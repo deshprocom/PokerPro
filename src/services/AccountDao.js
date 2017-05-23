@@ -76,14 +76,14 @@ export function setLoginUser(ret) {
     global.login_user = ret;
 
     JpushHelp.getRegistrationID((id) => {
-        router.log('JpushId:' + id)
+        router.log('JpushId: ' + id)
     });
     let alias = ret.user_id + helper.getApiType();
     console.log(alias)
     JpushHelp.setAlias(alias, () => {
-        router.log(alias + 'set jpush alias success')
+        router.log(alias + ' set jpush alias success')
     }, () => {
-        router.log(alias + 'set jpush alias fail')
+        router.log(alias + ' set jpush alias fail')
     })
 }
 

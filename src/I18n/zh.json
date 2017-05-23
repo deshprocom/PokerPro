@@ -153,5 +153,11 @@
   "integral": "积分",
   "phoebe_email": "phoebe@deshpro.com",
   "phoebe_phone": "15019446465",
-  "messages":"通知消息"
+  "messages":"通知消息",
+  "pull_refresh":"下拉刷新",
+  "release_refresh":"释放刷新",
+  "last_refresh":"最后刷新",
+  "no_more":"已经没有啦！",
+  "loading":"加载中..."
+
 }

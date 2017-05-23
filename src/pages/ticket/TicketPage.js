@@ -76,11 +76,11 @@ class TicketPage extends Component {
                 onFetch={this.onFetch}
                 refreshableMode="advanced"
                 rowView={this._itemListView}
-                refreshableTitlePull="下拉刷新"
-                refreshableTitleRelease="释放刷新"
-                dateTitle="最后刷新"
-                allLoadedText="已经没有啦！"
-                waitingSpinnerText="加载中..."
+                refreshableTitlePull={I18n.t('pull_refresh')}
+                refreshableTitleRelease={I18n.t('release_refresh')}
+                dateTitle={I18n.t('last_refresh')}
+                allLoadedText={I18n.t('no_more')}
+                waitingSpinnerText={I18n.t('loading')}
                 emptyView={()=>{
                     return <NoDataView/>;
                 }}

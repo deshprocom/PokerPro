@@ -25,6 +25,10 @@ export default class JpushHelper {
         if (Platform.OS === 'ios') {
             this.iosReceiveNotification(receiveCb);
             this.iosOpenNotification(openCb)
+            var subscription = NativeAppEventEmitter.addListener(
+                'networkDidReceiveMessage',
+                (message) => console.log('networkDidReceiveMessage',message)
+            );
         } else {
             JPushModule.addReceiveNotificationListener(receiveCb);
             JPushModule.addReceiveOpenNotificationListener(openCb)
@@ -47,8 +51,11 @@ export default class JpushHelper {
     }
 
 //设置 badge 值
-    static iosSetBadge(badge, cb) {
-        JPushModule.setBadge(badge, cb);
+    static iosSetBadge(badge) {
+        if (Platform.OS === 'ios')
+            JPushModule.setBadge(badge, (value) => {
+                console.log('badge', value)
+            });
     }
 
     //***************************IOS******************************************

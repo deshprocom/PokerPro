@@ -20,6 +20,7 @@ import ImageLoad from './ImageLoad';
 import MarkdownPlat from './MarkdownPlat';
 import Search from './Search';
 import Password from './Password';
+import UltimateListView from "react-native-ultimate-listview";
 
 export {
     BtnLong, BtnSoild, NavigationBar,
@@ -35,5 +36,6 @@ export {
     ImageLoad,
     MarkdownPlat,
     Search,
-    Password
+    Password,
+    UltimateListView
 }

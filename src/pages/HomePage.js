@@ -176,7 +176,15 @@ class HomePage extends Component {
                         style={styles.person_nick}>{I18n.t('log_register')}</Text>
                 </TouchableOpacity>
             )
-    }
+    };
+
+    toMessagePage = () => {
+        this.setState({
+            badge: false
+        });
+        JpushHelp.iosSetBadge(0);
+        router.toMessagePage()
+    };
 
     render() {
 
@@ -204,13 +212,12 @@ class HomePage extends Component {
                     <View style={{flex:1}}/>
                     <TouchableOpacity
                         testID="btn_bar_right"
-                        onPress={()=>router.toMessagePage()}
+                        onPress={this.toMessagePage}
                         style={styles.topBtn}
                         activeOpacity={1}>
-                        {badge ? <View style={styles.badge}/> : null}
                         <Image
                             style={styles.topImgRight}
-                            source={Images.home_notification}/>
+                            source={badge?Images.home_badge:Images.home_notification}/>
 
                     </TouchableOpacity>
 
@@ -473,15 +480,6 @@ const styles = StyleSheet.create({
     },
     topImgLeft: {height: 14, width: 18, marginLeft: 15, marginRight: 20},
     topImgRight: {height: 19, width: 17, marginRight: 15, marginLeft: 20},
-    badge: {
-        height: 10,
-        width: 10,
-        backgroundColor: 'red',
-        borderRadius: 5,
-        position: 'absolute',
-        top: 8,
-        left: 10
-    }
 });
 
 

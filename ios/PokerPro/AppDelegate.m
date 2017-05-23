@@ -17,6 +17,9 @@
 #import <React/RCTRootView.h>
 #import "RCTSplashScreen.h"
 
+static NSString *appKey = @"40fc518c7fb0759af5cba44a";     //填写appkey
+static NSString *channel = @"";    //填写channel   一般为nil
+static BOOL isProduction = false;  //填写isProdurion  平时测试时为false ，生产时填写true
 
 @implementation AppDelegate
 
@@ -41,8 +44,8 @@
                                           categories:nil];
   }
   
-  [JPUSHService setupWithOption:launchOptions appKey:@"40fc518c7fb0759af5cba44a"
-                        channel:nil apsForProduction:nil];
+  [JPUSHService setupWithOption:launchOptions appKey:appKey
+                        channel:nil apsForProduction:isProduction];
   NSURL *jsCodeLocation;
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
