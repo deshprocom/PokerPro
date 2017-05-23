@@ -1,0 +1,49 @@
+/**
+ * Created by lorne on 2017/2/20.
+ */
+import React, {Component}from 'react';
+import {
+    TouchableOpacity, View, TextInput,
+    StyleSheet, Image, Text, ScrollView, Platform
+} from 'react-native';
+import {connect} from 'react-redux';
+import I18n from 'react-native-i18n';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
+import {NavigationBar} from '../../components';
+import ScrollableTabView from 'react-native-scrollable-tab-view'
+import IDCardView from './IDCardView';
+import PassportView from './PassportView';
+
+export default class CertificationPage extends Component {
+
+
+    render() {
+        return (
+            <View style={ApplicationStyles.bgContainer}>
+                <NavigationBar
+                    toolbarStyle={{backgroundColor:Colors.bg_09}}
+                    router={this.props.router}
+                    title={I18n.t('certification')}
+                    leftBtnIcon={Images.sign_return}
+                    leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
+                    leftBtnPress={()=>this.props.router.pop()}/>
+                <IDCardView
+                    tabLabel={I18n.t('identification')}
+                    router={this.props.router}/>
+                {/* <ScrollableTabView
+                 tabBarActiveTextColor="#444444"
+                 tabBarInactiveTextColor="#999999"
+                 tabBarTextStyle={{fontSize: 18}}
+                 tabBarUnderlineStyle={{backgroundColor:'#111213'}}>
+                 <IDCardView
+                 user_extra={this.props.params.user_extra}
+                 tabLabel={I18n.t('identification')}
+                 router={this.props.router}/>
+                 <PassportView tabLabel={I18n.t('passport')}/>
+
+                 </ScrollableTabView>*/}
+
+            </View>
+        )
+    }
+}

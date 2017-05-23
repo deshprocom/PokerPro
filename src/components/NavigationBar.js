@@ -1,0 +1,155 @@
+/**
+ * Created by wangdi on 23/11/16.
+ */
+import React, {Component, PropTypes} from 'react';
+import {
+    StyleSheet, Platform, View, Text, StatusBar, TouchableOpacity,
+    Image
+} from 'react-native';
+import theme from '../styles/theme';
+import TestRouter from './TestRouter';
+
+export default class NavigationBar extends Component {
+    static propTypes = {
+        title: PropTypes.string,
+        leftBtnIcon: PropTypes.number,
+        leftBtnText: PropTypes.string,
+        leftBtnPress: PropTypes.func,
+        rightBtnIcon: PropTypes.number,
+        rightBtnText: PropTypes.string,
+        rightBtnPress: PropTypes.func,
+        leftImageStyle: PropTypes.object,
+        rightImageStyle: PropTypes.object,
+        btnTextStyle: PropTypes.object,
+        toolbarStyle: PropTypes.object,
+        router: PropTypes.object,
+        refreshPage: PropTypes.func
+    };
+
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        const {
+            title, leftBtnIcon, leftBtnText, leftBtnPress,
+            rightBtnIcon, rightBtnText, rightBtnPress, leftImageStyle,
+            rightImageStyle, btnTextStyle, toolbarStyle
+        } = this.props;
+
+        return (
+            <View style={[styles.container,toolbarStyle]}>
+                <StatusBar barStyle="light-content"/>
+                <View style={styles.toolbar}>
+                    <View style={styles.fixedCell}>
+                        {(leftBtnIcon || leftBtnText) ?
+                            <Button
+                                testID="btn_bar_left"
+                                icon={leftBtnIcon} text={leftBtnText} onPress={leftBtnPress}
+                                imageStyle={leftImageStyle} textStyle={btnTextStyle}/>
+                            :
+                            null
+                        }
+                    </View>
+                    <View style={styles.centerCell}>
+                        <Text
+                            numberOfLines={1}
+                            style={styles.title}>{title}</Text>
+                        <TestRouter router={this.props.router}
+                                    refreshPage={this.props.refreshPage}/>
+                    </View>
+                    <View style={[styles.fixedCell,{justifyContent:'flex-end'}]}>
+                        {(rightBtnIcon || rightBtnText) ?
+                            <Button
+                                testID="btn_bar_right"
+                                icon={rightBtnIcon} text={rightBtnText} onPress={rightBtnPress}
+                                imageStyle={rightImageStyle} textStyle={btnTextStyle}/>
+                            :
+                            null
+                        }
+                    </View>
+                </View>
+            </View>
+        );
+    }
+}
+
+class Button extends Component {
+    static propTypes = {
+        icon: PropTypes.number,
+        text: PropTypes.string,
+        onPress: PropTypes.func,
+        imageStyle: PropTypes.object,
+        textStyle: PropTypes.object,
+        testID: PropTypes.string
+
+    };
+
+    render() {
+        return (
+            <TouchableOpacity
+                testID={this.props.testID}
+                onPress={this.props.onPress}
+                activeOpacity={theme.touchableOpacityActiveOpacity}>
+
+                {this.props.icon != undefined ?
+
+                    <View style={styles.btnImage}>
+                        <Image source={this.props.icon} style={this.props.imageStyle}/>
+                    </View>
+                    :
+                    <View style={styles.btnTextView}>
+                        <Text style={[styles.btnText,this.props.textStyle]}
+                              numberOfLines={1}>{this.props.text}</Text>
+                    </View>
+                }
+
+            </TouchableOpacity>
+        );
+    }
+}
+
+const styles = StyleSheet.create({
+    container: { //in order to display the shadow on home tab
+        height: Platform.OS === 'android' ? 44 : 64,
+        width: theme.screenWidth
+    },
+    toolbar: {
+        height: Platform.OS === 'android' ? 44 : 64,
+        flexDirection: 'row',
+        paddingTop: Platform.OS === 'android' ? 0 : 20
+    },
+    fixedCell: {
+        flexDirection: 'row',
+        width: 100
+    },
+    centerCell: {
+        flex: 1,
+        height: theme.toolbar.height,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row'
+    },
+    title: {
+        fontSize: theme.toolbar.titleSize,
+        color: theme.toolbar.titleColor
+    },
+    btnImage: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
+        height: theme.toolbar.height
+    },
+    btnText: {
+        color: theme.toolbar.titleColor,
+        fontSize: theme.toolbar.textBtnSize,
+        marginLeft: 20,
+        marginRight: 20
+    },
+    btnTextView: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
+        height: theme.toolbar.height
+    }
+});

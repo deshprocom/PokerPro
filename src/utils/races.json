@@ -1,0 +1,82 @@
+{
+  "items": [
+    {
+      "race_id": 7,
+      "name": "2017皇城五坛系列赛",
+      "seq_id": 20170222000,
+      "logo": "http://img.dzpk.com/allimg/170119/4466-1F119113228-lp.png",
+      "prize": 3500000,
+      "location": "北京",
+      "begin_date": "2017-02-22",
+      "end_date": "2017-03-09",
+      "status": 0,
+      "followed": false,
+      "ordered": false
+    },
+    {
+      "race_id": 5,
+      "name": "WPT三亚站",
+      "seq_id": 20171004000,
+      "logo": "http://img.dzpk.com/allimg/170119/4466-1F119113228-lp.png",
+      "prize": 1500000,
+      "location": "海南三亚",
+      "begin_date": "2017-10-04",
+      "end_date": "2017-10-22",
+      "status": 0,
+      "followed": false,
+      "ordered": false
+    },
+    {
+      "race_id": 4,
+      "name": "TPT腾讯扑克锦标赛",
+      "seq_id": 20171201000,
+      "logo": "http://img.dzpk.com/allimg/170119/4466-1F119113228-lp.png",
+      "prize": 4500000,
+      "location": "深圳",
+      "begin_date": "2017-12-01",
+      "end_date": "2017-12-06",
+      "status": 0,
+      "followed": false,
+      "ordered": false
+    },
+    {
+      "race_id": 4,
+      "name": "TPT腾讯扑克锦标赛",
+      "seq_id": 20171201000,
+      "logo": "http://img.dzpk.com/allimg/170119/4466-1F119113228-lp.png",
+      "prize": 4500000,
+      "location": "深圳",
+      "begin_date": "2017-12-01",
+      "end_date": "2017-12-06",
+      "status": 0,
+      "followed": false,
+      "ordered": false
+    },
+    {
+      "race_id": 4,
+      "name": "TPT腾讯扑克锦标赛",
+      "seq_id": 20171201000,
+      "logo": "http://img.dzpk.com/allimg/170119/4466-1F119113228-lp.png",
+      "prize": 4500000,
+      "location": "深圳",
+      "begin_date": "2017-12-01",
+      "end_date": "2017-12-06",
+      "status": 0,
+      "followed": false,
+      "ordered": false
+    },
+    {
+      "race_id": 4,
+      "name": "TPT腾讯扑克锦标赛",
+      "seq_id": 20171201000,
+      "logo": "http://img.dzpk.com/allimg/170119/4466-1F119113228-lp.png",
+      "prize": 4500000,
+      "location": "深圳",
+      "begin_date": "2017-12-01",
+      "end_date": "2017-12-06",
+      "status": 0,
+      "followed": false,
+      "ordered": false
+    }
+  ]
+}
