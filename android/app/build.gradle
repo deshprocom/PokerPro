@@ -143,6 +143,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-video')
     compile project(':rn-umeng')
     compile project(':react-native-smart-splash-screen')
     compile project(':react-native-smart-pull-to-refresh-listview')

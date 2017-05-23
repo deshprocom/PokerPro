@@ -39,6 +39,7 @@ import ApiSettingPage from '../pages/setting/ApiSettingPage';
 import BindingPhonePage from '../pages/setting/BindingPhonePage';
 import ChangePhonePage from '../pages/setting/ChangePhonePage';
 import MessagePage from '../pages/message/MessagePage';
+import VideoPage from '../pages/news/VideoPage';
 
 
 //Config
@@ -72,6 +73,15 @@ export default class Router {
         this.navigator.popToTop();
     }
 
+
+    toVideoPage(props) {
+        this.push(props, {
+            page: VideoPage,
+            name: 'VideoPage',
+            sceneConfig: customFloatFromRight,
+
+        })
+    }
 
     toMessagePage(props) {
         this.push(props, {

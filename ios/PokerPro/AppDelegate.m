@@ -16,6 +16,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import "RCTSplashScreen.h"
+#import <AVFoundation/AVFoundation.h>
 
 static NSString *appKey = @"40fc518c7fb0759af5cba44a";     //填写appkey
 static NSString *channel = @"";    //填写channel   一般为nil
@@ -61,7 +62,7 @@ static BOOL isProduction = false;  //填写isProdurion  平时测试时为false 
 
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
 
-
+  [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:nil];  // allow
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];

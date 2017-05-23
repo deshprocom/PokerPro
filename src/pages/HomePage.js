@@ -280,7 +280,7 @@ class HomePage extends Component {
                         </TouchableOpacity>
                         <TouchableOpacity
                             testID="btn_home_video"
-                            onPress={developing}
+                            onPress={()=>router.toVideoPage()}
                             style={styles.item_center}>
                             <Image style={styles.gif_fuc}
                                    source={Images.home_video}/>
