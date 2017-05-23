@@ -26,17 +26,17 @@ export default class JpushHelper {
             this.iosReceiveNotification(receiveCb);
             this.iosOpenNotification(openCb)
         } else {
-            JPushModule.addReceiveNotificationListener(receiveCb)
+            JPushModule.addReceiveNotificationListener(receiveCb);
             JPushModule.addReceiveOpenNotificationListener(openCb)
         }
     }
 
 
-    static removePushListener(){
+    static removePushListener() {
         if (Platform.OS === 'ios') {
             DeviceEventEmitter.removeAllListeners();
             NativeAppEventEmitter.removeAllListeners();
-        }else{
+        } else {
             JPushModule.removeReceiveNotificationListener(receiveNotificationEvent);
             JPushModule.removeGetRegistrationIdListener(getRegistrationIdEvent);
             JPushModule.removeReceiveOpenNotificationListener(openNotificationEvent);
@@ -63,7 +63,7 @@ export default class JpushHelper {
         let subscription = NativeAppEventEmitter.addListener(
             'ReceiveNotification',
             (notification) => {
-                console.log(notification);
+                console.log('ReceiveNotification', notification);
                 cb(notification)
             }
         );
@@ -73,7 +73,7 @@ export default class JpushHelper {
         let subscription = NativeAppEventEmitter.addListener(
             'OpenNotification',
             (notification) => {
-                console.log(notification);
+                console.log('OpenNotification', notification);
                 cb(notification)
             }
         );
