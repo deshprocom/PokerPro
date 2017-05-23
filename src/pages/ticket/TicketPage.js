@@ -15,9 +15,6 @@ import {RACE_TICKET} from '../../actions/ActionTypes';
 import {fetchTickets} from '../../actions/RacesAction';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {isEmptyObject, strNotNull, convertDate, ticketStatusConvert} from '../../utils/ComonHelper';
-import {_renderFooter, _renderHeader} from '../../components/LoadingView';
-const headerStyle = {height: 35, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.bg_f5};
-import PullToRefreshListView from 'react-native-smart-pull-to-refresh-listview';
 import UltimateListView from "react-native-ultimate-listview";
 
 class TicketPage extends Component {
@@ -25,13 +22,10 @@ class TicketPage extends Component {
 
     constructor(props) {
         super(props);
-        this._dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2
-        });
+
         let dataList = [];
         this.state = {
             listTicket: dataList,
-            componentDataSource: this._dataSource.cloneWithRows(dataList),
             layout: 'list'
         };
 

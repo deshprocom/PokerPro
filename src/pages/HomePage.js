@@ -189,7 +189,7 @@ class HomePage extends Component {
                 testID="home_page">
 
                 <View style={[styles.topBar,{ backgroundColor: 'rgba(0,0,0,'+opacity+')'}]}>
-
+                    <StatusBar barStyle="light-content"/>
                     <TouchableOpacity
                         testID="btn_bar_left"
                         onPress={()=>this.props.openDrawer()}
