@@ -1,0 +1,17 @@
+login=info@deshpro.com
+pwd=pokerpro888
+pwd:Pokerpro888
+深圳德尚全彩体育文化传播有限公司
+深圳市福田区福田街道卓越世纪中心3号楼A座907
+
+
+googleplay
+xiaomi
+huawei
+yingyongbao
+360mobile
+wandoujia
+baidu
+91market
+
+cucumber -p iphonesim -f html -o ./cucumber_result_5_4.html -verbose
