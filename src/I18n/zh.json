@@ -146,13 +146,12 @@
   "pictures": "图库",
   "chose_image": "选择图片",
   "news_outline": "搜索资讯",
-  "ticket_placeholder":"请输入赛事名称",
-  "ranking":"名次",
-  "contestant":"参赛人",
-  "bonus":"奖金",
-  "integral":"积分",
-  "phoebe_email":"phoebe@deshpro.com",
-  "phoebe_phone":"15019446465"
-
-
+  "ticket_placeholder": "请输入赛事名称",
+  "ranking": "名次",
+  "contestant": "参赛人",
+  "bonus": "奖金",
+  "integral": "积分",
+  "phoebe_email": "phoebe@deshpro.com",
+  "phoebe_phone": "15019446465",
+  "messages":"通知消息"
 }

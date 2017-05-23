@@ -5,7 +5,7 @@ import React, {Component, PropTypes} from 'react';
 import {
     StyleSheet, Text, View, ListView,
     TouchableOpacity, Image, StatusBar,
-    ScrollView, Animated
+    ScrollView, Animated, Platform
 } from 'react-native';
 import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
@@ -24,6 +24,7 @@ import {isEmptyObject, strNotNull, putLoginUser, developing} from '../utils/Como
 import {NavigationBar, ParallaxScrollView} from '../components';
 import {LoadingView} from '../components/load';
 import JpushHelp from '../services/JpushHelper';
+import TestRouter from '../components/TestRouter';
 
 var maxDown = 0;
 
@@ -39,7 +40,9 @@ class HomePage extends Component {
         this.state = {
             user_id: '',
             languageChange: false,
-            opacity: 0
+            opacity: 0,
+            badge: false
+
         };
 
         init(() => {
@@ -62,7 +65,12 @@ class HomePage extends Component {
 
     receiveCb = (notification) => {
         const {aps} = notification;
-        alert(aps.alert)
+        alert(aps.alert);
+        if (aps.badge > 0) {
+            this.setState({
+                badge: true
+            })
+        }
     };
 
     openCb = (notification) => {
@@ -173,25 +181,43 @@ class HomePage extends Component {
     render() {
 
         const {profile, router, error, loading, hasData, actionType, listRaces} = this.props;
-        const {opacity} = this.state;
+        const {opacity, badge} = this.state;
 
         return (
             <View
                 style={ {flex:1,backgroundColor:Colors.bg_09}}
                 testID="home_page">
 
-                <NavigationBar
-                    refreshPage={()=>this._refreshPage()}
-                    router={this.props.router}
-                    leftBtnIcon={Images.home_more}
-                    leftImageStyle={{height:14,width:18,marginLeft:15,marginRight:20}}
-                    leftBtnPress={()=>this.props.openDrawer()}
-                    rightBtnIcon={Images.home_notification}
-                    rightBtnPress={()=>router.toJpushPage()}
-                    rightImageStyle={{height: 19, width: 17, marginRight: 15,marginLeft:20}}
-                    toolbarStyle={{ backgroundColor: 'rgba(0,0,0,'+opacity+')',
-        position: 'absolute',zIndex: 3}}
-                />
+                <View style={[styles.topBar,{ backgroundColor: 'rgba(0,0,0,'+opacity+')'}]}>
+
+                    <TouchableOpacity
+                        testID="btn_bar_left"
+                        onPress={()=>this.props.openDrawer()}
+                        style={styles.topBtn}
+                        activeOpacity={1}>
+                        <Image
+                            source={Images.home_more}
+                            style={styles.topImgLeft}/>
+
+                    </TouchableOpacity>
+                    <TestRouter refreshPage={this._refreshPage}/>
+                    <View style={{flex:1}}/>
+                    <TouchableOpacity
+                        testID="btn_bar_right"
+                        onPress={()=>router.toMessagePage()}
+                        style={styles.topBtn}
+                        activeOpacity={1}>
+                        {badge ? <View style={styles.badge}/> : null}
+                        <Image
+                            style={styles.topImgRight}
+                            source={Images.home_notification}/>
+
+                    </TouchableOpacity>
+
+
+                </View>
+
+
                 <ParallaxScrollView
                     fadeOutForeground={false}
                     fadeOutBackground={false}
@@ -429,6 +455,32 @@ const styles = StyleSheet.create({
         fontSize: Fonts.size.h15,
         color: Colors.txt_666, marginLeft: 13,
         backgroundColor: 'transparent'
+    },
+    topBar: {
+        height: Metrics.navBarHeight,
+        flexDirection: 'row',
+        alignItems: 'center',
+        position: 'absolute',
+        zIndex: 3,
+        width: Metrics.screenWidth,
+        paddingTop: Metrics.statusBarHeight
+    },
+    topBtn: {
+        height: 40,
+        width: 50,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    topImgLeft: {height: 14, width: 18, marginLeft: 15, marginRight: 20},
+    topImgRight: {height: 19, width: 17, marginRight: 15, marginLeft: 20},
+    badge: {
+        height: 10,
+        width: 10,
+        backgroundColor: 'red',
+        borderRadius: 5,
+        position: 'absolute',
+        top: 8,
+        left: 10
     }
 });
 

@@ -38,7 +38,7 @@ import TicketPage from '../pages/ticket/TicketPage';
 import ApiSettingPage from '../pages/setting/ApiSettingPage';
 import BindingPhonePage from '../pages/setting/BindingPhonePage';
 import ChangePhonePage from '../pages/setting/ChangePhonePage';
-import JpushPage from '../pages/message/JpushPage';
+import MessagePage from '../pages/message/MessagePage';
 
 
 //Config
@@ -73,10 +73,10 @@ export default class Router {
     }
 
 
-    toJpushPage(props) {
+    toMessagePage(props) {
         this.push(props, {
-            page: JpushPage,
-            name: 'JpushPage',
+            page: MessagePage,
+            name: 'MessagePage',
             sceneConfig: customFloatFromRight,
 
         })
