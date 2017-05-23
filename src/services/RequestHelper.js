@@ -19,6 +19,20 @@ const client = create({
     timeout: 20000,
 });
 
+export function getApiType() {
+    let type = 'test';
+    let ret = client.getBaseURL();
+    console.log(ret)
+    if (ret === Api.dev)
+        type = 'dev';
+    else if (ret === Api.test)
+        type = 'test';
+    else if (ret === Api.staging)
+        type = 'staging';
+
+    return type;
+}
+
 export function getBaseURL() {
 
     storage.load({key: StorageKey.ApiSever})

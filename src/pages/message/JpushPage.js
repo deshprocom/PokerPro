@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import JPushModule from 'jpush-react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import moment from 'moment';
 
 export default class JpushPage extends Component {
 

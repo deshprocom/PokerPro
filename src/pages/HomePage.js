@@ -11,7 +11,7 @@ import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
 import {openDrawer} from '../reducers/DrawerRedux';
 import StorageKey from '../configs/StorageKey';
-import {setAccessToken, getBaseURL} from '../services/RequestHelper';
+import {setAccessToken, getBaseURL, getApiType} from '../services/RequestHelper';
 import {fetchGetProfile} from '../actions/PersonAction';
 import {FETCH_SUCCESS, GET_PROFILE, GET_RECENT_RACES} from '../actions/ActionTypes';
 import I18n from 'react-native-i18n';
@@ -23,6 +23,7 @@ import ListNoDataPage from '../components/ListErrorPage';
 import {isEmptyObject, strNotNull, putLoginUser, developing} from '../utils/ComonHelper';
 import {NavigationBar, ParallaxScrollView} from '../components';
 import {LoadingView} from '../components/load';
+import JpushHelp from '../services/JpushHelper';
 
 var maxDown = 0;
 
@@ -50,9 +51,22 @@ class HomePage extends Component {
     }
 
     componentDidMount() {
+        JpushHelp.addPushListener(this.receiveCb, this.openCb)
         this._refreshPage();
 
     }
+
+    componentWillUnmount() {
+        JpushHelp.removePushListener();
+    }
+
+    receiveCb = (notification) => {
+        const {aps} = notification;
+        alert(aps.alert)
+    };
+
+    openCb = (notification) => {
+    };
 
     _refreshPage() {
         storage.load({key: StorageKey.LoginUser})
@@ -128,9 +142,13 @@ class HomePage extends Component {
 
         if (maxDown == -120 && offsetY == 0) {
             maxDown = 0;
-            this._refreshPage();
+            const recentRaces = {
+                user_id: this.state.user_id,
+                number: 5
+            };
+            this.props._getRecentRaces(recentRaces);
         }
-    }
+    };
 
     _showNick = (nickname) => {
         if (strNotNull(nickname))

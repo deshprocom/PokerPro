@@ -4,6 +4,7 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 import StorageKey from '../configs/StorageKey';
+import JpushHelp from './JpushHelper';
 
 
 export function postChangePermission(body, resolve, reject) {
@@ -73,6 +74,17 @@ global.login_user = {};
 export function setLoginUser(ret) {
     LoginUser = ret;
     global.login_user = ret;
+
+    JpushHelp.getRegistrationID((id) => {
+        router.log('JpushId:' + id)
+    });
+    let alias = ret.user_id + helper.getApiType();
+    console.log(alias)
+    JpushHelp.setAlias(alias, () => {
+        router.log(alias + 'set jpush alias success')
+    }, () => {
+        router.log(alias + 'set jpush alias fail')
+    })
 }
 
 export function removeToken() {
