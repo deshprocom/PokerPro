@@ -179,11 +179,17 @@ class HomePage extends Component {
     };
 
     toMessagePage = () => {
-        this.setState({
-            badge: false
-        });
-        JpushHelp.iosSetBadge(0);
-        router.toMessagePage()
+
+        if (isEmptyObject(login_user)) {
+            router.toLoginFirstPage()
+        } else {
+            this.setState({
+                badge: false
+            });
+            JpushHelp.iosSetBadge(0);
+            router.toMessagePage()
+        }
+
     };
 
     render() {
