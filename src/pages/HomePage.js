@@ -65,7 +65,6 @@ class HomePage extends Component {
 
     receiveCb = (notification) => {
         const {aps} = notification;
-        alert(aps.alert);
         if (aps.badge > 0) {
             this.setState({
                 badge: true

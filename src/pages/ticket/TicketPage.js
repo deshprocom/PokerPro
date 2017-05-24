@@ -92,22 +92,21 @@ class TicketPage extends Component {
         </View>)
     }
 
-    onFetch = async(page = 1, startFetch, abortFetch) => {
+    onFetch = (page = 1, startFetch, abortFetch) => {
         try {
             this.listPage = page;
-            console.log('listPage:', page)
+
             if (page === 1) {
                 this._onRefresh();
+                startFetch();
             } else {
                 this._onLoadMore();
             }
-
         } catch (err) {
             abortFetch();
-            console.log(err);
         }
 
-    }
+    };
 
     _onRefresh = () => {
         this.last_id = '0';

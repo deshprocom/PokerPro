@@ -21,17 +21,8 @@ export default class VideoPage extends Component {
     render() {
         return (<View style={styles.container}>
             <VideoPlayer
-                playInBackground={ false }   // play audio when entering background
-                playWhenInactive={ false }   // [iOS] continuing playing when notification centre active
-                resizeMode={ 'contain' }     // 'contain' or 'cover' should be used.
-                paused={ false }             // stop playback entirely
-                repeat={ false }             // Repeats at end of duration
-                muted={ false }              // Mutes the audio entirely.
-                title={ '' }                 // Video title, if null title area is hidden
-                volume={ 1 }                 // 0 is muted, 1 is normal.
-                rate={ 1 }
-                source={{ uri: 'https://vjs.zencdn.net/v/oceans.mp4' }}
-                navigator={ this.props.navigator }
+                title={ 'oceans.mp4' }                 // Video title, if null title area is hidden
+                source={{ uri: 'http://v.yoai.com/femme_tampon_tutorial.mp4' }}
             />
         </View>)
     }
@@ -48,8 +39,7 @@ export default class VideoPage extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: 'white'
+        flex: 1
     }
 });
 
