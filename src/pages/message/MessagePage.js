@@ -4,16 +4,16 @@
 import React, {PropTypes, Component}from 'react';
 import {
     StyleSheet, Image, Platform, ActivityIndicator,
-    Dimensions, View, Text
+    Dimensions, View, Text, FlatList
 } from 'react-native';
 import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {NavigationBar, UltimateListView, ImageLoad} from '../../components';
+import {NavigationBar, ImageLoad} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {GET_NOTIFICATIONS} from '../../actions/ActionTypes';
 import {fetchNotifications} from '../../actions/AccountAction';
-
+import {isEmptyObject} from '../../utils/ComonHelper';
 
 class MessagePage extends Component {
 
@@ -22,13 +22,17 @@ class MessagePage extends Component {
 
         let dataList = [];
         this.state = {
-            listTicket: dataList,
+            dataList: dataList,
         };
-        this.listPage = 1;
 
     }
 
+    componentDidMount() {
+        this._onRefresh();
+    }
+
     render() {
+        const {dataList} = this.state;
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 toolbarStyle={{backgroundColor:Colors.bg_09}}
@@ -37,22 +41,12 @@ class MessagePage extends Component {
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
                 leftBtnPress={()=>router.pop()}/>
+            {isEmptyObject(dataList) ? <NoDataView/> : null}
 
-            <UltimateListView
-                ref={(ref) => this.listView = ref}
-                keyExtractor={(item, index) => `${item.race_id}`}
-                onFetch={this.onFetch}
-                refreshableMode="advanced"
-                separator={()=>  <View style={{height:10}}/>}
-                rowView={this._itemListView}
-                refreshableTitlePull={I18n.t('pull_refresh')}
-                refreshableTitleRelease={I18n.t('release_refresh')}
-                dateTitle={I18n.t('last_refresh')}
-                allLoadedText={I18n.t('no_more')}
-                waitingSpinnerText={I18n.t('loading')}
-                emptyView={()=>{
-             return <NoDataView/>;
-             }}
+            <FlatList
+                keyExtractor={(item)=>item.id}
+                data={dataList}
+                renderItem={this._itemListView}
             />
 
         </View>)
@@ -65,71 +59,65 @@ class MessagePage extends Component {
             && hasData) {
 
             const {notifications} = notices;
-            if (this.listPage == 1) {
-                this.listView.postRefresh(notifications, 1);
-            }
+            this.setState({
+                dataList: notifications
+            })
         }
 
     }
 
-    onFetch = async(page = 1, startFetch, abortFetch) => {
-        try {
-            this.listPage = page;
-
-            if (page === 1) {
-                this._onRefresh();
-            }
-
-        } catch (err) {
-            abortFetch();
-            console.log(err);
-        }
-    };
 
     _onRefresh = () => {
         this.props.getNotices()
     };
 
-    _itemListView = (item, index) => {
+    _itemListView = ({item, index}) => {
 
         const {notify_type} = item;
         if (notify_type === 'order') {
-            return (  <View style={styles.listItem}>
-                <View style={styles.itemTitle}>
-                    <Text style={styles.txtPay}>付款成功</Text>
-                    <View style={{flex:1}}/>
-                    <Text style={styles.txtTime}>2018年5月17日 12:34</Text>
-                </View>
+            return ( <View>
+                    <View style={{height:10}}/>
+                    <View style={styles.listItem}>
+                        <View style={styles.itemTitle}>
+                            <Text style={styles.txtPay}>付款成功</Text>
+                            <View style={{flex:1}}/>
+                            <Text style={styles.txtTime}>2018年5月17日 12:34</Text>
+                        </View>
 
-                <View style={styles.itemView}>
-                    <ImageLoad
-                        source={{uri:''}}
-                        style={styles.imgRace}/>
-                    <View style={styles.itemContent}>
-                        <Text style={styles.txtContent}>恭喜您，下单成功！客服将及时与您联系，请保持手机通话畅通！</Text>
-                        <View style={{flex:1}}/>
+                        <View style={styles.itemView}>
+                            <ImageLoad
+                                source={{uri:''}}
+                                style={styles.imgRace}/>
+                            <View style={styles.itemContent}>
+                                <Text style={styles.txtContent}>恭喜您，下单成功！客服将及时与您联系，请保持手机通话畅通！</Text>
+                                <View style={{flex:1}}/>
 
-                        <Text style={styles.txtNum}>订单编号：34324325325</Text>
+                                <Text style={styles.txtNum}>订单编号：34324325325</Text>
+
+                            </View>
+
+                        </View>
+
+                        <View style={{height:15}}/>
 
                     </View>
-
                 </View>
-
-                <View style={{height:15}}/>
-
-            </View>)
+            )
         } else if (notify_type === 'certification') {
-            return ( <View style={styles.listItem}>
-                <View style={styles.itemTitle}>
-                    <Text style={[styles.txtPay,styles.txtRed]}>实名认证失败</Text>
-                    <View style={{flex:1}}/>
-                    <Text style={styles.txtTime}>2018年5月17日 12:34</Text>
+            return ( <View>
+                <View style={{height:10}}/>
+                <View style={styles.listItem}>
+                    <View style={styles.itemTitle}>
+                        <Text style={[styles.txtPay,styles.txtRed]}>实名认证失败</Text>
+                        <View style={{flex:1}}/>
+                        <Text style={styles.txtTime}>2018年5月17日 12:34</Text>
+                    </View>
+
+                    <Text style={styles.txtNotice}>您上传的证件号码有误，为了完善您更良好的购票体验，请重新实名认证！</Text>
+
+                    <Text style={styles.txtSource}>来自：Poker Pro官方客服</Text>
+
                 </View>
-
-                <Text style={styles.txtNotice}>您上传的证件号码有误，为了完善您更良好的购票体验，请重新实名认证！</Text>
-
-                <Text style={styles.txtSource}>来自：Poker Pro官方客服</Text>
-
             </View>)
         }
     }
