@@ -11,13 +11,14 @@ import {
     Text,
     TouchableOpacity,
     View,
+
 } from 'react-native';
 
 import VideoPlayer from '../../components/VideoPlayer';
 
 export default class VideoPage extends Component {
     render() {
-        return (<View style={{flex:1,backgroundColor:'white'}}>
+        return (<View style={styles.container}>
             <VideoPlayer
                 playInBackground={ false }   // play audio when entering background
                 playWhenInactive={ false }   // [iOS] continuing playing when notification centre active
@@ -35,4 +36,11 @@ export default class VideoPage extends Component {
     }
 
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: 'white'
+    }
+});
 
