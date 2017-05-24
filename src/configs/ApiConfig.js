@@ -51,7 +51,8 @@ export default {
     race_tickets: race_tickets,
     account_change_bind: account_change_bind,
     bind_account: bind_account,
-    change_permission: change_permission
+    change_permission: change_permission,
+    notifications: notifications
 
 
 }
@@ -65,6 +66,11 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+
+export function notifications() {
+    return 'users/' + login_user.user_id + '/notifications';
+}
 
 
 export function change_permission() {

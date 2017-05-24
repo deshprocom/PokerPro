@@ -6,7 +6,7 @@ import {
     POST_VERIFY_CODE, POST_RESET_PASSWORD, POST_REGISTER,
     POST_CHANGE_PWD, POST_V_CODE, POST_CARD_IMAGE,
     GET_PLAYER_INFO, POST_BIND_ACCOUNT, POST_CHANGE_BIND,
-    POST_CHANGE_PERMISSION,
+    POST_CHANGE_PERMISSION, GET_NOTIFICATIONS,
     FETCH_SUCCESS, FETCHING, FETCH_FAIL
 } from '../actions/ActionTypes';
 
@@ -16,7 +16,8 @@ const initialState = {
     error: false,
     loginUser: {},
     actionType: '',
-    player: {}
+    player: {},
+    notices: {}
 };
 
 export default function accountState(state = initialState, action) {
@@ -48,6 +49,9 @@ export default function accountState(state = initialState, action) {
             return handleNoData(state, action);
         case POST_CHANGE_PERMISSION:
             return handleNoData(state, action);
+        case GET_NOTIFICATIONS:
+            state.notices = {};
+            return handleFetch(state, action);
         default:
             return state;
     }
@@ -138,7 +142,17 @@ function handleFetch(state, action) {
                 player: action.player
             }
 
-        } else {
+        } else if(action.type === GET_NOTIFICATIONS){
+            return {
+                ...state,
+                loading: false,
+                hasData: true,
+                error: false,
+                actionType: action.type,
+                notices: action.notices
+            }
+
+        }else {
             return {
                 ...state,
                 loading: false,
