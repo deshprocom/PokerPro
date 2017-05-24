@@ -3,6 +3,7 @@ package com.pokerpro;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.github.yamill.orientation.OrientationPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import in.esseak.react_native_umeng.UmengPackage;
 import com.reactnativecomponent.splashscreen.RCTSplashScreenPackage;
@@ -31,6 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new OrientationPackage(),
             new ReactVideoPackage(),
             new UmengPackage(),
             new RCTSplashScreenPackage(),

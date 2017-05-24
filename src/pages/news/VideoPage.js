@@ -13,6 +13,7 @@ import {
     View,
 
 } from 'react-native';
+import Orientation from 'react-native-orientation';
 
 import VideoPlayer from '../../components/VideoPlayer';
 
@@ -33,6 +34,14 @@ export default class VideoPage extends Component {
                 navigator={ this.props.navigator }
             />
         </View>)
+    }
+
+    componentDidMount() {
+        Orientation.lockToLandscape();
+    }
+
+    componentWillUnmount() {
+        Orientation.lockToPortrait();
     }
 
 }
