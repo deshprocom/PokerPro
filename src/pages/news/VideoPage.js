@@ -36,7 +36,7 @@ export default class VideoPage extends Component {
         </View>)
     }
 
-    componentDidMount() {
+    componentWillMount() {
         Orientation.lockToLandscape();
     }
 
