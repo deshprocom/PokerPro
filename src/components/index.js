@@ -21,6 +21,7 @@ import MarkdownPlat from './MarkdownPlat';
 import Search from './Search';
 import Password from './Password';
 import UltimateListView from './flatlist/ultimateListView';
+import SwipeListView from './swipelist/SwipeListView';
 
 export {
     BtnLong, BtnSoild, NavigationBar,
@@ -37,5 +38,6 @@ export {
     MarkdownPlat,
     Search,
     Password,
-    UltimateListView
+    UltimateListView,
+    SwipeListView
 }

@@ -97,6 +97,29 @@ export function post(url, body, resolve, reject) {
 }
 
 
+export function del(url, body, resolve, reject) {
+    router.log(url, body)
+    client.delete(url, body)
+        .then((response) => {
+            if (response.ok) {
+                const {code, msg} = response.data;
+                if (code === 0) {
+                    resolve(response.data);
+                } else {
+                    reject(msg);
+                }
+            } else {
+                reject(response.problem);
+                netError(response);
+            }
+
+        }).catch((error) => {
+        router.log(TAG, error);
+        reject('Network response was not ok.');
+    });
+}
+
+
 export function put(url, body, resolve, reject) {
     router.log(url, body)
     client.put(url, body)

@@ -4,12 +4,12 @@
 import React, {PropTypes, Component}from 'react';
 import {
     StyleSheet, Image, Platform, ActivityIndicator,
-    Dimensions, View, Text, FlatList
+    Dimensions, View, Text, ListView
 } from 'react-native';
 import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {NavigationBar, ImageLoad} from '../../components';
+import {NavigationBar, ImageLoad, SwipeListView} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {GET_NOTIFICATIONS} from '../../actions/ActionTypes';
 import {fetchNotifications} from '../../actions/AccountAction';
@@ -21,8 +21,10 @@ class MessagePage extends Component {
         super(props);
 
         let dataList = [];
+        this._dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             dataList: dataList,
+            dataSource: this._dataSource.cloneWithRows(dataList)
         };
 
     }
@@ -32,7 +34,7 @@ class MessagePage extends Component {
     }
 
     render() {
-        const {dataList} = this.state;
+        const {dataList, dataSource} = this.state;
         return (<View
             testID="page_message"
             style={ApplicationStyles.bgContainer}>
@@ -45,10 +47,12 @@ class MessagePage extends Component {
                 leftBtnPress={()=>router.pop()}/>
             {isEmptyObject(dataList) ? <NoDataView/> : null}
 
-            <FlatList
-                keyExtractor={(item)=>item.id}
-                data={dataList}
-                renderItem={this._itemListView}
+            <SwipeListView
+                dataSource={dataSource}
+                renderHiddenRow={this.hiddenRow}
+                renderRow={this._itemListView}
+                disableRightSwipe={true}
+                rightOpenValue={-75}
             />
 
         </View>)
@@ -62,11 +66,23 @@ class MessagePage extends Component {
 
             const {notifications} = notices;
             this.setState({
-                dataList: notifications
+                dataList: notifications,
+                dataSource: this._dataSource.cloneWithRows(notifications)
             })
         }
 
     }
+
+    hiddenRow = (data) => {
+
+        return (
+
+            <View style={styles.rowHidden}>
+                <Text>Left</Text>
+                <Text style={styles.txtSwipe}>删除</Text>
+            </View>
+        )
+    };
 
 
     _onRefresh = () => {
@@ -84,7 +100,7 @@ class MessagePage extends Component {
         }
     };
 
-    _itemListView = ({item, index}) => {
+    _itemListView = (item) => {
 
         const {notify_type, color_type, title, content, created_at, order_number, image, id} = item;
         if (notify_type === 'order') {
@@ -242,6 +258,19 @@ const
             alignSelf: 'flex-end',
             marginTop: 15,
             marginBottom: 17
+        },
+        rowHidden: {
+            alignItems: 'center',
+            backgroundColor: '#F34A4A',
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginTop: 10
+        },
+        txtSwipe: {
+            fontSize: 20,
+            color: 'white',
+            marginRight: 16
         }
 
 
