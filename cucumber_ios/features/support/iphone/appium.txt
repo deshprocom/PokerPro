@@ -1,0 +1,15 @@
+[caps]
+platformName = "ios"
+deviceName = "iPhone 6s"
+platformVersion = "10.2"
+app = '../ios/build/Build/Products/Release-iphoneos/PokerPro.app'
+#udid = '11c7d9653b3e288edd63b241b4c21f8ceae1943c'
+automationName = 'XCUITest'
+language = 'zh'
+locale = 'zh_CN'
+fullReset = true
+
+[appium_lib]
+sauce_username = "edwardzhou"
+sauce_access_key = "52a8ed18-93b3-4aeb-b4b7-571b020e6bf7"
+port = 4445

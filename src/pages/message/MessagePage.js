@@ -13,7 +13,7 @@ import {NavigationBar, ImageLoad} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {GET_NOTIFICATIONS} from '../../actions/ActionTypes';
 import {fetchNotifications} from '../../actions/AccountAction';
-import {isEmptyObject, convertDate} from '../../utils/ComonHelper';
+import {isEmptyObject, utcDate} from '../../utils/ComonHelper';
 
 class MessagePage extends Component {
 
@@ -98,8 +98,8 @@ class MessagePage extends Component {
                                 style={[styles.txtPay,this._titleColor(color_type)]}>{title}</Text>
                             <View style={{flex:1}}/>
                             <Text
-                                testID={'txt_time_'+id}
-                                style={styles.txtTime}>{convertDate(created_at, "YYYY年MM月DD日")}</Text>
+                                testID={'txt_notice_time_1'+id}
+                                style={styles.txtTime}>{utcDate(created_at, "YYYY年MM月DD日")}</Text>
                         </View>
 
                         <View style={styles.itemView}>
@@ -127,7 +127,7 @@ class MessagePage extends Component {
             )
         } else if (notify_type === 'certification') {
             return ( <View
-                testID="item_order">
+                testID={"item_certification_"+id}>
                 <View style={{height:10}}/>
                 <View style={styles.listItem}>
                     <View style={styles.itemTitle}>
@@ -136,8 +136,8 @@ class MessagePage extends Component {
                             style={[styles.txtPay,this._titleColor(color_type)]}>{title}</Text>
                         <View style={{flex:1}}/>
                         <Text
-                            testID={'txt_time_'+id}
-                            style={styles.txtTime}>{convertDate(created_at, "YYYY年MM月DD日")}</Text>
+                            testID={'txt_notice_time_1'+id}
+                            style={styles.txtTime}>{utcDate(created_at, "YYYY年MM月DD日")}</Text>
                     </View>
 
                     <Text

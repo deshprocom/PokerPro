@@ -207,7 +207,7 @@ export function ticketStatusConvert(status) {
 export function sellable(status, able) {
     if (able) {
         if (status === SellStatus.selling
-        || status === SellStatus.sold_out)
+            || status === SellStatus.sold_out)
             return true;
         else
             return false;
@@ -221,6 +221,10 @@ export function sellable(status, able) {
 export function convertDate(date, formate) {
     if (strNotNull(date))
         return moment(legalValue(date)).format(formate)
+}
+
+export function utcDate(utc, formate) {
+    return moment.unix(utc).format(formate)
 }
 
 
