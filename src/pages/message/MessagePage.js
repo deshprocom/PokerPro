@@ -13,7 +13,7 @@ import {NavigationBar, ImageLoad} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {GET_NOTIFICATIONS} from '../../actions/ActionTypes';
 import {fetchNotifications} from '../../actions/AccountAction';
-import {isEmptyObject} from '../../utils/ComonHelper';
+import {isEmptyObject, convertDate} from '../../utils/ComonHelper';
 
 class MessagePage extends Component {
 
@@ -33,7 +33,9 @@ class MessagePage extends Component {
 
     render() {
         const {dataList} = this.state;
-        return (<View style={ApplicationStyles.bgContainer}>
+        return (<View
+            testID="page_message"
+            style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 toolbarStyle={{backgroundColor:Colors.bg_09}}
                 router={router}
@@ -71,28 +73,48 @@ class MessagePage extends Component {
         this.props.getNotices()
     };
 
+    _titleColor = (color_type) => {
+        switch (color_type) {
+            case 'success':
+                return styles.txtGreen;
+            case 'failure':
+                return styles.txtRed;
+            default:
+                return styles.txtBlack;
+        }
+    };
+
     _itemListView = ({item, index}) => {
 
-        const {notify_type} = item;
+        const {notify_type, color_type, title, content, created_at, order_number, image, id} = item;
         if (notify_type === 'order') {
-            return ( <View>
+            return ( <View
+                    testID={'item_order_'+id}>
                     <View style={{height:10}}/>
                     <View style={styles.listItem}>
                         <View style={styles.itemTitle}>
-                            <Text style={styles.txtPay}>付款成功</Text>
+                            <Text
+                                testID={'txt_title_'+id}
+                                style={[styles.txtPay,this._titleColor(color_type)]}>{title}</Text>
                             <View style={{flex:1}}/>
-                            <Text style={styles.txtTime}>2018年5月17日 12:34</Text>
+                            <Text
+                                testID={'txt_time_'+id}
+                                style={styles.txtTime}>{convertDate(created_at, "YYYY年MM月DD日")}</Text>
                         </View>
 
                         <View style={styles.itemView}>
                             <ImageLoad
-                                source={{uri:''}}
+                                source={{uri:image}}
                                 style={styles.imgRace}/>
                             <View style={styles.itemContent}>
-                                <Text style={styles.txtContent}>恭喜您，下单成功！客服将及时与您联系，请保持手机通话畅通！</Text>
+                                <Text
+                                    testID={'txt_content_'+id}
+                                    style={styles.txtContent}>{content}</Text>
                                 <View style={{flex:1}}/>
 
-                                <Text style={styles.txtNum}>订单编号：34324325325</Text>
+                                <Text
+                                    testID={'txt_order_num_'+id}
+                                    style={styles.txtNum}>订单编号:{order_number}</Text>
 
                             </View>
 
@@ -104,16 +126,23 @@ class MessagePage extends Component {
                 </View>
             )
         } else if (notify_type === 'certification') {
-            return ( <View>
+            return ( <View
+                testID="item_order">
                 <View style={{height:10}}/>
                 <View style={styles.listItem}>
                     <View style={styles.itemTitle}>
-                        <Text style={[styles.txtPay,styles.txtRed]}>实名认证失败</Text>
+                        <Text
+                            testID={'txt_title_'+id}
+                            style={[styles.txtPay,this._titleColor(color_type)]}>{title}</Text>
                         <View style={{flex:1}}/>
-                        <Text style={styles.txtTime}>2018年5月17日 12:34</Text>
+                        <Text
+                            testID={'txt_time_'+id}
+                            style={styles.txtTime}>{convertDate(created_at, "YYYY年MM月DD日")}</Text>
                     </View>
 
-                    <Text style={styles.txtNotice}>您上传的证件号码有误，为了完善您更良好的购票体验，请重新实名认证！</Text>
+                    <Text
+                        testID={'txt_content_'+id}
+                        style={styles.txtNotice}>{content}</Text>
 
                     <Text style={styles.txtSource}>来自：Poker Pro官方客服</Text>
 
@@ -160,7 +189,6 @@ const
         },
         txtPay: {
             fontSize: 18,
-            color: '#34BA3C'
         },
         txtTime: {
             fontSize: 12,
@@ -195,6 +223,12 @@ const
         },
         txtRed: {
             color: '#F34A4A'
+        },
+        txtGreen: {
+            color: '#34BA3C'
+        },
+        txtBlack: {
+            color: '#444444'
         },
         txtNotice: {
             fontSize: 14,
