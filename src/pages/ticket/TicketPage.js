@@ -10,12 +10,11 @@ import {
 import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {NavigationBar, ImageLoad} from '../../components';
+import {NavigationBar, ImageLoad,UltimateListView} from '../../components';
 import {RACE_TICKET} from '../../actions/ActionTypes';
 import {fetchTickets} from '../../actions/RacesAction';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {isEmptyObject, strNotNull, convertDate, ticketStatusConvert} from '../../utils/ComonHelper';
-import UltimateListView from "react-native-ultimate-listview";
 
 class TicketPage extends Component {
 

@@ -20,7 +20,7 @@ import ImageLoad from './ImageLoad';
 import MarkdownPlat from './MarkdownPlat';
 import Search from './Search';
 import Password from './Password';
-import UltimateListView from "react-native-ultimate-listview";
+import UltimateListView from './flatlist/ultimateListView';
 
 export {
     BtnLong, BtnSoild, NavigationBar,
