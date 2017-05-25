@@ -108,7 +108,7 @@ export function isEmptyObject(e) {
 export function showToast(msg) {
 
     const toast = Toast.show(msg, {
-        testID: 'deshproToast', position: -300, duration: 3 * 1000,
+        testID: 'deshproToast', position: 200, duration:Toast.durations.SHORT,
         onHidden: (siblingManager) => {
             Toast.hide(toast)
         }

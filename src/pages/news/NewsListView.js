@@ -55,7 +55,7 @@ class NewsListView extends Component {
 
 
             {isEmptyObject(newsListData) ? <NoDataView/> : null}
-            <View>
+            <View style={{flex:1}}>
                 <PullListView
                     ref={ (component) => this._pullToRefreshListView = component }
                     viewType={PullListView.constants.viewType.listView}
