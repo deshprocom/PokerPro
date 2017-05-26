@@ -40,10 +40,11 @@ export function fetchVideoType(body) {
 
 
 export function fetchVideoList(body) {
+    const {type_id} = body;
     return (dispatch) => {
         dispatch(_getVideoList());
         getVideoList(body, (ret) => {
-            dispatch(_getVideoListOk(ret))
+            dispatch(_getVideoListOk(ret,type_id))
         }, (err) => {
             showToast(err);
             dispatch(_getVideoListFail(err))
@@ -171,11 +172,12 @@ function _getVideoList() {
     }
 }
 
-function _getVideoListOk(videoList) {
+function _getVideoListOk(videoList,type_id) {
     return {
         type: GET_VIDEO_LIST,
         fetching: FETCH_SUCCESS,
-        videoList: videoList
+        videoList: videoList,
+        videoTypeId:type_id
     }
 }
 

@@ -51,6 +51,8 @@ export default class VideoPlayer extends Component {
             currentTime: 0,
             error: false,
             duration: 0,
+            playEnd: false
+
         };
 
         /**
@@ -196,6 +198,9 @@ export default class VideoPlayer extends Component {
      * new page.
      */
     _onEnd() {
+        this.setState({
+            playEnd: true
+        })
     }
 
     /**
@@ -284,7 +289,7 @@ export default class VideoPlayer extends Component {
             ),
             Animated.timing(
                 this.animations.topControl.marginTop,
-                {toValue: -100}
+                {toValue: 0}
             ),
             Animated.timing(
                 this.animations.bottomControl.opacity,
@@ -292,7 +297,7 @@ export default class VideoPlayer extends Component {
             ),
             Animated.timing(
                 this.animations.bottomControl.marginBottom,
-                {toValue: -100}
+                {toValue: 0}
             ),
         ]).start();
     }

@@ -41,11 +41,13 @@ export default class VideoInfoPage extends Component {
             style={styles.page}>
 
 
-            <VideoPlayer
-                source={{ uri: 'http://v.yoai.com/femme_tampon_tutorial.mp4' }}
-                videoStyle={styles.video}>
+            <View
+                style={styles.video}>
+                <VideoPlayer
+                    source={{ uri: 'http://v.yoai.com/femme_tampon_tutorial.mp4' }}
+                />
+            </View>
 
-            </VideoPlayer>
 
             <ScrollView>
 

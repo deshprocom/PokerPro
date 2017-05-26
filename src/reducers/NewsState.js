@@ -73,6 +73,7 @@ function handleFetch(state, action) {
             state.videoType = action.videoType;
         } else if (action.type === GET_VIDEO_LIST) {
             state.videoList = action.videoList;
+            state.videoTypeId = action.videoTypeId;
         } else if (action.type === SEARCH_VIDEO) {
             state.videoSearch = action.videoSearch;
         }

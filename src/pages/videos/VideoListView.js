@@ -107,7 +107,7 @@ class NewsListView extends Component {
 
     _itemNewsView = (rowData, sectionID, rowID) => {
 
-        const {top, name, image_thumb} = rowData;
+        const {top, name, cover_link} = rowData;
 
         if (top) {
             return (<TouchableOpacity
@@ -115,7 +115,7 @@ class NewsListView extends Component {
                 activeOpacity={1}
                 onPress={()=>this._pressItem(rowData)}>
                 <Image
-                    source={strNotNull(image)?{uri:image_thumb}:Images.empty_image}
+                    source={strNotNull(cover_link)?{uri:cover_link}:Images.empty_image}
                     style={styles.listTopImg}
                 >
 
@@ -133,7 +133,7 @@ class NewsListView extends Component {
                 activeOpacity={1}
                 onPress={()=>this._pressItem(rowData)}>
                 <Image
-                    source={strNotNull(image)?{uri:image_thumb}:Images.empty_image}
+                    source={strNotNull(cover_link)?{uri:cover_link}:Images.empty_image}
                     style={styles.listTopImg}
                 >
 
@@ -156,14 +156,15 @@ class NewsListView extends Component {
     }
 
     _handleNewsList = (newProps) => {
-        const {actionType, videoList, newsTypeId, loading} = newProps;
+        const {actionType, videoList, videoTypeId, loading} = newProps;
 
         let newsListType = GET_VIDEO_LIST + this.props.newsTypeItem.id;
 
-        if (actionType + newsTypeId === newsListType
+        router.log(actionType + videoTypeId, videoList)
+        if (actionType + videoTypeId === newsListType
             && !isEmptyObject(videoList)
             && this.props.loading !== loading) {
-            router.log(actionType + newsTypeId, videoList)
+
 
             let {items, next_id, topped} = videoList;
             const {newsListData, newsListNextId} =this.state;
@@ -222,7 +223,7 @@ const mapStateToProps = state => ({
     actionType: state.NewsState.actionType,
     errorMsg: state.NewsState.errorMsg,
     videoList: state.NewsState.videoList,
-    newsTypeId: state.NewsState.newsTypeId
+    videoTypeId: state.NewsState.videoTypeId
 });
 
 export default connect(mapStateToProps, bindAction)(NewsListView);
