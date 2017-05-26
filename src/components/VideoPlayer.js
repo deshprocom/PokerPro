@@ -13,11 +13,13 @@ import {
     Easing,
     Image,
     View,
-    Text
+    Text,
+    InteractionManager
 } from 'react-native';
 import _ from 'lodash';
 
 export default class VideoPlayer extends Component {
+
 
     constructor(props) {
         super(props);
@@ -82,7 +84,7 @@ export default class VideoPlayer extends Component {
          */
         this.methods = {
             onBack: this.props.onBack || this._onBack.bind(this),
-            toggleFullscreen: this._toggleFullscreen.bind(this),
+            toggleFullscreen: this.props.toggleFullscreen || this._toggleFullscreen.bind(this),
             togglePlayPause: this._togglePlayPause.bind(this),
             toggleControls: this._toggleControls.bind(this),
             toggleTimer: this._toggleTimer.bind(this),
@@ -130,6 +132,14 @@ export default class VideoPlayer extends Component {
             videoStyle: this.props.videoStyle || {},
             containerStyle: this.props.style || {}
         };
+    }
+
+    componentDidMount() {
+        InteractionManager.runAfterInteractions(() => {
+            this.setState({
+                paused: false
+            })
+        })
     }
 
 
@@ -198,7 +208,7 @@ export default class VideoPlayer extends Component {
      * new page.
      */
     _onEnd() {
-        this.seekTo();
+
     }
 
     /**

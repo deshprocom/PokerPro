@@ -97,7 +97,6 @@ class TicketPage extends Component {
 
             if (page === 1) {
                 this._onRefresh();
-                startFetch();
             } else {
                 this._onLoadMore();
             }

@@ -22,16 +22,10 @@ import {NavigationBar, MarkdownPlat, VideoPlayer} from '../../components';
 
 
 export default class VideoInfoPage extends Component {
-    state = {renderPlaceholderOnly: true};
+    state = {
+        videoFull: false,
 
-    componentDidMount() {
-        router.log(this.props.params)
-        InteractionManager.runAfterInteractions(() => {
-            this.setState({
-                renderPlaceholderOnly: false
-            });
-        });
-    }
+    };
 
     render() {
 
@@ -45,6 +39,7 @@ export default class VideoInfoPage extends Component {
             <View
                 style={styles.video}>
                 <VideoPlayer
+                    toggleFullscreen={this.toggleFullscreen}
                     source={{ uri:video_link }}
                 />
             </View>
@@ -59,8 +54,24 @@ export default class VideoInfoPage extends Component {
                 />
             </ScrollView>
 
+            <Modal
+                visible={this.state.videoFull}>
+                <View style={{flex:1}}>
+                    <VideoPlayer
+                        toggleFullscreen={this.toggleFullscreen}
+                        source={{ uri:video_link }}
+                    />
+                </View>
+            </Modal>
+
 
         </View>)
+    }
+
+    toggleFullscreen = () => {
+        let state = this.state;
+        state.videoFull = !state.videoFull;
+        this.setState(state);
     }
 
 }
