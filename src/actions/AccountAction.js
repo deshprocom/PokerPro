@@ -23,11 +23,12 @@ import {
 } from '../services/AccountDao';
 
 
-export function fetchDelNotice(body) {
+export function fetchDelNotice(body, success) {
 
     return (dispatch) => {
         dispatch(_delNotice());
         delNotification(body, (ret) => {
+            success();
             dispatch(_delNoticeOk(ret))
         }, (err) => {
             showToast(err);

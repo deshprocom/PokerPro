@@ -98,7 +98,7 @@ export function post(url, body, resolve, reject) {
 
 
 export function del(url, body, resolve, reject) {
-    router.log(url, body)
+    router.log(url, body);
     client.delete(url, body)
         .then((response) => {
             if (response.ok) {

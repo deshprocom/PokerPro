@@ -4,7 +4,8 @@
 import React, {PropTypes, Component}from 'react';
 import {
     StyleSheet, Image, Platform, ActivityIndicator,
-    Dimensions, View, Text, ListView, TouchableOpacity
+    Dimensions, View, Text, ListView, TouchableOpacity,
+    InteractionManager
 } from 'react-native';
 import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles} from '../../Themes';
@@ -32,7 +33,11 @@ class MessagePage extends Component {
     }
 
     componentDidMount() {
-        this._onRefresh();
+        InteractionManager.runAfterInteractions(() => {
+            this._onRefresh();
+        });
+
+
     }
 
     render() {
@@ -123,8 +128,10 @@ class MessagePage extends Component {
 
     _delNotice = (data, secId, rowId, rowMap) => {
 
-        // this.deleteRow(secId, rowId, rowMap);
-        this.props.delNotice({id: data.id})
+
+        this.props.delNotice({id: data.id}, () => {
+            this.deleteRow(secId, rowId, rowMap)
+        })
     };
 
     _itemListView = (item) => {
@@ -199,7 +206,7 @@ class MessagePage extends Component {
 const
     bindAction = dispatch => ({
         getNotices: () => dispatch(fetchNotifications()),
-        delNotice: (body) => dispatch(fetchDelNotice(body))
+        delNotice: (body, success) => dispatch(fetchDelNotice(body, success))
     })
     ;
 
