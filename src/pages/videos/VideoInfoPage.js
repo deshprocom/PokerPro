@@ -34,7 +34,7 @@ export default class VideoInfoPage extends Component {
 
     render() {
 
-        const {description,} = this.props.params.info;
+        const {description, video_link} = this.props.params.info;
 
         return (<View
             testID="page_news_info"
@@ -44,7 +44,7 @@ export default class VideoInfoPage extends Component {
             <View
                 style={styles.video}>
                 <VideoPlayer
-                    source={{ uri: 'http://v.yoai.com/femme_tampon_tutorial.mp4' }}
+                    source={{ uri:video_link }}
                 />
             </View>
 

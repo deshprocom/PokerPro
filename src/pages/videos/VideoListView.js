@@ -238,13 +238,13 @@ const styles = StyleSheet.create({
     },
     listTopTxtView: {
         height: 32,
-        backgroundColor: 'rgba(0,0,0,0.30)',
+        backgroundColor: 'transparent',
         width: Metrics.screenWidth,
         alignItems: 'center',
         flexDirection: 'row'
     },
     listTopTxt: {
-        fontSize: 15,
+        fontSize: 16,
         color: Colors.white,
         marginLeft: 17
     },
