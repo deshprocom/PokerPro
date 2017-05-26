@@ -198,9 +198,7 @@ export default class VideoPlayer extends Component {
      * new page.
      */
     _onEnd() {
-        this.setState({
-            playEnd: true
-        })
+        this.seekTo();
     }
 
     /**
