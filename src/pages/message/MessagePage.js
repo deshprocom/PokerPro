@@ -4,7 +4,7 @@
 import React, {PropTypes, Component}from 'react';
 import {
     StyleSheet, Image, Platform, ActivityIndicator,
-    Dimensions, View, Text, ListView
+    Dimensions, View, Text, ListView, TouchableOpacity
 } from 'react-native';
 import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles} from '../../Themes';
@@ -73,13 +73,18 @@ class MessagePage extends Component {
 
     }
 
-    hiddenRow = (data) => {
+    hiddenRow = (data, secId, rowId, rowMap) => {
 
         return (
 
             <View style={styles.rowHidden}>
-                <Text>Left</Text>
-                <Text style={styles.txtSwipe}>删除</Text>
+                <View></View>
+                <TouchableOpacity
+                    onPress={()=>this.deleteRow(secId, rowId, rowMap)}
+                    style={styles.rightSwipe}>
+                    <Text style={styles.txtSwipe}>删除</Text>
+                </TouchableOpacity>
+
             </View>
         )
     };
@@ -98,6 +103,16 @@ class MessagePage extends Component {
             default:
                 return styles.txtBlack;
         }
+    };
+
+    deleteRow = (secId, rowId, rowMap) => {
+        rowMap[`${secId}${rowId}`].closeRow();
+        const newData = [...this.state.dataList];
+        newData.splice(rowId, 1);
+        this.setState({
+            dataList: newData,
+            dataSource: this._dataSource.cloneWithRows(newData)
+        });
     };
 
     _itemListView = (item) => {
@@ -269,8 +284,13 @@ const
         },
         txtSwipe: {
             fontSize: 20,
-            color: 'white',
-            marginRight: 16
+            color: 'white'
+        },
+        rightSwipe: {
+            width: 75,
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: 140
         }
 
 

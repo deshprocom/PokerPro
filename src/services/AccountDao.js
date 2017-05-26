@@ -7,6 +7,15 @@ import StorageKey from '../configs/StorageKey';
 import JpushHelp from './JpushHelper';
 
 
+
+
+
+export function delNotification(body, resolve, reject) {
+    helper.get(Api.delNotice(body), (ret) => {
+        resolve(ret.data);
+    }, reject);
+}
+
 export function getNotifications(resolve, reject) {
     helper.get(Api.notifications(), (ret) => {
         resolve(ret.data);

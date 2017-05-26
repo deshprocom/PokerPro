@@ -4,6 +4,25 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
+
+export function getVideoSearch(body, resolve, reject) {
+    helper.get(Api.searchVideo(body), (ret) => {
+        resolve(ret.data)
+    }, reject)
+}
+
+export function getVideoList(body, resolve, reject) {
+    helper.get(Api.videoList(body), (ret) => {
+        resolve(ret.data)
+    }, reject)
+}
+
+export function getVideoTypes(resolve, reject) {
+    helper.get(Api.videoTypes, (ret) => {
+        resolve(ret.data)
+    }, reject)
+}
+
 /*获取资讯类别*/
 export function getNewsTypes(resolve, reject) {
     helper.get(Api.news_types, (ret) => {

@@ -3,6 +3,7 @@
  */
 import {
     GET_NEWS_SEARCH, GET_NEWS_TYPES, GET_NEWS_LIST,
+    GET_VIDEO_TYPE, GET_VIDEO_LIST, SEARCH_VIDEO,
     FETCH_SUCCESS, FETCHING, FETCH_FAIL
 } from '../actions/ActionTypes';
 
@@ -14,7 +15,10 @@ const initialState = {
     newsTypes: {},
     newsList: {},
     newsSearch: {},
-    errorMsg: ''
+    errorMsg: '',
+    videoList: {},
+    videoType: {},
+    videoSearch: {}
 };
 
 export default function newsState(state = initialState, action) {
@@ -28,6 +32,16 @@ export default function newsState(state = initialState, action) {
         case GET_NEWS_TYPES:
             state.newsTypes = {};
             return handleFetch(state, action);
+        case GET_VIDEO_LIST:
+            state.videoList = {};
+            return handleFetch(state, action);
+        case GET_VIDEO_TYPE:
+            state.videoType = {};
+            return handleFetch(state, action);
+        case SEARCH_VIDEO:
+            state.videoSearch = {};
+            return handleFetch(state, action);
+
 
         default:
             return state;
@@ -55,6 +69,12 @@ function handleFetch(state, action) {
         } else if (action.type === GET_NEWS_TYPES) {
             state.newsTypes = action.newsTypes;
 
+        } else if (action.type === GET_VIDEO_TYPE) {
+            state.videoList = action.videoList;
+        } else if (action.type === GET_VIDEO_LIST) {
+            state.videoType = action.videoType;
+        } else if (action.type === SEARCH_VIDEO) {
+            state.videoSearch = action.videoSearch;
         }
 
         return {

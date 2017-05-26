@@ -52,8 +52,11 @@ export default {
     account_change_bind: account_change_bind,
     bind_account: bind_account,
     change_permission: change_permission,
-    notifications: notifications
-
+    notifications: notifications,
+    videoTypes: 'videos/types',
+    videoList: videoList,
+    searchVideo: searchVideo,
+    delNotice: delNotice
 
 }
 
@@ -66,6 +69,23 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+
+export function delNotice(body) {
+    const {id} = body;
+    return 'users/' + login_user + '/notifications/' + id;
+
+}
+
+export function searchVideo(body) {
+    const {keyword, next_id} = body;
+    return 'videos/search?keyword=' + keyword + '&next_id=' + next_id
+}
+
+export function videoList(body) {
+    const {type_id, next_id} = body;
+    return 'videos/types/' + type_id + '?page_size=' + page_size + '&next_id=' + next_id
+}
 
 
 export function notifications() {

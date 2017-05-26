@@ -6,7 +6,7 @@ import {
     POST_VERIFY_CODE, POST_RESET_PASSWORD, POST_REGISTER,
     POST_CHANGE_PWD, POST_V_CODE, POST_CERTIFICATION, GET_CERTIFICATION,
     POST_CARD_IMAGE, GET_PLAYER_INFO, POST_BIND_ACCOUNT, POST_CHANGE_BIND,
-    POST_CHANGE_PERMISSION, GET_NOTIFICATIONS,
+    POST_CHANGE_PERMISSION, GET_NOTIFICATIONS, DEL_NOTIFICATIONS,
     FETCH_SUCCESS, FETCHING, FETCH_FAIL
 } from '../actions/ActionTypes';
 import {showToast} from '../utils/ComonHelper';
@@ -18,9 +18,22 @@ import {
     postChangePwd, LoginUser, postVCode,
     postCertification, getCertification,
     postCardImage, playerInfo, postChangeBind,
-    postBindAccount, postChangePermission, getNotifications
+    postBindAccount, postChangePermission, getNotifications,
+    delNotification
 } from '../services/AccountDao';
 
+
+export function fetchDelNotice(body) {
+    return (dispatch) => {
+        dispatch(_delNotice());
+        delNotification(body, (ret) => {
+            dispatch(_delNoticeOk(ret))
+        }, (err) => {
+            showToast(err);
+            dispatch(_delNoticeFail(err))
+        })
+    }
+}
 
 export function fetchNotifications() {
     return (dispatch) => {
@@ -640,6 +653,28 @@ function _getNotificationsOk(notices) {
 function _getNotificationsFail(error) {
     return {
         type: GET_NOTIFICATIONS,
+        fetching: FETCH_FAIL,
+        error: error
+    }
+}
+
+function _delNotice() {
+    return {
+        type: DEL_NOTIFICATIONS,
+        fetching: FETCHING
+    }
+}
+
+function _delNoticeOk(ret) {
+    return {
+        type: DEL_NOTIFICATIONS,
+        fetching: FETCH_SUCCESS
+    }
+}
+
+function _delNoticeFail(error) {
+    return {
+        type: DEL_NOTIFICATIONS,
         fetching: FETCH_FAIL,
         error: error
     }
