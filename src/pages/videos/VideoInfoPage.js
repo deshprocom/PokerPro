@@ -11,7 +11,8 @@ import React, {Component, PropTypes} from 'react';
 import {
     StyleSheet, Text, View, FlatList,
     TouchableOpacity, Image, StatusBar,
-    ScrollView, Animated, InteractionManager
+    ScrollView, Animated, InteractionManager,
+    Modal
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
