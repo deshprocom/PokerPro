@@ -73,7 +73,7 @@ const page_size = 10;
 
 export function delNotice(body) {
     const {id} = body;
-    return 'users/' + login_user + '/notifications/' + id;
+    return 'users/' + login_user.user_id + '/notifications/' + id;
 
 }
 

@@ -11,8 +11,8 @@ import {Colors, Fonts, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {NavigationBar, ImageLoad, SwipeListView} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
-import {GET_NOTIFICATIONS} from '../../actions/ActionTypes';
-import {fetchNotifications} from '../../actions/AccountAction';
+import {GET_NOTIFICATIONS, DEL_NOTIFICATIONS} from '../../actions/ActionTypes';
+import {fetchNotifications, fetchDelNotice} from '../../actions/AccountAction';
 import {isEmptyObject, utcDate} from '../../utils/ComonHelper';
 
 class MessagePage extends Component {
@@ -24,8 +24,10 @@ class MessagePage extends Component {
         this._dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             dataList: dataList,
-            dataSource: this._dataSource.cloneWithRows(dataList)
+            dataSource: this._dataSource.cloneWithRows(dataList),
+            fetchState: false
         };
+
 
     }
 
@@ -34,7 +36,7 @@ class MessagePage extends Component {
     }
 
     render() {
-        const {dataList, dataSource} = this.state;
+        const {dataList, dataSource, fetchState} = this.state;
         return (<View
             testID="page_message"
             style={ApplicationStyles.bgContainer}>
@@ -45,9 +47,12 @@ class MessagePage extends Component {
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
                 leftBtnPress={()=>router.pop()}/>
-            {isEmptyObject(dataList) ? <NoDataView/> : null}
+            {isEmptyObject(dataList) && !fetchState ? <NoDataView/> : null}
+            {isEmptyObject(dataList) && fetchState ? <LoadErrorView
+                    onPress={this._onRefresh}/> : null}
 
             <SwipeListView
+                enableEmptySections={true}
                 dataSource={dataSource}
                 renderHiddenRow={this.hiddenRow}
                 renderRow={this._itemListView}
@@ -59,7 +64,7 @@ class MessagePage extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        const {actionType, notices, loading, hasData} = newProps;
+        const {actionType, notices, loading, hasData, error} = newProps;
         if (actionType === GET_NOTIFICATIONS
             && loading !== this.props.loading
             && hasData) {
@@ -67,7 +72,8 @@ class MessagePage extends Component {
             const {notifications} = notices;
             this.setState({
                 dataList: notifications,
-                dataSource: this._dataSource.cloneWithRows(notifications)
+                dataSource: this._dataSource.cloneWithRows(notifications),
+                fetchState: error
             })
         }
 
@@ -80,7 +86,7 @@ class MessagePage extends Component {
             <View style={styles.rowHidden}>
                 <View></View>
                 <TouchableOpacity
-                    onPress={()=>this.deleteRow(secId, rowId, rowMap)}
+                    onPress={()=>this._delNotice(data,secId, rowId, rowMap)}
                     style={styles.rightSwipe}>
                     <Text style={styles.txtSwipe}>删除</Text>
                 </TouchableOpacity>
@@ -113,6 +119,12 @@ class MessagePage extends Component {
             dataList: newData,
             dataSource: this._dataSource.cloneWithRows(newData)
         });
+    };
+
+    _delNotice = (data, secId, rowId, rowMap) => {
+
+        // this.deleteRow(secId, rowId, rowMap);
+        this.props.delNotice({id: data.id})
     };
 
     _itemListView = (item) => {
@@ -186,7 +198,8 @@ class MessagePage extends Component {
 
 const
     bindAction = dispatch => ({
-        getNotices: () => dispatch(fetchNotifications())
+        getNotices: () => dispatch(fetchNotifications()),
+        delNotice: (body) => dispatch(fetchDelNotice(body))
     })
     ;
 

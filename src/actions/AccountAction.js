@@ -24,6 +24,7 @@ import {
 
 
 export function fetchDelNotice(body) {
+
     return (dispatch) => {
         dispatch(_delNotice());
         delNotification(body, (ret) => {
@@ -665,7 +666,7 @@ function _delNotice() {
     }
 }
 
-function _delNoticeOk(ret) {
+function _delNoticeOk() {
     return {
         type: DEL_NOTIFICATIONS,
         fetching: FETCH_SUCCESS

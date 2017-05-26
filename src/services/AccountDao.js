@@ -11,7 +11,7 @@ import JpushHelp from './JpushHelper';
 
 
 export function delNotification(body, resolve, reject) {
-    helper.get(Api.delNotice(body), (ret) => {
+    helper.del(Api.delNotice(body), (ret) => {
         resolve(ret.data);
     }, reject);
 }
