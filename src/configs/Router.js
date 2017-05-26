@@ -40,10 +40,10 @@ import BindingPhonePage from '../pages/setting/BindingPhonePage';
 import ChangePhonePage from '../pages/setting/ChangePhonePage';
 import MessagePage from '../pages/message/MessagePage';
 import VideoPage from '../pages/news/VideoPage';
+import MainVideoPage from '../pages/videos/MainVideoPage';
 
 
-//Config
-const secenConfig = require('./SceneConfig');
+
 
 const customFloatFromRight = Navigator.SceneConfigs.FloatFromRight;
 
@@ -76,8 +76,8 @@ export default class Router {
 
     toVideoPage(props) {
         this.push(props, {
-            page: VideoPage,
-            name: 'VideoPage',
+            page: MainVideoPage,
+            name: 'MainVideoPage',
             sceneConfig: customFloatFromRight,
 
         })

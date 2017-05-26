@@ -17,7 +17,7 @@ export function getVideoList(body, resolve, reject) {
     }, reject)
 }
 
-export function getVideoTypes(resolve, reject) {
+export function getVideoTypes(body, resolve, reject) {
     helper.get(Api.videoTypes, (ret) => {
         resolve(ret.data)
     }, reject)

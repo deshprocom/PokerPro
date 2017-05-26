@@ -70,9 +70,9 @@ function handleFetch(state, action) {
             state.newsTypes = action.newsTypes;
 
         } else if (action.type === GET_VIDEO_TYPE) {
-            state.videoList = action.videoList;
-        } else if (action.type === GET_VIDEO_LIST) {
             state.videoType = action.videoType;
+        } else if (action.type === GET_VIDEO_LIST) {
+            state.videoList = action.videoList;
         } else if (action.type === SEARCH_VIDEO) {
             state.videoSearch = action.videoSearch;
         }
