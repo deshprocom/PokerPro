@@ -22,6 +22,7 @@ import Search from './Search';
 import Password from './Password';
 import UltimateListView from './flatlist/ultimateListView';
 import SwipeListView from './swipelist/SwipeListView';
+import VideoPlayer from './VideoPlayer';
 
 export {
     BtnLong, BtnSoild, NavigationBar,
@@ -39,5 +40,6 @@ export {
     Search,
     Password,
     UltimateListView,
-    SwipeListView
+    SwipeListView,
+    VideoPlayer
 }

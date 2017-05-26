@@ -39,10 +39,8 @@ import ApiSettingPage from '../pages/setting/ApiSettingPage';
 import BindingPhonePage from '../pages/setting/BindingPhonePage';
 import ChangePhonePage from '../pages/setting/ChangePhonePage';
 import MessagePage from '../pages/message/MessagePage';
-import VideoPage from '../pages/news/VideoPage';
 import MainVideoPage from '../pages/videos/MainVideoPage';
-
-
+import VideoInfoPage from '../pages/videos/VideoInfoPage';
 
 
 const customFloatFromRight = Navigator.SceneConfigs.FloatFromRight;
@@ -141,6 +139,17 @@ export default class Router {
         })
     }
 
+    toVideoInfoPage(props, info) {
+        this.push(props, {
+            page: VideoInfoPage,
+            name: 'VideoInfoPage',
+            sceneConfig: customFloatFromRight,
+            params: {
+                info: info
+            }
+
+        })
+    }
 
     toNewsInfoPage(props, newsInfo) {
         this.push(props, {

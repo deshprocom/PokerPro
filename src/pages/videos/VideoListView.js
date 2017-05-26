@@ -107,7 +107,7 @@ class NewsListView extends Component {
 
     _itemNewsView = (rowData, sectionID, rowID) => {
 
-        const {top, image, title, description, date, image_thumb} = rowData;
+        const {top, name, image_thumb} = rowData;
 
         if (top) {
             return (<TouchableOpacity
@@ -121,7 +121,7 @@ class NewsListView extends Component {
 
                     <View style={{flex:1}}/>
                     <View style={styles.listTopTxtView}>
-                        <Text style={styles.listTopTxt}>{description}</Text>
+                        <Text style={styles.listTopTxt}>{name}</Text>
 
                     </View>
                 </Image>
@@ -139,7 +139,7 @@ class NewsListView extends Component {
 
                     <View style={{flex:1}}/>
                     <View style={styles.listTopTxtView}>
-                        <Text style={styles.listTopTxt}>{title}</Text>
+                        <Text style={styles.listTopTxt}>{name}</Text>
 
                     </View>
                 </Image>
@@ -152,7 +152,7 @@ class NewsListView extends Component {
     }
 
     _pressItem = (item) => {
-        router.toNewsInfoPage(this.props, item)
+        router.toVideoInfoPage(this.props, item)
     }
 
     _handleNewsList = (newProps) => {
