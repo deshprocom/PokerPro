@@ -66,11 +66,7 @@ export default class VideoInfoPage extends Component {
     };
 
     toggleFullscreen = () => {
-        let state = this.state;
-        state.videoFull = !state.videoFull;
-        this.setState(state);
         this.player.presentFullscreenPlayer();
-
     }
 
 

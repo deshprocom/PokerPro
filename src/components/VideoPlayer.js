@@ -44,7 +44,7 @@ export default class VideoPlayer extends Component {
             volumeFillWidth: 0,
             seekerFillWidth: 0,
             showControls: true,
-            volumePosition: 0,
+            volumePosition: 1,
             seekerPosition: 0,
             volumeOffset: 0,
             seekerOffset: 0,
@@ -208,7 +208,9 @@ export default class VideoPlayer extends Component {
      * new page.
      */
     _onEnd() {
-
+        this.setState({
+            playEnd: true
+        })
     }
 
     /**
@@ -412,6 +414,7 @@ export default class VideoPlayer extends Component {
         // state.resizeMode = state.isFullscreen === true ? 'cover' : 'contain';
         //
         // this.setState(state);
+        this.presentFullscreenPlayer()
     }
 
     /**
@@ -419,7 +422,13 @@ export default class VideoPlayer extends Component {
      */
     _togglePlayPause() {
         let state = this.state;
-        state.paused = !state.paused;
+        if (state.playEnd) {
+            state.playEnd = !state.playEnd;
+            this.seekTo(0);
+        } else
+            state.paused = !state.paused;
+
+
         this.setState(state);
     }
 
