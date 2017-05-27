@@ -19,6 +19,7 @@ import I18n from 'react-native-i18n';
 import {isEmptyObject, convertDate} from '../../utils/ComonHelper';
 import {LoadingView} from '../../components/load'
 import {NavigationBar, MarkdownPlat, VideoPlayer} from '../../components';
+import Orientation from 'react-native-orientation';
 
 
 export default class VideoInfoPage extends Component {
@@ -30,6 +31,7 @@ export default class VideoInfoPage extends Component {
     render() {
 
         const {description, video_link} = this.props.params.info;
+        const {videoFull} = this.state;
 
         return (<View
             testID="page_news_info"
@@ -39,40 +41,38 @@ export default class VideoInfoPage extends Component {
             <View
                 style={styles.video}>
                 <VideoPlayer
+                    ref={ref=>this.player = ref}
                     toggleFullscreen={this.toggleFullscreen}
                     source={{ uri:video_link }}
                 />
             </View>
 
 
-            <ScrollView>
-
-
-                <MarkdownPlat
-                    noScroll={true}
-                    markdownStr={description}
-                />
-            </ScrollView>
-
-            <Modal
-                visible={this.state.videoFull}>
-                <View style={{flex:1}}>
-                    <VideoPlayer
-                        toggleFullscreen={this.toggleFullscreen}
-                        source={{ uri:video_link }}
-                    />
-                </View>
-            </Modal>
+            {this.renderContent()}
 
 
         </View>)
     }
 
+    renderContent = () => {
+        const {description} = this.props.params.info;
+        return <ScrollView>
+
+            <MarkdownPlat
+                noScroll={true}
+                markdownStr={description}
+            />
+        </ScrollView>
+    };
+
     toggleFullscreen = () => {
         let state = this.state;
         state.videoFull = !state.videoFull;
         this.setState(state);
+        this.player.presentFullscreenPlayer();
+
     }
+
 
 }
 
@@ -109,6 +109,9 @@ const styles = StyleSheet.create({
     },
     video: {
         height: 216
+    },
+    fullVideo: {
+        flex: 1
     }
 
 })

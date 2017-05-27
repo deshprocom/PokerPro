@@ -246,6 +246,13 @@ export default class VideoPlayer extends Component {
         this.setState(state);
     }
 
+    presentFullscreenPlayer = () => {
+        this.player.ref.presentFullscreenPlayer()
+    };
+
+    dismissFullscreenPlayer = () => {
+        this.player.ref.dismissFullscreenPlayer();
+    };
 
     /*------------------------------------------------------
      | Methods
