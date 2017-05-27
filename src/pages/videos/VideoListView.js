@@ -42,6 +42,7 @@ class NewsListView extends Component {
             newsListNextId: '0',
             topped: {},
             componentDataSource: this._dataSource.cloneWithRows([]),
+            error: false
         }
 
 
@@ -49,15 +50,16 @@ class NewsListView extends Component {
 
 
     render() {
-        const {newsListData} = this.state;
+        const {newsListData, error} = this.state;
 
 
         return (<View
             style={styles.pullView}
             testID={'page_news_'+this.props.newsTypeItem.id}>
 
-
-            {isEmptyObject(newsListData) ? <NoDataView/> : null}
+            {(isEmptyObject(newsListData) && error )&&<LoadErrorView
+                    onPress={this._onRefresh()}/>}
+            {(isEmptyObject(newsListData) && !error )&& <NoDataView/>}
             <View style={{flex:1}}>
                 <PullListView
                     ref={ (component) => this._pullToRefreshListView = component }
@@ -156,7 +158,7 @@ class NewsListView extends Component {
     }
 
     _handleNewsList = (newProps) => {
-        const {actionType, videoList, videoTypeId, loading} = newProps;
+        const {actionType, videoList, videoTypeId, loading, error} = newProps;
 
         let newsListType = GET_VIDEO_LIST + this.props.newsTypeItem.id;
 
@@ -193,7 +195,8 @@ class NewsListView extends Component {
                     componentDataSource: this._dataSource.cloneWithRows(newData),
                     newsListNextId: next_id,
                     newsListData: newData,
-                    topped: topped
+                    topped: topped,
+                    error: error
                 })
             }
         }
