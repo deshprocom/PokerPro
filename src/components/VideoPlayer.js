@@ -800,7 +800,8 @@ export default class VideoPlayer extends Component {
                     <View style={ styles.controls.topControlGroup }>
                         { this.renderBack() }
                         <View style={ styles.controls.pullRight }>
-                            { this.renderVolume() }
+                            {/*{ this.renderVolume() }*/}
+                            {this.renderTitle()}
                             { this.renderFullscreen() }
                         </View>
                     </View>
@@ -880,18 +881,18 @@ export default class VideoPlayer extends Component {
                     source={ require( './assets/img/bottom-vignette.png' ) }
                     style={[ styles.controls.column, styles.controls.vignette,
             ]}>
-                    <View style={[
-                    styles.player.container,
-                    styles.controls.seekbar
-                ]}>
-                        { this.renderSeekbar() }
-                    </View>
+
                     <View style={[
                     styles.controls.column,
                     styles.controls.bottomControlGroup
                 ]}>
                         { this.renderPlayPause() }
-                        { this.renderTitle() }
+                        <View style={[
+                    styles.player.container,
+                    styles.controls.seekbar
+                ]}>
+                            { this.renderSeekbar() }
+                        </View>
                         { this.renderTimer() }
                     </View>
                 </Image>
@@ -943,8 +944,7 @@ export default class VideoPlayer extends Component {
         let source = this.state.paused === true ? require('./assets/img/play.png') : require('./assets/img/pause.png');
         return this.renderControl(
             <Image source={ source }/>,
-            this.methods.togglePlayPause,
-            styles.controls.playPause
+            this.methods.togglePlayPause
         );
     }
 
@@ -979,8 +979,7 @@ export default class VideoPlayer extends Component {
             <Text style={ styles.controls.timerText }>
                 { this.calculateTime() }
             </Text>,
-            this.methods.toggleTimer,
-            styles.controls.timer
+            this.methods.toggleTimer
         );
     }
 
@@ -1160,8 +1159,6 @@ const styles = {
             alignItems: 'center',
             justifyContent: 'center',
             zIndex: 100,
-            marginTop: 24,
-            marginBottom: 0,
         },
         topControlGroup: {
             alignSelf: 'stretch',
@@ -1215,8 +1212,6 @@ const styles = {
             justifyContent: 'center',
             backgroundColor: '#333',
             height: 4,
-            marginLeft: 28,
-            marginRight: 28,
         },
         fill: {
             alignSelf: 'flex-start',
