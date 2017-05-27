@@ -57,9 +57,9 @@ class NewsListView extends Component {
             style={styles.pullView}
             testID={'page_news_'+this.props.newsTypeItem.id}>
 
-            {(isEmptyObject(newsListData) && error )&&<LoadErrorView
-                    onPress={this._onRefresh()}/>}
-            {(isEmptyObject(newsListData) && !error )&& <NoDataView/>}
+            {(isEmptyObject(newsListData) && error ) && <LoadErrorView
+                onPress={this._onRefresh}/>}
+            {(isEmptyObject(newsListData) && !error ) && <NoDataView/>}
             <View style={{flex:1}}>
                 <PullListView
                     ref={ (component) => this._pullToRefreshListView = component }
@@ -155,7 +155,7 @@ class NewsListView extends Component {
 
     _pressItem = (item) => {
         router.toVideoInfoPage(this.props, item)
-    }
+    };
 
     _handleNewsList = (newProps) => {
         const {actionType, videoList, videoTypeId, loading, error} = newProps;
