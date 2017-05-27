@@ -33,21 +33,12 @@ class ImageLoad extends React.Component {
         if (strNotNull(uri))
             return (
                 <Image
+                    {...this.props}
                     onLoadEnd={this.onLoadEnd.bind(this)}
                     onError={this.onError.bind(this)}
-                    style={[this.props.style, { alignItems: 'center' }]}
-                    source={this.props.source}
-                >
-                    {
-                        this.state.isLoaded && !this.state.isError ? null :
-                            <Image
-                                style={[styles.imagePlaceholderStyles, this.props.placeholderStyle]}
-                                source={this.props.placeholderSource ? this.props.placeholderSource :Images.empty_image}
-                            >
+                    defaultSource={this.props.placeholderSource ? this.props.placeholderSource :Images.empty_image}
+                />
 
-                            </Image>
-                    }
-                </Image>
             );
         else {
             return (<Image

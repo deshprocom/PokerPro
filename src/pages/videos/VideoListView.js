@@ -113,40 +113,39 @@ class NewsListView extends Component {
 
         if (top) {
             return (<TouchableOpacity
+                style={styles.transparent}
                 testID={"btn_news_row_"+rowData.id}
                 activeOpacity={1}
                 onPress={()=>this._pressItem(rowData)}>
-                <Image
-                    source={strNotNull(cover_link)?{uri:cover_link}:Images.empty_image}
+
+
+                <ImageLoad
+                    source={{uri:cover_link}}
                     style={styles.listTopImg}
                 >
+                    <View style={styles.itemBack}/>
+                </ImageLoad>
 
-                    <View style={{flex:1}}/>
-                    <View style={styles.listTopTxtView}>
-                        <Text style={styles.listTopTxt}>{name}</Text>
-
-                    </View>
-                </Image>
+                <Text style={styles.listTopTxt}>{name}</Text>
 
             </TouchableOpacity>)
         } else {
             return (<TouchableOpacity
+                style={styles.transparent}
                 testID={"btn_news_row_"+rowData.id}
                 activeOpacity={1}
                 onPress={()=>this._pressItem(rowData)}>
-                <Image
-                    source={strNotNull(cover_link)?{uri:cover_link}:Images.empty_image}
+
+                <ImageLoad
+                    source={{uri:cover_link}}
                     style={styles.listTopImg}
                 >
+                    <View style={styles.itemBack}/>
 
-                    <View style={{flex:1}}/>
-                    <View style={styles.listTopTxtView}>
-                        <Text style={styles.listTopTxt}>{name}</Text>
-
-                    </View>
-                </Image>
+                </ImageLoad>
 
 
+                <Text style={styles.listTopTxt}>{name}</Text>
             </TouchableOpacity>)
         }
 
@@ -249,7 +248,9 @@ const styles = StyleSheet.create({
     listTopTxt: {
         fontSize: 16,
         color: Colors.white,
-        marginLeft: 17
+        left: 17,
+        position: 'absolute',
+        bottom: 33
     },
     listView: {
         flexDirection: 'row',
@@ -282,6 +283,7 @@ const styles = StyleSheet.create({
         marginLeft: 17,
         marginTop: 13,
         marginBottom: 16,
+        backgroundColor: 'transparent'
     },
     listTitleTxt: {
         color: '#444444',
@@ -292,5 +294,12 @@ const styles = StyleSheet.create({
     },
     pullView: {
         flex: 1
+    },
+    itemBack: {
+        backgroundColor: 'rgba(0,0,0,0.4)',
+        flex: 1
+    },
+    transparent: {
+        backgroundColor: 'transparent',
     }
 });

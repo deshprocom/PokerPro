@@ -282,7 +282,8 @@ const styles = StyleSheet.create({
     },
     itemTxtSelect: {
         color: '#444444',
-        fontSize: 16
+        fontSize: 16,
+        marginBottom: 5
     },
     triangle: {
         height: 9,

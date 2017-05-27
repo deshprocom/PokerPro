@@ -31,7 +31,7 @@ export default class VideoPlayer extends Component {
         const isFullscreen = this.props.resizeMode === 'cover' || false;
         this.state = {
             // Video
-            resizeMode: this.props.resizeMode || 'contain',
+            resizeMode: this.props.resizeMode || 'cover',
             paused: this.props.paused || false,
             muted: this.props.muted || false,
             volume: this.props.volume || 1,
