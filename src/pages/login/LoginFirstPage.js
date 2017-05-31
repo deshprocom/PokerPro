@@ -101,7 +101,7 @@ class LoginFirstPage extends React.Component {
                        source={Images.sign_logo_poker}/>
 
 
-                <KeyboardAvoidingView
+                <View
                     style={{flex:1,marginTop:60}}>
                     <View style={styles.view_input}>
                         <Image style={{width:13,height:16}}
@@ -176,14 +176,18 @@ class LoginFirstPage extends React.Component {
                         <Text style={styles.text_problem}>{I18n.t('problem_for_sign_in')}</Text>
 
                     </TouchableOpacity>
-                </KeyboardAvoidingView>
-                <TouchableOpacity
-                    style={{marginBottom: 48,padding:5}}
-                    testID="btn_switch_code_login"
-                    onPress={()=>this.props.router.toLoginCodePage()}>
-                    <Text style={styles.text_other_sign}>
-                        {I18n.t('sign_in_whit_phone')}</Text>
-                </TouchableOpacity>
+
+                    <View style={{flex:1}}/>
+
+                    <TouchableOpacity
+                        style={{marginBottom: 48,padding:5}}
+                        testID="btn_switch_code_login"
+                        onPress={()=>this.props.router.toLoginCodePage()}>
+                        <Text style={styles.text_other_sign}>
+                            {I18n.t('sign_in_whit_phone')}</Text>
+                    </TouchableOpacity>
+                </View>
+
 
             </Image>)
     }
