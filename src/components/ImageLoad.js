@@ -36,12 +36,14 @@ class ImageLoad extends React.Component {
                     {...this.props}
                     onLoadEnd={this.onLoadEnd.bind(this)}
                     onError={this.onError.bind(this)}
-                    defaultSource={this.props.placeholderSource ? this.props.placeholderSource :Images.empty_image}
+                    defaultSource={Images.empty_image}
                 />
 
             );
         else {
             return (<Image
+                resizeMode={'center'}
+                resizeMethod={'auto'}
                 style={[this.props.style, { alignItems: 'center' }]}
                 source={Images.empty_image}/>)
         }
