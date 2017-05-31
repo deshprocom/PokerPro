@@ -13,6 +13,7 @@ import {isEmptyObject, strNotNull, convertDate, ticketStatusConvert} from '../..
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {getRaceTickets} from '../../services/RacesDao';
 import {UltimateListView} from '../../components'
+import {itemListView} from './TicketRow';
 
 export default class TicketSearchPage extends Component {
 
@@ -22,8 +23,8 @@ export default class TicketSearchPage extends Component {
         this.state = {
             layout: 'list',
             items: [],
-            last_id: '0',
-            loadErr: false
+            last_id: 0,
+            loadErr: true
         };
     }
 
@@ -37,7 +38,7 @@ export default class TicketSearchPage extends Component {
                 keyExtractor={(item, index) => `${this.state.layout} - ${item.race_id}`}
                 onFetch={this.onFetch}
                 legacyImplementation
-                rowView={this._itemListView}
+                rowView={itemListView}
                 refreshableTitlePull={I18n.t('pull_refresh')}
                 refreshableTitleRelease={I18n.t('release_refresh')}
                 dateTitle={I18n.t('last_refresh')}
@@ -55,7 +56,8 @@ export default class TicketSearchPage extends Component {
         try {
 
             let {last_id} = this.state;
-            if (strNotNull(this.keyword))
+            if (strNotNull(this.keyword)) {
+
                 if (page === 1) {
                     let body = {
                         keyword: this.keyword
@@ -68,6 +70,9 @@ export default class TicketSearchPage extends Component {
                     };
                     this.fetch(body, startFetch, abortFetch)
                 }
+            } else {
+                startFetch([], 5)
+            }
 
         } catch (err) {
             abortFetch();
@@ -80,11 +85,17 @@ export default class TicketSearchPage extends Component {
         getRaceTickets(body, (data) => {
 
             let {items, last_id} = data;
-            this.setState({
-                items: this.state.items.concat(items),
-                last_id: last_id
-            });
-            startFetch(this.state.items, 5);
+
+            if (last_id !== 0) {
+                this.setState({
+                    items: items,
+                    last_id: last_id
+                });
+                startFetch(this.state.items, 5);
+            } else {
+                startFetch([], 5)
+            }
+
         }, (err) => {
             abortFetch();
             this.setState({
@@ -96,13 +107,12 @@ export default class TicketSearchPage extends Component {
     _navSearchBar = () => {
         return (<View style={styles.navBar}>
             <View style={styles.topBar}>
-                <TouchableOpacity
+                <View
                     testID="btn_bar_left"
                     style={styles.popBtn}
                     onPress={()=>router.pop()}>
-                    <Image style={styles.backImg}
-                           source={Images.sign_return}/>
-                </TouchableOpacity>
+
+                </View>
 
                 <View
                     style={styles.searchView}>
