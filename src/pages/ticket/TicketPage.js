@@ -73,7 +73,7 @@ class TicketPage extends Component {
                 key={this.state.layout}
                 keyExtractor={(item, index) => `${this.state.layout} - ${item.race_id}`}
                 onFetch={this.onFetch}
-                refreshableMode="advanced"
+                legacyImplementation
                 rowView={this._itemListView}
                 refreshableTitlePull={I18n.t('pull_refresh')}
                 refreshableTitleRelease={I18n.t('release_refresh')}
