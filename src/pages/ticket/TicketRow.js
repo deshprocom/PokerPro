@@ -7,9 +7,9 @@ import {
     TouchableOpacity, Image, StatusBar,
     ListView, Animated, Platform, InteractionManager
 } from 'react-native';
-import { convertDate, ticketStatusConvert} from '../../utils/ComonHelper';
+import {convertDate, ticketStatusConvert} from '../../utils/ComonHelper';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import { ImageLoad} from '../../components';
+import {ImageLoad} from '../../components';
 
 export const itemListView = (item, index) => {
     const {
@@ -24,13 +24,16 @@ export const itemListView = (item, index) => {
                 router.toRacesInfoPage(this.props, race_id, false)}
             disabled={!describable}
             activeOpacity={1}>
+            <View style={styles.marginLine}/>
             <View style={styles.itemView}>
 
                 <ImageLoad
                     source={{uri:logo}}
                     style={styles.itemImg}/>
                 <View style={styles.itemInfo}>
-                    <Text style={styles.itemTitle}>{name}</Text>
+                    <Text
+                        numberOfLines={1}
+                        style={styles.itemTitle}>{name}</Text>
                     <Text style={styles.itemTime}>
                         {convertDate(begin_date, 'YYYY.MM.DD') + '-' + convertDate(end_date, 'YYYY.MM.DD')}</Text>
                     <Text style={styles.itemAddr}>地址:{location}</Text>
@@ -38,8 +41,8 @@ export const itemListView = (item, index) => {
                     <View style={styles.itemTab}>
                         <Text style={styles.itemPrice}>{prize}</Text>
 
-                        <View style={styles.itemStatus}>
-                            <Text style={styles.StatusTxt}>{ticketStatusConvert(ticket_status)}</Text>
+                        <View style={sellStyle(ticket_status)}>
+                            <Text style={sellTxt(ticket_status)}>{ticketStatusConvert(ticket_status)}</Text>
                         </View>
 
 
@@ -48,17 +51,25 @@ export const itemListView = (item, index) => {
 
                 </View>
             </View>
-            <View style={styles.marginLine}/>
+
 
         </TouchableOpacity>
     )
 };
 
+function sellStyle(status) {
+    return status === 'selling' ? styles.itemSell : styles.itemStatus
+}
+
+function sellTxt(status) {
+    return status === 'selling' ? styles.sellTxt : styles.statusTxt
+}
+
 const styles = StyleSheet.create({
     itemImg: {
-        width: 80,
-        height: 104,
-        marginLeft: 17,
+        width: 67,
+        height: 95,
+        marginLeft: 12,
     },
     itemView: {
         flexDirection: 'row',
@@ -67,29 +78,27 @@ const styles = StyleSheet.create({
         height: 140
     },
     itemTitle: {
-        height: 44,
         width: 260,
-        color: '#444444',
-        fontSize: 16,
-        alignSelf: 'flex-start',
-        lineHeight: 20
+        color: '#161718',
+        fontSize: 17,
+        alignSelf: 'flex-start'
     },
     itemTime: {
-        color: Colors._AAA,
-        fontSize: 12,
-        marginTop: 6
+        color: '#999999',
+        fontSize: 14,
+        marginTop: 11
     },
     itemAddr: {
-        color: Colors._AAA,
-        fontSize: 12
+        color: '#999999',
+        fontSize: 14
     },
     itemPrice: {
-        color: Colors._161817,
+        color: '#D7AC64',
         fontSize: 16,
     },
     itemInfo: {
         marginLeft: 12,
-        height: 104,
+        height: 95,
     },
     itemTab: {
         marginTop: 7,
@@ -97,8 +106,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     itemStatus: {
-        height: 21,
-        width: 61,
+        height: 30,
+        width: 62,
         backgroundColor: '#DDDDDD',
         justifyContent: 'center',
         alignItems: 'center',
@@ -106,13 +115,26 @@ const styles = StyleSheet.create({
         marginRight: 14
 
     },
-    StatusTxt: {
+    statusTxt: {
         color: Colors.txt_666,
         fontSize: 12
     },
     marginLine: {
         height: 5,
     },
+    itemSell: {
+        height: 30,
+        width: 62,
+        backgroundColor: '#F6F2C1',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 2,
+        marginRight: 14
+    },
+    sellTxt: {
+        color: '#B3935E',
+        fontSize: 12
+    }
 
 
 });
