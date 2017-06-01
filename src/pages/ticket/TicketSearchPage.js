@@ -24,7 +24,7 @@ export default class TicketSearchPage extends Component {
             layout: 'list',
             items: [],
             last_id: 0,
-            loadErr: true
+            loadErr: false
         };
     }
 
@@ -45,7 +45,7 @@ export default class TicketSearchPage extends Component {
                 allLoadedText={I18n.t('no_more')}
                 waitingSpinnerText={I18n.t('loading')}
                 emptyView={()=>{
-                    return <NoDataView/>;
+                    return this.state.loadErr?<LoadErrorView/>:<NoDataView/>;
                 }}
             />
         </View>)
