@@ -75,7 +75,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: Colors.white,
-        height: 140
+        paddingTop: 15,
+        paddingBottom: 18
     },
     itemTitle: {
         width: 260,
@@ -101,9 +102,9 @@ const styles = StyleSheet.create({
         height: 95,
     },
     itemTab: {
-        marginTop: 7,
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        alignItems: ''
     },
     itemStatus: {
         height: 30,
