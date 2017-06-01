@@ -164,14 +164,14 @@ export default class TicketSearchPage extends Component {
 
 const styles = StyleSheet.create({
     topBar: {
-        height: 40,
+        height: 44,
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: Metrics.statusBarHeight,
 
     },
     popBtn: {
-        height: 40,
+        height: 44,
         width: 50,
         justifyContent: 'center',
         alignItems: 'center'
