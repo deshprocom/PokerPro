@@ -69,9 +69,10 @@ class TicketPage extends Component {
             {this.topBar()}
 
             <UltimateListView
-                ref={(ref) => this.listView = ref}
+
                 key={this.state.layout}
                 keyExtractor={(item, index) => `${this.state.layout} - ${item.race_id}`}
+                ref={(ref) => this.listView = ref}
                 onFetch={this.onFetch}
                 legacyImplementation
                 rowView={itemListView}

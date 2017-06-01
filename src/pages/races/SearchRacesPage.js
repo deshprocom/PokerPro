@@ -9,7 +9,7 @@ import {
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {PullListView, SearchRacesListView} from '../../components';
+import {PullListView} from '../../components';
 import CalendarModal from './CalendarModal';
 import {strNotNull, isEmptyObject, arrayUnique, dataBlob} from '../../utils/ComonHelper';
 import {fetchSearchByDate, fetchRaceHost, fetchGetSearchRaces} from '../../actions/RacesAction';
@@ -62,54 +62,7 @@ class SearchRacesPage extends Component {
             <View style={styles.flatBg}
                   testID="page_more_races">
 
-                <View style={styles.topBar}>
-                    <TouchableOpacity
-                        testID="btn_bar_left"
-                        style={[styles.topBtn,styles.topLeft]}
-                        onPress={this._back}>
-                        <Image style={styles.imgBack}
-                               source={Images.sign_return}/>
-                    </TouchableOpacity>
-                    <View style={styles.topBtn}/>
-                    <View style={styles.topBtn}/>
-
-                    <View style={styles.titleView}>
-                        <Text style={styles.title}>赛事表</Text>
-                    </View>
-                    <View style={styles.topRight}>
-
-                        <TestRouter router={this.props.router}/>
-                        <TouchableOpacity
-                            onPress={this._searchPage}
-                            testID="btn_search"
-                            style={styles.topBtn}>
-                            <Image style={{width:22,height:22}}
-                                   source={Images.search}/>
-
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            onPress={this._pressRaceType}
-                            testID="btn_race_hosts"
-                            style={styles.topBtn}>
-                            <Image style={{width:24,height:22}}
-                                   source={Images.race_type}/>
-
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            onPress={()=>this._calendarView()}
-                            testID="btn_calendar"
-                            style={styles.topBtn}>
-                            <Image style={{width:25,height:25}}
-                                   source={Images.schedule}/>
-
-                        </TouchableOpacity>
-
-
-                    </View>
-
-                </View>
+                {this.topBar()}
 
                 <View style={{flex:1}}>
 
@@ -138,6 +91,57 @@ class SearchRacesPage extends Component {
 
             </View>
         )
+    }
+
+    topBar = () => {
+        return ( <View style={styles.topBar}>
+            <TouchableOpacity
+                testID="btn_bar_left"
+                style={[styles.topBtn,styles.topLeft]}
+                onPress={this._back}>
+                <Image style={styles.imgBack}
+                       source={Images.sign_return}/>
+            </TouchableOpacity>
+            <View style={styles.topBtn}/>
+            <View style={styles.topBtn}/>
+
+            <View style={styles.titleView}>
+                <Text style={styles.title}>赛事表</Text>
+            </View>
+            <View style={styles.topRight}>
+
+                <TestRouter router={this.props.router}/>
+                <TouchableOpacity
+                    onPress={this._searchPage}
+                    testID="btn_search"
+                    style={styles.topBtn}>
+                    <Image style={{width:22,height:22}}
+                           source={Images.search}/>
+
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={this._pressRaceType}
+                    testID="btn_race_hosts"
+                    style={styles.topBtn}>
+                    <Image style={{width:24,height:22}}
+                           source={Images.race_type}/>
+
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={()=>this._calendarView()}
+                    testID="btn_calendar"
+                    style={styles.topBtn}>
+                    <Image style={{width:25,height:25}}
+                           source={Images.schedule}/>
+
+                </TouchableOpacity>
+
+
+            </View>
+
+        </View>)
     }
 
     _onLoadMore = () => {
