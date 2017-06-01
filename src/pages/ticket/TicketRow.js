@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     itemTab: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: ''
+        alignItems: 'center'
     },
     itemStatus: {
         height: 30,

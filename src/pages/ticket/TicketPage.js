@@ -81,11 +81,9 @@ class TicketPage extends Component {
                 allLoadedText={I18n.t('no_more')}
                 waitingSpinnerText={I18n.t('loading')}
                 emptyView={()=>{
-                    return <NoDataView/>;
+                    return this.props.error? <LoadErrorView/>: <NoDataView/>;
                 }}
             />
-
-            {isEmptyObject(listTicket) && this.props.error ? <LoadErrorView/> : null}
 
 
         </View>)
@@ -119,7 +117,6 @@ class TicketPage extends Component {
         this.props.getRaceTicket(body);
 
     };
-
 
 
     topBar = () => {
