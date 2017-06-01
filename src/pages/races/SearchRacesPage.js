@@ -64,25 +64,11 @@ class SearchRacesPage extends Component {
 
                 {this.topBar()}
 
-                <View style={{flex:1}}>
-
-                    {isEmptyObject(dataRaces) ? <NoDataView
-                            pageStyle={{ backgroundColor: '#161718'}}/> : null}
-                    <PullListView
-                        ref={ (component) => this._pullToRefreshListView = component }
-                        viewType={PullListView.constants.viewType.listView}
-                        dataSource={this.state.componentDataSource}
-                        renderSectionHeader={this._renderSectionHeader}
-                        renderRow={this._renderRow}
-                        renderHeader={(viewState)=>_renderHeader(viewState,headerStyle)}
-                        renderFooter={(viewState)=>_renderFooter(viewState,headerStyle)}
-                        onRefresh={this._onRefresh}
-                        onLoadMore={this._onLoadMore}
-                        enableEmptySections={true}/>
+                {isEmptyObject(dataRaces) ? <NoDataView
+                        pageStyle={{ backgroundColor: '#161718'}}/> : null}
 
 
-                </View>
-
+                {this.listView()}
 
                 {this._showCalendar()}
 
@@ -92,6 +78,27 @@ class SearchRacesPage extends Component {
             </View>
         )
     }
+
+
+    listView = () => {
+        return (<View style={{flex:1}}>
+            <PullListView
+                key="list"
+                ref={ (component) => this._pullToRefreshListView = component }
+                viewType={PullListView.constants.viewType.listView}
+                dataSource={this.state.componentDataSource}
+                renderSectionHeader={this._renderSectionHeader}
+                renderRow={this._renderRow}
+                renderHeader={(viewState)=>_renderHeader(viewState,headerStyle)}
+                renderFooter={(viewState)=>_renderFooter(viewState,headerStyle)}
+                onRefresh={this._onRefresh}
+                onLoadMore={this._onLoadMore}
+                autoLoadMore={true}
+                enableEmptySections={true}/>
+
+
+        </View>)
+    };
 
     topBar = () => {
         return ( <View style={styles.topBar}>
