@@ -39,7 +39,7 @@ export default class NavigationBar extends Component {
 
         return (
             <View style={[styles.container,toolbarStyle]}>
-                <StatusBar barStyle="light-content"/>
+                <StatusBar barStyle={this.props.barStyle?this.props.barStyle:"light-content"}/>
                 <View style={styles.toolbar}>
                     <View style={styles.fixedCell}>
                         {(leftBtnIcon || leftBtnText) ?
@@ -54,7 +54,7 @@ export default class NavigationBar extends Component {
                     <View style={styles.centerCell}>
                         <Text
                             numberOfLines={1}
-                            style={styles.title}>{title}</Text>
+                            style={this.props.titleStyle?this.props.titleStyle:styles.title}>{title}</Text>
                         <TestRouter router={this.props.router}
                                     refreshPage={this.props.refreshPage}/>
                     </View>

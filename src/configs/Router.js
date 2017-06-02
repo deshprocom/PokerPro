@@ -42,6 +42,7 @@ import MessagePage from '../pages/message/MessagePage';
 import MainVideoPage from '../pages/videos/MainVideoPage';
 import VideoInfoPage from '../pages/videos/VideoInfoPage';
 import TicketSearchPage from '../pages/ticket/TicketSearchPage';
+import ChoiseTicketPage from '../pages/ticket/ChoiseTicketPage';
 
 
 const customFloatFromRight = Navigator.SceneConfigs.FloatFromRight;
@@ -117,6 +118,16 @@ export default class Router {
 
     popToTop() {
         this.navigator.popToTop();
+    }
+
+
+    toChoiseTicketPage(props) {
+        this.push(props, {
+            page: ChoiseTicketPage,
+            name: 'ChoiseTicketPage',
+            sceneConfig: customFloatFromRight,
+
+        })
     }
 
 

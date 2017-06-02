@@ -137,7 +137,8 @@ const images = {
     race_type_unselect: require('../../source/races/race_type_unselect.png'),
     load_error: require('../../source/load/load_error.png'),
     set_back: require('../../source/setting/set_back.png'),
-    home_badge:require('../../source/home/home_badge.png')
+    home_badge: require('../../source/home/home_badge.png'),
+    dark_back: require('../../source/home/dark_back.png')
 
 
 }

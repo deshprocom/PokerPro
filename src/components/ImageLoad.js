@@ -42,8 +42,6 @@ class ImageLoad extends React.Component {
             );
         else {
             return (<Image
-                resizeMode={'center'}
-                resizeMethod={'auto'}
                 style={[this.props.style, { alignItems: 'center' }]}
                 source={Images.empty_image}/>)
         }
