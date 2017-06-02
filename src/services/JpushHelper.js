@@ -13,14 +13,14 @@ export default class JpushHelper {
     }
 
     static getRegistrationID(callback) {
-
         JPushModule.getRegistrationID(callback);
-
     }
 
 
     static setAlias(alias, successCallback, failedCallback) {
         JPushModule.setAlias(alias, successCallback, failedCallback)
+        if (Platform.OS !== 'ios')
+        JPushModule.initPush();
     }
 
     static addPushListener(receiveCb, openCb) {
