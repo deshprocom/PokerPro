@@ -121,7 +121,16 @@ export default class ChoiseTicketPage extends Component {
                 <Text style={[styles.txtLabel,styles.top8]}>2016.10.23-2016.10.25</Text>
                 <Text style={styles.txtLabel}>地址：九龙乡九龙港帝豪大厦</Text>
 
-                <Text style={styles.txtPrice}>¥13,480</Text>
+                <View style={styles.viewInfo}>
+                    <Text style={styles.txtPrice}>¥13,480</Text>
+
+                    <View style={{flex:1}}/>
+
+                    <View style={styles.btnInfo}>
+                        <Text style={styles.btnTxt}>查看详情</Text>
+                    </View>
+                </View>
+
 
             </View>
 
@@ -129,7 +138,7 @@ export default class ChoiseTicketPage extends Component {
     };
 
     onFetch = (page = 1, startFetch, abortFetch) => {
-        startFetch([1, 2, 3], 2)
+        startFetch([1, 3, 3], 2)
     };
 
     bottomBar = () => {
@@ -255,7 +264,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: Colors._161817,
-        marginTop: 9
     },
     viewBottom: {
         height: 60,
@@ -288,5 +296,25 @@ const styles = StyleSheet.create({
     txtBtnOk: {
         fontSize: 18,
         color: 'white'
+    },
+    viewInfo: {
+        marginTop: 9,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    btnInfo: {
+        height: 25,
+        width: 66,
+        borderRadius: 2,
+        borderWidth: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderColor: '#DDDDDD',
+        marginRight: 7
+    },
+    btnTxt: {
+        fontSize: 12,
+        color: '#666666',
+        fontWeight: 'bold',
     }
 });
