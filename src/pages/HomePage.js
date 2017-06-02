@@ -54,7 +54,10 @@ class HomePage extends Component {
     }
 
     componentDidMount() {
-        JpushHelp.addPushListener(this.receiveCb, this.openCb)
+        if (Platform.OS === 'android') {
+
+        }
+        JpushHelp.addPushListener(this.receiveCb, this.openCb);
         this._refreshPage();
 
     }

@@ -13,7 +13,9 @@ export default class JpushHelper {
     }
 
     static getRegistrationID(callback) {
+
         JPushModule.getRegistrationID(callback);
+
     }
 
 
@@ -27,9 +29,11 @@ export default class JpushHelper {
             this.iosOpenNotification(openCb)
             var subscription = NativeAppEventEmitter.addListener(
                 'networkDidReceiveMessage',
-                (message) => console.log('networkDidReceiveMessage',message)
+                (message) => console.log('networkDidReceiveMessage', message)
             );
         } else {
+
+            JPushModule.initPush();
             JPushModule.addReceiveNotificationListener(receiveCb);
             JPushModule.addReceiveOpenNotificationListener(openCb)
         }
@@ -41,6 +45,7 @@ export default class JpushHelper {
             DeviceEventEmitter.removeAllListeners();
             NativeAppEventEmitter.removeAllListeners();
         } else {
+            JPushModule.stopPush();
             JPushModule.removeReceiveNotificationListener(receiveNotificationEvent);
             JPushModule.removeGetRegistrationIdListener(getRegistrationIdEvent);
             JPushModule.removeReceiveOpenNotificationListener(openNotificationEvent);
