@@ -5,7 +5,7 @@
 import React, {Component, PropTypes} from 'react';
 import {
     StyleSheet, Text, View, TextInput,
-    TouchableOpacity, Image, StatusBar,
+    TouchableOpacity, ScrollView,
     Animated, Platform, InteractionManager
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
@@ -20,13 +20,9 @@ export default class ChoiseTicketPage extends Component {
         return (<View style={ApplicationStyles.bgContainer}>
             {this.topBar()}
 
-            {this.titelView()}
-
-            {this.raceTypeView()}
-
-            {this.ticketTypeView()}
-
             {this.listTicketView()}
+
+            {this.bottomBar()}
 
         </View>)
     }
@@ -85,15 +81,28 @@ export default class ChoiseTicketPage extends Component {
 
     listTicketView = () => {
         return (<UltimateListView
-            style={styles.viewList}
             ref={(ref) => this.listView = ref}
+            firstLoader={false}
             onFetch={this.onFetch}
             rowView={this.itemListView}
+            headerView={()=>{
+              return(<View>
+            {this.titelView()}
+
+            {this.raceTypeView()}
+
+            {this.ticketTypeView()}
+
+            <View style={{height:10}}/>
+
+
+</View>)
+            }}
             separator={() => {
             return <View style={styles.separator}/>
         }}
             emptyView={()=>{
-                    return this.props.error? <LoadErrorView/>: <NoDataView/>;
+                    return this.props.error? <LoadErrorView/>: <View/>;
                 }}
         />)
     };
@@ -121,6 +130,19 @@ export default class ChoiseTicketPage extends Component {
 
     onFetch = (page = 1, startFetch, abortFetch) => {
         startFetch([1, 2, 3], 2)
+    };
+
+    bottomBar = () => {
+        return (<View style={styles.viewBottom}>
+            <Text style={styles.txtMoney}>价格: </Text>
+            <Text style={styles.txtMoneyNum}>¥23,300</Text>
+            <View style={{flex:1}}/>
+            <View style={styles.viewBtnOk}>
+                <Text style={styles.txtBtnOk}>选好了</Text>
+
+            </View>
+
+        </View>)
     }
 
 
@@ -229,13 +251,42 @@ const styles = StyleSheet.create({
     separator: {
         height: 4
     },
-    viewList: {
-        paddingTop: 10
-    },
     txtPrice: {
         fontSize: 16,
         fontWeight: 'bold',
         color: Colors._161817,
         marginTop: 9
+    },
+    viewBottom: {
+        height: 60,
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingLeft: 17,
+        backgroundColor: 'white',
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+        left: 0
+    },
+    txtMoney: {
+        fontSize: 14,
+        color: Colors._161817,
+        fontWeight: 'bold',
+    },
+    txtMoneyNum: {
+        fontSize: 20,
+        color: '#DF1D0F',
+        fontWeight: 'bold',
+    },
+    viewBtnOk: {
+        width: 92,
+        height: 60,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#DF1D0F'
+    },
+    txtBtnOk: {
+        fontSize: 18,
+        color: 'white'
     }
 });
