@@ -14,6 +14,7 @@ import I18n from 'react-native-i18n';
 import {UltimateListView, NavigationBar, ImageLoad, ActionSide} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {getSelectRaceTicket} from '../../services/OrderDao';
+import Picker from 'react-native-picker';
 
 const RACE_MAIN = 'RACE_MAIN',
     RACE_SIDE = 'RACE_SIDE',
@@ -24,7 +25,8 @@ export default class ChoiseTicketPage extends Component {
 
     state = {
         selectRace: '',
-        selectTicket: ''
+        selectTicket: '',
+        selectRaceData: {}
     };
 
     componentDidMount() {
@@ -34,11 +36,17 @@ export default class ChoiseTicketPage extends Component {
                 race_id: race_id
             };
             getSelectRaceTicket(body, (data) => {
-                router.log('data', data)
+                this.setState({
+                    selectRaceData: data
+                })
             }, (err) => {
 
             })
         })
+    }
+
+    componentWillUnmount() {
+        Picker.hide();
     }
 
     render() {
@@ -49,8 +57,6 @@ export default class ChoiseTicketPage extends Component {
 
             {this.bottomBar()}
 
-            <ActionSide
-                ref={o => this.ActionSheet = o}/>
         </View>)
     }
 
@@ -65,6 +71,35 @@ export default class ChoiseTicketPage extends Component {
                 leftBtnPress={()=>router.pop()}/>
 
         </View>)
+    };
+
+    showSubTicket = () => {
+
+        const array = ['2017年扑克王澳门站-边赛1', '2017年扑克王澳门站-边赛2', '2017年扑克王澳门站-边赛3'];
+        Picker.init({
+            pickerConfirmBtnText: '确定',
+            pickerCancelBtnText: '取消',
+            pickerTitleText: '',
+            pickerData: array,
+            pickerConfirmBtnColor: [68, 68, 68, 1],
+            pickerCancelBtnColor: [68, 68, 68, 1],
+            pickerTitleColor: [20, 20, 20, 1],
+            pickerToolBarBg: [255, 255, 255, 1],
+            pickerBg: [255, 255, 255, 1],
+            pickerToolBarFontSize: 17,
+            pickerFontSize: 21,
+            pickerFontColor: [34, 34, 34, 1],
+            onPickerConfirm: (pickedValue, pickedIndex) => {
+
+            },
+            onPickerCancel: (pickedValue, pickedIndex) => {
+                console.log(pickedValue, pickedIndex);
+            },
+            onPickerSelect: (pickedValue, pickedIndex) => {
+                console.log(pickedValue, pickedIndex);
+            }
+        });
+        Picker.show();
     };
 
     titelView = () => {
@@ -157,7 +192,7 @@ export default class ChoiseTicketPage extends Component {
     selectSideView = () => {
         return (<TouchableOpacity
             onPress={()=>{
-                this.ActionSheet.show();
+               this.showSubTicket();
             }}
             style={styles.viewSide}>
             <View style={{flex:1}}/>
