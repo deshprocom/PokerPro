@@ -31,7 +31,7 @@ class MainVideoPage extends Component {
     state = {
         typeListData: [],
         selectTypeId: 1
-    }
+    };
 
 
     componentWillReceiveProps(newProps) {

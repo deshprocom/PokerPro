@@ -53,8 +53,7 @@ class NewsListView extends Component {
             style={styles.pullView}
             testID={'page_news_'+this.props.newsTypeItem.id}>
 
-
-            {isEmptyObject(newsListData) ? <NoDataView/> : null}
+            {/*{isEmptyObject(newsListData) ? <NoDataView/> : null}*/}
 
             <PullListView
                 ref={ (component) => this._pullToRefreshListView = component }

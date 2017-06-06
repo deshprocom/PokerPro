@@ -57,9 +57,9 @@ class NewsListView extends Component {
             style={styles.pullView}
             testID={'page_news_'+this.props.newsTypeItem.id}>
 
-            {(isEmptyObject(newsListData) && error ) && <LoadErrorView
-                onPress={this._onRefresh}/>}
-            {(isEmptyObject(newsListData) && !error ) && <NoDataView/>}
+            {/*{(isEmptyObject(newsListData) && error ) && <LoadErrorView*/}
+                {/*onPress={this._onRefresh}/>}*/}
+            {/*{(isEmptyObject(newsListData) && !error ) && <NoDataView/>}*/}
 
             <PullListView
                 ref={ (component) => this._pullToRefreshListView = component }
