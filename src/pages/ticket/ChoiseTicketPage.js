@@ -82,15 +82,24 @@ export default class ChoiseTicketPage extends Component {
     };
 
     ticketTypeView = () => {
+        const {selectTicket} = this.state;
         return (<View style={styles.viewRace}>
             <Text style={styles.txtSelectRace}>选择票务类型</Text>
             <View style={styles.viewMainSide}>
 
-                <TouchableOpacity style={styles.viewSelect}>
-                    <Text style={styles.txtSelect}>仅赛事</Text>
+                <TouchableOpacity
+                    onPress={()=>{
+                        this._selectTicket(ONLY_TICKET)
+                    }}
+                    style={this._selectedBg(ONLY_TICKET === selectTicket)}>
+                    <Text style={this._selectTxt(ONLY_TICKET === selectTicket)}>仅赛事</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.viewSelected,styles.marginLeft]}>
-                    <Text style={styles.txtSelected}>赛票套餐</Text>
+                <TouchableOpacity
+                    onPress={()=>{
+                        this._selectTicket(TICKETS)
+                    }}
+                    style={[this._selectedBg(TICKETS === selectTicket),styles.marginLeft]}>
+                    <Text style={this._selectTxt(TICKETS === selectTicket)}>赛票套餐</Text>
                 </TouchableOpacity>
             </View>
         </View>)
