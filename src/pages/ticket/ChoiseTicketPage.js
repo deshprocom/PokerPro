@@ -89,6 +89,8 @@ export default class ChoiseTicketPage extends Component {
 
                 <TouchableOpacity
                     onPress={()=>{
+                        this.listView.updateDataSource([]);
+
                         this._selectTicket(ONLY_TICKET)
                     }}
                     style={this._selectedBg(ONLY_TICKET === selectTicket)}>
@@ -186,7 +188,7 @@ export default class ChoiseTicketPage extends Component {
     };
 
     onFetch = (page = 1, startFetch, abortFetch) => {
-        startFetch([1, 3, 3], 2)
+
     };
 
     bottomBar = () => {
