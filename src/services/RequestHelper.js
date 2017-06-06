@@ -1,10 +1,12 @@
 /**
  * Created by lorne on 2016/12/23.
  */
-import {create} from 'apisauce'
+import {create} from 'apisauce';
 import Api from '../configs/ApiConfig';
 import {clearLoginUser} from '../utils/ComonHelper';
 import StorageKey from '../configs/StorageKey';
+import {NetworkInfo} from 'react-native-network-info';
+
 
 let TAG = 'PuKeHttp:';
 
@@ -14,7 +16,7 @@ const client = create({
     baseURL: Api.test,
     headers: {
         'X-DP-APP-KEY': '467109f4b44be6398c17f6c058dfa7ee',
-        'X-DP-CLIENT-IP': '192.168.2.231',
+        'X-DP-CLIENT-IP': '192.168.2.231'
     },
     timeout: 20000,
 });
@@ -22,7 +24,7 @@ const client = create({
 export function getApiType() {
     let type = 'test';
     let ret = client.getBaseURL();
-    console.log(ret)
+
     if (ret === Api.dev)
         type = 'dev';
     else if (ret === Api.test)
@@ -34,7 +36,10 @@ export function getApiType() {
 }
 
 export function getBaseURL() {
-
+    NetworkInfo.getIPAddress(ip => {
+        if (ip !== 'error')
+            client.setHeader('X-DP-CLIENT-IP', ip);
+    });
     storage.load({key: StorageKey.ApiSever})
         .then((ret) => {
             client.setBaseURL(ret)
