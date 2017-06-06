@@ -108,7 +108,7 @@ export function isEmptyObject(e) {
 export function showToast(msg) {
 
     const toast = Toast.show(msg, {
-        testID: 'deshproToast', position: 200, duration:Toast.durations.SHORT,
+        testID: 'deshproToast', position: 200, duration: Toast.durations.SHORT,
         onHidden: (siblingManager) => {
             Toast.hide(toast)
         }
@@ -352,6 +352,21 @@ export function newsUnique(arr) {
         }
     }
     return r;
+}
+
+export function uniqueArray(arr, arr1) {
+    arr.concat(arr1);
+    let n = {}, r = [];
+    for (let i = 0; i < arr.length; i++) {
+        let id = arr[i].id;
+        if (!n[id]) //如果hash表中没有当前项
+        {
+            n[id] = true;
+        } else {
+
+            r.push(arr[i]); //把当前数组的当前项push到临时数组里面
+        }
+    }
 }
 
 
