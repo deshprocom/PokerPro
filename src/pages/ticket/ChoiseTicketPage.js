@@ -13,6 +13,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {UltimateListView, NavigationBar, ImageLoad, ActionSide} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
+import {getSelectRaceTicket} from '../../services/OrderDao';
 
 const RACE_MAIN = 'RACE_MAIN',
     RACE_SIDE = 'RACE_SIDE',
@@ -25,6 +26,20 @@ export default class ChoiseTicketPage extends Component {
         selectRace: '',
         selectTicket: ''
     };
+
+    componentDidMount() {
+        const {race_id} = this.props.params;
+        InteractionManager.runAfterInteractions(() => {
+            let body = {
+                race_id: race_id
+            };
+            getSelectRaceTicket(body, (data) => {
+                router.log('data', data)
+            }, (err) => {
+
+            })
+        })
+    }
 
     render() {
         return (<View style={ApplicationStyles.bgContainer}>

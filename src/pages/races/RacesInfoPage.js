@@ -357,7 +357,7 @@ class RacesInfoPage extends Component {
                                 onPress:()=> this.props.router.toOrderInfo(this.props,raceInfo.order_id)}]);
 
                             else{
-                                this.props.router.toBuyTicketPage(this.props,this.props.params.race_id);
+                                this.props.router.toChoiseTicketPage(this.props,this.props.params.race_id);
                             }
 
                         }

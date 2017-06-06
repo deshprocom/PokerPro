@@ -56,7 +56,9 @@ export default {
     videoTypes: 'videos/types',
     videoList: videoList,
     searchVideo: searchVideo,
-    delNotice: delNotice
+    delNotice: delNotice,
+    selectRaceTicket: selectRaceTicket,
+    buyRaceTicket: buyRaceTicket
 
 }
 
@@ -70,6 +72,16 @@ function getUserId() {
 
 const page_size = 10;
 
+
+export function buyRaceTicket(body) {
+    const {race_id, ticket_id} = body;
+    return 'races/' + race_id + '/tickets/' + ticket_id;
+}
+
+export function selectRaceTicket(body) {
+    const {race_id} = body;
+    return 'races/' + race_id + '/tickets';
+}
 
 export function delNotice(body) {
     const {id} = body;

@@ -121,11 +121,14 @@ export default class Router {
     }
 
 
-    toChoiseTicketPage(props) {
+    toChoiseTicketPage(props, race_id) {
         this.push(props, {
             page: ChoiseTicketPage,
             name: 'ChoiseTicketPage',
             sceneConfig: customFloatFromRight,
+            params: {
+                race_id: race_id
+            }
 
         })
     }
