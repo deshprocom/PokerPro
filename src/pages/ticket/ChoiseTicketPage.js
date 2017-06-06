@@ -6,7 +6,8 @@ import React, {Component, PropTypes} from 'react';
 import {
     StyleSheet, Text, View, TextInput,
     TouchableOpacity, ScrollView,
-    Animated, Platform, InteractionManager
+    Animated, Platform, InteractionManager,
+    Image
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
@@ -33,7 +34,7 @@ export default class ChoiseTicketPage extends Component {
                 barStyle="dark-content"
                 title={I18n.t('selectTicket')}
                 titleStyle={styles.barTitle}
-                leftBtnIcon={Images.sign_return}
+                leftBtnIcon={Images.ic_back}
                 leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
                 leftBtnPress={()=>router.pop()}/>
 
@@ -91,6 +92,8 @@ export default class ChoiseTicketPage extends Component {
 
             {this.raceTypeView()}
 
+            {this.selectSideView()}
+
             {this.ticketTypeView()}
 
             <View style={{height:10}}/>
@@ -106,6 +109,21 @@ export default class ChoiseTicketPage extends Component {
                 }}
         />)
     };
+
+
+    selectSideView = () => {
+        return (<View style={styles.viewSide}>
+            <View style={{flex:1}}/>
+            <Text style={styles.lbSelect}>请选择赛事</Text>
+            <View style={{flex:1}}>
+                <Image
+                    resizeMode={'contain'}
+                    style={styles.imgDown}
+                    source={Images.down_triangle}/>
+            </View>
+        </View>)
+    };
+
 
     itemListView = () => {
         return (<View style={styles.itemView}>
@@ -316,5 +334,22 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#666666',
         fontWeight: 'bold',
-    }
+    },
+    viewSide: {
+        backgroundColor: 'white',
+        height: 60,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 5
+    },
+    lbSelect: {
+        color: '#CCCCCC',
+        fontSize: 15,
+    },
+    imgDown: {
+        width: 16,
+        height: 10,
+        alignSelf:'flex-end',
+        marginRight:35
+    },
 });

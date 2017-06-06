@@ -138,10 +138,13 @@ const images = {
     load_error: require('../../source/load/load_error.png'),
     set_back: require('../../source/setting/set_back.png'),
     home_badge: require('../../source/home/home_badge.png'),
-    dark_back: require('../../source/home/dark_back.png')
+    dark_back: require('../../source/home/dark_back.png'),
+    up_triangle: require('../../source/order/up_triangle.png'),
+    down_triangle: require('../../source/order/down_triangle.png'),
+    ic_back: require('../../source/order/ic_back.png')
 
 
-}
+};
 
 export default images
 
