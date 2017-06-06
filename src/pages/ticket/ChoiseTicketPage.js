@@ -160,6 +160,7 @@ export default class ChoiseTicketPage extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={()=>{
+                          this.listView.updateDataSource([1,2,3,4,5]);
                         this._selectTicket(TICKETS)
                     }}
                     style={[this._selectedBg(TICKETS === selectTicket),styles.marginLeft]}>
@@ -185,7 +186,7 @@ export default class ChoiseTicketPage extends Component {
 
             {selectRace===RACE_SIDE?this.selectSideView():null}
 
-            {this.ticketTypeView()}
+            {selectRace===RACE_MAIN?this.ticketTypeView():null}
 
             <View style={{height:10}}/>
 
