@@ -14,8 +14,17 @@ import I18n from 'react-native-i18n';
 import {UltimateListView, NavigationBar, ImageLoad, ActionSide} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 
+const RACE_MAIN = 'RACE_MAIN',
+    RACE_SIDE = 'RACE_SIDE',
+    ONLY_TICKET = 'ONLY_TICKET',
+    TICKETS = 'TICKETS';
 
 export default class ChoiseTicketPage extends Component {
+
+    state = {
+        selectRace: '',
+        selectTicket: ''
+    };
 
     render() {
         return (<View style={ApplicationStyles.bgContainer}>
@@ -52,16 +61,21 @@ export default class ChoiseTicketPage extends Component {
     };
 
     raceTypeView = () => {
+        const {selectRace} = this.state;
         return (<View style={styles.viewRace}>
             <Text style={styles.txtSelectRace}>选择赛事</Text>
             <View style={styles.viewMainSide}>
 
-                <View style={styles.viewSelected}>
-                    <Text style={styles.txtSelected}>主赛</Text>
-                </View>
-                <View style={[styles.viewSelect,styles.marginLeft]}>
-                    <Text style={styles.txtSelect}>边赛</Text>
-                </View>
+                <TouchableOpacity
+                    onPress={()=>this._selectRace(RACE_MAIN)}
+                    style={this._selectedBg(selectRace === RACE_MAIN)}>
+                    <Text style={this._selectTxt(selectRace === RACE_MAIN)}>主赛</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={()=>this._selectRace(RACE_SIDE)}
+                    style={[this._selectedBg(selectRace === RACE_SIDE),styles.marginLeft]}>
+                    <Text style={this._selectTxt(selectRace === RACE_SIDE)}>边赛</Text>
+                </TouchableOpacity>
             </View>
 
         </View>)
@@ -72,17 +86,18 @@ export default class ChoiseTicketPage extends Component {
             <Text style={styles.txtSelectRace}>选择票务类型</Text>
             <View style={styles.viewMainSide}>
 
-                <View style={styles.viewSelect}>
+                <TouchableOpacity style={styles.viewSelect}>
                     <Text style={styles.txtSelect}>仅赛事</Text>
-                </View>
-                <View style={[styles.viewSelected,styles.marginLeft]}>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.viewSelected,styles.marginLeft]}>
                     <Text style={styles.txtSelected}>赛票套餐</Text>
-                </View>
+                </TouchableOpacity>
             </View>
         </View>)
     };
 
     listTicketView = () => {
+        const {selectRace} = this.state;
         return (<UltimateListView
             ref={(ref) => this.listView = ref}
             firstLoader={false}
@@ -94,7 +109,7 @@ export default class ChoiseTicketPage extends Component {
 
             {this.raceTypeView()}
 
-            {this.selectSideView()}
+            {selectRace===RACE_SIDE?this.selectSideView():null}
 
             {this.ticketTypeView()}
 
@@ -178,12 +193,24 @@ export default class ChoiseTicketPage extends Component {
         </View>)
     };
 
-    selectedBg = (select) => {
+    _selectedBg = (select) => {
         return select ? styles.viewSelected : styles.viewSelect;
     };
 
-    selectTxt = (select) => {
+    _selectTxt = (select) => {
         return select ? styles.txtSelected : styles.txtSelect;
+    };
+
+    _selectRace = (race) => {
+        this.setState({
+            selectRace: race
+        })
+    };
+
+    _selectTicket = (ticket) => {
+        this.setState({
+            selectTicket: ticket
+        })
     }
 
 
