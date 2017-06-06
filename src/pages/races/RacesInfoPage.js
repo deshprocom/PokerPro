@@ -352,17 +352,17 @@ class RacesInfoPage extends Component {
                             if(raceInfo.ordered)
                                 Alert.alert(I18n.t('tint'),I18n.t('ticket_ordered_tint'),
                                 [{text:I18n.t('ignore'),
-                                onPress:()=>this.props.router.toBuyTicketPage(this.props,this.props.params.race_id)},
+                                onPress:()=>router.toBuyTicketPage(this.props,this.props.params.race_id)},
                                 {text:I18n.t('look_order'),
-                                onPress:()=> this.props.router.toOrderInfo(this.props,raceInfo.order_id)}]);
+                                onPress:()=> router.toOrderInfo(this.props,raceInfo.order_id)}]);
 
                             else{
-                                this.props.router.toChoiseTicketPage(this.props,this.props.params.race_id);
+                                router.toBuyTicketPage(this.props,this.props.params.race_id);
                             }
 
                         }
                         else
-                            this.props.router.toLoginFirstPage();
+                            router.toLoginFirstPage();
 
                 }}/>)
     };
