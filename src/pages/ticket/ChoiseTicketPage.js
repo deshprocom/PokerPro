@@ -14,6 +14,7 @@ import I18n from 'react-native-i18n';
 import {UltimateListView, NavigationBar, ImageLoad, ActionSide} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {getSelectRaceTicket} from '../../services/OrderDao';
+import {isEmptyObject} from '../../utils/ComonHelper';
 import Picker from 'react-native-picker';
 
 const RACE_MAIN = 'RACE_MAIN',
@@ -36,6 +37,7 @@ export default class ChoiseTicketPage extends Component {
                 race_id: race_id
             };
             getSelectRaceTicket(body, (data) => {
+                router.log('data', data);
                 this.setState({
                     selectRaceData: data
                 })
@@ -102,11 +104,21 @@ export default class ChoiseTicketPage extends Component {
         Picker.show();
     };
 
-    titelView = () => {
-        return (<View style={styles.viewTitle}>
-            <Text style={styles.txtTitle}>[澳门]扑克王杯澳门站</Text>
+    titleView = () => {
 
+        return (<View style={styles.viewTitle}>
+            {this.titleTxtView()}
         </View>)
+
+    };
+
+    titleTxtView = () => {
+        const {race} = this.state.selectRaceData;
+        if (!isEmptyObject(race)) {
+            const {location, name} = race;
+            return ( <Text style={styles.txtTitle}>[{location}]{name}</Text>)
+        }
+
 
     };
 
@@ -161,12 +173,13 @@ export default class ChoiseTicketPage extends Component {
         const {selectRace} = this.state;
         return (<UltimateListView
             ref={(ref) => this.listView = ref}
+            refreshable={false}
             firstLoader={false}
             onFetch={this.onFetch}
             rowView={this.itemListView}
             headerView={()=>{
               return(<View>
-            {this.titelView()}
+            {this.titleView()}
 
             {this.raceTypeView()}
 
