@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {UltimateListView, NavigationBar, ImageLoad} from '../../components';
+import {UltimateListView, NavigationBar, ImageLoad, ActionSide} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 
 
@@ -25,6 +25,8 @@ export default class ChoiseTicketPage extends Component {
 
             {this.bottomBar()}
 
+            <ActionSide
+                ref={o => this.ActionSheet = o}/>
         </View>)
     }
 
@@ -112,7 +114,11 @@ export default class ChoiseTicketPage extends Component {
 
 
     selectSideView = () => {
-        return (<View style={styles.viewSide}>
+        return (<TouchableOpacity
+            onPress={()=>{
+                this.ActionSheet.show();
+            }}
+            style={styles.viewSide}>
             <View style={{flex:1}}/>
             <Text style={styles.lbSelect}>请选择赛事</Text>
             <View style={{flex:1}}>
@@ -121,7 +127,7 @@ export default class ChoiseTicketPage extends Component {
                     style={styles.imgDown}
                     source={Images.down_triangle}/>
             </View>
-        </View>)
+        </TouchableOpacity>)
     };
 
 
@@ -170,6 +176,14 @@ export default class ChoiseTicketPage extends Component {
             </View>
 
         </View>)
+    };
+
+    selectedBg = (select) => {
+        return select ? styles.viewSelected : styles.viewSelect;
+    };
+
+    selectTxt = (select) => {
+        return select ? styles.txtSelected : styles.txtSelect;
     }
 
 
@@ -349,7 +363,7 @@ const styles = StyleSheet.create({
     imgDown: {
         width: 16,
         height: 10,
-        alignSelf:'flex-end',
-        marginRight:35
+        alignSelf: 'flex-end',
+        marginRight: 35
     },
 });

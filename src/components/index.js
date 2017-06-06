@@ -23,6 +23,7 @@ import Password from './Password';
 import UltimateListView from './flatlist/ultimateListView';
 import SwipeListView from './swipelist/SwipeListView';
 import VideoPlayer from './VideoPlayer';
+import ActionSide from './ActionSide';
 
 export {
     BtnLong, BtnSoild, NavigationBar,
@@ -41,5 +42,6 @@ export {
     Password,
     UltimateListView,
     SwipeListView,
-    VideoPlayer
+    VideoPlayer,
+    ActionSide
 }
