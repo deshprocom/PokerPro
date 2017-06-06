@@ -60,19 +60,18 @@ class NewsListView extends Component {
             {(isEmptyObject(newsListData) && error ) && <LoadErrorView
                 onPress={this._onRefresh}/>}
             {(isEmptyObject(newsListData) && !error ) && <NoDataView/>}
-            <View style={{flex:1}}>
-                <PullListView
-                    ref={ (component) => this._pullToRefreshListView = component }
-                    viewType={PullListView.constants.viewType.listView}
-                    dataSource={this.state.componentDataSource}
-                    renderRow={this._itemNewsView}
-                    renderHeader={(viewState)=>_renderHeader(viewState,headerStyle)}
-                    renderFooter={(viewState)=>_renderFooter(viewState,headerStyle)}
-                    onRefresh={this._onRefresh}
-                    onLoadMore={this._onLoadMore}
-                    enableEmptySections={true}
-                />
-            </View>
+
+            <PullListView
+                ref={ (component) => this._pullToRefreshListView = component }
+                viewType={PullListView.constants.viewType.listView}
+                dataSource={this.state.componentDataSource}
+                renderRow={this._itemNewsView}
+                renderHeader={(viewState)=>_renderHeader(viewState,headerStyle)}
+                renderFooter={(viewState)=>_renderFooter(viewState,headerStyle)}
+                onRefresh={this._onRefresh}
+                onLoadMore={this._onLoadMore}
+                enableEmptySections={true}
+            />
 
 
         </View>)
