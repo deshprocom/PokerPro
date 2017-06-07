@@ -12,7 +12,7 @@ import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {GET_NEWS_LIST} from '../../actions/ActionTypes';
-import {isEmptyObject, convertDate, strNotNull, newsUnique} from '../../utils/ComonHelper';
+import {isEmptyObject, convertDate, strNotNull, uniqueArray} from '../../utils/ComonHelper';
 import {ImageLoad, PullListView, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {fetchNewsList} from '../../actions/NewsAction';
@@ -103,12 +103,14 @@ class NewsListView extends Component {
         getNewsList(body, (data) => {
             let {items, next_id, topped} = data;
 
-            startFetch(items, 5);
+            let rows = uniqueArray(this.listView.getRows(), items)
 
-            let newData = newsListData.concat(items);
+            startFetch(rows, 2);
+
+            let newData = newsListData.concat(rows);
             this.setState({
                 newsListData: newData,
-                newsListNextId: next_id
+                newsListNextId: next_id === 0 ? newsListNextId : next_id
             })
         }, (err) => {
             abortFetch();
@@ -126,10 +128,12 @@ class NewsListView extends Component {
             if (!isEmptyObject(topped)) {
                 items.unshift(topped)
             }
-            startFetch(items, 5);
+            let rows = uniqueArray(this.listView.getRows(), items);
+
+            startFetch(rows, 2);
 
             this.setState({
-                newsListData: items,
+                newsListData: rows,
                 newsListNextId: next_id
             })
         }, (err) => {

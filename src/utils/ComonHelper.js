@@ -354,8 +354,8 @@ export function newsUnique(arr) {
     return r;
 }
 
-export function uniqueArray(arr, arr1) {
-    arr.concat(arr1);
+export function uniqueArray(arr, items) {
+    arr.concat(items);
     let n = {}, r = [];
     for (let i = 0; i < arr.length; i++) {
         let id = arr[i].id;
@@ -363,10 +363,24 @@ export function uniqueArray(arr, arr1) {
         {
             n[id] = true;
         } else {
-
             r.push(arr[i]); //把当前数组的当前项push到临时数组里面
         }
     }
+
+    items.concat(r);
+    let m = {}, l = [];
+    for (let j = 0; j < items.length; j++) {
+        let id = items[j].id;
+        if (!m[id]) //如果hash表中没有当前项
+        {
+            m[id] = true; //存入hash表
+            l.push(items[j]); //把当前数组的当前项push到临时数组里面
+        }
+    }
+
+    console.log(l)
+
+    return l;
 }
 
 
