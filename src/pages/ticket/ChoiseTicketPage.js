@@ -27,7 +27,9 @@ export default class ChoiseTicketPage extends Component {
     state = {
         selectRace: '',
         selectTicket: '',
-        selectRaceData: {}
+        selectRaceData: {},
+        selectSub: {}
+
     };
 
     componentDidMount() {
@@ -76,8 +78,16 @@ export default class ChoiseTicketPage extends Component {
     };
 
     showSubTicket = () => {
+        const {selectRaceData} = this.state;
+        const {sub_races} = selectRaceData;
+        const array = [];
+        if (!isEmptyObject(sub_races)) {
+            sub_races.forEach(function (x) {
+                array.push(x.name)
+            })
+        }
 
-        const array = ['2017年扑克王澳门站-边赛1', '2017年扑克王澳门站-边赛2', '2017年扑克王澳门站-边赛3'];
+
         Picker.init({
             pickerConfirmBtnText: '确定',
             pickerCancelBtnText: '取消',
@@ -91,14 +101,22 @@ export default class ChoiseTicketPage extends Component {
             pickerToolBarFontSize: 17,
             pickerFontSize: 21,
             pickerFontColor: [34, 34, 34, 1],
-            onPickerConfirm: (pickedValue, pickedIndex) => {
+            onPickerConfirm: (data) => {
+
+                for (i = 0; i < sub_races.length; i++) {
+                    if (sub_races[i].name === data[0])
+                        this.setState({
+                            selectSub: sub_races[i]
+                        })
+                }
+
 
             },
-            onPickerCancel: (pickedValue, pickedIndex) => {
-                console.log(pickedValue, pickedIndex);
+            onPickerCancel: (data) => {
+
             },
-            onPickerSelect: (pickedValue, pickedIndex) => {
-                console.log(pickedValue, pickedIndex);
+            onPickerSelect: (data) => {
+
             }
         });
         Picker.show();
@@ -121,6 +139,15 @@ export default class ChoiseTicketPage extends Component {
 
 
     };
+
+    _selectSub = () => {
+        const {selectSub} = this.state;
+        if (isEmptyObject(selectSub))
+            return '请选择赛事';
+        else
+            return selectSub.name
+    };
+
 
     raceTypeView = () => {
         const {selectRace} = this.state;
@@ -215,6 +242,10 @@ export default class ChoiseTicketPage extends Component {
         />)
     };
 
+    selectSubImg = () => {
+        const {selectSub} = this.state;
+        return isEmptyObject(selectSub) ? Images.down_triangle : Images.up_triangle
+    };
 
     selectSideView = () => {
         return (<TouchableOpacity
@@ -223,12 +254,12 @@ export default class ChoiseTicketPage extends Component {
             }}
             style={styles.viewSide}>
             <View style={{flex:1}}/>
-            <Text style={styles.lbSelect}>请选择赛事</Text>
+            <Text style={styles.lbSelect}>{this._selectSub()}</Text>
             <View style={{flex:1}}>
                 <Image
                     resizeMode={'contain'}
                     style={styles.imgDown}
-                    source={Images.down_triangle}/>
+                    source={this.selectSubImg()}/>
             </View>
         </TouchableOpacity>)
     };
