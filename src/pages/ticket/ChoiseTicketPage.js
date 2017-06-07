@@ -14,7 +14,7 @@ import I18n from 'react-native-i18n';
 import {UltimateListView, NavigationBar, ImageLoad, ActionSide} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {getSelectRaceTicket} from '../../services/OrderDao';
-import {isEmptyObject} from '../../utils/ComonHelper';
+import {isEmptyObject, convertDate} from '../../utils/ComonHelper';
 import Picker from 'react-native-picker';
 
 const RACE_MAIN = 'RACE_MAIN',
@@ -34,7 +34,7 @@ export default class ChoiseTicketPage extends Component {
         const {race_id} = this.props.params;
         InteractionManager.runAfterInteractions(() => {
             let body = {
-                race_id: race_id
+                race_id: 28
             };
             getSelectRaceTicket(body, (data) => {
                 router.log('data', data);
@@ -134,7 +134,10 @@ export default class ChoiseTicketPage extends Component {
                     <Text style={this._selectTxt(selectRace === RACE_MAIN)}>主赛</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={()=>this._selectRace(RACE_SIDE)}
+                    onPress={()=>{
+                         this.listView.updateDataSource([]);
+                        this._selectRace(RACE_SIDE)
+                    }}
                     style={[this._selectedBg(selectRace === RACE_SIDE),styles.marginLeft]}>
                     <Text style={this._selectTxt(selectRace === RACE_SIDE)}>边赛</Text>
                 </TouchableOpacity>
@@ -143,8 +146,18 @@ export default class ChoiseTicketPage extends Component {
         </View>)
     };
 
+    _raceList = () => {
+        const {selectRaceData} = this.state;
+        const {race} = selectRaceData;
+        if (!isEmptyObject(race)) {
+            const {tickets} = race;
+            return tickets
+        }
+    };
+
     ticketTypeView = () => {
         const {selectTicket} = this.state;
+
         return (<View style={styles.viewRace}>
             <Text style={styles.txtSelectRace}>选择票务类型</Text>
             <View style={styles.viewMainSide}>
@@ -160,7 +173,7 @@ export default class ChoiseTicketPage extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={()=>{
-                          this.listView.updateDataSource([1,2,3,4,5]);
+                          this.listView.updateDataSource(this._raceList());
                         this._selectTicket(TICKETS)
                     }}
                     style={[this._selectedBg(TICKETS === selectTicket),styles.marginLeft]}>
@@ -220,23 +233,44 @@ export default class ChoiseTicketPage extends Component {
         </TouchableOpacity>)
     };
 
+    _location = () => {
+        const {selectRaceData} = this.state;
+        const {race} = selectRaceData;
+        if (!isEmptyObject(race)) {
+            const {location} = race;
+            return location;
+        }
+    };
 
-    itemListView = () => {
+    _date = () => {
+        const {selectRaceData} = this.state;
+        const {race} = selectRaceData;
+        if (!isEmptyObject(race)) {
+            const {end_date, begin_date} = race;
+            return convertDate(begin_date, 'YYYY.MM.DD') + "-" + convertDate(end_date, 'YYYY.MM.DD')
+        }
+    };
+
+
+    itemListView = (rowData) => {
+
+        const {logo, original_price, price, ticket_class, title} = rowData;
+
         return (<View style={styles.itemView}>
             <ImageLoad
-                source={{uri:''}}
+                source={{uri:logo}}
                 style={styles.itemImg}/>
 
             <View style={styles.itemContent}>
                 <Text
                     numberOfLines={2}
-                    style={styles.txtItemTitle}>WPT世界巡回赛票+机票+济州岛某某某酒店</Text>
+                    style={styles.txtItemTitle}>{title}</Text>
 
-                <Text style={[styles.txtLabel,styles.top8]}>2016.10.23-2016.10.25</Text>
-                <Text style={styles.txtLabel}>地址：九龙乡九龙港帝豪大厦</Text>
+                <Text style={[styles.txtLabel,styles.top8]}>{this._date()}</Text>
+                <Text style={styles.txtLabel}>地址: {this._location()}</Text>
 
                 <View style={styles.viewInfo}>
-                    <Text style={styles.txtPrice}>¥13,480</Text>
+                    <Text style={styles.txtPrice}>{price}</Text>
 
                     <View style={{flex:1}}/>
 
@@ -256,16 +290,31 @@ export default class ChoiseTicketPage extends Component {
     };
 
     bottomBar = () => {
+
+
         return (<View style={styles.viewBottom}>
             <Text style={styles.txtMoney}>价格: </Text>
-            <Text style={styles.txtMoneyNum}>¥23,300</Text>
+            <Text style={styles.txtMoneyNum}>{this._prize()}</Text>
             <View style={{flex:1}}/>
-            <View style={styles.viewBtnOk}>
+            <View style={[styles.viewBtnOk,styles.btnDisable]}>
                 <Text style={styles.txtBtnOk}>选好了</Text>
 
             </View>
 
         </View>)
+    };
+
+    _prize = () => {
+        const {selectRaceData} = this.state;
+        const {race} = selectRaceData;
+
+
+        if (!isEmptyObject(race)) {
+            const {prize} = race;
+            return prize;
+        }
+
+
     };
 
     _selectedBg = (select) => {
@@ -278,7 +327,8 @@ export default class ChoiseTicketPage extends Component {
 
     _selectRace = (race) => {
         this.setState({
-            selectRace: race
+            selectRace: race,
+            selectTicket: ''
         })
     };
 
@@ -468,4 +518,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         marginRight: 35
     },
+    btnDisable: {
+        backgroundColor: Colors.txt_666
+    }
 });
