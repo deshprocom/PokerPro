@@ -407,7 +407,7 @@ export default class ChoiseTicketPage extends Component {
             return selectMain.price;
         } else if (!isEmptyObject(selectSub)) {
             return selectSub.prize;
-        } else if (selectOnly) {
+        } else if (!isEmptyObject(race) && selectOnly) {
             return race.ticket_price;
         } else if (!isEmptyObject(race)) {
             return race.prize
