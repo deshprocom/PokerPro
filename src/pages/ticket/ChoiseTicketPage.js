@@ -38,7 +38,7 @@ export default class ChoiseTicketPage extends Component {
         const {race_id} = this.props.params;
         InteractionManager.runAfterInteractions(() => {
             let body = {
-                race_id: 28
+                race_id: race_id
             };
             getSelectRaceTicket(body, (data) => {
                 router.log('data', data);
@@ -166,16 +166,24 @@ export default class ChoiseTicketPage extends Component {
                     <Text style={this._selectTxt(selectRace === RACE_MAIN)}>主赛</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
+                    disabled={!this.btnSideDisabled()}
                     onPress={()=>{
                          this.listView.updateDataSource([]);
                         this._selectRace(RACE_SIDE)
                     }}
                     style={[this._selectedBg(selectRace === RACE_SIDE),styles.marginLeft]}>
-                    <Text style={this._selectTxt(selectRace === RACE_SIDE)}>边赛</Text>
+                    <Text style={this.btnSideDisabled()?
+                        this._selectTxt(selectRace === RACE_SIDE):
+                        styles.txtDisabled}>边赛</Text>
                 </TouchableOpacity>
             </View>
 
         </View>)
+    };
+
+    btnSideDisabled = () => {
+        const {sub_races} = this.state.selectRaceData;
+        return !isEmptyObject(sub_races) && sub_races.length > 0
     };
 
     _raceList = () => {
@@ -204,15 +212,29 @@ export default class ChoiseTicketPage extends Component {
                     <Text style={this._selectTxt(ONLY_TICKET === selectTicket)}>仅赛事</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
+                    disabled={!this._btnMainDisabled()}
                     onPress={()=>{
                           this.listView.updateDataSource(this._raceList());
                         this._selectTicket(TICKETS)
                     }}
                     style={[this._selectedBg(TICKETS === selectTicket),styles.marginLeft]}>
-                    <Text style={this._selectTxt(TICKETS === selectTicket)}>赛票套餐</Text>
+                    <Text style={this._btnMainDisabled()?
+                    this._selectTxt(TICKETS === selectTicket):
+                    styles.txtDisabled}>赛票套餐</Text>
                 </TouchableOpacity>
             </View>
         </View>)
+    };
+
+    _btnMainDisabled = () => {
+        const {race} = this.state.selectRaceData;
+        if (isEmptyObject(race)) {
+            return false;
+        } else {
+            const {tickets} = race;
+            return !isEmptyObject(tickets) && tickets.length > 0
+        }
+
     };
 
     listTicketView = () => {

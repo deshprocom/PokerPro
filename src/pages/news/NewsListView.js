@@ -194,7 +194,7 @@ class NewsListView extends Component {
         }
 
 
-    }
+    };
 
     _pressItem = (item) => {
         router.toNewsInfoPage(this.props, item)

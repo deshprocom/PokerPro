@@ -296,7 +296,7 @@ class HomePage extends Component {
                         </TouchableOpacity>
                         <TouchableOpacity
                             testID="btn_home_sort"
-                            onPress={()=>router.toChoiseTicketPage(this.props,7)}
+                            onPress={()=>router.toChoiseTicketPage(this.props,28)}
                             style={[{marginRight:53},styles.item_center]}>
                             <Image style={styles.gif_fuc}
                                    source={Images.home_sort}/>
