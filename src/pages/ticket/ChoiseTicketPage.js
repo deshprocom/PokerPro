@@ -28,7 +28,9 @@ export default class ChoiseTicketPage extends Component {
         selectRace: '',
         selectTicket: '',
         selectRaceData: {},
-        selectSub: {}
+        selectSub: {},
+        selectMain: {},
+        selectOnly: false
 
     };
 
@@ -156,7 +158,10 @@ export default class ChoiseTicketPage extends Component {
             <View style={styles.viewMainSide}>
 
                 <TouchableOpacity
-                    onPress={()=>this._selectRace(RACE_MAIN)}
+                    onPress={()=>{
+                          Picker.hide();
+                        this._selectRace(RACE_MAIN)
+                    }}
                     style={this._selectedBg(selectRace === RACE_MAIN)}>
                     <Text style={this._selectTxt(selectRace === RACE_MAIN)}>主赛</Text>
                 </TouchableOpacity>
@@ -247,6 +252,12 @@ export default class ChoiseTicketPage extends Component {
         return isEmptyObject(selectSub) ? Images.down_triangle : Images.up_triangle
     };
 
+    _txtSub = () => {
+        const {selectSub} = this.state;
+
+        return isEmptyObject(selectSub) ? styles.lbSelect : styles.txtSub
+    };
+
     selectSideView = () => {
         return (<TouchableOpacity
             onPress={()=>{
@@ -254,7 +265,7 @@ export default class ChoiseTicketPage extends Component {
             }}
             style={styles.viewSide}>
             <View style={{flex:1}}/>
-            <Text style={styles.lbSelect}>{this._selectSub()}</Text>
+            <Text style={this._txtSub()}>{this._selectSub()}</Text>
             <View style={{flex:1}}>
                 <Image
                     resizeMode={'contain'}
@@ -282,12 +293,24 @@ export default class ChoiseTicketPage extends Component {
         }
     };
 
+    _selectItemStyle = () => {
+        const {selectMain} = this.state;
+        return isEmptyObject(selectMain) ? styles.itemView : styles.selectMain
+
+    };
 
     itemListView = (rowData) => {
 
         const {logo, original_price, price, ticket_class, title} = rowData;
 
-        return (<View style={styles.itemView}>
+        return (<TouchableOpacity
+            activeOpacity={1}
+            onPress={()=>{
+                this.setState({
+                    selectMain:rowData
+                })
+            }}
+            style={this._selectItemStyle()}>
             <ImageLoad
                 source={{uri:logo}}
                 style={styles.itemImg}/>
@@ -313,24 +336,42 @@ export default class ChoiseTicketPage extends Component {
 
             </View>
 
-        </View>)
+        </TouchableOpacity>)
     };
 
     onFetch = (page = 1, startFetch, abortFetch) => {
 
     };
 
-    bottomBar = () => {
 
+    _btnOkStyle = () => {
+        const {selectSub, selectMain, selectOnly} = this.state;
+        return !isEmptyObject(selectMain) || !isEmptyObject(selectSub) || selectOnly ?
+            styles.viewBtnOk : [styles.viewBtnOk, styles.btnDisable]
+
+
+    };
+
+    _btnOkDisabled = () => {
+        const {selectSub, selectMain, selectOnly} = this.state;
+        return isEmptyObject(selectMain)
+            && isEmptyObject(selectSub)
+            && !selectOnly
+    };
+
+    bottomBar = () => {
 
         return (<View style={styles.viewBottom}>
             <Text style={styles.txtMoney}>价格: </Text>
             <Text style={styles.txtMoneyNum}>{this._prize()}</Text>
             <View style={{flex:1}}/>
-            <View style={[styles.viewBtnOk,styles.btnDisable]}>
+            <TouchableOpacity
+                onPress={()=>alert('选好了')}
+                disabled={this._btnOkDisabled()}
+                style={this._btnOkStyle()}>
                 <Text style={styles.txtBtnOk}>选好了</Text>
 
-            </View>
+            </TouchableOpacity>
 
         </View>)
     };
@@ -338,11 +379,16 @@ export default class ChoiseTicketPage extends Component {
     _prize = () => {
         const {selectRaceData} = this.state;
         const {race} = selectRaceData;
+        const {selectSub, selectMain, selectOnly} = this.state;
 
-
-        if (!isEmptyObject(race)) {
-            const {prize} = race;
-            return prize;
+        if (!isEmptyObject(selectMain)) {
+            return selectMain.price;
+        } else if (!isEmptyObject(selectSub)) {
+            return selectSub.prize;
+        } else if (selectOnly) {
+            return race.ticket_price;
+        } else if (!isEmptyObject(race)) {
+            return race.prize
         }
 
 
@@ -359,13 +405,17 @@ export default class ChoiseTicketPage extends Component {
     _selectRace = (race) => {
         this.setState({
             selectRace: race,
-            selectTicket: ''
+            selectTicket: '',
+            selectSub: race === RACE_MAIN ? {} : this.state.selectSub,
+            selectMain: race === RACE_SIDE ? {} : this.state.selectMain
         })
     };
 
     _selectTicket = (ticket) => {
         this.setState({
-            selectTicket: ticket
+            selectTicket: ticket,
+            selectOnly: ticket === ONLY_TICKET,
+            selectMain: ticket == ONLY_TICKET ? {} : this.state.selectMain
         })
     }
 
@@ -462,7 +512,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#444444',
         lineHeight: 20
-
     },
     txtLabel: {
         fontSize: 12,
@@ -551,5 +600,17 @@ const styles = StyleSheet.create({
     },
     btnDisable: {
         backgroundColor: Colors.txt_666
+    },
+    txtSub: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#444444'
+    },
+    selectMain: {
+        borderWidth: 2,
+        borderColor: '#FF8888',
+        flexDirection: 'row',
+        paddingLeft: 17,
+        backgroundColor: 'white'
     }
 });
