@@ -234,7 +234,7 @@ export default class ChoiseTicketPage extends Component {
                 <TouchableOpacity
                     disabled={!this._package_tickets()}
                     onPress={()=>{
-                         this._selectTicket(TICKETS)
+                         this._selectTicket(TICKETS);
                          this.listView.updateDataSource(this._listTicket());
 
                     }}
@@ -402,18 +402,16 @@ export default class ChoiseTicketPage extends Component {
 
 
     _btnOkStyle = () => {
-        const {selectSub, selectMain, selectOnly} = this.state;
-        return !isEmptyObject(selectMain) || !isEmptyObject(selectSub) || selectOnly ?
+        const {ticket} = this.state;
+        return !isEmptyObject(ticket) ?
             styles.viewBtnOk : [styles.viewBtnOk, styles.btnDisable]
 
 
     };
 
     _btnOkDisabled = () => {
-        const {selectSub, selectMain, selectOnly} = this.state;
-        return isEmptyObject(selectMain)
-            && isEmptyObject(selectSub)
-            && !selectOnly
+        const {ticket} = this.state;
+        return isEmptyObject(ticket)
     };
 
     bottomBar = () => {
@@ -462,6 +460,7 @@ export default class ChoiseTicketPage extends Component {
         this.setState({
             selectRace: race,
             selectTicket: '',
+            ticket: {}
         })
     };
 
@@ -472,6 +471,7 @@ export default class ChoiseTicketPage extends Component {
         } else
             this.setState({
                 selectTicket: ticket,
+                ticket: {}
             })
     };
 
