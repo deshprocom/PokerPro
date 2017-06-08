@@ -23,6 +23,7 @@ import {fetchRacesInfo, fetchGetRecentRaces} from '../../actions/RacesAction';
 import StorageKey from '../../configs/StorageKey';
 import {_renderFooter, _renderHeader} from '../../components/LoadingView';
 import PullToRefreshListView from 'react-native-smart-pull-to-refresh-listview';
+import {getBuyRaceTicket} from '../../services/OrderDao';
 
 const E_TICKET = 'e_ticket',
     ENTITY = 'entity';
@@ -33,14 +34,15 @@ class BuyTicketPage extends Component {
         knowRed: true,
         isEntity: 'e_ticket',
         email: '',
-        isNameReal: false
-    }
+        isNameReal: false,
+        raceTicketData: {}
+    };
 
     componentWillReceiveProps(newProps) {
 
         if (newProps.hasData) {
 
-            if(newProps.actionType === GET_RACE_NEW_ORDER){
+            if (newProps.actionType === GET_RACE_NEW_ORDER) {
                 this._pullToRefreshListView.endRefresh()
             }
 
@@ -76,7 +78,7 @@ class BuyTicketPage extends Component {
     }
 
     componentDidMount() {
-     this._pullToRefreshListView.beginRefresh();
+        this._pullToRefreshListView.beginRefresh();
 
     }
 
@@ -85,7 +87,20 @@ class BuyTicketPage extends Component {
     };
 
     refreshPage = () => {
-        this.props._getRaceNewOrder(this.props.params.race_id);
+        // this.props._getRaceNewOrder(this.props.params.race_id);
+        const {race_id, ticket_id} = this.props.params;
+        const body = {
+            race_id: race_id,
+            ticket_id: ticket_id
+        };
+        getBuyRaceTicket(body, data => {
+            this.setState({
+                raceTicketData: data
+            })
+        }, err => {
+            showToast("获取赛票数据失败！")
+        });
+
         this.props._getCertification();
         this.tagBuyKnow();
         const {email} = getLoginUser();
@@ -99,7 +114,7 @@ class BuyTicketPage extends Component {
     eTicketNum = (ticket_info) => {
         if (!isEmptyObject(ticket_info))
             return ticket_info.e_ticket_number - ticket_info.e_ticket_sold_number;
-    }
+    };
 
     btnBuyKnow = () => {
         storage.save({
@@ -135,7 +150,7 @@ class BuyTicketPage extends Component {
                 }
                 }])
 
-    }
+    };
 
     _btnBuyTicket = () => {
         let {isEntity, email, isNameReal} = this.state;
@@ -157,12 +172,12 @@ class BuyTicketPage extends Component {
             showToast('请先进行实名认证')
         }
 
-    }
+    };
 
     ticketPrice = (race) => {
         if (!isEmptyObject(race))
             return race.ticket_price;
-    }
+    };
 
     _raceView = (raceInfo) => {
         if (!isEmptyObject(raceInfo))
@@ -196,8 +211,9 @@ class BuyTicketPage extends Component {
     }
 
     render() {
-        const {race_ticket_addr, user_extra} = this.props;
-        const {race, ticket_info, ordered} = race_ticket_addr;
+        const {user_extra} = this.props;
+        const {race, tickets, ordered} = this.state.raceTicketData;
+        const {ticket_info}  = tickets;
         const {isEntity, knowRed, email} = this.state;
 
         return (
@@ -207,11 +223,10 @@ class BuyTicketPage extends Component {
                 <NavigationBar
                     refreshPage={this.refreshPage}
                     toolbarStyle={{backgroundColor:Colors.bg_09}}
-                    router={this.props.router}
                     title={I18n.t('buy_ticket')}
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
-                    leftBtnPress={()=>this.props.router.pop()}/>
+                    leftBtnPress={()=>router.pop()}/>
                 <PullToRefreshListView
                     ref={ (component) => this._pullToRefreshListView = component }
                     viewType={PullToRefreshListView.constants.viewType.scrollView}
@@ -320,7 +335,7 @@ class BuyTicketPage extends Component {
                     {isEntity == ENTITY ? this._addrView() : this._emailViwe(email)}
 
                     <NameRealView user_extra={user_extra}
-                                  router={this.props.router}/>
+                                  router={router}/>
 
 
                     <View style={{height:20,flex:1}}/>
