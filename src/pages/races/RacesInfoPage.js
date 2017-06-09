@@ -227,7 +227,7 @@ class RacesInfoPage extends Component {
 
             </TouchableOpacity>);
 
-            this.pages.push(<View
+            this.pages.push(<ScrollView
                 testID="page_race_result"
                 key={'page_race_result'}
                 style={{
@@ -237,7 +237,7 @@ class RacesInfoPage extends Component {
                     blinds={blinds}
                     schedules={schedules}
                     raceRanks={raceRanks}/>
-            </View>)
+            </ScrollView>)
         }
 
 

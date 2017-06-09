@@ -54,9 +54,6 @@ class HomePage extends Component {
     }
 
     componentDidMount() {
-        if (Platform.OS === 'android') {
-
-        }
         JpushHelp.addPushListener(this.receiveCb, this.openCb);
         this._refreshPage();
 
@@ -67,6 +64,7 @@ class HomePage extends Component {
     }
 
     receiveCb = (notification) => {
+        alert("receiveCb");
         const {aps} = notification;
         if (aps.badge > 0) {
             this.setState({
@@ -76,6 +74,7 @@ class HomePage extends Component {
     };
 
     openCb = (notification) => {
+        alert('openCb')
     };
 
     _refreshPage() {
