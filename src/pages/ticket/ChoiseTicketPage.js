@@ -30,8 +30,6 @@ export default class ChoiseTicketPage extends Component {
         selectTicket: '',
         selectRaceData: {},
         selectSub: {},
-        selectMain: {},
-        selectOnly: false,
         sub_races: [],
         ticket: {}
 
@@ -421,7 +419,7 @@ export default class ChoiseTicketPage extends Component {
             <Text style={styles.txtMoneyNum}>{this._prize()}</Text>
             <View style={{flex:1}}/>
             <TouchableOpacity
-                onPress={()=>alert('选好了')}
+                onPress={this._toBuy}
                 disabled={this._btnOkDisabled()}
                 style={this._btnOkStyle()}>
                 <Text style={styles.txtBtnOk}>选好了</Text>
@@ -429,6 +427,20 @@ export default class ChoiseTicketPage extends Component {
             </TouchableOpacity>
 
         </View>)
+    };
+
+    _toBuy = () => {
+        const {selectRace, selectSub, selectRaceData, ticket} = this.state;
+        const {id} = ticket;
+        if (selectRace === RACE_MAIN && id) {
+            const {race_id} = selectRaceData.race;
+            router.toBuyTicketPage(this.props, race_id, id)
+        } else if (selectRace === RACE_SIDE && id) {
+            const {race_id} = selectSub.race;
+            router.toBuyTicketPage(this.props, race_id, id)
+        }
+
+
     };
 
     _prize = () => {

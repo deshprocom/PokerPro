@@ -4,7 +4,8 @@
 import React, {Component}from 'react';
 import {
     TouchableOpacity, View, TextInput, Alert,
-    StyleSheet, Image, Text, ScrollView, Platform
+    StyleSheet, Image, Text, ScrollView, Platform,
+    InteractionManager
 } from 'react-native';
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
@@ -21,8 +22,6 @@ import {GET_CERTIFICATION, POST_BUY_TICKET, GET_RACE_NEW_ORDER, POST_CERTIFICATI
 import NameRealView from './NameRealView';
 import {fetchRacesInfo, fetchGetRecentRaces} from '../../actions/RacesAction';
 import StorageKey from '../../configs/StorageKey';
-import {_renderFooter, _renderHeader} from '../../components/LoadingView';
-import PullToRefreshListView from 'react-native-smart-pull-to-refresh-listview';
 import {getBuyRaceTicket} from '../../services/OrderDao';
 
 const E_TICKET = 'e_ticket',
@@ -35,16 +34,15 @@ class BuyTicketPage extends Component {
         isEntity: 'e_ticket',
         email: '',
         isNameReal: false,
-        raceTicketData: {}
+        raceTicketData: {},
+        ordered: false,
+        race: {},
+        tickets: {}
     };
 
     componentWillReceiveProps(newProps) {
 
         if (newProps.hasData) {
-
-            if (newProps.actionType === GET_RACE_NEW_ORDER) {
-                this._pullToRefreshListView.endRefresh()
-            }
 
             if (newProps.actionType === GET_CERTIFICATION || POST_CERTIFICATION) {
 
@@ -78,24 +76,27 @@ class BuyTicketPage extends Component {
     }
 
     componentDidMount() {
-        this._pullToRefreshListView.beginRefresh();
+        InteractionManager.runAfterInteractions(()=>{
+            this.refreshPage();
+        })
+
 
     }
-
-    _onRefresh = () => {
-        this.refreshPage();
-    };
 
     refreshPage = () => {
         // this.props._getRaceNewOrder(this.props.params.race_id);
         const {race_id, ticket_id} = this.props.params;
+        router.log('ticket', race_id, ticket_id);
         const body = {
             race_id: race_id,
             ticket_id: ticket_id
         };
         getBuyRaceTicket(body, data => {
+            const {tickets, ordered, race} =data;
             this.setState({
-                raceTicketData: data
+                tickets: tickets,
+                ordered: ordered,
+                race: race
             })
         }, err => {
             showToast("获取赛票数据失败！")
@@ -212,7 +213,7 @@ class BuyTicketPage extends Component {
 
     render() {
         const {user_extra} = this.props;
-        const {race, tickets, ordered} = this.state.raceTicketData;
+        const {race, tickets, ordered} = this.state;
         const {ticket_info}  = tickets;
         const {isEntity, knowRed, email} = this.state;
 
@@ -227,11 +228,7 @@ class BuyTicketPage extends Component {
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
                     leftBtnPress={()=>router.pop()}/>
-                <PullToRefreshListView
-                    ref={ (component) => this._pullToRefreshListView = component }
-                    viewType={PullToRefreshListView.constants.viewType.scrollView}
-                    onRefresh={this._onRefresh}
-                    renderHeader={(viewState)=>_renderHeader(viewState,headerStyle)}
+                <ScrollView
                     style={{marginBottom:62}}>
                     {/*赛事简介*/}
                     <View style={{height:7}}/>
@@ -341,7 +338,7 @@ class BuyTicketPage extends Component {
                     <View style={{height:20,flex:1}}/>
 
 
-                </PullToRefreshListView>
+                </ScrollView>
                 <View
                     style={{height:62,width:Metrics.screenWidth,
                         backgroundColor:Colors.white,flexDirection:'row',

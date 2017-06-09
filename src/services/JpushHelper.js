@@ -19,21 +19,18 @@ export default class JpushHelper {
 
     static setAlias(alias, successCallback, failedCallback) {
         JPushModule.setAlias(alias, successCallback, failedCallback)
-        if (Platform.OS !== 'ios')
-        JPushModule.initPush();
     }
 
     static addPushListener(receiveCb, openCb) {
         if (Platform.OS === 'ios') {
             this.iosReceiveNotification(receiveCb);
-            this.iosOpenNotification(openCb)
+            this.iosOpenNotification(openCb);
             var subscription = NativeAppEventEmitter.addListener(
                 'networkDidReceiveMessage',
                 (message) => console.log('networkDidReceiveMessage', message)
             );
         } else {
 
-            JPushModule.initPush();
             JPushModule.addReceiveNotificationListener(receiveCb);
             JPushModule.addReceiveOpenNotificationListener(openCb)
         }
@@ -45,7 +42,6 @@ export default class JpushHelper {
             DeviceEventEmitter.removeAllListeners();
             NativeAppEventEmitter.removeAllListeners();
         } else {
-            JPushModule.stopPush();
             JPushModule.removeReceiveNotificationListener(receiveNotificationEvent);
             JPushModule.removeGetRegistrationIdListener(getRegistrationIdEvent);
             JPushModule.removeReceiveOpenNotificationListener(openNotificationEvent);
