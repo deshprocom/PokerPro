@@ -5,6 +5,14 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 import StorageKey from '../configs/StorageKey';
 
+
+export function postOrderTicket(param, body, resolve, reject) {
+    helper.post(Api.orderTicket(param), body, (ret) => {
+        resolve(ret.data)
+    }, reject)
+}
+
+
 export function getBuyRaceTicket(body, resolve, reject) {
     helper.get(Api.buyRaceTicket(body), (ret) => {
         resolve(ret.data)

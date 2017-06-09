@@ -22,7 +22,7 @@ import {GET_CERTIFICATION, POST_BUY_TICKET, GET_RACE_NEW_ORDER, POST_CERTIFICATI
 import NameRealView from './NameRealView';
 import {fetchRacesInfo, fetchGetRecentRaces} from '../../actions/RacesAction';
 import StorageKey from '../../configs/StorageKey';
-import {getBuyRaceTicket} from '../../services/OrderDao';
+import {getBuyRaceTicket, postOrderTicket} from '../../services/OrderDao';
 
 const E_TICKET = 'e_ticket',
     ENTITY = 'entity';
@@ -51,29 +51,10 @@ class BuyTicketPage extends Component {
                 });
 
             }
-            if (newProps.actionType === POST_BUY_TICKET) {
-                Alert.alert('购票成功', '工作人员将及时与您联系，请保持手机畅通');
-                this.props.router.toOrderListPage();
 
-                const {user_id} = getLoginUser();
-                if (strNotNull(user_id)) {
-                    const body = {
-                        user_id: user_id,
-                        race_id: this.props.params.race_id
-                    };
-                    this.props._getRacesInfo(body);
-
-                    const recentRaces = {
-                        user_id: user_id,
-                        number: 5
-                    };
-                    this.props._getRecentRaces(recentRaces);
-                    this.refreshPage();
-                }
-
-            }
         }
     }
+
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
@@ -153,6 +134,30 @@ class BuyTicketPage extends Component {
 
     };
 
+
+    _postOrderOk = () => {
+        Alert.alert('购票成功', '工作人员将及时与您联系，请保持手机畅通');
+
+
+        const {user_id} = getLoginUser();
+        if (strNotNull(user_id)) {
+            const body = {
+                user_id: user_id,
+                race_id: this.props.params.race_id
+            };
+            this.props._getRacesInfo(body);
+
+            const recentRaces = {
+                user_id: user_id,
+                number: 5
+            };
+            this.props._getRecentRaces(recentRaces);
+            this.refreshPage();
+
+            router.toOrderListPage();
+        }
+    };
+
     _btnBuyTicket = () => {
         let {isEntity, email, isNameReal} = this.state;
         if (isNameReal) {
@@ -162,11 +167,21 @@ class BuyTicketPage extends Component {
             }
 
             if (checkMail(email)) {
+
+                const {race_id, ticket_id} = this.props.params;
+                let param = {
+                    race_id: race_id,
+                    ticket_id: ticket_id
+                };
                 let body = {
                     ticket_type: 'e_ticket',
                     email: email
                 };
-                this.props._postBuyTicket(this.props.params.race_id, body);
+                postOrderTicket(param, body, data => {
+                    this._postOrderOk();
+                }, err => {
+                    showToast(err)
+                });
             }
 
         } else {
@@ -429,7 +444,7 @@ class BuyTicketPage extends Component {
 
 
         </View>)
-    }
+    };
 
     _addrView = () => {
         return (  <View style={{height:89,flex:1,marginTop:10,backgroundColor:Colors.white}}>

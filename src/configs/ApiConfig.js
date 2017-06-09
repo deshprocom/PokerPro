@@ -58,7 +58,8 @@ export default {
     searchVideo: searchVideo,
     delNotice: delNotice,
     selectRaceTicket: selectRaceTicket,
-    buyRaceTicket: buyRaceTicket
+    buyRaceTicket: buyRaceTicket,
+    orderTicket:orderTicket
 
 }
 
@@ -71,6 +72,13 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+
+
+export function orderTicket(body) {
+    const {race_id, ticket_id} = body;
+    return 'races/' + race_id + '/tickets/' + ticket_id+'/orders';
+}
 
 
 export function buyRaceTicket(body) {
