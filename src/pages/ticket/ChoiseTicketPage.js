@@ -383,9 +383,11 @@ export default class ChoiseTicketPage extends Component {
 
                     <View style={{flex:1}}/>
 
-                    <View style={styles.btnInfo}>
+                    <TouchableOpacity
+                        onPress={()=>router.toTicketInfoPage()}
+                        style={styles.btnInfo}>
                         <Text style={styles.btnTxt}>查看详情</Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
 
 

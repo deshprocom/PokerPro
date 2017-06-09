@@ -43,6 +43,7 @@ import MainVideoPage from '../pages/videos/MainVideoPage';
 import VideoInfoPage from '../pages/videos/VideoInfoPage';
 import TicketSearchPage from '../pages/ticket/TicketSearchPage';
 import ChoiseTicketPage from '../pages/ticket/ChoiseTicketPage';
+import TicketInfoPage from '../pages/ticket/TicketInfoPage';
 
 
 const customFloatFromRight = Navigator.SceneConfigs.FloatFromRight;
@@ -120,6 +121,15 @@ export default class Router {
         this.navigator.popToTop();
     }
 
+
+    toTicketInfoPage(props) {
+        this.push(props, {
+            page: TicketInfoPage,
+            name: 'TicketInfoPage',
+            sceneConfig: customFloatFromRight
+
+        })
+    }
 
     toChoiseTicketPage(props, race_id) {
         this.push(props, {
