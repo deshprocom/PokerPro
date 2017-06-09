@@ -10,7 +10,7 @@ import {
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar, InputView} from '../../components';
+import {NavigationBar, InputView, ImageLoad} from '../../components';
 import {fetchRaceNewOrder, fetchBuyTicket} from '../../actions/TicketOrderAction'
 import {
     isEmptyObject, showToast, checkMail, moneyFormat,
@@ -76,7 +76,7 @@ class BuyTicketPage extends Component {
     }
 
     componentDidMount() {
-        InteractionManager.runAfterInteractions(()=>{
+        InteractionManager.runAfterInteractions(() => {
             this.refreshPage();
         })
 
@@ -86,7 +86,7 @@ class BuyTicketPage extends Component {
     refreshPage = () => {
         // this.props._getRaceNewOrder(this.props.params.race_id);
         const {race_id, ticket_id} = this.props.params;
-        router.log('ticket', race_id, ticket_id);
+
         const body = {
             race_id: race_id,
             ticket_id: ticket_id
@@ -126,7 +126,7 @@ class BuyTicketPage extends Component {
             knowRed: false
         });
         this.props.router.toBuyKnownPage();
-    }
+    };
 
     tagBuyKnow = () => {
         storage.load({key: StorageKey.BuyKnow})
@@ -137,7 +137,7 @@ class BuyTicketPage extends Component {
             }).catch(err => {
 
         })
-    }
+    };
 
     _btnService = () => {
         Alert.alert(I18n.t('hot_line'), I18n.t('hot_phone') + '\n' + I18n.t('work_time'),
@@ -180,36 +180,65 @@ class BuyTicketPage extends Component {
             return race.ticket_price;
     };
 
-    _raceView = (raceInfo) => {
-        if (!isEmptyObject(raceInfo))
-            return (  <TouchableOpacity
-                testID="btn_race_detail"
-                onPress={()=> this.props.router.toRacesInfoPage(this.props, raceInfo.race_id,true)}
-                activeOpacity={1}
-                style={{flexDirection:'row',backgroundColor:Colors.white}}>
-                <View style={{flex:1,marginLeft:17}}>
+    _location = () => {
 
-                    <Text testID="txt_races_title"
-                          style={[Fonts.H17,{color:Colors.txt_444,marginTop:12,lineHeight:20}]}
-                          numberOfLines={2}>{raceInfo.name}</Text>
-                    <Text testID="txt_races_period"
-                          style={{fontSize:12,color:Colors._888,
-                            marginTop:10}}
-                          numberOfLines={1}>{convertDate(raceInfo.begin_date, YYYY_MM_DD)
-                    + '-' + convertDate(raceInfo.end_date, YYYY_MM_DD)}</Text>
-                    <Text testID="txt_races_address"
-                          style={{fontSize:12,color:Colors._888,
-                            marginTop:4,marginBottom:12}}
-                          numberOfLines={1}>{raceInfo.location}</Text>
+        const {race} = this.state;
+        if (!isEmptyObject(race)) {
+            const {location} = race;
+            return location;
+        }
+    };
+
+    _date = () => {
+        const {race} = this.state;
+        if (!isEmptyObject(race)) {
+            const {end_date, begin_date} = race;
+            return convertDate(begin_date, 'YYYY.MM.DD') + "-" + convertDate(end_date, 'YYYY.MM.DD')
+        }
+    };
+
+    itemListView = (rowData) => {
+
+        const {logo, original_price, price, ticket_class, title} = rowData;
+
+        return (<TouchableOpacity
+            activeOpacity={1}
+            onPress={()=>{
+                  const {race_id, ticket_id} = this.props.params;
+                  router.toTicketInfoPage(this.props,race_id,ticket_id)
+            }}
+            style={styles.itemView}>
+            <ImageLoad
+                source={{uri:logo}}
+                style={styles.itemImg}/>
+
+            <View style={styles.itemContent}>
+                <Text
+                    numberOfLines={2}
+                    style={styles.txtItemTitle}>{title}</Text>
+
+                <Text style={[styles.txtLabel,styles.top8]}>{this._date()}</Text>
+                <Text style={styles.txtLabel}>地址: {this._location()}</Text>
+
+                <View style={styles.viewInfo}>
+                    <Text style={styles.txtPrice}>{price}</Text>
+
+                    <View style={{flex:1}}/>
+
                 </View>
-                <View style={{flexDirection:'row',alignItems:'center',
+
+
+            </View>
+            <View style={{flexDirection:'row',alignItems:'center',
                 justifyContent:'center',width:45,flex:0.15}}>
-                    <Image style={{height:20,width:11}}
-                           source={Images.ticket_arrow}/>
+                <Image style={{height:20,width:11}}
+                       source={Images.ticket_arrow}/>
 
-                </View>
-            </TouchableOpacity>)
-    }
+            </View>
+
+        </TouchableOpacity>)
+    };
+
 
     render() {
         const {user_extra} = this.props;
@@ -233,7 +262,7 @@ class BuyTicketPage extends Component {
                     {/*赛事简介*/}
                     <View style={{height:7}}/>
 
-                    {this._raceView(race)}
+                    {this.itemListView(tickets)}
 
 
                     {/*安全*/}
@@ -432,6 +461,49 @@ const styles = StyleSheet.create({
     ticketUnSelect: {
         height: 30, width: 91, borderRadius: 5, backgroundColor: '#E5E5E5',
         alignItems: 'center', justifyContent: 'center'
+    },
+    itemView: {
+        flexDirection: 'row',
+        paddingLeft: 17,
+        backgroundColor: 'white'
+    },
+    itemImg: {
+        height: 104,
+        width: 80,
+        marginTop: 16,
+        marginBottom: 20
+    },
+    itemContent: {
+        flex: 1,
+        marginTop: 16,
+        marginLeft: 13,
+        marginRight: 10
+    },
+    txtItemTitle: {
+        fontSize: 16,
+        color: '#444444',
+        lineHeight: 20
+    },
+    txtLabel: {
+        fontSize: 12,
+        color: '#AAAAAA'
+    },
+    top8: {
+        marginTop: 8,
+        marginBottom: 3
+    },
+    separator: {
+        height: 4
+    },
+    txtPrice: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: Colors._161817,
+    },
+    viewInfo: {
+        marginTop: 9,
+        flexDirection: 'row',
+        alignItems: 'center'
     },
 
 });

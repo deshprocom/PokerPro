@@ -15,7 +15,7 @@ export default class MarkdownPlat extends Component {
     static propTypes = {
         markdownStr: PropTypes.string.isRequired,
         noScroll: PropTypes.bool
-    }
+    };
 
     render() {
         if (this.props.noScroll)

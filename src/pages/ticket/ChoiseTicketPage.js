@@ -384,7 +384,7 @@ export default class ChoiseTicketPage extends Component {
                     <View style={{flex:1}}/>
 
                     <TouchableOpacity
-                        onPress={()=>router.toTicketInfoPage()}
+                        onPress={()=>this._toTicketInfo(rowData)}
                         style={styles.btnInfo}>
                         <Text style={styles.btnTxt}>查看详情</Text>
                     </TouchableOpacity>
@@ -394,6 +394,20 @@ export default class ChoiseTicketPage extends Component {
             </View>
 
         </TouchableOpacity>)
+    };
+
+    _toTicketInfo = (rowData) => {
+        const {selectRace, selectSub, selectRaceData} = this.state;
+        const {id} = rowData;
+        if (selectRace === RACE_MAIN && id) {
+            const {race_id} = selectRaceData.race;
+            router.toTicketInfoPage(this.props, race_id, id)
+        } else if (selectRace === RACE_SIDE && id) {
+            const {race_id} = selectSub.race;
+            router.toTicketInfoPage(this.props, race_id, id)
+        }
+
+
     };
 
     onFetch = (page = 1, startFetch, abortFetch) => {
