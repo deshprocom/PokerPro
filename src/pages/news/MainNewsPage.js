@@ -16,27 +16,14 @@ import {connect} from 'react-redux';
 import {fetchNewsTypes} from '../../actions/NewsAction';
 import NewsListView from './NewsListView';
 import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
+import {getNewsTypes} from '../../services/NewsDao';
 
 
-class MainNewsPage extends Component {
+export default class MainNewsPage extends Component {
 
     componentDidMount() {
-        this.props.getNewsTypes();
-    }
-
-    state = {
-        typeListData: [],
-        selectTypeId: 1
-    };
-
-
-    componentWillReceiveProps(newProps) {
-
-        const {actionType, newsTypes, loading} = newProps;
-
-        if (actionType === GET_NEWS_TYPES && !isEmptyObject(newsTypes) && !loading) {
-            let {items} = newsTypes;
-
+        getNewsTypes(data => {
+            let {items} = data;
             items.map(function (x) {
                 x['select'] = false;
             });
@@ -48,10 +35,14 @@ class MainNewsPage extends Component {
                     selectTypeId: items[0].id
                 })
             }
-
-        }
-
+        }, err => {
+        })
     }
+
+    state = {
+        typeListData: [],
+        selectTypeId: 1
+    };
 
 
     render() {
@@ -106,7 +97,7 @@ class MainNewsPage extends Component {
             {pages}
         </ScrollableTabView>)
 
-    }
+    };
 
 
     _navSearchBar = () => {
@@ -137,7 +128,7 @@ class MainNewsPage extends Component {
 
             </View>
         </View>)
-    }
+    };
 
     _newsTypeView = () => {
 
@@ -152,7 +143,7 @@ class MainNewsPage extends Component {
                 keyExtractor={item=> item.id}
             />
         </View> )
-    }
+    };
 
 
     _itemView = ({item}) => {
@@ -175,15 +166,15 @@ class MainNewsPage extends Component {
                                   source={Images.news_triangle}/> : null}
 
         </TouchableOpacity>)
-    }
+    };
 
     _page = (item) => {
         const {typeListData} = this.state;
-        for (var i = 0; i < typeListData.length; i++) {
+        for (let i = 0; i < typeListData.length; i++) {
             if (item.id === typeListData[i].id)
                 return i;
         }
-    }
+    };
 
 
     _pressItem = (item) => {
@@ -207,20 +198,6 @@ class MainNewsPage extends Component {
 
 }
 
-export default connect(
-    state => ({
-        loading: state.NewsState.loading,
-        error: state.NewsState.error,
-        hasData: state.NewsState.hasData,
-        actionType: state.NewsState.actionType,
-        errorMsg: state.NewsState.errorMsg,
-        newsTypes: state.NewsState.newsTypes
-    }),
-    dispatch => ({
-        getNewsTypes: () => dispatch(fetchNewsTypes())
-
-    })
-)(MainNewsPage);
 
 const styles = StyleSheet.create({
     topBar: {
