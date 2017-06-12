@@ -6,6 +6,7 @@ import Api from '../configs/ApiConfig';
 import {clearLoginUser} from '../utils/ComonHelper';
 import StorageKey from '../configs/StorageKey';
 import {NetworkInfo} from 'react-native-network-info';
+import {Platform} from 'react-native';
 
 
 let TAG = 'PuKeHttp:';
@@ -35,11 +36,23 @@ export function getApiType() {
     return type;
 }
 
+function setDpIp() {
+    if (Platform.OS === 'ios')
+        NetworkInfo.getIPAddress(ip => {
+            if (ip !== 'error') {
+                client.setHeader('X-DP-CLIENT-IP', ip);
+            }
+        });
+    else
+        NetworkInfo.getIPV4Address(ip => {
+            if (ip !== 'error') {
+                client.setHeader('X-DP-CLIENT-IP', ip);
+            }
+        });
+}
+
 export function getBaseURL() {
-    NetworkInfo.getIPAddress(ip => {
-        if (ip !== 'error')
-            client.setHeader('X-DP-CLIENT-IP', ip);
-    });
+    setDpIp();
     storage.load({key: StorageKey.ApiSever})
         .then((ret) => {
             client.setBaseURL(ret)
