@@ -162,7 +162,7 @@ class BuyTicketPage extends Component {
         let {isEntity, email, isNameReal} = this.state;
         if (isNameReal) {
             if (isEntity === ENTITY) {
-                showToast('实体票暂不开放')
+                showToast('实体票暂不开放');
                 return;
             }
 
