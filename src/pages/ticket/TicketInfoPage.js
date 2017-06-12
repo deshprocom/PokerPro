@@ -54,7 +54,6 @@ export default class TicketInfoPage extends Component {
 
             {this._content()}
 
-            {this.state.ordered ? this._viewGoBuy() : null}
 
         </View>)
 
@@ -62,6 +61,10 @@ export default class TicketInfoPage extends Component {
 
     _viewGoBuy = () => {
         return ( <TouchableOpacity
+            onPress={()=>{
+                 const {race_id, ticket_id} = this.props.params;
+                 router.toBuyTicketPage(this.props, race_id, ticket_id)
+            }}
             style={styles.btnBuy}>
             <Text style={styles.txtGoBuy}>{I18n.t('goBuy')}</Text>
 
@@ -75,7 +78,6 @@ export default class TicketInfoPage extends Component {
         return (  <ScrollView
             iosalwaysBounceVertical={false}
             scrollEventThrottle={16}
-            style={ordered?styles.scroll:{}}
             onScroll={this._onScroll}
         >
 
@@ -100,13 +102,13 @@ export default class TicketInfoPage extends Component {
 
             </View>
 
-            <View style={styles.markdown}>
+            <View style={styles.margin108}>
                 <MarkdownPlat
                     markdownStr={description}
                     noScroll={false}/>
             </View>
 
-
+            { this._viewGoBuy() }
         </ScrollView>)
     };
 
@@ -208,7 +210,9 @@ const styles = StyleSheet.create({
         color: '#D2C476',
         fontSize: 18
     },
-    scroll: {
-        marginBottom: 70
+    margin108: {
+        marginBottom: 108,
+        backgroundColor: 'white',
+        marginTop: 6
     }
 });
