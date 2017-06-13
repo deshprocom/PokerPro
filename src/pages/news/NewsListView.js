@@ -105,7 +105,7 @@ class NewsListView extends Component {
 
             let rows = uniqueArray(this.listView.getRows(), items)
 
-            startFetch(rows, 2);
+            startFetch(rows, 5);
 
             let newData = newsListData.concat(rows);
             this.setState({
@@ -130,7 +130,7 @@ class NewsListView extends Component {
             }
             let rows = uniqueArray(this.listView.getRows(), items);
 
-            startFetch(rows, 2);
+            startFetch(rows, 5);
 
             this.setState({
                 newsListData: rows,
