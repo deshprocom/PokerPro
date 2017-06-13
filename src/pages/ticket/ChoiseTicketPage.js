@@ -15,7 +15,7 @@ import {UltimateListView, NavigationBar, ImageLoad, ActionSide} from '../../comp
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {getSelectRaceTicket} from '../../services/OrderDao';
 import {subRaces} from '../../services/RacesDao';
-import {isEmptyObject, convertDate} from '../../utils/ComonHelper';
+import {isEmptyObject, convertDate, strNotNull} from '../../utils/ComonHelper';
 import Picker from 'react-native-picker';
 
 const RACE_MAIN = 'RACE_MAIN',
@@ -286,7 +286,7 @@ export default class ChoiseTicketPage extends Component {
 
             {selectRace===RACE_SIDE?this.selectSideView():null}
 
-            {this.ticketTypeView()}
+            {strNotNull(selectRace)?this.ticketTypeView():null}
 
             <View style={{height:10}}/>
 
