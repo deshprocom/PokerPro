@@ -105,8 +105,8 @@ export default class ChoiseTicketPage extends Component {
 
 
         Picker.init({
-            pickerConfirmBtnText: '确定',
-            pickerCancelBtnText: '取消',
+            pickerConfirmBtnText: I18n.t('certain'),
+            pickerCancelBtnText: I18n.t('cancel'),
             pickerTitleText: '',
             pickerData: array,
             pickerConfirmBtnColor: [68, 68, 68, 1],
@@ -170,7 +170,7 @@ export default class ChoiseTicketPage extends Component {
     _selectSub = () => {
         const {race} = this.state.selectSub;
         if (isEmptyObject(race))
-            return '请选择赛事';
+            return I18n.t('pleaseSelectRace');
         else
             return race.name
     };
@@ -179,7 +179,7 @@ export default class ChoiseTicketPage extends Component {
     raceTypeView = () => {
         const {selectRace} = this.state;
         return (<View style={styles.viewRace}>
-            <Text style={styles.txtSelectRace}>选择赛事</Text>
+            <Text style={styles.txtSelectRace}>{I18n.t('selectRace')}</Text>
             <View style={styles.viewMainSide}>
 
                 <TouchableOpacity
@@ -188,7 +188,7 @@ export default class ChoiseTicketPage extends Component {
                         this._selectRace(RACE_MAIN)
                     }}
                     style={this._selectedBg(selectRace === RACE_MAIN)}>
-                    <Text style={this._selectTxt(selectRace === RACE_MAIN)}>主赛</Text>
+                    <Text style={this._selectTxt(selectRace === RACE_MAIN)}>{I18n.t('mainRace')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     disabled={!this.btnSideDisabled()}
@@ -199,7 +199,7 @@ export default class ChoiseTicketPage extends Component {
                     style={[this._selectedBg(selectRace === RACE_SIDE),styles.marginLeft]}>
                     <Text style={this.btnSideDisabled()?
                         this._selectTxt(selectRace === RACE_SIDE):
-                        styles.txtDisabled}>边赛</Text>
+                        styles.txtDisabled}>{I18n.t('sideRace')}</Text>
                 </TouchableOpacity>
             </View>
 
@@ -216,7 +216,7 @@ export default class ChoiseTicketPage extends Component {
         const {selectTicket} = this.state;
 
         return (<View style={styles.viewRace}>
-            <Text style={styles.txtSelectRace}>选择票务类型</Text>
+            <Text style={styles.txtSelectRace}>{I18n.t('ticketType')}</Text>
             <View style={styles.viewMainSide}>
 
                 <TouchableOpacity
@@ -227,7 +227,7 @@ export default class ChoiseTicketPage extends Component {
                     }}
                     style={this._selectedBg(ONLY_TICKET === selectTicket)}>
                     <Text style={this._single_tickets()?this._selectTxt(ONLY_TICKET === selectTicket):
-                     styles.txtDisabled}>仅赛事</Text>
+                     styles.txtDisabled}>{I18n.t('onlyRace')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     disabled={!this._package_tickets()}
@@ -239,7 +239,7 @@ export default class ChoiseTicketPage extends Component {
                     style={[this._selectedBg(TICKETS === selectTicket),styles.marginLeft]}>
                     <Text style={this._package_tickets()?
                     this._selectTxt(TICKETS === selectTicket):
-                    styles.txtDisabled}>赛票套餐</Text>
+                    styles.txtDisabled}>{I18n.t('ticketBinds')}</Text>
                 </TouchableOpacity>
             </View>
         </View>)
@@ -376,7 +376,7 @@ export default class ChoiseTicketPage extends Component {
                     style={styles.txtItemTitle}>{title}</Text>
 
                 <Text style={[styles.txtLabel,styles.top8]}>{this._date()}</Text>
-                <Text style={styles.txtLabel}>地址: {this._location()}</Text>
+                <Text style={styles.txtLabel}>{I18n.t('location')}: {this._location()}</Text>
 
                 <View style={styles.viewInfo}>
                     <Text style={styles.txtPrice}>{price}</Text>
@@ -386,7 +386,7 @@ export default class ChoiseTicketPage extends Component {
                     <TouchableOpacity
                         onPress={()=>this._toTicketInfo(rowData)}
                         style={styles.btnInfo}>
-                        <Text style={styles.btnTxt}>查看详情</Text>
+                        <Text style={styles.btnTxt}>{I18n.t('lookDetail')}</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -431,14 +431,14 @@ export default class ChoiseTicketPage extends Component {
     bottomBar = () => {
 
         return (<View style={styles.viewBottom}>
-            <Text style={styles.txtMoney}>价格: </Text>
+            <Text style={styles.txtMoney}>{I18n.t('price')}: </Text>
             <Text style={styles.txtMoneyNum}>{this._prize()}</Text>
             <View style={{flex:1}}/>
             <TouchableOpacity
                 onPress={this._toBuy}
                 disabled={this._btnOkDisabled()}
                 style={this._btnOkStyle()}>
-                <Text style={styles.txtBtnOk}>选好了</Text>
+                <Text style={styles.txtBtnOk}>{I18n.t('selectOk')}</Text>
 
             </TouchableOpacity>
 

@@ -160,6 +160,16 @@
   "no_more":"已经没有啦！",
   "loading":"加载中...",
   "selectTicket":"选票",
-  "goBuy":"立即购买"
-
+  "goBuy":"立即购买",
+  "location":"地址",
+  "lookDetail":"查看详情",
+  "price":"价格",
+  "selectOk":"选好了",
+  "ticketType":"选择票务类型",
+  "onlyRace":"仅赛事",
+  "ticketBinds":"赛票套餐",
+  "selectRace":"选择赛事",
+  "mainRace":"主赛",
+  "sideRace":"边赛",
+  "pleaseSelectRace":"请选择赛事"
 }
