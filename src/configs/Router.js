@@ -44,6 +44,7 @@ import VideoInfoPage from '../pages/videos/VideoInfoPage';
 import TicketSearchPage from '../pages/ticket/TicketSearchPage';
 import ChoiseTicketPage from '../pages/ticket/ChoiseTicketPage';
 import TicketInfoPage from '../pages/ticket/TicketInfoPage';
+import WebViewPage from '../components/WebViewPage';
 
 
 const customFloatFromRight = Navigator.SceneConfigs.FloatFromRight;
@@ -119,6 +120,18 @@ export default class Router {
 
     popToTop() {
         this.navigator.popToTop();
+    }
+
+    toWebViewPage(props, url) {
+        this.push(props, {
+            page: WebViewPage,
+            name: 'WebViewPage',
+            sceneConfig: customFloatFromRight,
+            params: {
+                url: url
+            }
+
+        })
     }
 
 

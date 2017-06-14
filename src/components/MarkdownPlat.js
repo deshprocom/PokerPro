@@ -35,7 +35,11 @@ export default class MarkdownPlat extends Component {
         if (strNotNull(markdownStr))
             if (Platform.OS === 'ios') {
 
-                return (<MarkdownView>
+                return (<MarkdownView
+                    onLinkPress={url=>{
+
+                        router.toWebViewPage(this.props,url);
+                    }}>
                     {markdownStr}
                 </MarkdownView>)
 
