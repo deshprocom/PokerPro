@@ -11,7 +11,7 @@ import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
 import {openDrawer} from '../reducers/DrawerRedux';
 import StorageKey from '../configs/StorageKey';
-import {setAccessToken, getBaseURL, getApiType} from '../services/RequestHelper';
+import {setAccessToken, getBaseURL} from '../services/RequestHelper';
 import {fetchGetProfile} from '../actions/PersonAction';
 import {FETCH_SUCCESS, GET_PROFILE, GET_RECENT_RACES} from '../actions/ActionTypes';
 import I18n from 'react-native-i18n';

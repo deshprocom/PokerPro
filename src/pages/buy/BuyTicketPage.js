@@ -258,7 +258,7 @@ class BuyTicketPage extends Component {
     render() {
         const {user_extra} = this.props;
         const {race, tickets, ordered} = this.state;
-        const {ticket_info}  = tickets;
+        const {ticket_info, price}  = tickets;
         const {isEntity, knowRed, email} = this.state;
 
         return (
@@ -393,7 +393,7 @@ class BuyTicketPage extends Component {
                         <Text style={{fontSize:12,color:Colors.txt_FF9,marginLeft:10}}>¥</Text>
                         <Text style={{fontSize:18,color:Colors.txt_FF9}}
                               testID="txt_ticket_price">
-                            {moneyFormat(this.ticketPrice(race))}
+                            {price}
                         </Text>
                     </View>
                     <View style={{height:41,width:1,backgroundColor:Colors.txt_DDD}}/>
