@@ -120,7 +120,7 @@ export function showToast(msg) {
 var myreg = /^1(3|4|5|7|8)\d{9}$/;
 export function checkPhone(phone) {
     if (phone != null && phone != undefined) {
-        if (!myreg.test(phone)) {
+        if (!myreg.test(phone.trim())) {
             showToast('请输入有效的手机号码！');
             return false;
         }
@@ -131,7 +131,7 @@ export function checkPhone(phone) {
 var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 export function checkMail(mail) {
 
-    if (filter.test(mail)) return true;
+    if (filter.test(mail.trim())) return true;
     else {
         showToast('您的电子邮件格式不正确');
         return false;
@@ -139,7 +139,7 @@ export function checkMail(mail) {
 }
 
 export function checkLoginMail(mail) {
-    if (filter.test(mail)) return true;
+    if (filter.test(mail.trim())) return true;
     else {
         return false;
     }

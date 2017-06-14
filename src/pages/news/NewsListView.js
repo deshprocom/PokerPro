@@ -161,7 +161,9 @@ class NewsListView extends Component {
 
                     <View style={{flex:1}}/>
                     <View style={styles.listTopTxtView}>
-                        <Text style={styles.listTopTxt}>{title}</Text>
+                        <Text
+                            numberOfLines={1}
+                            style={styles.listTopTxt}>{title}</Text>
 
                     </View>
                 </Image>
