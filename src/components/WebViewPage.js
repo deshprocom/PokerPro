@@ -69,15 +69,20 @@ export default class WebViewPage extends Component {
         return (
             <View style={ApplicationStyles.bgContainer}>
                 {this.topBarView()}
-                <WebView
-                    ref={(ref)=>{this.webView = ref}}
-                    style={styles.webView}
-                    scalesPageToFit={true}
-                    source={{uri: url}}
-                    renderLoading={this._renderLoading}
-                    renderError={this._renderError}
-                    startInLoadingState={true}
-                />
+                <View
+                    style={styles.contentContainer}
+                    {...this._panResponder.panHandlers}>
+                    <WebView
+
+                        ref={(ref)=>{this.webView = ref}}
+                        style={styles.webView}
+                        scalesPageToFit={true}
+                        source={{uri: url}}
+                        renderLoading={this._renderLoading}
+                        renderError={this._renderError}
+                        startInLoadingState={true}
+                    />
+                </View>
 
 
                 {this.bottomBarView()}
@@ -158,9 +163,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     contentContainer: {
-        marginTop: theme.toolbar.height,
-        flex: 1,
-        paddingTop: theme.toolbar.paddingTop
+        flex: 1
     },
     toolbar: {
         position: 'absolute',
