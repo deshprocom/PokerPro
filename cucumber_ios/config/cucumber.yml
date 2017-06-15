@@ -1,0 +1,7 @@
+# config/cucumber.yml
+##YAML Template
+---
+ipadsim: IDEVICENAME='ipad simulator'
+iphonesim: IDEVICENAME='iphone simulator'
+iphone: IDEVICENAME='iphone'
+

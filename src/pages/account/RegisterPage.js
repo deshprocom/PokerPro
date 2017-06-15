@@ -4,7 +4,7 @@
 import React from 'react';
 import {
     TouchableOpacity, View, TextInput,
-    StyleSheet, Image, Text
+    StyleSheet, Image, Text, KeyboardAvoidingView
 } from 'react-native';
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
@@ -14,7 +14,7 @@ import {CountDownText}from '../../components/countdown/CountDownText';
 import {fetchPostVerifyCode, fetchPostVCode}from '../../actions/AccountAction';
 import {checkPhone, strNotNull, showToast, checkMail} from '../../utils/ComonHelper';
 import {POST_VERIFY_CODE, POST_V_CODE} from '../../actions/ActionTypes';
-import {BtnLong, BtnSoild,InputView} from '../../components';
+import {BtnLong, BtnSoild, InputView} from '../../components';
 
 class RegisterPage extends React.Component {
 
@@ -63,7 +63,6 @@ class RegisterPage extends React.Component {
             getCodeDisable: false
         });
     };
-
 
 
     _inputMobileCodeView = () => {
@@ -165,55 +164,56 @@ class RegisterPage extends React.Component {
                         leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
                         leftBtnPress={()=>this.props.router.pop()}/>
                 </View>
-                <View style={{flex:1}}>
 
-                    {this._inputMobileCodeView()}
+                {this._inputMobileCodeView()}
 
-                    <Text style={{color:Colors._AAA,fontSize:12,
+                <Text style={{color:Colors._AAA,fontSize:12,
                     marginTop:17,alignSelf:'center'}}>
-                        {I18n.t('chang_use_phone')}</Text>
+                    {I18n.t('chang_use_phone')}</Text>
 
-                    {/*下一步按钮*/}
-                    <BtnSoild
-                        testID="btn_next"
-                        onPress={this._next}
-                        name={I18n.t('next')}
-                        style={{marginTop:19,
+                {/*下一步按钮*/}
+                <BtnSoild
+                    testID="btn_next"
+                    onPress={this._next}
+                    name={I18n.t('next')}
+                    style={{marginTop:19,
                         backgroundColor: canNextDisable?Colors._AAA:Colors.bg_09}}
-                        disabled={canNextDisable}
-                        textStyle={{color:canNextDisable? Colors.white:Colors.txt_E0C}}/>
+                    disabled={canNextDisable}
+                    textStyle={{color:canNextDisable? Colors.white:Colors.txt_E0C}}/>
 
-                    <TouchableOpacity
-                        style={{ borderBottomWidth:0.5,
+                <TouchableOpacity
+                    style={{ borderBottomWidth:0.5,
         borderBottomColor:Colors._999,
         alignSelf: 'flex-end',
         marginTop: 29,
         marginRight: 20}}
-                        transparent
-                        testID="btn_have_account"
-                        onPress={()=>this.props.router.pop()}>
+                    transparent
+                    testID="btn_have_account"
+                    onPress={()=>this.props.router.pop()}>
 
-                        <Text style={styles.text_problem}>{I18n.t('i_have_account')}</Text>
+                    <Text style={styles.text_problem}>{I18n.t('i_have_account')}</Text>
 
-                    </TouchableOpacity>
+                </TouchableOpacity>
 
-                    {/*使用邮箱注册*/}
-                    <BtnLong
-                        style={{marginTop:35}}
-                        testID="btn_switch_email_register"
-                        onPress={()=>{
+                {/*使用邮箱注册*/}
+                <BtnLong
+                    style={{marginTop:35}}
+                    testID="btn_switch_email_register"
+                    onPress={()=>{
                               this.countDownText.end();
                              this.props.router.toEmailRegisterPage()
                         }}
-                        name={ I18n.t('email_register')}/>
-                </View>
+                    name={ I18n.t('email_register')}/>
 
-                <TouchableOpacity onPress={()=>{
+
+                <View style={{flex:1}}/>
+                <TouchableOpacity
+                    onPress={()=>{
                     this.setState({
                         checkAgree:!checkAgree
                     })
                 }}
-                                  style={{marginBottom:49}}>
+                    style={{marginBottom:49}}>
                     <View style={{alignSelf:'center',flexDirection:'row'}}>
                         <Image style={{height:12,width:12,marginRight:8}}
                                source={checkAgree?Images.sign_choice_no:Images.sign_choice}/>

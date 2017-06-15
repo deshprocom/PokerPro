@@ -51,8 +51,15 @@ export default {
     race_tickets: race_tickets,
     account_change_bind: account_change_bind,
     bind_account: bind_account,
-    change_permission: change_permission
-
+    change_permission: change_permission,
+    notifications: notifications,
+    videoTypes: 'videos/types',
+    videoList: videoList,
+    searchVideo: searchVideo,
+    delNotice: delNotice,
+    selectRaceTicket: selectRaceTicket,
+    buyRaceTicket: buyRaceTicket,
+    orderTicket:orderTicket
 
 }
 
@@ -65,6 +72,45 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+
+
+export function orderTicket(body) {
+    const {race_id, ticket_id} = body;
+    return 'races/' + race_id + '/tickets/' + ticket_id+'/orders';
+}
+
+
+export function buyRaceTicket(body) {
+    const {race_id, ticket_id} = body;
+    return 'races/' + race_id + '/tickets/' + ticket_id;
+}
+
+export function selectRaceTicket(body) {
+    const {race_id} = body;
+    return 'races/' + race_id + '/tickets';
+}
+
+export function delNotice(body) {
+    const {id} = body;
+    return 'users/' + login_user.user_id + '/notifications/' + id;
+
+}
+
+export function searchVideo(body) {
+    const {keyword, next_id} = body;
+    return 'videos/search?keyword=' + keyword + '&next_id=' + next_id
+}
+
+export function videoList(body) {
+    const {type_id, next_id} = body;
+    return 'videos/types/' + type_id + '?page_size=' + page_size + '&next_id=' + next_id
+}
+
+
+export function notifications() {
+    return 'users/' + login_user.user_id + '/notifications';
+}
 
 
 export function change_permission() {

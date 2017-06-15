@@ -227,7 +227,7 @@ class RacesInfoPage extends Component {
 
             </TouchableOpacity>);
 
-            this.pages.push(<View
+            this.pages.push(<ScrollView
                 testID="page_race_result"
                 key={'page_race_result'}
                 style={{
@@ -237,7 +237,7 @@ class RacesInfoPage extends Component {
                     blinds={blinds}
                     schedules={schedules}
                     raceRanks={raceRanks}/>
-            </View>)
+            </ScrollView>)
         }
 
 
@@ -352,17 +352,17 @@ class RacesInfoPage extends Component {
                             if(raceInfo.ordered)
                                 Alert.alert(I18n.t('tint'),I18n.t('ticket_ordered_tint'),
                                 [{text:I18n.t('ignore'),
-                                onPress:()=>this.props.router.toBuyTicketPage(this.props,this.props.params.race_id)},
+                                onPress:()=>router.toChoiseTicketPage(this.props,this.props.params.race_id)},
                                 {text:I18n.t('look_order'),
-                                onPress:()=> this.props.router.toOrderInfo(this.props,raceInfo.order_id)}]);
+                                onPress:()=> router.toOrderInfo(this.props,raceInfo.order_id)}]);
 
                             else{
-                                this.props.router.toBuyTicketPage(this.props,this.props.params.race_id);
+                                router.toChoiseTicketPage(this.props,this.props.params.race_id);
                             }
 
                         }
                         else
-                            this.props.router.toLoginFirstPage();
+                            router.toLoginFirstPage();
 
                 }}/>)
     };

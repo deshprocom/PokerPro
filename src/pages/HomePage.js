@@ -5,7 +5,7 @@ import React, {Component, PropTypes} from 'react';
 import {
     StyleSheet, Text, View, ListView,
     TouchableOpacity, Image, StatusBar,
-    ScrollView, Animated
+    ScrollView, Animated, Platform
 } from 'react-native';
 import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
@@ -23,6 +23,8 @@ import ListNoDataPage from '../components/ListErrorPage';
 import {isEmptyObject, strNotNull, putLoginUser, developing} from '../utils/ComonHelper';
 import {NavigationBar, ParallaxScrollView} from '../components';
 import {LoadingView} from '../components/load';
+import JpushHelp from '../services/JpushHelper';
+import TestRouter from '../components/TestRouter';
 
 var maxDown = 0;
 
@@ -38,7 +40,9 @@ class HomePage extends Component {
         this.state = {
             user_id: '',
             languageChange: false,
-            opacity: 0
+            opacity: 0,
+            badge: false
+
         };
 
         init(() => {
@@ -50,9 +54,27 @@ class HomePage extends Component {
     }
 
     componentDidMount() {
+        JpushHelp.addPushListener(this.receiveCb, this.openCb);
         this._refreshPage();
 
     }
+
+    componentWillUnmount() {
+        JpushHelp.removePushListener();
+    }
+
+    receiveCb = (notification) => {
+        const {aps} = notification;
+        if (aps.badge > 0) {
+            this.setState({
+                badge: true
+            })
+        }
+    };
+
+    openCb = (notification) => {
+
+    };
 
     _refreshPage() {
         storage.load({key: StorageKey.LoginUser})
@@ -128,9 +150,13 @@ class HomePage extends Component {
 
         if (maxDown == -120 && offsetY == 0) {
             maxDown = 0;
-            this._refreshPage();
+            const recentRaces = {
+                user_id: this.state.user_id,
+                number: 5
+            };
+            this.props._getRecentRaces(recentRaces);
         }
-    }
+    };
 
     _showNick = (nickname) => {
         if (strNotNull(nickname))
@@ -150,30 +176,61 @@ class HomePage extends Component {
                         style={styles.person_nick}>{I18n.t('log_register')}</Text>
                 </TouchableOpacity>
             )
-    }
+    };
+
+    toMessagePage = () => {
+
+        if (isEmptyObject(login_user)) {
+            router.toLoginFirstPage()
+        } else {
+            this.setState({
+                badge: false
+            });
+            JpushHelp.iosSetBadge(0);
+            router.toMessagePage()
+        }
+
+    };
 
     render() {
 
         const {profile, router, error, loading, hasData, actionType, listRaces} = this.props;
-        const {opacity} = this.state;
+        const {opacity, badge} = this.state;
 
         return (
             <View
                 style={ {flex:1,backgroundColor:Colors.bg_09}}
                 testID="home_page">
 
-                <NavigationBar
-                    refreshPage={()=>this._refreshPage()}
-                    router={this.props.router}
-                    leftBtnIcon={Images.home_more}
-                    leftImageStyle={{height:14,width:18,marginLeft:15,marginRight:20}}
-                    leftBtnPress={()=>this.props.openDrawer()}
-                    rightBtnIcon={Images.home_notification}
-                    rightBtnPress={()=>router.toJpushPage()}
-                    rightImageStyle={{height: 19, width: 17, marginRight: 15,marginLeft:20}}
-                    toolbarStyle={{ backgroundColor: 'rgba(0,0,0,'+opacity+')',
-        position: 'absolute',zIndex: 3}}
-                />
+                <View style={[styles.topBar,{ backgroundColor: 'rgba(0,0,0,'+opacity+')'}]}>
+                    <StatusBar barStyle="light-content"/>
+                    <TouchableOpacity
+                        testID="btn_bar_left"
+                        onPress={()=>this.props.openDrawer()}
+                        style={styles.topBtn}
+                        activeOpacity={1}>
+                        <Image
+                            source={Images.home_more}
+                            style={styles.topImgLeft}/>
+
+                    </TouchableOpacity>
+                    <TestRouter refreshPage={this._refreshPage}/>
+                    <View style={{flex:1}}/>
+                    <TouchableOpacity
+                        testID="btn_bar_right"
+                        onPress={this.toMessagePage}
+                        style={styles.topBtn}
+                        activeOpacity={1}>
+                        <Image
+                            style={styles.topImgRight}
+                            source={badge?Images.home_badge:Images.home_notification}/>
+
+                    </TouchableOpacity>
+
+
+                </View>
+
+
                 <ParallaxScrollView
                     fadeOutForeground={false}
                     fadeOutBackground={false}
@@ -229,7 +286,7 @@ class HomePage extends Component {
                         </TouchableOpacity>
                         <TouchableOpacity
                             testID="btn_home_video"
-                            onPress={developing}
+                            onPress={()=>router.toVideoPage()}
                             style={styles.item_center}>
                             <Image style={styles.gif_fuc}
                                    source={Images.home_video}/>
@@ -237,7 +294,7 @@ class HomePage extends Component {
                         </TouchableOpacity>
                         <TouchableOpacity
                             testID="btn_home_sort"
-                            onPress={developing}
+                            onPress={()=>router.toChoiseTicketPage(this.props,28)}
                             style={[{marginRight:53},styles.item_center]}>
                             <Image style={styles.gif_fuc}
                                    source={Images.home_sort}/>
@@ -411,7 +468,24 @@ const styles = StyleSheet.create({
         fontSize: Fonts.size.h15,
         color: Colors.txt_666, marginLeft: 13,
         backgroundColor: 'transparent'
-    }
+    },
+    topBar: {
+        height: Metrics.navBarHeight,
+        flexDirection: 'row',
+        alignItems: 'center',
+        position: 'absolute',
+        zIndex: 3,
+        width: Metrics.screenWidth,
+        paddingTop: Metrics.statusBarHeight
+    },
+    topBtn: {
+        height: 40,
+        width: 50,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    topImgLeft: {height: 14, width: 18, marginLeft: 15, marginRight: 20},
+    topImgRight: {height: 19, width: 17, marginRight: 15, marginLeft: 20},
 });
 
 

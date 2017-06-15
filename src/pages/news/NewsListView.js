@@ -12,12 +12,13 @@ import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {GET_NEWS_LIST} from '../../actions/ActionTypes';
-import {isEmptyObject, convertDate, strNotNull, newsUnique} from '../../utils/ComonHelper';
-import {ImageLoad, PullListView} from '../../components';
+import {isEmptyObject, convertDate, strNotNull, uniqueArray} from '../../utils/ComonHelper';
+import {ImageLoad, PullListView, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {fetchNewsList} from '../../actions/NewsAction';
 import {_renderFooter, _renderHeader} from '../../components/LoadingView';
 const headerStyle = {height: 35, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.bg_f5};
+import {getNewsList} from '../../services/NewsDao';
 
 
 class NewsListView extends Component {
@@ -39,6 +40,7 @@ class NewsListView extends Component {
             newsListNextId: '0',
             topped: {},
             componentDataSource: this._dataSource.cloneWithRows([]),
+            error: false
         }
 
 
@@ -46,60 +48,101 @@ class NewsListView extends Component {
 
 
     render() {
-        const {newsListData} = this.state;
-
 
         return (<View
             style={styles.pullView}
             testID={'page_news_'+this.props.newsTypeItem.id}>
 
 
-            {isEmptyObject(newsListData) ? <NoDataView/> : null}
-            <View>
-                <PullListView
-                    ref={ (component) => this._pullToRefreshListView = component }
-                    viewType={PullListView.constants.viewType.listView}
-                    dataSource={this.state.componentDataSource}
-                    renderRow={this._itemNewsView}
-                    renderHeader={(viewState)=>_renderHeader(viewState,headerStyle)}
-                    renderFooter={(viewState)=>_renderFooter(viewState,headerStyle)}
-                    onRefresh={this._onRefresh}
-                    onLoadMore={this._onLoadMore}
-                    enableEmptySections={true}
-                />
-            </View>
+            <UltimateListView
+                key={this.state.layout}
+                keyExtractor={(item, index) => `${this.state.layout} - ${item.race_id}`}
+                ref={(ref) => this.listView = ref}
+                onFetch={this.onFetch}
+                legacyImplementation
+                rowView={this._itemNewsView}
+                refreshableTitlePull={I18n.t('pull_refresh')}
+                refreshableTitleRelease={I18n.t('release_refresh')}
+                dateTitle={I18n.t('last_refresh')}
+                allLoadedText={I18n.t('no_more')}
+                waitingSpinnerText={I18n.t('loading')}
+                emptyView={()=>{
+                    return this.state.error? <LoadErrorView
+                    onPress={()=>{
+                        this.listView.refresh()
+                    }}/>: <NoDataView/>;
+                }}
+            />
 
 
         </View>)
     }
 
+    onFetch = (page = 1, startFetch, abortFetch) => {
+        try {
+            this.listPage = page;
 
-    _onRefresh = () => {
-        const {newsTypeItem} = this.props;
-        this._getNewsList(newsTypeItem.id, '0')
+            if (page === 1) {
+                this.refresh(startFetch, abortFetch)
+            } else {
+                this.loadmore(startFetch, abortFetch);
+            }
+        } catch (err) {
+            abortFetch();
+        }
+
     };
 
-    _onLoadMore = () => {
-        const {newsTypeItem} = this.props;
-        const {newsListNextId} = this.state;
-        router.log("onEndReached", newsTypeItem, newsListNextId);
-        this._getNewsList(newsTypeItem.id, newsListNextId)
+    loadmore = (startFetch, abortFetch) => {
+        let {newsTypeItem} = this.props;
+        const {newsListNextId, newsListData} = this.state;
+        let body = {
+            type_id: newsTypeItem.id,
+            next_id: newsListNextId
+        };
+        getNewsList(body, (data) => {
+            let {items, next_id, topped} = data;
 
+            let rows = uniqueArray(this.listView.getRows(), items)
+
+            startFetch(rows, 5);
+
+            let newData = newsListData.concat(rows);
+            this.setState({
+                newsListData: newData,
+                newsListNextId: next_id === 0 ? newsListNextId : next_id
+            })
+        }, (err) => {
+            abortFetch();
+        })
     };
 
+    refresh = (startFetch, abortFetch) => {
+        let {newsTypeItem} = this.props;
+        let body = {
+            type_id: newsTypeItem.id,
+            next_id: '0'
+        };
+        getNewsList(body, (data) => {
+            let {items, next_id, topped} = data;
+            if (!isEmptyObject(topped)) {
+                items.unshift(topped)
+            }
+            let rows = uniqueArray(this.listView.getRows(), items);
 
-    componentDidMount() {
-        InteractionManager.runAfterInteractions(() => {
-            this._onRefresh();
-        });
+            startFetch(rows, 5);
 
-    }
-
-
-    componentWillReceiveProps(newProps) {
-
-        this._handleNewsList(newProps);
-    }
+            this.setState({
+                newsListData: rows,
+                newsListNextId: next_id
+            })
+        }, (err) => {
+            this.setState({
+                error: true
+            });
+            abortFetch();
+        })
+    };
 
 
     _itemNewsView = (rowData, sectionID, rowID) => {
@@ -118,7 +161,9 @@ class NewsListView extends Component {
 
                     <View style={{flex:1}}/>
                     <View style={styles.listTopTxtView}>
-                        <Text style={styles.listTopTxt}>{title}</Text>
+                        <Text
+                            numberOfLines={1}
+                            style={styles.listTopTxt}>{title}</Text>
 
                     </View>
                 </Image>
@@ -151,65 +196,12 @@ class NewsListView extends Component {
         }
 
 
-    }
+    };
 
     _pressItem = (item) => {
         router.toNewsInfoPage(this.props, item)
-    }
+    };
 
-    _handleNewsList = (newProps) => {
-        const {actionType, newsList, newsTypeId, loading} = newProps;
-
-        let newsListType = GET_NEWS_LIST + this.props.newsTypeItem.id;
-
-        if (actionType + newsTypeId === newsListType
-            && !isEmptyObject(newsList)
-            && this.props.loading !== loading) {
-            router.log(actionType + newsTypeId, newsList)
-
-            let {items, next_id, topped} = newsList;
-            const {newsListData, newsListNextId} =this.state;
-
-            if (newsListNextId !== '0') {
-                this._pullToRefreshListView.endLoadMore(false);
-                if (isEmptyObject(items))
-                    return;
-
-                let newData = newsUnique(newsListData.concat(items));
-
-                this.setState({
-                    componentDataSource: this._dataSource.cloneWithRows(newData),
-                    newsListNextId: next_id,
-                    newsListData: newData
-                })
-            } else {
-                this._pullToRefreshListView.endRefresh();
-
-                if (!isEmptyObject(topped)) {
-                    items.unshift(topped)
-                }
-                let newData = newsUnique(items);
-
-                this.setState({
-                    componentDataSource: this._dataSource.cloneWithRows(newData),
-                    newsListNextId: next_id,
-                    newsListData: newData,
-                    topped: topped
-                })
-            }
-        }
-    }
-
-    _getNewsList = (type_id, next_id) => {
-        const body = {
-            type_id: type_id,
-            next_id: next_id
-        };
-        this.setState({
-            newsListNextId: next_id
-        });
-        this.props.getNewsList(body);
-    }
 }
 
 

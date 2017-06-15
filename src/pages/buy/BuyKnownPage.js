@@ -46,7 +46,7 @@ export default class BuyKnowPage extends Component {
                         {'\n\n'}
                         6.电子票支付成功后，我们将赛票信息发送到您预留的邮箱，请及时查收。如若邮箱收不到信息，请及时与客服人员取得联系！
                         {'\n\n'}
-                        7.客服服务热线：XXXXXXXXXXX；服务时间：10：30-19:30
+                        7.客服服务热线：0755-23919844；服务时间：10：30-19:30
                     </Text>
 
                 </View>

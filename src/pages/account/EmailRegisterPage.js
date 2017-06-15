@@ -16,7 +16,7 @@ import {fetchPostRegister} from '../../actions/AccountAction';
 import {fetchGetProfile} from '../../actions/PersonAction';
 import {fetchGetRecentRaces} from '../../actions/RacesAction';
 import BtnLong from '../../components/BtnLong';
-import {NavigationBar,InputView,InputPwdView} from '../../components';
+import {NavigationBar, InputView, InputPwdView} from '../../components';
 
 class EmailRegisterPage extends React.Component {
 
@@ -73,73 +73,73 @@ class EmailRegisterPage extends React.Component {
                         leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
                         leftBtnPress={()=>this.props.router.pop()}/>
                 </View>
-                <View style={{flex:1}}>
-                    <InputView
-                        testID="input_email"
-                        placeholder={I18n.t('please_input_email')}
-                        stateText={(text)=>{
+
+                <InputView
+                    testID="input_email"
+                    placeholder={I18n.t('please_input_email')}
+                    stateText={(text)=>{
                         this.setState({
                             email:text,
                             canNextDisable:!(text.length>0 && this.state.password.length>0)
                         })
                     }}
-                    />
-                    <InputPwdView
-                        testID="input_password"
-                        placeholder={I18n.t('ple_new_pwd')}
-                        stateText={(text)=>{
+                />
+                <InputPwdView
+                    testID="input_password"
+                    placeholder={I18n.t('ple_new_pwd')}
+                    stateText={(text)=>{
                         this.setState({
                             password:text,
                             canNextDisable:!(text.length>0 && this.state.email.length>0)
                         })
                     }}/>
-                    <Text style={{color:Colors._AAA,fontSize:12,
+                <Text style={{color:Colors._AAA,fontSize:12,
                     marginTop:17,alignSelf:'center'}}>
-                        {I18n.t('password_format')}</Text>
+                    {I18n.t('password_format')}</Text>
 
-                    {/*下一步按钮*/}
-                    <TouchableOpacity
-                        testID="btn_complete"
-                        style={{marginTop:19, alignSelf: 'center',
+                {/*下一步按钮*/}
+                <TouchableOpacity
+                    testID="btn_complete"
+                    style={{marginTop:19, alignSelf: 'center',
         backgroundColor: canNextDisable?Colors._AAA:Colors.bg_09,
         height: 45,
         justifyContent: 'center',
         borderRadius: 5,
         width: 336}}
-                        onPress={this._next}
-                        disabled={canNextDisable}>
+                    onPress={this._next}
+                    disabled={canNextDisable}>
 
-                        <Text style={{ alignSelf: 'center',
+                    <Text style={{ alignSelf: 'center',
         color:canNextDisable? Colors.white:Colors.txt_E0C,
         fontSize: 19}}>
-                            {I18n.t('complete')}</Text>
+                        {I18n.t('complete')}</Text>
 
-                    </TouchableOpacity>
+                </TouchableOpacity>
 
-                    <TouchableOpacity
-                        style={{ borderBottomWidth:0.5,
+                <TouchableOpacity
+                    style={{ borderBottomWidth:0.5,
         borderBottomColor:Colors._999,
         alignSelf: 'flex-end',
         marginTop: 29,
         marginRight: 20}}
-                        transparent
-                        testID="btn_have_account"
-                        onPress={()=>this.props.router.popToLogin()}>
+                    transparent
+                    testID="btn_have_account"
+                    onPress={()=>this.props.router.popToLogin()}>
 
-                        <Text style={styles.text_problem}>{I18n.t('i_have_account')}</Text>
+                    <Text style={styles.text_problem}>{I18n.t('i_have_account')}</Text>
 
-                    </TouchableOpacity>
+                </TouchableOpacity>
 
-                    {/*使用邮箱注册*/}
-                    <BtnLong
-                        style={{marginTop:35}}
-                        testID="btn_switch_phone_register"
-                        onPress={()=>{
+                {/*使用邮箱注册*/}
+                <BtnLong
+                    style={{marginTop:35}}
+                    testID="btn_switch_phone_register"
+                    onPress={()=>{
                              this.props.router.pop();
                         }}
-                        name={I18n.t('phone_register')}/>
+                    name={I18n.t('phone_register')}/>
 
-                </View>
+                <View style={{flex:1}}/>
 
                 <TouchableOpacity onPress={()=>{
                     this.setState({

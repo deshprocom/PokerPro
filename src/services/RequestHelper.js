@@ -1,26 +1,58 @@
 /**
  * Created by lorne on 2016/12/23.
  */
-import {create} from 'apisauce'
+import {create} from 'apisauce';
 import Api from '../configs/ApiConfig';
 import {clearLoginUser} from '../utils/ComonHelper';
 import StorageKey from '../configs/StorageKey';
+import {NetworkInfo} from 'react-native-network-info';
+import {Platform} from 'react-native';
+
 
 let TAG = 'PuKeHttp:';
 
 
 // define the api
 const client = create({
-    baseURL: Api.test,
+    baseURL: Api.production,
     headers: {
         'X-DP-APP-KEY': '467109f4b44be6398c17f6c058dfa7ee',
-        'X-DP-CLIENT-IP': '192.168.2.231',
+        'X-DP-CLIENT-IP': '192.168.2.231'
     },
     timeout: 20000,
 });
 
-export function getBaseURL() {
+export function getApiType() {
+    let type = 'test';
+    let ret = client.getBaseURL();
 
+    if (ret === Api.dev)
+        type = 'dev';
+    else if (ret === Api.test)
+        type = 'test';
+    else if (ret === Api.staging)
+        type = 'staging';
+
+    return type;
+}
+
+function setDpIp() {
+    if (Platform.OS === 'ios')
+        NetworkInfo.getIPAddress(ip => {
+            if (ip !== 'error') {
+                client.setHeader('X-DP-CLIENT-IP', ip);
+            }
+        });
+    else
+        NetworkInfo.getIPV4Address(ip => {
+            if (ip !== 'error') {
+                client.setHeader('X-DP-CLIENT-IP', ip);
+            }
+        });
+}
+
+export function getBaseURL() {
+    setDpIp();
     storage.load({key: StorageKey.ApiSever})
         .then((ret) => {
             client.setBaseURL(ret)
@@ -75,6 +107,29 @@ export function post(url, body, resolve, reject) {
                 netError(response);
             }
 
+
+        }).catch((error) => {
+        router.log(TAG, error);
+        reject('Network response was not ok.');
+    });
+}
+
+
+export function del(url, body, resolve, reject) {
+    router.log(url, body);
+    client.delete(url, body)
+        .then((response) => {
+            if (response.ok) {
+                const {code, msg} = response.data;
+                if (code === 0) {
+                    resolve(response.data);
+                } else {
+                    reject(msg);
+                }
+            } else {
+                reject(response.problem);
+                netError(response);
+            }
 
         }).catch((error) => {
         router.log(TAG, error);

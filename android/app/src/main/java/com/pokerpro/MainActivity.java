@@ -5,6 +5,8 @@ import android.os.Bundle;
 import com.reactnativecomponent.splashscreen.RCTSplashScreen;    //import RCTSplashScreen
 import com.umeng.analytics.MobclickAgent;
 import cn.jpush.android.api.JPushInterface;
+import android.content.Intent;
+import android.content.res.Configuration;
 
 public class MainActivity extends ReactActivity {
 
@@ -38,4 +40,12 @@ JPushInterface.onResume(this);
     	MobclickAgent.onPause(this);
     	 JPushInterface.onPause(this);
     }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+            super.onConfigurationChanged(newConfig);
+            Intent intent = new Intent("onConfigurationChanged");
+            intent.putExtra("newConfig", newConfig);
+            this.sendBroadcast(intent);
+        }
 }

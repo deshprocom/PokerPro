@@ -202,7 +202,7 @@ class SearchNewsPage extends Component {
 
             </View>
         </View>)
-    }
+    };
 
     _searchInput = () => {
         if (Platform.OS === 'ios')

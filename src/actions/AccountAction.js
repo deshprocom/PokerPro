@@ -6,7 +6,7 @@ import {
     POST_VERIFY_CODE, POST_RESET_PASSWORD, POST_REGISTER,
     POST_CHANGE_PWD, POST_V_CODE, POST_CERTIFICATION, GET_CERTIFICATION,
     POST_CARD_IMAGE, GET_PLAYER_INFO, POST_BIND_ACCOUNT, POST_CHANGE_BIND,
-    POST_CHANGE_PERMISSION,
+    POST_CHANGE_PERMISSION, GET_NOTIFICATIONS, DEL_NOTIFICATIONS,
     FETCH_SUCCESS, FETCHING, FETCH_FAIL
 } from '../actions/ActionTypes';
 import {showToast} from '../utils/ComonHelper';
@@ -18,9 +18,36 @@ import {
     postChangePwd, LoginUser, postVCode,
     postCertification, getCertification,
     postCardImage, playerInfo, postChangeBind,
-    postBindAccount,postChangePermission
+    postBindAccount, postChangePermission, getNotifications,
+    delNotification
 } from '../services/AccountDao';
 
+
+export function fetchDelNotice(body, success) {
+
+    return (dispatch) => {
+        dispatch(_delNotice());
+        delNotification(body, (ret) => {
+            success();
+            dispatch(_delNoticeOk(ret))
+        }, (err) => {
+            showToast(err);
+            dispatch(_delNoticeFail(err))
+        })
+    }
+}
+
+export function fetchNotifications() {
+    return (dispatch) => {
+        dispatch(_getNotifications());
+        getNotifications((ret) => {
+            dispatch(_getNotificationsOk(ret))
+        }, (err) => {
+            showToast(err);
+            dispatch(_getNotificationsFail(err))
+        })
+    }
+}
 
 export function fetchChangePermission(body) {
     return (dispatch) => {
@@ -605,6 +632,51 @@ function _postChangePermissionOk() {
 function _postChangePermissionFail(error) {
     return {
         type: POST_CHANGE_PERMISSION,
+        fetching: FETCH_FAIL,
+        error: error
+    }
+}
+
+function _getNotifications() {
+    return {
+        type: GET_NOTIFICATIONS,
+        fetching: FETCHING
+    }
+}
+
+function _getNotificationsOk(notices) {
+    return {
+        type: GET_NOTIFICATIONS,
+        fetching: FETCH_SUCCESS,
+        notices: notices
+    }
+}
+
+function _getNotificationsFail(error) {
+    return {
+        type: GET_NOTIFICATIONS,
+        fetching: FETCH_FAIL,
+        error: error
+    }
+}
+
+function _delNotice() {
+    return {
+        type: DEL_NOTIFICATIONS,
+        fetching: FETCHING
+    }
+}
+
+function _delNoticeOk() {
+    return {
+        type: DEL_NOTIFICATIONS,
+        fetching: FETCH_SUCCESS
+    }
+}
+
+function _delNoticeFail(error) {
+    return {
+        type: DEL_NOTIFICATIONS,
         fetching: FETCH_FAIL,
         error: error
     }

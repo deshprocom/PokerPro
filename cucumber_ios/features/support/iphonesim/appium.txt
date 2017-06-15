@@ -1,0 +1,13 @@
+[caps]
+platformName = "ios"
+deviceName = "iPhone 6s"
+platformVersion = "10.2"
+app = '../ios/build/Build/Products/Debug-iphonesimulator/PokerPro.app'
+automationName = 'XCUITest'
+language = 'zh'
+locale = 'zh_CN'
+
+[appium_lib]
+sauce_username = false
+sauce_access_key = false
+wait_timeout = 10

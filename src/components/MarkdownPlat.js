@@ -9,13 +9,14 @@ import {
 import Markdown from './simple';
 import {MarkdownView} from './markview';
 import ImageMark from './simple/ImageMark';
+import {strNotNull} from '../utils/ComonHelper';
 
 export default class MarkdownPlat extends Component {
 
     static propTypes = {
-        markdownStr: PropTypes.string.isRequired,
+        markdownStr: PropTypes.string,
         noScroll: PropTypes.bool
-    }
+    };
 
     render() {
         if (this.props.noScroll)
@@ -31,20 +32,25 @@ export default class MarkdownPlat extends Component {
 
     _markdownView = () => {
         const {markdownStr} = this.props;
-        if (Platform.OS === 'ios') {
+        if (strNotNull(markdownStr))
+            if (Platform.OS === 'ios') {
 
-            return (<MarkdownView>
-                {markdownStr}
-            </MarkdownView>)
+                return (<MarkdownView
+                    onLinkPress={url=>{
 
-        } else {
+                        router.toWebViewPage(this.props,url);
+                    }}>
+                    {markdownStr}
+                </MarkdownView>)
 
-            return ( <Markdown
-                rules={markRules}
-                styles={markStyles}>
-                {markdownStr}
-            </Markdown>)
-        }
+            } else {
+
+                return ( <Markdown
+                    rules={markRules}
+                    styles={markStyles}>
+                    {markdownStr}
+                </Markdown>)
+            }
     }
 }
 

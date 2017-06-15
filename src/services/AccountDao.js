@@ -4,8 +4,20 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 import StorageKey from '../configs/StorageKey';
+import JpushHelp from './JpushHelper';
 
 
+export function delNotification(body, resolve, reject) {
+    helper.del(Api.delNotice(body), {}, (ret) => {
+        resolve(ret.data);
+    }, reject);
+}
+
+export function getNotifications(resolve, reject) {
+    helper.get(Api.notifications(), (ret) => {
+        resolve(ret.data);
+    }, reject);
+}
 export function postChangePermission(body, resolve, reject) {
     helper.post(Api.change_permission(), body, (ret) => {
         resolve(ret.data);
@@ -73,6 +85,17 @@ global.login_user = {};
 export function setLoginUser(ret) {
     LoginUser = ret;
     global.login_user = ret;
+
+    JpushHelp.getRegistrationID((id) => {
+        router.log('JpushId: ' + id)
+    });
+    let alias = helper.getApiType() + '_' + ret.user_id;
+    console.log(alias)
+    JpushHelp.setAlias(alias, () => {
+        router.log(alias + ' set jpush alias success')
+    }, () => {
+        router.log(alias + ' set jpush alias fail')
+    })
 }
 
 export function removeToken() {

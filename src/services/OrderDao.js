@@ -5,6 +5,25 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 import StorageKey from '../configs/StorageKey';
 
+
+export function postOrderTicket(param, body, resolve, reject) {
+    helper.post(Api.orderTicket(param), body, (ret) => {
+        resolve(ret.data)
+    }, reject)
+}
+
+
+export function getBuyRaceTicket(body, resolve, reject) {
+    helper.get(Api.buyRaceTicket(body), (ret) => {
+        resolve(ret.data)
+    }, reject)
+}
+
+export function getSelectRaceTicket(body, resolve, reject) {
+    helper.get(Api.selectRaceTicket(body), (ret) => {
+        resolve(ret.data)
+    }, reject)
+}
 /*订单列表*/
 export function getOrderList(body, resolve, reject) {
     helper.get(Api.users_orderList(body), (ret) => {

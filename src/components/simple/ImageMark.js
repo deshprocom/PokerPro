@@ -62,8 +62,9 @@ export default class ImageMark extends Component {
         if (Platform.OS === 'ios')
             return (
                 <Image
+                    resizeMode={'cover'}
                     source={{uri: src}}
-                    style={{width, height, resizeMode: 'cover',
+                    style={{width, height,
                     marginTop:10,backgroundColor:Colors._EEE}}
                 >
                     <TouchableOpacity
@@ -77,10 +78,10 @@ export default class ImageMark extends Component {
                     onPress={()=>this.imageClick(src)}
                     style={{marginTop:10,flexDirection:'column'}}>
                     <Image
+                        resizeMode={'cover'}
                         source={{uri: src}}
                         style={{width:pixel(height),
-                 height:pixel(width),
-                resizeMode: 'cover',}}/>
+                 height:pixel(width)}}/>
 
                     <Text> </Text>
                 </Text>)

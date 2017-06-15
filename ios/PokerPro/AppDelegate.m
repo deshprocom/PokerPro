@@ -16,7 +16,12 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import "RCTSplashScreen.h"
+#import <AVFoundation/AVFoundation.h>
+#import "Orientation.h"
 
+static NSString *appKey = @"40fc518c7fb0759af5cba44a";     //填写appkey
+static NSString *channel = @"";    //填写channel   一般为nil
+static BOOL isProduction = false;  //填写isProdurion  平时测试时为false ，生产时填写true
 
 @implementation AppDelegate
 
@@ -41,8 +46,8 @@
                                           categories:nil];
   }
   
-  [JPUSHService setupWithOption:launchOptions appKey:@"40fc518c7fb0759af5cba44a"
-                        channel:nil apsForProduction:nil];
+  [JPUSHService setupWithOption:launchOptions appKey:appKey
+                        channel:nil apsForProduction:isProduction];
   NSURL *jsCodeLocation;
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
@@ -58,7 +63,7 @@
 
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
 
-
+  [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:nil];  // allow
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];
@@ -68,6 +73,10 @@
   return YES;
 }
 
+ - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+    return [Orientation getOrientation];
+  }
+
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 [JPUSHService registerDeviceToken:deviceToken];
 }
@@ -75,8 +84,12 @@
 [[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:userInfo];
 }
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)   (UIBackgroundFetchResult))completionHandler {
-[[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:userInfo];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:userInfo];
+    completionHandler(UIBackgroundFetchResultNewData);
+  });
 }
+
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler {
  NSDictionary * userInfo = notification.request.content.userInfo;
  if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {

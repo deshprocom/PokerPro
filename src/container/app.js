@@ -12,6 +12,7 @@ import '../I18n/I18n';
 import SplashScreen from 'react-native-smart-splash-screen';
 import MobclickAgent from 'rn-umeng';
 import {UMENG_ANDROID,UMENG_IOS} from '../configs/Constants';
+import Orientation from 'react-native-orientation';
 console.disableYellowBox = true;
 
 const store = configureStore();
@@ -27,6 +28,7 @@ export default class App extends Component {
     }
 
     componentDidMount() {
+        Orientation.lockToPortrait();
         //SplashScreen.close(SplashScreen.animationType.scale, 850, 500)
         SplashScreen.close({
             animationType: SplashScreen.animationType.scale,

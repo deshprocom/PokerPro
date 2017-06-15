@@ -34,8 +34,8 @@ export default class ApiSettingPage extends Component {
             api = Api.dev;
         else if (ret === Api.test)
             api = Api.test;
-        else if (ret === Api.staging)
-            api = Api.staging;
+        else if (ret === Api.production)
+            api = Api.production;
 
         this.setState({
             api: api
@@ -57,7 +57,7 @@ export default class ApiSettingPage extends Component {
                 onValueChange={(api) => this._setApiSever(api)}>
                 <Picker.Item value={Api.dev} label="dev"/>
                 <Picker.Item value={Api.test} label="test"/>
-                <Picker.Item value={Api.staging} label="staging"/>
+                <Picker.Item value={Api.production} label="production"/>
             </Picker>
 
         </View>)

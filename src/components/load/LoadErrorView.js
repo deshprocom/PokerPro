@@ -15,7 +15,7 @@ export default class LoadErrorView extends Component {
     render() {
         return (<View
             testID="view_load_error"
-            style={ApplicationStyles.bgContainer}>
+            style={styles.page}>
 
             <View style={{alignItems:'center',justifyContent:'center',
             marginTop:140}}>
@@ -43,3 +43,10 @@ export default class LoadErrorView extends Component {
         </View>)
     }
 }
+
+
+const styles = StyleSheet.create({
+    page: {
+        backgroundColor: Colors.bg_f5
+    }
+});

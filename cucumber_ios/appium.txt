@@ -1,0 +1,9 @@
+[caps]
+platformName = 'ios'
+versionNumber = '10.2'
+deviceName = 'iPhone 6'
+app = '../ios/build/Build/Products/Debug-iphonesimulator/PokerPro.app'
+automationName = 'XCUITest'
+
+language = 'zh'
+locale = 'zh_CN'
