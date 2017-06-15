@@ -69,6 +69,7 @@ export default class ActionSide extends Component {
         </Modal>)
     }
 
+
     _keyExtractor = (item) => {
         return item.race_id;
     };
@@ -132,6 +133,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         height: 50,
+
     },
     btnTxt: {
         fontSize: 16,
@@ -146,11 +148,13 @@ const styles = StyleSheet.create({
     viewItem: {
         height: 50,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderBottomWidth: 0.5,
+        borderBottomColor: '#444444'
     },
     txtName: {
         fontSize: 20,
         color: '#161718',
         fontWeight: 'bold',
-    }
+    },
 });
