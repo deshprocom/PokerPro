@@ -37,21 +37,21 @@ export default class BusinessPage extends Component {
                     onPress={this._hotLine}
                     name="联系电话"
                     testID="btn_business_phone"
-                    rightText={I18n.t('phoebe_phone')}
+                    rightText={I18n.t('hot_phone')}
                 />
             </View>
         </View>)
     }
 
     _hotLine = () => {
-        Alert.alert(I18n.t('business_cooperation'), I18n.t('phoebe_phone'),
+        Alert.alert(I18n.t('business_cooperation'), I18n.t('hot_phone'),
             [{
                 text: I18n.t('cancel'), onPress: () => {
                 }
             },
                 {
                     text: I18n.t('call'), onPress: () => {
-                    call(I18n.t('phoebe_phone'))
+                    call(I18n.t('hot_phone'))
                 }
                 }])
     }
