@@ -23,15 +23,15 @@ const client = create({
 });
 
 export function getApiType() {
-    let type = 'test';
+    let type = 'production';
     let ret = client.getBaseURL();
 
     if (ret === Api.dev)
         type = 'dev';
     else if (ret === Api.test)
         type = 'test';
-    else if (ret === Api.staging)
-        type = 'staging';
+    else if (ret === Api.production)
+        type = 'production';
 
     return type;
 }
