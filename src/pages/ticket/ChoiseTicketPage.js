@@ -16,7 +16,6 @@ import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {getSelectRaceTicket} from '../../services/OrderDao';
 import {subRaces} from '../../services/RacesDao';
 import {isEmptyObject, convertDate, strNotNull} from '../../utils/ComonHelper';
-import Picker from 'react-native-picker';
 
 const RACE_MAIN = 'RACE_MAIN',
     RACE_SIDE = 'RACE_SIDE',
@@ -66,9 +65,6 @@ export default class ChoiseTicketPage extends Component {
         })
     };
 
-    componentWillUnmount() {
-        Picker.hide();
-    }
 
     render() {
         return (<View style={ApplicationStyles.bgContainer}>
@@ -77,6 +73,9 @@ export default class ChoiseTicketPage extends Component {
             {this.listTicketView()}
 
             {this.bottomBar()}
+
+            <ActionSide
+                ref={ref=>this.actionSide = ref}/>
 
         </View>)
     }
@@ -96,57 +95,9 @@ export default class ChoiseTicketPage extends Component {
 
     showSubTicket = () => {
         const {sub_races} = this.state;
-        const array = [];
-        if (!isEmptyObject(sub_races)) {
-            sub_races.forEach(function (x) {
-                array.push(x.name + '--' + x.race_id)
-            })
-        }
+        this.actionSide.setData(sub_races);
+        this.actionSide.show();
 
-
-        Picker.init({
-            pickerConfirmBtnText: I18n.t('certain'),
-            pickerCancelBtnText: I18n.t('cancel'),
-            pickerTitleText: '',
-            pickerData: array,
-            pickerConfirmBtnColor: [68, 68, 68, 1],
-            pickerCancelBtnColor: [68, 68, 68, 1],
-            pickerTitleColor: [20, 20, 20, 1],
-            pickerToolBarBg: [255, 255, 255, 1],
-            pickerBg: [255, 255, 255, 1],
-            pickerToolBarFontSize: 17,
-            pickerFontSize: 21,
-            pickerFontColor: [34, 34, 34, 1],
-            onPickerConfirm: (data) => {
-
-                for (i = 0; i < sub_races.length; i++) {
-                    let select = sub_races[i].name + '--' + sub_races[i].race_id;
-                    if (select === data[0]) {
-
-                        let body = {
-                            race_id: sub_races[i].race_id
-                        };
-                        getSelectRaceTicket(body, ret => {
-                            router.log('subTicket', ret);
-                            this.setState({
-                                selectSub: ret
-                            });
-                        }, err => {
-
-                        });
-
-                    }
-
-                }
-            },
-            onPickerCancel: (data) => {
-
-            },
-            onPickerSelect: (data) => {
-
-            }
-        });
-        Picker.show();
     };
 
     titleView = () => {
@@ -184,7 +135,7 @@ export default class ChoiseTicketPage extends Component {
 
                 <TouchableOpacity
                     onPress={()=>{
-                          Picker.hide();
+
                         this._selectRace(RACE_MAIN)
                     }}
                     style={this._selectedBg(selectRace === RACE_MAIN)}>
@@ -603,7 +554,9 @@ const styles = StyleSheet.create({
     itemView: {
         flexDirection: 'row',
         paddingLeft: 17,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        borderWidth: 2,
+        borderColor: 'white'
     },
     itemImg: {
         height: 104,

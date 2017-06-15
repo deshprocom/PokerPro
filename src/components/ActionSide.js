@@ -3,9 +3,11 @@
  */
 import React, {Component, PropTypes} from 'react'
 import {
-    Text, View, StyleSheet, Dimensions,
-    Modal, TouchableHighlight, Animated, ScrollView
-} from 'react-native'
+    Text, View, StyleSheet, Dimensions, Button,
+    Modal, TouchableOpacity, Animated, ScrollView,
+    FlatList
+} from 'react-native';
+import I18n from 'react-native-i18n';
 
 export default class ActionSide extends Component {
 
@@ -14,9 +16,16 @@ export default class ActionSide extends Component {
         this.translateY = 268;
         this.state = {
             visible: false,
-            sheetAnim: new Animated.Value(this.translateY)
+            sheetAnim: new Animated.Value(this.translateY),
+            data: []
         };
     }
+
+    setData = (data) => {
+        this.setState({
+            data: data
+        })
+    };
 
     show() {
         this.setState({visible: true});
@@ -32,7 +41,7 @@ export default class ActionSide extends Component {
 
 
     render() {
-        const {visible, sheetAnim} = this.state;
+        const {visible, sheetAnim, data} = this.state;
 
         return (<Modal
             visible={visible}
@@ -45,13 +54,51 @@ export default class ActionSide extends Component {
                     style={[styles.page ,
                     {height: this.translateY, transform: [{translateY: sheetAnim}]}]}
                 >
-                    <Text>辣椒卡斯蒂略分 </Text>
+                    {this._topBar()}
+
+                    <FlatList
+                        data={data}
+                        renderItem={this._renderItem}
+                        keyExtractor={this._keyExtractor}
+                    />
+
 
                 </Animated.View>
 
             </View>
         </Modal>)
     }
+
+    _keyExtractor = (item) => {
+        return item.race_id;
+    };
+    _renderItem = ({item}) => {
+        const {name} = item;
+        return (<View style={styles.viewItem}>
+            <Text style={styles.txtName}>{name}</Text>
+
+        </View>)
+    };
+
+    _topBar = () => {
+        return ( <View style={styles.topBar}>
+            <TouchableOpacity
+                onPress={this._cancel}
+                style={styles.btn}>
+                <Text style={styles.btnTxt}
+                >{I18n.t('cancel')}</Text>
+            </TouchableOpacity>
+
+
+            <View style={{flex:1}}/>
+
+            <TouchableOpacity style={styles.btn}>
+                <Text style={styles.btnTxt}
+                >{I18n.t('certain')}</Text>
+            </TouchableOpacity>
+
+        </View>)
+    };
 
     _cancel = () => {
         this._hideSheet(
@@ -76,10 +123,34 @@ const styles = StyleSheet.create({
         flex: 1
     },
     page: {
-
         backgroundColor: 'white',
     },
     overlay: {
         flex: 1
+    },
+    topBar: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        height: 50,
+    },
+    btnTxt: {
+        fontSize: 16,
+        color: '#444444'
+    },
+    btn: {
+        height: 50,
+        width: 70,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    viewItem: {
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    txtName: {
+        fontSize: 20,
+        color: '#161718',
+        fontWeight: 'bold',
     }
 });
