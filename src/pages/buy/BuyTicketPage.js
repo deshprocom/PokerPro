@@ -57,6 +57,7 @@ class BuyTicketPage extends Component {
 
 
     componentDidMount() {
+        this._getLocalEmail();
         InteractionManager.runAfterInteractions(() => {
             this.refreshPage();
         })
@@ -85,12 +86,7 @@ class BuyTicketPage extends Component {
 
         this.props._getCertification();
         this.tagBuyKnow();
-        const {email} = getLoginUser();
-        if (strNotNull(email)) {
-            this.setState({
-                email: email
-            })
-        }
+
     };
 
     eTicketNum = (ticket_info) => {
@@ -158,7 +154,17 @@ class BuyTicketPage extends Component {
         }
     };
 
+    _saveBuyEmail = () => {
+        let {email} = this.state;
+        if (strNotNull(email))
+            storage.save({
+                key: StorageKey.BuyEmail,
+                rawData: email
+            });
+    };
+
     _btnBuyTicket = () => {
+
         let {isEntity, email, isNameReal} = this.state;
         if (isNameReal) {
             if (isEntity === ENTITY) {
@@ -167,7 +173,7 @@ class BuyTicketPage extends Component {
             }
 
             if (checkMail(email)) {
-
+                this._saveBuyEmail();
                 const {race_id, ticket_id} = this.props.params;
                 let param = {
                     race_id: race_id,
@@ -267,6 +273,15 @@ class BuyTicketPage extends Component {
             <Text
                 style={{fontSize:15,color:isEntity==ENTITY?Colors.txt_F28:Colors._AAA}}>{I18n.t('ticket_paper')}</Text>
         </TouchableOpacity>)
+    };
+
+    _getLocalEmail = () => {
+        storage.load({key: StorageKey.BuyEmail})
+            .then((ret) => {
+                this.setState({
+                    email: ret
+                })
+            });
     };
 
 
