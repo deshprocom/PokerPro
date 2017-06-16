@@ -254,6 +254,21 @@ class BuyTicketPage extends Component {
         </TouchableOpacity>)
     };
 
+    _entityView = () => {
+        return (   <TouchableOpacity
+            onPress={() => {
+                                this.setState({
+                                    isEntity: ENTITY
+                                })
+                            }}
+            activeOpacity={1}
+            testID="btn_entity_ticket"
+            style={isEntity==ENTITY ? styles.ticketSelect : styles.ticketUnSelect}>
+            <Text
+                style={{fontSize:15,color:isEntity==ENTITY?Colors.txt_F28:Colors._AAA}}>{I18n.t('ticket_paper')}</Text>
+        </TouchableOpacity>)
+    };
+
 
     render() {
         const {user_extra} = this.props;
@@ -353,18 +368,8 @@ class BuyTicketPage extends Component {
                                 <Text
                                     style={{fontSize:15,color:isEntity==ENTITY?Colors._AAA:Colors.txt_F28}}>{I18n.t('ticket_web')}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={() => {
-                                this.setState({
-                                    isEntity: ENTITY
-                                })
-                            }}
-                                activeOpacity={1}
-                                testID="btn_entity_ticket"
-                                style={isEntity==ENTITY ? styles.ticketSelect : styles.ticketUnSelect}>
-                                <Text
-                                    style={{fontSize:15,color:isEntity==ENTITY?Colors.txt_F28:Colors._AAA}}>{I18n.t('ticket_paper')}</Text>
-                            </TouchableOpacity>
+
+                            {false ? this._entityView() : null}
 
 
                         </View>
