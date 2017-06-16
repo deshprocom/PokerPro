@@ -349,17 +349,7 @@ class RacesInfoPage extends Component {
                 raceInfo={raceInfo}
                 onPress={()=>{
                         if(isLoginUser){
-                            if(raceInfo.ordered)
-                                Alert.alert(I18n.t('tint'),I18n.t('ticket_ordered_tint'),
-                                [{text:I18n.t('ignore'),
-                                onPress:()=>router.toChoiseTicketPage(this.props,this.props.params.race_id)},
-                                {text:I18n.t('look_order'),
-                                onPress:()=> router.toOrderInfo(this.props,raceInfo.order_id)}]);
-
-                            else{
-                                router.toChoiseTicketPage(this.props,this.props.params.race_id);
-                            }
-
+                             router.toChoiseTicketPage(this.props,this.props.params.race_id);
                         }
                         else
                             router.toLoginFirstPage();
