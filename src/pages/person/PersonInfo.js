@@ -225,12 +225,7 @@ export default class PersonInfo extends React.Component {
 
                 <View style={[styles.line,{height:8}]}/>
 
-                <View style={styles.set_view}>
-                    <Text style={styles.text_label}>{I18n.t('addr_manager')}</Text>
-                    <Image style={{height:20,width:11}}
-                           source={Images.set_more}/>
-                </View>
-                <View style={[styles.line,{marginLeft:20}]}/>
+                {this._addrView()}
                 <TouchableOpacity
                     testID="btn_real_name"
                     onPress={this._toRealName}
@@ -259,6 +254,14 @@ export default class PersonInfo extends React.Component {
             </View>
         )
     }
+
+    _addrView = () => {
+        return false ? ( <View style={styles.set_view}>
+                <Text style={styles.text_label}>{I18n.t('addr_manager')}</Text>
+                <Image style={{height:20,width:11}}
+                       source={Images.set_more}/>
+            </View>) : null
+    };
 
 
     handlePress = (i) => {
