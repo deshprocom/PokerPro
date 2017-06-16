@@ -192,16 +192,18 @@ class OrderInfoPage extends React.Component {
                             <Text style={{fontSize:14,color:Colors.txt_666}}>商品金额</Text>
                             <Text
                                 testID="txt_original_price"
-                                style={{fontSize:14,color:Colors.txt_E48,marginRight:18}}>
-                                {moneyFormat(legalValue(order_info.original_price))}元</Text>
+                                style={{fontSize:14,color:Colors.bg_black,marginRight:18,
+                                textDecorationLine: 'line-through'}}>
+                                {moneyFormat(legalValue(order_info.original_price))}</Text>
                         </View>
                         <View
                             style={{justifyContent:'space-between',flexDirection:'row',marginTop:16}}>
                             <Text style={{fontSize:14,color:Colors.txt_666}}>应付金额</Text>
                             <Text
+
                                 testID="txt_price"
                                 style={{fontSize:14,color:Colors.txt_E48,marginRight:18}}>
-                                {moneyFormat(legalValue(order_info.price))}元</Text>
+                                {moneyFormat(legalValue(order_info.price))}</Text>
                         </View>
                     </View>
 

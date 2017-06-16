@@ -77,13 +77,14 @@ class HomePage extends Component {
     };
 
     _refreshPage() {
+        getBaseURL();
         storage.load({key: StorageKey.LoginUser})
             .then(ret => {
                 router.log(ret);
                 let {access_token, user_id} = ret;
                 putLoginUser(ret);
                 setAccessToken(access_token);
-                getBaseURL();
+
                 this.setState({
                     user_id: user_id
                 });
@@ -96,7 +97,7 @@ class HomePage extends Component {
                 this.props._getRecentRaces(recentRaces);
 
             }).catch(err => {
-            getBaseURL();
+
             const recentRaces = {
                 number: 5
             };
