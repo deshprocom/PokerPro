@@ -19,6 +19,32 @@ import {fetchGetRecentRaces, _getProfileOk} from '../../actions/RacesAction';
 
 class SettingPage extends Component {
 
+    _languageView = () => {
+        return ( <SetItemView name='语言（简体中文）'
+                              styles={{marginTop:10}}/>)
+    };
+
+    _likeView =()=>{
+        return (
+            <SetItemView name='喜欢扑客吗？支持一下'/>)
+    };
+
+    _noticeView=()=>{
+        return(<View>
+            <SetItemView name='赛事到来通知提醒'
+                         rightType="SWITCH_BTN"/>
+
+            <View
+                style={{height:1,marginLeft:17,backgroundColor:Colors.bg_black}}/>
+
+            <SetItemView name='系统通知'
+                         rightType="SWITCH_BTN"/>
+            <View
+                style={{height:1,marginLeft:17,backgroundColor:Colors.bg_black}}/>
+        </View>)
+    };
+
+
     render() {
 
         return (<View
@@ -42,8 +68,7 @@ class SettingPage extends Component {
                 name={I18n.t('account_security')}
                 styles={{marginTop:5}}/>
 
-            <SetItemView name='语言（简体中文）'
-                         styles={{marginTop:10}}/>
+
 
             <View style={{backgroundColor:Colors.setting,marginTop:10}}>
                 <SetItemView
@@ -57,22 +82,11 @@ class SettingPage extends Component {
                     testID="btn_share"
                     name='推荐扑客给我的德州圈好友'/>
 
-                <View
-                    style={{height:1,marginLeft:17,backgroundColor:Colors.bg_black}}/>
 
-                <SetItemView name='喜欢扑客吗？支持一下'/>
+
             </View>
             <View style={{backgroundColor:Colors.setting,marginTop:10}}>
-                <SetItemView name='赛事到来通知提醒'
-                             rightType="SWITCH_BTN"/>
 
-                <View
-                    style={{height:1,marginLeft:17,backgroundColor:Colors.bg_black}}/>
-
-                <SetItemView name='系统通知'
-                             rightType="SWITCH_BTN"/>
-                <View
-                    style={{height:1,marginLeft:17,backgroundColor:Colors.bg_black}}/>
                 <SetItemView name='关于'
                              onPress={()=>router.toAboutPage()}/>
             </View>
