@@ -204,15 +204,10 @@ export function ticketStatusConvert(status) {
 }
 
 
-export function sellable(status, able) {
-    if (able) {
-        if (status === SellStatus.selling)
-            return true;
-        else
-            return false;
+export function sellable(status) {
 
-    } else
-        return false;
+    return status === SellStatus.selling?true:false;
+
 }
 
 

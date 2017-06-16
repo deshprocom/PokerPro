@@ -76,7 +76,7 @@ export default class RaceRowView extends Component {
     }
 
     _itemClick = (rowData) => {
-       router.toRacesInfoPage(this.props, rowData.race_id, false);
+        router.toRacesInfoPage(this.props, rowData.race_id, false);
     };
 
     describableView = (describable) => {
@@ -114,7 +114,7 @@ export default class RaceRowView extends Component {
 
         const {ticket_sellable, ordered, ticket_status} = rowData;
 
-        if (ordered || sellable(ticket_status, ticket_sellable))
+        if (ordered || sellable(ticket_status))
             return (
                 <TouchableOpacity
                     testID={"btn_races_"+rowData.race_id}
@@ -126,7 +126,7 @@ export default class RaceRowView extends Component {
                        ,alignItems:'center'}}
                            source={rowData.ordered?Images.home_ordered:Images.home_gold}>
                         <Text style={rowData.ordered?
-            styles.txtOrder:styles.txtBuy}>{rowData.ordered ? '已购' : '购票'}</Text >
+            styles.txtOrder:styles.txtBuy}>{'购票'}</Text >
                     </Image>
                 </TouchableOpacity>)
 
@@ -134,9 +134,8 @@ export default class RaceRowView extends Component {
 
 
     _buyTicket = (rowData) => {
-        if (strNotNull(getLoginUser().user_id)) {
-            if (!rowData.ordered)
-                this.props.router.toChoiseTicketPage(this.props, rowData.race_id);
+        if (strNotNull(login_user.user_id)) {
+            this.props.router.toChoiseTicketPage(this.props, rowData.race_id);
         }
         else
             this.props.router.toLoginFirstPage();
