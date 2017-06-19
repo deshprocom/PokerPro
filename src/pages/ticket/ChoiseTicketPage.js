@@ -332,7 +332,8 @@ export default class ChoiseTicketPage extends Component {
 
     itemListView = (rowData) => {
 
-        const {original_price, price, ticket_class, title} = rowData;
+        const {original_price, price, ticket_info, title} = rowData;
+
 
         return (<TouchableOpacity
             activeOpacity={1}
@@ -356,6 +357,11 @@ export default class ChoiseTicketPage extends Component {
 
                 <View style={styles.viewInfo}>
                     <Text style={styles.txtPrice}>{price}</Text>
+                    <View style={styles.viewNum}>
+                        <Text style={styles.lbNum}>  （剩余</Text>
+                        <Text style={styles.txtNum}>{this._ticketNum(ticket_info)}</Text>
+                        <Text style={styles.lbNum}>张）</Text>
+                    </View>
 
                     <View style={{flex:1}}/>
 
@@ -370,6 +376,14 @@ export default class ChoiseTicketPage extends Component {
             </View>
 
         </TouchableOpacity>)
+    };
+
+    _ticketNum = (ticket_info) => {
+        if (!isEmptyObject(ticket_info)) {
+            const {e_ticket_number, e_ticket_sold_number} = ticket_info;
+            return e_ticket_number - e_ticket_sold_number;
+        }
+
     };
 
     _toTicketInfo = (rowData) => {
@@ -716,5 +730,17 @@ const styles = StyleSheet.create({
     },
     margin: {
         marginBottom: 60
+    },
+    viewNum: {
+        flexDirection: 'row'
+    },
+    lbNum: {
+        fontSize: 14,
+        color: '#666666'
+    },
+    txtNum: {
+        fontSize: 14,
+        color: '#DF1D0F'
     }
+
 });
