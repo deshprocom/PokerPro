@@ -45,7 +45,7 @@ export default class Root extends Component {
                 },
             })
         }
-    }
+    };
 
     onBackAndroid = () => {
         const nav = this.navigator;
@@ -55,7 +55,7 @@ export default class Root extends Component {
             return true;
         }
         return false;
-    }
+    };
 
     render() {
 
@@ -63,6 +63,7 @@ export default class Root extends Component {
             ref={view => this.navigator=view}
             initialRoute={initialRoute}
             renderScene={this.renderScene}
+            onStartShouldSetResponder={()=>false}
         />);
     }
 }

@@ -282,6 +282,12 @@ export default class ChoiseTicketPage extends Component {
         </TouchableOpacity>)
     };
 
+    _logo = () => {
+        const {selectRaceData} = this.state;
+        const {race} = selectRaceData;
+        return isEmptyObject(race) ? '' : race.logo;
+    };
+
     _location = () => {
         const {selectRaceData} = this.state;
         const {race} = selectRaceData;
@@ -308,7 +314,7 @@ export default class ChoiseTicketPage extends Component {
 
     itemListView = (rowData) => {
 
-        const {logo, original_price, price, ticket_class, title} = rowData;
+        const {original_price, price, ticket_class, title} = rowData;
 
         return (<TouchableOpacity
             activeOpacity={1}
@@ -319,7 +325,7 @@ export default class ChoiseTicketPage extends Component {
             }}
             style={this._selectItemStyle(rowData)}>
             <ImageLoad
-                source={{uri:logo}}
+                source={{uri:this._logo()}}
                 style={styles.itemImg}/>
 
             <View style={styles.itemContent}>
