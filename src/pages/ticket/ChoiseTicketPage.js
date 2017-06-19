@@ -15,7 +15,7 @@ import {UltimateListView, NavigationBar, ImageLoad, ActionSide} from '../../comp
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {getSelectRaceTicket} from '../../services/OrderDao';
 import {subRaces} from '../../services/RacesDao';
-import {isEmptyObject, convertDate, strNotNull} from '../../utils/ComonHelper';
+import {isEmptyObject, convertDate, strNotNull, ticketStatusConvert} from '../../utils/ComonHelper';
 
 const RACE_MAIN = 'RACE_MAIN',
     RACE_SIDE = 'RACE_SIDE',
@@ -75,10 +75,12 @@ export default class ChoiseTicketPage extends Component {
             {this.bottomBar()}
 
             <ActionSide
+                getSubTicket={this._getSubTicket}
                 ref={ref=>this.actionSide = ref}/>
 
         </View>)
     }
+
 
     topBar = () => {
         return (<View style={styles.topView}>
@@ -97,6 +99,22 @@ export default class ChoiseTicketPage extends Component {
         const {sub_races} = this.state;
         this.actionSide.setData(sub_races);
         this.actionSide.show();
+
+    };
+
+    _getSubTicket = (item) => {
+
+        const {race_id} = item;
+        let body = {
+            race_id: race_id
+        };
+        getSelectRaceTicket(body, (data) => {
+            router.log('subData', data);
+            this.setState({
+                selectSub: data
+            });
+            this.listView.updateDataSource(this._listTicket(RACE_SIDE));
+        })
 
     };
 
@@ -375,7 +393,7 @@ export default class ChoiseTicketPage extends Component {
 
     _btnOkStyle = () => {
         const {ticket} = this.state;
-        return !isEmptyObject(ticket) ?
+        return ticket.status === "selling" ?
             styles.viewBtnOk : [styles.viewBtnOk, styles.btnDisable]
 
 
@@ -383,7 +401,7 @@ export default class ChoiseTicketPage extends Component {
 
     _btnOkDisabled = () => {
         const {ticket} = this.state;
-        return isEmptyObject(ticket)
+        return !(ticket.status === "selling");
     };
 
     bottomBar = () => {
@@ -396,11 +414,20 @@ export default class ChoiseTicketPage extends Component {
                 onPress={this._toBuy}
                 disabled={this._btnOkDisabled()}
                 style={this._btnOkStyle()}>
-                <Text style={styles.txtBtnOk}>{I18n.t('selectOk')}</Text>
+                <Text style={styles.txtBtnOk}>{this._txtTicketStatus()}</Text>
 
             </TouchableOpacity>
 
         </View>)
+    };
+
+    _txtTicketStatus = () => {
+        const {ticket} = this.state;
+        if (isEmptyObject(ticket))
+            return I18n.t('selectOk');
+        else
+            return ticketStatusConvert(ticket.status)
+
     };
 
     _toBuy = () => {
@@ -418,17 +445,21 @@ export default class ChoiseTicketPage extends Component {
     };
 
     _prize = () => {
-        const {selectRaceData, ticket} = this.state;
+        const {selectRaceData, ticket, selectRace, selectSub} = this.state;
 
         if (!isEmptyObject(ticket)) {
             return ticket.price
-        } else if (!isEmptyObject(selectRaceData)) {
+        } else if (selectRace === RACE_MAIN && !isEmptyObject(selectRaceData)) {
             const {max_price, min_price} = selectRaceData;
-            return min_price + '-' +
-                max_price;
+            if (strNotNull(max_price) && strNotNull(min_price))
+                return min_price + '-' +
+                    max_price;
+        } else if (selectRace === RACE_SIDE && !isEmptyObject(selectSub)) {
+            const {max_price, min_price} = selectSub;
+            if (strNotNull(max_price) && strNotNull(min_price))
+                return min_price + '-' +
+                    max_price;
         }
-
-
     };
 
     _selectedBg = (select) => {

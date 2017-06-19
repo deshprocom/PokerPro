@@ -141,7 +141,9 @@ const images = {
     dark_back: require('../../source/home/dark_back.png'),
     up_triangle: require('../../source/order/up_triangle.png'),
     down_triangle: require('../../source/order/down_triangle.png'),
-    ic_back: require('../../source/order/ic_back.png')
+    ic_back: require('../../source/order/ic_back.png'),
+    side_select:require('../../source/order/side_select.png'),
+    side_selected:require('../../source/order/side_seleced.png')
 
 
 };
