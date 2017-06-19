@@ -21,7 +21,7 @@ export default class LoadErrorView extends Component {
             marginTop:140}}>
                 <Image
                     resizeMode={'contain'}
-                    style={{height:100,width:155}}
+                    style={{height:99,width:80}}
                     source={Images.load_error}/>
 
                 <Text style={[Fonts.H18,{color:Colors._AAA,

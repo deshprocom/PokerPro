@@ -25,7 +25,7 @@ export default class NoDataView extends Component {
 
             <View style={{alignItems:'center',justifyContent:'center',
             marginTop:126}}>
-                <Image style={{height:72,width:52}}
+                <Image style={{height:75,width:72}}
                        source={Images.load_no_data}/>
 
                 <Text style={[Fonts.H18,{color:Colors._AAA,
