@@ -237,7 +237,7 @@ export default class ChoiseTicketPage extends Component {
 
             {selectRace===RACE_SIDE?this.selectSideView():null}
 
-            {strNotNull(selectRace)?this.ticketTypeView():null}
+
 
             <View style={{height:10}}/>
 
@@ -415,7 +415,7 @@ export default class ChoiseTicketPage extends Component {
 
         if (!isEmptyObject(ticket)) {
             return ticket.price
-        }  else if (!isEmptyObject(selectRaceData)) {
+        } else if (!isEmptyObject(selectRaceData)) {
             const {max_price, min_price} = selectRaceData;
             return min_price + '-' +
                 max_price;
@@ -433,12 +433,13 @@ export default class ChoiseTicketPage extends Component {
     };
 
     _selectRace = (race) => {
-        this.listView.updateDataSource([]);
+        this.listView.updateDataSource(this._listTicket(race));
         this.setState({
             selectRace: race,
             selectTicket: '',
             ticket: {}
-        })
+        });
+
     };
 
     _selectTicket = (ticket) => {
@@ -452,12 +453,14 @@ export default class ChoiseTicketPage extends Component {
             })
     };
 
-    _listTicket = () => {
-        let {selectRace, selectRaceData, selectSub} = this.state;
+    _listTicket = (selectRace) => {
+        let {selectRaceData, selectSub} = this.state;
         if (selectRace === RACE_MAIN) {
-            return selectRaceData.package_tickets
-        } else if (selectRace === RACE_SIDE) {
-            return selectSub.package_tickets
+            const {package_tickets, single_tickets} = selectRaceData;
+            return single_tickets.concat(package_tickets);
+        } else if (selectRace === RACE_SIDE && !isEmptyObject(selectSub)) {
+            const {package_tickets, single_tickets} =selectSub;
+            return single_tickets.concat(package_tickets);
         }
     };
 

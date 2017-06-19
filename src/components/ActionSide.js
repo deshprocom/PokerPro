@@ -13,7 +13,7 @@ export default class ActionSide extends Component {
 
     constructor(props) {
         super(props);
-        this.translateY = 268;
+        this.translateY = 400;
         this.state = {
             visible: false,
             sheetAnim: new Animated.Value(this.translateY),
