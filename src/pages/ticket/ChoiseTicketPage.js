@@ -223,6 +223,7 @@ export default class ChoiseTicketPage extends Component {
     listTicketView = () => {
         const {selectRace} = this.state;
         return (<UltimateListView
+            style={styles.margin}
             ref={(ref) => this.listView = ref}
             refreshable={false}
             firstLoader={false}
@@ -675,5 +676,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingLeft: 17,
         backgroundColor: 'white'
+    },
+    margin: {
+        marginBottom: 60
     }
 });
