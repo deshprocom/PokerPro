@@ -124,9 +124,8 @@ export default class RaceRowView extends Component {
                     <Image style={{height:20,width:40,
                         marginRight:17,justifyContent:'center'
                        ,alignItems:'center'}}
-                           source={rowData.ordered?Images.home_ordered:Images.home_gold}>
-                        <Text style={rowData.ordered?
-            styles.txtOrder:styles.txtBuy}>{'购票'}</Text >
+                           source={Images.home_gold}>
+                        <Text style={styles.txtBuy}>{'购票'}</Text >
                     </Image>
                 </TouchableOpacity>)
 

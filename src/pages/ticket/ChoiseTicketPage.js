@@ -411,16 +411,14 @@ export default class ChoiseTicketPage extends Component {
     };
 
     _prize = () => {
-        const {selectRaceData, ticket, selectSub, selectRace} = this.state;
+        const {selectRaceData, ticket} = this.state;
 
         if (!isEmptyObject(ticket)) {
             return ticket.price
-        } else if (selectRace === RACE_MAIN && !isEmptyObject(selectRaceData)) {
-            return selectRaceData.race.ticket_price
-        } else if (selectRace === RACE_SIDE && !isEmptyObject(selectSub)) {
-            return selectSub.race.ticket_price
-        } else if (!isEmptyObject(selectRaceData)) {
-            return selectRaceData.race.ticket_price
+        }  else if (!isEmptyObject(selectRaceData)) {
+            const {max_price, min_price} = selectRaceData;
+            return min_price + '-' +
+                max_price;
         }
 
 
