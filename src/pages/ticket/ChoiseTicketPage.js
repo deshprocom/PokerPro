@@ -440,8 +440,21 @@ export default class ChoiseTicketPage extends Component {
         if (isEmptyObject(ticket))
             return I18n.t('selectOk');
         else
-            return ticketStatusConvert(ticket.status)
+            return this._txtTicketBuy(ticket.status)
 
+    };
+
+    _txtTicketBuy = (status)=>{
+        switch (status) {
+            case 'unsold':
+                return I18n.t('ticket_unsold');
+            case 'selling':
+                return I18n.t('selectOk');
+            case 'end':
+                return I18n.t('ticket_end');
+            case 'sold_out':
+                return I18n.t('ticket_sold_out');
+        }
     };
 
     _toBuy = () => {

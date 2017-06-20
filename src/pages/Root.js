@@ -11,11 +11,7 @@ let initialRoute = {
 };
 
 export default class Root extends Component {
-    constructor(props) {
 
-        super(props);
-
-    }
 
     componentWillMount() {
         if (Platform.OS === 'android') {
@@ -63,7 +59,6 @@ export default class Root extends Component {
             ref={view => this.navigator=view}
             initialRoute={initialRoute}
             renderScene={this.renderScene}
-            onStartShouldSetResponder={()=>false}
         />);
     }
 }
