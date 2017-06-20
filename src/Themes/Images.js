@@ -130,7 +130,7 @@ const images = {
     race_triangle: require('../../source/races/triangle.png'),
     news_outline: require('../../source/news/outline.png'),
     news_triangle: require('../../source/news/triangle.png'),
-    empty_image: require('../../source/empty-image.png'),
+    empty_image: require('../../source/empty/empty_ticket.png'),
     news_share: require('../../source/news/news_share.png'),
     race_type: require('../../source/races/race_type.png'),
     race_type_selected: require('../../source/races/race_type_selected.png'),

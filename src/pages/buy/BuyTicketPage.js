@@ -30,7 +30,7 @@ const E_TICKET = 'e_ticket',
 class BuyTicketPage extends Component {
 
     state = {
-        knowRed: true,
+        knowRed: false,
         isEntity: 'e_ticket',
         email: '',
         isNameReal: false,
@@ -112,7 +112,9 @@ class BuyTicketPage extends Component {
                     knowRed: false
                 })
             }).catch(err => {
-
+            this.setState({
+                knowRed: true
+            })
         })
     };
 
