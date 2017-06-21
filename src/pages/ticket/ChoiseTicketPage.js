@@ -516,41 +516,21 @@ export default class ChoiseTicketPage extends Component {
     };
 
     _selectTicket = (ticket) => {
-
-        if (ticket === ONLY_TICKET) {
-            this._onlyTicket()
-        } else
-            this.setState({
-                selectTicket: ticket,
-                ticket: {}
-            })
+        this.setState({
+            selectTicket: ticket,
+            ticket: {}
+        })
     };
 
     _listTicket = (selectRace) => {
         let {selectRaceData, selectSub} = this.state;
         if (selectRace === RACE_MAIN) {
-            const {package_tickets, single_tickets} = selectRaceData;
-            return single_tickets.concat(package_tickets);
+            const {tickets} = selectRaceData;
+            return tickets;
         } else if (selectRace === RACE_SIDE && !isEmptyObject(selectSub)) {
-            const {package_tickets, single_tickets} =selectSub;
-            return single_tickets.concat(package_tickets);
+            const {tickets} =selectSub;
+            return tickets;
         }
-    };
-
-    _onlyTicket = () => {
-        let {selectRace, selectRaceData, selectSub} = this.state;
-        let ticket;
-        if (selectRace === RACE_MAIN
-            && selectRaceData.single_tickets.length > 0) {
-            ticket = selectRaceData.single_tickets[0]
-        } else if (selectSub.single_tickets.length > 0) {
-            ticket = selectSub.single_tickets[0]
-        }
-        this.setState({
-            selectTicket: ONLY_TICKET,
-            ticket: ticket
-        })
-
     };
 
 
