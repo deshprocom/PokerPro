@@ -11,6 +11,7 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, SetItemView, SecurityText} from '../../components';
 import {getLoginUser, strNotNull} from '../../utils/ComonHelper';
+import {umengEvent} from '../../utils/UmengEvent';
 
 export default class SecurityPage extends Component {
 
@@ -52,7 +53,10 @@ export default class SecurityPage extends Component {
                 <View
                     style={{height:1,marginLeft:17,backgroundColor:Colors.bg_black}}/>
                 <SetItemView
-                    onPress={()=>this.props.router.toModifyPwdPage()}
+                    onPress={()=>{
+                        umengEvent('setting_modify_pwd');
+                        router.toModifyPwdPage()
+                    }}
                     name={I18n.t('modify')}
                     testID="btn_change_password"
                 />
@@ -71,6 +75,7 @@ export default class SecurityPage extends Component {
     };
 
     _toBindPage = () => {
+        umengEvent('setting_mobile');
         if (strNotNull(login_user.mobile)) {
             router.toChangePhonePage()
         } else {

@@ -25,6 +25,7 @@ import {NavigationBar, ParallaxScrollView} from '../components';
 import {LoadingView} from '../components/load';
 import JpushHelp from '../services/JpushHelper';
 import TestRouter from '../components/TestRouter';
+import {umengEvent} from '../utils/UmengEvent';
 
 var maxDown = 0;
 
@@ -122,7 +123,7 @@ class HomePage extends Component {
     _loadErrorPage = () => {
         return (<LoadErrorPage
             btnRefresh={()=>this._refreshPage()}/>)
-    }
+    };
 
 
     _userIdView = (profile) => {
@@ -133,13 +134,13 @@ class HomePage extends Component {
                 <Text style={styles.person_honer}></Text>
             </View>
         )
-    }
+    };
 
 
     _onScroll = (event) => {
-        var offsetY = event.nativeEvent.contentOffset.y;
+        let offsetY = event.nativeEvent.contentOffset.y;
         if (offsetY <= 232 - Metrics.navBarHeight) {
-            var opacity = offsetY / (232 - Metrics.navBarHeight - 20);
+            let opacity = offsetY / (232 - Metrics.navBarHeight - 20);
             this.setState({opacity: opacity});
         } else {
             this.setState({opacity: 1});
@@ -165,7 +166,7 @@ class HomePage extends Component {
                 <Text
                     testID="lb_nickname"
                     style={styles.person_nick}>{nickname}</Text>
-            )
+            );
         else
             return (
                 <TouchableOpacity
@@ -181,6 +182,7 @@ class HomePage extends Component {
 
     toMessagePage = () => {
 
+        umengEvent('home_notification');
         if (isEmptyObject(login_user)) {
             router.toLoginFirstPage()
         } else {
@@ -207,7 +209,10 @@ class HomePage extends Component {
                     <StatusBar barStyle="light-content"/>
                     <TouchableOpacity
                         testID="btn_bar_left"
-                        onPress={()=>this.props.openDrawer()}
+                        onPress={()=>{
+                            umengEvent('home_side');
+                            this.props.openDrawer()
+                        }}
                         style={styles.topBtn}
                         activeOpacity={1}>
                         <Image
@@ -271,7 +276,10 @@ class HomePage extends Component {
                     <View style={styles.home_modules}>
                         <TouchableOpacity
                             testID="btn_home_ticket"
-                            onPress={()=>router.toTicketPage()}
+                            onPress={()=>{
+                                umengEvent('home_ticket');
+                                router.toTicketPage()
+                            }}
                             style={[{marginLeft:53},styles.item_center]}>
                             <Image style={styles.gif_fuc}
                                    source={Images.home_ticket}/>
@@ -279,7 +287,10 @@ class HomePage extends Component {
                         </TouchableOpacity>
                         <TouchableOpacity
                             testID="btn_home_news"
-                            onPress={()=>router.toMainNewsPage()}
+                            onPress={()=>{
+                                umengEvent('home_news');
+                                router.toMainNewsPage()
+                            }}
                             style={styles.item_center}>
                             <Image style={styles.gif_fuc}
                                    source={Images.home_new}/>
@@ -287,7 +298,10 @@ class HomePage extends Component {
                         </TouchableOpacity>
                         <TouchableOpacity
                             testID="btn_home_video"
-                            onPress={()=>router.toVideoPage()}
+                            onPress={()=>{
+                                umengEvent('home_videos');
+                                router.toVideoPage()
+                            }}
                             style={styles.item_center}>
                             <Image style={styles.gif_fuc}
                                    source={Images.home_video}/>
@@ -295,7 +309,10 @@ class HomePage extends Component {
                         </TouchableOpacity>
                         <TouchableOpacity
                             testID="btn_home_sort"
-                            onPress={()=>router.toChoiseTicketPage(this.props,28)}
+                            onPress={()=>{
+                                umengEvent('home_ranking');
+                                router.toChoiseTicketPage(this.props,28)
+                            }}
                             style={[{marginRight:53},styles.item_center]}>
                             <Image style={styles.gif_fuc}
                                    source={Images.home_sort}/>
@@ -342,7 +359,10 @@ class HomePage extends Component {
                             </View>
                             <TouchableOpacity
                                 testID="btn_more_races"
-                                onPress={()=>this.props.router.toSearchRacesPage()}
+                                onPress={()=>{
+                                    umengEvent('home_more');
+                                    this.props.router.toSearchRacesPage()
+                                }}
                                 style={[styles.recent_races,
                             {marginRight:17,marginTop:12}]}>
                                 <Image style={{height:9,width:35}}

@@ -10,7 +10,8 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {isEmptyObject, idCardStatus} from '../../utils/ComonHelper';
 import SecurityText from 'react-native-smart-security-text';
-import {Verified} from '../../configs/Status'
+import {Verified} from '../../configs/Status';
+import {umengEvent} from '../../utils/UmengEvent';
 
 export default class NameRealView extends Component {
     static propTypes = {
@@ -21,12 +22,13 @@ export default class NameRealView extends Component {
     _certification = () => {
         const {user_extra} = this.props;
 
+        umengEvent("ticket_buy_true_name");
         if (isEmptyObject(user_extra)) {
             this.props.router.toCertificationPage()
         } else {
             this.editIdCard(user_extra)
         }
-    }
+    };
 
     render() {
         const {user_extra} = this.props;

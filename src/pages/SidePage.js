@@ -12,6 +12,7 @@ import {closeDrawer} from '../reducers/DrawerRedux';
 import StorageKey from '../configs/StorageKey';
 import {strNotNull, isEmptyObject, getLoginUser} from '../utils/ComonHelper';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
+import {umengEvent} from '../utils/UmengEvent';
 
 class SidePage extends React.Component {
 
@@ -76,6 +77,7 @@ class SidePage extends React.Component {
 
     _toOrderListPage = () => {
 
+        umengEvent('more_order');
         if (strNotNull(getLoginUser().user_id))
             router.toOrderListPage();
         else
@@ -84,6 +86,7 @@ class SidePage extends React.Component {
     };
 
     _toBusinessPage = () => {
+        umengEvent('more_business');
         router.toBusinessPage()
         // this.props.router.toChildRaceInfoPage();
     }

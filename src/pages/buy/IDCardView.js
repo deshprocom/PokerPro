@@ -20,6 +20,7 @@ import {
 } from '../../utils/ComonHelper';
 import {Verified} from '../../configs/Status';
 import ActionSheet from 'react-native-actionsheet';
+import {umengEvent} from '../../utils/UmengEvent';
 
 const CANCEL_INDEX = 0;
 const DESTRUCTIVE_INDEX = 2;
@@ -116,6 +117,7 @@ class IDCardView extends Component {
 
 
     _btnSubmit = () => {
+        umengEvent('true_name_submit');
         const {realName, idCard, cardImage, imageName} = this.state;
         if (strNotNull(realName) && strNotNull(idCard) && !isEmptyObject(cardImage)) {
 

@@ -26,6 +26,7 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 import RaceSideView from './RaceSideView';
 import {MarkdownPlat} from '../../components';
 import MainRaceResultView from './MainRaceResultView';
+import {umengEvent} from '../../utils/UmengEvent';
 
 
 class RacesInfoPage extends Component {
@@ -349,6 +350,7 @@ class RacesInfoPage extends Component {
             return (    <RaceInfoBottomView
                 raceInfo={raceInfo}
                 onPress={()=>{
+                    umengEvent('race_buy_ticket');
                         if(isLoginUser){
                              router.toChoiseTicketPage(this.props,this.props.params.race_id);
                         }
@@ -359,6 +361,7 @@ class RacesInfoPage extends Component {
     };
 
     _selectPage = (index) => {
+        umengEvent(index === 1 ? 'race_main_info' : 'race_side_info');
         this.viewpage.goToPage(index);
     };
 

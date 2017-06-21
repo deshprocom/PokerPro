@@ -15,6 +15,7 @@ import {
     isLoginUser, share
 } from '../../utils/ComonHelper';
 import {fetchGetRecentRaces, _getProfileOk} from '../../actions/RacesAction';
+import {umengEvent} from '../../utils/UmengEvent';
 
 
 class SettingPage extends Component {
@@ -24,13 +25,13 @@ class SettingPage extends Component {
                               styles={{marginTop:10}}/>)
     };
 
-    _likeView =()=>{
+    _likeView = () => {
         return (
             <SetItemView name='喜欢扑客吗？支持一下'/>)
     };
 
-    _noticeView=()=>{
-        return(<View>
+    _noticeView = () => {
+        return (<View>
             <SetItemView name='赛事到来通知提醒'
                          rightType="SWITCH_BTN"/>
 
@@ -60,6 +61,8 @@ class SettingPage extends Component {
             <SetItemView
                 testID="btn_account_security"
                 onPress={()=>{
+
+                    umengEvent('setting_security');
                     if(isLoginUser())
                         this.props.router.toSecurityPage();
                     else
@@ -67,7 +70,6 @@ class SettingPage extends Component {
                 }}
                 name={I18n.t('account_security')}
                 styles={{marginTop:5}}/>
-
 
 
             <View style={{backgroundColor:Colors.setting,marginTop:10}}>
@@ -78,10 +80,12 @@ class SettingPage extends Component {
                 <View
                     style={{height:1,marginLeft:17,backgroundColor:Colors.bg_black}}/>
                 <SetItemView
-                    onPress={()=>{share("分享扑客给好友","http://www.deshpro.com")}}
+                    onPress={()=>{
+                        umengEvent('setting_recommend');
+                        share("分享扑客给好友","http://www.deshpro.com")
+                    }}
                     testID="btn_share"
                     name='推荐扑客给我的德州圈好友'/>
-
 
 
             </View>

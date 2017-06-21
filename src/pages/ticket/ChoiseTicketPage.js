@@ -16,6 +16,7 @@ import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {getSelectRaceTicket} from '../../services/OrderDao';
 import {subRaces} from '../../services/RacesDao';
 import {isEmptyObject, convertDate, strNotNull, ticketStatusConvert} from '../../utils/ComonHelper';
+import {umengEvent} from '../../utils/UmengEvent';
 
 const RACE_MAIN = 'RACE_MAIN',
     RACE_SIDE = 'RACE_SIDE',
@@ -153,8 +154,8 @@ export default class ChoiseTicketPage extends Component {
 
                 <TouchableOpacity
                     onPress={()=>{
-
-                        this._selectRace(RACE_MAIN)
+                        this._selectRace(RACE_MAIN);
+                        umengEvent('ticket_main')
                     }}
                     style={this._selectedBg(selectRace === RACE_MAIN)}>
                     <Text style={this._selectTxt(selectRace === RACE_MAIN)}>{I18n.t('mainRace')}</Text>
@@ -162,7 +163,7 @@ export default class ChoiseTicketPage extends Component {
                 <TouchableOpacity
                     disabled={!this.btnSideDisabled()}
                     onPress={()=>{
-
+                        umengEvent('ticket_side');
                         this._selectRace(RACE_SIDE)
                     }}
                     style={[this._selectedBg(selectRace === RACE_SIDE),styles.marginLeft]}>
@@ -358,7 +359,7 @@ export default class ChoiseTicketPage extends Component {
                 <View style={styles.viewInfo}>
                     <Text style={styles.txtPrice}>{price}</Text>
                     <View style={styles.viewNum}>
-                        <Text style={styles.lbNum}>  （剩余</Text>
+                        <Text style={styles.lbNum}> （剩余</Text>
                         <Text style={styles.txtNum}>{this._ticketNum(ticket_info)}</Text>
                         <Text style={styles.lbNum}>张）</Text>
                     </View>
@@ -444,7 +445,7 @@ export default class ChoiseTicketPage extends Component {
 
     };
 
-    _txtTicketBuy = (status)=>{
+    _txtTicketBuy = (status) => {
         switch (status) {
             case 'unsold':
                 return I18n.t('ticket_unsold');
@@ -458,6 +459,7 @@ export default class ChoiseTicketPage extends Component {
     };
 
     _toBuy = () => {
+        umengEvent('ticket_contain');
         const {selectRace, selectSub, selectRaceData, ticket} = this.state;
         const {id} = ticket;
         if (selectRace === RACE_MAIN && id) {
