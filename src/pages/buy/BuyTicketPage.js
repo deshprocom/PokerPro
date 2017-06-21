@@ -234,7 +234,10 @@ class BuyTicketPage extends Component {
             activeOpacity={1}
             onPress={()=>{
                   const {race_id, ticket_id} = this.props.params;
-                  router.toTicketInfoPage(this.props,race_id,ticket_id)
+                  if(ticket_class === 'single_ticket')
+                       router.toRacesInfoPage(this.props, race_id, false);
+                  else
+                      router.toTicketInfoPage(this.props,race_id,ticket_id)
             }}
             style={styles.itemView}>
             <ImageLoad

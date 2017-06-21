@@ -389,17 +389,23 @@ export default class ChoiseTicketPage extends Component {
 
     _toTicketInfo = (rowData) => {
         const {selectRace, selectSub, selectRaceData} = this.state;
-        const {id} = rowData;
+        const {id, ticket_class} = rowData;
         if (selectRace === RACE_MAIN && id) {
             const {race_id} = selectRaceData.race;
-            router.toTicketInfoPage(this.props, race_id, id)
+            if (ticket_class === "single_ticket")
+                router.toRacesInfoPage(this.props, race_id, false);
+            else
+                router.toTicketInfoPage(this.props, race_id, id)
         } else if (selectRace === RACE_SIDE && id) {
             const {race_id} = selectSub.race;
-            router.toTicketInfoPage(this.props, race_id, id)
+            if (ticket_class === "single_ticket")
+                router.toRacesInfoPage(this.props, race_id, false);
+            else
+                router.toTicketInfoPage(this.props, race_id, id)
         }
 
-
     };
+
 
     onFetch = (page = 1, startFetch, abortFetch) => {
 
