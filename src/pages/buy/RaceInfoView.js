@@ -24,9 +24,12 @@ export default class RaceInfoView extends Component {
 
     _ticket_price = (ticket) => {
         if (!isEmptyObject(ticket))
-            return ( <Text testID="txt_races_price"
-                           style={{fontSize:15,color:Colors.txt_FF9,
-                            marginTop:10}}>金额:{ticket.price}</Text>)
+            return (<View style={styles.viewPrice}>
+                <Text style={styles.lbPrice}>金额:</Text>
+                <Text style={styles.txtPrice}>  {ticket.price}</Text>
+
+            </View>);
+
     };
 
     _orderName = () => {
@@ -114,3 +117,18 @@ export default class RaceInfoView extends Component {
         }
     }
 }
+
+const styles = StyleSheet.create({
+    viewPrice: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    lbPrice: {
+        fontSize: Fonts.size.h12,
+        color: Colors._888,
+    },
+    txtPrice: {
+        fontSize: Fonts.size.h15,
+        color: '#DF1D0F',
+    }
+});
