@@ -355,7 +355,7 @@ export default class ChoiseTicketPage extends Component {
                     numberOfLines={2}
                     style={styles.txtItemTitle}>{title}</Text>
 
-                <Text style={[styles.txtLabel,styles.top8]}>{this._date()}</Text>
+                <Text style={styles.txtLabel}>{this._date()}</Text>
                 <Text style={styles.txtLabel}>{I18n.t('location')}: {this._location()}</Text>
 
                 <View style={styles.viewInfo}>
@@ -629,7 +629,8 @@ const styles = StyleSheet.create({
     txtItemTitle: {
         fontSize: 16,
         color: '#444444',
-        lineHeight: 20
+        lineHeight: 20,
+        height: 45
     },
     txtLabel: {
         fontSize: 12,

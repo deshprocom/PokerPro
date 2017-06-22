@@ -126,7 +126,7 @@ class ListOrderView extends Component {
 
     _renderRow = (rowData, sectionID, rowID) => {
 
-        const {order_info, race_info} = rowData;
+        const {order_info, race_info, ticket} = rowData;
         return (<TouchableOpacity
             onPress={()=>this._lookOrderDetail(order_info.order_id)}
             activeOpacity={1}
@@ -145,6 +145,7 @@ class ListOrderView extends Component {
             <View style={{height:1}}/>
             {/*赛事简介*/}
             <RaceInfoView
+                ticket={ticket}
                 orderInfo={order_info}
                 disabled={true}
                 raceInfo={race_info}

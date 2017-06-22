@@ -317,7 +317,7 @@ class OrderInfoPage extends React.Component {
 
     render() {
         const {orderDetail} = this.props;
-        const {race_info, order_info} = orderDetail;
+        const {race_info, order_info, ticket} = orderDetail;
 
         return (
             <View
@@ -336,6 +336,7 @@ class OrderInfoPage extends React.Component {
                     <View style={{height:7}}/>
                     {/*赛事简介*/}
                     <RaceInfoView
+                        ticket={ticket}
                         orderInfo={order_info}
                         disabled={false}
                         raceInfo={race_info}
