@@ -45,7 +45,8 @@ export default class ChoiseTicketPage extends Component {
     _fetchRaceTicket = () => {
         const {race_id} = this.props.params;
         let body = {
-            race_id: race_id
+            race_id: race_id,
+            type: 'tradable'
         };
 
         subRaces(body, data => {
@@ -164,7 +165,8 @@ export default class ChoiseTicketPage extends Component {
                     disabled={!this.btnSideDisabled()}
                     onPress={()=>{
                         umengEvent('ticket_side');
-                        this._selectRace(RACE_SIDE)
+                        this._selectRace(RACE_SIDE);
+                        this.showSubTicket();
                     }}
                     style={[this._selectedBg(selectRace === RACE_SIDE),styles.marginLeft]}>
                     <Text style={this.btnSideDisabled()?
