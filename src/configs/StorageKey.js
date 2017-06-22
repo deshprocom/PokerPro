@@ -6,6 +6,7 @@ export default {
     profile: 'profile',
     Language: 'Language',
     BuyKnow: 'BuyKnow',
-    ApiSever:'ApiSever'
+    ApiSever:'ApiSever',
+    BuyEmail:'BuyEmail'
 
 }

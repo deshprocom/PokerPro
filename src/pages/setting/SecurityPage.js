@@ -11,6 +11,7 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, SetItemView, SecurityText} from '../../components';
 import {getLoginUser, strNotNull} from '../../utils/ComonHelper';
+import {umengEvent} from '../../utils/UmengEvent';
 
 export default class SecurityPage extends Component {
 
@@ -51,23 +52,30 @@ export default class SecurityPage extends Component {
                 />
                 <View
                     style={{height:1,marginLeft:17,backgroundColor:Colors.bg_black}}/>
-
-                <SetItemView name={I18n.t('mail')}
-                             testID="btn_email_cer"
-                             rightText={I18n.t('un_approve')}
+                <SetItemView
+                    onPress={()=>{
+                        umengEvent('setting_modify_pwd');
+                        router.toModifyPwdPage()
+                    }}
+                    name={I18n.t('modify')}
+                    testID="btn_change_password"
                 />
+
             </View>
-            <SetItemView
-                onPress={()=>this.props.router.toModifyPwdPage()}
-                name={I18n.t('modify')}
-                testID="btn_change_password"
-                styles={{marginTop:11}}
-            />
+
 
         </View>)
     }
 
+    _mailCerfitication = () => {
+        return ( <SetItemView name={I18n.t('mail')}
+                              testID="btn_email_cer"
+                              rightText={I18n.t('un_approve')}
+        />)
+    };
+
     _toBindPage = () => {
+        umengEvent('setting_mobile');
         if (strNotNull(login_user.mobile)) {
             router.toChangePhonePage()
         } else {

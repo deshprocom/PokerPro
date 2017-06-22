@@ -15,8 +15,8 @@ import {UltimateListView, NavigationBar, ImageLoad, ActionSide} from '../../comp
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {getSelectRaceTicket} from '../../services/OrderDao';
 import {subRaces} from '../../services/RacesDao';
-import {isEmptyObject, convertDate, strNotNull} from '../../utils/ComonHelper';
-import Picker from 'react-native-picker';
+import {isEmptyObject, convertDate, strNotNull, ticketStatusConvert} from '../../utils/ComonHelper';
+import {umengEvent} from '../../utils/UmengEvent';
 
 const RACE_MAIN = 'RACE_MAIN',
     RACE_SIDE = 'RACE_SIDE',
@@ -66,9 +66,6 @@ export default class ChoiseTicketPage extends Component {
         })
     };
 
-    componentWillUnmount() {
-        Picker.hide();
-    }
 
     render() {
         return (<View style={ApplicationStyles.bgContainer}>
@@ -78,8 +75,13 @@ export default class ChoiseTicketPage extends Component {
 
             {this.bottomBar()}
 
+            <ActionSide
+                getSubTicket={this._getSubTicket}
+                ref={ref=>this.actionSide = ref}/>
+
         </View>)
     }
+
 
     topBar = () => {
         return (<View style={styles.topView}>
@@ -96,57 +98,25 @@ export default class ChoiseTicketPage extends Component {
 
     showSubTicket = () => {
         const {sub_races} = this.state;
-        const array = [];
-        if (!isEmptyObject(sub_races)) {
-            sub_races.forEach(function (x) {
-                array.push(x.name + '--' + x.race_id)
-            })
-        }
+        this.actionSide.setData(sub_races);
+        this.actionSide.show();
 
+    };
 
-        Picker.init({
-            pickerConfirmBtnText: I18n.t('certain'),
-            pickerCancelBtnText: I18n.t('cancel'),
-            pickerTitleText: '',
-            pickerData: array,
-            pickerConfirmBtnColor: [68, 68, 68, 1],
-            pickerCancelBtnColor: [68, 68, 68, 1],
-            pickerTitleColor: [20, 20, 20, 1],
-            pickerToolBarBg: [255, 255, 255, 1],
-            pickerBg: [255, 255, 255, 1],
-            pickerToolBarFontSize: 17,
-            pickerFontSize: 21,
-            pickerFontColor: [34, 34, 34, 1],
-            onPickerConfirm: (data) => {
+    _getSubTicket = (item) => {
 
-                for (i = 0; i < sub_races.length; i++) {
-                    let select = sub_races[i].name + '--' + sub_races[i].race_id;
-                    if (select === data[0]) {
+        const {race_id} = item;
+        let body = {
+            race_id: race_id
+        };
+        getSelectRaceTicket(body, (data) => {
+            router.log('subData', data);
+            this.setState({
+                selectSub: data
+            });
+            this.listView.updateDataSource(this._listTicket(RACE_SIDE));
+        })
 
-                        let body = {
-                            race_id: sub_races[i].race_id
-                        };
-                        getSelectRaceTicket(body, ret => {
-                            router.log('subTicket', ret);
-                            this.setState({
-                                selectSub: ret
-                            });
-                        }, err => {
-
-                        });
-
-                    }
-
-                }
-            },
-            onPickerCancel: (data) => {
-
-            },
-            onPickerSelect: (data) => {
-
-            }
-        });
-        Picker.show();
     };
 
     titleView = () => {
@@ -184,8 +154,8 @@ export default class ChoiseTicketPage extends Component {
 
                 <TouchableOpacity
                     onPress={()=>{
-                          Picker.hide();
-                        this._selectRace(RACE_MAIN)
+                        this._selectRace(RACE_MAIN);
+                        umengEvent('ticket_main')
                     }}
                     style={this._selectedBg(selectRace === RACE_MAIN)}>
                     <Text style={this._selectTxt(selectRace === RACE_MAIN)}>{I18n.t('mainRace')}</Text>
@@ -193,7 +163,7 @@ export default class ChoiseTicketPage extends Component {
                 <TouchableOpacity
                     disabled={!this.btnSideDisabled()}
                     onPress={()=>{
-
+                        umengEvent('ticket_side');
                         this._selectRace(RACE_SIDE)
                     }}
                     style={[this._selectedBg(selectRace === RACE_SIDE),styles.marginLeft]}>
@@ -272,6 +242,7 @@ export default class ChoiseTicketPage extends Component {
     listTicketView = () => {
         const {selectRace} = this.state;
         return (<UltimateListView
+            style={styles.margin}
             ref={(ref) => this.listView = ref}
             refreshable={false}
             firstLoader={false}
@@ -286,7 +257,7 @@ export default class ChoiseTicketPage extends Component {
 
             {selectRace===RACE_SIDE?this.selectSideView():null}
 
-            {strNotNull(selectRace)?this.ticketTypeView():null}
+
 
             <View style={{height:10}}/>
 
@@ -330,6 +301,12 @@ export default class ChoiseTicketPage extends Component {
         </TouchableOpacity>)
     };
 
+    _logo = () => {
+        const {selectRaceData} = this.state;
+        const {race} = selectRaceData;
+        return isEmptyObject(race) ? '' : race.logo;
+    };
+
     _location = () => {
         const {selectRaceData} = this.state;
         const {race} = selectRaceData;
@@ -356,7 +333,8 @@ export default class ChoiseTicketPage extends Component {
 
     itemListView = (rowData) => {
 
-        const {logo, original_price, price, ticket_class, title} = rowData;
+        const {original_price, price, ticket_info, title} = rowData;
+
 
         return (<TouchableOpacity
             activeOpacity={1}
@@ -367,7 +345,7 @@ export default class ChoiseTicketPage extends Component {
             }}
             style={this._selectItemStyle(rowData)}>
             <ImageLoad
-                source={{uri:logo}}
+                source={{uri:this._logo()}}
                 style={styles.itemImg}/>
 
             <View style={styles.itemContent}>
@@ -380,6 +358,11 @@ export default class ChoiseTicketPage extends Component {
 
                 <View style={styles.viewInfo}>
                     <Text style={styles.txtPrice}>{price}</Text>
+                    <View style={styles.viewNum}>
+                        <Text style={styles.lbNum}> （剩余</Text>
+                        <Text style={styles.txtNum}>{this._ticketNum(ticket_info)}</Text>
+                        <Text style={styles.lbNum}>张）</Text>
+                    </View>
 
                     <View style={{flex:1}}/>
 
@@ -396,19 +379,33 @@ export default class ChoiseTicketPage extends Component {
         </TouchableOpacity>)
     };
 
-    _toTicketInfo = (rowData) => {
-        const {selectRace, selectSub, selectRaceData} = this.state;
-        const {id} = rowData;
-        if (selectRace === RACE_MAIN && id) {
-            const {race_id} = selectRaceData.race;
-            router.toTicketInfoPage(this.props, race_id, id)
-        } else if (selectRace === RACE_SIDE && id) {
-            const {race_id} = selectSub.race;
-            router.toTicketInfoPage(this.props, race_id, id)
+    _ticketNum = (ticket_info) => {
+        if (!isEmptyObject(ticket_info)) {
+            const {e_ticket_number, e_ticket_sold_number} = ticket_info;
+            return e_ticket_number - e_ticket_sold_number;
         }
 
+    };
+
+    _toTicketInfo = (rowData) => {
+        const {selectRace, selectSub, selectRaceData} = this.state;
+        const {id, ticket_class} = rowData;
+        if (selectRace === RACE_MAIN && id) {
+            const {race_id} = selectRaceData.race;
+            if (ticket_class === "single_ticket")
+                router.toRacesInfoPage(this.props, race_id, false);
+            else
+                router.toTicketInfoPage(this.props, race_id, id)
+        } else if (selectRace === RACE_SIDE && id) {
+            const {race_id} = selectSub.race;
+            if (ticket_class === "single_ticket")
+                router.toRacesInfoPage(this.props, race_id, false);
+            else
+                router.toTicketInfoPage(this.props, race_id, id)
+        }
 
     };
+
 
     onFetch = (page = 1, startFetch, abortFetch) => {
 
@@ -417,7 +414,7 @@ export default class ChoiseTicketPage extends Component {
 
     _btnOkStyle = () => {
         const {ticket} = this.state;
-        return !isEmptyObject(ticket) ?
+        return ticket.status === "selling" ?
             styles.viewBtnOk : [styles.viewBtnOk, styles.btnDisable]
 
 
@@ -425,7 +422,7 @@ export default class ChoiseTicketPage extends Component {
 
     _btnOkDisabled = () => {
         const {ticket} = this.state;
-        return isEmptyObject(ticket)
+        return !(ticket.status === "selling");
     };
 
     bottomBar = () => {
@@ -438,14 +435,37 @@ export default class ChoiseTicketPage extends Component {
                 onPress={this._toBuy}
                 disabled={this._btnOkDisabled()}
                 style={this._btnOkStyle()}>
-                <Text style={styles.txtBtnOk}>{I18n.t('selectOk')}</Text>
+                <Text style={styles.txtBtnOk}>{this._txtTicketStatus()}</Text>
 
             </TouchableOpacity>
 
         </View>)
     };
 
+    _txtTicketStatus = () => {
+        const {ticket} = this.state;
+        if (isEmptyObject(ticket))
+            return I18n.t('selectOk');
+        else
+            return this._txtTicketBuy(ticket.status)
+
+    };
+
+    _txtTicketBuy = (status) => {
+        switch (status) {
+            case 'unsold':
+                return I18n.t('ticket_unsold');
+            case 'selling':
+                return I18n.t('selectOk');
+            case 'end':
+                return I18n.t('ticket_end');
+            case 'sold_out':
+                return I18n.t('ticket_sold_out');
+        }
+    };
+
     _toBuy = () => {
+        umengEvent('ticket_contain');
         const {selectRace, selectSub, selectRaceData, ticket} = this.state;
         const {id} = ticket;
         if (selectRace === RACE_MAIN && id) {
@@ -460,19 +480,21 @@ export default class ChoiseTicketPage extends Component {
     };
 
     _prize = () => {
-        const {selectRaceData, ticket, selectSub, selectRace} = this.state;
+        const {selectRaceData, ticket, selectRace, selectSub} = this.state;
 
         if (!isEmptyObject(ticket)) {
             return ticket.price
         } else if (selectRace === RACE_MAIN && !isEmptyObject(selectRaceData)) {
-            return selectRaceData.race.ticket_price
+            const {max_price, min_price} = selectRaceData;
+            if (strNotNull(max_price) && strNotNull(min_price))
+                return min_price + '-' +
+                    max_price;
         } else if (selectRace === RACE_SIDE && !isEmptyObject(selectSub)) {
-            return selectSub.race.ticket_price
-        } else if (!isEmptyObject(selectRaceData)) {
-            return selectRaceData.race.ticket_price
+            const {max_price, min_price} = selectSub;
+            if (strNotNull(max_price) && strNotNull(min_price))
+                return min_price + '-' +
+                    max_price;
         }
-
-
     };
 
     _selectedBg = (select) => {
@@ -484,12 +506,13 @@ export default class ChoiseTicketPage extends Component {
     };
 
     _selectRace = (race) => {
-        this.listView.updateDataSource([]);
+        this.listView.updateDataSource(this._listTicket(race));
         this.setState({
             selectRace: race,
             selectTicket: '',
             ticket: {}
-        })
+        });
+
     };
 
     _selectTicket = (ticket) => {
@@ -503,12 +526,14 @@ export default class ChoiseTicketPage extends Component {
             })
     };
 
-    _listTicket = () => {
-        let {selectRace, selectRaceData, selectSub} = this.state;
+    _listTicket = (selectRace) => {
+        let {selectRaceData, selectSub} = this.state;
         if (selectRace === RACE_MAIN) {
-            return selectRaceData.package_tickets
-        } else if (selectRace === RACE_SIDE) {
-            return selectSub.package_tickets
+            const {package_tickets, single_tickets} = selectRaceData;
+            return single_tickets.concat(package_tickets);
+        } else if (selectRace === RACE_SIDE && !isEmptyObject(selectSub)) {
+            const {package_tickets, single_tickets} =selectSub;
+            return single_tickets.concat(package_tickets);
         }
     };
 
@@ -603,7 +628,9 @@ const styles = StyleSheet.create({
     itemView: {
         flexDirection: 'row',
         paddingLeft: 17,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        borderWidth: 2,
+        borderColor: 'white'
     },
     itemImg: {
         height: 104,
@@ -721,5 +748,20 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingLeft: 17,
         backgroundColor: 'white'
+    },
+    margin: {
+        marginBottom: 60
+    },
+    viewNum: {
+        flexDirection: 'row'
+    },
+    lbNum: {
+        fontSize: 14,
+        color: '#666666'
+    },
+    txtNum: {
+        fontSize: 14,
+        color: '#DF1D0F'
     }
+
 });

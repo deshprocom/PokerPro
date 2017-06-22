@@ -26,6 +26,7 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 import RaceSideView from './RaceSideView';
 import {MarkdownPlat} from '../../components';
 import MainRaceResultView from './MainRaceResultView';
+import {umengEvent} from '../../utils/UmengEvent';
 
 
 class RacesInfoPage extends Component {
@@ -344,22 +345,14 @@ class RacesInfoPage extends Component {
         const {isLoginUser, raceInfo} = this.state;
 
         const {ticket_status, ticket_sellable} = raceInfo;
-        if (!this.props.params.fromBuy && sellable(ticket_status, ticket_sellable))
+
+        if (!this.props.params.fromBuy && sellable(ticket_status))
             return (    <RaceInfoBottomView
                 raceInfo={raceInfo}
                 onPress={()=>{
+                    umengEvent('race_buy_ticket');
                         if(isLoginUser){
-                            if(raceInfo.ordered)
-                                Alert.alert(I18n.t('tint'),I18n.t('ticket_ordered_tint'),
-                                [{text:I18n.t('ignore'),
-                                onPress:()=>router.toChoiseTicketPage(this.props,this.props.params.race_id)},
-                                {text:I18n.t('look_order'),
-                                onPress:()=> router.toOrderInfo(this.props,raceInfo.order_id)}]);
-
-                            else{
-                                router.toChoiseTicketPage(this.props,this.props.params.race_id);
-                            }
-
+                             router.toChoiseTicketPage(this.props,this.props.params.race_id);
                         }
                         else
                             router.toLoginFirstPage();
@@ -368,6 +361,7 @@ class RacesInfoPage extends Component {
     };
 
     _selectPage = (index) => {
+        umengEvent(index === 1 ? 'race_main_info' : 'race_side_info');
         this.viewpage.goToPage(index);
     };
 

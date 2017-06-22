@@ -56,7 +56,7 @@ export default class ScheduleList extends Component {
                 style={styles.txtInfo}>{convertDate(item.begin_time, "M月D日")}</Text>
             <Text
                 testID={"txt_begin_time_"+item.schedule_id}
-                style={styles.txtInfo}>{convertDate(item.begin_time, "hh:mm")}</Text>
+                style={styles.txtInfo}>{convertDate(item.begin_time, "HH:mm")}</Text>
         </View>)
     }
 }

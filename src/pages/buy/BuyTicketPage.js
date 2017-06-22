@@ -23,6 +23,8 @@ import NameRealView from './NameRealView';
 import {fetchRacesInfo, fetchGetRecentRaces} from '../../actions/RacesAction';
 import StorageKey from '../../configs/StorageKey';
 import {getBuyRaceTicket, postOrderTicket} from '../../services/OrderDao';
+import {umengEvent} from '../../utils/UmengEvent';
+
 
 const E_TICKET = 'e_ticket',
     ENTITY = 'entity';
@@ -30,7 +32,7 @@ const E_TICKET = 'e_ticket',
 class BuyTicketPage extends Component {
 
     state = {
-        knowRed: true,
+        knowRed: false,
         isEntity: 'e_ticket',
         email: '',
         isNameReal: false,
@@ -57,6 +59,8 @@ class BuyTicketPage extends Component {
 
 
     componentDidMount() {
+        this._getLocalEmail();
+        umengEvent('ticket_buy_info');
         InteractionManager.runAfterInteractions(() => {
             this.refreshPage();
         })
@@ -85,12 +89,7 @@ class BuyTicketPage extends Component {
 
         this.props._getCertification();
         this.tagBuyKnow();
-        const {email} = getLoginUser();
-        if (strNotNull(email)) {
-            this.setState({
-                email: email
-            })
-        }
+
     };
 
     eTicketNum = (ticket_info) => {
@@ -99,6 +98,7 @@ class BuyTicketPage extends Component {
     };
 
     btnBuyKnow = () => {
+        umengEvent('ticket_buy_know');
         storage.save({
             key: StorageKey.BuyKnow,
             rowData: false
@@ -116,11 +116,14 @@ class BuyTicketPage extends Component {
                     knowRed: false
                 })
             }).catch(err => {
-
+            this.setState({
+                knowRed: true
+            })
         })
     };
 
     _btnService = () => {
+        umengEvent("ticket_buy_hotline");
         Alert.alert(I18n.t('hot_line'), I18n.t('hot_phone') + '\n' + I18n.t('work_time'),
             [{
                 text: I18n.t('cancel'), onPress: () => {
@@ -158,7 +161,18 @@ class BuyTicketPage extends Component {
         }
     };
 
+    _saveBuyEmail = () => {
+        let {email} = this.state;
+        if (strNotNull(email))
+            storage.save({
+                key: StorageKey.BuyEmail,
+                rawData: email
+            });
+    };
+
     _btnBuyTicket = () => {
+
+        umengEvent('ticket_buy_contain');
         let {isEntity, email, isNameReal} = this.state;
         if (isNameReal) {
             if (isEntity === ENTITY) {
@@ -167,7 +181,7 @@ class BuyTicketPage extends Component {
             }
 
             if (checkMail(email)) {
-
+                this._saveBuyEmail();
                 const {race_id, ticket_id} = this.props.params;
                 let param = {
                     race_id: race_id,
@@ -220,7 +234,10 @@ class BuyTicketPage extends Component {
             activeOpacity={1}
             onPress={()=>{
                   const {race_id, ticket_id} = this.props.params;
-                  router.toTicketInfoPage(this.props,race_id,ticket_id)
+                  if(ticket_class === 'single_ticket')
+                       router.toRacesInfoPage(this.props, race_id, false);
+                  else
+                      router.toTicketInfoPage(this.props,race_id,ticket_id)
             }}
             style={styles.itemView}>
             <ImageLoad
@@ -252,6 +269,30 @@ class BuyTicketPage extends Component {
             </View>
 
         </TouchableOpacity>)
+    };
+
+    _entityView = () => {
+        return (   <TouchableOpacity
+            onPress={() => {
+                                this.setState({
+                                    isEntity: ENTITY
+                                })
+                            }}
+            activeOpacity={1}
+            testID="btn_entity_ticket"
+            style={isEntity==ENTITY ? styles.ticketSelect : styles.ticketUnSelect}>
+            <Text
+                style={{fontSize:15,color:isEntity==ENTITY?Colors.txt_F28:Colors._AAA}}>{I18n.t('ticket_paper')}</Text>
+        </TouchableOpacity>)
+    };
+
+    _getLocalEmail = () => {
+        storage.load({key: StorageKey.BuyEmail})
+            .then((ret) => {
+                this.setState({
+                    email: ret
+                })
+            });
     };
 
 
@@ -353,18 +394,8 @@ class BuyTicketPage extends Component {
                                 <Text
                                     style={{fontSize:15,color:isEntity==ENTITY?Colors._AAA:Colors.txt_F28}}>{I18n.t('ticket_web')}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={() => {
-                                this.setState({
-                                    isEntity: ENTITY
-                                })
-                            }}
-                                activeOpacity={1}
-                                testID="btn_entity_ticket"
-                                style={isEntity==ENTITY ? styles.ticketSelect : styles.ticketUnSelect}>
-                                <Text
-                                    style={{fontSize:15,color:isEntity==ENTITY?Colors.txt_F28:Colors._AAA}}>{I18n.t('ticket_paper')}</Text>
-                            </TouchableOpacity>
+
+                            {false ? this._entityView() : null}
 
 
                         </View>

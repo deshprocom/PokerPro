@@ -27,7 +27,8 @@ export const itemListView = (item, index) => {
             <View style={styles.marginLine}/>
             <View style={styles.itemView}>
 
-                <ImageLoad
+                <Image
+                    defaultSource={Images.empty_ticket}
                     source={{uri:logo}}
                     style={styles.itemImg}/>
                 <View style={styles.itemInfo}>

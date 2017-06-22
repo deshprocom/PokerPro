@@ -11,11 +11,7 @@ let initialRoute = {
 };
 
 export default class Root extends Component {
-    constructor(props) {
 
-        super(props);
-
-    }
 
     componentWillMount() {
         if (Platform.OS === 'android') {
@@ -45,7 +41,7 @@ export default class Root extends Component {
                 },
             })
         }
-    }
+    };
 
     onBackAndroid = () => {
         const nav = this.navigator;
@@ -55,7 +51,7 @@ export default class Root extends Component {
             return true;
         }
         return false;
-    }
+    };
 
     render() {
 

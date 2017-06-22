@@ -47,7 +47,7 @@ import TicketInfoPage from '../pages/ticket/TicketInfoPage';
 import WebViewPage from '../components/WebViewPage';
 
 
-const customFloatFromRight = Navigator.SceneConfigs.FloatFromRight;
+const customFloatFromRight = Navigator.SceneConfigs.FadeAndroid;
 
 // import {Actions, Scene} from 'react-native-router-flux'
 //

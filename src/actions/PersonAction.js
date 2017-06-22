@@ -93,7 +93,7 @@ export function fetchPutProfile(user_id, body) {
     return (dispatch) => {
         dispatch(_putProfile());
         putProfile(user_id, body, (ret) => {
-            showToast('修改数据成功');
+            showToast('修改成功');
             dispatch(_putProfileOk(ret))
         }, (err) => {
             showToast(err);

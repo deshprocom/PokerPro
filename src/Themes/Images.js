@@ -130,7 +130,7 @@ const images = {
     race_triangle: require('../../source/races/triangle.png'),
     news_outline: require('../../source/news/outline.png'),
     news_triangle: require('../../source/news/triangle.png'),
-    empty_image: require('../../source/empty-image.png'),
+    empty_image: require('../../source/empty/empty_ticket.png'),
     news_share: require('../../source/news/news_share.png'),
     race_type: require('../../source/races/race_type.png'),
     race_type_selected: require('../../source/races/race_type_selected.png'),
@@ -141,7 +141,10 @@ const images = {
     dark_back: require('../../source/home/dark_back.png'),
     up_triangle: require('../../source/order/up_triangle.png'),
     down_triangle: require('../../source/order/down_triangle.png'),
-    ic_back: require('../../source/order/ic_back.png')
+    ic_back: require('../../source/order/ic_back.png'),
+    side_select: require('../../source/order/side_select.png'),
+    side_selected: require('../../source/order/side_seleced.png'),
+    empty_ticket: require('../../source/empty/empty_ticket.png')
 
 
 };
