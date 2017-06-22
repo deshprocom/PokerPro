@@ -67,14 +67,25 @@ export default class RaceInfoView extends Component {
         const {raceInfo} = this.props;
         if (!isEmptyObject(raceInfo))
             return raceInfo.logo;
-    }
+    };
+
+    _btnClick = () => {
+        const {ticket, raceInfo} = this.props;
+        if (!isEmptyObject(ticket)) {
+            const {ticket_class, id} = ticket;
+            if (ticket_class === 'package_ticket')
+                router.toTicketInfoPage(this.props, raceInfo.race_id, id)
+            else
+                router.toRacesInfoPage(this.props, raceInfo.race_id, true)
+        }
+    };
 
     render() {
         const {raceInfo, disabled} = this.props;
         return (  <TouchableOpacity
             disabled={disabled}
             testID="btn_race_detail"
-            onPress={()=> this.props.router.toRacesInfoPage(this.props, raceInfo.race_id,true)}
+            onPress={this._btnClick}
             activeOpacity={1}
             style={{height:149,width:Metrics.screenWidth,
                     flexDirection:'row',alignItems:'center',
