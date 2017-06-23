@@ -11,8 +11,9 @@ import '../configs/StorageConfig';
 import '../I18n/I18n';
 import SplashScreen from 'react-native-smart-splash-screen';
 import MobclickAgent from 'rn-umeng';
-import {UMENG_ANDROID,UMENG_IOS} from '../configs/Constants';
+import {UMENG_ANDROID, UMENG_IOS} from '../configs/Constants';
 import Orientation from 'react-native-orientation';
+import UMShare from 'react-native-umshare';
 console.disableYellowBox = true;
 
 const store = configureStore();
@@ -36,10 +37,29 @@ export default class App extends Component {
             delay: 500,
         });
 
-        if (Platform.OS === 'ios')
-            MobclickAgent.startWithAppkey(UMENG_IOS);
-        else
-            MobclickAgent.startWithAppkey(UMENG_ANDROID);
+        // 第二个参数决定在分享界面的排序1_、2_、3_为前缀
+        UMShare.initShare(Platform.OS === 'ios' ? UMENG_IOS : UMENG_ANDROID,
+            {
+                "1_weixin": {
+                    appKey: "",
+                    appSecret: "",
+                    redirectURL: "",
+                },
+                "2_qq": {
+                    appKey: "",
+                    appSecret: "",
+                    redirectURL: "",
+                },
+                "3_sina": {
+                    appKey: "",
+                    appSecret: "",
+                    redirectURL: "",
+                },
+            },
+            false);
+
+        MobclickAgent.startWithAppkey(Platform.OS === 'ios' ? UMENG_IOS : UMENG_ANDROID);
+
 
         MobclickAgent.onEvent("startApp");
     }

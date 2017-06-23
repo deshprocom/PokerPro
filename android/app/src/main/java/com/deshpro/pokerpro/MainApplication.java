@@ -49,8 +49,8 @@ public class MainApplication extends Application implements ReactApplication {
             new ReactNativeI18n(),
             new BlurViewPackage(),
             new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
-             new RNNetworkInfoPackage(),
-             new UMShareModulePackage
+            new RNNetworkInfoPackage(),
+            new UMShareModulePackage()
       );
     }
   };
