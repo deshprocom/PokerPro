@@ -46,14 +46,7 @@ class SearchKeywordPage extends Component {
             testID="page_keyword_search"
             style={ApplicationStyles.bg_black}>
             <View style={styles.navBar}>
-                <TouchableOpacity
-                    testID="btn_bar_left"
-                    activeOpacity={1}
-                    onPress={()=>this.props.router.pop()}
-                    style={styles.btnCancel}>
-                    <Image source={Images.sign_return} style={{height:19,width:11}}/>
-
-                </TouchableOpacity>
+                <View style={styles.popBtn}/>
 
                 <View style={styles.searchBar}>
                     <Image style={styles.imgSearch}
@@ -74,7 +67,12 @@ class SearchKeywordPage extends Component {
                 </View>
 
 
-                <View style={{width:20}}/>
+                <TouchableOpacity
+                    testID="btn_bar_right"
+                    style={styles.popBtn}
+                    onPress={()=>router.pop()}>
+                    <Text style={styles.txtCancel}>{I18n.t('cancel')}</Text>
+                </TouchableOpacity>
 
             </View>
 
@@ -192,6 +190,12 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.bg_09,
         alignItems: 'center'
     },
+    popBtn: {
+        height: 44,
+        width: 50,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     searchBar: {
         height: 30,
         flexDirection: 'row',
@@ -221,7 +225,7 @@ const styles = StyleSheet.create({
     txtCancel: {
         color: '#E4D57F',
         fontSize: 15
-    }
+    },
 
 
 })
