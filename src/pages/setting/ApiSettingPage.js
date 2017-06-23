@@ -23,7 +23,7 @@ export default class ApiSettingPage extends Component {
                 router.log(ret);
                 this._select(ret);
             }).catch(err => {
-            this._select(Api.test);
+            this._select(Api.production);
         })
     }
 

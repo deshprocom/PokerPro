@@ -120,6 +120,8 @@ android {
                           keyPassword MYAPP_RELEASE_KEY_PASSWORD
                       }
         }
+
+
     }
 
     buildTypes {
@@ -146,6 +148,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-umshare')
     compile project(':react-native-network-info')
     compile project(':react-native-orientation')
     compile project(':react-native-video')
