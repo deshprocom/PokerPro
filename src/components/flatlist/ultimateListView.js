@@ -200,7 +200,7 @@ export default class UltimateListView extends Component {
     }
 
     componentDidMount() {
-        InteractionManager.runAfterInteractions(()=>{
+        InteractionManager.runAfterInteractions(() => {
             this.mounted = true;
             this.props.onFetch(this.getPage(), this.postRefresh, this.endFetch);
         })
@@ -452,7 +452,7 @@ export default class UltimateListView extends Component {
 
             return (
                 <View style={styles.paginationView}>
-                    <Text style={{alignSelf: 'center'}}>
+                    <Text style={{alignSelf: 'center',color:'#cccccc'}}>
                         {this.props.allLoadedText}
                     </Text>
                 </View>
@@ -573,7 +573,7 @@ export default class UltimateListView extends Component {
 
         return (
             <ScrollView {...props}
-                        ref={(ref) => this.scrollView = ref}/>
+                ref={(ref) => this.scrollView = ref}/>
         );
     };
 
@@ -642,7 +642,7 @@ export default class UltimateListView extends Component {
             return (
                 <ListView renderScrollComponent={this.renderScrollComponent}
                           pageSize={this.props.gridColumn}
-                          {...this.props}
+                    {...this.props}
                           ref={(ref) => this.listView = ref}
                           dataSource={this.state.dataSource}
                           enableEmptySections={this.props.enableEmptySections}
@@ -664,7 +664,7 @@ export default class UltimateListView extends Component {
 
         return (
             <FlatList renderScrollComponent={this.renderScrollComponent}
-                      {...this.props}
+                {...this.props}
                       ref={(ref) => this.flatList = ref}
                       removeClippedSubviews={false}
                       data={this.state.dataSource}
