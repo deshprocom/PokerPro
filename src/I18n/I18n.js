@@ -30,7 +30,7 @@ switch (languageCode) {
         I18n.translations.zh = require('./zh.json')
         break;
     case 'en':
-        I18n.translations.en = require('./english.json')
+        I18n.translations.en = require('./zh.json')
         break;
     default:
         I18n.translations.zh = require('./zh.json')
