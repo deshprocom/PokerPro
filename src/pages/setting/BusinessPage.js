@@ -35,7 +35,7 @@ export default class BusinessPage extends Component {
 
                 <SetItemView
                     onPress={this._hotLine}
-                    name="联系电话"
+                    name={I18n.t('line')}
                     testID="btn_business_phone"
                     rightText={I18n.t('hot_phone')}
                 />

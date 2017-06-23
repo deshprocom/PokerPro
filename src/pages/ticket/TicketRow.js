@@ -7,6 +7,7 @@ import {
     TouchableOpacity, Image, StatusBar,
     ListView, Animated, Platform, InteractionManager
 } from 'react-native';
+import I18n from 'react-native-i18n';
 import {convertDate, ticketStatusConvert} from '../../utils/ComonHelper';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {ImageLoad} from '../../components';
@@ -37,7 +38,7 @@ export const itemListView = (item, index) => {
                         style={styles.itemTitle}>{name}</Text>
                     <Text style={styles.itemTime}>
                         {convertDate(begin_date, 'YYYY.MM.DD') + '-' + convertDate(end_date, 'YYYY.MM.DD')}</Text>
-                    <Text style={styles.itemAddr}>地址:{location}</Text>
+                    <Text style={styles.itemAddr}>{I18n.t('location')}:{location}</Text>
 
                     <View style={styles.itemTab}>
                         <Text style={styles.itemPrice}>{prize}</Text>

@@ -37,7 +37,7 @@ class RaceResultView extends Component {
                     style={[btnLeft?styles.btnSelect:styles.btn,styles.btnLeft]}
                     textStyle={btnLeft?styles.txtBtnSelect:styles.txtBtn}
                 >
-                    赛事信息
+                    {I18n.t('GameInformation')}
                 </Button>
 
                 <Button
@@ -47,7 +47,7 @@ class RaceResultView extends Component {
                     style={[btnRight?styles.btnSelect:styles.btn,styles.btnRight]}
                     textStyle={btnRight?styles.txtBtnSelect:styles.txtBtn}
                 >
-                    赛事结果
+                    {I18n.t('GameResult')}
                 </Button>
             </View>
 

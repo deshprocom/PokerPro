@@ -60,7 +60,7 @@ class SearchKeywordPage extends Component {
                            source={Images.search_gray}/>
                     <TextInput
                         placeholderTextColor="#6A6B6B"
-                        placeholder='点击搜索更多赛事'
+                        placeholder={I18n.t('serachMore')}
                         testID="input_keyword"
                         underlineColorAndroid='transparent'
                         style={styles.inputSearch}
