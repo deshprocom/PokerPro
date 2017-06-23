@@ -3,6 +3,7 @@ package com.deshpro.pokerpro;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.zzy.umshare.UMShareModulePackage;
 import com.github.yamill.orientation.OrientationPackage;
 import com.brentvatne.react.ReactVideoPackage;
 
@@ -37,6 +38,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new UMShareModulePackage(),
             new OrientationPackage(),
             new ReactVideoPackage(),
             new UmengPackage(),
@@ -47,7 +49,8 @@ public class MainApplication extends Application implements ReactApplication {
             new ReactNativeI18n(),
             new BlurViewPackage(),
             new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
-             new RNNetworkInfoPackage()
+             new RNNetworkInfoPackage(),
+             new UMShareModulePackage
       );
     }
   };
