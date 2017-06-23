@@ -555,7 +555,7 @@ const styles = StyleSheet.create({
         width: 16
     },
     txtTab: {
-        fontSize: 16,
+        fontSize: 14,
         color: '#888888',
         marginBottom: 10
     },
