@@ -35,6 +35,7 @@
     "react-native-smart-security-text": "^1.0.1",
     "react-native-smart-splash-screen": "^2.3.3",
     "react-native-storage": "^0.1.4",
+    "react-native-umeng-share": "git+https://github.com/HADB/react-native-umeng-share.git",
     "react-native-video": "^1.0.0",
     "react-redux": "^5.0.4",
     "react-timer-mixin": "^0.13.3",

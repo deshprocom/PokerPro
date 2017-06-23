@@ -93,14 +93,14 @@ class HomePage extends Component {
 
                 const recentRaces = {
                     user_id: user_id,
-                    number: 5
+                    number: 8
                 };
                 this.props._getRecentRaces(recentRaces);
 
             }).catch(err => {
 
             const recentRaces = {
-                number: 5
+                number: 8
             };
             this.props._getRecentRaces(recentRaces)
         })
