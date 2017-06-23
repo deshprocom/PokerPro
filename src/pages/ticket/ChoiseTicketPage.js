@@ -663,6 +663,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: Colors._161817,
         fontWeight: 'bold',
+        marginTop:3
     },
     txtMoneyNum: {
         fontSize: 20,
