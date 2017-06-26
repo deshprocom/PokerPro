@@ -10,14 +10,12 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import NavigationBar from '../../components/NavigationBar';
 import {connect} from 'react-redux';
-import md5 from "react-native-md5";
 import {checkPhone, strNotNull, showToast} from '../../utils/ComonHelper';
 import {CountDownText}from '../../components/countdown/CountDownText';
 import {fetchPostVerifyCode, fetchPostVCode, fetchPostLogin}from '../../actions/AccountAction';
 import {fetchGetProfile} from '../../actions/PersonAction';
 import {fetchGetRecentRaces} from '../../actions/RacesAction';
-import {POST_VCODE_LOGIN} from '../../actions/ActionTypes'
-import {BtnLong, BtnSoild} from '../../comporea'
+import {POST_VCODE_LOGIN} from '../../actions/ActionTypes';
 
 class LoginCodeView extends React.Component {
 
