@@ -131,7 +131,7 @@ class RacesInfoPage extends Component {
                                         style={styles.txtLocation}>{raceInfo.location}</Text>
                                 </View>
                                 <View style={styles.viewPrice}>
-                                    <Text style={styles.txtLabel}>奖池:</Text>
+                                    <Text style={styles.txtLabel}>{I18n.t('prizePond')}:</Text>
                                     <Text
                                         testID="txt_races_prize"
                                         style={styles.txtPrice}>{raceInfo.prize}</Text>
@@ -186,7 +186,7 @@ class RacesInfoPage extends Component {
             testID="btn_main_race"
             onPress={()=>this._selectPage(0)}
             style={styles.viewCenter1}>
-            <Text style={selectPage === 0?styles.txtTabSelect:styles.txtTab}>赛事介绍</Text>
+            <Text style={selectPage === 0?styles.txtTabSelect:styles.txtTab}>{I18n.t('RaceIntro')}</Text>
             {selectPage === 0 ? <Image style={styles.imgTab}
                                        source={Images.race_triangle}/> :
                 <View style={styles.imgTab}/>}
@@ -220,7 +220,7 @@ class RacesInfoPage extends Component {
                 style={styles.viewCenter}>
                 <Text
                     style={selectPageKey === 'page_race_result'?
-                    styles.txtTabSelect:styles.txtTab}>主赛信息</Text>
+                    styles.txtTabSelect:styles.txtTab}>{I18n.t('MainInformation')}</Text>
                 {selectPageKey === 'page_race_result' ?
                     <Image style={styles.imgTab}
                            source={Images.race_triangle}/> :
@@ -251,7 +251,7 @@ class RacesInfoPage extends Component {
                 onPress={()=>this._selectPage(this._selectPageIndex('page_race_side'))}
                 style={styles.viewCenter}>
                 <Text style={selectPageKey === 'page_race_side'?
-                styles.txtTabSelect:styles.txtTab}>边赛信息</Text>
+            styles.txtTabSelect:styles.txtTab}>{I18n.t('SideInformation')}</Text>
                 {selectPageKey === 'page_race_side' ?
                     <Image style={styles.imgTab}
                            source={Images.race_triangle}/> :

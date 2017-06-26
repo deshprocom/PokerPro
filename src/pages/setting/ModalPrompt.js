@@ -68,7 +68,7 @@ class ModalPrompt extends Component {
 
         } else if (actionType === POST_CHANGE_BIND && hasData) {
             this._close();
-            showToast('更换手机号成功，请重新登录');
+            showToast(`${I18n.t('reLogin')}`);
             clearLoginUser();
             const recentRaces = {
                 number: 5
@@ -121,17 +121,17 @@ class ModalPrompt extends Component {
                     <View style={styles.item}>
                         <View style={styles.point}/>
 
-                        <Text style={styles.txtLabel}>一个月只能更换一次</Text>
+                        <Text style={styles.txtLabel}>{I18n.t('once')}</Text>
                     </View>
                     <View style={styles.item1}>
                         <View style={styles.point}/>
 
-                        <Text style={styles.txtLabel}>更换手机号不影响账号内容和数据</Text>
+                        <Text style={styles.txtLabel}>{I18n.t('noChange')}</Text>
                     </View>
                     <View style={styles.item1}>
                         <View style={styles.point}/>
 
-                        <Text style={styles.txtLabel}>你将使用新手机号登录</Text>
+                        <Text style={styles.txtLabel}>{I18n.t('useNewTle')}</Text>
                     </View>
 
 
@@ -140,7 +140,7 @@ class ModalPrompt extends Component {
                         testID="btn_bind_know"
                         onPress={this._btnNext}
                         style={styles.btnKnow}>
-                        <Text style={styles.txtKnow}>我知道了</Text>
+                        <Text style={styles.txtKnow}>{I18n.t('konw')}</Text>
 
                     </TouchableOpacity>
 
@@ -176,9 +176,9 @@ class ModalPrompt extends Component {
                         </TouchableOpacity>
 
                     </View>
-                    <Text style={styles.txtCode}>请输入验证码</Text>
+                    <Text style={styles.txtCode}>{I18n.t('please_input_code')}</Text>
                     <View style={styles.viewSend}>
-                        <Text style={styles.txtSendCode}>验证码发送至</Text>
+                        <Text style={styles.txtSendCode}>{I18n.t('sendCode')}</Text>
                         <SecurityText
                             securityOptions={{
                         isSecurity: true,
@@ -204,7 +204,7 @@ class ModalPrompt extends Component {
                             timeLeft={60} // 正向计时 时间起点为0秒
                             step={-1} // 计时步长，以秒为单位，正数则为正计时，负数为倒计时
                             startText={I18n.t('get_vcode')} // 开始的文本
-                            endText={'60S后重发'} // 结束的文本
+                            endText={I18n.t('reSend')} // 结束的文本
                             ref={ref=>this.countDownText = ref}
                             intervalText={(sec) => sec + 's'} // 定时的文本回调
                         />
@@ -235,7 +235,7 @@ class ModalPrompt extends Component {
 
                     </View>
 
-                    <Text style={styles.txtPhone}>更换新手机号</Text>
+                    <Text style={styles.txtPhone}>{I18n.t('changePhone')}</Text>
 
                     <View style={styles.inputView}>
                         <TextInput
@@ -247,7 +247,7 @@ class ModalPrompt extends Component {
                             }}
                             value={phone}
                             clearButtonMode="always"
-                            placeholder={'                      请输入新的手机号码'}
+                            placeholder={I18n.t('writeNewPhone')}
                             placeholderTextColor="#BBBBBB"
                             underlineColorAndroid='transparent'
                             style={styles.inputPhone}/>
@@ -257,7 +257,7 @@ class ModalPrompt extends Component {
                         testID="btn_bind_next"
                         onPress={this._btnNewNext}
                         style={styles.btnNext}>
-                        <Text style={styles.txtNext}>下一步</Text>
+                        <Text style={styles.txtNext}>{I18n.t('next')}</Text>
 
                     </TouchableOpacity>
 
@@ -293,9 +293,9 @@ class ModalPrompt extends Component {
                         </TouchableOpacity>
 
                     </View>
-                    <Text style={styles.txtCode}>请输入验证码</Text>
+                    <Text style={styles.txtCode}>{I18n.t('please_input_code')}</Text>
                     <View style={styles.viewSend}>
-                        <Text style={styles.txtSendCode}>验证码发送至</Text>
+                        <Text style={styles.txtSendCode}>{I18n.t('sendCode')}</Text>
                         <SecurityText
                             securityOptions={{
                         isSecurity: true,
@@ -321,7 +321,7 @@ class ModalPrompt extends Component {
                             timeLeft={60} // 正向计时 时间起点为0秒
                             step={-1} // 计时步长，以秒为单位，正数则为正计时，负数为倒计时
                             startText={I18n.t('get_vcode')} // 开始的文本
-                            endText={'60S后重发'} // 结束的文本
+                            endText={I18n.t('reSend')} // 结束的文本
                             ref={ref=>this.countDownText = ref}
                             intervalText={(sec) => sec + 's'} // 定时的文本回调
                         />

@@ -27,13 +27,13 @@ export default class ChangePhonePage extends Component {
             style={ApplicationStyles.bg_black}>
             <NavigationBar
                 toolbarStyle={{backgroundColor:Colors.bg_09}}
-                title={'手机号'}
+                title={I18n.t('tel')}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
                 leftBtnPress={()=>router.pop()}/>
 
             <View style={styles.viewPhone}>
-                <Text style={styles.txtPhone}>你当前的手机号为</Text>
+                <Text style={styles.txtPhone}>{I18n.t('presentTel')}</Text>
                 <SecurityText
                     testID="txt_phone_security"
                     securityOptions={{
@@ -46,7 +46,7 @@ export default class ChangePhonePage extends Component {
                 </SecurityText>
             </View>
 
-            <Text style={styles.txtTine}>更换后个人信息不变，下次可以使用新手机号登录</Text>
+            <Text style={styles.txtTine}>{I18n.t('newTel')}</Text>
 
 
             <ModalPrompt
@@ -60,7 +60,7 @@ export default class ChangePhonePage extends Component {
                 onPress={this.modalShow}
                 textStyle={styles.txtChange}
                 style={styles.btnChange}>
-                更换手机号
+                {I18n.t('changeTel')}
             </Button>
         </View>)
     }

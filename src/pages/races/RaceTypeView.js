@@ -6,6 +6,7 @@ import {
     TouchableOpacity, View, TextInput, FlatList,
     StyleSheet, Image, Text, Platform
 } from 'react-native';
+import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 
 export default class RaceTypeView extends Component {
@@ -29,7 +30,7 @@ export default class RaceTypeView extends Component {
                 <TouchableOpacity
                     onPress={this.props.pressAll}
                     style={styles.all}>
-                    <Text style={styles.allTxt}>全部赛事</Text>
+                    <Text style={styles.allTxt}>{I18n.t('AllGame')}</Text>
 
                     <Image style={styles.typeSelect}
                            source={selectAll?
@@ -54,7 +55,7 @@ export default class RaceTypeView extends Component {
                         testID="btn_hosts_complete"
                         onPress={()=>this.props.pressHostOk()}
                         style={styles.completeView}>
-                        <Text style={styles.completeTxt}>完成</Text>
+                        <Text style={styles.completeTxt}>{I18n.t('Finsh')}</Text>
                     </TouchableOpacity>
 
 

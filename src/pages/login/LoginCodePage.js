@@ -17,7 +17,7 @@ import {fetchPostVerifyCode, fetchPostVCode, fetchPostLogin}from '../../actions/
 import {fetchGetProfile} from '../../actions/PersonAction';
 import {fetchGetRecentRaces} from '../../actions/RacesAction';
 import {POST_VCODE_LOGIN} from '../../actions/ActionTypes'
-import {BtnLong, BtnSoild} from '../../components';
+import {BtnLong, BtnSoild} from '../../comporea'
 
 class LoginCodeView extends React.Component {
 
