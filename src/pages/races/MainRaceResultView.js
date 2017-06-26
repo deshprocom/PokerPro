@@ -61,7 +61,7 @@ export default class MainRaceResultView extends Component {
                 style={curTab === TAB_INFO?styles.btnSelect:styles.btn}
                 textStyle={curTab === TAB_INFO?styles.txtBtnSelect:styles.txtBtn}
             >
-                赛程表
+                {I18n.t('Schudel')}
             </Button>)
 
         }
@@ -75,7 +75,7 @@ export default class MainRaceResultView extends Component {
                 style={curTab === TAB_BLINDS?styles.btnSelect:styles.btn}
                 textStyle={curTab === TAB_BLINDS?styles.txtBtnSelect:styles.txtBtn}
             >
-                盲注结构
+                {I18n.t('Blind')}
             </Button>)
         }
         if (!isEmptyObject(raceRanks) &&
@@ -88,7 +88,7 @@ export default class MainRaceResultView extends Component {
                 style={curTab === TAB_RESULT?styles.btnSelect:styles.btn1}
                 textStyle={curTab === TAB_RESULT?styles.txtBtnSelect:styles.txtBtn}
             >
-                赛事结果
+                {I18n.t('Ranks')}
             </Button>)
 
 
