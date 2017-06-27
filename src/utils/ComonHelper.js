@@ -30,7 +30,7 @@ export function strToDate(date) {
     }
 }
 
-const shareIcon = 'http://deshpro.ufile.ucloud.com.cn/pokerpro.png';
+const shareIcon = 'https://www.deshpro.com/pokerpro.png';
 export const DayHeadings = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
 export const MonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May',
     'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
