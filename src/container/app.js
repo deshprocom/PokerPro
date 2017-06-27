@@ -11,7 +11,10 @@ import '../configs/StorageConfig';
 import '../I18n/I18n';
 import SplashScreen from 'react-native-smart-splash-screen';
 import MobclickAgent from 'rn-umeng';
-import {UMENG_ANDROID, UMENG_IOS} from '../configs/Constants';
+import {
+    UMENG_ANDROID, UMENG_IOS, WX_ID, WX_Secret,
+    QQ_SHARE_ID, QQ_SHARE_KEY, WX_ANDROID_URL
+} from '../configs/Constants';
 import Orientation from 'react-native-orientation';
 import UMShare from 'react-native-umshare';
 console.disableYellowBox = true;
@@ -41,14 +44,14 @@ export default class App extends Component {
         UMShare.initShare(Platform.OS === 'ios' ? UMENG_IOS : UMENG_ANDROID,
             {
                 "1_weixin": {
-                    appKey: "",
-                    appSecret: "",
-                    redirectURL: "",
+                    appKey: WX_ID,
+                    appSecret: WX_Secret,
+                    redirectURL: WX_ANDROID_URL,
                 },
                 "2_qq": {
-                    appKey: "",
-                    appSecret: "",
-                    redirectURL: "",
+                    appKey: QQ_SHARE_ID,
+                    appSecret: QQ_SHARE_KEY,
+                    redirectURL: WX_ANDROID_URL,
                 },
                 "3_sina": {
                     appKey: "",
@@ -56,7 +59,7 @@ export default class App extends Component {
                     redirectURL: "",
                 },
             },
-            false);
+            true);
 
         MobclickAgent.startWithAppkey(Platform.OS === 'ios' ? UMENG_IOS : UMENG_ANDROID);
 

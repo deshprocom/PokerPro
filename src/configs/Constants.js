@@ -12,3 +12,8 @@ export const UMENG_ANDROID_PRODUCTION = '58da162c9f06fd7065000052';//android_pop
 
 export const QQ_SHARE_ID = '1106155543';
 export const QQ_SHARE_KEY = 'kaI7hok5UcxwVaHv';
+export const WX_Secret = '387c2d97583a60c9ac17272102d23637';
+export const WX_ID = 'wx938123615f256c33';
+
+export const WX_ANDROID_URL = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.tencent.mm';
+export const QQ_ANDROID_URL = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.tencent.mobileqq';
