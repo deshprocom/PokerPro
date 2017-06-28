@@ -19,7 +19,7 @@ import RaceInfoBottomView from './RaceInfoBottomView';
 import {
     strNotNull, sellable, isEmptyObject, YYYY_MM_DD,
     raceStatusConvert, ticketStatusConvert, convertDate,
-    strValid
+    strValid, uShare
 } from '../../utils/ComonHelper';
 import TestRouter from '../../components/TestRouter';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
@@ -110,7 +110,9 @@ class RacesInfoPage extends Component {
                         <TouchableOpacity
                             testID="btn_bar_right"
                             style={styles.popBtn}
-                            onPress={()=>router.pop()}>
+                            onPress={()=>{
+                                uShare()
+                            }}>
                             <Image style={styles.imgShare}
                                    source={Images.match_share}/>
                         </TouchableOpacity>
