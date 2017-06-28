@@ -466,8 +466,7 @@ const styles = StyleSheet.create({
     popBtn: {
         height: 40,
         width: 50,
-        justifyContent: 'center',
-        backgroundColor: 'green'
+        justifyContent: 'center'
     },
     backImg: {
         width: 11,
@@ -586,7 +585,8 @@ const styles = StyleSheet.create({
     },
     imgShare: {
         height: 23,
-        width: 18
+        width: 18,
+        marginLeft: 15
     }
 
 
