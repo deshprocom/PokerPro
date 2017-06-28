@@ -312,7 +312,7 @@ class HomePage extends Component {
                             onPress={()=>{
                                 umengEvent('home_ranking');
                                 {/*router.toChoiseTicketPage(this.props,28)*/}
-                                uShare()
+
                             }}
                             style={[{marginRight:53},styles.item_center]}>
                             <Image style={styles.gif_fuc}
