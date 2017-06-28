@@ -14,7 +14,7 @@ let TAG = 'PuKeHttp:';
 
 // define the api
 const client = create({
-    baseURL: Api.production,
+    baseURL: Api.test_ci_at,
     headers: {
         'X-DP-APP-KEY': '467109f4b44be6398c17f6c058dfa7ee',
         'X-DP-CLIENT-IP': '192.168.2.231'

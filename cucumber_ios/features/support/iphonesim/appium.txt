@@ -10,4 +10,4 @@ locale = 'zh_CN'
 [appium_lib]
 sauce_username = false
 sauce_access_key = false
-wait_timeout = 10
+wait_timeout = 5
