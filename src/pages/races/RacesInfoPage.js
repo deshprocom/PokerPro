@@ -107,7 +107,13 @@ class RacesInfoPage extends Component {
                                 style={styles.txtTitle}
                                 numberOfLines={1}>{raceInfo.name}</Text>
                         </View>
-                        <View style={styles.popBtn}/>
+                        <TouchableOpacity
+                            testID="btn_bar_right"
+                            style={styles.popBtn}
+                            onPress={()=>router.pop()}>
+                            <Image style={styles.imgShare}
+                                   source={Images.match_share}/>
+                        </TouchableOpacity>
 
 
                     </View>
@@ -460,7 +466,8 @@ const styles = StyleSheet.create({
     popBtn: {
         height: 40,
         width: 50,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: 'green'
     },
     backImg: {
         width: 11,
@@ -576,6 +583,10 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    imgShare: {
+        height: 23,
+        width: 18
     }
 
 

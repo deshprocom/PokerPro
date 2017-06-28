@@ -14,6 +14,8 @@ export const QQ_SHARE_ID = '1106155543';
 export const QQ_SHARE_KEY = 'kaI7hok5UcxwVaHv';
 export const WX_Secret = '387c2d97583a60c9ac17272102d23637';
 export const WX_ID = 'wx938123615f256c33';
+export const WB_ID = '1050957035';
+export const WB_KEY = 'e1049869ddd670771459d154fe1a9207';
 
-export const WX_ANDROID_URL = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.tencent.mm';
-export const QQ_ANDROID_URL = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.tencent.mobileqq';
+export const WX_URL = 'http://mobile.umeng.com/social';
+export const WB_URL = 'https://sns.whalecloud.com/sina2/callback';
