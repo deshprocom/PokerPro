@@ -16,6 +16,7 @@ import {fetchPostVerifyCode, fetchPostVCode, fetchPostLogin}from '../../actions/
 import {fetchGetProfile} from '../../actions/PersonAction';
 import {fetchGetRecentRaces} from '../../actions/RacesAction';
 import {POST_VCODE_LOGIN} from '../../actions/ActionTypes';
+import {closeDrawer} from '../../reducers/DrawerRedux';
 
 class LoginCodeView extends React.Component {
 
@@ -36,6 +37,7 @@ class LoginCodeView extends React.Component {
                     user_id: user_id,
                     number: 5
                 };
+                this.props.closeDrawer();
                 this.props._getRecentRaces(recentRaces);
                 this.props._getProfile(user_id);
                 this.props.router.popToTop();
@@ -263,7 +265,8 @@ function bindAction(dispatch) {
         fetchVCode: (body) => dispatch(fetchPostVCode(body)),
         _fetchPostLogin: (body) => dispatch(fetchPostLogin(body)),
         _getProfile: (user_id) => dispatch(fetchGetProfile(user_id)),
-        _getRecentRaces: (body) => dispatch(fetchGetRecentRaces(body))
+        _getRecentRaces: (body) => dispatch(fetchGetRecentRaces(body)),
+        closeDrawer: () => dispatch(closeDrawer()),
     };
 }
 

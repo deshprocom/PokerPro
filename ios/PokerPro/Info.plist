@@ -46,6 +46,14 @@
 				<string>QQ41ee9817</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>wb1050957035</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>60</string>
@@ -53,13 +61,11 @@
 	<array>
 		<string>wechat</string>
 		<string>weixin</string>
-
 		<string>sinaweibohd</string>
 		<string>sinaweibo</string>
 		<string>sinaweibosso</string>
 		<string>weibosdk</string>
 		<string>weibosdk2.5</string>
-
 		<string>mqqapi</string>
 		<string>mqq</string>
 		<string>mqqOpensdkSSoLogin</string>
