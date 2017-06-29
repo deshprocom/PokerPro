@@ -20,7 +20,7 @@ import {fetchGetRecentRaces, _getProfileOk} from '../actions/RacesAction';
 import ListViewForRaces from '../components/listitem/ListViewForRaces';
 import LoadErrorPage from '../components/ListNoDataPage';
 import ListNoDataPage from '../components/ListErrorPage';
-import {isEmptyObject, strNotNull, putLoginUser, developing} from '../utils/ComonHelper';
+import {isEmptyObject, strNotNull, putLoginUser, uShare} from '../utils/ComonHelper';
 import {NavigationBar, ParallaxScrollView} from '../components';
 import {LoadingView} from '../components/load';
 import JpushHelp from '../services/JpushHelper';
@@ -311,7 +311,8 @@ class HomePage extends Component {
                             testID="btn_home_sort"
                             onPress={()=>{
                                 umengEvent('home_ranking');
-                                router.toChoiseTicketPage(this.props,28)
+                                {/*router.toChoiseTicketPage(this.props,28)*/}
+
                             }}
                             style={[{marginRight:53},styles.item_center]}>
                             <Image style={styles.gif_fuc}

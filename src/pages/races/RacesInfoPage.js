@@ -19,7 +19,7 @@ import RaceInfoBottomView from './RaceInfoBottomView';
 import {
     strNotNull, sellable, isEmptyObject, YYYY_MM_DD,
     raceStatusConvert, ticketStatusConvert, convertDate,
-    strValid
+    strValid, uShare
 } from '../../utils/ComonHelper';
 import TestRouter from '../../components/TestRouter';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
@@ -107,7 +107,15 @@ class RacesInfoPage extends Component {
                                 style={styles.txtTitle}
                                 numberOfLines={1}>{raceInfo.name}</Text>
                         </View>
-                        <View style={styles.popBtn}/>
+                        <TouchableOpacity
+                            testID="btn_bar_right"
+                            style={styles.popBtn}
+                            onPress={()=>{
+                                uShare(this.props.params.race_id)
+                            }}>
+                            <Image style={styles.imgShare}
+                                   source={Images.match_share}/>
+                        </TouchableOpacity>
 
 
                     </View>
@@ -131,7 +139,7 @@ class RacesInfoPage extends Component {
                                         style={styles.txtLocation}>{raceInfo.location}</Text>
                                 </View>
                                 <View style={styles.viewPrice}>
-                                    <Text style={styles.txtLabel}>{I18n.t('prizePond')}:</Text>
+                                    <Text style={styles.txtLabel}>{I18n.t('PrizePond')}:</Text>
                                     <Text
                                         testID="txt_races_prize"
                                         style={styles.txtPrice}>{raceInfo.prize}</Text>
@@ -576,6 +584,11 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    imgShare: {
+        height: 23,
+        width: 18,
+        marginLeft: 15
     }
 
 

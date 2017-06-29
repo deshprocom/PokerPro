@@ -50,7 +50,7 @@
 		480FDC411EFD16D300546599 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 480FDC401EFD16D300546599 /* libsqlite3.tbd */; };
 		480FDC431EFD16F800546599 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 480FDC421EFD16F800546599 /* libc++.tbd */; };
 		48358DFC1ED2C9B100997A6D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 48358DFA1ED2C9B100997A6D /* LaunchScreen.xib */; };
-		486EB1BF1EEE345500D38BE3 /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 486EB1BE1EEE345500D38BE3 /* splash.png */; };
+		485E1F791F03B481005615DE /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 485E1F781F03B481005615DE /* splash.png */; };
 		48B6307A1ED53E0400B956A5 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48B630791ED53E0400B956A5 /* RSKImageCropper.framework */; };
 		48B6307B1ED53E0400B956A5 /* RSKImageCropper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48B630791ED53E0400B956A5 /* RSKImageCropper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		48B6307D1ED53E0E00B956A5 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48B6307C1ED53E0E00B956A5 /* QBImagePicker.framework */; };
@@ -408,7 +408,7 @@
 		480FDC421EFD16F800546599 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		48358DFA1ED2C9B100997A6D /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		48358EB81ED2D97600997A6D /* PokerPro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = PokerPro.entitlements; path = PokerPro/PokerPro.entitlements; sourceTree = "<group>"; };
-		486EB1BE1EEE345500D38BE3 /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash.png; path = "../../../../../../Desktop/UI视觉/splash.png"; sourceTree = "<group>"; };
+		485E1F781F03B481005615DE /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash.png; path = ../../../../android/app/src/main/res/drawable/splash.png; sourceTree = "<group>"; };
 		48B630791ED53E0400B956A5 /* RSKImageCropper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48B6307C1ED53E0E00B956A5 /* QBImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C9D3F913DBB405D860C62E0 /* RCTSplashScreen.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTSplashScreen.xcodeproj; path = "../node_modules/react-native-smart-splash-screen/ios/RCTSplashScreen/RCTSplashScreen.xcodeproj"; sourceTree = "<group>"; };
@@ -699,7 +699,7 @@
 		48358DF91ED2C9B100997A6D /* SplashScreenResource */ = {
 			isa = PBXGroup;
 			children = (
-				486EB1BE1EEE345500D38BE3 /* splash.png */,
+				485E1F781F03B481005615DE /* splash.png */,
 				48358DFA1ED2C9B100997A6D /* LaunchScreen.xib */,
 			);
 			name = SplashScreenResource;
@@ -1357,9 +1357,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				480FDC291EFD12F600546599 /* UMSocialSDKPromptResources.bundle in Resources */,
+				485E1F791F03B481005615DE /* splash.png in Resources */,
 				480FDC281EFD12F600546599 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				486EB1BF1EEE345500D38BE3 /* splash.png in Resources */,
 				480FDC2B1EFD12F600546599 /* WeiboSDK.bundle in Resources */,
 				48358DFC1ED2C9B100997A6D /* LaunchScreen.xib in Resources */,
 				480FDC2A1EFD12F600546599 /* UMSocialSDKResources.bundle in Resources */,
