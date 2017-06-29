@@ -43,8 +43,8 @@ export function strNotNull(str) {
 }
 
 
-export function uShare() {
-    UMShare.share("赛事详情", "简介", shareIcon, "http://106.75.134.18:8100/#/main")
+export function uShare(raceId) {
+    UMShare.share("赛事详情", "简介", shareIcon, "http://106.75.134.18:8100/race/"+raceId)
         .then(() => {
             alert('成功')
         }, (error) => {

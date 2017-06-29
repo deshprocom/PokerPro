@@ -13,7 +13,8 @@ import SplashScreen from 'react-native-smart-splash-screen';
 import MobclickAgent from 'rn-umeng';
 import {
     UMENG_ANDROID, UMENG_IOS, WX_ID, WX_Secret,
-    QQ_SHARE_ID, QQ_SHARE_KEY, WX_ANDROID_URL
+    QQ_SHARE_ID, QQ_SHARE_KEY, WX_URL, WB_URL,
+    WB_ID, WB_KEY
 } from '../configs/Constants';
 import Orientation from 'react-native-orientation';
 import UMShare from 'react-native-umshare';
@@ -46,17 +47,17 @@ export default class App extends Component {
                 "1_weixin": {
                     appKey: WX_ID,
                     appSecret: WX_Secret,
-                    redirectURL: WX_ANDROID_URL,
+                    redirectURL: WX_URL,
                 },
                 "2_qq": {
                     appKey: QQ_SHARE_ID,
                     appSecret: QQ_SHARE_KEY,
-                    redirectURL: WX_ANDROID_URL,
+                    redirectURL: WX_URL,
                 },
                 "3_sina": {
-                    appKey: "",
-                    appSecret: "",
-                    redirectURL: "",
+                    appKey: WB_ID,
+                    appSecret: WB_KEY,
+                    redirectURL: WB_URL,
                 },
             },
             true);
