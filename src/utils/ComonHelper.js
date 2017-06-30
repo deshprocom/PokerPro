@@ -44,7 +44,7 @@ export function strNotNull(str) {
 
 
 export function uShare(title, location, raceId) {
-    UMShare.share(title, location, shareIcon, "http://106.75.134.18:8100/race/" + raceId)
+    UMShare.share(title, location, shareIcon, "http://106.75.136.9:8810/race/" + raceId)
         .then(() => {
             showToast('分享成功')
         }, (error) => {
