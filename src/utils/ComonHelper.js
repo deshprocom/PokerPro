@@ -12,7 +12,8 @@ import StorageKey from '../configs/StorageKey';
 import {Verified, SellStatus} from '../configs/Status';
 import Communications from 'react-native-communications';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
-import ImageMark from '../components/simple/ImageMark'
+import ImageMark from '../components/simple/ImageMark';
+import UMShare from 'react-native-umshare';
 
 export const YYYY_MM_DD = 'YYYY.MM.DD';
 export const DATA_SS = 'YYYY-MM-DD hh:mm:ss';
@@ -29,7 +30,7 @@ export function strToDate(date) {
     }
 }
 
-
+const shareIcon = 'https://www.deshpro.com/pokerpro.png';
 export const DayHeadings = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
 export const MonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May',
     'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -39,6 +40,16 @@ export function strNotNull(str) {
         return false;
     else
         return true;
+}
+
+
+export function uShare(raceId) {
+    UMShare.share("赛事详情", "简介", shareIcon, "http://106.75.134.18:8100/race/"+raceId)
+        .then(() => {
+            alert('成功')
+        }, (error) => {
+            alert(error)
+        })
 }
 
 export function strValid(str) {

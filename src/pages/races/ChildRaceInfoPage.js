@@ -78,7 +78,7 @@ class ChildRaceInfoPage extends Component {
 
                     <Text
                         testID="txt_race_begin_chips"
-                        style={styles.txtNum}>{I18n.t('beginChip')}{subRaceInfo.participants}</Text>
+                        style={styles.txtNum}>{I18n.t('beginChip')}{subRaceInfo.blind}</Text>
                 </View>
 
             </View>)
@@ -108,12 +108,12 @@ class ChildRaceInfoPage extends Component {
             return;
         const {schedules, ranks, blinds} = subRaceInfo;
 
-        return ( <View style={styles.page}>
+        return ( <ScrollView style={styles.page}>
             <MainRaceResultView
                 blinds={blinds}
                 schedules={schedules}
                 raceRanks={ranks}/>
-        </View>)
+        </ScrollView>)
     }
 
 }

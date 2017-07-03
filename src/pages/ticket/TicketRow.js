@@ -40,14 +40,10 @@ export const itemListView = (item, index) => {
                         {convertDate(begin_date, 'YYYY.MM.DD') + '-' + convertDate(end_date, 'YYYY.MM.DD')}</Text>
                     <Text style={styles.itemAddr}>{I18n.t('location')}:{location}</Text>
 
-                    <View style={styles.itemTab}>
-                        <Text style={styles.itemPrice}>{prize}</Text>
+                    <Text style={styles.itemPrice}>{prize}</Text>
 
-                        <View style={sellStyle(ticket_status)}>
-                            <Text style={sellTxt(ticket_status)}>{ticketStatusConvert(ticket_status)}</Text>
-                        </View>
-
-
+                    <View style={sellStyle(ticket_status)}>
+                        <Text style={sellTxt(ticket_status)}>{ticketStatusConvert(ticket_status)}</Text>
                     </View>
 
 
@@ -60,7 +56,7 @@ export const itemListView = (item, index) => {
 };
 
 function sellStyle(status) {
-    return status === 'selling' ? styles.itemSell : styles.itemStatus
+    return status === 'selling' ? styles.itemSell : [styles.itemSell, {backgroundColor: '#DDDDDD'}]
 }
 
 function sellTxt(status) {
@@ -77,11 +73,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: Colors.white,
-        paddingTop: 15,
-        paddingBottom: 18
+        paddingTop: 16,
+        paddingBottom: 16
     },
     itemTitle: {
-        width: 260,
+        width: 270,
         color: '#161718',
         fontSize: 17,
         alignSelf: 'flex-start'
@@ -89,15 +85,16 @@ const styles = StyleSheet.create({
     itemTime: {
         color: '#999999',
         fontSize: 14,
-        marginTop: 11
+        marginTop: 19
     },
     itemAddr: {
         color: '#999999',
         fontSize: 14
     },
     itemPrice: {
-        color: '#D7AC64',
+        color: Colors.txt_price,
         fontSize: 16,
+        marginTop: 4
     },
     itemInfo: {
         marginLeft: 12,
@@ -107,16 +104,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-end'
-    },
-    itemStatus: {
-        height: 30,
-        width: 62,
-        backgroundColor: '#DDDDDD',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 2,
-        marginRight: 14
-
     },
     statusTxt: {
         color: Colors.txt_666,
@@ -132,7 +119,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 2,
-        marginRight: 14
+        position: 'absolute',
+        bottom: 0,
+        right: 0
     },
     sellTxt: {
         color: '#B3935E',

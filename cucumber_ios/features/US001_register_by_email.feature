@@ -46,7 +46,7 @@ Feature: US_001 邮箱注册
     Then 我应当看到浮动提示 "密码格式不正确"
 
   Scenario: AC_US001_08 注册成功
-    Given 我在 "邮箱" 输入 "test1@gmail.com"
+    Given 我在 "邮箱" 输入 "test12@gmail.com"
     When 我在 "密码" 输入 "test123456"
     And 我按下按钮 "完成"
     Then 我应当到达 "主页面"
