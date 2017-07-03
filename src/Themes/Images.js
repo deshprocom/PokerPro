@@ -151,7 +151,14 @@ const images = {
     home_news:require('../../source/home/home_news.png'),
     home_sort1:require('../../source/home/home_sort.png'),
     home_ticket1:require('../../source/home/home_ticket.png'),
-    home_video1:require('../../source/home/home_video.png')
+    home_video1:require('../../source/home/home_video.png'),
+    item_sale:require('../../source/home/item_sale.png'),
+    home_clock:require('../../source/home/home_clock.png'),
+    home_adr:require('../../source/home/home_adr.png'),
+    race_doing:require('../../source/home/race_doing.png'),
+    race_end:require('../../source/home/race_end.png'),
+    race_unstart:require('../../source/home/race_unstart.png'),
+    race_wait:require('../../source/home/race_wait.png')
 
 
 };

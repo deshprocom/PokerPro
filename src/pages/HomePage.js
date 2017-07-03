@@ -237,6 +237,7 @@ class HomePage extends Component {
 
                 </View>
                 <ScrollView
+                    scrollEventThrottle={16}
                     bounces={false}
                     onScroll={this._onScroll}>
                     <View>
