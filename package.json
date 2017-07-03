@@ -35,6 +35,7 @@
     "react-native-smart-security-text": "^1.0.1",
     "react-native-smart-splash-screen": "^2.3.3",
     "react-native-storage": "^0.1.4",
+    "react-native-tabular-grid": "^1.1.0",
     "react-native-umshare": "^1.1.2",
     "react-native-video": "^1.0.0",
     "react-redux": "^5.0.4",

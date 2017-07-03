@@ -43,10 +43,10 @@ export function strNotNull(str) {
 }
 
 
-export function uShare(raceId) {
-    UMShare.share("赛事详情", "简介", shareIcon, "http://106.75.134.18:8100/race/"+raceId)
+export function uShare(title, location, raceId) {
+    UMShare.share(title, location, shareIcon, "http://106.75.136.9:8810/race/" + raceId)
         .then(() => {
-            alert('成功')
+            showToast('分享成功')
         }, (error) => {
             alert(error)
         })
@@ -217,7 +217,7 @@ export function ticketStatusConvert(status) {
 
 export function sellable(status) {
 
-    return status === SellStatus.selling?true:false;
+    return status === SellStatus.selling ? true : false;
 
 }
 
