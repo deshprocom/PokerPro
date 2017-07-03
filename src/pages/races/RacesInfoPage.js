@@ -113,7 +113,10 @@ class RacesInfoPage extends Component {
                             testID="btn_bar_right"
                             style={styles.popBtn}
                             onPress={() => {
-                                uShare(raceInfo.name,raceInfo.location, this.props.params.race_id)
+                                uShare(raceInfo.name, raceInfo.location +
+                                    '\n' + this.race_time(raceInfo),
+                                    raceInfo.logo,
+                                    this.props.params.race_id)
                             }}>
                             <Image style={styles.imgShare}
                                    source={Images.match_share}/>

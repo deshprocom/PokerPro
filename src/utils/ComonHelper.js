@@ -43,8 +43,8 @@ export function strNotNull(str) {
 }
 
 
-export function uShare(title, location, raceId) {
-    UMShare.share(title, location, shareIcon, "http://106.75.136.9:8810/race/" + raceId)
+export function uShare(title, location,icon, raceId) {
+    UMShare.share(title, location, icon, "http://106.75.136.9:8810/race/" + raceId)
         .then(() => {
             showToast('分享成功')
         }, (error) => {
