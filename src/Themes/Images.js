@@ -144,7 +144,14 @@ const images = {
     ic_back: require('../../source/order/ic_back.png'),
     side_select: require('../../source/order/side_select.png'),
     side_selected: require('../../source/order/side_seleced.png'),
-    empty_ticket: require('../../source/empty/empty_ticket.png')
+    empty_ticket: require('../../source/empty/empty_ticket.png'),
+    home_img:require('../../source/home/home_img.png'),
+    home_fire:require('../../source/home/home_fire.png'),
+    more:require('../../source/home/more.png'),
+    home_news:require('../../source/home/home_news.png'),
+    home_sort1:require('../../source/home/home_sort.png'),
+    home_ticket1:require('../../source/home/home_ticket.png'),
+    home_video1:require('../../source/home/home_video.png')
 
 
 };
