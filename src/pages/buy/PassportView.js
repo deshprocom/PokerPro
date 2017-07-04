@@ -9,6 +9,7 @@ import {
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
+import Button from 'react-native-smart-button'
 
 import {InputView} from "../../components";
 
@@ -59,6 +60,13 @@ export default class PassportView extends Component {
                 style={{fontSize:Fonts.size.h12,marginTop:114,alignSelf:'center',color:Colors._AAA}}>
                 {I18n.t('upload_issue')}
             </Text>
+            <Button activeOpacity={1}
+                style={{height:49,width:Metrics.screenWidth-34,
+                alignSelf:'center',backgroundColor:'#161718',
+                marginTop:25,justifyContent:'center'}}
+                textStyle={{fontSize:Fonts.size.h17,color:Colors.txt_E0C}}>
+                {I18n.t('submit')}
+            </Button>
 
         </View>)
     }
