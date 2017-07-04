@@ -16,14 +16,10 @@ import {
 } from '../../utils/ComonHelper';
 import {fetchGetRecentRaces, _getProfileOk} from '../../actions/RacesAction';
 import {umengEvent} from '../../utils/UmengEvent';
-
+import {setLocalLanguage} from '../../services/ConfigDao';
 
 class SettingPage extends Component {
 
-    _languageView = () => {
-        return ( <SetItemView name={I18n.t('Chinese')}
-                              styles={{marginTop:10}}/>)
-    };
 
     _likeView = () => {
         return (
@@ -36,12 +32,12 @@ class SettingPage extends Component {
                          rightType="SWITCH_BTN"/>
 
             <View
-                style={{height:1,marginLeft:17,backgroundColor:Colors.bg_black}}/>
+                style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>
 
             <SetItemView name={I18n.t('system_inform')}
                          rightType="SWITCH_BTN"/>
             <View
-                style={{height:1,marginLeft:17,backgroundColor:Colors.bg_black}}/>
+                style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>
         </View>)
     };
 
@@ -52,51 +48,51 @@ class SettingPage extends Component {
             testID="page_setting"
             style={ApplicationStyles.bg_black}>
             <NavigationBar
-                toolbarStyle={{backgroundColor:Colors.bg_09}}
+                toolbarStyle={{backgroundColor: Colors.bg_09}}
                 router={this.props.router}
                 title={I18n.t('setting')}
                 leftBtnIcon={Images.sign_return}
-                leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
-                leftBtnPress={()=>this.props.router.pop()}/>
+                leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                leftBtnPress={() => this.props.router.pop()}/>
             <SetItemView
                 testID="btn_account_security"
-                onPress={()=>{
+                onPress={() => {
 
                     umengEvent('setting_security');
-                    if(isLoginUser())
+                    if (isLoginUser())
                         this.props.router.toSecurityPage();
                     else
                         this.props.router.toLoginFirstPage();
                 }}
                 name={I18n.t('account_security')}
-                styles={{marginTop:5}}/>
+                styles={{marginTop: 5}}/>
 
 
-            <View style={{backgroundColor:Colors.setting,marginTop:10}}>
+            <View style={{backgroundColor: Colors.setting, marginTop: 10}}>
                 <SetItemView
-                    onPress={()=>this.props.router.toBusinessPage()}
-                    testID="btn_business_cooperation"
-                    name={I18n.t('business_cooperation')}/>
+                    onPress={this._switchLanguage}
+                    name={I18n.t('Chinese')}
+                    styles={{marginTop: 10}}/>
                 <View
-                    style={{height:1,marginLeft:17,backgroundColor:Colors.bg_black}}/>
+                    style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>
                 <SetItemView
-                    onPress={()=>{
+                    onPress={() => {
                         umengEvent('setting_recommend');
-                        share(`${I18n.t('share_friend')}`,"http://www.deshpro.com")
+                        share(`${I18n.t('share_friend')}`, "http://www.deshpro.com")
                     }}
                     testID="btn_share"
                     name={I18n.t('recommend_friend')}/>
 
 
             </View>
-            <View style={{backgroundColor:Colors.setting,marginTop:10}}>
+            <View style={{backgroundColor: Colors.setting, marginTop: 10}}>
 
                 <SetItemView name={I18n.t('about')}
-                             onPress={()=>router.toAboutPage()}/>
+                             onPress={() => router.toAboutPage()}/>
             </View>
 
 
-            <View style={{flex:1}}/>
+            <View style={{flex: 1}}/>
 
             {this._exitView()}
 
@@ -108,13 +104,35 @@ class SettingPage extends Component {
             return ( <Button
                 testID="btn_exit"
                 onPress={this._exitApp}
-                style={{width:Metrics.screenWidth,height:59,
-            justifyContent:'center',backgroundColor:'#212325'}}
-                textStyle={[{color:Colors._AAA},Fonts.H17]}>
+                style={{
+                    width: Metrics.screenWidth, height: 59,
+                    justifyContent: 'center', backgroundColor: '#212325'
+                }}
+                textStyle={[{color: Colors._AAA}, Fonts.H17]}>
                 {I18n.t('exit_login')}
             </Button>)
         }
-    }
+    };
+
+
+    _switchLanguage = () => {
+        Alert.alert('语言切换', '', [
+            {
+                text: '中文', onPress: () => {
+                setLocalLanguage('zh');
+                this.forceUpdate();
+
+
+            }
+            },
+            {
+                text: '英语', onPress: () => {
+                setLocalLanguage('en');
+                this.forceUpdate();
+            }
+            }
+        ]);
+    };
 
     _exitApp = () => {
         Alert.alert(I18n.t('tint'), I18n.t('exit_tine'), [
@@ -143,7 +161,7 @@ class SettingPage extends Component {
 
 const bindAction = dispatch => ({
     _getRecentRaces: (body) => dispatch(fetchGetRecentRaces(body)),
-    _getProfileNull: () => dispatch(_getProfileOk({}))
+    _getProfileNull: () => dispatch(_getProfileOk({})),
 });
 
 const mapStateToProps = state => ({});
