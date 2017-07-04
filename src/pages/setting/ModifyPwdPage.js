@@ -102,7 +102,7 @@ class ModifyPwdPage extends Component {
 
                 this.props._postModifyPwd(body);
             } else {
-                showToast('请填写完整')
+                showToast(`${I18n.t('fillWhole')}`)
             }
         }
 

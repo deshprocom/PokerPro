@@ -34,7 +34,7 @@ class BindingPhonePage extends Component {
     componentWillReceiveProps(newProps) {
         const {loading, actionType, hasData} = newProps;
         if (actionType === POST_BIND_ACCOUNT && hasData) {
-            showToast('手机号绑定成功');
+            showToast(`${I18n.t('phoneBang')}`);
             login_user.mobile = this.phone;
             storage.save({
                 key: StorageKey.LoginUser,
@@ -67,21 +67,21 @@ class BindingPhonePage extends Component {
             <NavigationBar
                 toolbarStyle={{backgroundColor:Colors.bg_09}}
                 router={router}
-                title={'绑定手机'}
+                title={`${I18n.t('phone')}`}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
                 leftBtnPress={()=>router.pop()}/>
 
             {this._inputPhoneCode()}
 
-            <Text style={styles.txtPrompt}>重设和修改密码时，需要用到此号码</Text>
+            <Text style={styles.txtPrompt}>{I18n.t('reset')}</Text>
 
             <Button
                 onPress={this._btnBind}
                 testID="btn_bind"
                 textStyle={styles.txtBind}
                 style={styles.btnBind}>
-                绑定
+                {I18n.t('bang')}
             </Button>
 
 

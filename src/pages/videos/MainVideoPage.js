@@ -20,27 +20,14 @@ import {fetchVideoType} from '../../actions/NewsAction';
 import VideoListView from './VideoListView';
 import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
 import {NavigationBar} from '../../components';
+import {getVideoTypes} from '../../services/NewsDao';
 
 
-class MainVideoPage extends Component {
+export  default class MainVideoPage extends Component {
 
     componentDidMount() {
-        this.props.getNewsTypes();
-    }
-
-    state = {
-        typeListData: [],
-        selectTypeId: 1
-    };
-
-
-    componentWillReceiveProps(newProps) {
-
-        const {actionType, videoType, loading} = newProps;
-
-        if (actionType === GET_VIDEO_TYPE && !isEmptyObject(videoType) && !loading) {
-            let {items} = videoType;
-
+        getVideoTypes({}, data => {
+            let {items} = data;
             items.map(function (x) {
                 x['select'] = false;
             });
@@ -52,10 +39,14 @@ class MainVideoPage extends Component {
                     selectTypeId: items[0].id
                 })
             }
-
-        }
-
+        }, err => {
+        })
     }
+
+    state = {
+        typeListData: [],
+        selectTypeId: 1
+    };
 
 
     render() {
@@ -67,7 +58,7 @@ class MainVideoPage extends Component {
                 <NavigationBar
                     toolbarStyle={{backgroundColor:Colors.bg_09}}
                     router={router}
-                    title={'视频'}
+                    title={I18n.t('home_video')}
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
                     leftBtnPress={()=>router.pop()}/>
@@ -187,20 +178,6 @@ class MainVideoPage extends Component {
 
 }
 
-export default connect(
-    state => ({
-        loading: state.NewsState.loading,
-        error: state.NewsState.error,
-        hasData: state.NewsState.hasData,
-        actionType: state.NewsState.actionType,
-        errorMsg: state.NewsState.errorMsg,
-        videoType: state.NewsState.videoType
-    }),
-    dispatch => ({
-        getNewsTypes: () => dispatch(fetchVideoType())
-
-    })
-)(MainVideoPage);
 
 const styles = StyleSheet.create({
     topBar: {
@@ -263,7 +240,7 @@ const styles = StyleSheet.create({
     itemTxtSelect: {
         color: '#444444',
         fontSize: 16,
-        marginBottom:5
+        marginBottom: 5
     },
     triangle: {
         height: 9,

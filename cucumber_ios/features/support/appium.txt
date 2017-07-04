@@ -1,8 +1,8 @@
 [caps]
 platformName = "ios"
-deviceName = "iPhone 6"
-platformVersion = "8.1"
-app = '/Users/edwardzhou/deshpro/dpapp/ios/build/Build/Products/Debug-iphonesimulator/PokerPro.app'
+deviceName = "iPhone 6s"
+platformVersion = "10.3"
+app = '../ios/build/Build/Products/Debug-iphonesimulator/PokerPro.app'
 automationName = 'XCUITest'
 language = 'zh'
 locale = 'zh_CN'
@@ -10,4 +10,4 @@ locale = 'zh_CN'
 [appium_lib]
 sauce_username = false
 sauce_access_key = false
-wait_timeout = 5
+wait_timeout = 10

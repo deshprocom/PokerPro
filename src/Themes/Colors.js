@@ -40,7 +40,8 @@ const colors = {
     txt_btn_21: '#212325',
     _161817: '#161718',
     txt_E4D: '#E4D57F',
-    txt_race_type: '#CAC6CA'
+    txt_race_type: '#CAC6CA',
+    txt_price:'#DF1D0F'
 
 }
 

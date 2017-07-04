@@ -29,10 +29,10 @@ export default class BlindsList extends Component {
 
     _listHeader = () => {
         return ( <View style={styles.tableTitle}>
-            <Text style={styles.title}>级别</Text>
-            <Text style={styles.title}>盲注</Text>
-            <Text style={styles.title}>前注</Text>
-            <Text style={styles.title}>时间</Text>
+            <Text style={styles.title}>{I18n.t('Level')}</Text>
+            <Text style={styles.title}>{I18n.t('Blinds')}</Text>
+            <Text style={styles.title}>{I18n.t('Ante')}</Text>
+            <Text style={styles.title}>{I18n.t('time')}</Text>
         </View>)
     }
 
