@@ -431,7 +431,7 @@ const styles = StyleSheet.create({
         bottom: 20
     },
     imgRaceStatus: {
-        height: 10,
+        height: 12,
         width: 10
 
     },
