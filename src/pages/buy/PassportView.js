@@ -44,7 +44,7 @@ export default class PassportView extends Component {
                 <Text style={{marginLeft:18}}>护照号：</Text>
                 <InputView
                     editable={editable}
-                    inputView={{height:50,borderBottomColor:Color.white,
+                    inputView={{height:50,borderBottomColor:Colors.white,
                         borderBottomWidth:1,flex:1}}
                     inputText={{height:50,fontSize:15,marginLeft:15}}
                     placeholder="请输入护照号"/>
