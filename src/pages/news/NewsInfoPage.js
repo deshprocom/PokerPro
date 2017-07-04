@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {isEmptyObject, convertDate} from '../../utils/ComonHelper';
+import {isEmptyObject, convertDate,newShare} from '../../utils/ComonHelper';
 import {LoadingView} from '../../components/load'
 import {NavigationBar, MarkdownPlat} from '../../components';
 
@@ -38,7 +38,13 @@ export default class NewsInfoPage extends Component {
                 router={router}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                leftBtnPress={()=>router.pop()}/>
+                leftBtnPress={()=>router.pop()}
+                rightBtnIcon={Images.match_share}
+                rightImageStyle={{height:20,width:16,marginRight:15}}
+                rightBtnPress={()=>{
+                    newShare(title,source,this.props.params.id);
+                    router.log(title,source)
+                }}/>
 
             <ScrollView>
 
@@ -100,6 +106,5 @@ const styles = StyleSheet.create({
     page: {
         flex: 1,
         backgroundColor: Colors.white
-    },
-
+    }
 })

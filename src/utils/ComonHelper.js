@@ -52,6 +52,15 @@ export function uShare(title, location, raceId) {
         })
 }
 
+export function newShare(title,location,raceId) {
+    UMShare.share(title,location,shareIcon,""+raceId)
+        .then(() => {
+            showToast('分享成功')
+        },(error) => {
+            alert(error)
+        })
+}
+
 export function strValid(str) {
     if (str == undefined || str == null || str.length == 0)
         return '';
