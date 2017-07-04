@@ -10,7 +10,7 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import NavigationBar from '../../components/NavigationBar';
 import md5 from "react-native-md5";
-import {checkLoginMail, strNotNull, showToast} from '../../utils/ComonHelper';
+import {checkLoginMail, strNotNull, showToast, userData,setUserData} from '../../utils/ComonHelper';
 import Toast from 'react-native-root-toast';
 import {fetchPostLogin}from '../../actions/AccountAction';
 import {connect} from 'react-redux';
@@ -52,6 +52,7 @@ class LoginFirstPage extends React.Component {
     doLogin = () => {
         const {username, password} = this.state;
         if (strNotNull(username) && strNotNull(password)) {
+            setUserData(username);
             if (checkLoginMail(username)) {
                 let body = {
                     type: 'email',
@@ -84,105 +85,118 @@ class LoginFirstPage extends React.Component {
         return (
             <Image
                 testID="page_login_account"
-                style={{flex:1,width:Metrics.screenWidth}}
+                style={{flex: 1, width: Metrics.screenWidth}}
                 source={Images.sign_bg}>
                 <NavigationBar
                     router={this.props.router}
                     leftBtnIcon={Images.sign_close}
-                    leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
+                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     rightBtnText={I18n.t('register')}
-                    btnTextStyle={{color:Colors.txt_E0C,
-                        fontSize:16,marginRight:20}}
-                    leftBtnPress={()=>this.props.router.popToTop()}
-                    rightBtnPress={()=>this.props.router.toRegisterPage()}/>
+                    btnTextStyle={{
+                        color: Colors.txt_E0C,
+                        fontSize: 16, marginRight: 20
+                    }}
+                    leftBtnPress={() => this.props.router.popToTop()}
+                    rightBtnPress={() => this.props.router.toRegisterPage()}/>
 
-                <Image style={{width:91,height:91,
-                    marginTop:49,alignSelf:'center'}}
+                <Image style={{
+                    width: 91, height: 91,
+                    marginTop: 49, alignSelf: 'center'
+                }}
                        source={Images.sign_logo_poker}/>
 
 
                 <View
-                    style={{flex:1,marginTop:60}}>
+                    style={{flex: 1, marginTop: 60}}>
                     <View style={styles.view_input}>
-                        <Image style={{width:13,height:16}}
+                        <Image style={{width: 13, height: 16}}
                                source={Images.sign_number}/>
-                        <View style={{borderBottomColor:"#444444",borderBottomWidth:0.5,
-                        flex:1,height:40,alignItems:'center',marginLeft: 15,flexDirection:'row'}}>
+                        <View style={{
+                            borderBottomColor: "#444444", borderBottomWidth: 0.5,
+                            flex: 1, height: 40, alignItems: 'center', marginLeft: 15, flexDirection: 'row'
+                        }}>
                             <TextInput style={styles.text_input}
                                        numberOfLines={1}
                                        placeholderTextColor={Colors.txt_666}
                                        underlineColorAndroid='transparent'
-                                       onChangeText={text=>{
-                                   this.setState({
-                                       username:text.trim()
-                                   })
-                               }}
+                                       onChangeText={text => {
+                                           this.setState({
+                                               username: text.trim()
+                                           })
+                                       }}
+                                       defaultValue={userData}
                                        testID="input_username"
                                        placeholder={I18n.t('phone_email')}/>
                         </View>
                     </View>
 
                     <View style={styles.view_input}>
-                        <Image style={{width:12,height:15}} source={Images.sign_password}/>
-                        <View style={{borderBottomColor:"#444444",borderBottomWidth:0.5,
-                        flex:1,height:40,alignItems:'center',marginLeft: 15,flexDirection:'row'}}>
+                        <Image style={{width: 12, height: 15}} source={Images.sign_password}/>
+                        <View style={{
+                            borderBottomColor: "#444444", borderBottomWidth: 0.5,
+                            flex: 1, height: 40, alignItems: 'center', marginLeft: 15, flexDirection: 'row'
+                        }}>
                             <TextInput style={styles.text_input}
                                        numberOfLines={1}
                                        placeholderTextColor={Colors.txt_666}
-                                       onChangeText={text=>{
-                                   this.setState({
-                                       password:text
-                                   })
-                               }}
+                                       onChangeText={text => {
+                                           this.setState({
+                                               password: text
+                                           })
+                                       }}
                                        underlineColorAndroid='transparent'
                                        secureTextEntry={pwdEye}
                                        testID="input_password"
                                        placeholder={I18n.t('password')}/>
                             <TouchableOpacity
                                 testID="btn_eyes"
-                                style={{height:30,marginRight:4,alignItems:'center',
-                                justifyContent:'center'}}
-                                onPress={()=>{
-                            this.setState({
-                                       pwdEye:!pwdEye
-                                   })
-                        }}>
+                                style={{
+                                    height: 30, marginRight: 4, alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}
+                                onPress={() => {
+                                    this.setState({
+                                        pwdEye: !pwdEye
+                                    })
+                                }}>
 
                                 <Image
-                                    style={pwdEye?styles.close_eye:styles.open_eye}
-                                    source={pwdEye?Images.sign_eye:Images.sign_eye_open}/>
+                                    style={pwdEye ? styles.close_eye : styles.open_eye}
+                                    source={pwdEye ? Images.sign_eye : Images.sign_eye_open}/>
                             </TouchableOpacity>
                         </View>
                     </View>
                     {/*登录*/}
                     <TouchableOpacity
                         testID="btn_login"
-                        style={[styles.btn_sign_in,{marginTop:43}]}
+                        style={[styles.btn_sign_in, {marginTop: 43}]}
                         onPress={this.doLogin}>
                         <Text style={styles.btn_text_sign}>{I18n.t('sign_in')}</Text>
 
                     </TouchableOpacity>
                     {/*遇到问题*/}
                     <TouchableOpacity
-                        style={{ borderBottomWidth:0.5,
-        borderBottomColor:Colors._AAA,
-        alignSelf: 'flex-end',
-        marginTop: 36,
-        marginRight: 66}}
+                        style={{
+                            borderBottomWidth: 0.5,
+                            borderBottomColor: Colors._AAA,
+                            alignSelf: 'flex-end',
+                            marginTop: 36,
+                            marginRight: 66
+                        }}
                         transparent
                         testID="btn_problem"
-                        onPress={()=>this.props.router.toForgetPage()}>
+                        onPress={() => this.props.router.toForgetPage()}>
 
                         <Text style={styles.text_problem}>{I18n.t('problem_for_sign_in')}</Text>
 
                     </TouchableOpacity>
 
-                    <View style={{flex:1}}/>
+                    <View style={{flex: 1}}/>
 
                     <TouchableOpacity
-                        style={{marginBottom: 48,padding:5}}
+                        style={{marginBottom: 48, padding: 5}}
                         testID="btn_switch_code_login"
-                        onPress={()=>this.props.router.toLoginCodePage()}>
+                        onPress={() => this.props.router.toLoginCodePage()}>
                         <Text style={styles.text_other_sign}>
                             {I18n.t('sign_in_whit_phone')}</Text>
                     </TouchableOpacity>

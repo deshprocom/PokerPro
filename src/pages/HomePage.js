@@ -20,7 +20,7 @@ import {fetchGetRecentRaces, _getProfileOk} from '../actions/RacesAction';
 import ListViewForRaces from '../components/listitem/ListViewForRaces';
 import LoadErrorPage from '../components/ListNoDataPage';
 import ListNoDataPage from '../components/ListErrorPage';
-import {isEmptyObject, strNotNull, putLoginUser} from '../utils/ComonHelper';
+import {isEmptyObject, strNotNull, putLoginUser,getUserData} from '../utils/ComonHelper';
 import {NavigationBar, ParallaxScrollView} from '../components';
 import {LoadingView} from '../components/load';
 import JpushHelp from '../services/JpushHelper';
@@ -45,7 +45,7 @@ class HomePage extends Component {
             badge: false
 
         };
-
+        getUserData();
         init(() => {
             this.setState({
                 languageChange: true
