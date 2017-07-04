@@ -56,7 +56,7 @@ export  default class MainVideoPage extends Component {
                 testID="page_news_main"
                 style={ApplicationStyles.bgContainer}>
                 <NavigationBar
-                    toolbarStyle={{backgroundColor:Colors.bg_09}}
+                    toolbarStyle={{backgroundColor:Colors._161817}}
                     router={router}
                     title={I18n.t('home_video')}
                     leftBtnIcon={Images.sign_return}

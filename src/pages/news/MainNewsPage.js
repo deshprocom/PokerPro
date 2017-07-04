@@ -4,7 +4,7 @@
 import React, {Component, PropTypes} from 'react';
 import {
     StyleSheet, Text, View, FlatList,
-    TouchableOpacity, Image, StatusBar,
+    TouchableOpacity, Image, Platform,
     ScrollView, Animated
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
@@ -77,23 +77,23 @@ export default class MainNewsPage extends Component {
 
 
         return (  <ScrollableTabView
-            onChangeTab={({i})=>{
-                router.log('tab',i);
-                if(i== undefined || i < 0 || i>pages.length)
+            onChangeTab={({i}) => {
+                router.log('tab', i);
+                if (i == undefined || i < 0 || i > pages.length)
                     return;
                 let item = typeListData[i];
 
-                if(isEmptyObject(item))
+                if (isEmptyObject(item))
                     return;
 
                 this.setState({
-                    selectTypeId:item.id
+                    selectTypeId: item.id
                 });
                 this.typeList.scrollToIndex({viewPosition: 1, index: Number(i)});
                 this._pressItem(item);
             }}
             renderTabBar={false}
-            ref={ref=>this.newsPages = ref}>
+            ref={ref => this.newsPages = ref}>
             {pages}
         </ScrollableTabView>)
 
@@ -106,7 +106,7 @@ export default class MainNewsPage extends Component {
                 <TouchableOpacity
                     testID="btn_bar_left"
                     style={styles.popBtn}
-                    onPress={()=>router.pop()}>
+                    onPress={() => router.pop()}>
                     <Image style={styles.backImg}
                            source={Images.sign_return}/>
                 </TouchableOpacity>
@@ -114,7 +114,7 @@ export default class MainNewsPage extends Component {
                 <TouchableOpacity
                     testID="btn_news_search"
                     activeOpacity={1}
-                    onPress={()=>router.toSearchNewsPage()}
+                    onPress={() => router.toSearchNewsPage()}
                     style={styles.searchView}>
 
                     <View style={styles.searchBar}>
@@ -134,13 +134,13 @@ export default class MainNewsPage extends Component {
 
         return ( <View style={styles.newsTypeView}>
             <FlatList
-                ref={ref=>this.typeList = ref}
+                ref={ref => this.typeList = ref}
                 legacyImplementation={false}
                 showsHorizontalScrollIndicator={false}
                 data={this.state.typeListData}
                 renderItem={this._itemView}
                 horizontal={true}
-                keyExtractor={item=> item.id}
+                keyExtractor={item => item.id}
             />
         </View> )
     };
@@ -149,19 +149,19 @@ export default class MainNewsPage extends Component {
     _itemView = ({item}) => {
 
         return (<TouchableOpacity
-            testID={"btn_news_type_"+item.id}
-            onPress={()=>{
+            testID={"btn_news_type_" + item.id}
+            onPress={() => {
                 this._pressItem(item);
 
-                  this.setState({
-                    selectTypeId:item.id
+                this.setState({
+                    selectTypeId: item.id
                 });
                 this.newsPages.goToPage(this._page(item))
             }}
             style={styles.itemView}>
-            {item.select ? <View style={{flex:1}}/> : null}
-            <Text style={item.select?
-            styles.itemTxtSelect:styles.itemTxt}>{item.name}</Text>
+            {item.select ? <View style={{flex: 1}}/> : null}
+            <Text style={item.select ?
+                styles.itemTxtSelect : styles.itemTxt}>{item.name}</Text>
             {item.select ? <Image style={styles.triangle}
                                   source={Images.news_triangle}/> : null}
 
@@ -201,14 +201,14 @@ export default class MainNewsPage extends Component {
 
 const styles = StyleSheet.create({
     topBar: {
-        height: 40,
+        height: 44,
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: Metrics.statusBarHeight,
 
     },
     popBtn: {
-        height: 40,
+        height: 44,
         width: 50,
         justifyContent: 'center'
     },
