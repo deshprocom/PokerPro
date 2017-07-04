@@ -135,7 +135,13 @@ class SettingPage extends Component {
     _switch = (language) => {
         setLocalLanguage(language);
         this.forceUpdate();
-        this.props._refreshRaces()
+        let recentRaces = {
+            number: 8
+        };
+        if (login_user.user_id)
+            recentRaces['user_id'] = login_user.user_id;
+
+        this.props._getRecentRaces(recentRaces);
     };
 
     _exitApp = () => {
@@ -148,7 +154,7 @@ class SettingPage extends Component {
                 text: I18n.t('certain'), onPress: () => {
                 clearLoginUser();
                 const recentRaces = {
-                    number: 5
+                    number: 8
                 };
                 this.props._getRecentRaces(recentRaces);
                 this.props._getProfileNull();
