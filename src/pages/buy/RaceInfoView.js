@@ -22,21 +22,31 @@ export default class RaceInfoView extends Component {
     };
 
 
-    _ticket_price = (raceInfo, disabled) => {
-        if (disabled)
-            return ( <Text testID="txt_races_price"
-                           style={{fontSize:15,color:Colors.txt_FF9,
-                            marginTop:10}}>票价:￥{moneyFormat(disabled ? raceInfo.ticket_price : raceInfo.prize)}</Text>)
-    }
+    _ticket_price = (ticket) => {
+        if (!isEmptyObject(ticket))
+            return (<View style={styles.viewPrice}>
+                <Text style={styles.lbPrice}>金额:</Text>
+                <Text style={styles.txtPrice}>  {ticket.price}</Text>
+
+            </View>);
+
+    };
+
+    _orderName = () => {
+        const {ticket} = this.props;
+        if (!isEmptyObject(ticket))
+            return (   <Text testID="txt_races_title"
+                             style={{fontSize:15,color:Colors.txt_444}}
+                             numberOfLines={2}>{ticket.title}</Text>)
+    };
 
     raceView = () => {
-        const {raceInfo, disabled} = this.props;
+        const {raceInfo, ticket} = this.props;
         if (!isEmptyObject(raceInfo))
             return (  <View style={{height:115,flex:1}}>
 
-                <Text testID="txt_races_title"
-                      style={{fontSize:15,color:Colors.txt_444}}
-                      numberOfLines={2}>{raceInfo.name}</Text>
+                {this._orderName()}
+
                 <Text testID="txt_races_period"
                       style={{fontSize:12,color:Colors._888,
                             marginTop:15}}
@@ -46,7 +56,7 @@ export default class RaceInfoView extends Component {
                       style={{fontSize:12,color:Colors._888,
                             marginTop:4,marginBottom:19}}
                       numberOfLines={1}>{raceInfo.location}</Text>
-                {this._ticket_price(raceInfo, disabled)}
+                {this._ticket_price(ticket)}
 
             </View>)
 
@@ -57,14 +67,25 @@ export default class RaceInfoView extends Component {
         const {raceInfo} = this.props;
         if (!isEmptyObject(raceInfo))
             return raceInfo.logo;
-    }
+    };
+
+    _btnClick = () => {
+        const {ticket, raceInfo} = this.props;
+        if (!isEmptyObject(ticket)) {
+            const {ticket_class, id} = ticket;
+            if (ticket_class === 'package_ticket')
+                router.toTicketInfoPage(this.props, raceInfo.race_id, id)
+            else
+                router.toRacesInfoPage(this.props, raceInfo.race_id, true)
+        }
+    };
 
     render() {
         const {raceInfo, disabled} = this.props;
         return (  <TouchableOpacity
             disabled={disabled}
             testID="btn_race_detail"
-            onPress={()=> this.props.router.toRacesInfoPage(this.props, raceInfo.race_id,true)}
+            onPress={this._btnClick}
             activeOpacity={1}
             style={{height:149,width:Metrics.screenWidth,
                     flexDirection:'row',alignItems:'center',
@@ -107,3 +128,18 @@ export default class RaceInfoView extends Component {
         }
     }
 }
+
+const styles = StyleSheet.create({
+    viewPrice: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    lbPrice: {
+        fontSize: Fonts.size.h12,
+        color: Colors._888,
+    },
+    txtPrice: {
+        fontSize: Fonts.size.h15,
+        color: '#DF1D0F',
+    }
+});

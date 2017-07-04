@@ -6,6 +6,7 @@ import {
     TouchableOpacity, View, TextInput, Dimensions,
     StyleSheet, Image, Text, ScrollView, Platform
 } from 'react-native';
+import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {YYYY_MM_DD, convertDate, strValid} from '../../utils/ComonHelper';
 import {ParallaxScrollView, MarkdownPlat} from '../../components';
@@ -91,7 +92,7 @@ export default class RaceMarkdownView extends React.Component {
                                 style={styles.txtLocation}>{raceInfo.location}</Text>
                         </View>
                         <View style={styles.viewPrice}>
-                            <Text style={styles.txtLabel}>奖池:</Text>
+                            <Text style={styles.txtLabel}>{I18n.t('PrizePond')}:</Text>
                             <Text
                                 testID="txt_races_prize"
                                 style={styles.txtPrice}>{raceInfo.prize}</Text>
@@ -118,7 +119,7 @@ export default class RaceMarkdownView extends React.Component {
                         testID="btn_main_race"
                         onPress={()=>this._selectPage(0)}
                         style={styles.viewCenter1}>
-                        <Text style={selectPage === 0?styles.txtTabSelect:styles.txtTab}>主赛信息</Text>
+                        <Text style={selectPage === 0?styles.txtTabSelect:styles.txtTab}>{I18n.t('MainInformation')}</Text>
                         {selectPage === 0 ? <Image style={styles.imgTab}
                                                    source={Images.race_triangle}/> : <View style={styles.imgTab}/>}
 
@@ -127,7 +128,7 @@ export default class RaceMarkdownView extends React.Component {
                         testID="btn_sub_race"
                         onPress={()=>this._selectPage(1)}
                         style={styles.viewCenter}>
-                        <Text style={selectPage === 1?styles.txtTabSelect:styles.txtTab}>边赛信息</Text>
+                        <Text style={selectPage === 1?styles.txtTabSelect:styles.txtTab}>{I18n.t('SideInformation')}</Text>
                         {selectPage === 1 ? <Image style={styles.imgTab}
                                                    source={Images.race_triangle}/> : <View style={styles.imgTab}/>}
 
@@ -136,7 +137,7 @@ export default class RaceMarkdownView extends React.Component {
                         testID="btn_main_result"
                         onPress={()=>this._selectPage(2)}
                         style={styles.viewCenter}>
-                        <Text style={selectPage === 2?styles.txtTabSelect:styles.txtTab}>主赛结果</Text>
+                        <Text style={selectPage === 2?styles.txtTabSelect:styles.txtTab}>{I18n.t('MainResult')}</Text>
                         {selectPage === 2 ? <Image style={styles.imgTab}
                                                    source={Images.race_triangle}/> : <View style={styles.imgTab}/>}
 

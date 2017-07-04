@@ -113,7 +113,7 @@ class SearchRacesPage extends Component {
             <View style={styles.topBtn}/>
 
             <View style={styles.titleView}>
-                <Text style={styles.title}>赛事表</Text>
+                <Text style={styles.title}>{I18n.t('GameList')}</Text>
             </View>
             <View style={styles.topRight}>
 

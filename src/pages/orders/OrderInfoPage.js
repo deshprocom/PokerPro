@@ -193,8 +193,7 @@ class OrderInfoPage extends React.Component {
                             <Text
                                 testID="txt_original_price"
                                 style={{fontSize:14,color:Colors.bg_black,marginRight:18,
-                                textDecorationLine: 'line-through'}}>
-                                {moneyFormat(legalValue(order_info.original_price))}</Text>
+                                textDecorationLine: 'line-through'}}>{order_info.original_price}</Text>
                         </View>
                         <View
                             style={{justifyContent:'space-between',flexDirection:'row',marginTop:16}}>
@@ -202,8 +201,7 @@ class OrderInfoPage extends React.Component {
                             <Text
 
                                 testID="txt_price"
-                                style={{fontSize:14,color:Colors.txt_E48,marginRight:18}}>
-                                {moneyFormat(legalValue(order_info.price))}</Text>
+                                style={{fontSize:14,color:'#DF1D0F',marginRight:18}}>{order_info.price}</Text>
                         </View>
                     </View>
 
@@ -226,12 +224,12 @@ class OrderInfoPage extends React.Component {
 
 
                 <View style={{flexDirection:'row',marginLeft:19,alignItems:'flex-end'}}>
-                    <Text style={{fontSize:14,color:Colors.txt_666}}>合计:</Text>
-                    <Text style={{fontSize:12,color:Colors.txt_FF9,marginLeft:10}}>¥</Text>
+                    <Text style={{fontSize:14,color:Colors.txt_666}}>合计:  </Text>
+
                     <Text
                         testID="txt_total_price"
-                        style={{fontSize:18,color:Colors.txt_FF9}}>
-                        {isEmptyObject(order_info) ? '' : order_info.price}</Text>
+                        style={{fontSize:18,color:'#DF1D0F'}}>
+                         {isEmptyObject(order_info) ? '' : order_info.price}</Text>
                 </View>
 
                 <TouchableOpacity
@@ -317,7 +315,7 @@ class OrderInfoPage extends React.Component {
 
     render() {
         const {orderDetail} = this.props;
-        const {race_info, order_info} = orderDetail;
+        const {race_info, order_info, ticket} = orderDetail;
 
         return (
             <View
@@ -336,6 +334,7 @@ class OrderInfoPage extends React.Component {
                     <View style={{height:7}}/>
                     {/*赛事简介*/}
                     <RaceInfoView
+                        ticket={ticket}
                         orderInfo={order_info}
                         disabled={false}
                         raceInfo={race_info}
@@ -361,7 +360,7 @@ class OrderInfoPage extends React.Component {
                             {'\n\n'}
                             6.电子票支付成功后，我们将赛票信息发送到您预留的邮箱，请及时查收。如若邮箱收不到信息，请及时与客服人员取得联系！
                             {'\n\n'}
-                            7.客服服务热线：XXXXXXXXXXX；服务时间：10：30-19:30
+                            7.客服服务热线：{I18n.t('hot_phone')}；服务时间：10：30-19:30
                         </Text>
                     </View>
 

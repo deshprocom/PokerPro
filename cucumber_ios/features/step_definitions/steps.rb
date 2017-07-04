@@ -92,7 +92,7 @@ Given(/^我在 "(.*?)" 输入 "(.*?)"$/) do |input, value|
     input_box = id(input_id)
   end
   input_box.clear
-  input_box.type "#{value}\n"
+  input_box.type "#{value}"
   sleep 1
 end
 
@@ -148,7 +148,7 @@ Given(/^我已使用 "([^"]*)" 登录$/) do |value|
     id(email_input)
   end
   id(email_input).clear
-  id(email_input).type "#{value}\n"
+  id(email_input).type "#{value}"
   sleep 1
 
   id(password_input).clear

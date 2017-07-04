@@ -21,24 +21,24 @@ import {umengEvent} from '../../utils/UmengEvent';
 class SettingPage extends Component {
 
     _languageView = () => {
-        return ( <SetItemView name='语言（简体中文）'
+        return ( <SetItemView name={I18n.t('Chinese')}
                               styles={{marginTop:10}}/>)
     };
 
     _likeView = () => {
         return (
-            <SetItemView name='喜欢扑客吗？支持一下'/>)
+            <SetItemView name={I18n.t('like_support')}/>)
     };
 
     _noticeView = () => {
         return (<View>
-            <SetItemView name='赛事到来通知提醒'
+            <SetItemView name={I18n.t('game_remind')}
                          rightType="SWITCH_BTN"/>
 
             <View
                 style={{height:1,marginLeft:17,backgroundColor:Colors.bg_black}}/>
 
-            <SetItemView name='系统通知'
+            <SetItemView name={I18n.t('system_inform')}
                          rightType="SWITCH_BTN"/>
             <View
                 style={{height:1,marginLeft:17,backgroundColor:Colors.bg_black}}/>
@@ -82,16 +82,16 @@ class SettingPage extends Component {
                 <SetItemView
                     onPress={()=>{
                         umengEvent('setting_recommend');
-                        share("分享扑客给好友","http://www.deshpro.com")
+                        share(`${I18n.t('share_friend')}`,"http://www.deshpro.com")
                     }}
                     testID="btn_share"
-                    name='推荐扑客给我的德州圈好友'/>
+                    name={I18n.t('recommend_friend')}/>
 
 
             </View>
             <View style={{backgroundColor:Colors.setting,marginTop:10}}>
 
-                <SetItemView name='关于'
+                <SetItemView name={I18n.t('about')}
                              onPress={()=>router.toAboutPage()}/>
             </View>
 

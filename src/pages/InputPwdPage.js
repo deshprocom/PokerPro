@@ -16,6 +16,7 @@ import {pwdVaild} from '../utils/LoginHelper';
 import NavigationBar from '../components/NavigationBar';
 import {fetchGetProfile} from '../actions/PersonAction';
 import {fetchGetRecentRaces} from '../actions/RacesAction';
+import {closeDrawer} from '../reducers/DrawerRedux';
 
 
 class InputPwdPage extends React.Component {
@@ -39,6 +40,7 @@ class InputPwdPage extends React.Component {
             user_id: user_id,
             number: 5
         };
+        this.props.closeDrawer();
         this.props._getRecentRaces(recentRaces);
         this.props._getProfile(user_id);
 
@@ -211,6 +213,7 @@ function bindAction(dispatch) {
         _resetPwdMobile: (phone, vcode, password) => dispatch(fetchPostMobileResetPwd(phone, vcode, password)),
         _getProfile: (user_id) => dispatch(fetchGetProfile(user_id)),
         _getRecentRaces: (body) => dispatch(fetchGetRecentRaces(body)),
+        closeDrawer: () => dispatch(closeDrawer()),
     };
 }
 
