@@ -58,7 +58,7 @@ export default class NewsInfoPage extends Component {
                             style={styles.txtTime}>{convertDate(date, 'YYYY-MM-DD')}</Text>
                         <Text
                             testID="txt_news_source"
-                            style={styles.txtSource}>来源于 {source}</Text>
+                            style={styles.txtSource}>{I18n.t('from_place')} {source}</Text>
                     </View>
 
                 </View>

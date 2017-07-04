@@ -35,20 +35,30 @@ export default class PassportView extends Component {
                     inputView={{height:50, borderBottomColor: Colors.white,
                         borderBottomWidth: 1,flex:1}}
                     inputText={{height:50,fontSize:15,marginLeft:15}}
-                    placeholder="请输入真实姓名"/>
+                    placeholder={I18n.t('ple_real_name')}/>
             </View>
-
             <View
                 style={{height:50,alignItems:'center',flexDirection:'row',marginTop:8,
                 backgroundColor:Colors.white}}>
-                <Text style={{marginLeft:18}}>护照号：</Text>
+                <Text style={{marginLeft:18}}>{I18n.t('password_card')}</Text>
                 <InputView
                     editable={editable}
                     inputView={{height:50,borderBottomColor:Colors.white,
                         borderBottomWidth:1,flex:1}}
                     inputText={{height:50,fontSize:15,marginLeft:15}}
-                    placeholder="请输入护照号"/>
+                    placeholder={I18n.t('ple_password_card')}/>
             </View>
+            <TouchableOpacity
+                disabled={!editable}
+                activeOpacity={1}
+                style={{height:198,width:Metrics.screenWidth-34,
+                alignSelf:'center',backgroundColor:Colors.txt_CCCCCC,
+                marginTop:14,alignItems:'center',justifyContent:'center'}}>
+            </TouchableOpacity>
+            <Text
+                style={{fontSize:Fonts.size.h12,marginTop:114,alignSelf:'center',color:Colors._AAA}}>
+                {I18n.t('upload_issue')}
+            </Text>
 
         </View>)
     }
