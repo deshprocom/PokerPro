@@ -52,8 +52,8 @@ export function uShareRace(title, location, icon, raceId) {
         })
 }
 
-export function newShare(title,location,raceId) {
-    UMShare.share(title,location,shareIcon,""+raceId)
+export function newShare(title,location,icon,raceId) {
+    UMShare.share(title,location,icon,"url"+raceId)
         .then(() => {
             showToast('分享成功')
         },(error) => {

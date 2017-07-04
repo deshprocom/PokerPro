@@ -28,7 +28,7 @@ export default class NewsInfoPage extends Component {
 
     render() {
 
-        const {date, description, source, title} = this.props.params.newsInfo;
+        const {date, description, source, title, id, image} = this.props.params.newsInfo;
 
         return (<View
             testID="page_news_info"
@@ -42,8 +42,8 @@ export default class NewsInfoPage extends Component {
                 rightBtnIcon={Images.match_share}
                 rightImageStyle={{height:20,width:16,marginRight:15}}
                 rightBtnPress={()=>{
-                    newShare(title,source,this.props.params.id);
-                    router.log(title,source)
+                    newShare(title,date+'\n'+source,image,id);
+                    {/*router.log(title,date+'\n'+source,image,id);*/}
                 }}/>
 
             <ScrollView>
