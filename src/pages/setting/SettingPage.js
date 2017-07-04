@@ -14,7 +14,7 @@ import {
     clearLoginUser, getLoginUser, strNotNull,
     isLoginUser, share
 } from '../../utils/ComonHelper';
-import {fetchGetRecentRaces, _getProfileOk} from '../../actions/RacesAction';
+import {fetchGetRecentRaces, _getProfileOk, _getRecentRaces} from '../../actions/RacesAction';
 import {umengEvent} from '../../utils/UmengEvent';
 import {setLocalLanguage} from '../../services/ConfigDao';
 
@@ -119,19 +119,23 @@ class SettingPage extends Component {
         Alert.alert('语言切换', '', [
             {
                 text: '中文', onPress: () => {
-                setLocalLanguage('zh');
-                this.forceUpdate();
-
+                this._switch('zh')
 
             }
             },
             {
                 text: '英语', onPress: () => {
-                setLocalLanguage('en');
-                this.forceUpdate();
+                this._switch('en')
+
             }
             }
         ]);
+    };
+
+    _switch = (language) => {
+        setLocalLanguage(language);
+        this.forceUpdate();
+        this.props._refreshRaces()
     };
 
     _exitApp = () => {
@@ -162,6 +166,7 @@ class SettingPage extends Component {
 const bindAction = dispatch => ({
     _getRecentRaces: (body) => dispatch(fetchGetRecentRaces(body)),
     _getProfileNull: () => dispatch(_getProfileOk({})),
+    _refreshRaces: () => dispatch(_getRecentRaces())
 });
 
 const mapStateToProps = state => ({});

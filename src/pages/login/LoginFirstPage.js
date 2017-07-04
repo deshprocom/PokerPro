@@ -10,7 +10,7 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import NavigationBar from '../../components/NavigationBar';
 import md5 from "react-native-md5";
-import {checkLoginMail, strNotNull, showToast, userData,setUserData} from '../../utils/ComonHelper';
+import {checkLoginMail, strNotNull, showToast, userData, setUserData} from '../../utils/ComonHelper';
 import Toast from 'react-native-root-toast';
 import {fetchPostLogin}from '../../actions/AccountAction';
 import {connect} from 'react-redux';
@@ -23,7 +23,7 @@ class LoginFirstPage extends React.Component {
 
 
     state = {
-        username: '',
+        username: userData,
         password: '',
         pwdEye: true
     };
