@@ -92,12 +92,29 @@ export default class RaceRowView extends Component {
 
     _itemRender = () => {
         const {
-            logo, name, begin_date, end_date, status,
-            location, prize, ticket_status
+            ticket_sellable
         } = this.props.rowData;
-        return (<Image
-            style={styles.viewItem}
-            source={Images.item_sale}>
+        if (ticket_sellable)
+            return (<Image
+                style={styles.viewItem}
+                source={Images.item_sale}>
+                {this._itemView()}
+
+            </Image>);
+        else
+            return this._itemView();
+    };
+
+    _itemView = () => {
+        const {
+            logo, name, begin_date, end_date, status,
+            location, prize, ticket_status, ticket_sellable
+        } = this.props.rowData;
+        return (<View
+            style={[styles.viewItem,
+                {
+                    backgroundColor: ticket_sellable ? 'transparent' : 'white'
+                }]}>
 
             <Image
                 defaultSource={Images.empty_image}
@@ -125,15 +142,12 @@ export default class RaceRowView extends Component {
 
                 <View style={[styles.viewClock, {marginTop: 10}]}>
                     <Text style={styles.lbPrice}>{I18n.t('prize')}</Text>
-                    <Text style={styles.txtPrice}>{prize}</Text>
+                    <Text style={styles.txtPrice}> {prize}</Text>
                 </View>
             </View>
 
 
-            <View style={styles.btnStatus}>
-                <Text style={styles.txtTicket}>{ticket_status}</Text>
-            </View>
-
+            {this._ticketStatus(ticket_status, ticket_sellable)}
 
             <View style={styles.raceStatus}>
                 <Image
@@ -145,7 +159,24 @@ export default class RaceRowView extends Component {
             </View>
 
 
-        </Image>)
+        </View>)
+    };
+
+
+    _ticketStatus = (ticket_status, ticket_sellable) => {
+        if (ticket_sellable)
+            return (    <View style={[styles.btnStatus, this._colorTicket(ticket_status)]}>
+                <Text style={[styles.txtTicket, this._colorTicketTxt(ticket_status)]}>{ticket_status}</Text>
+            </View>)
+    };
+
+
+    _colorTicket = (ticket_status) => {
+        return ticket_status === "selling" ? {borderColor: '#ed3445'} : {}
+    };
+
+    _colorTicketTxt = (ticket_status) => {
+        return ticket_status === "selling" ? {color: '#ed3445'} : {}
     };
 
     _txtColorStatus = (status) => {
@@ -300,9 +331,11 @@ const styles = StyleSheet.create({
     },
     viewItem: {
         height: 140,
-        width: Metrics.screenWidth,
+        width: Metrics.screenWidth - 10,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginLeft: 5,
+        marginRight: 5,
     },
     viewLine: {
         height: 8
@@ -361,7 +394,8 @@ const styles = StyleSheet.create({
     },
     txtTicket: {
         fontSize: Fonts.size.h14,
-        color: '#cccccc'
+        color: '#cccccc',
+        backgroundColor: 'transparent'
     },
     raceStatus: {
         position: 'absolute',
@@ -378,7 +412,8 @@ const styles = StyleSheet.create({
     },
     txtRaceStatus: {
         fontSize: Fonts.size.h9,
-        color: '#cccccc'
+        color: '#cccccc',
+        backgroundColor: 'transparent'
     }
 
 })
