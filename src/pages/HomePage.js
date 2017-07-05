@@ -611,8 +611,8 @@ const styles = StyleSheet.create({
         paddingLeft: 15
     },
     imgFire: {
-        height: 15,
-        width: 11
+        height: 16,
+        width: 12
     },
     txtRace: {
         fontSize: Fonts.size.h15,
