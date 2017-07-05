@@ -306,6 +306,24 @@ export function idCardStatus(status) {
     }
 }
 
+export function setUserData(data) {
+    userData = data;
+    storage.save({
+        key: StorageKey.UserData,
+        rawData: data
+    })
+}
+
+export var userData = '';
+
+export function getUserData() {
+    storage.load({key: StorageKey.UserData})
+        .then((ret) => {
+            console.log(ret)
+            userData = ret
+        })
+}
+
 
 /*数组格式 转 字典数组*/
 export function dataBlob(arr) {

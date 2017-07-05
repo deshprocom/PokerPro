@@ -232,7 +232,7 @@ export default connect(
 
 const styles = StyleSheet.create({
     topBar: {
-        height: 40,
+        height: 44,
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: Metrics.statusBarHeight,

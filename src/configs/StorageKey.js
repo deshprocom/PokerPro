@@ -7,6 +7,7 @@ export default {
     Language: 'Language',
     BuyKnow: 'BuyKnow',
     ApiSever:'ApiSever',
-    BuyEmail:'BuyEmail'
+    BuyEmail:'BuyEmail',
+    UserData:'UserData'
 
 }

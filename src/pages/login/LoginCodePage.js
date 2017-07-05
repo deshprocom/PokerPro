@@ -35,7 +35,7 @@ class LoginCodeView extends React.Component {
                 const {user_id} = newProps.loginUser.data;
                 const recentRaces = {
                     user_id: user_id,
-                    number: 5
+                    number: 8
                 };
                 this.props.closeDrawer();
                 this.props._getRecentRaces(recentRaces);

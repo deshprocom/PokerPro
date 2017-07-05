@@ -158,7 +158,8 @@ const images = {
     race_doing:require('../../source/home/race_doing.png'),
     race_end:require('../../source/home/race_end.png'),
     race_unstart:require('../../source/home/race_unstart.png'),
-    race_wait:require('../../source/home/race_wait.png')
+    race_wait:require('../../source/home/race_wait.png'),
+    home_head:require('../../source/home/home_head.png')
 
 
 };
