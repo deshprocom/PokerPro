@@ -250,12 +250,10 @@ class HomePage extends Component {
                     renderForeground={() => <View>
                         <View
                             style={styles.homeImg}/>
-                        <View style={styles.viewNick}>
-                            {this._showNick(profile.nick_name)}
 
-                            <Text style={styles.txtSign}>{profile.signature ? profile.signature :
-                                I18n.t('ple_sign')}</Text>
-                        </View>
+                        <Image
+                            style={styles.imgHead}
+                            source={Images.home_head}/>
 
                         <TouchableOpacity
                             style={styles.btnAvatar}
@@ -269,6 +267,13 @@ class HomePage extends Component {
                                 />
                             </View>
                         </TouchableOpacity>
+                        <View style={styles.viewNick}>
+                            {this._showNick(profile.nick_name)}
+
+                            <Text style={styles.txtSign}>{profile.signature ? profile.signature :
+                                I18n.t('ple_sign')}</Text>
+                        </View>
+
 
                     </View>}
                     parallaxHeaderHeight={300}
@@ -573,7 +578,8 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     viewNick: {
-        marginLeft: 130
+        marginLeft: 130,
+        marginTop: 10
     },
     viewAvatar: {
         height: 106,
@@ -632,6 +638,18 @@ const styles = StyleSheet.create({
         height: 42,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    viewUser: {
+        height: 150,
+        width: Metrics.screenWidth,
+        flexDirection: 'row'
+    },
+    imgHead: {
+        height: 91,
+        width: Metrics.screenWidth,
+        position: 'absolute',
+        zIndex: 2,
+        top: 146,
     }
 });
 
