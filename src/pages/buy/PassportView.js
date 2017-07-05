@@ -11,6 +11,11 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import Button from 'react-native-smart-button'
 
+import {
+    isEmptyObject
+} from '../../utils/ComonHelper';
+
+
 import {InputView} from "../../components";
 
 export default class PassportView extends Component {
@@ -19,12 +24,40 @@ export default class PassportView extends Component {
     };
 
     state = {
-        editable: true
+        editable: true,
+        realName: '',
+        passwordCard:'',
+        cardImage:''
+    }
+
+    _cardImageView = () => {
+        let {cardImage} = this.state;
+        if(isEmptyObject(cardImage)){
+            return(
+                <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
+                    <Image
+                        source={Images.name_id}
+                        style={{height:35,width:49}}/>
+
+                    <Text style={{fontSize:Fonts.size.h18,color:Colors._AAA,marginTop:31}}>
+                        {I18n.t('ple_upload_name_id')}
+                    </Text>
+                </View>
+            )
+        }else{
+            return (<Image
+                style={{height:150,width:250}}
+                source={{uri:cardImage}}>
+
+            </Image>)
+        }
     }
 
     render() {
-        const {editable}=this.state;
+        const {editable,realName,passwordCard}=this.state;
+        router.log(this.state);
         return (<View
+            testID="page_real_name"
             style={ApplicationStyles.bgContainer}>
 
             <View
@@ -33,6 +66,13 @@ export default class PassportView extends Component {
                 <Text style={{marginLeft:18}}>真实姓名：</Text>
                 <InputView
                     editable={editable}
+                    testID="input_real_name"
+                    stateText={text=>{
+                                this.setState({
+                                    realName:text
+                                })
+                            }}
+                    inputValue={realName}
                     inputView={{height:50, borderBottomColor: Colors.white,
                         borderBottomWidth: 1,flex:1}}
                     inputText={{height:50,fontSize:15,marginLeft:15}}
@@ -44,6 +84,13 @@ export default class PassportView extends Component {
                 <Text style={{marginLeft:18}}>{I18n.t('password_card')}</Text>
                 <InputView
                     editable={editable}
+                    testID="input_real_name"
+                    stateText={text=>{
+                                this.setState({
+                                    passwordCard:text
+                                })
+                            }}
+                    inputValue={passwordCard}
                     inputView={{height:50,borderBottomColor:Colors.white,
                         borderBottomWidth:1,flex:1}}
                     inputText={{height:50,fontSize:15,marginLeft:15}}
@@ -55,6 +102,7 @@ export default class PassportView extends Component {
                 style={{height:198,width:Metrics.screenWidth-34,
                 alignSelf:'center',backgroundColor:Colors.txt_CCCCCC,
                 marginTop:14,alignItems:'center',justifyContent:'center'}}>
+                {this._cardImageView()}
             </TouchableOpacity>
             <Text
                 style={{fontSize:Fonts.size.h12,marginTop:114,alignSelf:'center',color:Colors._AAA}}>
