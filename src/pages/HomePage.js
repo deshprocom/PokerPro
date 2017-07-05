@@ -203,7 +203,7 @@ class HomePage extends Component {
         return (
 
             <View
-                style={ {flex: 1, backgroundColor: Colors.white}}
+                style={ {flex: 1, backgroundColor: '#ececee'}}
                 testID="home_page">
 
                 <View style={[styles.topBar, {backgroundColor: 'rgba(0,0,0,' + opacity + ')'}]}>
@@ -221,7 +221,11 @@ class HomePage extends Component {
                             style={styles.topImgLeft}/>
 
                     </TouchableOpacity>
-                    <TestRouter refreshPage={this._refreshPage}/>
+                    <View style={{flex: 1}}/>
+                    <Text style={{
+                        color: 'rgba(255,255,255,' + opacity + ')',
+                        fontSize: Fonts.size.h15
+                    }}>扑客</Text>
                     <View style={{flex: 1}}/>
                     <TouchableOpacity
                         testID="btn_bar_right"
@@ -239,6 +243,7 @@ class HomePage extends Component {
                 <ParallaxScrollView
                     fadeOutForeground={false}
                     fadeOutBackground={false}
+                    backgroundColor="white"
                     renderBackground={() => <View style={{
                         height: 300, width: Metrics.screenWidth,
                         backgroundColor: 'white'
