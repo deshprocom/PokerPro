@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {isEmptyObject, convertDate} from '../../utils/ComonHelper';
+import {isEmptyObject, convertDate,newShare} from '../../utils/ComonHelper';
 import {LoadingView} from '../../components/load'
 import {NavigationBar, MarkdownPlat} from '../../components';
 
@@ -28,7 +28,7 @@ export default class NewsInfoPage extends Component {
 
     render() {
 
-        const {date, description, source, title} = this.props.params.newsInfo;
+        const {date, description, source, title, id, image} = this.props.params.newsInfo;
 
         return (<View
             testID="page_news_info"
@@ -38,7 +38,13 @@ export default class NewsInfoPage extends Component {
                 router={router}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                leftBtnPress={()=>router.pop()}/>
+                leftBtnPress={()=>router.pop()}
+                rightBtnIcon={Images.match_share}
+                rightImageStyle={{height:20,width:16,marginRight:15}}
+                rightBtnPress={()=>{
+                    newShare(title,date+'\n'+source,image,id);
+                    {/*router.log(title,date+'\n'+source,image,id);*/}
+                }}/>
 
             <ScrollView>
 
@@ -52,7 +58,7 @@ export default class NewsInfoPage extends Component {
                             style={styles.txtTime}>{convertDate(date, 'YYYY-MM-DD')}</Text>
                         <Text
                             testID="txt_news_source"
-                            style={styles.txtSource}>来源于 {source}</Text>
+                            style={styles.txtSource}>{I18n.t('from_place')} {source}</Text>
                     </View>
 
                 </View>
@@ -100,6 +106,5 @@ const styles = StyleSheet.create({
     page: {
         flex: 1,
         backgroundColor: Colors.white
-    },
-
+    }
 })

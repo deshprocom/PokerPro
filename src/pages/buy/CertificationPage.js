@@ -27,21 +27,18 @@ export default class CertificationPage extends Component {
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
                     leftBtnPress={()=>this.props.router.pop()}/>
-                <IDCardView
-                    tabLabel={I18n.t('identification')}
-                    router={this.props.router}/>
-                {/* <ScrollableTabView
-                 tabBarActiveTextColor="#444444"
-                 tabBarInactiveTextColor="#999999"
-                 tabBarTextStyle={{fontSize: 18}}
-                 tabBarUnderlineStyle={{backgroundColor:'#111213'}}>
-                 <IDCardView
-                 user_extra={this.props.params.user_extra}
-                 tabLabel={I18n.t('identification')}
-                 router={this.props.router}/>
-                 <PassportView tabLabel={I18n.t('passport')}/>
 
-                 </ScrollableTabView>*/}
+                <ScrollableTabView
+                    tabBarActiveTextColor="#444444"
+                    tabBarInactiveTextColor="#999999"
+                    tabBarTextStyle={{fontSize: 18}}
+                    tabBarUnderlineStyle={{backgroundColor:'#111213'}}>
+                    <IDCardView
+                        tabLabel={I18n.t('identification')}
+                        router={this.props.router}/>
+                    <PassportView tabLabel={I18n.t('passport')}/>
+
+                </ScrollableTabView>
 
             </View>
         )
