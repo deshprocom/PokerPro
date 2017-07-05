@@ -267,12 +267,17 @@ class HomePage extends Component {
                                 />
                             </View>
                         </TouchableOpacity>
-                        <View style={styles.viewNick}>
-                            {this._showNick(profile.nick_name)}
+                        <View style={{
+                            backgroundColor: 'white',
+                            height: 100
+                        }}>
+                            < View style={styles.viewNick}>
+                                {this._showNick(profile.nick_name)}
 
-                            <Text style={styles.txtSign}>{profile.signature ? profile.signature :
-                                I18n.t('ple_sign')}</Text>
-                        </View>
+                                <Text style={styles.txtSign}>{profile.signature ? profile.signature :
+                                    I18n.t('ple_sign')}</Text>
+                            </View>
+                        </View >
 
 
                     </View>}
@@ -569,7 +574,7 @@ const styles = StyleSheet.create({
         top: 176
     },
     txtNick: {
-        fontSize: Fonts.size.h15,
+        fontSize: Fonts.size.h17,
         color: '#333333'
     },
     txtSign: {
@@ -579,7 +584,9 @@ const styles = StyleSheet.create({
     },
     viewNick: {
         marginLeft: 130,
-        marginTop: 10
+        marginTop: 10,
+        backgroundColor: 'white'
+
     },
     viewAvatar: {
         height: 106,
