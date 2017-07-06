@@ -18,11 +18,9 @@ import I18n from 'react-native-i18n';
 import {init} from '../services/ConfigDao';
 import {fetchGetRecentRaces, _getProfileOk} from '../actions/RacesAction';
 import ListViewForRaces from '../components/listitem/ListViewForRaces';
-import LoadErrorPage from '../components/ListNoDataPage';
-import ListNoDataPage from '../components/ListErrorPage';
-import {isEmptyObject, strNotNull, putLoginUser} from '../utils/ComonHelper';
+import {LoadErrorView, LoadingView, NoDataView} from '../components/load'
+import {isEmptyObject, strNotNull, putLoginUser, getUserData} from '../utils/ComonHelper';
 import {NavigationBar, ParallaxScrollView} from '../components';
-import {LoadingView} from '../components/load';
 import JpushHelp from '../services/JpushHelper';
 import TestRouter from '../components/TestRouter';
 import {umengEvent} from '../utils/UmengEvent';
@@ -45,7 +43,7 @@ class HomePage extends Component {
             badge: false
 
         };
-
+        getUserData();
         init(() => {
             this.setState({
                 languageChange: true
@@ -115,14 +113,14 @@ class HomePage extends Component {
             />)
         } else {
             return (
-                <ListNoDataPage/>)
+                <NoDataView/>)
         }
 
     };
 
     _loadErrorPage = () => {
-        return (<LoadErrorPage
-            btnRefresh={() => this._refreshPage()}/>)
+        return (<LoadErrorView
+            onPress={() => this._refreshPage()}/>)
     };
 
 
@@ -203,7 +201,7 @@ class HomePage extends Component {
         return (
 
             <View
-                style={ {flex: 1, backgroundColor: Colors.white}}
+                style={ {flex: 1, backgroundColor: '#ececee'}}
                 testID="home_page">
 
                 <View style={[styles.topBar, {backgroundColor: 'rgba(0,0,0,' + opacity + ')'}]}>
@@ -221,7 +219,11 @@ class HomePage extends Component {
                             style={styles.topImgLeft}/>
 
                     </TouchableOpacity>
-                    <TestRouter refreshPage={this._refreshPage}/>
+                    <View style={{flex: 1}}/>
+                    <Text style={{
+                        color: 'rgba(255,255,255,' + opacity + ')',
+                        fontSize: Fonts.size.h15
+                    }}>扑客</Text>
                     <View style={{flex: 1}}/>
                     <TouchableOpacity
                         testID="btn_bar_right"
@@ -236,20 +238,25 @@ class HomePage extends Component {
 
 
                 </View>
-                <ScrollView
-                    scrollEventThrottle={16}
-                    bounces={false}
-                    onScroll={this._onScroll}>
-                    <View>
+                <ParallaxScrollView
+                    fadeOutForeground={false}
+                    fadeOutBackground={false}
+                    backgroundColor="white"
+                    renderBackground={() => <View style={{
+                        height: 300, width: Metrics.screenWidth,
+                        backgroundColor: 'white'
+                    }}>
                         <Image
                             style={styles.homeImg}
                             source={Images.home_img}/>
-                        <View style={styles.viewNick}>
-                            {this._showNick(profile.nick_name)}
+                    </View>}
+                    renderForeground={() => <View>
+                        <View
+                            style={styles.homeImg}/>
 
-                            <Text style={styles.txtSign}>{profile.signature ? profile.signature :
-                                I18n.t('ple_sign')}</Text>
-                        </View>
+                        <Image
+                            style={styles.imgHead}
+                            source={Images.home_head}/>
 
                         <TouchableOpacity
                             style={styles.btnAvatar}
@@ -263,248 +270,178 @@ class HomePage extends Component {
                                 />
                             </View>
                         </TouchableOpacity>
+                        <View style={{
+                            backgroundColor: 'white',
+                            height: 100
+                        }}>
+                            < View style={styles.viewNick}>
+                                {this._showNick(profile.nick_name)}
 
-
-                        {/*功能模块*/}
-                        <View style={styles.menu}>
-                            <TouchableOpacity
-                                testID="btn_home_ticket"
-                                onPress={() => {
-                                    umengEvent('home_ticket');
-                                    router.toTicketPage()
-                                }}
-                                style={[{marginLeft: 53}, styles.item_center]}>
-                                <Image style={styles.gif_fuc}
-                                       source={Images.home_ticket1}/>
-                                <Text style={styles.txtMenu}>{I18n.t('home_ticket')}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                testID="btn_home_news"
-                                onPress={() => {
-                                    umengEvent('home_news');
-                                    router.toMainNewsPage()
-                                }}
-                                style={styles.item_center}>
-                                <Image style={styles.gif_fuc}
-                                       source={Images.home_news}/>
-                                <Text style={styles.txtMenu}>{I18n.t('home_info')}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                testID="btn_home_video"
-                                onPress={() => {
-                                    umengEvent('home_videos');
-                                    router.toVideoPage()
-                                }}
-                                style={styles.item_center}>
-                                <Image style={styles.gif_fuc}
-                                       source={Images.home_video1}/>
-                                <Text style={styles.txtMenu}>{I18n.t('home_video')}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                testID="btn_home_sort"
-                                onPress={() => {
-                                    umengEvent('home_ranking');
-                                    {/*router.toChoiseTicketPage(this.props,28)*/
-                                    }
-
-                                }}
-                                style={[{marginRight: 53}, styles.item_center]}>
-                                <Image style={styles.gif_fuc}
-                                       source={Images.home_sort1}/>
-                                <Text style={styles.txtMenu}>{I18n.t('home_sort')}</Text>
-                            </TouchableOpacity>
-
-                        </View>
-
-                        <View style={styles.viewRace}>
-                            <View style={styles.viewRecent}>
-                                <Image style={styles.imgFire}
-                                       source={Images.home_fire}/>
-                                <Text style={styles.txtRace}>
-                                    {I18n.t('home_recent_races')}</Text>
+                                <Text style={styles.txtSign}>{profile.signature ? profile.signature :
+                                    I18n.t('ple_sign')}</Text>
                             </View>
-
-                            <TouchableOpacity
-                                style={styles.btnMore}
-                                testID="btn_more_races"
-                                onPress={() => {
-                                    umengEvent('home_more');
-                                    this.props.router.toSearchRacesPage()
-                                }}>
-                                <Image style={styles.imgMore}
-                                       source={Images.more}/>
-                            </TouchableOpacity>
+                        </View >
 
 
-                        </View>
+                    </View>}
+                    parallaxHeaderHeight={300}
+                    onScroll={this._onScroll}>
+
+
+                    {/*功能模块*/}
+                    <View style={styles.menu}>
+                        <TouchableOpacity
+                            testID="btn_home_ticket"
+                            onPress={() => {
+                                umengEvent('home_ticket');
+                                router.toTicketPage()
+                            }}
+                            style={[{marginLeft: 53}, styles.item_center]}>
+                            <Image style={styles.gif_fuc}
+                                   source={Images.home_ticket1}/>
+                            <Text style={styles.txtMenu}>{I18n.t('home_ticket')}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            testID="btn_home_news"
+                            onPress={() => {
+                                umengEvent('home_news');
+                                router.toMainNewsPage()
+                            }}
+                            style={styles.item_center}>
+                            <Image style={styles.gif_fuc}
+                                   source={Images.home_news}/>
+                            <Text style={styles.txtMenu}>{I18n.t('home_info')}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            testID="btn_home_video"
+                            onPress={() => {
+                                umengEvent('home_videos');
+                                router.toVideoPage()
+                            }}
+                            style={styles.item_center}>
+                            <Image style={styles.gif_fuc}
+                                   source={Images.home_video1}/>
+                            <Text style={styles.txtMenu}>{I18n.t('home_video')}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            testID="btn_home_sort"
+                            onPress={() => {
+                                umengEvent('home_ranking');
+                                router.toNewAddressPage()
+
+                            }}
+                            style={[{marginRight: 53}, styles.item_center]}>
+                            <Image style={styles.gif_fuc}
+                                   source={Images.home_sort1}/>
+                            <Text style={styles.txtMenu}>{I18n.t('home_sort')}</Text>
+                        </TouchableOpacity>
 
                     </View>
+
+
+                    <View style={styles.viewRace}>
+                        <View style={styles.viewRecent}>
+                            <Image style={styles.imgFire}
+                                   source={Images.home_fire}/>
+                            <Text style={styles.txtRace}>
+                                {I18n.t('home_recent_races')}</Text>
+                        </View>
+
+                        <TouchableOpacity
+                            style={styles.btnMore}
+                            testID="btn_more_races"
+                            onPress={() => {
+                                umengEvent('home_more');
+                                this.props.router.toSearchRacesPage()
+                            }}>
+                            <Image style={styles.imgMore}
+                                   source={Images.more}/>
+                        </TouchableOpacity>
+
+
+                    </View>
+
 
                     {this._showLoading()}
                     {/*赛事列表*/}
                     {!loading && error ? this._loadErrorPage()
                         : this._showListView(listRaces)}
 
-                </ScrollView>
+
+                </ParallaxScrollView>
 
 
             </View>
         )
     }
 
+    _topView = () => {
+        return <View>
+            <View
+                style={styles.homeImg}/>
+            <View style={styles.viewNick}>
+                {this._showNick(profile.nick_name)}
+
+                <Text style={styles.txtSign}>{profile.signature ? profile.signature :
+                    I18n.t('ple_sign')}</Text>
+            </View>
+
+            <TouchableOpacity
+                style={styles.btnAvatar}
+                activeOpacity={1}
+                onPress={this._btnHeader}>
+                <View
+                    style={styles.viewAvatar}>
+                    <Image style={styles.avatar}
+                           source={strNotNull(profile.avatar) ?
+                               {uri: profile.avatar} : Images.home_avatar}
+                    />
+                </View>
+            </TouchableOpacity>
+
+        </View>
+
+    };
+
     old = () => {
-        return <ParallaxScrollView
-            fadeOutForeground={false}
-            fadeOutBackground={false}
-            contentBackgroundColor="#191b1e"
-            renderBackground={() => <Image style={{height: 260, width: Metrics.screenWidth}}
-                                           source={Images.home_bg}/>}
-            renderForeground={() => <View style={styles.person_view}>
+        const {profile, router, error, loading, hasData, actionType, listRaces} = this.props;
+        const {opacity, badge} = this.state;
+        return <ScrollView
+            scrollEventThrottle={16}
+            bounces={false}
+            onScroll={this._onScroll}>
+            <View>
+                <Image
+                    style={styles.homeImg}
+                    source={Images.home_img}/>
+                <View style={styles.viewNick}>
+                    {this._showNick(profile.nick_name)}
+
+                    <Text style={styles.txtSign}>{profile.signature ? profile.signature :
+                        I18n.t('ple_sign')}</Text>
+                </View>
+
                 <TouchableOpacity
+                    style={styles.btnAvatar}
                     activeOpacity={1}
                     onPress={this._btnHeader}>
-                    <Image
-                        style={{
-                            height: 101, width: 101,
-                            alignItems: 'center', justifyContent: 'center'
-                        }}
-                        source={Images.home_def_harid}>
-                        <Image style={{
-                            height: 82, width: 82,
-                            borderRadius: 41
-                        }}
+                    <View
+                        style={styles.viewAvatar}>
+                        <Image style={styles.avatar}
                                source={strNotNull(profile.avatar) ?
                                    {uri: profile.avatar} : Images.home_avatar}
                         />
-                    </Image>
-                </TouchableOpacity>
-
-                {this._showNick(profile.nick_name)}
-
-                <Text style={styles.person_sign}
-                >{profile.signature ? profile.signature :
-                    I18n.t('ple_sign')}</Text>
-                {/*ID 称号*/}
-                {isEmptyObject(profile) ? null : this._userIdView(profile)}
-
-            </View>}
-            parallaxHeaderHeight={260}
-            onScroll={this._onScroll}>
-
-
-            {/*功能模块*/}
-            <View style={styles.home_modules}>
-                <TouchableOpacity
-                    testID="btn_home_ticket"
-                    onPress={() => {
-                        umengEvent('home_ticket');
-                        router.toTicketPage()
-                    }}
-                    style={[{marginLeft: 53}, styles.item_center]}>
-                    <Image style={styles.gif_fuc}
-                           source={Images.home_ticket}/>
-                    <Text style={styles.text_fuc}>{I18n.t('home_ticket')}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    testID="btn_home_news"
-                    onPress={() => {
-                        umengEvent('home_news');
-                        router.toMainNewsPage()
-                    }}
-                    style={styles.item_center}>
-                    <Image style={styles.gif_fuc}
-                           source={Images.home_new}/>
-                    <Text style={styles.text_fuc}>{I18n.t('home_info')}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    testID="btn_home_video"
-                    onPress={() => {
-                        umengEvent('home_videos');
-                        router.toVideoPage()
-                    }}
-                    style={styles.item_center}>
-                    <Image style={styles.gif_fuc}
-                           source={Images.home_video}/>
-                    <Text style={styles.text_fuc}>{I18n.t('home_video')}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    testID="btn_home_sort"
-                    onPress={() => {
-                        umengEvent('home_ranking');
-                        {/*router.toChoiseTicketPage(this.props,28)*/
-                        }
-
-                    }}
-                    style={[{marginRight: 53}, styles.item_center]}>
-                    <Image style={styles.gif_fuc}
-                           source={Images.home_sort}/>
-                    <Text style={styles.text_fuc}>{I18n.t('home_sort')}</Text>
-                </TouchableOpacity>
-
-            </View>
-
-
-            <View style={{height: 20, backgroundColor: Colors.bg_09}}/>
-
-            {/*我的赛事*/}
-            <View style={{backgroundColor: Colors.bg_09}}>
-                {/*    <View style={styles.home_list1}>
-
-                 <View style={{flexDirection:'row'}}>
-                 <Image style={{height:15,width:24,
-                 marginRight:21,alignSelf:'flex-end'}}
-                 source={Images.home_left_click}/>
-                 <Image style={{height:22,width:25}}
-                 source={Images.home_poker}/>
-                 <Image style={{height:16,width:67,alignSelf:'flex-end'}}
-                 source={Images.home_typeface}/>
-                 <Image style={{height:15,width:24,
-                 marginLeft:21,alignSelf:'flex-end'}}
-                 source={Images.home_right_click}/>
-                 </View>
-                 </View>*/}
-
-                <Image style={{
-                    height: 54,
-                    justifyContent: 'space-between',
-                    flexDirection: 'row',
-                    width: Metrics.screenWidth
-                }}
-                       source={Images.home_bg_races}>
-                    <View
-                        style={[styles.recent_races,
-                            {marginLeft: 17, marginTop: 12}]}>
-
-                        <Image style={{height: 19, width: 14}}
-                               source={Images.home_match}/>
-                        <Text style={styles.txtRecent}>
-                            {I18n.t('home_recent_races')}</Text>
-
                     </View>
-                    <TouchableOpacity
-                        testID="btn_more_races"
-                        onPress={() => {
-                            umengEvent('home_more');
-                            this.props.router.toSearchRacesPage()
-                        }}
-                        style={[styles.recent_races,
-                            {marginRight: 17, marginTop: 12}]}>
-                        <Image style={{height: 9, width: 35}}
-                               source={Images.home_more_one}/>
-                        <Image style={{height: 11, width: 8, marginLeft: 5}}
-                               source={Images.home_open}/>
-                    </TouchableOpacity>
-                </Image>
-            </View>
+                </TouchableOpacity>
 
+            </View>
 
             {this._showLoading()}
             {/*赛事列表*/}
             {!loading && error ? this._loadErrorPage()
                 : this._showListView(listRaces)}
 
-
-        </ParallaxScrollView>;
+        </ScrollView>;
     }
 
 
@@ -639,7 +576,7 @@ const styles = StyleSheet.create({
         top: 176
     },
     txtNick: {
-        fontSize: Fonts.size.h15,
+        fontSize: Fonts.size.h17,
         color: '#333333'
     },
     txtSign: {
@@ -648,7 +585,10 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     viewNick: {
-        marginLeft: 130
+        marginLeft: 130,
+        marginTop: 10,
+        backgroundColor: 'white'
+
     },
     viewAvatar: {
         height: 106,
@@ -668,8 +608,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 40,
-        marginBottom: 30
+        marginTop: 14,
+        marginBottom: 20
     },
     txtMenu: {
         fontSize: Fonts.size.h14,
@@ -686,8 +626,8 @@ const styles = StyleSheet.create({
         paddingLeft: 15
     },
     imgFire: {
-        height: 15,
-        width: 11
+        height: 16,
+        width: 12
     },
     txtRace: {
         fontSize: Fonts.size.h15,
@@ -707,6 +647,18 @@ const styles = StyleSheet.create({
         height: 42,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    viewUser: {
+        height: 150,
+        width: Metrics.screenWidth,
+        flexDirection: 'row'
+    },
+    imgHead: {
+        height: 91,
+        width: Metrics.screenWidth,
+        position: 'absolute',
+        zIndex: 2,
+        top: 146,
     }
 });
 

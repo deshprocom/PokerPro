@@ -33,16 +33,16 @@ export default class RaceTypeView extends Component {
                     <Text style={styles.allTxt}>{I18n.t('AllGame')}</Text>
 
                     <Image style={styles.typeSelect}
-                           source={selectAll?
-                   Images.race_type_selected:
-                   Images.race_type_unselect}/>
+                           source={selectAll ?
+                               Images.race_type_selected :
+                               Images.race_type_unselect}/>
 
                 </TouchableOpacity>
 
                 <View style={styles.listView}>
                     <FlatList
                         ItemSeparatorComponent={this._itemSeparatorComponent}
-                        keyExtractor={item=> item.id}
+                        keyExtractor={item => item.id}
                         data={dataHosts}
                         renderItem={this._itemListView}/>
                 </View>
@@ -53,7 +53,7 @@ export default class RaceTypeView extends Component {
 
                     <TouchableOpacity
                         testID="btn_hosts_complete"
-                        onPress={()=>this.props.pressHostOk()}
+                        onPress={() => this.props.pressHostOk()}
                         style={styles.completeView}>
                         <Text style={styles.completeTxt}>{I18n.t('Finsh')}</Text>
                     </TouchableOpacity>
@@ -78,15 +78,15 @@ export default class RaceTypeView extends Component {
     _itemListView = ({item}) => {
 
         return (<TouchableOpacity
-            testID={'btn_host_'+item.id}
-            onPress={()=>this.props.pressItem(item)}
+            testID={'btn_host_' + item.id}
+            onPress={() => this.props.pressItem(item)}
             style={styles.itemListView}>
             <Text style={styles.allTxt}>{item.name}</Text>
 
             <Image style={styles.typeSelect}
-                   source={item.select?
-                   Images.race_type_selected:
-                   Images.race_type_unselect}/>
+                   source={item.select ?
+                       Images.race_type_selected :
+                       Images.race_type_unselect}/>
 
 
         </TouchableOpacity>)
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        backgroundColor: '#212327'
+        backgroundColor: 'white'
     },
     all: {
         height: 50,
@@ -117,16 +117,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         width: Metrics.screenWidth,
-        backgroundColor: '#2E3035'
+        backgroundColor: Colors.bg_ec
     },
     allTxt: {
         fontSize: 17,
-        color: Colors.txt_race_type,
+        color: Colors._161817,
         marginLeft: 20
     },
     typeTxt: {
         fontSize: 15,
-        color: Colors.txt_race_type
+        color: Colors._161817
     },
     typeSelect: {
         height: 19,
@@ -138,11 +138,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        width: Metrics.screenWidth
+        width: Metrics.screenWidth,
+
     },
     itemSeparator: {
         height: 1,
-        backgroundColor: '#2E3035',
+        backgroundColor: Colors.bg_ec,
         marginLeft: 20
     },
     listView: {
@@ -150,19 +151,18 @@ const styles = StyleSheet.create({
     },
     completeTxt: {
 
-        color: Colors.txt_E4D,
+        color: '#d9cb7a',
         fontSize: 15
 
     },
     completeView: {
         width: 60,
         height: 27,
-        borderColor: Colors.txt_E4D,
-        borderWidth: 1,
         borderRadius: 3,
         alignItems: 'center',
         justifyContent: 'center',
-        marginRight: 20
+        marginRight: 20,
+        backgroundColor: Colors._161817
     }
 
 });

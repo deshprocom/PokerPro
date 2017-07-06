@@ -13,6 +13,7 @@ import {
     convertDate, YYYY_MM_DD, racesStatusImage,
     sellable, raceStatusConvert
 } from '../../utils/ComonHelper';
+import {SellStatus} from '../../configs/Status';
 
 export default class RaceRowView extends Component {
 
@@ -24,11 +25,15 @@ export default class RaceRowView extends Component {
 
     render() {
 
-
-        return (<View>
+        const {describable, race_id} = this.props.rowData;
+        return (<TouchableOpacity
+            disabled={!describable}
+            activeOpacity={1}
+            testID={'btn_races_' + race_id}
+            onPress={() => this._itemClick(this.props.rowData)}>
             {this._itemRender()}
-            <View style={styles.viewLine}/>
-        </View>)
+            <View style={this.props.isMoreRace ? styles.viewLine1 : styles.viewLine}/>
+        </TouchableOpacity>)
     }
 
     oldView = () => {
@@ -94,7 +99,9 @@ export default class RaceRowView extends Component {
         const {
             ticket_sellable
         } = this.props.rowData;
-        if (ticket_sellable)
+        if (this.props.isMoreRace) {
+            return this._itemView();
+        } else if (ticket_sellable)
             return (<Image
                 style={styles.viewItem}
                 source={Images.item_sale}>
@@ -111,7 +118,7 @@ export default class RaceRowView extends Component {
             location, prize, ticket_status, ticket_sellable
         } = this.props.rowData;
         return (<View
-            style={[styles.viewItem,
+            style={this.props.isMoreRace ? styles.backMore : [styles.viewItem,
                 {
                     backgroundColor: ticket_sellable ? 'transparent' : 'white'
                 }]}>
@@ -164,10 +171,30 @@ export default class RaceRowView extends Component {
 
 
     _ticketStatus = (ticket_status, ticket_sellable) => {
-        if (ticket_sellable)
-            return (    <View style={[styles.btnStatus, this._colorTicket(ticket_status)]}>
-                <Text style={[styles.txtTicket, this._colorTicketTxt(ticket_status)]}>{ticket_status}</Text>
-            </View>)
+        if (ticket_sellable && (ticket_status === SellStatus.selling
+            || ticket_status === 'sold_out'))
+            return (    <TouchableOpacity
+                disabled={!ticket_status === SellStatus.selling}
+                activeOpacity={1}
+                onPress={() => this._buyTicket(this.props.rowData)}
+                style={[styles.btnStatus, this._colorTicket(ticket_status)]}>
+                <Text style={[styles.txtTicket,
+                    this._colorTicketTxt(ticket_status)]}
+                >{this._txtTicketStatus(ticket_status)}</Text>
+            </TouchableOpacity>)
+    };
+
+    _txtTicketStatus = (status) => {
+        switch (status) {
+            case 'unsold':
+                return I18n.t('ticket_unsold');
+            case 'selling':
+                return '购票';
+            case 'end':
+                return I18n.t('ticket_end');
+            case 'sold_out':
+                return '售完';
+        }
     };
 
 
@@ -406,7 +433,7 @@ const styles = StyleSheet.create({
         bottom: 20
     },
     imgRaceStatus: {
-        height: 10,
+        height: 12,
         width: 10
 
     },
@@ -414,6 +441,18 @@ const styles = StyleSheet.create({
         fontSize: Fonts.size.h9,
         color: '#cccccc',
         backgroundColor: 'transparent'
+    },
+    backMore: {
+        marginLeft: 0,
+        marginRight: 0,
+        height: 140,
+        width: Metrics.screenWidth,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'white'
+    },
+    viewLine1: {
+        height: 0.5
     }
 
 })
