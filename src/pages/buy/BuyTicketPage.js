@@ -272,6 +272,8 @@ class BuyTicketPage extends Component {
     };
 
     _entityView = () => {
+
+        const {isEntity} = this.state;
         return (   <TouchableOpacity
             onPress={() => {
                                 this.setState({
@@ -395,7 +397,7 @@ class BuyTicketPage extends Component {
                                     style={{fontSize:15,color:isEntity==ENTITY?Colors._AAA:Colors.txt_F28}}>{I18n.t('ticket_web')}</Text>
                             </TouchableOpacity>
 
-                            {false ? this._entityView() : null}
+                            {this._entityView()}
 
 
                         </View>

@@ -18,11 +18,9 @@ import I18n from 'react-native-i18n';
 import {init} from '../services/ConfigDao';
 import {fetchGetRecentRaces, _getProfileOk} from '../actions/RacesAction';
 import ListViewForRaces from '../components/listitem/ListViewForRaces';
-import LoadErrorPage from '../components/ListNoDataPage';
-import ListNoDataPage from '../components/ListErrorPage';
+import {LoadErrorView, LoadingView, NoDataView} from '../components/load'
 import {isEmptyObject, strNotNull, putLoginUser, getUserData} from '../utils/ComonHelper';
 import {NavigationBar, ParallaxScrollView} from '../components';
-import {LoadingView} from '../components/load';
 import JpushHelp from '../services/JpushHelper';
 import TestRouter from '../components/TestRouter';
 import {umengEvent} from '../utils/UmengEvent';
@@ -115,14 +113,14 @@ class HomePage extends Component {
             />)
         } else {
             return (
-                <ListNoDataPage/>)
+                <NoDataView/>)
         }
 
     };
 
     _loadErrorPage = () => {
-        return (<LoadErrorPage
-            btnRefresh={() => this._refreshPage()}/>)
+        return (<LoadErrorView
+            onPress={() => this._refreshPage()}/>)
     };
 
 
@@ -329,8 +327,7 @@ class HomePage extends Component {
                             testID="btn_home_sort"
                             onPress={() => {
                                 umengEvent('home_ranking');
-                                {/*router.toChoiseTicketPage(this.props,28)*/
-                                }
+                                router.toNewAddressPage()
 
                             }}
                             style={[{marginRight: 53}, styles.item_center]}>
