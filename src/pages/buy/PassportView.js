@@ -48,15 +48,7 @@ export default class PassportView extends Component {
         imageName:''
     }
 
-    componentDidMount() {
-        postPasswordImage( data => {
-            router.log(1111)
-            router.log(data);
-            router.log(1111)
-        },err => {
 
-        })
-    }
 
     showPickImage = () => {
         this.ActionSheet.show()
@@ -128,16 +120,20 @@ export default class PassportView extends Component {
                 let formData = new FormData();
                 let file = {uri: cardImage, type: 'multipart/form-data', name: imageName};
                 formData.append("image", file);
-                // this.props._postCardImage(formData);
                 this.state.cardImage = formData;
             }
-
             const body = {
+                password_img:cardImage,
                 real_name: realName,
                 cert_no: passwordCard
             };
-            // this.props._postCertification(body);
-            this.componentDidMount()
+            postPasswordImage(body, data => {
+                router.log(1111)
+                router.log(data);
+                router.log(1111)
+            },err => {
+
+            })
 
         } else {
             showToast('内容填写不完整')
