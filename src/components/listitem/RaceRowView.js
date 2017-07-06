@@ -32,7 +32,7 @@ export default class RaceRowView extends Component {
             testID={'btn_races_' + race_id}
             onPress={() => this._itemClick(this.props.rowData)}>
             {this._itemRender()}
-            <View style={styles.viewLine}/>
+            <View style={this.props.isMoreRace ? styles.viewLine1 : styles.viewLine}/>
         </TouchableOpacity>)
     }
 
@@ -99,7 +99,9 @@ export default class RaceRowView extends Component {
         const {
             ticket_sellable
         } = this.props.rowData;
-        if (ticket_sellable)
+        if (this.props.isMoreRace) {
+            return this._itemView();
+        } else if (ticket_sellable)
             return (<Image
                 style={styles.viewItem}
                 source={Images.item_sale}>
@@ -116,7 +118,7 @@ export default class RaceRowView extends Component {
             location, prize, ticket_status, ticket_sellable
         } = this.props.rowData;
         return (<View
-            style={[styles.viewItem,
+            style={this.props.isMoreRace ? styles.backMore : [styles.viewItem,
                 {
                     backgroundColor: ticket_sellable ? 'transparent' : 'white'
                 }]}>
@@ -439,6 +441,18 @@ const styles = StyleSheet.create({
         fontSize: Fonts.size.h9,
         color: '#cccccc',
         backgroundColor: 'transparent'
+    },
+    backMore: {
+        marginLeft: 0,
+        marginRight: 0,
+        height: 140,
+        width: Metrics.screenWidth,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'white'
+    },
+    viewLine1: {
+        height: 0.5
     }
 
 })
