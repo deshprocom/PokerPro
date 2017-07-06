@@ -22,21 +22,33 @@ export default class NewAddress extends Component {
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}/>
 
-            <View style={styles.inputView}>
-                <Text style={styles.lbAdr}>收货人:</Text>
-                <TextInput style={styles.input}/>
+            <View style={styles.view1}>
+                <View style={styles.inputView}>
+                    <Text style={styles.lbAdr}>收货人: </Text>
+                    <TextInput style={styles.input}/>
+                </View>
+                <View style={styles.line}/>
+                <View style={styles.inputView}>
+                    <Text style={styles.lbAdr}>联系电话: </Text>
+                    <TextInput style={styles.input}/>
+                </View>
+                <View style={styles.line}/>
+                <View style={styles.inputView}>
+                    <Text style={styles.lbAdr}>所在地:</Text>
+                    <TextInput style={styles.input}/>
+                </View>
+                <View style={styles.line}/>
+                <View style={styles.inputAdrView}>
+                    <TextInput
+                        numberOfLines={2}
+                        multiline={true}
+                        style={styles.inputAdr}
+                        placeholder={'请输入详细地址，不少于5个字'}
+                        placeholderTextColor={'#AAAAAA'}/>
+                </View>
+
             </View>
-            <View style={styles.line}/>
-            <View style={styles.inputView}>
-                <Text style={styles.lbAdr}>联系电话:</Text>
-                <TextInput style={styles.input}/>
-            </View>
-            <View style={styles.line}/>
-            <View style={styles.inputView}>
-                <Text style={styles.lbAdr}>所在地:</Text>
-                <TextInput style={styles.input}/>
-            </View>
-            <View style={styles.line}/>
+
 
         </View>)
     }
@@ -47,7 +59,7 @@ const styles = StyleSheet.create({
         height: 50,
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: 'white'
+
     },
     lbAdr: {
         fontSize: 15,
@@ -58,9 +70,25 @@ const styles = StyleSheet.create({
         height: 50,
         fontSize: 15,
         color: '#444444',
-        flex:1
+        flex: 1
     },
     line: {
         height: 0.5,
+        backgroundColor: Colors.bg_f5
+    },
+    inputAdr: {
+        marginLeft: 17,
+        marginTop: 17,
+        height: 60,
+        fontSize: 15,
+        color: '#444444',
+        justifyContent: 'flex-start',
+
+    },
+    view1: {
+        backgroundColor: 'white'
+    },
+    inputAdrView: {
+        height: 80,
     }
 });
