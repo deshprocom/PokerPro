@@ -49,6 +49,13 @@ export default class NewAddress extends Component {
 
             </View>
 
+            <View style={styles.view2}>
+                <Text style={styles.lbDefault}>设默认地址: </Text>
+
+                <Text style={styles.lbRemark}>注：每次下单时会使用该地址（电子票下单除外）</Text>
+
+            </View>
+
 
         </View>)
     }
@@ -86,9 +93,29 @@ const styles = StyleSheet.create({
 
     },
     view1: {
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        marginTop: 8,
+        marginBottom: 10
+
     },
     inputAdrView: {
         height: 80,
+    },
+    view2: {
+        height: 85,
+        backgroundColor: 'white'
+    },
+    lbDefault: {
+        fontSize: 15,
+        color: '#444444',
+        marginLeft: 17,
+        marginTop: 17
+    },
+    lbRemark: {
+        fontSize: 14,
+        color: '#AAAAAA',
+        marginLeft: 17,
+        marginTop: 21
+
     }
 });
