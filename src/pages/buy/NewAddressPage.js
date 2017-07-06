@@ -18,6 +18,7 @@ export default class NewAddress extends Component {
                 refreshPage={this.refreshPage}
                 toolbarStyle={{backgroundColor: Colors.bg_09}}
                 title={I18n.t('add_new_adr')}
+                rightBtnText={'保存'}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}/>
