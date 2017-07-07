@@ -133,13 +133,14 @@ export default class Router {
         })
     }
 
-    toNewAddressPage(props, getList) {
+    toNewAddressPage(props, getList, address) {
         this.push(props, {
             page: NewAddressPage,
             name: 'NewAddressPage',
             sceneConfig: customFloatFromRight,
             params: {
-                getList: getList
+                getList: getList,
+                address: address
             }
 
         })

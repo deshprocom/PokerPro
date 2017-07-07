@@ -70,7 +70,7 @@ export default class AdrListPage extends Component {
             <TouchableOpacity
                 activeOpacity={1}
                 onPress={() => {
-                    router.toNewAddressPage(this.props, this._getAddressList)
+                    router.toNewAddressPage(this.props, this._getAddressList,{})
                 }}
                 style={styles.viewAdd}>
                 <Text style={styles.txtName}>+新建地址</Text>
@@ -108,13 +108,19 @@ export default class AdrListPage extends Component {
                 >{address} {address_detail}</Text>
 
             </View>
-            <View style={styles.viewEdit}>
+            <TouchableOpacity
+                onPress={() => {
+                    router.toNewAddressPage(this.props,
+                        this._getAddressList,
+                        item)
+                }}
+                style={styles.viewEdit}>
                 <Image
                     style={styles.imgEdit}
                     source={Images.edit}/>
 
                 <Text style={styles.txtEdit}>编辑</Text>
-            </View>
+            </TouchableOpacity>
             <View style={{flex: 1}}/>
             <View style={styles.line}/>
 
@@ -192,10 +198,11 @@ const styles = StyleSheet.create({
     },
     viewEdit: {
         position: 'absolute',
-        top: 30,
+        top: 10,
         right: 17,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        height: 50
     },
     imgEdit: {
         height: 14,

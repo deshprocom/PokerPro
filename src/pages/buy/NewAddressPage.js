@@ -11,7 +11,7 @@ import {NavigationBar} from '../../components';
 import I18n from 'react-native-i18n';
 import {connect} from 'react-redux';
 import {fetchAddress} from '../../actions/OrderAction';
-import {strNotNull, showToast, checkPhone} from '../../utils/ComonHelper';
+import {strNotNull, showToast, checkPhone, isEmptyObject} from '../../utils/ComonHelper';
 import {postAddress} from '../../services/OrderDao';
 import Region from '../../components/region-picker/region'
 
@@ -20,7 +20,38 @@ export default class NewAddress extends Component {
     state = {
         isDefault: false,
         regionVisible: false,
-        regionTxt: ''
+        regionTxt: '',
+        addressEdit: {}
+    };
+
+    componentDidMount() {
+        const {address} = this.props.params;
+        this.setState({
+            addressEdit: address,
+            regionTxt: isEmptyObject(address) ? '' : address.address,
+            isDefault: isEmptyObject(address) ? false : address.default
+        });
+        if (!isEmptyObject(address)) {
+            this.receiver = address.consignee;
+            this.receiverAdr1 = address.address;
+            this.receiverAdr2 = address.address_detail;
+            this.phoneNum = address.mobile;
+
+        }
+    }
+
+    _getName = () => {
+        const {consignee} = this.state.addressEdit;
+        return consignee;
+    };
+    _getPhone = () => {
+        const {mobile} = this.state.addressEdit;
+        return mobile;
+    };
+
+    _getAdrDetail = () => {
+        const {address_detail} = this.state.addressEdit;
+        return address_detail;
     };
 
     render() {
@@ -39,6 +70,7 @@ export default class NewAddress extends Component {
                 <View style={styles.inputView}>
                     <Text style={styles.lbAdr}>收货人: </Text>
                     <TextInput style={styles.input}
+                               defaultValue={this._getName()}
                                onChangeText={txt => {
                                    this.receiver = txt;
                                }}/>
@@ -47,6 +79,7 @@ export default class NewAddress extends Component {
                 <View style={styles.inputView}>
                     <Text style={styles.lbAdr}>联系电话: </Text>
                     <TextInput style={styles.input}
+                               defaultValue={this._getPhone()}
                                onChangeText={txt => {
                                    this.phoneNum = txt;
                                }}/>
@@ -73,6 +106,7 @@ export default class NewAddress extends Component {
                         numberOfLines={2}
                         multiline={true}
                         style={styles.inputAdr}
+                        defaultValue={this._getAdrDetail()}
                         placeholder={'请输入详细地址，不少于5个字'}
                         placeholderTextColor={'#AAAAAA'}
                         onChangeText={txt => {
@@ -138,6 +172,13 @@ export default class NewAddress extends Component {
                 address_detail: this.receiverAdr2,
                 default: this.state.isDefault,
             };
+
+
+            if (!isEmptyObject(this.state.addressEdit)) {
+                const {id} = this.state.addressEdit;
+                body['id'] = id
+            }
+
 
             postAddress(body, data => {
                 console.log(data);
