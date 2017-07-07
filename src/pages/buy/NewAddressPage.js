@@ -13,11 +13,13 @@ import {connect} from 'react-redux';
 import {fetchAddress} from '../../actions/OrderAction';
 import {strNotNull, showToast, checkPhone} from '../../utils/ComonHelper';
 import {postAddress} from '../../services/OrderDao';
+import Region from '../../components/region-picker/region'
 
 export default class NewAddress extends Component {
 
     state = {
-        isDefault: false
+        isDefault: false,
+        regionVisible: false
     };
 
     render() {
@@ -49,13 +51,20 @@ export default class NewAddress extends Component {
                                }}/>
                 </View>
                 <View style={styles.line}/>
-                <View style={styles.inputView}>
+                <TouchableOpacity
+                    onPress={() => {
+                        this.setState({
+                            regionVisible: !this.state.regionVisible
+                        })
+                    }}
+                    style={styles.inputView}>
                     <Text style={styles.lbAdr}>所在地:</Text>
-                    <TextInput style={styles.input}
-                               onChangeText={txt => {
-                                   this.receiverAdr1 = txt;
-                               }}/>
-                </View>
+                    <View style={{flex: 1}}/>
+                    <Text style={styles.txtSelect}>请选择</Text>
+                    <Image style={styles.imgRight}
+                           source={Images.adr_right}/>
+
+                </TouchableOpacity>
                 <View style={styles.line}/>
                 <View style={styles.inputAdrView}>
                     <TextInput
@@ -90,7 +99,22 @@ export default class NewAddress extends Component {
 
             </View>
 
-
+            <Region
+                visible={this.state.regionVisible} //true展示，false不展示
+                selectedProvince={'110000'} //初始化省，不传默认也是北京
+                selectedCity={'110100'} //初始化市，不传默认也是北京
+                selectedArea={'110101'} //初始化区，不传默认为东城区
+                onSubmit={(params) => {
+                    this.setState({
+                        regionVisible: false
+                    })
+                }}
+                onCancel={() => {
+                    this.setState({
+                        regionVisible: false
+                    })
+                }}
+            />
         </View>)
     }
 
@@ -188,6 +212,15 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 9,
         right: 19
-
+    },
+    imgRight: {
+        height: 20,
+        width: 11,
+        marginRight: 17
+    },
+    txtSelect: {
+        fontSize: 14,
+        color: '#AAAAAA',
+        marginRight: 6
     }
 });
