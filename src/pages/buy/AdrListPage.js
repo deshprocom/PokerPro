@@ -51,9 +51,14 @@ export default class AdrListPage extends Component {
             />
 
 
-            <View style={styles.viewAdd}>
+            <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => {
+                    router.toNewAddressPage()
+                }}
+                style={styles.viewAdd}>
                 <Text style={styles.txtName}>+新建地址</Text>
-            </View>
+            </TouchableOpacity>
 
         </View>)
     }

@@ -296,8 +296,6 @@ class BuyTicketPage extends Component {
     };
 
 
-
-
     render() {
         const {user_extra} = this.props;
         const {race, tickets, ordered} = this.state;
@@ -522,7 +520,14 @@ class BuyTicketPage extends Component {
     };
 
     _addrView = () => {
-        return (  <View style={{height: 89, flex: 1, marginTop: 10, backgroundColor: Colors.white}}>
+        const {address_detail, consignee, mobile} = this.state.shipping_address;
+
+        return (  <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => {
+                router.toAdrListPage();
+            }}
+            style={{height: 89, flex: 1, marginTop: 10, backgroundColor: Colors.white}}>
             <View style={{height: 44, flex: 1, alignItems: 'center', flexDirection: 'row'}}>
 
                 <Text style={{
@@ -540,7 +545,7 @@ class BuyTicketPage extends Component {
                 <Image style={{width: 11, height: 20, marginRight: 17}}
                        source={Images.ticket_arrow}/>
             </View>
-        </View>)
+        </TouchableOpacity>)
     }
 
 
