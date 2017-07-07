@@ -122,6 +122,9 @@ export default class PassportView extends Component {
                 formData.append("image", file);
                 this.state.cardImage = formData;
             }
+            router.log(22222)
+            router.log(cardImage);
+            router.log(22222)
             const body = {
                 password_img:cardImage,
                 real_name: realName,

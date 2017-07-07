@@ -57,7 +57,7 @@ class IDCardView extends Component {
     componentWillReceiveProps(newProps) {
         if (newProps.actionType === POST_CERTIFICATION &&
             newProps.hasData) {
-            this.props.router.pop();
+            router.pop();
         } else if (newProps.actionType === GET_CERTIFICATION &&
             newProps.hasData) {
             if (!isEmptyObject(user_extra)) {
