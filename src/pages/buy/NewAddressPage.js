@@ -19,7 +19,8 @@ export default class NewAddress extends Component {
 
     state = {
         isDefault: false,
-        regionVisible: false
+        regionVisible: false,
+        regionTxt: ''
     };
 
     render() {
@@ -59,6 +60,7 @@ export default class NewAddress extends Component {
                     }}
                     style={styles.inputView}>
                     <Text style={styles.lbAdr}>所在地:</Text>
+                    <Text style={styles.lbAdr}>{this.state.regionTxt}</Text>
                     <View style={{flex: 1}}/>
                     <Text style={styles.txtSelect}>请选择</Text>
                     <Image style={styles.imgRight}
@@ -105,8 +107,12 @@ export default class NewAddress extends Component {
                 selectedCity={'110100'} //初始化市，不传默认也是北京
                 selectedArea={'110101'} //初始化区，不传默认为东城区
                 onSubmit={(params) => {
+
+                    const {provinceName, cityName, areaName} = params;
+                    this.receiverAdr1 = provinceName + ' ' + cityName + ' ' + areaName;
                     this.setState({
-                        regionVisible: false
+                        regionVisible: false,
+                        regionTxt: this.receiverAdr1
                     })
                 }}
                 onCancel={() => {

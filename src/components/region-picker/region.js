@@ -331,11 +331,11 @@ const styles = StyleSheet.create({
         padding: 20,
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: 'blue',
+        backgroundColor: 'white',
         flexDirection: 'row'
     },
     text: {
-        color: '#FFF',
+        color: '#000000',
         fontSize: 20,
         fontWeight: 'bold'
     },
