@@ -141,7 +141,10 @@ export default class NewAddress extends Component {
 
             postAddress(body, data => {
                 console.log(data);
-                showToast('提交成功')
+                showToast('提交成功');
+                this.props.params.getList();
+                router.pop();
+
             }, err => {
                 console.log(err)
             })

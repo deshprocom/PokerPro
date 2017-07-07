@@ -28,6 +28,10 @@ export default class AdrListPage extends Component {
     }
 
     componentDidMount() {
+        this._getAddressList();
+    }
+
+    _getAddressList = () => {
         getAddressList(data => {
             const {items} = data;
             this.setState({
@@ -35,7 +39,7 @@ export default class AdrListPage extends Component {
                 dataSource: this._dataSource.cloneWithRows(items)
             })
         })
-    }
+    };
 
 
     render() {
@@ -66,7 +70,7 @@ export default class AdrListPage extends Component {
             <TouchableOpacity
                 activeOpacity={1}
                 onPress={() => {
-                    router.toNewAddressPage()
+                    router.toNewAddressPage(this.props, this._getAddressList)
                 }}
                 style={styles.viewAdd}>
                 <Text style={styles.txtName}>+新建地址</Text>
@@ -79,7 +83,7 @@ export default class AdrListPage extends Component {
         const {consignee, address, address_detail, mobile} = item;
         return (<View style={styles.itemView}>
             <View style={styles.rowView}>
-                <Text style={styles.txtName}>{consignee}</Text>
+                <Text style={styles.txtName}>{consignee}    </Text>
                 <SecurityText
                     testID="txt_phone_security"
                     securityOptions={{
