@@ -95,8 +95,17 @@ class BuyTicketPage extends Component {
     };
 
     eTicketNum = (ticket_info) => {
-        if (!isEmptyObject(ticket_info))
-            return ticket_info.e_ticket_number - ticket_info.e_ticket_sold_number;
+        if (isEmptyObject(ticket_info))
+            return;
+        const {isEntity} = this.state;
+        const {
+            e_ticket_number, e_ticket_sold_number,
+            entity_ticket_number, entity_ticket_sold_number
+        } = ticket_info;
+        if (isEntity == ENTITY)
+            return entity_ticket_number - entity_ticket_sold_number;
+        else
+            return e_ticket_number - e_ticket_sold_number;
     };
 
     btnBuyKnow = () => {
@@ -175,14 +184,27 @@ class BuyTicketPage extends Component {
     _btnBuyTicket = () => {
 
         umengEvent('ticket_buy_contain');
-        let {isEntity, email, isNameReal} = this.state;
+        let {isEntity, email, isNameReal, shipping_address} = this.state;
         if (isNameReal) {
             if (isEntity === ENTITY) {
-                showToast('实体票暂不开放');
-                return;
-            }
+                const {race_id, ticket_id} = this.props.params;
+                let param = {
+                    race_id: race_id,
+                    ticket_id: ticket_id
+                };
+                let body = {
+                    ticket_type: 'entity_ticket',
+                    mobile: shipping_address.mobile,
+                    consignee: shipping_address.consignee,
+                    address: shipping_address.address + shipping_address.address_detail
+                };
+                postOrderTicket(param, body, data => {
+                    this._postOrderOk();
+                }, err => {
+                    showToast(err)
+                });
 
-            if (checkMail(email)) {
+            } else if (checkMail(email)) {
                 this._saveBuyEmail();
                 const {race_id, ticket_id} = this.props.params;
                 let param = {

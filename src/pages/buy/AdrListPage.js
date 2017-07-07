@@ -36,7 +36,7 @@ export default class AdrListPage extends Component {
         getAddressList(data => {
             const {items} = data;
             const {adrData} = this.props.params;
-            console.log('adrData',adrData);
+
             let buyAdr = {};
             if (!isEmptyObject(adrData))
                 items.forEach(function (x) {
