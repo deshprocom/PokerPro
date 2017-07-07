@@ -57,12 +57,12 @@ class SearchKeywordPage extends Component {
                         testID="input_keyword"
                         underlineColorAndroid='transparent'
                         style={styles.inputSearch}
-                        onChangeText={txt=>{
-                        this.setState({
-                            keyword:txt
-                        });
-                         this.loadList('0',txt)
-                    }}/>
+                        onChangeText={txt => {
+                            this.setState({
+                                keyword: txt
+                            });
+                            this.loadList('0', txt)
+                        }}/>
 
                 </View>
 
@@ -70,7 +70,7 @@ class SearchKeywordPage extends Component {
                 <TouchableOpacity
                     testID="btn_bar_right"
                     style={styles.popBtn}
-                    onPress={()=>router.pop()}>
+                    onPress={() => router.pop()}>
                     <Text style={styles.txtCancel}>{I18n.t('cancel')}</Text>
                 </TouchableOpacity>
 
@@ -87,17 +87,17 @@ class SearchKeywordPage extends Component {
         if (actionType === SEARCH_BY_KEYWORD && dataList.length <= 0)
             if (hasData) {
                 return <NoDataView
-                    pageStyle={{ backgroundColor: '#161718'}}/>
+                    pageStyle={{backgroundColor: Colors.bg_ec}}/>
             } else if (error)
                 return <LoadErrorView
-                    onPress={()=>this._onRefresh()}/>
+                    onPress={() => this._onRefresh()}/>
         return <PullToRefreshListView
             ref={ (component) => this._pullToRefreshListView = component }
             viewType={PullToRefreshListView.constants.viewType.listView}
             dataSource={this.state.dataSource}
             renderRow={this._renderRow}
-            renderHeader={(viewState)=>_renderHeader(viewState,headerStyle)}
-            renderFooter={(viewState)=>_renderFooter(viewState,headerStyle)}
+            renderHeader={(viewState) => _renderHeader(viewState, headerStyle)}
+            renderFooter={(viewState) => _renderFooter(viewState, headerStyle)}
             onRefresh={this._onRefresh}
             onLoadMore={this._onLoadMore}
             enableEmptySections={true}
@@ -173,6 +173,7 @@ class SearchKeywordPage extends Component {
 
         return (
             <RaceRowView
+                isMoreRace={true}
                 rowID={rowID}
                 router={this.props.router}
                 rowData={rowData}/>
@@ -230,7 +231,7 @@ const styles = StyleSheet.create({
 
 })
 
-const headerStyle = {height: 35, justifyContent: 'center', alignItems: 'center', backgroundColor: '#161718'};
+const headerStyle = {height: 35, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.bg_ec};
 
 const bindAction = dispatch => ({
     _searchByDate: (body) => dispatch(fetchSearchByKeyword(body))

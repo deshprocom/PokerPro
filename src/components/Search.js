@@ -343,7 +343,6 @@ class Search extends Component {
 
 const styles = {
     container: {
-        backgroundColor: 'grey',
         height: containerHeight,
         flexDirection: 'row',
         justifyContent: 'flex-start',

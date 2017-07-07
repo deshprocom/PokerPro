@@ -241,7 +241,6 @@ class HomePage extends Component {
                 <ParallaxScrollView
                     fadeOutForeground={false}
                     fadeOutBackground={false}
-                    backgroundColor="white"
                     renderBackground={() => <View style={{
                         height: 300, width: Metrics.screenWidth,
                         backgroundColor: 'white'
@@ -327,7 +326,6 @@ class HomePage extends Component {
                             testID="btn_home_sort"
                             onPress={() => {
                                 umengEvent('home_ranking');
-                                router.toNewAddressPage()
 
                             }}
                             style={[{marginRight: 53}, styles.item_center]}>
