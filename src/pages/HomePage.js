@@ -241,7 +241,6 @@ class HomePage extends Component {
                 <ParallaxScrollView
                     fadeOutForeground={false}
                     fadeOutBackground={false}
-                    backgroundColor="white"
                     renderBackground={() => <View style={{
                         height: 300, width: Metrics.screenWidth,
                         backgroundColor: 'white'

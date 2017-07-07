@@ -6,6 +6,12 @@ import Api from '../configs/ApiConfig';
 import StorageKey from '../configs/StorageKey';
 
 
+export function postAddress(body, resolve, reject) {
+    helper.post(Api.addAddress(), body, (ret) => {
+        resolve(ret.data)
+    }, reject)
+}
+
 export function postOrderTicket(param, body, resolve, reject) {
     helper.post(Api.orderTicket(param), body, (ret) => {
         resolve(ret.data)

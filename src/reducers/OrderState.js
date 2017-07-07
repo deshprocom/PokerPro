@@ -3,6 +3,7 @@
  */
 import {
     GET_ORDER_DETAIL, GET_ORDER_LIST, POST_ORDER_CANCEL,
+    POST_ADDRESS,
     FETCH_SUCCESS, FETCHING, FETCH_FAIL
 } from '../actions/ActionTypes';
 
@@ -13,7 +14,8 @@ const initialState = {
     actionType: '',
     orderDetail: {},
     orderList: {},
-    orderStatus: ''
+    orderStatus: '',
+    address:{}
 };
 
 export default function orderState(state = initialState, action) {
@@ -26,6 +28,9 @@ export default function orderState(state = initialState, action) {
             return handleFetch(state, action);
         case POST_ORDER_CANCEL:
             return handleFetch(state, action);
+        case POST_ADDRESS:
+            state.address = {};
+            return handleFetch(state,action);
 
         default:
             return state;
@@ -63,6 +68,14 @@ function handleFetch(state, action) {
             }
         } else if (action.type === POST_ORDER_CANCEL) {
             return {
+                ...state,
+                loading: false,
+                hasData: true,
+                error: false,
+                actionType: action.type
+            }
+        }else if(action.type === POST_ADDRESS){
+            return{
                 ...state,
                 loading: false,
                 hasData: true,
