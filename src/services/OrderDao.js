@@ -4,7 +4,15 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 import StorageKey from '../configs/StorageKey';
+import {showToast} from '../utils/ComonHelper';
 
+export function getAddressList(resolve) {
+    helper.get(Api.addAddress(), (ret) => {
+        resolve(ret.data)
+    }, err => {
+        showToast(err)
+    })
+}
 
 export function postAddress(body, resolve, reject) {
     helper.post(Api.addAddress(), body, (ret) => {

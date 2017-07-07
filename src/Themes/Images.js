@@ -163,7 +163,8 @@ const images = {
     edit: require('../../source/buy/edit@2x.png'),
     handle: require('../../source/buy/handle@2x.png'),
     handle2: require('../../source/buy/handle2@2x.png'),
-    adr_right: require('../../source/buy/adr_right.png')
+    adr_right: require('../../source/buy/adr_right.png'),
+    adr_select:require('../../source/buy/adr_select.png')
 
 
 };

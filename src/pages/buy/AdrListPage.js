@@ -9,6 +9,7 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, SwipeListView, SecurityText} from '../../components';
 import I18n from 'react-native-i18n';
+import {getAddressList} from '../../services/OrderDao';
 
 export default class AdrListPage extends Component {
 
@@ -19,10 +20,21 @@ export default class AdrListPage extends Component {
         this._dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             dataList: dataList,
-            dataSource: this._dataSource.cloneWithRows(dataList)
+            dataSource: this._dataSource.cloneWithRows(dataList),
+            selectAdr: {}
         };
 
 
+    }
+
+    componentDidMount() {
+        getAddressList(data => {
+            const {items} = data;
+            this.setState({
+                dataList: items,
+                dataSource: this._dataSource.cloneWithRows(items)
+            })
+        })
     }
 
 
@@ -64,9 +76,10 @@ export default class AdrListPage extends Component {
     }
 
     _itemListView = (item) => {
+        const {consignee, address, address_detail, mobile} = item;
         return (<View style={styles.itemView}>
             <View style={styles.rowView}>
-                <Text style={styles.txtName}>张达标</Text>
+                <Text style={styles.txtName}>{consignee}</Text>
                 <SecurityText
                     testID="txt_phone_security"
                     securityOptions={{
@@ -75,17 +88,20 @@ export default class AdrListPage extends Component {
                         endIndex: 7,
                     }}
                     style={styles.txtName}>
-                    13556840809
+                    {mobile}
                 </SecurityText>
             </View>
 
             <View style={styles.rowView}>
-                <View style={styles.tabView}>
+                {item.default ? <View style={styles.tabView}>
                     <Text style={styles.txtDefault}>默认</Text>
-                </View>
+                </View> : <Image style={styles.imgSelect}
+                                 source={Images.adr_select}/>}
+
+
                 <Text style={styles.txtAdr}
                       numberOfLines={2}
-                >阿里巴巴集团服务有限公司香港铜锣湾勿地 臣街1号时代广场1座26楼</Text>
+                >{address} {address_detail}</Text>
 
             </View>
             <View style={styles.viewEdit}>
@@ -190,7 +206,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: 'white',
         alignSelf: 'center'
-
+    },
+    imgSelect: {
+        height: 12,
+        width: 12,
+        marginRight: 20
     }
 
 });
