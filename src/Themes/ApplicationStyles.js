@@ -159,7 +159,7 @@ const ApplicationStyles = {
     },
     bg_black: {
         flex: 1,
-        backgroundColor: Colors.bg_black
+        backgroundColor: Colors.bg_ec
     }
 
 

@@ -4,14 +4,14 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
     calendarContainer: {
-        backgroundColor: '#2E3035',
-        height: 385
+        backgroundColor: 'white',
+        height: 388
     },
     monthContainer: {
         width: DEVICE_WIDTH,
     },
     calendarControls: {
-        backgroundColor: '#212327',
+        backgroundColor: '#ececee',
         height: 60,
         alignItems: 'center',
         flexDirection: 'row'
@@ -30,9 +30,9 @@ const styles = StyleSheet.create({
     title: {
         flex: 1,
         textAlign: 'center',
-        fontSize: 19,
+        fontSize: 17,
         margin: 10,
-        color: '#CAC6CA',
+        color: '#333333',
         fontWeight: 'bold',
     },
     calendarHeading: {

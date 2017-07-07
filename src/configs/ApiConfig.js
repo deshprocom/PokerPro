@@ -59,7 +59,8 @@ export default {
     delNotice: delNotice,
     selectRaceTicket: selectRaceTicket,
     buyRaceTicket: buyRaceTicket,
-    orderTicket: orderTicket
+    orderTicket: orderTicket,
+    addAddress: addAddress
 
 }
 
@@ -73,6 +74,10 @@ function getUserId() {
 
 const page_size = 10;
 
+
+export function addAddress() {
+    return 'account/users/' + getUserId() + '/address';
+}
 
 export function orderTicket(body) {
     const {race_id, ticket_id} = body;
@@ -155,7 +160,7 @@ export function player_info(body) {
 }
 
 export function sub_race_info(body) {
-    const {race_id_1, race_id_2}  = body;
+    const {race_id_1, race_id_2} = body;
     return 'races/' + race_id_1 + '/sub_races/' + race_id_2;
 }
 

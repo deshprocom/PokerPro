@@ -153,6 +153,7 @@ export function fetchPostCertification(body) {
             let {user_extra} = ret.data;
             global.user_extra = user_extra;
             dispatch(_postCertificationOk(user_extra))
+            showToast('信息提交成功');
         }, (err) => {
             showToast(err);
             dispatch(_postCertificationFail(err))

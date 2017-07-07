@@ -131,7 +131,7 @@ class SearchRacesPage extends Component {
                     onPress={this._pressRaceType}
                     testID="btn_race_hosts"
                     style={styles.topBtn}>
-                    <Image style={{width: 24, height: 22}}
+                    <Image style={{width: 22, height: 22}}
                            source={Images.race_type}/>
 
                 </TouchableOpacity>
@@ -140,7 +140,7 @@ class SearchRacesPage extends Component {
                     onPress={() => this._calendarView()}
                     testID="btn_calendar"
                     style={styles.topBtn}>
-                    <Image style={{width: 25, height: 25}}
+                    <Image style={{width: 22, height: 21}}
                            source={Images.schedule}/>
 
                 </TouchableOpacity>
