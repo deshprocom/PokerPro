@@ -39,7 +39,8 @@ class BuyTicketPage extends Component {
         raceTicketData: {},
         ordered: false,
         race: {},
-        tickets: {}
+        tickets: {},
+        shipping_address: {}
     };
 
     componentWillReceiveProps(newProps) {
@@ -59,7 +60,6 @@ class BuyTicketPage extends Component {
 
 
     componentDidMount() {
-        this._getLocalEmail();
         umengEvent('ticket_buy_info');
         InteractionManager.runAfterInteractions(() => {
             this.refreshPage();
@@ -77,11 +77,13 @@ class BuyTicketPage extends Component {
             ticket_id: ticket_id
         };
         getBuyRaceTicket(body, data => {
-            const {tickets, ordered, race} =data;
+            const {tickets, ordered, race, recent_email, shipping_address} = data;
             this.setState({
                 tickets: tickets,
                 ordered: ordered,
-                race: race
+                race: race,
+                shipping_address: shipping_address,
+                email: recent_email
             })
         }, err => {
             showToast("获取赛票数据失败！")
@@ -232,16 +234,16 @@ class BuyTicketPage extends Component {
 
         return (<TouchableOpacity
             activeOpacity={1}
-            onPress={()=>{
-                  const {race_id, ticket_id} = this.props.params;
-                  if(ticket_class === 'single_ticket')
-                       router.toRacesInfoPage(this.props, race_id, false);
-                  else
-                      router.toTicketInfoPage(this.props,race_id,ticket_id)
+            onPress={() => {
+                const {race_id, ticket_id} = this.props.params;
+                if (ticket_class === 'single_ticket')
+                    router.toRacesInfoPage(this.props, race_id, false);
+                else
+                    router.toTicketInfoPage(this.props, race_id, ticket_id)
             }}
             style={styles.itemView}>
             <ImageLoad
-                source={{uri:logo}}
+                source={{uri: logo}}
                 style={styles.itemImg}/>
 
             <View style={styles.itemContent}>
@@ -249,21 +251,23 @@ class BuyTicketPage extends Component {
                     numberOfLines={2}
                     style={styles.txtItemTitle}>{title}</Text>
 
-                <Text style={[styles.txtLabel,styles.top8]}>{this._date()}</Text>
+                <Text style={[styles.txtLabel, styles.top8]}>{this._date()}</Text>
                 <Text style={styles.txtLabel}>地址: {this._location()}</Text>
 
                 <View style={styles.viewInfo}>
                     <Text style={styles.txtPrice}>{price}</Text>
 
-                    <View style={{flex:1}}/>
+                    <View style={{flex: 1}}/>
 
                 </View>
 
 
             </View>
-            <View style={{flexDirection:'row',alignItems:'center',
-                justifyContent:'center',width:45,flex:0.15}}>
-                <Image style={{height:20,width:11}}
+            <View style={{
+                flexDirection: 'row', alignItems: 'center',
+                justifyContent: 'center', width: 45, flex: 0.15
+            }}>
+                <Image style={{height: 20, width: 11}}
                        source={Images.ticket_arrow}/>
 
             </View>
@@ -276,78 +280,88 @@ class BuyTicketPage extends Component {
         const {isEntity} = this.state;
         return (   <TouchableOpacity
             onPress={() => {
-                                this.setState({
-                                    isEntity: ENTITY
-                                })
-                            }}
+                this.setState({
+                    isEntity: ENTITY
+                })
+            }}
             activeOpacity={1}
             testID="btn_entity_ticket"
-            style={isEntity==ENTITY ? styles.ticketSelect : styles.ticketUnSelect}>
+            style={isEntity == ENTITY ? styles.ticketSelect : styles.ticketUnSelect}>
             <Text
-                style={{fontSize:15,color:isEntity==ENTITY?Colors.txt_F28:Colors._AAA}}>{I18n.t('ticket_paper')}</Text>
+                style={{
+                    fontSize: 15,
+                    color: isEntity == ENTITY ? Colors.txt_F28 : Colors._AAA
+                }}>{I18n.t('ticket_paper')}</Text>
         </TouchableOpacity>)
     };
 
-    _getLocalEmail = () => {
-        storage.load({key: StorageKey.BuyEmail})
-            .then((ret) => {
-                this.setState({
-                    email: ret
-                })
-            });
-    };
+
 
 
     render() {
         const {user_extra} = this.props;
         const {race, tickets, ordered} = this.state;
-        const {ticket_info, price}  = tickets;
+        const {ticket_info, price} = tickets;
         const {isEntity, knowRed, email} = this.state;
 
         return (
             <View
                 testID="page_buy_ticket"
-                style={{flex:1,backgroundColor:Colors.bg_f5}}>
+                style={{flex: 1, backgroundColor: Colors.bg_f5}}>
                 <NavigationBar
                     refreshPage={this.refreshPage}
-                    toolbarStyle={{backgroundColor:Colors.bg_09}}
+                    toolbarStyle={{backgroundColor: Colors.bg_09}}
                     title={I18n.t('buy_ticket')}
                     leftBtnIcon={Images.sign_return}
-                    leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
-                    leftBtnPress={()=>router.pop()}/>
+                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                    leftBtnPress={() => router.pop()}/>
                 <ScrollView
-                    style={{marginBottom:62}}>
+                    style={{marginBottom: 62}}>
                     {/*赛事简介*/}
-                    <View style={{height:7}}/>
+                    <View style={{height: 7}}/>
 
                     {this.itemListView(tickets)}
 
 
                     {/*安全*/}
-                    <View style={{flex:1,height:40,backgroundColor:Colors.white,
-                    flexDirection:'row',marginTop:1}}>
-                        <View style={{flex:1,flexDirection:'row',
-                        alignItems:'center'}}>
-                            <Image style={{height:17,width:15,
-                            marginLeft:18,marginRight:9}}
+                    <View style={{
+                        flex: 1, height: 40, backgroundColor: Colors.white,
+                        flexDirection: 'row', marginTop: 1
+                    }}>
+                        <View style={{
+                            flex: 1, flexDirection: 'row',
+                            alignItems: 'center'
+                        }}>
+                            <Image style={{
+                                height: 17, width: 15,
+                                marginLeft: 18, marginRight: 9
+                            }}
                                    source={Images.ticket_security}/>
-                            <Text style={{fontSize:14,color:Colors._999}}>{I18n.t('money_safe')}</Text>
+                            <Text style={{fontSize: 14, color: Colors._999}}>{I18n.t('money_safe')}</Text>
 
                         </View>
-                        <View style={{flex:1,flexDirection:'row',
-                        alignItems:'center'}}>
-                            <Image style={{height:17,width:15,
-                            marginLeft:18,marginRight:9}}
+                        <View style={{
+                            flex: 1, flexDirection: 'row',
+                            alignItems: 'center'
+                        }}>
+                            <Image style={{
+                                height: 17, width: 15,
+                                marginLeft: 18, marginRight: 9
+                            }}
                                    source={Images.ticket_security}/>
-                            <Text style={{fontSize:14,color:Colors._999}}>{I18n.t('real_ticket')}</Text>
+                            <Text style={{fontSize: 14, color: Colors._999}}>{I18n.t('real_ticket')}</Text>
 
                         </View>
-                        <View style={{flex:1,flexDirection:'row',
-                        alignItems:'center'}}>
-                            <Image style={{height:17,width:15,
-                            marginLeft:18,marginRight:9}}
+                        <View style={{
+                            flex: 1, flexDirection: 'row',
+                            alignItems: 'center'
+                        }}>
+                            <Image style={{
+                                height: 17, width: 15,
+                                marginLeft: 18, marginRight: 9
+                            }}
                                    source={Images.ticket_security}/>
-                            <Text style={{fontSize:14,color:Colors._999}}>{I18n.t('guarantee')}</Text>
+                            <Text style={{fontSize: 14, color: Colors._999}}>{I18n.t('guarantee')}</Text>
 
                         </View>
 
@@ -358,43 +372,54 @@ class BuyTicketPage extends Component {
                         testID="btn_buy_notice"
                         onPress={this.btnBuyKnow}
                         activeOpacity={1}
-                        style={{flex:1,flexDirection:'row',height:40,
-                    backgroundColor:Colors.white,alignItems:'center',
-                    marginTop:8,justifyContent: 'space-between'}}>
-                        <View style={{flexDirection:'row'}}>
-                            <Image style={{height:16,width:16,marginLeft:18,
-                        marginRight:12}}
+                        style={{
+                            flex: 1, flexDirection: 'row', height: 40,
+                            backgroundColor: Colors.white, alignItems: 'center',
+                            marginTop: 8, justifyContent: 'space-between'
+                        }}>
+                        <View style={{flexDirection: 'row'}}>
+                            <Image style={{
+                                height: 16, width: 16, marginLeft: 18,
+                                marginRight: 12
+                            }}
                                    source={Images.ticket_prompt}/>
-                            <Text style={{fontSize:14,color:Colors._999}}>{I18n.t('ticket_prompt')}</Text>
+                            <Text style={{fontSize: 14, color: Colors._999}}>{I18n.t('ticket_prompt')}</Text>
                         </View>
-                        {knowRed ? <View style={{width:10,height:10,backgroundColor:'#FF5252',
-                        borderRadius:5,marginRight:16}}/> : null}
+                        {knowRed ? <View style={{
+                            width: 10, height: 10, backgroundColor: '#FF5252',
+                            borderRadius: 5, marginRight: 16
+                        }}/> : null}
 
 
                     </TouchableOpacity>
                     {/*票务类型*/}
-                    <View style={{height:96,flex:1,
-                   backgroundColor:Colors.white,marginTop:6}}>
-                        <View style={{flexDirection:'row',alignItems:'center',marginLeft:18,marginTop:18}}>
-                            <Text style={{fontSize:15,color:Colors.txt_666}}>
+                    <View style={{
+                        height: 96, flex: 1,
+                        backgroundColor: Colors.white, marginTop: 6
+                    }}>
+                        <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 18, marginTop: 18}}>
+                            <Text style={{fontSize: 15, color: Colors.txt_666}}>
                                 {I18n.t('ticket_type')}</Text>
-                            <Text style={{fontSize:14,color:Colors.txt_FF3,marginLeft:18}}>
+                            <Text style={{fontSize: 14, color: Colors.txt_FF3, marginLeft: 18}}>
                                 (剩余{this.eTicketNum(ticket_info)}张)</Text>
                         </View>
                         <View
-                            style={{height:66,flex:1,flexDirection:'row',alignItems:'center'}}>
+                            style={{height: 66, flex: 1, flexDirection: 'row', alignItems: 'center'}}>
                             <TouchableOpacity
-                                onPress={()=>{
+                                onPress={() => {
                                     this.setState({
-                                        isEntity:E_TICKET
+                                        isEntity: E_TICKET
                                     })
                                 }}
                                 activeOpacity={1}
                                 testID="btn_e_ticket"
-                                style={[isEntity == ENTITY?styles.ticketUnSelect:styles.ticketSelect,
-                        {marginRight:20,marginLeft:18}]}>
+                                style={[isEntity == ENTITY ? styles.ticketUnSelect : styles.ticketSelect,
+                                    {marginRight: 20, marginLeft: 18}]}>
                                 <Text
-                                    style={{fontSize:15,color:isEntity==ENTITY?Colors._AAA:Colors.txt_F28}}>{I18n.t('ticket_web')}</Text>
+                                    style={{
+                                        fontSize: 15,
+                                        color: isEntity == ENTITY ? Colors._AAA : Colors.txt_F28
+                                    }}>{I18n.t('ticket_web')}</Text>
                             </TouchableOpacity>
 
                             {this._entityView()}
@@ -412,41 +437,54 @@ class BuyTicketPage extends Component {
                                   router={router}/>
 
 
-                    <View style={{height:20,flex:1}}/>
+                    <View style={{height: 20, flex: 1}}/>
 
 
                 </ScrollView>
                 <View
-                    style={{height:62,width:Metrics.screenWidth,
-                        backgroundColor:Colors.white,flexDirection:'row',
-                        alignItems:'center',position:'absolute',bottom: 0,left: 0,right: 0, shadowColor: 'rgb(0,0,0)',
-        shadowOffset: {height: 2, width: 1},shadowOpacity: 0.25,shadowRadius: 3}}>
-                    <View style={{flex:1,flexDirection:'row',marginLeft:19,alignItems:'flex-end'}}>
-                        <Text style={{fontSize:14,color:Colors.txt_666}}>票价:</Text>
-                        <Text style={{fontSize:12,color:Colors.txt_FF9,marginLeft:10}}>¥</Text>
-                        <Text style={{fontSize:18,color:Colors.txt_FF9}}
+                    style={{
+                        height: 62,
+                        width: Metrics.screenWidth,
+                        backgroundColor: Colors.white,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        shadowColor: 'rgb(0,0,0)',
+                        shadowOffset: {height: 2, width: 1},
+                        shadowOpacity: 0.25,
+                        shadowRadius: 3
+                    }}>
+                    <View style={{flex: 1, flexDirection: 'row', marginLeft: 19, alignItems: 'flex-end'}}>
+                        <Text style={{fontSize: 14, color: Colors.txt_666}}>票价:</Text>
+                        <Text style={{fontSize: 12, color: Colors.txt_FF9, marginLeft: 10}}>¥</Text>
+                        <Text style={{fontSize: 18, color: Colors.txt_FF9}}
                               testID="txt_ticket_price">
                             {price}
                         </Text>
                     </View>
-                    <View style={{height:41,width:1,backgroundColor:Colors.txt_DDD}}/>
+                    <View style={{height: 41, width: 1, backgroundColor: Colors.txt_DDD}}/>
                     <TouchableOpacity
                         onPress={this._btnService}
                         testID="btn_service"
                         activeOpacity={1}
-                        style={{width:77,height:62,alignItems:'center',justifyContent:'center'}}>
-                        <Image style={{width:25,height:21}}
+                        style={{width: 77, height: 62, alignItems: 'center', justifyContent: 'center'}}>
+                        <Image style={{width: 25, height: 21}}
                                source={Images.prompt_service}/>
-                        <Text style={{fontSize:12,color:Colors.txt_666}}>客服</Text>
+                        <Text style={{fontSize: 12, color: Colors.txt_666}}>客服</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         disabled={ordered}
                         onPress={this._btnBuyTicket}
                         testID="btn_buy_ticket"
                         activeOpacity={1}
-                        style={{width:103,height:62,alignItems:'center',justifyContent:'center',
-                    backgroundColor:ordered?Colors._999:Colors.bg_09}}>
-                        <Text style={{fontSize:18,color:ordered?Colors.white:Colors.txt_E0C}}>购票下单</Text>
+                        style={{
+                            width: 103, height: 62, alignItems: 'center', justifyContent: 'center',
+                            backgroundColor: ordered ? Colors._999 : Colors.bg_09
+                        }}>
+                        <Text style={{fontSize: 18, color: ordered ? Colors.white : Colors.txt_E0C}}>购票下单</Text>
                     </TouchableOpacity>
 
 
@@ -457,22 +495,26 @@ class BuyTicketPage extends Component {
 
     _emailViwe = (email) => {
         return (  <View
-            style={{height:44,alignItems:'center',flexDirection:'row',
-                    marginTop:10,backgroundColor:Colors.white}}>
+            style={{
+                height: 44, alignItems: 'center', flexDirection: 'row',
+                marginTop: 10, backgroundColor: Colors.white
+            }}>
 
-            <Text style={{fontSize:15,color:Colors.txt_666,marginLeft:18}}>{I18n.t('email')}:</Text>
+            <Text style={{fontSize: 15, color: Colors.txt_666, marginLeft: 18}}>{I18n.t('email')}:</Text>
             <InputView
                 testIDClear="btn_clear_email"
                 testID="input_email"
                 inputValue={email}
-                stateText={text=>{
-                                this.setState({
-                                    email:text
-                                })
-                            }}
-                inputView={{height:44, borderBottomColor: Colors.white,
-        borderBottomWidth: 1,flex:1}}
-                inputText={{height:44,fontSize:14,marginLeft:9}}
+                stateText={text => {
+                    this.setState({
+                        email: text
+                    })
+                }}
+                inputView={{
+                    height: 44, borderBottomColor: Colors.white,
+                    borderBottomWidth: 1, flex: 1
+                }}
+                inputText={{height: 44, fontSize: 14, marginLeft: 9}}
                 placeholder={I18n.t('send_ticket_email')}/>
 
 
@@ -480,18 +522,22 @@ class BuyTicketPage extends Component {
     };
 
     _addrView = () => {
-        return (  <View style={{height:89,flex:1,marginTop:10,backgroundColor:Colors.white}}>
-            <View style={{height:44,flex:1,alignItems:'center',flexDirection:'row'}}>
+        return (  <View style={{height: 89, flex: 1, marginTop: 10, backgroundColor: Colors.white}}>
+            <View style={{height: 44, flex: 1, alignItems: 'center', flexDirection: 'row'}}>
 
-                <Text style={{fontSize:15,color:Colors.txt_666,marginLeft:18,
-                        marginRight:9}}>{I18n.t('shopping_addr')}:</Text>
-                <Text style={{fontSize:14,color:Colors._AAA,flex:1}}>{I18n.t('shopping_addr_desc')}</Text>
+                <Text style={{
+                    fontSize: 15, color: Colors.txt_666, marginLeft: 18,
+                    marginRight: 9
+                }}>{I18n.t('shopping_addr')}:</Text>
+                <Text style={{fontSize: 14, color: Colors._AAA, flex: 1}}>{I18n.t('shopping_addr_desc')}</Text>
 
             </View>
-            <View style={{height:44,flex:1,alignItems:'center',flexDirection:'row',
-                        justifyContent:'space-between',marginLeft:18}}>
-                <Text style={{fontSize:12,color:Colors._AAA}}>{I18n.t('no_addr_tip')}</Text>
-                <Image style={{width:11,height:20,marginRight:17}}
+            <View style={{
+                height: 44, flex: 1, alignItems: 'center', flexDirection: 'row',
+                justifyContent: 'space-between', marginLeft: 18
+            }}>
+                <Text style={{fontSize: 12, color: Colors._AAA}}>{I18n.t('no_addr_tip')}</Text>
+                <Image style={{width: 11, height: 20, marginRight: 17}}
                        source={Images.ticket_arrow}/>
             </View>
         </View>)

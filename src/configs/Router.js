@@ -46,6 +46,7 @@ import ChoiseTicketPage from '../pages/ticket/ChoiseTicketPage';
 import TicketInfoPage from '../pages/ticket/TicketInfoPage';
 import WebViewPage from '../components/WebViewPage';
 import NewAddressPage from '../pages/buy/NewAddressPage';
+import AdrListPage from '../pages/buy/AdrListPage';
 
 
 const customFloatFromRight = Navigator.SceneConfigs.FadeAndroid;
@@ -123,6 +124,14 @@ export default class Router {
         this.navigator.popToTop();
     }
 
+    toAdrListPage(props){
+        this.push(props, {
+            page: AdrListPage,
+            name: 'AdrListPage',
+            sceneConfig: customFloatFromRight,
+
+        })
+    }
 
     toNewAddressPage(props) {
         this.push(props, {
