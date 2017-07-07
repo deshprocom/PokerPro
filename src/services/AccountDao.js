@@ -168,3 +168,10 @@ export function postCardImage(body, resolve, reject) {
         resolve(ret.data)
     }, reject);
 }
+
+// 上传护照
+export function postPasswordImage(body, resolve, reject) {
+    helper.post(Api.upload_card_image, body, (ret) => {
+        resolve(ret.data)
+    }, reject);
+}

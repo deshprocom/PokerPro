@@ -22,6 +22,9 @@ export const OPEN_DRAWER = 'OPEN_DRAWER';
 export const CLOSE_DRAWER = 'CLOSE_DRAWER';
 
 //for fetching status
+export const FETCH_PASS = 'FETCH_PASS';
+export const FETCH_PASS_SUCCESS = 'FETCH_PASS_SUCCESS';
+export const FETCH_PASS_FAIL = 'FETCH_PASS_FAIL';
 export const FETCH_START = 'FETCH_START';
 export const FETCHING = 'FETCHING';
 export const FETCH_SUCCESS = 'FETCH_SUCCESS';
@@ -50,6 +53,8 @@ export const POST_RESET_PASSWORD = 'POST_RESET_PASSWORD';
 export const POST_REGISTER = 'POST_REGISTER';
 export const POST_CHANGE_PWD = 'POST_CHANGE_PWD';
 export const POST_V_CODE = 'POST_V_CODE';
+
+export const POST_PASSWORD_IMAGE = 'POST_PASSWORD_IMAGE';
 
 export const POST_CARD_IMAGE = 'POST_CARD_IMAGE';
 export const GET_PLAYER_INFO = 'GET_PLAYER_INFO';

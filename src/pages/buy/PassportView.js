@@ -3,7 +3,7 @@
  */
 import React, {Component,PropTypes}from 'react';
 import {
-    TouchableOpacity, View, TextInput,
+    TouchableOpacity, View, TextInput,Alert,
     StyleSheet, Image, Text, ScrollView, Platform
 } from 'react-native';
 import {connect} from 'react-redux';
@@ -17,8 +17,10 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {POST_CERTIFICATION, GET_CERTIFICATION} from '../../actions/ActionTypes';
 import {
     isEmptyObject,getDispatchAction,strNotNull,getCurrentDate
-    ,showToast
+    ,showToast,call
 } from '../../utils/ComonHelper';
+import {Verified} from '../../configs/Status';
+import {fetchPostCertification, fetchPostPasswordImage} from '../../actions/AccountAction';
 import {postPasswordImage} from '../../services/NewsDao';
 import {umengEvent} from '../../utils/UmengEvent';
 
@@ -35,7 +37,7 @@ const picker = {
     compressImageMaxHeight: 800,
     compressImageQuality: 0.8,
 };
-export default class PassportView extends Component {
+class PassportView extends Component {
     static propTypes = {
         router:PropTypes.object
     };
@@ -48,7 +50,33 @@ export default class PassportView extends Component {
         imageName:''
     }
 
+    componentDidMount() {
+        getDispatchAction()[GET_CERTIFICATION]();
 
+
+    }
+
+    componentWillReceiveProps(newProps) {
+        if (newProps.actionType === POST_CERTIFICATION &&
+            newProps.hasData) {
+            router.pop();
+        } else if (newProps.actionType === GET_CERTIFICATION &&
+            newProps.hasData) {
+            if (!isEmptyObject(user_extra)) {
+                let editable = true;
+                if (user_extra.status === Verified.PASSED) {
+                    editable = false;
+                }
+                this.setState({
+                    cardImage: user_extra.image,
+                    realName: user_extra.real_name,
+                    passwordCard: user_extra.cert_no,
+                    editable: editable
+                })
+            }
+        }
+
+    }
 
     showPickImage = () => {
         this.ActionSheet.show()
@@ -111,8 +139,8 @@ export default class PassportView extends Component {
         }
     }
 
-    submitBtn = () => {
-        umengEvent('true_password_submit');
+    _btnSubmit = () => {
+        umengEvent('true_name_submit');
         const {realName, passwordCard, cardImage, imageName} = this.state;
         if (strNotNull(realName) && strNotNull(passwordCard) && !isEmptyObject(cardImage)) {
 
@@ -120,28 +148,54 @@ export default class PassportView extends Component {
                 let formData = new FormData();
                 let file = {uri: cardImage, type: 'multipart/form-data', name: imageName};
                 formData.append("image", file);
-                this.state.cardImage = formData;
+                this.props._postPasswordImage(formData);
             }
-            router.log(22222)
-            router.log(cardImage);
-            router.log(22222)
+
             const body = {
-                password_img:cardImage,
                 real_name: realName,
                 cert_no: passwordCard
             };
-            postPasswordImage(body, data => {
-                router.log(1111)
-                router.log(data);
-                router.log(1111)
-            },err => {
+            this.props._postCertification(body);
 
-            })
 
         } else {
             showToast('内容填写不完整')
         }
+
+
     }
+
+    // submitBtn = () => {
+    //     umengEvent('true_password_submit');
+    //     const {realName, passwordCard, cardImage, imageName} = this.state;
+    //     if (strNotNull(realName) && strNotNull(passwordCard) && !isEmptyObject(cardImage)) {
+    //
+    //         if (cardImage.indexOf("http") == -1) {
+    //             let formData = new FormData();
+    //             let file = {uri: cardImage, type: 'multipart/form-data', name: imageName};
+    //             formData.append("image", file);
+    //             this.state.cardImage = formData;
+    //         }
+    //         router.log(22222)
+    //         router.log(cardImage);
+    //         router.log(22222)
+    //         const body = {
+    //             password_img:cardImage,
+    //             real_name: realName,
+    //             cert_no: passwordCard
+    //         };
+    //         postPasswordImage(body, data => {
+    //             router.log(1111)
+    //             router.log(data);
+    //             router.log(1111)
+    //         },err => {
+    //
+    //         })
+    //
+    //     } else {
+    //         showToast('内容填写不完整')
+    //     }
+    // }
 
     render() {
         const {editable,realName,passwordCard}=this.state;
@@ -199,14 +253,17 @@ export default class PassportView extends Component {
                 style={{fontSize:Fonts.size.h12,marginTop:114,alignSelf:'center',color:Colors._AAA}}>
                 {I18n.t('upload_issue')}
             </Text>
-            <Button activeOpacity={1}
-                onPress={this.submitBtn}
-                style={{height:49,width:Metrics.screenWidth-34,
-                alignSelf:'center',backgroundColor:'#161718',
-                marginTop:25,justifyContent:'center'}}
-                textStyle={{fontSize:Fonts.size.h17,color:Colors.txt_E0C}}>
-                {I18n.t('submit')}
-            </Button>
+
+            {this._hasRealBtn()}
+
+            {/*<Button activeOpacity={1}*/}
+                {/*onPress={this.submitBtn}*/}
+                {/*style={{height:49,width:Metrics.screenWidth-34,*/}
+                {/*alignSelf:'center',backgroundColor:'#161718',*/}
+                {/*marginTop:25,justifyContent:'center'}}*/}
+                {/*textStyle={{fontSize:Fonts.size.h17,color:Colors.txt_E0C}}>*/}
+                {/*{I18n.t('submit')}*/}
+            {/*</Button>*/}
 
             <ActionSheet
                 ref={o => this.ActionSheet = o}
@@ -220,4 +277,62 @@ export default class PassportView extends Component {
         </View>)
     }
 
+    _hasRealBtn = () => {
+        const {editable} = this.state;
+        if (editable) {
+            return ( <Button
+                testID="btn_submit"
+                activeOpacity={1}
+                onPress={this._btnSubmit}
+                style={{height:49,width:Metrics.screenWidth-34,
+            alignSelf:'center',backgroundColor:'#161718',
+            marginTop:25,justifyContent:'center'}}
+                textStyle={{fontSize:Fonts.size.h17,color:Colors.txt_E0C}}>
+                {I18n.t('submit')}
+
+            </Button>)
+        } else {
+            return ( <Button
+                testID="btn_contact_customer_service"
+                activeOpacity={1}
+                onPress={this._btnService}
+                style={{height:49,width:Metrics.screenWidth-34,
+            alignSelf:'center',backgroundColor:Colors.white,
+            marginTop:25,justifyContent:'center'}}
+                textStyle={{fontSize:Fonts.size.h17,color:Colors.txt_666}}>
+                {I18n.t('contact_customer_service')}
+
+            </Button>)
+        }
+    }
+
+    _btnService = () => {
+        Alert.alert(I18n.t('hot_line'), I18n.t('hot_phone') + '\n' + I18n.t('work_time'),
+            [{
+                text: I18n.t('cancel'), onPress: () => {
+                }
+            },
+                {
+                    text: I18n.t('call'), onPress: () => {
+                    call(I18n.t('hot_phone'), false)
+                }
+                }])
+
+    }
+
 }
+
+const bindAction = dispatch => ({
+    _postCertification: (body) => dispatch(fetchPostCertification(body)),
+    _postPasswordImage: (body) => dispatch(fetchPostPasswordImage(body))
+});
+
+const mapStateToProps = state => ({
+    loading: state.TicketOrderState.loading,
+    error: state.TicketOrderState.error,
+    hasData: state.TicketOrderState.hasData,
+    actionType: state.TicketOrderState.actionType
+
+});
+
+export default connect(mapStateToProps, bindAction)(PassportView);
