@@ -10,6 +10,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, SwipeListView, SecurityText} from '../../components';
 import I18n from 'react-native-i18n';
 import {getAddressList} from '../../services/OrderDao';
+import {isEmptyObject} from '../../utils/ComonHelper';
 
 export default class AdrListPage extends Component {
 
@@ -29,25 +30,39 @@ export default class AdrListPage extends Component {
 
     componentDidMount() {
         this._getAddressList();
-        const {adrData} = this.props.params;
-        this.setState({
-            selectAdrData: adrData
-        })
     }
 
     _getAddressList = () => {
         getAddressList(data => {
             const {items} = data;
+            const {adrData} = this.props.params;
+            console.log('adrData',adrData);
+            let buyAdr = {};
+            if (!isEmptyObject(adrData))
+                items.forEach(function (x) {
+                    if (x.id === adrData.id)
+                        buyAdr = x;
+                });
+            else
+                items.forEach(function (x) {
+                    if (x.default)
+                        buyAdr = x;
+                });
+
+
+
             this.setState({
                 dataList: items,
-                dataSource: this._dataSource.cloneWithRows(items)
+                dataSource: this._dataSource.cloneWithRows(items),
+                selectAdrData: buyAdr
+
             })
         })
     };
 
 
     render() {
-        const {dataSource} = this.state;
+        const {dataSource, selectAdrData} = this.state;
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 refreshPage={this.refreshPage}
@@ -58,7 +73,10 @@ export default class AdrListPage extends Component {
                     height: 19, width: 11,
                     marginLeft: 20, marginRight: 20
                 }}
-                leftBtnPress={() => router.pop()}/>
+                leftBtnPress={() => {
+                    this.props.params.selectAdr(selectAdrData);
+                    router.pop()
+                }}/>
 
             <View style={{height: 7}}/>
             <SwipeListView

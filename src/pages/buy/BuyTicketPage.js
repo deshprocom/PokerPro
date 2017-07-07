@@ -527,9 +527,10 @@ class BuyTicketPage extends Component {
     };
 
     _addrView = () => {
-        const {address, address_detail, consignee, mobile} = this.state.shipping_address;
+        const {shipping_address} = this.state;
+        const {address, address_detail, consignee, mobile} = shipping_address;
 
-        if (isEmptyObject(this.state.shipping_address))
+        if (isEmptyObject(shipping_address))
             return (  <TouchableOpacity
                 activeOpacity={1}
                 onPress={() => {
@@ -558,7 +559,7 @@ class BuyTicketPage extends Component {
             return (<TouchableOpacity
                 activeOpacity={1}
                 onPress={() => {
-                    router.toAdrListPage(this.props, this._selectAdr, this.state.shipping_address);
+                    router.toAdrListPage(this.props, this._selectAdr,shipping_address);
                 }}
                 style={styles.viewAdr}>
                 <View style={{height: 40, alignItems: 'center', flexDirection: 'row'}}>
@@ -571,7 +572,7 @@ class BuyTicketPage extends Component {
 
                 </View>
                 <View style={styles.viewAdrInfo}>
-                    <View style={{flex: 1}}>
+                    <View>
 
                         <View style={styles.ViewRow}>
                             <Text style={styles.txtAdrInfo}>{consignee}    </Text>
