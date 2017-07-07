@@ -160,7 +160,9 @@ const images = {
     race_unstart:require('../../source/home/race_unstart.png'),
     race_wait:require('../../source/home/race_wait.png'),
     home_head:require('../../source/home/home_head.png'),
-    edit:require('../../source/buy/edit@2x.png')
+    edit:require('../../source/buy/edit@2x.png'),
+    handle:require('../../source/buy/handle@2x.png'),
+    handle2:require('../../source/buy/handle2@2x.png')
 
 
 };

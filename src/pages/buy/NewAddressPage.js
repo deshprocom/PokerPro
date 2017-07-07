@@ -16,6 +16,10 @@ import {postAddress} from '../../services/OrderDao';
 
 export default class NewAddress extends Component {
 
+    state = {
+        isDefault: false
+    };
+
     render() {
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
@@ -72,6 +76,18 @@ export default class NewAddress extends Component {
 
                 <Text style={styles.lbRemark}>注：每次下单时会使用该地址（电子票下单除外）</Text>
 
+                <TouchableOpacity
+                    onPress={() => {
+                        this.setState({
+                            isDefault: !this.state.isDefault
+                        })
+                    }}
+                    style={styles.imgSwitch}>
+                    <Image style={styles.imgSwitch}
+                           source={this.state.isDefault ? Images.handle : Images.handle2}/>
+                </TouchableOpacity>
+
+
             </View>
 
 
@@ -90,7 +106,7 @@ export default class NewAddress extends Component {
                 mobile: this.phoneNum,
                 address: this.receiverAdr1,
                 address_detail: this.receiverAdr2,
-                default: 1,
+                default: this.state.isDefault,
             };
 
             postAddress(body, data => {
@@ -165,6 +181,13 @@ const styles = StyleSheet.create({
         color: '#AAAAAA',
         marginLeft: 17,
         marginTop: 21
+    },
+    imgSwitch: {
+        height: 32,
+        width: 53,
+        position: 'absolute',
+        top: 9,
+        right: 19
 
     }
 });
