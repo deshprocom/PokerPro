@@ -559,21 +559,22 @@ class BuyTicketPage extends Component {
             return (<TouchableOpacity
                 activeOpacity={1}
                 onPress={() => {
-                    router.toAdrListPage(this.props, this._selectAdr,shipping_address);
+                    router.toAdrListPage(this.props, this._selectAdr, shipping_address);
                 }}
                 style={styles.viewAdr}>
-                <View style={{height: 40, alignItems: 'center', flexDirection: 'row'}}>
+
+                <View style={{alignItems: 'center', flexDirection: 'row', marginTop: 14}}>
 
                     <Text style={{
                         fontSize: 15, color: Colors.txt_666, marginLeft: 18,
                         marginRight: 9
                     }}>{I18n.t('shopping_addr')}:</Text>
-                    <Text style={{fontSize: 14, color: Colors._AAA, flex: 1}}>{I18n.t('shopping_addr_desc')}</Text>
+                    <Text style={{fontSize: 14, color: Colors._AAA}}>{I18n.t('shopping_addr_desc')}</Text>
 
                 </View>
-                <View style={styles.viewAdrInfo}>
-                    <View>
 
+                <View style={styles.viewAdrInfo}>
+                    <View style={{flex: 1}}>
                         <View style={styles.ViewRow}>
                             <Text style={styles.txtAdrInfo}>{consignee}    </Text>
                             <SecurityText
@@ -590,7 +591,7 @@ class BuyTicketPage extends Component {
 
                         <Text
                             numberOfLines={2}
-                            style={styles.txtAdrInfo}>{address + '\n' + address_detail}</Text>
+                            style={styles.txtAdrInfo}>{address + address_detail}</Text>
 
                     </View>
                     <Image style={{width: 11, height: 20, marginRight: 17}}
@@ -658,12 +659,13 @@ const styles = StyleSheet.create({
     viewAdr: {
         height: 128,
         backgroundColor: 'white',
-        flex: 1,
         marginTop: 10,
+        marginBottom: 6
     },
     viewAdrInfo: {
-        height: 44, flex: 1, alignItems: 'center', flexDirection: 'row',
-        justifyContent: 'space-between', marginLeft: 18
+        alignItems: 'center', flexDirection: 'row',
+        justifyContent: 'space-between', marginLeft: 18,
+        marginTop: 20
     },
     txtAdrInfo: {
         fontSize: 14,
