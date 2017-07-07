@@ -124,11 +124,15 @@ export default class Router {
         this.navigator.popToTop();
     }
 
-    toAdrListPage(props) {
+    toAdrListPage(props, selectAdr, adrData) {
         this.push(props, {
             page: AdrListPage,
             name: 'AdrListPage',
             sceneConfig: customFloatFromRight,
+            params: {
+                selectAdr: selectAdr,
+                adrData: adrData
+            }
 
         })
     }

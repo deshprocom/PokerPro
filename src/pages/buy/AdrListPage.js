@@ -21,7 +21,7 @@ export default class AdrListPage extends Component {
         this.state = {
             dataList: dataList,
             dataSource: this._dataSource.cloneWithRows(dataList),
-            selectAdr: {}
+            selectAdrData: {}
         };
 
 
@@ -29,6 +29,10 @@ export default class AdrListPage extends Component {
 
     componentDidMount() {
         this._getAddressList();
+        const {adrData} = this.props.params;
+        this.setState({
+            selectAdrData: adrData
+        })
     }
 
     _getAddressList = () => {
@@ -70,7 +74,7 @@ export default class AdrListPage extends Component {
             <TouchableOpacity
                 activeOpacity={1}
                 onPress={() => {
-                    router.toNewAddressPage(this.props, this._getAddressList,{})
+                    router.toNewAddressPage(this.props, this._getAddressList, {})
                 }}
                 style={styles.viewAdd}>
                 <Text style={styles.txtName}>+新建地址</Text>
@@ -81,7 +85,14 @@ export default class AdrListPage extends Component {
 
     _itemListView = (item) => {
         const {consignee, address, address_detail, mobile} = item;
-        return (<View style={styles.itemView}>
+        const {id} = this.state.selectAdrData;
+        return (<TouchableOpacity
+            activeOpacity={1}
+            onPress={() => {
+                this.props.params.selectAdr(item);
+                router.pop();
+            }}
+            style={styles.itemView}>
             <View style={styles.rowView}>
                 <Text style={styles.txtName}>{consignee}    </Text>
                 <SecurityText
@@ -100,7 +111,7 @@ export default class AdrListPage extends Component {
                 {item.default ? <View style={styles.tabView}>
                     <Text style={styles.txtDefault}>默认</Text>
                 </View> : <Image style={styles.imgSelect}
-                                 source={Images.adr_select}/>}
+                                 source={item.id === id ? Images.adr_selected : Images.adr_select}/>}
 
 
                 <Text style={styles.txtAdr}
@@ -124,7 +135,7 @@ export default class AdrListPage extends Component {
             <View style={{flex: 1}}/>
             <View style={styles.line}/>
 
-        </View>)
+        </TouchableOpacity>)
     };
 
     hiddenRow = () => {

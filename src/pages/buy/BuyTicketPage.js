@@ -10,7 +10,7 @@ import {
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar, InputView, ImageLoad} from '../../components';
+import {NavigationBar, InputView, ImageLoad, SecurityText} from '../../components';
 import {fetchRaceNewOrder, fetchBuyTicket} from '../../actions/TicketOrderAction'
 import {
     isEmptyObject, showToast, checkMail, moneyFormat,
@@ -519,33 +519,83 @@ class BuyTicketPage extends Component {
         </View>)
     };
 
+    _selectAdr = (address) => {
+        console.log('adr:', address);
+        this.setState({
+            shipping_address: address
+        })
+    };
+
     _addrView = () => {
-        const {address_detail, consignee, mobile} = this.state.shipping_address;
+        const {address, address_detail, consignee, mobile} = this.state.shipping_address;
 
-        return (  <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => {
-                router.toAdrListPage();
-            }}
-            style={{height: 89, flex: 1, marginTop: 10, backgroundColor: Colors.white}}>
-            <View style={{height: 44, flex: 1, alignItems: 'center', flexDirection: 'row'}}>
+        if (isEmptyObject(this.state.shipping_address))
+            return (  <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => {
+                    router.toAdrListPage(this.props, this._selectAdr, {});
+                }}
+                style={{height: 89, flex: 1, marginTop: 10, backgroundColor: Colors.white}}>
+                <View style={{height: 44, flex: 1, alignItems: 'center', flexDirection: 'row'}}>
 
-                <Text style={{
-                    fontSize: 15, color: Colors.txt_666, marginLeft: 18,
-                    marginRight: 9
-                }}>{I18n.t('shopping_addr')}:</Text>
-                <Text style={{fontSize: 14, color: Colors._AAA, flex: 1}}>{I18n.t('shopping_addr_desc')}</Text>
+                    <Text style={{
+                        fontSize: 15, color: Colors.txt_666, marginLeft: 18,
+                        marginRight: 9
+                    }}>{I18n.t('shopping_addr')}:</Text>
+                    <Text style={{fontSize: 14, color: Colors._AAA, flex: 1}}>{I18n.t('shopping_addr_desc')}</Text>
 
-            </View>
-            <View style={{
-                height: 44, flex: 1, alignItems: 'center', flexDirection: 'row',
-                justifyContent: 'space-between', marginLeft: 18
-            }}>
-                <Text style={{fontSize: 12, color: Colors._AAA}}>{I18n.t('no_addr_tip')}</Text>
-                <Image style={{width: 11, height: 20, marginRight: 17}}
-                       source={Images.ticket_arrow}/>
-            </View>
-        </TouchableOpacity>)
+                </View>
+                <View style={{
+                    height: 44, flex: 1, alignItems: 'center', flexDirection: 'row',
+                    justifyContent: 'space-between', marginLeft: 18
+                }}>
+                    <Text style={{fontSize: 12, color: Colors._AAA}}>{I18n.t('no_addr_tip')}</Text>
+                    <Image style={{width: 11, height: 20, marginRight: 17}}
+                           source={Images.ticket_arrow}/>
+                </View>
+            </TouchableOpacity>);
+        else
+            return (<TouchableOpacity
+                activeOpacity={1}
+                onPress={() => {
+                    router.toAdrListPage(this.props, this._selectAdr, this.state.shipping_address);
+                }}
+                style={styles.viewAdr}>
+                <View style={{height: 40, alignItems: 'center', flexDirection: 'row'}}>
+
+                    <Text style={{
+                        fontSize: 15, color: Colors.txt_666, marginLeft: 18,
+                        marginRight: 9
+                    }}>{I18n.t('shopping_addr')}:</Text>
+                    <Text style={{fontSize: 14, color: Colors._AAA, flex: 1}}>{I18n.t('shopping_addr_desc')}</Text>
+
+                </View>
+                <View style={styles.viewAdrInfo}>
+                    <View style={{flex: 1}}>
+
+                        <View style={styles.ViewRow}>
+                            <Text style={styles.txtAdrInfo}>{consignee}    </Text>
+                            <SecurityText
+                                testID="txt_phone_security"
+                                securityOptions={{
+                                    isSecurity: true,
+                                    startIndex: 3,
+                                    endIndex: 7,
+                                }}
+                                style={styles.txtAdrInfo}>
+                                {mobile}
+                            </SecurityText>
+                        </View>
+
+                        <Text
+                            numberOfLines={2}
+                            style={styles.txtAdrInfo}>{address + '\n' + address_detail}</Text>
+
+                    </View>
+                    <Image style={{width: 11, height: 20, marginRight: 17}}
+                           source={Images.ticket_arrow}/>
+                </View>
+            </TouchableOpacity>)
     }
 
 
@@ -604,6 +654,25 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
+    viewAdr: {
+        height: 128,
+        backgroundColor: 'white',
+        flex: 1,
+        marginTop: 10,
+    },
+    viewAdrInfo: {
+        height: 44, flex: 1, alignItems: 'center', flexDirection: 'row',
+        justifyContent: 'space-between', marginLeft: 18
+    },
+    txtAdrInfo: {
+        fontSize: 14,
+        color: '#666666',
+        marginTop: 8
+    },
+    ViewRow: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    }
 
 });
 
