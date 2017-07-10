@@ -79,6 +79,7 @@ export default class AdrListPage extends Component {
 
             <View style={{height: 7}}/>
             <SwipeListView
+                ref={ref => this.swipeList = ref}
                 enableEmptySections={true}
                 dataSource={dataSource}
                 renderHiddenRow={this.hiddenRow}
@@ -160,6 +161,7 @@ export default class AdrListPage extends Component {
             <View style={{flex: 1}}/>
             <TouchableOpacity
                 onPress={() => {
+                    this.swipeList.safeCloseOpenRow();
                     this._setAdrDefault(data.id)
                 }}
                 style={[styles.btnHidden, {backgroundColor: '#BBBBBB'}]}>
@@ -167,6 +169,7 @@ export default class AdrListPage extends Component {
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={() => {
+                    this.swipeList.safeCloseOpenRow();
                     this._delAdr(data.id)
                 }}
                 style={[styles.btnHidden, {backgroundColor: '#F05656'}]}>
@@ -177,8 +180,14 @@ export default class AdrListPage extends Component {
     };
 
     _setAdrDefault = (adr_id) => {
+        const {selectAdrData} = this.state;
         postAdrDefault(adr_id, data => {
             showToast('设置默认成功');
+            if (adr_id === selectAdrData.id) {
+                this.setState({
+                    selectAdrData: {}
+                })
+            }
             this._getAddressList();
         })
     };
