@@ -45,7 +45,9 @@ class IDCardView extends Component {
         idCard: '',
         cardImage: '',
         editable: true,
-        imageName: ''
+        imageName: '',
+        chinese_id: '',
+        choice_id: ''
     };
 
     componentDidMount() {
@@ -118,7 +120,7 @@ class IDCardView extends Component {
 
     _btnSubmit = () => {
         umengEvent('true_name_submit');
-        const {realName, idCard, cardImage, imageName} = this.state;
+        const {realName, idCard, cardImage, imageName, chinese_id} = this.state;
         if (strNotNull(realName) && strNotNull(idCard) && !isEmptyObject(cardImage)) {
 
             if (cardImage.indexOf("http") == -1) {
@@ -130,7 +132,8 @@ class IDCardView extends Component {
 
             const body = {
                 real_name: realName,
-                cert_no: idCard
+                cert_no: idCard,
+                cert_type: 'chinese_id'
             };
             this.props._postCertification(body);
 
@@ -164,6 +167,13 @@ class IDCardView extends Component {
         }
     };
 
+    choiceID = () => {
+        const {choice_id} = this.state
+        const a = {
+            choice_id: 'sgdfsgsg'
+        }
+        router.log(a)
+    }
 
     render() {
 
@@ -173,6 +183,16 @@ class IDCardView extends Component {
             testID="page_real_name"
             style={ApplicationStyles.bgContainer}>
 
+            <View style={{flexDirection:'row',paddingTop: 12,paddingLeft: 17, paddingRight: 17, paddingBottom: 18, backgroundColor: '#FFFFFF'}}>
+                <Button style={{width:160,height:36,fontSize:15,flex: 1,alignItems: 'center',
+                paddingTop: 8,backgroundColor: '#F5F5F5',borderRadius: 2, marginRight: 22,color: '#444444'}}
+                onPress={() => this.choiceID()}>
+                    身份证</Button>
+
+                <Button style={{width:160,height:36,fontSize:15,flex: 1,alignItems: 'center',
+                paddingTop: 8,backgroundColor: '#F5F5F5',borderRadius: 2, color: '#444444'}}>
+                    护照</Button>
+            </View>
 
             <View
                 style={{height:50,alignItems:'center',flexDirection:'row',

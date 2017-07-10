@@ -47,7 +47,8 @@ class PassportView extends Component {
         realName: '',
         passwordCard:'',
         cardImage:'',
-        imageName:''
+        imageName:'',
+        passport_id: ''
     }
 
     componentDidMount() {
@@ -141,7 +142,7 @@ class PassportView extends Component {
 
     _btnSubmit = () => {
         umengEvent('true_name_submit');
-        const {realName, passwordCard, cardImage, imageName} = this.state;
+        const {realName, passwordCard, cardImage, imageName, passport_id} = this.state;
         if (strNotNull(realName) && strNotNull(passwordCard) && !isEmptyObject(cardImage)) {
 
             if (cardImage.indexOf("http") == -1) {
@@ -153,7 +154,8 @@ class PassportView extends Component {
 
             const body = {
                 real_name: realName,
-                cert_no: passwordCard
+                cert_no: passwordCard,
+                cert_type: 'passport_id'
             };
             this.props._postCertification(body);
 
