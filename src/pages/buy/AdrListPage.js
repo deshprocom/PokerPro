@@ -260,10 +260,11 @@ const styles = StyleSheet.create({
     viewEdit: {
         position: 'absolute',
         top: 10,
-        right: 17,
+        right: 0,
         flexDirection: 'row',
         alignItems: 'center',
-        height: 50
+        height: 60,
+        width: 60
     },
     imgEdit: {
         height: 14,

@@ -221,8 +221,8 @@ class HomePage extends Component {
                     </TouchableOpacity>
                     <View style={{flex: 1}}/>
                     <Text style={{
-                        color: 'rgba(255,255,255,' + opacity + ')',
-                        fontSize: Fonts.size.h15
+                        color: 'rgba(244,227,161,' + opacity + ')',
+                        fontSize: Fonts.size.h18
                     }}>扑客</Text>
                     <View style={{flex: 1}}/>
                     <TouchableOpacity
@@ -534,8 +534,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     gif_fuc: {
-        height: 30,
-        width: 30
+        height: 27,
+        width: 27
     },
     recent_races: {
         flexDirection: 'row',

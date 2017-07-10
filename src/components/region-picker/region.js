@@ -135,6 +135,7 @@ var Region = React.createClass({
                     outputRange: [HEIGHT, 0]
                 })
             }]}>
+                <View style={styles.regionItem}/>
                 <View style={styles.region}>
                     {/*头部按钮*/}
                     <View style={styles.nav}>
@@ -340,8 +341,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     region: {
-        flex: 1,
-        marginTop: HEIGHT / 2,
         backgroundColor: '#FFF'
     },
     regionArea: {

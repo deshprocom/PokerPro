@@ -57,7 +57,8 @@ export function getBaseURL() {
         .then((ret) => {
             client.setBaseURL(ret)
         }).catch(err => {
-        client.setBaseURL(Api.test)
+        client.setBaseURL(Api.production)
+        setBaseURL(Api.production)
     });
 }
 
