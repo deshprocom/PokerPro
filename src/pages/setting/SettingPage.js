@@ -4,12 +4,12 @@
 import React, {Component}from 'react';
 import {
     TouchableOpacity, View, TextInput, Alert,
-    StyleSheet, Image, Text, ScrollView, Platform
+    StyleSheet, Image, Text, ScrollView,
 } from 'react-native';
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar, SetItemView, Button} from '../../components';
+import {NavigationBar, SetItemView, Button, ActionSheet} from '../../components';
 import {
     clearLoginUser, getLoginUser, strNotNull,
     isLoginUser, share
@@ -17,6 +17,10 @@ import {
 import {fetchGetRecentRaces, _getProfileOk, _getRecentRaces} from '../../actions/RacesAction';
 import {umengEvent} from '../../utils/UmengEvent';
 import {setLocalLanguage} from '../../services/ConfigDao';
+
+const CANCEL_INDEX = 0;
+const DESTRUCTIVE_INDEX = 2;
+const options = [I18n.t('cancel'), '标准', '中', '大'];
 
 class SettingPage extends Component {
 
@@ -83,6 +87,14 @@ class SettingPage extends Component {
                     testID="btn_share"
                     name={I18n.t('recommend_friend')}/>
 
+                <View
+                    style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>
+                <SetItemView
+                    onPress={() => {
+                        this.ActionSheet.show();
+                    }}
+                    name={'字体设置'}/>
+
 
             </View>
             <View style={{backgroundColor: Colors.setting, marginTop: 10}}>
@@ -96,7 +108,33 @@ class SettingPage extends Component {
 
             {this._exitView()}
 
+
+            <ActionSheet
+                ref={o => this.ActionSheet = o}
+                title={'字体选择'}
+                options={options}
+                cancelButtonIndex={CANCEL_INDEX}
+                destructiveButtonIndex={DESTRUCTIVE_INDEX}
+                onPress={this.handlePress}
+            />
+
         </View>)
+    }
+
+    handlePress = (i) => {
+        switch (i) {
+            case 1:
+                Fonts.setSize(0);
+                break;
+            case 2:
+                Fonts.setSize(2);
+                break;
+            case 3:
+                Fonts.setSize(4);
+                break;
+
+
+        }
     }
 
     _exitView = () => {
