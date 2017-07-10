@@ -169,7 +169,7 @@ class IDCardView extends Component {
 
         const {realName, idCard, editable} = this.state;
 
-        return (<View
+        return (<ScrollView
             testID="page_real_name"
             style={ApplicationStyles.bgContainer}>
 
@@ -244,7 +244,7 @@ class IDCardView extends Component {
                 destructiveButtonIndex={DESTRUCTIVE_INDEX}
                 onPress={this.handlePress}
             />
-        </View>)
+        </ScrollView>)
     }
 
     _hasRealBtn = () => {

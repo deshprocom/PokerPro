@@ -200,7 +200,7 @@ class PassportView extends Component {
     render() {
         const {editable,realName,passwordCard}=this.state;
         router.log(this.state);
-        return (<View
+        return (<ScrollView
             testID="page_real_name"
             style={ApplicationStyles.bgContainer}>
 
@@ -274,7 +274,7 @@ class PassportView extends Component {
                 onPress={this.handlePress}
             />
 
-        </View>)
+        </ScrollView>)
     }
 
     _hasRealBtn = () => {
