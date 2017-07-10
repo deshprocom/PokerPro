@@ -550,7 +550,7 @@ class BuyTicketPage extends Component {
 
     _addrView = () => {
         const {shipping_address} = this.state;
-        const {address, address_detail, consignee, mobile} = shipping_address;
+
 
         if (isEmptyObject(shipping_address))
             return (  <TouchableOpacity
@@ -577,7 +577,8 @@ class BuyTicketPage extends Component {
                            source={Images.ticket_arrow}/>
                 </View>
             </TouchableOpacity>);
-        else
+        else{
+            const {address, address_detail, consignee, mobile} = shipping_address;
             return (<TouchableOpacity
                 activeOpacity={1}
                 onPress={() => {
@@ -620,6 +621,8 @@ class BuyTicketPage extends Component {
                            source={Images.ticket_arrow}/>
                 </View>
             </TouchableOpacity>)
+        }
+
     }
 
 
