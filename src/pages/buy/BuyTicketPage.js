@@ -82,7 +82,7 @@ class BuyTicketPage extends Component {
                 tickets: tickets,
                 ordered: ordered,
                 race: race,
-                shipping_address: shipping_address,
+                shipping_address: isEmptyObject(shipping_address) ? {} : shipping_address,
                 email: recent_email
             })
         }, err => {
@@ -187,6 +187,10 @@ class BuyTicketPage extends Component {
         let {isEntity, email, isNameReal, shipping_address} = this.state;
         if (isNameReal) {
             if (isEntity === ENTITY) {
+                if (isEmptyObject(shipping_address)) {
+                    showToast('请添加收货地址')
+                    return;
+                }
                 const {race_id, ticket_id} = this.props.params;
                 let param = {
                     race_id: race_id,
@@ -577,7 +581,7 @@ class BuyTicketPage extends Component {
                            source={Images.ticket_arrow}/>
                 </View>
             </TouchableOpacity>);
-        else{
+        else {
             const {address, address_detail, consignee, mobile} = shipping_address;
             return (<TouchableOpacity
                 activeOpacity={1}
