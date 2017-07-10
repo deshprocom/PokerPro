@@ -57,7 +57,7 @@ class IDCardView extends Component {
     componentWillReceiveProps(newProps) {
         if (newProps.actionType === POST_CERTIFICATION &&
             newProps.hasData) {
-            this.props.router.pop();
+            router.pop();
         } else if (newProps.actionType === GET_CERTIFICATION &&
             newProps.hasData) {
             if (!isEmptyObject(user_extra)) {
@@ -169,7 +169,7 @@ class IDCardView extends Component {
 
         const {realName, idCard, editable} = this.state;
 
-        return (<View
+        return (<ScrollView
             testID="page_real_name"
             style={ApplicationStyles.bgContainer}>
 
@@ -244,7 +244,7 @@ class IDCardView extends Component {
                 destructiveButtonIndex={DESTRUCTIVE_INDEX}
                 onPress={this.handlePress}
             />
-        </View>)
+        </ScrollView>)
     }
 
     _hasRealBtn = () => {
@@ -256,7 +256,7 @@ class IDCardView extends Component {
                 onPress={this._btnSubmit}
                 style={{height:49,width:Metrics.screenWidth-34,
             alignSelf:'center',backgroundColor:'#161718',
-            marginTop:25,justifyContent:'center'}}
+            marginTop:25,justifyContent:'center',marginBottom:10}}
                 textStyle={{fontSize:Fonts.size.h17,color:Colors.txt_E0C}}>
                 {I18n.t('submit')}
 
@@ -268,7 +268,7 @@ class IDCardView extends Component {
                 onPress={this._btnService}
                 style={{height:49,width:Metrics.screenWidth-34,
             alignSelf:'center',backgroundColor:Colors.white,
-            marginTop:25,justifyContent:'center'}}
+            marginTop:25,justifyContent:'center',marginBottom:10}}
                 textStyle={{fontSize:Fonts.size.h17,color:Colors.txt_666}}>
                 {I18n.t('contact_customer_service')}
 

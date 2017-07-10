@@ -63,6 +63,9 @@ export function umengEvent(event) {
         case "true_name_submit":
             strEvnet = "true_name_submit";
             break;
+        case "true_password_submit":
+            strEvnet = "true_password_submit";
+            break;
         case "more_order":
             strEvnet = "more_order";
             break;
