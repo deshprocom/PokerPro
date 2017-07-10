@@ -46,35 +46,33 @@ class SearchKeywordPage extends Component {
             testID="page_keyword_search"
             style={ApplicationStyles.bg_black}>
             <View style={styles.navBar}>
-                <TouchableOpacity
-                    testID="btn_bar_left"
-                    activeOpacity={1}
-                    onPress={()=>this.props.router.pop()}
-                    style={styles.btnCancel}>
-                    <Image source={Images.sign_return} style={{height:19,width:11}}/>
-
-                </TouchableOpacity>
+                <View style={styles.popBtn}/>
 
                 <View style={styles.searchBar}>
                     <Image style={styles.imgSearch}
                            source={Images.search_gray}/>
                     <TextInput
                         placeholderTextColor="#6A6B6B"
-                        placeholder='点击搜索更多赛事'
+                        placeholder={I18n.t('serachMore')}
                         testID="input_keyword"
                         underlineColorAndroid='transparent'
                         style={styles.inputSearch}
-                        onChangeText={txt=>{
-                        this.setState({
-                            keyword:txt
-                        });
-                         this.loadList('0',txt)
-                    }}/>
+                        onChangeText={txt => {
+                            this.setState({
+                                keyword: txt
+                            });
+                            this.loadList('0', txt)
+                        }}/>
 
                 </View>
 
 
-                <View style={{width:20}}/>
+                <TouchableOpacity
+                    testID="btn_bar_right"
+                    style={styles.popBtn}
+                    onPress={() => router.pop()}>
+                    <Text style={styles.txtCancel}>{I18n.t('cancel')}</Text>
+                </TouchableOpacity>
 
             </View>
 
@@ -89,17 +87,17 @@ class SearchKeywordPage extends Component {
         if (actionType === SEARCH_BY_KEYWORD && dataList.length <= 0)
             if (hasData) {
                 return <NoDataView
-                    pageStyle={{ backgroundColor: '#161718'}}/>
+                    pageStyle={{backgroundColor: Colors.bg_ec}}/>
             } else if (error)
                 return <LoadErrorView
-                    onPress={()=>this._onRefresh()}/>
+                    onPress={() => this._onRefresh()}/>
         return <PullToRefreshListView
             ref={ (component) => this._pullToRefreshListView = component }
             viewType={PullToRefreshListView.constants.viewType.listView}
             dataSource={this.state.dataSource}
             renderRow={this._renderRow}
-            renderHeader={(viewState)=>_renderHeader(viewState,headerStyle)}
-            renderFooter={(viewState)=>_renderFooter(viewState,headerStyle)}
+            renderHeader={(viewState) => _renderHeader(viewState, headerStyle)}
+            renderFooter={(viewState) => _renderFooter(viewState, headerStyle)}
             onRefresh={this._onRefresh}
             onLoadMore={this._onLoadMore}
             enableEmptySections={true}
@@ -175,6 +173,7 @@ class SearchKeywordPage extends Component {
 
         return (
             <RaceRowView
+                isMoreRace={true}
                 rowID={rowID}
                 router={this.props.router}
                 rowData={rowData}/>
@@ -190,6 +189,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingTop: Platform.OS === 'android' ? 0 : 20,
         backgroundColor: Colors.bg_09,
+        alignItems: 'center'
+    },
+    popBtn: {
+        height: 44,
+        width: 50,
+        justifyContent: 'center',
         alignItems: 'center'
     },
     searchBar: {
@@ -221,12 +226,12 @@ const styles = StyleSheet.create({
     txtCancel: {
         color: '#E4D57F',
         fontSize: 15
-    }
+    },
 
 
 })
 
-const headerStyle = {height: 35, justifyContent: 'center', alignItems: 'center', backgroundColor: '#161718'};
+const headerStyle = {height: 35, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.bg_ec};
 
 const bindAction = dispatch => ({
     _searchByDate: (body) => dispatch(fetchSearchByKeyword(body))

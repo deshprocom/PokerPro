@@ -64,7 +64,7 @@ class SidePage extends React.Component {
                 }
                 activeOpacity={1}
                 testID="btn_login">
-                <Text style={{color:Colors.txt_DDD,fontSize:16}}>登陆/注册</Text>
+                <Text style={{color:Colors.txt_DDD,fontSize:16}}>{I18n.t('log_register')}</Text>
             </TouchableOpacity>)
         }
     }

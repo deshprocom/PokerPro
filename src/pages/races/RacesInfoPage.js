@@ -19,7 +19,7 @@ import RaceInfoBottomView from './RaceInfoBottomView';
 import {
     strNotNull, sellable, isEmptyObject, YYYY_MM_DD,
     raceStatusConvert, ticketStatusConvert, convertDate,
-    strValid
+    strValid, uShareRace
 } from '../../utils/ComonHelper';
 import TestRouter from '../../components/TestRouter';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
@@ -81,8 +81,10 @@ class RacesInfoPage extends Component {
         const {raceInfo} = this.state;
         return (
             <View
-                style={{flex:1,
-                backgroundColor:Colors.white}}
+                style={{
+                    flex: 1,
+                    backgroundColor: Colors.white
+                }}
                 testID="page_race_intro">
 
 
@@ -95,7 +97,7 @@ class RacesInfoPage extends Component {
                         <TouchableOpacity
                             testID="btn_bar_left"
                             style={styles.popBtn}
-                            onPress={()=>router.pop()}>
+                            onPress={() => router.pop()}>
                             <Image style={styles.backImg}
                                    source={Images.sign_return}/>
                         </TouchableOpacity>
@@ -107,48 +109,59 @@ class RacesInfoPage extends Component {
                                 style={styles.txtTitle}
                                 numberOfLines={1}>{raceInfo.name}</Text>
                         </View>
-                        <View style={styles.popBtn}/>
+                        <TouchableOpacity
+                            testID="btn_bar_right"
+                            style={styles.popBtn}
+                            onPress={() => {
+                                uShareRace(raceInfo.name, raceInfo.location +
+                                    '\n' + this.race_time(raceInfo),
+                                    raceInfo.logo,
+                                    this.props.params.race_id)
+                            }}>
+                            <Image style={styles.imgShare}
+                                   source={Images.match_share}/>
+                        </TouchableOpacity>
 
 
                     </View>
 
                     {isEmptyObject(raceInfo) ? null : <View style={styles.headerInfo}>
-                            <Image style={styles.logoImg}
-                                   source={{uri:raceInfo.logo}}/>
-                            <View style={styles.viewInfo}>
-                                <View style={styles.viewTime}>
-                                    <Image style={styles.imgTime}
-                                           source={Images.race_time}/>
-                                    <Text
-                                        testID="txt_races_period"
-                                        style={styles.txtTime}>{this.race_time(raceInfo)}</Text>
-                                </View>
-                                <View style={styles.viewLocation}>
-                                    <Image style={styles.imgLocation}
-                                           source={Images.race_location}/>
-                                    <Text
-                                        testID="txt_races_address"
-                                        style={styles.txtLocation}>{raceInfo.location}</Text>
-                                </View>
-                                <View style={styles.viewPrice}>
-                                    <Text style={styles.txtLabel}>奖池:</Text>
-                                    <Text
-                                        testID="txt_races_prize"
-                                        style={styles.txtPrice}>{raceInfo.prize}</Text>
-                                </View>
-
-                                <View style={styles.viewPrice}>
-                                    <Text
-                                        testID="txt_races_status"
-                                        style={styles.txtStatus}>{raceStatusConvert(raceInfo.status)}</Text>
-                                    <Text
-                                        testID="txt_races_ticket"
-                                        style={[styles.txtStatus,styles.txtStatus1]}> {ticketStatusConvert(raceInfo.ticket_status)}</Text>
-                                </View>
-
+                        <Image style={styles.logoImg}
+                               source={{uri: raceInfo.logo}}/>
+                        <View style={styles.viewInfo}>
+                            <View style={styles.viewTime}>
+                                <Image style={styles.imgTime}
+                                       source={Images.race_time}/>
+                                <Text
+                                    testID="txt_races_period"
+                                    style={styles.txtTime}>{this.race_time(raceInfo)}</Text>
+                            </View>
+                            <View style={styles.viewLocation}>
+                                <Image style={styles.imgLocation}
+                                       source={Images.race_location}/>
+                                <Text
+                                    testID="txt_races_address"
+                                    style={styles.txtLocation}>{raceInfo.location}</Text>
+                            </View>
+                            <View style={styles.viewPrice}>
+                                <Text style={styles.txtLabel}>{I18n.t('PrizePond')}:</Text>
+                                <Text
+                                    testID="txt_races_prize"
+                                    style={styles.txtPrice}>{raceInfo.prize}</Text>
                             </View>
 
-                        </View>}
+                            <View style={styles.viewPrice}>
+                                <Text
+                                    testID="txt_races_status"
+                                    style={styles.txtStatus}>{raceStatusConvert(raceInfo.status)}</Text>
+                                <Text
+                                    testID="txt_races_ticket"
+                                    style={[styles.txtStatus, styles.txtStatus1]}> {ticketStatusConvert(raceInfo.ticket_status)}</Text>
+                            </View>
+
+                        </View>
+
+                    </View>}
 
                     <View style={styles.viewFlex}/>
 
@@ -184,9 +197,9 @@ class RacesInfoPage extends Component {
         tabs.push(<TouchableOpacity
             key={'btn_main_race'}
             testID="btn_main_race"
-            onPress={()=>this._selectPage(0)}
+            onPress={() => this._selectPage(0)}
             style={styles.viewCenter1}>
-            <Text style={selectPage === 0?styles.txtTabSelect:styles.txtTab}>赛事介绍</Text>
+            <Text style={selectPage === 0 ? styles.txtTabSelect : styles.txtTab}>{I18n.t('RaceIntro')}</Text>
             {selectPage === 0 ? <Image style={styles.imgTab}
                                        source={Images.race_triangle}/> :
                 <View style={styles.imgTab}/>}
@@ -199,8 +212,9 @@ class RacesInfoPage extends Component {
                 testID="page_race_info"
                 key={'page_race_info'}
                 style={{
-                        backgroundColor:Colors.white,
-                        marginBottom:noBottomBar?0:50}}>
+                    backgroundColor: Colors.white,
+                    marginBottom: noBottomBar ? 0 : 50
+                }}>
                 <MarkdownPlat
                     markdownStr={raceInfo.description}/>
 
@@ -216,11 +230,11 @@ class RacesInfoPage extends Component {
             tabs.push(<TouchableOpacity
                 testID="btn_main_result"
                 key={'btn_main_result'}
-                onPress={()=>this._selectPage(this._selectPageIndex('page_race_result'))}
+                onPress={() => this._selectPage(this._selectPageIndex('page_race_result'))}
                 style={styles.viewCenter}>
                 <Text
-                    style={selectPageKey === 'page_race_result'?
-                    styles.txtTabSelect:styles.txtTab}>主赛信息</Text>
+                    style={selectPageKey === 'page_race_result' ?
+                        styles.txtTabSelect : styles.txtTab}>{I18n.t('MainInformation')}</Text>
                 {selectPageKey === 'page_race_result' ?
                     <Image style={styles.imgTab}
                            source={Images.race_triangle}/> :
@@ -232,8 +246,9 @@ class RacesInfoPage extends Component {
                 testID="page_race_result"
                 key={'page_race_result'}
                 style={{
-                         backgroundColor:Colors.bg_f5,
-                        marginBottom:noBottomBar?0:50}}>
+                    backgroundColor: Colors.bg_f5,
+                    marginBottom: noBottomBar ? 0 : 50
+                }}>
                 <MainRaceResultView
                     blinds={blinds}
                     schedules={schedules}
@@ -248,10 +263,10 @@ class RacesInfoPage extends Component {
             tabs.push(<TouchableOpacity
                 testID="btn_sub_race"
                 key={'btn_sub_race'}
-                onPress={()=>this._selectPage(this._selectPageIndex('page_race_side'))}
+                onPress={() => this._selectPage(this._selectPageIndex('page_race_side'))}
                 style={styles.viewCenter}>
-                <Text style={selectPageKey === 'page_race_side'?
-                styles.txtTabSelect:styles.txtTab}>边赛信息</Text>
+                <Text style={selectPageKey === 'page_race_side' ?
+                    styles.txtTabSelect : styles.txtTab}>{I18n.t('SideInformation')}</Text>
                 {selectPageKey === 'page_race_side' ?
                     <Image style={styles.imgTab}
                            source={Images.race_triangle}/> :
@@ -263,8 +278,9 @@ class RacesInfoPage extends Component {
                 testID="page_race_side"
                 key={'page_race_side'}
                 style={{
-                         backgroundColor:Colors.bg_f5,
-                        marginBottom:noBottomBar?0:50}}>
+                    backgroundColor: Colors.bg_f5,
+                    marginBottom: noBottomBar ? 0 : 50
+                }}>
                 <RaceSideView
                     raceId={this.props.params.race_id}
                     subRaces={subRaces}/>
@@ -349,13 +365,13 @@ class RacesInfoPage extends Component {
         if (!this.props.params.fromBuy && sellable(ticket_status))
             return (    <RaceInfoBottomView
                 raceInfo={raceInfo}
-                onPress={()=>{
+                onPress={() => {
                     umengEvent('race_buy_ticket');
-                        if(isLoginUser){
-                             router.toChoiseTicketPage(this.props,this.props.params.race_id);
-                        }
-                        else
-                            router.toLoginFirstPage();
+                    if (isLoginUser) {
+                        router.toChoiseTicketPage(this.props, this.props.params.race_id);
+                    }
+                    else
+                        router.toLoginFirstPage();
 
                 }}/>)
     };
@@ -369,23 +385,23 @@ class RacesInfoPage extends Component {
     _viewPager = () => {
 
         return ( <ScrollableTabView
-            onChangeTab={({i})=>{
-                     if(i== undefined || i < 0)
+            onChangeTab={({i}) => {
+                if (i == undefined || i < 0)
                     return;
 
 
-                     let pageKey;
-                     if(!isEmptyObject(this.pages[i]))
-                         pageKey = this.pages[i].key;
+                let pageKey;
+                if (!isEmptyObject(this.pages[i]))
+                    pageKey = this.pages[i].key;
 
-                      this.setState({
-                         selectPage:i,
-                         selectPageKey:pageKey
-                     })
-                }}
+                this.setState({
+                    selectPage: i,
+                    selectPageKey: pageKey
+                })
+            }}
             renderTabBar={false}
             style={styles.container}
-            ref={ref=>this.viewpage = ref}>
+            ref={ref => this.viewpage = ref}>
 
             {this.pages}
 
@@ -416,7 +432,7 @@ const bindAction = dispatch => ({
         _getRaceRanks: (body) => dispatch(fetchRaceRanks(body)),
         _getRacesInfo: () => dispatch(_getRacesInfo())
     })
-    ;
+;
 
 const mapStateToProps = state => ({
     loading: state.RaceState.loading,
@@ -555,7 +571,7 @@ const styles = StyleSheet.create({
         width: 16
     },
     txtTab: {
-        fontSize: 16,
+        fontSize: 14,
         color: '#888888',
         marginBottom: 10
     },
@@ -576,6 +592,11 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    imgShare: {
+        height: 23,
+        width: 18,
+        marginLeft: 15
     }
 
 

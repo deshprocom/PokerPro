@@ -65,7 +65,7 @@ class SearchRacesPage extends Component {
                 {this.topBar()}
 
                 {isEmptyObject(dataRaces) ? <NoDataView
-                        pageStyle={{ backgroundColor: '#161718'}}/> : null}
+                    pageStyle={{backgroundColor: Colors.bg_ec}}/> : null}
 
 
                 {this.listView()}
@@ -81,7 +81,7 @@ class SearchRacesPage extends Component {
 
 
     listView = () => {
-        return (<View style={{flex:1}}>
+        return (<View style={{flex: 1}}>
             <PullListView
                 key="list"
                 ref={ (component) => this._pullToRefreshListView = component }
@@ -89,8 +89,8 @@ class SearchRacesPage extends Component {
                 dataSource={this.state.componentDataSource}
                 renderSectionHeader={this._renderSectionHeader}
                 renderRow={this._renderRow}
-                renderHeader={(viewState)=>_renderHeader(viewState,headerStyle)}
-                renderFooter={(viewState)=>_renderFooter(viewState,headerStyle)}
+                renderHeader={(viewState) => _renderHeader(viewState, headerStyle)}
+                renderFooter={(viewState) => _renderFooter(viewState, headerStyle)}
                 onRefresh={this._onRefresh}
                 onLoadMore={this._onLoadMore}
                 autoLoadMore={true}
@@ -104,7 +104,7 @@ class SearchRacesPage extends Component {
         return ( <View style={styles.topBar}>
             <TouchableOpacity
                 testID="btn_bar_left"
-                style={[styles.topBtn,styles.topLeft]}
+                style={[styles.topBtn, styles.topLeft]}
                 onPress={this._back}>
                 <Image style={styles.imgBack}
                        source={Images.sign_return}/>
@@ -113,7 +113,7 @@ class SearchRacesPage extends Component {
             <View style={styles.topBtn}/>
 
             <View style={styles.titleView}>
-                <Text style={styles.title}>赛事表</Text>
+                <Text style={styles.title}>{I18n.t('GameList')}</Text>
             </View>
             <View style={styles.topRight}>
 
@@ -122,7 +122,7 @@ class SearchRacesPage extends Component {
                     onPress={this._searchPage}
                     testID="btn_search"
                     style={styles.topBtn}>
-                    <Image style={{width:22,height:22}}
+                    <Image style={{width: 22, height: 22}}
                            source={Images.search}/>
 
                 </TouchableOpacity>
@@ -131,16 +131,16 @@ class SearchRacesPage extends Component {
                     onPress={this._pressRaceType}
                     testID="btn_race_hosts"
                     style={styles.topBtn}>
-                    <Image style={{width:24,height:22}}
+                    <Image style={{width: 22, height: 22}}
                            source={Images.race_type}/>
 
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    onPress={()=>this._calendarView()}
+                    onPress={() => this._calendarView()}
                     testID="btn_calendar"
                     style={styles.topBtn}>
-                    <Image style={{width:25,height:25}}
+                    <Image style={{width: 22, height: 21}}
                            source={Images.schedule}/>
 
                 </TouchableOpacity>
@@ -188,9 +188,11 @@ class SearchRacesPage extends Component {
     _renderSectionHeader = (sectionData, sectionID) => {
 
         return (
-            <View style={{height:30,backgroundColor:'#202125',
-            alignItems:'center',justifyContent:'center'}}>
-                <Text style={[Fonts.H15,{color:'#68707D'}]}>{sectionID}</Text>
+            <View style={{
+                height: 44, backgroundColor: Colors.bg_ec,
+                alignItems: 'center', justifyContent: 'center'
+            }}>
+                <Text style={{color: '#4b515a', fontSize: 17}}>{sectionID}</Text>
             </View>
         )
     }
@@ -199,6 +201,7 @@ class SearchRacesPage extends Component {
         return (
 
             <RaceRowView
+                isMoreRace={true}
                 rowID={rowID}
                 router={router}
                 rowData={rowData}/>
@@ -325,8 +328,8 @@ class SearchRacesPage extends Component {
     _showCalendar = () => {
         if (this.state.showCalender)
             return (<CalendarModal
-                ref={ref=>this.calendarModal=ref}
-                selected={(date)=>{
+                ref={ref => this.calendarModal = ref}
+                selected={(date) => {
 
                     this.calendar = date;
 
@@ -415,7 +418,7 @@ class SearchRacesPage extends Component {
 
 }
 
-const headerStyle = {height: 35, justifyContent: 'center', alignItems: 'center', backgroundColor: '#161718'};
+const headerStyle = {height: 34, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.bg_ec};
 
 
 const styles = StyleSheet.create({
@@ -450,7 +453,7 @@ const styles = StyleSheet.create({
         marginRight: 5
     },
     flatBg: {
-        backgroundColor: '#161718',
+        backgroundColor: Colors.bg_ec,
         flex: 1
     },
 

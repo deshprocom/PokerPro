@@ -8,13 +8,10 @@ import I18n from 'react-native-i18n';
 export function init(resolve) {
     storage.load({key:StorageKey.Language})
         .then(ret=>{
-            I18n.locale = ret;
             console.log('Config',ret);
             setLanguage(ret);
             resolve();
-        }).catch(err => {
-        console.log(err);
-    });
+        });
 }
 
 const config = {

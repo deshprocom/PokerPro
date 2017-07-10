@@ -45,7 +45,8 @@ export default class ChoiseTicketPage extends Component {
     _fetchRaceTicket = () => {
         const {race_id} = this.props.params;
         let body = {
-            race_id: race_id
+            race_id: race_id,
+            type: 'tradable'
         };
 
         subRaces(body, data => {
@@ -164,7 +165,8 @@ export default class ChoiseTicketPage extends Component {
                     disabled={!this.btnSideDisabled()}
                     onPress={()=>{
                         umengEvent('ticket_side');
-                        this._selectRace(RACE_SIDE)
+                        this._selectRace(RACE_SIDE);
+                        this.showSubTicket();
                     }}
                     style={[this._selectedBg(selectRace === RACE_SIDE),styles.marginLeft]}>
                     <Text style={this.btnSideDisabled()?
@@ -353,15 +355,15 @@ export default class ChoiseTicketPage extends Component {
                     numberOfLines={2}
                     style={styles.txtItemTitle}>{title}</Text>
 
-                <Text style={[styles.txtLabel,styles.top8]}>{this._date()}</Text>
+                <Text style={styles.txtLabel}>{this._date()}</Text>
                 <Text style={styles.txtLabel}>{I18n.t('location')}: {this._location()}</Text>
 
                 <View style={styles.viewInfo}>
                     <Text style={styles.txtPrice}>{price}</Text>
                     <View style={styles.viewNum}>
-                        <Text style={styles.lbNum}> （剩余</Text>
+                        <Text style={styles.lbNum}> {I18n.t('surplus')}</Text>
                         <Text style={styles.txtNum}>{this._ticketNum(ticket_info)}</Text>
-                        <Text style={styles.lbNum}>张）</Text>
+                        <Text style={styles.lbNum}>{I18n.t('spread')}</Text>
                     </View>
 
                     <View style={{flex:1}}/>
@@ -516,41 +518,21 @@ export default class ChoiseTicketPage extends Component {
     };
 
     _selectTicket = (ticket) => {
-
-        if (ticket === ONLY_TICKET) {
-            this._onlyTicket()
-        } else
-            this.setState({
-                selectTicket: ticket,
-                ticket: {}
-            })
+        this.setState({
+            selectTicket: ticket,
+            ticket: {}
+        })
     };
 
     _listTicket = (selectRace) => {
         let {selectRaceData, selectSub} = this.state;
         if (selectRace === RACE_MAIN) {
-            const {package_tickets, single_tickets} = selectRaceData;
-            return single_tickets.concat(package_tickets);
+            const {tickets} = selectRaceData;
+            return tickets;
         } else if (selectRace === RACE_SIDE && !isEmptyObject(selectSub)) {
-            const {package_tickets, single_tickets} =selectSub;
-            return single_tickets.concat(package_tickets);
+            const {tickets} =selectSub;
+            return tickets;
         }
-    };
-
-    _onlyTicket = () => {
-        let {selectRace, selectRaceData, selectSub} = this.state;
-        let ticket;
-        if (selectRace === RACE_MAIN
-            && selectRaceData.single_tickets.length > 0) {
-            ticket = selectRaceData.single_tickets[0]
-        } else if (selectSub.single_tickets.length > 0) {
-            ticket = selectSub.single_tickets[0]
-        }
-        this.setState({
-            selectTicket: ONLY_TICKET,
-            ticket: ticket
-        })
-
     };
 
 
@@ -647,7 +629,8 @@ const styles = StyleSheet.create({
     txtItemTitle: {
         fontSize: 16,
         color: '#444444',
-        lineHeight: 20
+        lineHeight: 20,
+        height: 45
     },
     txtLabel: {
         fontSize: 12,
@@ -680,6 +663,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: Colors._161817,
         fontWeight: 'bold',
+        marginTop:3
     },
     txtMoneyNum: {
         fontSize: 20,

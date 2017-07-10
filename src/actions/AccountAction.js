@@ -3,11 +3,11 @@
  */
 import {
     POST_EMAIL_LOGIN, POST_PHONE_LOGIN, POST_VCODE_LOGIN,
-    POST_VERIFY_CODE, POST_RESET_PASSWORD, POST_REGISTER,
+    POST_VERIFY_CODE, POST_RESET_PASSWORD, POST_REGISTER,POST_PASSWORD_IMAGE,
     POST_CHANGE_PWD, POST_V_CODE, POST_CERTIFICATION, GET_CERTIFICATION,
     POST_CARD_IMAGE, GET_PLAYER_INFO, POST_BIND_ACCOUNT, POST_CHANGE_BIND,
     POST_CHANGE_PERMISSION, GET_NOTIFICATIONS, DEL_NOTIFICATIONS,
-    FETCH_SUCCESS, FETCHING, FETCH_FAIL
+    FETCH_SUCCESS, FETCHING, FETCH_FAIL,FETCH_PASS, FETCH_PASS_SUCCESS,FETCH_PASS_FAIL
 } from '../actions/ActionTypes';
 import {showToast} from '../utils/ComonHelper';
 
@@ -17,7 +17,7 @@ import {
     postRegister, postResetPwdCode,
     postChangePwd, LoginUser, postVCode,
     postCertification, getCertification,
-    postCardImage, playerInfo, postChangeBind,
+    postCardImage, postPasswordImage, playerInfo, postChangeBind,
     postBindAccount, postChangePermission, getNotifications,
     delNotification
 } from '../services/AccountDao';
@@ -116,6 +116,18 @@ export function fetchPostCardImage(body) {
     }
 }
 
+// 上传护照图片
+export function fetchPostPasswordImage(body) {
+    return (dispatch) => {
+        dispatch(_postPasswordImage());
+        postPasswordImage(body, (ret) => {
+            dispatch(_postPasswordImageOK())
+        }, (err) => {
+            showToast(err);
+            dispatch(_postPasswordImageFail(err))
+        })
+    }
+}
 
 global.user_extra = {};
 /*获取实名信息*/
@@ -141,6 +153,7 @@ export function fetchPostCertification(body) {
             let {user_extra} = ret.data;
             global.user_extra = user_extra;
             dispatch(_postCertificationOk(user_extra))
+            showToast('信息提交成功');
         }, (err) => {
             showToast(err);
             dispatch(_postCertificationFail(err))
@@ -532,6 +545,13 @@ function _postCardImage() {
     }
 }
 
+function _postPasswordImage() {
+    return {
+        type: POST_PASSWORD_IMAGE,
+        fetching: FETCH_PASS
+    }
+}
+
 function _postCardImageOk() {
     return {
         type: POST_CARD_IMAGE,
@@ -544,6 +564,20 @@ function _postCardImageFail(error) {
         type: POST_CARD_IMAGE,
         fetching: FETCH_FAIL,
         error: error
+    }
+}
+
+function _postPasswordImageOK() {
+    return {
+        type: POST_PASSWORD_IMAGE,
+        fetching: FETCH_PASS_SUCCESS
+    }
+}
+
+function _postPasswordImageFail() {
+    return {
+        type: POST_PASSWORD_IMAGE,
+        fetching: FETCH_PASS_FAIL
     }
 }
 

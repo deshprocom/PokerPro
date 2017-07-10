@@ -96,7 +96,7 @@ export default class TicketInfoPage extends Component {
 
                 <View style={styles.viewSell}>
                     <Text style={styles.txtPrice}>{price}</Text>
-                    <Text style={styles.lbPrice}>／份</Text>
+                    <Text style={styles.lbPrice}>{I18n.t('part')}</Text>
                 </View>
 
 

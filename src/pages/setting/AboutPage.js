@@ -36,7 +36,7 @@ export default class AboutPage extends Component {
 
             <View style={styles.viewFlex}/>
 
-            <Text style={styles.txtCompany}>北京德尚全彩體育文化傳播有限公司@</Text>
+            <Text style={styles.txtCompany}>{I18n.t('Company')}</Text>
         </View>)
     }
 }

@@ -99,7 +99,8 @@ android {
         multiDexEnabled true
         manifestPlaceholders = [
                 JPUSH_APPKEY: "40fc518c7fb0759af5cba44a",   //在此替换你的APPKey
-                APP_CHANNEL : "developer-default"        //应用渠道号
+                APP_CHANNEL : "developer-default",        //应用渠道号
+                UMENG_APPKEY:"58da17cc1061d26493001174",
         ]
     }
     splits {
@@ -120,6 +121,8 @@ android {
                           keyPassword MYAPP_RELEASE_KEY_PASSWORD
                       }
         }
+
+
     }
 
     buildTypes {
@@ -146,6 +149,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-umshare')
     compile project(':react-native-network-info')
     compile project(':react-native-orientation')
     compile project(':react-native-video')
