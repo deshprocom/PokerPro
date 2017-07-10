@@ -43,3 +43,10 @@ export function getNewsSearch(body, resolve, reject) {
         resolve(ret.data)
     }, reject)
 }
+
+// 身份证上传
+export function postPasswordImage(body, resolve, reject){
+    helper.post(Api.upload_card_image,body,(ret) => {
+        resolve(ret.data)
+    }, reject)
+}

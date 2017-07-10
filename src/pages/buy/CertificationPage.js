@@ -34,8 +34,7 @@ export default class CertificationPage extends Component {
                     tabBarTextStyle={{fontSize: 18}}
                     tabBarUnderlineStyle={{backgroundColor:'#111213'}}>
                     <IDCardView
-                        tabLabel={I18n.t('identification')}
-                        router={this.props.router}/>
+                        tabLabel={I18n.t('identification')}/>
                     <PassportView tabLabel={I18n.t('passport')}/>
 
                 </ScrollableTabView>
