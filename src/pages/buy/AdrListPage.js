@@ -9,8 +9,8 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, SwipeListView, SecurityText} from '../../components';
 import I18n from 'react-native-i18n';
-import {getAddressList} from '../../services/OrderDao';
-import {isEmptyObject} from '../../utils/ComonHelper';
+import {getAddressList, postAdrDefault, postAdrDelete} from '../../services/OrderDao';
+import {isEmptyObject, showToast} from '../../utils/ComonHelper';
 
 export default class AdrListPage extends Component {
 
@@ -50,7 +50,6 @@ export default class AdrListPage extends Component {
                 });
 
 
-
             this.setState({
                 dataList: items,
                 dataSource: this._dataSource.cloneWithRows(items),
@@ -80,6 +79,7 @@ export default class AdrListPage extends Component {
 
             <View style={{height: 7}}/>
             <SwipeListView
+                ref={ref => this.swipeList = ref}
                 enableEmptySections={true}
                 dataSource={dataSource}
                 renderHiddenRow={this.hiddenRow}
@@ -156,17 +156,49 @@ export default class AdrListPage extends Component {
         </TouchableOpacity>)
     };
 
-    hiddenRow = () => {
+    hiddenRow = (data, secId, rowId, rowMap) => {
         return (<View style={styles.hiddenView}>
             <View style={{flex: 1}}/>
-            <View style={[styles.btnHidden, {backgroundColor: '#BBBBBB'}]}>
+            <TouchableOpacity
+                onPress={() => {
+                    this.swipeList.safeCloseOpenRow();
+                    this._setAdrDefault(data.id)
+                }}
+                style={[styles.btnHidden, {backgroundColor: '#BBBBBB'}]}>
                 <Text>设为默认</Text>
-            </View>
-            <View style={[styles.btnHidden, {backgroundColor: '#F05656'}]}>
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => {
+                    this.swipeList.safeCloseOpenRow();
+                    this._delAdr(data.id)
+                }}
+                style={[styles.btnHidden, {backgroundColor: '#F05656'}]}>
                 <Text>删除</Text>
-            </View>
+            </TouchableOpacity>
 
         </View>)
+    };
+
+    _setAdrDefault = (adr_id) => {
+        const {selectAdrData} = this.state;
+        postAdrDefault(adr_id, data => {
+            showToast('设置默认成功');
+            if (adr_id === selectAdrData.id) {
+                this.setState({
+                    selectAdrData: {}
+                })
+            }
+            this._getAddressList();
+        })
+    };
+
+    _delAdr = (adr_id) => {
+        postAdrDelete(adr_id, data => {
+            showToast('删除成功');
+            this._getAddressList();
+        }, err => {
+
+        })
     }
 }
 

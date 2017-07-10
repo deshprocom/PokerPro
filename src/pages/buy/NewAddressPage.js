@@ -54,13 +54,20 @@ export default class NewAddress extends Component {
         return address_detail;
     };
 
+    _getTitle = () => {
+        if (isEmptyObject(this.state.addressEdit)) {
+            return I18n.t('add_new_adr');
+        } else
+            return '编辑收货地址';
+    };
+
     render() {
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 refreshPage={this.refreshPage}
                 toolbarStyle={{backgroundColor: Colors.bg_09}}
                 rightBtnPress={this._postAdr}
-                title={I18n.t('add_new_adr')}
+                title={this._getTitle()}
                 rightBtnText={I18n.t('save')}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}

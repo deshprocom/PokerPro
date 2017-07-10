@@ -60,7 +60,9 @@ export default {
     selectRaceTicket: selectRaceTicket,
     buyRaceTicket: buyRaceTicket,
     orderTicket: orderTicket,
-    addAddress: addAddress
+    addAddress: addAddress,
+    setAdrDefault: setAdrDefault,
+    adrDelete:adrDelete
 
 }
 
@@ -75,6 +77,13 @@ function getUserId() {
 const page_size = 10;
 
 
+export function adrDelete(address_id) {
+    return 'account/users/' + getUserId() + '/address/' + address_id + '/delete';
+}
+
+export function setAdrDefault(address_id) {
+    return 'account/users/' + getUserId() + '/address/' + address_id + '/default';
+}
 export function addAddress() {
     return 'account/users/' + getUserId() + '/address';
 }
