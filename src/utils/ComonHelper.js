@@ -52,11 +52,11 @@ export function uShareRace(title, location, icon, raceId) {
         })
 }
 
-export function newShare(title,location,icon,newsId) {
-    UMShare.share(title,location,icon,"http://106.75.136.9:8810/news/"+newsId)
+export function newShare(title, location, icon, newsId) {
+    UMShare.share(title, location, icon, "http://106.75.136.9:8810/news/" + newsId)
         .then(() => {
             showToast('分享成功')
-        },(error) => {
+        }, (error) => {
             alert(error)
         })
 }
@@ -151,7 +151,7 @@ export function checkPhone(phone) {
 var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 export function checkMail(mail) {
 
-    if (filter.test(mail.trim())) return true;
+    if (strNotNull(mail) && filter.test(mail.trim())) return true;
     else {
         showToast('您的电子邮件格式不正确');
         return false;
