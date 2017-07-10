@@ -222,7 +222,7 @@ class HomePage extends Component {
                     <View style={{flex: 1}}/>
                     <Text style={{
                         color: 'rgba(244,227,161,' + opacity + ')',
-                        fontSize: Fonts.size.h18
+                        fontSize: Fonts.size.h17
                     }}>扑客</Text>
                     <View style={{flex: 1}}/>
                     <TouchableOpacity
