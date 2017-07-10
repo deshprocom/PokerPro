@@ -3,10 +3,25 @@
  */
 import {
     GET_ORDER_LIST, GET_ORDER_DETAIL, POST_ORDER_CANCEL,
+    POST_ADDRESS,
     FETCH_SUCCESS, FETCHING, FETCH_FAIL
 } from '../actions/ActionTypes';
 import {getOrderDetail, getOrderList, postOrderCancel} from '../services/OrderDao';
 import {showToast} from '../utils/ComonHelper';
+
+
+export function fetchAddress(body) {
+    return (dispatch) => {
+        dispatch(_postAddress());
+        postOrderCancel(body, (ret) => {
+            dispatch(_postAddressOk(ret))
+        }, (err) => {
+            showToast(err);
+            dispatch(_postAddressFail(err))
+        })
+    }
+}
+
 
 /*取消订单*/
 export function fetchOrderCancel(body) {
@@ -118,3 +133,29 @@ function _postOrderCancelFail(error) {
         error: error
     }
 }
+
+function _postAddress() {
+    return {
+        type: POST_ADDRESS,
+        fetching: FETCHING
+    }
+}
+
+function _postAddressOk(address) {
+    return {
+        type: POST_ADDRESS,
+        fetching: FETCH_SUCCESS,
+        address: address
+    }
+}
+
+function _postAddressFail(error) {
+    return {
+        type: POST_ADDRESS,
+        fetching: FETCH_FAIL,
+        error: error
+    }
+}
+
+
+

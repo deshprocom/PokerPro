@@ -182,7 +182,7 @@ export function _getProfileOk(profile) {
 }
 
 
-function _getRecentRaces() {
+export function _getRecentRaces() {
     return {
         type: GET_RECENT_RACES,
         fetching: FETCHING

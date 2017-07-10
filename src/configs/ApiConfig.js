@@ -59,7 +59,8 @@ export default {
     delNotice: delNotice,
     selectRaceTicket: selectRaceTicket,
     buyRaceTicket: buyRaceTicket,
-    orderTicket:orderTicket
+    orderTicket: orderTicket,
+    addAddress: addAddress
 
 }
 
@@ -74,10 +75,13 @@ function getUserId() {
 const page_size = 10;
 
 
+export function addAddress() {
+    return 'account/users/' + getUserId() + '/address';
+}
 
 export function orderTicket(body) {
     const {race_id, ticket_id} = body;
-    return 'races/' + race_id + '/tickets/' + ticket_id+'/orders';
+    return 'races/' + race_id + '/tickets/' + ticket_id + '/orders';
 }
 
 
@@ -156,7 +160,7 @@ export function player_info(body) {
 }
 
 export function sub_race_info(body) {
-    const {race_id_1, race_id_2}  = body;
+    const {race_id_1, race_id_2} = body;
     return 'races/' + race_id_1 + '/sub_races/' + race_id_2;
 }
 
@@ -167,8 +171,11 @@ export function race_ranks(body) {
 }
 
 export function sub_races(body) {
-    const {race_id} = body;
-    return 'races/' + race_id + '/sub_races';
+    const {race_id, type} = body;
+    if (strNotNull(type))
+        return 'races/' + race_id + '/sub_races?type=' + type;
+    else
+        return 'races/' + race_id + '/sub_races';
 }
 
 export function search_range_list(body) {

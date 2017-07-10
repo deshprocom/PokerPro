@@ -44,6 +44,7 @@ export default class ListViewForRaces extends Component {
         return (
             <View>
                 <ListView
+                    style={{backgroundColor:'#ececee'}}
                     removeClippedSubviews={false}
                     dataSource={this.ds.cloneWithRows(this.props.dataSource)}
                     renderRow={this._renderRow}/>

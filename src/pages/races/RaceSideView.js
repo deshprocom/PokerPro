@@ -67,7 +67,7 @@ export default class RaceSideView extends Component {
                 <Text style={styles.txtTitle}
                       numberOfLines={2}>{item.name}</Text>
                 <View style={styles.buyView}>
-                    <Text style={styles.txtBuy}>买入:{item.ticket_price}</Text>
+                    <Text style={styles.txtBuy}>{I18n.t('buy')}:{item.ticket_price}</Text>
                     {this._royView(item.roy)}
                 </View>
 

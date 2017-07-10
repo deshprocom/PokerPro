@@ -1164,6 +1164,7 @@ const styles = {
             flex: 1,
             alignItems: 'stretch',
             justifyContent: 'flex-start',
+            zIndex: 5
         },
         bottom: {
             alignItems: 'stretch',
