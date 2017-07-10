@@ -4,7 +4,7 @@
 import StorageKey from '../configs/StorageKey';
 import {setLanguage} from '../I18n/I18n';
 import I18n from 'react-native-i18n';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
+import {getSize} from '../utils/ComonHelper';
 
 export function init(resolve) {
     storage.load({key:StorageKey.Language})
@@ -13,7 +13,7 @@ export function init(resolve) {
             setLanguage(ret);
             resolve();
         });
-    Fonts.getSize();
+    getSize();
 }
 
 const config = {

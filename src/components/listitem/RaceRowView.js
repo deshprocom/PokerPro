@@ -11,7 +11,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {
     strNotNull, getLoginUser,
     convertDate, YYYY_MM_DD, racesStatusImage,
-    sellable, raceStatusConvert
+    sellable, raceStatusConvert,FontSize
 } from '../../utils/ComonHelper';
 import {SellStatus} from '../../configs/Status';
 
@@ -129,13 +129,13 @@ export default class RaceRowView extends Component {
                 source={{uri: logo}}/>
             <View style={{backgroundColor: 'transparent'}}>
                 <Text
-                    style={[styles.txtTitle,{fontSize:Fonts.sizeble.h17}]}
+                    style={[styles.txtTitle,{fontSize:FontSize.h17}]}
                     numberOfLines={2}>{name}</Text>
                 <View style={styles.viewClock}>
                     <Image source={Images.home_adr}
                            style={styles.imgAdr}/>
 
-                    <Text style={[styles.txtClock,{fontSize:Fonts.sizeble.h13}]}>{location}</Text>
+                    <Text style={[styles.txtClock,{fontSize:FontSize.h13}]}>{location}</Text>
 
                 </View>
 
@@ -143,14 +143,14 @@ export default class RaceRowView extends Component {
                     <Image source={Images.home_clock}
                            style={styles.imgClock}/>
 
-                    <Text style={[styles.txtClock,{fontSize:Fonts.sizeble.h13}]}>
+                    <Text style={[styles.txtClock,{fontSize:FontSize.h13}]}>
                         {this._time(begin_date, end_date)}</Text>
 
                 </View>
 
                 <View style={[styles.viewClock, {marginTop: 10}]}>
-                    <Text style={[styles.lbPrice,{fontSize:Fonts.sizeble.h13}]}>{I18n.t('prize')}</Text>
-                    <Text style={[styles.txtPrice,{fontSize:Fonts.sizeble.h13}]}> {prize}</Text>
+                    <Text style={[styles.lbPrice,{fontSize:FontSize.h13}]}>{I18n.t('prize')}</Text>
+                    <Text style={[styles.txtPrice,{fontSize:FontSize.h13}]}> {prize}</Text>
                 </View>
             </View>
 

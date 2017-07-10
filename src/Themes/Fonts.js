@@ -42,7 +42,7 @@ export function setSize(num) {
     });
 }
 
-export const sizeble = {
+let sizeble = {
     h19: 19 + sizeNum,
     h18: 18 + sizeNum,
     h17: 17 + sizeNum,

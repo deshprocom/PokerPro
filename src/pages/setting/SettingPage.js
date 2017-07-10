@@ -12,7 +12,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, SetItemView, Button, ActionSheet} from '../../components';
 import {
     clearLoginUser, getLoginUser, strNotNull,
-    isLoginUser, share
+    isLoginUser, share, setSize
 } from '../../utils/ComonHelper';
 import {fetchGetRecentRaces, _getProfileOk, _getRecentRaces} from '../../actions/RacesAction';
 import {umengEvent} from '../../utils/UmengEvent';
@@ -124,13 +124,13 @@ class SettingPage extends Component {
     handlePress = (i) => {
         switch (i) {
             case 1:
-                Fonts.setSize(0);
+                setSize(0);
                 break;
             case 2:
-                Fonts.setSize(2);
+                setSize(2);
                 break;
             case 3:
-                Fonts.setSize(4);
+                setSize(4);
                 break;
 
 
