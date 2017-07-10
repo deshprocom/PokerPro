@@ -1,8 +1,8 @@
 // @flow
-
+import StorageKey from '../configs/StorageKey';
 const type = {
     base: 'PingFangSC-Light',
-}
+};
 
 const size = {
     h1: 38,
@@ -20,7 +20,40 @@ const size = {
     h12: 12,
     h9: 9,
     tiny: 8.5
+};
+
+
+let sizeNum = 0;
+
+export function getSize() {
+    storage.load({key: StorageKey.FontNum})
+        .then((ret) => {
+            sizeNum = ret;
+            console.log('sizeNum:' + sizeNum)
+        });
 }
+
+
+export function setSize(num) {
+    sizeNum = num;
+    storage.save({
+        key: StorageKey.FontNum,
+        rawData: num
+    });
+}
+
+export const sizeble = {
+    h19: 19 + sizeNum,
+    h18: 18 + sizeNum,
+    h17: 17 + sizeNum,
+    h16: 16 + sizeNum,
+    h15: 15 + sizeNum,
+    h14: 14 + sizeNum,
+    h13: 13 + sizeNum,
+    h12: 12 + sizeNum,
+    h9: 9 + sizeNum,
+};
+
 
 const style = {
     h1: {
@@ -101,6 +134,9 @@ export default {
     },
     type,
     size,
-    style
+    style,
+    sizeble,
+    setSize,
+    getSize
 }
 
