@@ -256,7 +256,7 @@ class IDCardView extends Component {
                 onPress={this._btnSubmit}
                 style={{height:49,width:Metrics.screenWidth-34,
             alignSelf:'center',backgroundColor:'#161718',
-            marginTop:25,justifyContent:'center'}}
+            marginTop:25,justifyContent:'center',marginBottom:10}}
                 textStyle={{fontSize:Fonts.size.h17,color:Colors.txt_E0C}}>
                 {I18n.t('submit')}
 
@@ -268,7 +268,7 @@ class IDCardView extends Component {
                 onPress={this._btnService}
                 style={{height:49,width:Metrics.screenWidth-34,
             alignSelf:'center',backgroundColor:Colors.white,
-            marginTop:25,justifyContent:'center'}}
+            marginTop:25,justifyContent:'center',marginBottom:10}}
                 textStyle={{fontSize:Fonts.size.h17,color:Colors.txt_666}}>
                 {I18n.t('contact_customer_service')}
 
