@@ -15,7 +15,7 @@ import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {GET_VIDEO_LIST} from '../../actions/ActionTypes';
-import {isEmptyObject, uniqueArray, strNotNull, newsUnique} from '../../utils/ComonHelper';
+import {isEmptyObject, uniqueArray, FontSize, newsUnique} from '../../utils/ComonHelper';
 import {ImageLoad, PullListView, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {fetchVideoList} from '../../actions/NewsAction';
@@ -56,7 +56,7 @@ class NewsListView extends Component {
 
         return (<View
             style={styles.pullView}
-            testID={'page_news_'+this.props.newsTypeItem.id}>
+            testID={'page_news_' + this.props.newsTypeItem.id}>
 
             <UltimateListView
                 key={this.state.layout}
@@ -70,11 +70,11 @@ class NewsListView extends Component {
                 dateTitle={I18n.t('last_refresh')}
                 allLoadedText={I18n.t('no_more')}
                 waitingSpinnerText={I18n.t('loading')}
-                emptyView={()=>{
-                    return this.state.error? <LoadErrorView
-                    onPress={()=>{
-                        this.listView.refresh()
-                    }}/>: <NoDataView/>;
+                emptyView={() => {
+                    return this.state.error ? <LoadErrorView
+                        onPress={() => {
+                            this.listView.refresh()
+                        }}/> : <NoDataView/>;
                 }}
             />
 
@@ -149,11 +149,6 @@ class NewsListView extends Component {
     };
 
 
-
-
-
-
-
     _itemNewsView = (rowData, sectionID, rowID) => {
 
         const {top, name, cover_link} = rowData;
@@ -161,30 +156,30 @@ class NewsListView extends Component {
         if (top) {
             return (<TouchableOpacity
                 style={styles.transparent}
-                testID={"btn_news_row_"+rowData.id}
+                testID={"btn_news_row_" + rowData.id}
                 activeOpacity={1}
-                onPress={()=>this._pressItem(rowData)}>
+                onPress={() => this._pressItem(rowData)}>
 
 
                 <ImageLoad
-                    source={{uri:cover_link}}
+                    source={{uri: cover_link}}
                     style={styles.listTopImg}
                 >
                     <View style={styles.itemBack}/>
                 </ImageLoad>
 
-                <Text style={styles.listTopTxt}>{name}</Text>
+                <Text style={[styles.listTopTxt, {fontSize:FontSize.h16}]}>{name}</Text>
 
             </TouchableOpacity>)
         } else {
             return (<TouchableOpacity
                 style={styles.transparent}
-                testID={"btn_news_row_"+rowData.id}
+                testID={"btn_news_row_" + rowData.id}
                 activeOpacity={1}
-                onPress={()=>this._pressItem(rowData)}>
+                onPress={() => this._pressItem(rowData)}>
 
                 <ImageLoad
-                    source={{uri:cover_link}}
+                    source={{uri: cover_link}}
                     style={styles.listTopImg}
                 >
                     <View style={styles.itemBack}/>
@@ -192,7 +187,7 @@ class NewsListView extends Component {
                 </ImageLoad>
 
 
-                <Text style={styles.listTopTxt}>{name}</Text>
+                <Text style={[styles.listTopTxt,{fontSize:FontSize.h16} ]}>{name}</Text>
             </TouchableOpacity>)
         }
 
@@ -238,7 +233,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     listTopTxt: {
-        fontSize: 16,
         color: Colors.white,
         left: 17,
         position: 'absolute',
