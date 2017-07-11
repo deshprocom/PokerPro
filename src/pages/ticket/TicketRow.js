@@ -36,11 +36,21 @@ export const itemListView = (item, index) => {
                     <Text
                         numberOfLines={1}
                         style={styles.itemTitle}>{name}</Text>
-                    <Text style={styles.itemTime}>
-                        {convertDate(begin_date, 'YYYY.MM.DD') + '-' + convertDate(end_date, 'YYYY.MM.DD')}</Text>
-                    <Text style={styles.itemAddr}>{I18n.t('location')}:{location}</Text>
 
-                    <Text style={styles.itemPrice}>{prize}</Text>
+                    <View style={styles.viewLocation}>
+                        <Image source={Images.race_location}
+                               style={styles.img_ico}/>
+                        <Text style={styles.itemAddr}>{I18n.t('location')}:{location}</Text>
+                    </View>
+
+                    <View style={styles.view_time}>
+                        <Image source={Images.race_time}
+                        style={styles.img_ico}/>
+                        <Text style={styles.itemTime}>
+                            {convertDate(begin_date, 'YYYY.MM.DD') + '-' + convertDate(end_date, 'YYYY.MM.DD')}</Text>
+                    </View>
+
+                    <Text style={styles.itemPrice}>奖池：{prize}</Text>
 
                     <View style={sellStyle(ticket_status)}>
                         <Text style={sellTxt(ticket_status)}>{ticketStatusConvert(ticket_status)}</Text>
@@ -64,6 +74,20 @@ function sellTxt(status) {
 }
 
 const styles = StyleSheet.create({
+    img_ico: {
+        width: 9,
+        height: 13
+    },
+    viewLocation: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 10
+    },
+    view_time: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 7
+    },
     itemImg: {
         width: 67,
         height: 95,
@@ -85,11 +109,12 @@ const styles = StyleSheet.create({
     itemTime: {
         color: '#999999',
         fontSize: 14,
-        marginTop: 19
+        marginTop: 5
     },
     itemAddr: {
         color: '#999999',
-        fontSize: 14
+        fontSize: 14,
+        marginLeft: 5
     },
     itemPrice: {
         color: Colors.txt_price,
