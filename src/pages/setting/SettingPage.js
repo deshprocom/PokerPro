@@ -132,10 +132,15 @@ class SettingPage extends Component {
             case 3:
                 setSize(4);
                 break;
-
-
         }
-    }
+        let recentRaces = {
+            number: 8
+        };
+        if (login_user.user_id)
+            recentRaces['user_id'] = login_user.user_id;
+
+        this.props._getRecentRaces(recentRaces);
+    };
 
     _exitView = () => {
         if (strNotNull(getLoginUser().user_id)) {

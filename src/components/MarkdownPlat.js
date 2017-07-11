@@ -9,7 +9,7 @@ import {
 import Markdown from './simple';
 import {MarkdownView} from './markview';
 import ImageMark from './simple/ImageMark';
-import {strNotNull} from '../utils/ComonHelper';
+import {strNotNull,FontSize} from '../utils/ComonHelper';
 
 export default class MarkdownPlat extends Component {
 
@@ -36,6 +36,32 @@ export default class MarkdownPlat extends Component {
             if (Platform.OS === 'ios') {
 
                 return (<MarkdownView
+                    styles={{
+                        heading1: {
+                            color: '#555555',
+                            fontSize: FontSize.h19,
+                        },
+                        heading2: {
+                            color: '#555555',
+                            fontSize: FontSize.h17,
+                        },
+                        heading3: {
+                            color: '#555555',
+                            fontSize: FontSize.h16,
+                        },
+                        heading4: {
+                            color: '#555555',
+                            fontSize:  FontSize.h15,
+                        },
+                        paragraph: {
+                            marginTop: 10,
+                            marginBottom: 10,
+                            fontSize:  FontSize.h15,
+                            lineHeight: 20,
+                            letterSpacing: 0.3,
+                            color: '#777777'
+                        },
+                    }}
                     onLinkPress={url=>{
 
                         router.toWebViewPage(this.props,url);
@@ -47,7 +73,34 @@ export default class MarkdownPlat extends Component {
 
                 return ( <Markdown
                     rules={markRules}
-                    styles={markStyles}>
+                    styles={{
+                        view: {
+                            padding: 20,
+                            paddingBottom: 40
+                        },
+                        text: {
+                            color: '#777777',
+                            fontSize:  FontSize.h15,
+                            lineHeight: 20,
+                            letterSpacing: 0.3
+                        },
+                        heading1: {
+                            color: '#555555',
+                            fontSize: FontSize.h19,
+                        },
+                        heading2: {
+                            color: '#555555',
+                            fontSize: FontSize.h17,
+                        },
+                        heading3: {
+                            color: '#555555',
+                            fontSize: FontSize.h16,
+                        },
+                        heading4: {
+                            color: '#555555',
+                            fontSize:  FontSize.h15,
+                        },
+                    }}>
                     {markdownStr}
                 </Markdown>)
             }
@@ -92,5 +145,5 @@ export const markStyles = {
     heading4: {
         color: '#555555',
         fontSize: 15,
-    }
+    },
 };
