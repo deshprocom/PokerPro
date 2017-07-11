@@ -141,6 +141,7 @@ export default class MainNewsPage extends Component {
                 renderItem={this._itemView}
                 horizontal={true}
                 keyExtractor={item => item.id}
+                style={{marginLeft: 10}}
             />
         </View> )
     };
@@ -265,7 +266,7 @@ const styles = StyleSheet.create({
     triangle: {
         height: 3,
         width: 32,
-        marginBottom:4
+        marginBottom: 4
     },
     viewPage: {
         flex: 1

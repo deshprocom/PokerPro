@@ -302,8 +302,8 @@ const styles = StyleSheet.create({
         bottom: 36
     },
     imgPlay: {
-        height: 76,
-        width: 76,
+        height: 68,
+        width: 68,
         alignSelf: 'center',
         marginTop: 68
     }

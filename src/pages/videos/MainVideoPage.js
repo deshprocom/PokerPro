@@ -121,6 +121,7 @@ export  default class MainVideoPage extends Component {
                 renderItem={this._itemView}
                 horizontal={true}
                 keyExtractor={item => item.id}
+                style={{marginLeft: 10}}
             />
         </View> )
     }
