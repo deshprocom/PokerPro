@@ -107,7 +107,7 @@ export  default class MainVideoPage extends Component {
             {pages}
         </ScrollableTabView>)
 
-    }
+    };
 
 
     _newsTypeView = () => {
@@ -124,7 +124,7 @@ export  default class MainVideoPage extends Component {
                 style={{marginLeft: 10}}
             />
         </View> )
-    }
+    };
 
 
     _itemView = ({item}) => {
