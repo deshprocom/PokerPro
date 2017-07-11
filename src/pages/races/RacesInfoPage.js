@@ -131,14 +131,14 @@ class RacesInfoPage extends Component {
                         <View style={styles.viewInfo}>
                             <View style={styles.viewTime}>
                                 <Image style={styles.imgTime}
-                                       source={Images.race_time}/>
+                                       source={Images.home_clock}/>
                                 <Text
                                     testID="txt_races_period"
                                     style={styles.txtTime}>{this.race_time(raceInfo)}</Text>
                             </View>
                             <View style={styles.viewLocation}>
                                 <Image style={styles.imgLocation}
-                                       source={Images.race_location}/>
+                                       source={Images.home_adr}/>
                                 <Text
                                     testID="txt_races_address"
                                     style={styles.txtLocation}>{raceInfo.location}</Text>
@@ -502,8 +502,8 @@ const styles = StyleSheet.create({
         marginTop: 4
     },
     imgTime: {
-        height: 16,
-        width: 14
+        height: 15,
+        width: 15
     },
     imgLocation: {
         height: 15,
