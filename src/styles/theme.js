@@ -14,7 +14,7 @@ export default {
     touchableOpacityActiveOpacity: 0.8,
     segment: {
         color: '#ccc',
-        width: 1/PixelRatio.get()
+        width: 1 / PixelRatio.get()
     },
     tabButton: {
         normalColor: '#aaa'
@@ -23,8 +23,8 @@ export default {
         height: 44,
         paddingTop: Platform.Version >= 21 ? 20 : 0,
         //barColor: favoriteColor,
-        titleColor: '#E0C675',
-        titleSize: 18,
+        titleColor: '#F4E3A1',
+        titleSize: 17,
         textBtnSize: 15
     }
 }

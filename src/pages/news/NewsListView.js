@@ -12,7 +12,7 @@ import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {GET_NEWS_LIST} from '../../actions/ActionTypes';
-import {isEmptyObject, convertDate, strNotNull, uniqueArray} from '../../utils/ComonHelper';
+import {isEmptyObject, convertDate, strNotNull, uniqueArray, FontSize} from '../../utils/ComonHelper';
 import {ImageLoad, PullListView, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {fetchNewsList} from '../../actions/NewsAction';
@@ -51,7 +51,7 @@ class NewsListView extends Component {
 
         return (<View
             style={styles.pullView}
-            testID={'page_news_'+this.props.newsTypeItem.id}>
+            testID={'page_news_' + this.props.newsTypeItem.id}>
 
 
             <UltimateListView
@@ -66,11 +66,11 @@ class NewsListView extends Component {
                 dateTitle={I18n.t('last_refresh')}
                 allLoadedText={I18n.t('no_more')}
                 waitingSpinnerText={I18n.t('loading')}
-                emptyView={()=>{
-                    return this.state.error? <LoadErrorView
-                    onPress={()=>{
-                        this.listView.refresh()
-                    }}/>: <NoDataView/>;
+                emptyView={() => {
+                    return this.state.error ? <LoadErrorView
+                        onPress={() => {
+                            this.listView.refresh()
+                        }}/> : <NoDataView/>;
                 }}
             />
 
@@ -151,19 +151,19 @@ class NewsListView extends Component {
 
         if (top) {
             return (<TouchableOpacity
-                testID={"btn_news_row_"+rowData.id}
+                testID={"btn_news_row_" + rowData.id}
                 activeOpacity={1}
-                onPress={()=>this._pressItem(rowData)}>
+                onPress={() => this._pressItem(rowData)}>
                 <Image
-                    source={strNotNull(image)?{uri:image}:Images.empty_image}
+                    source={strNotNull(image) ? {uri: image} : Images.empty_image}
                     style={styles.listTopImg}
                 >
 
-                    <View style={{flex:1}}/>
+                    <View style={{flex: 1}}/>
                     <View style={styles.listTopTxtView}>
                         <Text
                             numberOfLines={1}
-                            style={styles.listTopTxt}>{title}</Text>
+                            style={[styles.listTopTxt, {fontSize: FontSize.h15}]}>{title}</Text>
 
                     </View>
                 </Image>
@@ -171,14 +171,14 @@ class NewsListView extends Component {
             </TouchableOpacity>)
         } else {
             return (<TouchableOpacity
-                testID={"btn_news_row_"+rowData.id}
+                testID={"btn_news_row_" + rowData.id}
                 activeOpacity={1}
-                onPress={()=>this._pressItem(rowData)}
+                onPress={() => this._pressItem(rowData)}
                 style={styles.listView}>
                 <View style={styles.listTitleView}>
                     <Text
                         numberOfLines={2}
-                        style={styles.listTitleTxt}>{title}</Text>
+                        style={[styles.listTitleTxt, {fontSize: FontSize.h16}]}>{title}</Text>
 
                     <View style={styles.listTimeView}>
                         <Text style={styles.listSource}>{source}</Text>
@@ -188,9 +188,9 @@ class NewsListView extends Component {
 
                 </View>
 
-                <View style={{flex:1}}/>
+                <View style={{flex: 1}}/>
                 <ImageLoad style={styles.listImg}
-                           source={{uri:image_thumb}}/>
+                           source={{uri: image_thumb}}/>
 
             </TouchableOpacity>)
         }
@@ -237,9 +237,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     listTopTxt: {
-        fontSize: 15,
         color: Colors.white,
-        marginLeft: 17
+        marginLeft: 17,
+        fontWeight: 'bold'
     },
     listView: {
         flexDirection: 'row',
@@ -275,10 +275,10 @@ const styles = StyleSheet.create({
     },
     listTitleTxt: {
         color: '#444444',
-        fontSize: 16,
         width: 216,
         alignSelf: 'flex-start',
-        height: 44
+        height: 44,
+        fontWeight: 'bold'
     },
     pullView: {
         flex: 1

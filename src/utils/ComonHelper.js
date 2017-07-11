@@ -52,11 +52,11 @@ export function uShareRace(title, location, icon, raceId) {
         })
 }
 
-export function newShare(title,location,icon,newsId) {
-    UMShare.share(title,location,icon,"http://106.75.136.9:8810/news/"+newsId)
+export function newShare(title, location, icon, newsId) {
+    UMShare.share(title, location, icon, "http://106.75.136.9:8810/news/" + newsId)
         .then(() => {
             showToast('分享成功')
-        },(error) => {
+        }, (error) => {
             alert(error)
         })
 }
@@ -151,7 +151,7 @@ export function checkPhone(phone) {
 var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 export function checkMail(mail) {
 
-    if (filter.test(mail.trim())) return true;
+    if (strNotNull(mail) && filter.test(mail.trim())) return true;
     else {
         showToast('您的电子邮件格式不正确');
         return false;
@@ -322,6 +322,58 @@ export function getUserData() {
             console.log(ret)
             userData = ret
         })
+}
+
+export let FontSize = {
+    h19: 19,
+    h18: 18,
+    h17: 17,
+    h16: 16,
+    h15: 15,
+    h14: 14,
+    h13: 13,
+    h12: 12,
+    h9: 9,
+};
+let sizeNum = 0;
+
+export function getSize() {
+    storage.load({key: StorageKey.FontNum})
+        .then((ret) => {
+            sizeNum = ret;
+            console.log('sizeNum:' + sizeNum);
+            FontSize = {
+                h19: 19 + sizeNum,
+                h18: 18 + sizeNum,
+                h17: 17 + sizeNum,
+                h16: 16 + sizeNum,
+                h15: 15 + sizeNum,
+                h14: 14 + sizeNum,
+                h13: 13 + sizeNum,
+                h12: 12 + sizeNum,
+                h9: 9 + sizeNum,
+            }
+        });
+}
+
+
+export function setSize(num) {
+    sizeNum = num;
+    FontSize = {
+        h19: 19 + sizeNum,
+        h18: 18 + sizeNum,
+        h17: 17 + sizeNum,
+        h16: 16 + sizeNum,
+        h15: 15 + sizeNum,
+        h14: 14 + sizeNum,
+        h13: 13 + sizeNum,
+        h12: 12 + sizeNum,
+        h9: 9 + sizeNum,
+    }
+    storage.save({
+        key: StorageKey.FontNum,
+        rawData: num
+    });
 }
 
 
