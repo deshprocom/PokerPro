@@ -151,7 +151,7 @@ class NewsListView extends Component {
 
     _itemNewsView = (rowData, sectionID, rowID) => {
 
-        const {top, name, cover_link} = rowData;
+        const {top, name, cover_link, video_duration} = rowData;
 
         if (top) {
             return (<TouchableOpacity
@@ -168,7 +168,8 @@ class NewsListView extends Component {
                     <View style={styles.itemBack}/>
                 </ImageLoad>
 
-                <Text style={[styles.listTopTxt, {fontSize:FontSize.h16}]}>{name}</Text>
+                <Text style={[styles.listVideoTime, {fontSize: FontSize.h14}]}>{video_duration}</Text>
+                <Text style={[styles.listTopTxt, {fontSize: FontSize.h17}]}>{name}</Text>
 
             </TouchableOpacity>)
         } else {
@@ -182,12 +183,17 @@ class NewsListView extends Component {
                     source={{uri: cover_link}}
                     style={styles.listTopImg}
                 >
-                    <View style={styles.itemBack}/>
+                    <View style={styles.itemBack}>
+                        <Image
+                            style={styles.imgPlay}
+                            source={Images.video_play}/>
+
+                    </View>
 
                 </ImageLoad>
 
-
-                <Text style={[styles.listTopTxt,{fontSize:FontSize.h16} ]}>{name}</Text>
+                <Text style={[styles.listVideoTime, {fontSize: FontSize.h14}]}>{video_duration}</Text>
+                <Text style={[styles.listTopTxt, {fontSize: FontSize.h16}]}>{name}</Text>
             </TouchableOpacity>)
         }
 
@@ -236,7 +242,8 @@ const styles = StyleSheet.create({
         color: Colors.white,
         left: 17,
         position: 'absolute',
-        bottom: 33
+        bottom: 12,
+        fontWeight: 'bold'
     },
     listView: {
         flexDirection: 'row',
@@ -287,5 +294,17 @@ const styles = StyleSheet.create({
     },
     transparent: {
         backgroundColor: 'transparent',
+    },
+    listVideoTime: {
+        color: Colors._EEE,
+        left: 17,
+        position: 'absolute',
+        bottom: 36
+    },
+    imgPlay: {
+        height: 68,
+        width: 68,
+        alignSelf: 'center',
+        marginTop: 68
     }
 });
