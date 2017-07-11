@@ -375,10 +375,8 @@ const styles = StyleSheet.create({
         marginRight: 15
     },
     txtTitle: {
-
         color: '#333333',
         lineHeight: 20,
-        height: 38,
         width: 170
     },
     imgClock: {
