@@ -95,7 +95,7 @@
   "entity_ticket_buy": "实体购票流程",
   "certification": "新增实名信息",
   "real_name": "真实姓名",
-  "ID_card": "身份证号",
+  "ID_card": "身份证号：",
   "identification": "身份证",
   "passport": "护照",
   "ple_real_name": "请输入真实姓名",
