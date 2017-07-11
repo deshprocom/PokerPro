@@ -3,7 +3,7 @@
  */
 import React, {Component, PropTypes}from 'react';
 import {
-    TouchableOpacity, View, TextInput, Alert,
+    TouchableOpacity, View, TextInput, Keyboard,
     StyleSheet, Image, Text, ScrollView, Platform
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
@@ -94,6 +94,7 @@ export default class NewAddress extends Component {
                 <View style={styles.line}/>
                 <TouchableOpacity
                     onPress={() => {
+                        Keyboard.dismiss();
                         this.setState({
                             regionVisible: !this.state.regionVisible
                         })

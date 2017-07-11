@@ -1,8 +1,8 @@
 // @flow
-
+import StorageKey from '../configs/StorageKey';
 const type = {
     base: 'PingFangSC-Light',
-}
+};
 
 const size = {
     h1: 38,
@@ -20,7 +20,8 @@ const size = {
     h12: 12,
     h9: 9,
     tiny: 8.5
-}
+};
+
 
 const style = {
     h1: {
@@ -101,6 +102,6 @@ export default {
     },
     type,
     size,
-    style
+    style,
 }
 

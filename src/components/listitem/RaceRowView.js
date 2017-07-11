@@ -11,7 +11,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {
     strNotNull, getLoginUser,
     convertDate, YYYY_MM_DD, racesStatusImage,
-    sellable, raceStatusConvert
+    sellable, raceStatusConvert,FontSize
 } from '../../utils/ComonHelper';
 import {SellStatus} from '../../configs/Status';
 
@@ -129,13 +129,13 @@ export default class RaceRowView extends Component {
                 source={{uri: logo}}/>
             <View style={{backgroundColor: 'transparent'}}>
                 <Text
-                    style={styles.txtTitle}
+                    style={[styles.txtTitle,{fontSize:FontSize.h17}]}
                     numberOfLines={2}>{name}</Text>
                 <View style={styles.viewClock}>
                     <Image source={Images.home_adr}
                            style={styles.imgAdr}/>
 
-                    <Text style={styles.txtClock}>{location}</Text>
+                    <Text style={[styles.txtClock,{fontSize:FontSize.h13}]}>{location}</Text>
 
                 </View>
 
@@ -143,13 +143,14 @@ export default class RaceRowView extends Component {
                     <Image source={Images.home_clock}
                            style={styles.imgClock}/>
 
-                    <Text style={styles.txtClock}>{this._time(begin_date, end_date)}</Text>
+                    <Text style={[styles.txtClock,{fontSize:FontSize.h13}]}>
+                        {this._time(begin_date, end_date)}</Text>
 
                 </View>
 
                 <View style={[styles.viewClock, {marginTop: 10}]}>
-                    <Text style={styles.lbPrice}>{I18n.t('prize')}</Text>
-                    <Text style={styles.txtPrice}> {prize}</Text>
+                    <Text style={[styles.lbPrice,{fontSize:FontSize.h13}]}>{I18n.t('prize')}</Text>
+                    <Text style={[styles.txtPrice,{fontSize:FontSize.h13}]}> {prize}</Text>
                 </View>
             </View>
 
@@ -374,7 +375,7 @@ const styles = StyleSheet.create({
         marginRight: 15
     },
     txtTitle: {
-        fontSize: Fonts.size.h15,
+
         color: '#333333',
         lineHeight: 20,
         height: 38,
@@ -389,7 +390,7 @@ const styles = StyleSheet.create({
         width: 10
     },
     txtClock: {
-        fontSize: Fonts.size.h13,
+
         color: '#888888',
         marginLeft: 5
     },
@@ -399,11 +400,11 @@ const styles = StyleSheet.create({
         marginTop: 5
     },
     lbPrice: {
-        fontSize: Fonts.size.h13,
+
         color: '#454545'
     },
     txtPrice: {
-        fontSize: Fonts.size.h13,
+
         color: '#daa647'
     },
     btnStatus: {
