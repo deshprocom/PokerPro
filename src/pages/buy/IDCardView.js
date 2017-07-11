@@ -45,7 +45,8 @@ class IDCardView extends Component {
         idCard: '',
         cardImage: '',
         editable: true,
-        imageName: ''
+        imageName: '',
+        choice_id: 'chinese_id'
     };
 
     componentDidMount() {
@@ -118,7 +119,7 @@ class IDCardView extends Component {
 
     _btnSubmit = () => {
         umengEvent('true_name_submit');
-        const {realName, idCard, cardImage, imageName} = this.state;
+        const {realName, idCard, cardImage, imageName, choice_id} = this.state;
         if (strNotNull(realName) && strNotNull(idCard) && !isEmptyObject(cardImage)) {
 
             if (cardImage.indexOf("http") == -1) {
@@ -127,10 +128,11 @@ class IDCardView extends Component {
                 formData.append("image", file);
                 this.props._postCardImage(formData);
             }
-
+            // router.log(choice_id);
             const body = {
                 real_name: realName,
-                cert_no: idCard
+                cert_no: idCard,
+                cert_type: choice_id
             };
             this.props._postCertification(body);
 
@@ -164,15 +166,34 @@ class IDCardView extends Component {
         }
     };
 
-
     render() {
 
-        const {realName, idCard, editable} = this.state;
+        const {realName, idCard, editable,choice_id} = this.state;
 
         return (<ScrollView
             testID="page_real_name"
             style={ApplicationStyles.bgContainer}>
 
+            <View style={styles.choice_view}>
+                <Button style={[styles.choice_btn, styles.choice_btn_right,
+                {backgroundColor:choice_id==='chinese_id'?Colors.bg_black :Colors.bg_f5}]}
+                        textStyle={[styles.choice_text_btn,{color: choice_id==='chinese_id'?Colors.text_choice_btn :Colors.txt_444}]}
+                        onPress={() =>{
+                    this.setState({
+                        choice_id:'chinese_id'
+                    })
+                }}>
+                    身份证</Button>
+
+                <Button style={[styles.choice_btn,{backgroundColor:choice_id==='passport_id'?Colors.bg_black :Colors.bg_f5}]}
+                        textStyle={[styles.choice_text_btn,{color: choice_id==='passport_id'?Colors.text_choice_btn :Colors.txt_444}]}
+                        onPress={() => {
+                    this.setState({
+                        choice_id:'passport_id'
+                    })
+                }}>
+                    护照</Button>
+            </View>
 
             <View
                 style={{height:50,alignItems:'center',flexDirection:'row',
@@ -197,9 +218,10 @@ class IDCardView extends Component {
             </View>
             <View
                 style={{height:50,alignItems:'center',flexDirection:'row',
-                    marginTop:1,backgroundColor:Colors.white}}>
+                    marginTop:1,backgroundColor:Colors.white,paddingLeft: 18}}>
 
-                <Text style={{fontSize:15,color:Colors.txt_666,marginLeft:18}}>{I18n.t('ID_card')}:</Text>
+                <Text style={[styles.text_input,{width: choice_id==='chinese_id'?76 :0}]}>{I18n.t('ID_card')}</Text>
+                <Text style={[styles.text_input,{width: choice_id==='passport_id'?66 :0}]}>{I18n.t('password_card')}</Text>
                 <InputView
                     testID="input_id_card"
                     editable={editable}
@@ -305,3 +327,35 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, bindAction)(IDCardView);
+
+const styles = StyleSheet.create({
+    choice_view: {
+        flexDirection: 'row',
+        paddingTop: 12,
+        paddingLeft: 17,
+        paddingRight: 17,
+        paddingBottom: 18,
+        backgroundColor: Colors.white
+    },
+    choice_btn: {
+        width: 160,
+        height: 36,
+        flex: 1,
+        alignItems: 'center',
+        paddingTop: 8,
+        backgroundColor: Colors.bg_f5,
+        borderRadius: 2
+    },
+    choice_btn_right: {
+        marginRight: 22
+    },
+    choice_text_btn: {
+        fontSize: 15,
+        color: Colors.txt_444
+    },
+    text_input: {
+        // backgroundColor: 'red',
+        fontSize:15,
+        color:Colors.txt_666
+    }
+})
