@@ -253,7 +253,7 @@ class IDCardView extends Component {
             </TouchableOpacity>
 
             <Text style={{fontSize:Fonts.size.h12,marginTop:114,alignSelf:'center',
-            color:Colors._AAA}}>
+            color:Colors._AAA,paddingLeft: 15,paddingRight: 15}}>
                 {I18n.t('upload_issue')}</Text>
 
             {this._hasRealBtn()}

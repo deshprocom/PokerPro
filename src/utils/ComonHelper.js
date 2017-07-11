@@ -369,11 +369,18 @@ export function setSize(num) {
         h13: 13 + sizeNum,
         h12: 12 + sizeNum,
         h9: 9 + sizeNum,
-    }
+    };
     storage.save({
         key: StorageKey.FontNum,
         rawData: num
     });
+}
+
+export function setFontSize(num) {
+    storage.save({
+        key: StorageKey.FontSizeNum,
+        rawData: num
+    })
 }
 
 

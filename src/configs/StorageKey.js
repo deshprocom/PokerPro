@@ -9,6 +9,7 @@ export default {
     ApiSever:'ApiSever',
     BuyEmail:'BuyEmail',
     UserData:'UserData',
-    FontNum:'FontNum'
+    FontNum:'FontNum',
+    FontSizeNum: 'FontSizeNum'
 
 }
