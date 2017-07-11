@@ -220,8 +220,8 @@ class IDCardView extends Component {
                 style={{height:50,alignItems:'center',flexDirection:'row',
                     marginTop:1,backgroundColor:Colors.white,paddingLeft: 18}}>
 
-                <Text style={[styles.text_input,{width: choice_id==='chinese_id'?80 :0}]}>{I18n.t('ID_card')}</Text>
-                <Text style={[styles.text_input,{width: choice_id==='passport_id'?80 :0}]}>{I18n.t('password_card')}</Text>
+                <Text style={[styles.text_input,{width: choice_id==='chinese_id'?76 :0}]}>{I18n.t('ID_card')}</Text>
+                <Text style={[styles.text_input,{width: choice_id==='passport_id'?66 :0}]}>{I18n.t('password_card')}</Text>
                 <InputView
                     testID="input_id_card"
                     editable={editable}
@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
         color: Colors.txt_444
     },
     text_input: {
-        width: 80,
+        // backgroundColor: 'red',
         fontSize:15,
         color:Colors.txt_666
     }
