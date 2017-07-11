@@ -169,7 +169,7 @@ class NewsListView extends Component {
                 </ImageLoad>
 
                 <Text style={[styles.listVideoTime, {fontSize: FontSize.h14}]}>{video_duration}</Text>
-                <Text style={[styles.listTopTxt, {fontSize: FontSize.h16}]}>{name}</Text>
+                <Text style={[styles.listTopTxt, {fontSize: FontSize.h17}]}>{name}</Text>
 
             </TouchableOpacity>)
         } else {
@@ -242,7 +242,8 @@ const styles = StyleSheet.create({
         color: Colors.white,
         left: 17,
         position: 'absolute',
-        bottom: 12
+        bottom: 12,
+        fontWeight: 'bold'
     },
     listView: {
         flexDirection: 'row',
@@ -301,8 +302,8 @@ const styles = StyleSheet.create({
         bottom: 36
     },
     imgPlay: {
-        height: 68,
-        width: 68,
+        height: 76,
+        width: 76,
         alignSelf: 'center',
         marginTop: 68
     }
