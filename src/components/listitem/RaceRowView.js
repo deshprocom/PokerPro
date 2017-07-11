@@ -377,7 +377,7 @@ const styles = StyleSheet.create({
     txtTitle: {
         color: '#333333',
         lineHeight: 20,
-        width: 170
+        width: 200
     },
     imgClock: {
         height: 12,
