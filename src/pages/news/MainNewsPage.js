@@ -141,6 +141,7 @@ export default class MainNewsPage extends Component {
                 renderItem={this._itemView}
                 horizontal={true}
                 keyExtractor={item => item.id}
+                style={{marginLeft: 10}}
             />
         </View> )
     };
@@ -245,7 +246,7 @@ const styles = StyleSheet.create({
     },
     newsTypeView: {
         height: 40,
-        backgroundColor: Colors.white
+        backgroundColor: Colors._161817
     },
     itemView: {
         height: 40,
@@ -254,17 +255,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     itemTxt: {
-        color: Colors._AAA,
+        color: Colors._888,
         fontSize: 14
     },
     itemTxtSelect: {
-        color: '#444444',
+        color: 'white',
         fontSize: 16,
         marginBottom: 5
     },
     triangle: {
-        height: 9,
-        width: 16
+        height: 3,
+        width: 32,
+        marginBottom: 4
     },
     viewPage: {
         flex: 1
