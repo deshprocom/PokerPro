@@ -76,7 +76,7 @@ export const itemListView = (item, index) => {
 };
 
 function sellStyle(status) {
-    return status === 'selling' ? styles.itemSell : [styles.itemSell, {borderColor: Colors.txt_666}]
+    return status === 'selling' ? styles.itemSell : [styles.itemSell, {borderColor: Colors._666}]
 }
 
 function sellTxt(status) {
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end'
     },
     statusTxt: {
-        color: Colors.txt_666,
+        color: Colors._666,
         fontSize: 12
     },
     marginLine: {

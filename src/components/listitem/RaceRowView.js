@@ -84,7 +84,7 @@ export default class RaceRowView extends Component {
                     <Text
                         numberOfLines={1}
                         style={[Fonts.H13, {
-                            color: Colors.txt_666,
+                            color: Colors._666,
                             marginTop: 4
                         }]}>{I18n.t('address') + rowData.location}</Text>
                     {this.racesTimeView(rowData.begin_date, rowData.end_date)}
@@ -249,7 +249,7 @@ export default class RaceRowView extends Component {
     racesTimeView = (begin_date, end_date) => {
         let start = convertDate(begin_date, YYYY_MM_DD);
         let end = convertDate(end_date, YYYY_MM_DD);
-        return ( <Text style={[Fonts.H12, {color: Colors.txt_666, marginTop: 3, marginBottom: 18}]}>
+        return ( <Text style={[Fonts.H12, {color: Colors._666, marginTop: 3, marginBottom: 18}]}>
             {start + "-" + end}</Text>)
 
     };

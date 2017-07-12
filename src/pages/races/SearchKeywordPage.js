@@ -44,7 +44,7 @@ class SearchKeywordPage extends Component {
     render() {
         return (<View
             testID="page_keyword_search"
-            style={ApplicationStyles.bg_black}>
+            style={ApplicationStyles._ECE}>
             <View style={styles.navBar}>
                 <View style={styles.popBtn}/>
 

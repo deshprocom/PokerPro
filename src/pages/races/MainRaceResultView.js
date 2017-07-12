@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
         marginLeft: 17,
         marginBottom: 20,
         borderWidth: 1,
-        borderColor: Colors._161817,
+        borderColor: Colors._161,
         borderRadius: 2,
     },
     btn1: {
@@ -171,17 +171,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRightWidth: 1,
-        borderRightColor: Colors._161817
+        borderRightColor: Colors._161
     },
     btnSelect: {
         flex: 1,
         height: 36,
-        backgroundColor: Colors._161817,
+        backgroundColor: Colors._161,
         justifyContent: 'center',
         alignItems: 'center'
     },
     txtBtn: {
-        color: Colors._161817,
+        color: Colors._161,
         fontSize: 14
     },
     txtBtnSelect: {
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 2
     },
     txtTab: {
-        color: Colors.txt_666,
+        color: Colors._666,
         fontSize: 13,
         marginTop: 13,
         marginLeft: 17,

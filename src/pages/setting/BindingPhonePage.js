@@ -63,7 +63,7 @@ class BindingPhonePage extends Component {
 
         return (<View
             testID="page_bind"
-            style={ApplicationStyles.bg_black}>
+            style={ApplicationStyles._ECE}>
             <NavigationBar
                 toolbarStyle={{backgroundColor:Colors.bg_09}}
                 router={router}
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
         fontSize: 15
     },
     txtPrompt: {
-        color: Colors.txt_666,
+        color: Colors._666,
         fontSize: 13,
         marginTop: 15,
         alignSelf: 'center'
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     },
     txtBind: {
         fontSize: 19,
-        color: Colors._161817
+        color: Colors._161
     }
 
 });

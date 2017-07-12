@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 50,
-        color: Colors.txt_666,
+        color: Colors._666,
         fontSize: 15, flex: 1, alignSelf: 'center',
         marginLeft: 20
     },
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     },
     text_other_sign: {
         fontSize: 14,
-        color: Colors.txt_666,
+        color: Colors._666,
         marginBottom: 48
     },
     btn_text_sign: {

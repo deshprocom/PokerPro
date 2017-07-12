@@ -144,19 +144,19 @@ const styles = StyleSheet.create({
         flex: 1,
         height: 36,
         borderWidth: 1,
-        borderColor: Colors._161817,
+        borderColor: Colors._161,
         justifyContent: 'center',
         alignItems: 'center'
     },
     btnSelect: {
         flex: 1,
         height: 36,
-        backgroundColor: Colors._161817,
+        backgroundColor: Colors._161,
         justifyContent: 'center',
         alignItems: 'center',
     },
     txtBtn: {
-        color: Colors._161817,
+        color: Colors._161,
         fontSize: 14
     },
     txtBtnSelect: {
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 2
     },
     txtTab: {
-        color: Colors.txt_666,
+        color: Colors._666,
         fontSize: 13,
         marginTop: 13,
         marginLeft: 17,

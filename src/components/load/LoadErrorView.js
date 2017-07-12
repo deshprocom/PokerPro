@@ -32,7 +32,7 @@ export default class LoadErrorView extends Component {
                     if(this.props.onPress !== undefined)
                         this.props.onPress();
                 }}
-                    style={{backgroundColor:Colors._161817,
+                    style={{backgroundColor:Colors._161,
                 height:40,width:172,marginTop:37,justifyContent:'center'}}
                     textStyle={[Fonts.H17,{color:Colors.txt_E4D}]}>
                     {I18n.t('retry')}

@@ -33,7 +33,7 @@ class ModifyPwdPage extends Component {
     render() {
         return (<View
                 testID="page_modify_pwd_by_pwd"
-                style={ApplicationStyles.bg_black}>
+                style={ApplicationStyles._ECE}>
                 <NavigationBar
                     toolbarStyle={{backgroundColor:Colors.bg_09}}
                     router={this.props.router}

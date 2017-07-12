@@ -138,20 +138,20 @@ class OrderInfoPage extends React.Component {
                     <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
                         <View>
                             <View style={{flexDirection:'row',alignItems:'center'}}>
-                                <Text style={{fontSize:14,color:Colors.txt_666,marginRight:18}}>订单编号:</Text>
+                                <Text style={{fontSize:14,color:Colors._666,marginRight:18}}>订单编号:</Text>
                                 <Text
                                     testID="txt_ticket_type"
                                     style={{fontSize:15,color:Colors._888}}>{order_info.order_id}</Text>
                             </View>
                             <View style={{flexDirection:'row',alignItems:'center',marginTop:10}}>
-                                <Text style={{fontSize:14,color:Colors.txt_666,marginRight:18}}>下单时间:</Text>
+                                <Text style={{fontSize:14,color:Colors._666,marginRight:18}}>下单时间:</Text>
                                 <Text
                                     testID="txt_created_at"
                                     style={{fontSize:15,color:Colors._888}}>
                                     {convertDate(order_info.created_at, DATA_SS)}</Text>
                             </View>
                             <View style={{flexDirection:'row',alignItems:'center',marginTop:10}}>
-                                <Text style={{fontSize:14,color:Colors.txt_666,marginRight:18}}>订单状态:</Text>
+                                <Text style={{fontSize:14,color:Colors._666,marginRight:18}}>订单状态:</Text>
                                 <Text
                                     testID="txt_order_status"
                                     style={{fontSize:15,color:Colors._888}}>{orderStatus(order_info.status)}</Text>
@@ -170,7 +170,7 @@ class OrderInfoPage extends React.Component {
                         </View>
                         <View style={{height:1,backgroundColor:Colors.bg_f5}}/>
                         <View style={{flexDirection:'row',alignItems:'center',marginTop:10}}>
-                            <Text style={{fontSize:14,color:Colors.txt_666,marginRight:18}}>电子邮件:</Text>
+                            <Text style={{fontSize:14,color:Colors._666,marginRight:18}}>电子邮件:</Text>
                             <Text
                                 testID="txt_email"
                                 style={{fontSize:14,color:Colors._888}}>{legalValue(order_info.email)}</Text>
@@ -189,15 +189,15 @@ class OrderInfoPage extends React.Component {
                     <View style={{flex:1}}>
                         <View
                             style={{justifyContent:'space-between',flexDirection:'row',marginTop:14}}>
-                            <Text style={{fontSize:14,color:Colors.txt_666}}>商品金额</Text>
+                            <Text style={{fontSize:14,color:Colors._666}}>商品金额</Text>
                             <Text
                                 testID="txt_original_price"
-                                style={{fontSize:14,color:Colors.bg_black,marginRight:18,
+                                style={{fontSize:14,color:Colors._ECE,marginRight:18,
                                 textDecorationLine: 'line-through'}}>{order_info.original_price}</Text>
                         </View>
                         <View
                             style={{justifyContent:'space-between',flexDirection:'row',marginTop:16}}>
-                            <Text style={{fontSize:14,color:Colors.txt_666}}>应付金额</Text>
+                            <Text style={{fontSize:14,color:Colors._666}}>应付金额</Text>
                             <Text
 
                                 testID="txt_price"
@@ -224,7 +224,7 @@ class OrderInfoPage extends React.Component {
 
 
                 <View style={{flexDirection:'row',marginLeft:19,alignItems:'flex-end'}}>
-                    <Text style={{fontSize:14,color:Colors.txt_666}}>合计:  </Text>
+                    <Text style={{fontSize:14,color:Colors._666}}>合计:  </Text>
 
                     <Text
                         testID="txt_total_price"
@@ -240,7 +240,7 @@ class OrderInfoPage extends React.Component {
                     <View
                         style={{borderColor:Colors._AAA,borderWidth:1,borderRadius:5,
                     height:32,width:68,alignItems:'center',justifyContent:'center',marginRight:15}}>
-                        <Text style={{fontSize:12,color:Colors.txt_666}}>取消订单</Text>
+                        <Text style={{fontSize:12,color:Colors._666}}>取消订单</Text>
                     </View>
                 </TouchableOpacity>
                 {this._user_real_call_btn()}
@@ -289,7 +289,7 @@ class OrderInfoPage extends React.Component {
                 onPress={this._hotLine}
                 touchableType={Button.constants.touchableTypes.fadeContent}
                 testID="btn_refresh"
-                textStyle={{color:Colors.txt_666,fontSize:17}}
+                textStyle={{color:Colors._666,fontSize:17}}
                 style={{justifyContent:'center',backgroundColor:Colors.white,
                     height:49,flex:1,marginLeft:17,marginRight:17,marginBottom:17
                     }}

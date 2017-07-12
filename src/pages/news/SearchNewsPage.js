@@ -177,7 +177,7 @@ class SearchNewsPage extends Component {
                                source={Images.news_outline}/>
                         <TextInput
                             testID="input_news_search"
-                            placeholderTextColor={Colors.txt_666}
+                            placeholderTextColor={Colors._666}
                             placeholder={I18n.t('news_outline')}
                             autoCapitalize="none"
                             autoCorrect={false}
@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
         borderRadius: 3
     },
     navBar: {
-        backgroundColor: Colors._161817
+        backgroundColor: Colors._161
     },
     searchImg: {
         height: 16,

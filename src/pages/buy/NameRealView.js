@@ -42,7 +42,7 @@ export default class NameRealView extends Component {
             <View style={{height:61,flex:1,marginLeft:18}}>
 
                 <Text
-                    style={{fontSize:15,color:Colors.txt_666,marginTop:13}}>{I18n.t('real_name_tip')}</Text>
+                    style={{fontSize:15,color:Colors._666,marginTop:13}}>{I18n.t('real_name_tip')}</Text>
                 <Text
                     style={{fontSize:14,color:Colors._AAA,flex:1,marginTop:4}}>{I18n.t('real_name_ticket')}</Text>
 
@@ -82,16 +82,16 @@ export default class NameRealView extends Component {
                 <View style={{flex:1}}>
                     <View style={{alignItems:'center',flexDirection:'row',marginTop:10}}>
                         <View style={{flexDirection:'row'}}>
-                            <Text style={{fontSize:Fonts.size.h15,color:Colors.txt_666,marginRight:9}}>
+                            <Text style={{fontSize:Fonts.size.h15,color:Colors._666,marginRight:9}}>
                                 真实姓名:</Text>
-                            <Text style={{fontSize:Fonts.size.h15,color:Colors.txt_666}}>
+                            <Text style={{fontSize:Fonts.size.h15,color:Colors._666}}>
                                 {user_extra.real_name}</Text>
                         </View>
 
                     </View>
 
                     <View style={{flexDirection:'row',marginTop:8}}>
-                        <Text style={{fontSize:Fonts.size.h15,color:Colors.txt_666,marginRight:9}}>
+                        <Text style={{fontSize:Fonts.size.h15,color:Colors._666,marginRight:9}}>
                             身份证号:</Text>
                         <SecurityText
                             securityOptions={{
@@ -99,7 +99,7 @@ export default class NameRealView extends Component {
                         startIndex: 4,
                         endIndex: 15,
                     }}
-                            style={{fontSize:Fonts.size.h15,color:Colors.txt_666}}>
+                            style={{fontSize:Fonts.size.h15,color:Colors._666}}>
                             {user_extra.cert_no}</SecurityText>
                     </View>
                 </View>
