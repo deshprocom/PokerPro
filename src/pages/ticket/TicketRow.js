@@ -47,8 +47,8 @@ export const itemListView = (item, index) => {
                         </View>
 
                         <View style={styles.view_time}>
-                            <Image source={Images.race_time}
-                            style={{width: 11, height: 11}}/>
+                            <Image source={Images.home_clock}
+                            style={{width: 10, height: 10}}/>
                             <Text style={styles.itemTime}>
                                 {convertDate(begin_date, 'YYYY.MM.DD') + '-' + convertDate(end_date, 'YYYY.MM.DD')}</Text>
                         </View>
@@ -76,7 +76,7 @@ export const itemListView = (item, index) => {
 };
 
 function sellStyle(status) {
-    return status === 'selling' ? styles.itemSell : [styles.itemSell, {borderColor: Colors.txt_666}]
+    return status === 'selling' ? styles.itemSell : [styles.itemSell, {borderColor: Colors._CCC}]
 }
 
 function sellTxt(status) {
@@ -118,9 +118,9 @@ const styles = StyleSheet.create({
     bg_img: {
         backgroundColor: 'transparent',
         height: 127,
-        marginLeft: '2%',
-        marginRight: '2%',
-        width: '96%'
+        marginLeft: '1%',
+        marginRight: '1%',
+        width: '98%'
     },
     itemTitle: {
         width: 270,
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end'
     },
     statusTxt: {
-        color: Colors.txt_666,
+        color: Colors._CCC,
         fontSize: 12
     },
     marginLine: {
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
         borderRadius: 2,
         position: 'absolute',
         top: 30,
-        right: '3%'
+        right: 6
     },
     sellTxt: {
         color: '#ED3445',
