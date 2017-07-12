@@ -49,7 +49,7 @@ export default class OrderListPage extends Component {
                  textStyle={{fontSize:17}}
                  style={{ borderColor: Colors._EEE}}
                  tabStyle={{paddingBottom:0}}
-                 underlineStyle={{backgroundColor:'#161718'}}/>}>
+                 underlineStyle={{backgroundColor:'#161718',width: '12%', height: 2,marginLeft: '4.6%'}}/>}>
 
 
                 <ListOrderView
