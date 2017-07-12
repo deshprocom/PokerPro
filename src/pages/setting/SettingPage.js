@@ -181,9 +181,9 @@ class SettingPage extends Component {
                 onPress={this._exitApp}
                 style={{
                     width: Metrics.screenWidth, height: 59,
-                    justifyContent: 'center', backgroundColor: '#212325'
+                    justifyContent: 'center', backgroundColor: 'white'
                 }}
-                textStyle={[{color: Colors._AAA}, Fonts.H17]}>
+                textStyle={[{color: Colors._333}, Fonts.H17]}>
                 {I18n.t('exit_login')}
             </Button>)
         }

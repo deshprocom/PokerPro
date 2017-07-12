@@ -23,7 +23,6 @@ const colors = {
     txt_777: '#777777',
     txt_FF5: '#FF5837',
     _888: '#888888',
-    _999: '#999999',
     bg_1B1C1D: '#1B1C1D',
     txt_DDD: '#DDDDDD',
     txt_C9B: '#C9BB6C',
@@ -43,7 +42,16 @@ const colors = {
     txt_race_type: '#CAC6CA',
     txt_price:'#DF1D0F',
     bg_ec:'#ececee',
-    text_choice_btn: '#FFE9AD'
+    text_choice_btn: '#FFE9AD',
+
+    _F4E:'#F4E3A1',
+    _DF1:'#DF1D0F',
+    _161: '#161718',
+    _333:'#333333',
+    _666: '#666666',
+    _999: '#999999',
+    _CCC: '#CCCCCC',
+    _ECE: '#ECECEE',
 
 }
 
