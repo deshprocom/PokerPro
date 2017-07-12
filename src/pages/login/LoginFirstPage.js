@@ -117,7 +117,7 @@ class LoginFirstPage extends React.Component {
                         }}>
                             <TextInput style={styles.text_input}
                                        numberOfLines={1}
-                                       placeholderTextColor={Colors._666}
+                                       placeholderTextColor={Colors.txt_666}
                                        underlineColorAndroid='transparent'
                                        onChangeText={text => {
                                            this.setState({
@@ -138,7 +138,7 @@ class LoginFirstPage extends React.Component {
                         }}>
                             <TextInput style={styles.text_input}
                                        numberOfLines={1}
-                                       placeholderTextColor={Colors._666}
+                                       placeholderTextColor={Colors.txt_666}
                                        onChangeText={text => {
                                            this.setState({
                                                password: text
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     text_other_sign: {
         alignSelf: 'center',
         fontSize: 14,
-        color: Colors._666
+        color: Colors.txt_666
     },
     text_problem: {
         fontSize: 14,

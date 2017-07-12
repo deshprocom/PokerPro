@@ -11,8 +11,8 @@ const colors = {
     white: '#FFFFFF',
     _2C3039: '#2C3039',
     line_16181D: '#16181D',
-
-
+    txt_CCCCCC: '#CCCCCC',
+    txt_666: '#666666',
     txt_E0C: '#E0C675',
     bg_09: '#090909',
     _222: '#222222',
@@ -33,14 +33,16 @@ const colors = {
     txt_FF3: '#FF3838',
     _EEE: '#EEEEEE',
     txt_E48: '#E4834F',
+    bg_black: '#ECECEE',
     setting: '#FFFFFF',
     btn_bg: '#E0BB75',
     txt_btn_21: '#212325',
+    _161817: '#161718',
     txt_E4D: '#E4D57F',
     txt_race_type: '#CAC6CA',
+    txt_price:'#DF1D0F',
     bg_ec:'#ececee',
     text_choice_btn: '#FFE9AD',
-
 
     _F4E:'#F4E3A1',
     _DF1:'#DF1D0F',
@@ -50,8 +52,6 @@ const colors = {
     _999: '#999999',
     _CCC: '#CCCCCC',
     _ECE: '#ECECEE',
-
-
 
 }
 

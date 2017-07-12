@@ -560,7 +560,7 @@ const styles = StyleSheet.create({
     },
     barTitle: {
         fontSize: 18,
-        color: Colors._161
+        color: Colors._161817
     },
     viewRace: {
         height: 100,
@@ -649,7 +649,7 @@ const styles = StyleSheet.create({
     txtPrice: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: Colors._161,
+        color: Colors._161817,
     },
     viewBottom: {
         height: 60,
@@ -664,7 +664,7 @@ const styles = StyleSheet.create({
     },
     txtMoney: {
         fontSize: 14,
-        color: Colors._161,
+        color: Colors._161817,
         fontWeight: 'bold',
         marginTop: 3
     },

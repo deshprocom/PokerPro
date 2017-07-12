@@ -133,11 +133,11 @@ const styles = StyleSheet.create({
     },
     txtName: {
         fontSize: 18,
-        color: Colors._666
+        color: Colors.txt_666
     },
     txtCountry: {
         fontSize: 18,
-        color: Colors._666,
+        color: Colors.txt_666,
         marginTop: 8
     }
 

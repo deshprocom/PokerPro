@@ -422,7 +422,7 @@ class BuyTicketPage extends Component {
                         backgroundColor: Colors.white, marginTop: 6
                     }}>
                         <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 18, marginTop: 18}}>
-                            <Text style={{fontSize: 15, color: Colors._666}}>
+                            <Text style={{fontSize: 15, color: Colors.txt_666}}>
                                 {I18n.t('ticket_type')}</Text>
                             <Text style={{fontSize: 14, color: Colors.txt_FF3, marginLeft: 18}}>
                                 (剩余{this.eTicketNum(ticket_info)}张)</Text>
@@ -482,7 +482,7 @@ class BuyTicketPage extends Component {
                         shadowRadius: 3
                     }}>
                     <View style={{flex: 1, flexDirection: 'row', marginLeft: 19, alignItems: 'flex-end'}}>
-                        <Text style={{fontSize: 14, color: Colors._666}}>票价:</Text>
+                        <Text style={{fontSize: 14, color: Colors.txt_666}}>票价:</Text>
                         <Text style={{fontSize: 12, color: Colors.txt_FF9, marginLeft: 10}}>¥</Text>
                         <Text style={{fontSize: 18, color: Colors.txt_FF9}}
                               testID="txt_ticket_price">
@@ -497,7 +497,7 @@ class BuyTicketPage extends Component {
                         style={{width: 77, height: 62, alignItems: 'center', justifyContent: 'center'}}>
                         <Image style={{width: 25, height: 21}}
                                source={Images.prompt_service}/>
-                        <Text style={{fontSize: 12, color: Colors._666}}>客服</Text>
+                        <Text style={{fontSize: 12, color: Colors.txt_666}}>客服</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         disabled={ordered}
@@ -524,7 +524,7 @@ class BuyTicketPage extends Component {
                 marginTop: 10, backgroundColor: Colors.white
             }}>
 
-            <Text style={{fontSize: 15, color: Colors._666, marginLeft: 18}}>{I18n.t('email')}:</Text>
+            <Text style={{fontSize: 15, color: Colors.txt_666, marginLeft: 18}}>{I18n.t('email')}:</Text>
             <InputView
                 testIDClear="btn_clear_email"
                 testID="input_email"
@@ -566,7 +566,7 @@ class BuyTicketPage extends Component {
                 <View style={{height: 44, flex: 1, alignItems: 'center', flexDirection: 'row'}}>
 
                     <Text style={{
-                        fontSize: 15, color: Colors._666, marginLeft: 18,
+                        fontSize: 15, color: Colors.txt_666, marginLeft: 18,
                         marginRight: 9
                     }}>{I18n.t('shopping_addr')}:</Text>
                     <Text style={{fontSize: 14, color: Colors._AAA, flex: 1}}>{I18n.t('shopping_addr_desc')}</Text>
@@ -593,7 +593,7 @@ class BuyTicketPage extends Component {
                 <View style={{alignItems: 'center', flexDirection: 'row', marginTop: 14}}>
 
                     <Text style={{
-                        fontSize: 15, color: Colors._666, marginLeft: 18,
+                        fontSize: 15, color: Colors.txt_666, marginLeft: 18,
                         marginRight: 9
                     }}>{I18n.t('shopping_addr')}:</Text>
                     <Text style={{fontSize: 14, color: Colors._AAA}}>{I18n.t('shopping_addr_desc')}</Text>
@@ -678,7 +678,7 @@ const styles = StyleSheet.create({
     txtPrice: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: Colors._161,
+        color: Colors._161817,
     },
     viewInfo: {
         marginTop: 9,

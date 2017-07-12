@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     },
     text_other_sign: {
         fontSize: 14,
-        color: Colors._666,
+        color: Colors.txt_666,
         marginBottom: 48
     },
     btn_text_sign: {

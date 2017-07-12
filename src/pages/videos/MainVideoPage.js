@@ -56,7 +56,7 @@ export  default class MainVideoPage extends Component {
                 testID="page_news_main"
                 style={ApplicationStyles.bgContainer}>
                 <NavigationBar
-                    toolbarStyle={{backgroundColor: Colors._161}}
+                    toolbarStyle={{backgroundColor: Colors._161817}}
                     router={router}
                     title={I18n.t('home_video')}
                     leftBtnIcon={Images.sign_return}
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
         borderRadius: 3
     },
     navBar: {
-        backgroundColor: Colors._161
+        backgroundColor: Colors._161817
     },
     searchImg: {
         height: 16,
@@ -221,12 +221,12 @@ const styles = StyleSheet.create({
         marginRight: 10
     },
     txtOutline: {
-        color: Colors._666,
+        color: Colors.txt_666,
         fontSize: 12
     },
     newsTypeView: {
         height: 40,
-        backgroundColor: Colors._161
+        backgroundColor: Colors._161817
     },
     itemView: {
         height: 40,

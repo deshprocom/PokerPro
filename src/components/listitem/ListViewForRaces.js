@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     item_text_until: {
-        color: Colors._666,
+        color: Colors.txt_666,
         marginTop: 3,
         fontSize: 12
     },
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
         marginTop: 19
     },
     item_text_month: {
-        color: Colors._666,
+        color: Colors.txt_666,
         fontSize: 15,
         marginTop: 3
     },

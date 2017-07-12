@@ -24,7 +24,7 @@ export default class ChangePhonePage extends Component {
     render() {
         return (<View
             testID="page_change_bind"
-            style={ApplicationStyles._ECE}>
+            style={ApplicationStyles.bg_black}>
             <NavigationBar
                 toolbarStyle={{backgroundColor:Colors.bg_09}}
                 title={I18n.t('tel')}
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     },
     txtChange: {
         fontSize: 19,
-        color: Colors._161,
+        color: Colors._161817,
     },
     viewPhone: {
         marginTop: 146,

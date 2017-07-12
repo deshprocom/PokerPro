@@ -157,13 +157,13 @@ const styles = StyleSheet.create({
         marginBottom: 7
     },
     txtPrice: {
-        color: Colors._666,
+        color: Colors.txt_666,
         fontSize: 14,
         flex: 2,
         fontWeight: 'bold'
     },
     txtNum: {
-        color: Colors._666,
+        color: Colors.txt_666,
         fontSize: 14,
         flex: 3,
         fontWeight: 'bold'
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
         borderRadius: 2
     },
     viewSelected: {
-        backgroundColor: Colors._161,
+        backgroundColor: Colors._161817,
         width: 172,
         alignItems: 'center',
         justifyContent: 'center',
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     viewUn: {
         width: 172,
         borderWidth: 1,
-        borderColor: Colors._161,
+        borderColor: Colors._161817,
         alignItems: 'center',
         justifyContent: 'center',
         height: 36
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
         fontSize: 14
     },
     txtUn: {
-        color: Colors._161,
+        color: Colors._161817,
         fontSize: 14
     },
     page: {

@@ -40,12 +40,12 @@ class SettingPage extends Component {
                          rightType="SWITCH_BTN"/>
 
             <View
-                style={{height: 1, marginLeft: 17, backgroundColor: Colors._ECE}}/>
+                style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>
 
             <SetItemView name={I18n.t('system_inform')}
                          rightType="SWITCH_BTN"/>
             <View
-                style={{height: 1, marginLeft: 17, backgroundColor: Colors._ECE}}/>
+                style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>
         </View>)
     };
 
@@ -74,7 +74,7 @@ class SettingPage extends Component {
 
         return (<View
             testID="page_setting"
-            style={ApplicationStyles._ECE}>
+            style={ApplicationStyles.bg_black}>
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors.bg_09}}
                 router={this.props.router}
@@ -102,7 +102,7 @@ class SettingPage extends Component {
                     name={I18n.t('Chinese')}
                     styles={{marginTop: 10}}/>
                 <View
-                    style={{height: 1, marginLeft: 17, backgroundColor: Colors._ECE}}/>
+                    style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>
                 <SetItemView
                     onPress={() => {
                         this.ActionSheet.show();
@@ -110,7 +110,7 @@ class SettingPage extends Component {
                     name={'字体设置'}/>
 
                 <View
-                    style={{height: 1, marginLeft: 17, backgroundColor: Colors._ECE}}/>
+                    style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>
 
                 <SetItemView
                     onPress={() => {

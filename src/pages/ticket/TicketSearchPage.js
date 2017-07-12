@@ -122,7 +122,7 @@ export default class TicketSearchPage extends Component {
                                source={Images.news_outline}/>
                         <TextInput
                             testID="input_news_search"
-                            placeholderTextColor={Colors._666}
+                            placeholderTextColor={Colors.txt_666}
                             placeholder={I18n.t('news_outline')}
                             autoCapitalize="none"
                             autoCorrect={false}
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
         borderRadius: 3
     },
     navBar: {
-        backgroundColor: Colors._161
+        backgroundColor: Colors._161817
     },
     searchImg: {
         height: 16,

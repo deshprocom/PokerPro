@@ -247,7 +247,7 @@ class PassportView extends Component {
                 activeOpacity={1}
                 onPress={this.showPickImage}
                 style={{height:198,width:Metrics.screenWidth-34,
-                alignSelf:'center',backgroundColor:Colors._CCC,
+                alignSelf:'center',backgroundColor:Colors.txt_CCCCCC,
                 marginTop:14,alignItems:'center',justifyContent:'center'}}>
                 {this._cardImageView()}
             </TouchableOpacity>
@@ -301,7 +301,7 @@ class PassportView extends Component {
                 style={{height:49,width:Metrics.screenWidth-34,
             alignSelf:'center',backgroundColor:Colors.white,
             marginTop:25,justifyContent:'center',marginBottom:10}}
-                textStyle={{fontSize:Fonts.size.h17,color:Colors._666}}>
+                textStyle={{fontSize:Fonts.size.h17,color:Colors.txt_666}}>
                 {I18n.t('contact_customer_service')}
 
             </Button>)

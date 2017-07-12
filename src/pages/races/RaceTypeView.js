@@ -121,12 +121,12 @@ const styles = StyleSheet.create({
     },
     allTxt: {
         fontSize: 17,
-        color: Colors._161,
+        color: Colors._161817,
         marginLeft: 20
     },
     typeTxt: {
         fontSize: 15,
-        color: Colors._161
+        color: Colors._161817
     },
     typeSelect: {
         height: 19,
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginRight: 20,
-        backgroundColor: Colors._161
+        backgroundColor: Colors._161817
     }
 
 });
