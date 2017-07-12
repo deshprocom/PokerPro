@@ -75,8 +75,9 @@ class PersonPage extends React.Component {
         return (
             <View
                 testID="page_profile"
-                style={{backgroundColor:'#161718',flex:1}}>
+                style={{backgroundColor:'#ECECEE',flex:1}}>
                 <NavigationBar
+                    toolbarStyle={{backgroundColor: '#161718'}}
                     title={I18n.t('edit_info')}
                     rightBtnText={I18n.t('complete')}
                     leftBtnText={I18n.t('cancel')}

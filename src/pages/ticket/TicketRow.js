@@ -31,10 +31,13 @@ export const itemListView = (item, index) => {
             resizeMode="cover"
             style={styles.bg_img}>
                 <View style={styles.itemView}>
-                    <Image
-                        defaultSource={Images.empty_ticket}
-                        source={{uri:logo}}
-                        style={styles.itemImg}/>
+                    <ImageLoad defaultSource={Images.empty_ticket}
+                       source={{uri:logo}}
+                       style={styles.itemImg}/>
+                    {/*<Image*/}
+                        {/*defaultSource={Images.empty_ticket}*/}
+                        {/*source={{uri:logo}}*/}
+                        {/*style={styles.itemImg}/>*/}
                     <View style={styles.itemInfo}>
                         <Text
                             numberOfLines={1}

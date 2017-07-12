@@ -139,13 +139,14 @@ export default class PersonInfo extends React.Component {
     render() {
         const {profile} = this.props;
         return (
-            <View style={{backgroundColor:'#212325'}}>
+            <View style={{backgroundColor:'#FFF'}}>
                 <View style={{marginLeft:20}}>
                     {/*头像*/}
                     <TouchableOpacity
                         activeOpacity={1}
                         style={{height:136,flexDirection:'row',alignItems:'center'}}
                         onPress={this.selectPhotoTapped}>
+                        <Text style={[styles.text_label,{marginRight: '45%'}]}>{I18n.t('user_edit_avatar')}</Text>
                         <Image style={{height:86,width:86,
                             alignItems:'center',justifyContent:'center'}}
                                source={Images.home_def_harid}>
@@ -154,7 +155,7 @@ export default class PersonInfo extends React.Component {
                                    source={strNotNull(profile.avatar)?{uri:profile.avatar}:Images.home_avatar}
                             />
                         </Image>
-                        <Text style={[styles.text_label,{marginLeft:17}]}>{I18n.t('user_edit_avatar')}</Text>
+
 
                     </TouchableOpacity>
                     <View style={styles.line}/>
@@ -331,7 +332,7 @@ const styles = StyleSheet.create({
         marginRight: 27
     },
     text_value: {color: Colors._AAA, fontSize: Fonts.size.h14, flex: 1},
-    line: {height: 1, backgroundColor: '#0E0E0F'},
+    line: {height: 1, backgroundColor: '#ECECEE'},
     set_view: {
         height: 51, justifyContent: 'space-between',
         alignItems: 'center', flexDirection: 'row', marginRight: 30, marginLeft: 20
