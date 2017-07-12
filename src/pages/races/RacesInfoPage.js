@@ -502,12 +502,12 @@ const styles = StyleSheet.create({
         marginTop: 4
     },
     imgTime: {
-        height: 15,
-        width: 15
+        height: 10,
+        width: 10
     },
     imgLocation: {
-        height: 15,
-        width: 11
+        height: 11,
+        width: 8
     },
     viewTime: {
         flexDirection: 'row',
@@ -520,16 +520,16 @@ const styles = StyleSheet.create({
     },
     txtTime: {
         color: '#cccccc',
-        fontSize: 12,
-        marginLeft: 11
+        fontSize: 13,
+        marginLeft: 7
     },
     txtLocation: {
         color: '#cccccc',
-        fontSize: 12,
-        marginLeft: 14
+        fontSize: 13,
+        marginLeft: 7
     },
     txtLabel: {
-        fontSize: 14,
+        fontSize: 15,
         color: '#D2C476'
     },
     txtPrice: {
