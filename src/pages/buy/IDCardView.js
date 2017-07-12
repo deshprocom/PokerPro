@@ -176,7 +176,7 @@ class IDCardView extends Component {
 
             <View style={styles.choice_view}>
                 <Button style={[styles.choice_btn, styles.choice_btn_right,
-                {backgroundColor:choice_id==='chinese_id'?Colors.bg_black :Colors.bg_f5}]}
+                {backgroundColor:choice_id==='chinese_id'?'#16181D' :Colors.bg_f5}]}
                         textStyle={[styles.choice_text_btn,{color: choice_id==='chinese_id'?Colors.text_choice_btn :Colors.txt_444}]}
                         onPress={() =>{
                     this.setState({
@@ -185,7 +185,7 @@ class IDCardView extends Component {
                 }}>
                     身份证</Button>
 
-                <Button style={[styles.choice_btn,{backgroundColor:choice_id==='passport_id'?Colors.bg_black :Colors.bg_f5}]}
+                <Button style={[styles.choice_btn,{backgroundColor:choice_id==='passport_id'?'#16181D' :Colors.bg_f5}]}
                         textStyle={[styles.choice_text_btn,{color: choice_id==='passport_id'?Colors.text_choice_btn :Colors.txt_444}]}
                         onPress={() => {
                     this.setState({
@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         paddingTop: 8,
-        backgroundColor: Colors.bg_f5,
+        backgroundColor: '#16181D',
         borderRadius: 2
     },
     choice_btn_right: {
