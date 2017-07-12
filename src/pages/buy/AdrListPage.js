@@ -112,7 +112,9 @@ export default class AdrListPage extends Component {
             }}
             style={styles.itemView}>
             <View style={styles.rowView}>
-                <Text style={styles.txtName}>{consignee}    </Text>
+                <Text
+                    style={[styles.txtName,
+                        {color: item.id === id ? Colors._DF1 : Colors._666}]}>{consignee}    </Text>
                 <SecurityText
                     testID="txt_phone_security"
                     securityOptions={{
@@ -120,16 +122,20 @@ export default class AdrListPage extends Component {
                         startIndex: 3,
                         endIndex: 7,
                     }}
-                    style={styles.txtName}>
+                    style={[styles.txtName,
+                        {color: item.id === id ? Colors._DF1 : Colors._666}]}>
                     {mobile}
                 </SecurityText>
+
+                {item.default ? <View style={styles.tabView}>
+                    <Text style={styles.txtDefault}>默认</Text>
+                </View> : null}
             </View>
 
             <View style={styles.rowView}>
-                {item.default ? <View style={styles.tabView}>
-                    <Text style={styles.txtDefault}>默认</Text>
-                </View> : <Image style={styles.imgSelect}
-                                 source={item.id === id ? Images.adr_selected : Images.adr_select}/>}
+
+                {item.id === id ? <Image style={styles.imgSelect}
+                                         source={Images.adr_selected}/> : null}
 
 
                 <Text style={styles.txtAdr}
@@ -165,15 +171,15 @@ export default class AdrListPage extends Component {
                     this._setAdrDefault(data.id)
                 }}
                 style={[styles.btnHidden, {backgroundColor: '#BBBBBB'}]}>
-                <Text>设为默认</Text>
+                <Text style={styles.txtDel}>设为默认</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={() => {
                     this.swipeList.safeCloseOpenRow();
                     this._delAdr(data.id)
                 }}
-                style={[styles.btnHidden, {backgroundColor: '#F05656'}]}>
-                <Text>删除</Text>
+                style={[styles.btnHidden, {backgroundColor: Colors._DF1}]}>
+                <Text style={styles.txtDel}>删除</Text>
             </TouchableOpacity>
 
         </View>)
@@ -232,15 +238,17 @@ const styles = StyleSheet.create({
     tabView: {
         height: 15,
         width: 32,
-        backgroundColor: '#AAAAAA',
         borderRadius: 2,
         alignItems: 'center',
         justifyContent: 'center',
-        marginRight: 5
+        marginRight: 5,
+        borderWidth: 1,
+        borderColor: Colors._DF1,
+        marginLeft: 19
     },
     txtDefault: {
         fontSize: 12,
-        color: 'white'
+        color: Colors._DF1
     },
     line: {
         height: 3,
@@ -283,7 +291,11 @@ const styles = StyleSheet.create({
     imgSelect: {
         height: 12,
         width: 12,
-        marginRight: 20
+        marginRight: 10
+    },
+    txtDel: {
+        color: 'white',
+        fontSize: 14
     }
 
 });
