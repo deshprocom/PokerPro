@@ -56,7 +56,7 @@ export default class SetItemView extends Component {
             style={[{height:50,justifyContent:'space-between',
             alignItems:'center',flexDirection:'row',backgroundColor:Colors.setting,
             width:Metrics.screenWidth,paddingRight:17,paddingLeft:17},styles]}>
-            <Text style={[Fonts.H16,{color:Colors._AAA,
+            <Text style={[Fonts.H15,{color:Colors.txt_444,
                 marginRight:24}]}>
                 {name}
             </Text>

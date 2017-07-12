@@ -16,14 +16,18 @@ import {
 } from '../../utils/ComonHelper';
 import {fetchGetRecentRaces, _getProfileOk, _getRecentRaces} from '../../actions/RacesAction';
 import {umengEvent} from '../../utils/UmengEvent';
+import StorageKey from '../../configs/StorageKey';
+
 import {setLocalLanguage} from '../../services/ConfigDao';
 
 const CANCEL_INDEX = 0;
-const DESTRUCTIVE_INDEX = 2;
 const options = [I18n.t('cancel'), '标准', '中', '大'];
 
-class SettingPage extends Component {
 
+class SettingPage extends Component {
+    state = {
+        DESTRUCTIVE_INDEX: 1
+    }
 
     _likeView = () => {
         return (
@@ -45,8 +49,28 @@ class SettingPage extends Component {
         </View>)
     };
 
+    componentDidMount() {
+        storage.load({
+            key: StorageKey.FontNum
+        }).then(ret => {
+            // console.log('FontNum' + ret)
+            let fontIndex = 1;
+            if (ret === 0) {
+                fontIndex = 1;
+            } else if (ret === 2) {
+                fontIndex = 2;
+            } else if (ret === 4) {
+                fontIndex = 3;
+            }
+            this.setState({
+                DESTRUCTIVE_INDEX: fontIndex
+            })
+        })
+    }
+
 
     render() {
+        const {DESTRUCTIVE_INDEX} = this.state;
 
         return (<View
             testID="page_setting"
@@ -81,19 +105,20 @@ class SettingPage extends Component {
                     style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>
                 <SetItemView
                     onPress={() => {
+                        this.ActionSheet.show();
+                    }}
+                    name={'字体设置'}/>
+
+                <View
+                    style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>
+
+                <SetItemView
+                    onPress={() => {
                         umengEvent('setting_recommend');
                         share(`${I18n.t('share_friend')}`, "http://www.deshpro.com")
                     }}
                     testID="btn_share"
                     name={I18n.t('recommend_friend')}/>
-
-                <View
-                    style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>
-                <SetItemView
-                    onPress={() => {
-                        this.ActionSheet.show();
-                    }}
-                    name={'字体设置'}/>
 
 
             </View>
@@ -133,6 +158,13 @@ class SettingPage extends Component {
                 setSize(4);
                 break;
         }
+
+        if (i === 0)
+            return;
+
+        this.setState({
+            DESTRUCTIVE_INDEX: i
+        });
         let recentRaces = {
             number: 8
         };
