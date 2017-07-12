@@ -26,47 +26,57 @@ export const itemListView = (item, index) => {
             disabled={!describable}
             activeOpacity={1}>
             <View style={styles.marginLine}/>
-            <View style={styles.itemView}>
 
-                <Image
-                    defaultSource={Images.empty_ticket}
-                    source={{uri:logo}}
-                    style={styles.itemImg}/>
-                <View style={styles.itemInfo}>
-                    <Text
-                        numberOfLines={1}
-                        style={styles.itemTitle}>{name}</Text>
+            <Image source={Images.item_sale}
+            resizeMode="cover"
+            style={styles.bg_img}>
+                <View style={styles.itemView}>
+                    <Image
+                        defaultSource={Images.empty_ticket}
+                        source={{uri:logo}}
+                        style={styles.itemImg}/>
+                    <View style={styles.itemInfo}>
+                        <Text
+                            numberOfLines={1}
+                            style={styles.itemTitle}>{name}</Text>
 
-                    <View style={styles.viewLocation}>
-                        <Image source={Images.race_location}
-                               style={styles.img_ico}/>
-                        <Text style={styles.itemAddr}>{I18n.t('location')}:{location}</Text>
+                        <View style={styles.viewLocation}>
+                            <Image source={Images.race_location}
+                                   style={styles.img_ico}/>
+                            <Text style={styles.itemAddr}>{I18n.t('location')}:{location}</Text>
+                        </View>
+
+                        <View style={styles.view_time}>
+                            <Image source={Images.race_time}
+                            style={{width: 11, height: 11}}/>
+                            <Text style={styles.itemTime}>
+                                {convertDate(begin_date, 'YYYY.MM.DD') + '-' + convertDate(end_date, 'YYYY.MM.DD')}</Text>
+                        </View>
+
+                        <View style={styles.price_view}>
+                            <Text style={{color: '#454545'}}>奖池：</Text>
+                            <Text style={styles.itemPrice}>{prize}</Text>
+                        </View>
+
+                        <View style={sellStyle(ticket_status)}>
+                            <Text style={sellTxt(ticket_status)}>{ticketStatusConvert(ticket_status)}</Text>
+                        </View>
+
+                        {/*<View style={styles.status_view}>*/}
+                            {/*<Image source={Images.race_doing}*/}
+                                {/*style={{width: 8, height: 9, alignItems: 'center', marginRight: 5}}/>*/}
+                            {/*<Text style={sellTxt(ticket_status)}>{ticketStatusConvert(ticket_status)}</Text>*/}
+                        {/*</View>*/}
                     </View>
-
-                    <View style={styles.view_time}>
-                        <Image source={Images.race_time}
-                        style={styles.img_ico}/>
-                        <Text style={styles.itemTime}>
-                            {convertDate(begin_date, 'YYYY.MM.DD') + '-' + convertDate(end_date, 'YYYY.MM.DD')}</Text>
-                    </View>
-
-                    <Text style={styles.itemPrice}>奖池：{prize}</Text>
-
-                    <View style={sellStyle(ticket_status)}>
-                        <Text style={sellTxt(ticket_status)}>{ticketStatusConvert(ticket_status)}</Text>
-                    </View>
-
-
                 </View>
-            </View>
-
+            </Image>
 
         </TouchableOpacity>
     )
 };
 
 function sellStyle(status) {
-    return status === 'selling' ? styles.itemSell : [styles.itemSell, {backgroundColor: '#DDDDDD'}]
+    return status === 'selling' ? styles.itemSell : [styles.itemSell, {borderColor: Colors.txt_666}]
 }
 
 function sellTxt(status) {
@@ -88,6 +98,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 7
     },
+    price_view: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 12,
+        fontSize: 13
+    },
     itemImg: {
         width: 67,
         height: 95,
@@ -96,9 +112,15 @@ const styles = StyleSheet.create({
     itemView: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: Colors.white,
         paddingTop: 16,
         paddingBottom: 16
+    },
+    bg_img: {
+        backgroundColor: 'transparent',
+        height: 127,
+        marginLeft: '2%',
+        marginRight: '2%',
+        width: '96%'
     },
     itemTitle: {
         width: 270,
@@ -109,7 +131,8 @@ const styles = StyleSheet.create({
     itemTime: {
         color: '#999999',
         fontSize: 14,
-        marginTop: 5
+        alignItems: 'center',
+        marginLeft: 5
     },
     itemAddr: {
         color: '#999999',
@@ -117,9 +140,8 @@ const styles = StyleSheet.create({
         marginLeft: 5
     },
     itemPrice: {
-        color: Colors.txt_price,
-        fontSize: 16,
-        marginTop: 4
+        color: '#DAA647',
+        fontSize: 13
     },
     itemInfo: {
         marginLeft: 12,
@@ -138,20 +160,27 @@ const styles = StyleSheet.create({
         height: 5,
     },
     itemSell: {
-        height: 30,
-        width: 62,
-        backgroundColor: '#F6F2C1',
+        height: 32,
+        width: 53,
+        borderWidth: 1,
+        borderColor: '#ED3445',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 2,
         position: 'absolute',
-        bottom: 0,
-        right: 0
+        top: 30,
+        right: '3%'
     },
     sellTxt: {
-        color: '#B3935E',
+        color: '#ED3445',
         fontSize: 12
     }
-
+    // status_view: {
+    //     position: 'absolute',
+    //     bottom: 0,
+    //     right: '4%',
+    //     flexDirection: 'row',
+    //     alignItems: 'center'
+    // }
 
 });
