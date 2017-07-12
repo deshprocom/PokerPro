@@ -131,14 +131,14 @@ class RacesInfoPage extends Component {
                         <View style={styles.viewInfo}>
                             <View style={styles.viewTime}>
                                 <Image style={styles.imgTime}
-                                       source={Images.race_time}/>
+                                       source={Images.home_clock}/>
                                 <Text
                                     testID="txt_races_period"
                                     style={styles.txtTime}>{this.race_time(raceInfo)}</Text>
                             </View>
                             <View style={styles.viewLocation}>
                                 <Image style={styles.imgLocation}
-                                       source={Images.race_location}/>
+                                       source={Images.home_adr}/>
                                 <Text
                                     testID="txt_races_address"
                                     style={styles.txtLocation}>{raceInfo.location}</Text>
@@ -502,12 +502,12 @@ const styles = StyleSheet.create({
         marginTop: 4
     },
     imgTime: {
-        height: 16,
-        width: 14
+        height: 10,
+        width: 10
     },
     imgLocation: {
-        height: 15,
-        width: 11
+        height: 11,
+        width: 8
     },
     viewTime: {
         flexDirection: 'row',
@@ -520,16 +520,16 @@ const styles = StyleSheet.create({
     },
     txtTime: {
         color: '#cccccc',
-        fontSize: 12,
-        marginLeft: 11
+        fontSize: 13,
+        marginLeft: 7
     },
     txtLocation: {
         color: '#cccccc',
-        fontSize: 12,
-        marginLeft: 14
+        fontSize: 13,
+        marginLeft: 7
     },
     txtLabel: {
-        fontSize: 14,
+        fontSize: 15,
         color: '#D2C476'
     },
     txtPrice: {

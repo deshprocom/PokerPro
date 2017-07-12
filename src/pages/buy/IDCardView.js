@@ -176,7 +176,7 @@ class IDCardView extends Component {
 
             <View style={styles.choice_view}>
                 <Button style={[styles.choice_btn, styles.choice_btn_right,
-                {backgroundColor:choice_id==='chinese_id'?Colors.bg_black :Colors.bg_f5}]}
+                {backgroundColor:choice_id==='chinese_id'?Colors._ECE :Colors.bg_f5}]}
                         textStyle={[styles.choice_text_btn,{color: choice_id==='chinese_id'?Colors.text_choice_btn :Colors.txt_444}]}
                         onPress={() =>{
                     this.setState({
@@ -185,7 +185,7 @@ class IDCardView extends Component {
                 }}>
                     身份证</Button>
 
-                <Button style={[styles.choice_btn,{backgroundColor:choice_id==='passport_id'?Colors.bg_black :Colors.bg_f5}]}
+                <Button style={[styles.choice_btn,{backgroundColor:choice_id==='passport_id'?Colors._ECE :Colors.bg_f5}]}
                         textStyle={[styles.choice_text_btn,{color: choice_id==='passport_id'?Colors.text_choice_btn :Colors.txt_444}]}
                         onPress={() => {
                     this.setState({
@@ -199,7 +199,7 @@ class IDCardView extends Component {
                 style={{height:50,alignItems:'center',flexDirection:'row',
                     marginTop:8,backgroundColor:Colors.white}}>
 
-                <Text style={{fontSize:15,color:Colors.txt_666,marginLeft:18}}>{I18n.t('real_name')}:</Text>
+                <Text style={{fontSize:15,color:Colors._666,marginLeft:18}}>{I18n.t('real_name')}:</Text>
                 <InputView
                     editable={editable}
                     testID="input_real_name"
@@ -245,7 +245,7 @@ class IDCardView extends Component {
                 testID="btn_picker_image"
                 onPress={this.showPickImage}
                 style={{height:198,width:Metrics.screenWidth-34,
-                alignSelf:'center',backgroundColor:Colors.txt_CCCCCC,
+                alignSelf:'center',backgroundColor:Colors._CCC,
                 marginTop:14,alignItems:'center',justifyContent:'center'}}>
 
                 {this._cardImageView()}
@@ -291,7 +291,7 @@ class IDCardView extends Component {
                 style={{height:49,width:Metrics.screenWidth-34,
             alignSelf:'center',backgroundColor:Colors.white,
             marginTop:25,justifyContent:'center',marginBottom:10}}
-                textStyle={{fontSize:Fonts.size.h17,color:Colors.txt_666}}>
+                textStyle={{fontSize:Fonts.size.h17,color:Colors._666}}>
                 {I18n.t('contact_customer_service')}
 
             </Button>)
@@ -356,6 +356,6 @@ const styles = StyleSheet.create({
     text_input: {
         // backgroundColor: 'red',
         fontSize:15,
-        color:Colors.txt_666
+        color:Colors._666
     }
 })

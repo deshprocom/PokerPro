@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
 
     },
     topView: {
-        backgroundColor: Colors._161817
+        backgroundColor: Colors._161
     },
     searchInput: {
         height: 32,

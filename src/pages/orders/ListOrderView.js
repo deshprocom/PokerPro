@@ -137,9 +137,9 @@ class ListOrderView extends Component {
             <View style={{height:49,flex:1,flexDirection:'row',
             justifyContent:'space-between',alignItems:'center',
             backgroundColor:Colors.white,paddingLeft:17,paddingRight:17}}>
-                <Text style={{fontSize:15,color:Colors.txt_666}}>
+                <Text style={{fontSize:15,color:Colors._666}}>
                     订单编号:{order_info.order_id}</Text>
-                <Text style={{fontSize:15,color:Colors.txt_666}}>
+                <Text style={{fontSize:15,color:Colors._666}}>
                     {orderStatus(order_info.status)}</Text>
             </View>
             <View style={{height:1}}/>

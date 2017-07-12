@@ -118,11 +118,11 @@ const styles = StyleSheet.create({
     },
     txtDate: {
         fontSize: 20,
-        color: Colors.txt_666
+        color: Colors._666
     },
     txtDay: {
         fontSize: 15,
-        color: Colors.txt_666,
+        color: Colors._666,
         marginTop: 3
     },
     txtTitle: {

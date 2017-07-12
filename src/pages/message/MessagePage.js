@@ -255,7 +255,7 @@ const
         },
         txtContent: {
             fontSize: 14,
-            color: Colors.txt_666,
+            color: Colors._666,
             marginTop: 10,
             lineHeight: 20
         },
@@ -283,7 +283,7 @@ const
         },
         txtNotice: {
             fontSize: 14,
-            color: Colors.txt_666,
+            color: Colors._666,
             marginTop: 10,
             lineHeight: 20
         },

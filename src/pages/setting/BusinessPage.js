@@ -16,7 +16,7 @@ export default class BusinessPage extends Component {
     render() {
         return (<View
             testID="page_business"
-            style={ApplicationStyles.bg_black}>
+            style={ApplicationStyles._ECE}>
             <NavigationBar
                 toolbarStyle={{backgroundColor:Colors.bg_09}}
                 router={this.props.router}
@@ -31,7 +31,7 @@ export default class BusinessPage extends Component {
                 />
 
                 <View
-                    style={{height:1,marginLeft:17,backgroundColor:Colors.bg_black}}/>
+                    style={{height:1,marginLeft:17,backgroundColor:Colors._ECE}}/>
 
                 <SetItemView
                     onPress={this._hotLine}

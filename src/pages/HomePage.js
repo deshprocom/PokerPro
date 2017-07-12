@@ -497,7 +497,7 @@ const styles = StyleSheet.create({
     },
     person_nick: {
         marginTop: 8,
-        color: Colors.txt_CCCCCC,
+        color: Colors._CCC,
         fontSize: 16,
         backgroundColor: 'transparent'
     },
@@ -543,7 +543,7 @@ const styles = StyleSheet.create({
     },
     txtRecent: {
         fontSize: Fonts.size.h15,
-        color: Colors.txt_666, marginLeft: 13,
+        color: Colors._666, marginLeft: 13,
         backgroundColor: 'transparent'
     },
     topBar: {

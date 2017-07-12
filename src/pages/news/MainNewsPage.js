@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
         borderRadius: 3
     },
     navBar: {
-        backgroundColor: Colors._161817
+        backgroundColor: Colors._161
     },
     searchImg: {
         height: 16,
@@ -241,12 +241,12 @@ const styles = StyleSheet.create({
         marginRight: 10
     },
     txtOutline: {
-        color: Colors.txt_666,
+        color: Colors._666,
         fontSize: 12
     },
     newsTypeView: {
         height: 40,
-        backgroundColor: Colors._161817
+        backgroundColor: Colors._161
     },
     itemView: {
         height: 40,

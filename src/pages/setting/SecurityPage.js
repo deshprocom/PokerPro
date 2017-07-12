@@ -27,7 +27,7 @@ export default class SecurityPage extends Component {
 
     render() {
 
-        return (<View style={ApplicationStyles.bg_black}>
+        return (<View style={ApplicationStyles._ECE}>
             <NavigationBar
                 toolbarStyle={{backgroundColor:Colors.bg_09}}
                 router={this.props.router}
@@ -51,7 +51,7 @@ export default class SecurityPage extends Component {
                     }}
                 />
                 <View
-                    style={{height:1,marginLeft:17,backgroundColor:Colors.bg_black}}/>
+                    style={{height:1,marginLeft:17,backgroundColor:Colors._ECE}}/>
                 <SetItemView
                     onPress={()=>{
                         umengEvent('setting_modify_pwd');

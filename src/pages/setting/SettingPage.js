@@ -40,12 +40,12 @@ class SettingPage extends Component {
                          rightType="SWITCH_BTN"/>
 
             <View
-                style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>
+                style={{height: 1, marginLeft: 17, backgroundColor: Colors._ECE}}/>
 
             <SetItemView name={I18n.t('system_inform')}
                          rightType="SWITCH_BTN"/>
             <View
-                style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>
+                style={{height: 1, marginLeft: 17, backgroundColor: Colors._ECE}}/>
         </View>)
     };
 
@@ -74,7 +74,7 @@ class SettingPage extends Component {
 
         return (<View
             testID="page_setting"
-            style={ApplicationStyles.bg_black}>
+            style={ApplicationStyles._ECE}>
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors.bg_09}}
                 router={this.props.router}
@@ -102,7 +102,7 @@ class SettingPage extends Component {
                     name={I18n.t('Chinese')}
                     styles={{marginTop: 10}}/>
                 <View
-                    style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>
+                    style={{height: 1, marginLeft: 17, backgroundColor: Colors._ECE}}/>
                 <SetItemView
                     onPress={() => {
                         this.ActionSheet.show();
@@ -110,7 +110,7 @@ class SettingPage extends Component {
                     name={'字体设置'}/>
 
                 <View
-                    style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>
+                    style={{height: 1, marginLeft: 17, backgroundColor: Colors._ECE}}/>
 
                 <SetItemView
                     onPress={() => {
@@ -181,9 +181,9 @@ class SettingPage extends Component {
                 onPress={this._exitApp}
                 style={{
                     width: Metrics.screenWidth, height: 59,
-                    justifyContent: 'center', backgroundColor: '#212325'
+                    justifyContent: 'center', backgroundColor: 'white'
                 }}
-                textStyle={[{color: Colors._AAA}, Fonts.H17]}>
+                textStyle={[{color: Colors._333}, Fonts.H17]}>
                 {I18n.t('exit_login')}
             </Button>)
         }

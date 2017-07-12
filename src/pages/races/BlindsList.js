@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     },
     txtInfo: {
         fontSize: 14,
-        color: Colors.txt_666,
+        color: Colors._666,
         flex: 1,
         textAlign: 'center'
     },
