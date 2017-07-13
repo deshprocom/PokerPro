@@ -289,27 +289,33 @@ export default class PersonInfo extends React.Component {
     }
 
     _txtRealStatus = () => {
-        if (!isEmptyObject(user_extra))
+        if (!isEmptyObject(user_extra)) {
             switch (user_extra.status) {
                 case Verified.FAILED:
                     return I18n.t('real_fail');
-                case Verified.PASSED:
-                    return I18n.t('real_pass');
+                // case Verified.PASSED:
+                //     return I18n.t('real_pass');
                 case Verified.PENDING:
                     return I18n.t('pending')
             }
+        }else if(isEmptyObject(user_extra)){
+            return I18n.t('init');
+        }
     }
 
     _colorRealStatus = () => {
-        if (!isEmptyObject(user_extra))
+        if (!isEmptyObject(user_extra)) {
             switch (user_extra.status) {
                 case Verified.FAILED:
-                    return styles.txt_real;
-                case Verified.PASSED:
-                    return styles.txt_real_pass;
+                    return styles.txt_real_fail;
+                // case Verified.PASSED:
+                //     return styles.txt_real_pass;
                 case Verified.PENDING:
                     return styles.txt_real;
             }
+        }else if(isEmptyObject(user_extra)){
+            return styles.txt_real_init;
+        }
     }
 
 }
@@ -337,12 +343,18 @@ const styles = StyleSheet.create({
         height: 51, justifyContent: 'space-between',
         alignItems: 'center', flexDirection: 'row', marginRight: 30, marginLeft: 20
     },
+    txt_real_init: {
+        fontSize: 15, color: '#F34A4A', marginRight: 20
+    },
     txt_real: {
-        fontSize: 15, color: '#555C63', marginRight: 20
+        fontSize: 15, color: '#34BA3C', marginRight: 20
     },
     view_real: {flexDirection: 'row', alignItems: 'center'},
-    txt_real_pass: {
-        fontSize: 15, color: '#878787', marginRight: 20
+    // txt_real_pass: {
+    //     fontSize: 15, color: '#878787', marginRight: 20
+    // },
+    txt_real_fail: {
+        fontSize: 15, color: '#4990E2', marginRight: 20
     }
 
 });

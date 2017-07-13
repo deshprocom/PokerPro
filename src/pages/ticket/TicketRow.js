@@ -57,8 +57,8 @@ export const itemListView = (item, index) => {
                         </View>
 
                         <View style={styles.price_view}>
-                            <Text style={{color: '#454545'}}>奖池：</Text>
-                            <Text style={styles.itemPrice}>{prize}</Text>
+                            <Text style={{color: '#454545', fontSize: 13}}>奖池：</Text>
+                            <Text style={[styles.itemPrice,{fontSize: 13}]}>{prize}</Text>
                         </View>
 
                         <View style={sellStyle(ticket_status)}>
@@ -104,8 +104,7 @@ const styles = StyleSheet.create({
     price_view: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 12,
-        fontSize: 13
+        marginTop: 12
     },
     itemImg: {
         width: 67,
