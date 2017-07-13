@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {convertDate, YYYY_MM_DD, isEmptyObject, moneyFormat} from '../../utils/ComonHelper'
+import {convertDate, YYYY_MM_DD, isEmptyObject, moneyFormat, FontSize} from '../../utils/ComonHelper'
 import {Verified, OrderStatus} from '../../configs/Status';
 import {ImageLoad} from '../../components';
 
@@ -26,8 +26,8 @@ export default class RaceInfoView extends Component {
     _ticket_price = (ticket) => {
         if (!isEmptyObject(ticket))
             return (<View style={styles.viewPrice}>
-                <Text style={styles.lbPrice}>金额:</Text>
-                <Text style={styles.txtPrice}>  {ticket.price}</Text>
+                <Text style={[styles.lbPrice,{fontSize: FontSize.h12}]}>金额:</Text>
+                <Text style={[styles.txtPrice,{fontSize: FontSize.h15}]}>  {ticket.price}</Text>
 
             </View>);
 
@@ -37,7 +37,7 @@ export default class RaceInfoView extends Component {
         const {ticket} = this.props;
         if (!isEmptyObject(ticket))
             return (   <Text testID="txt_races_title"
-                             style={{fontSize:15,color:Colors.txt_444}}
+                             style={{fontSize:FontSize.h15,color:Colors.txt_444}}
                              numberOfLines={2}>{ticket.title}</Text>)
     };
 
@@ -49,12 +49,12 @@ export default class RaceInfoView extends Component {
                 {this._orderName()}
 
                 <Text testID="txt_races_period"
-                      style={{fontSize:12,color:Colors._888,
+                      style={{fontSize:FontSize.h12,color:Colors._888,
                             marginTop:15}}
                       numberOfLines={1}>{convertDate(raceInfo.begin_date, YYYY_MM_DD)
                 + '-' + convertDate(raceInfo.end_date, YYYY_MM_DD)}</Text>
                 <Text testID="txt_races_address"
-                      style={{fontSize:12,color:Colors._888,
+                      style={{fontSize:FontSize.h12,color:Colors._888,
                             marginTop:4,marginBottom:19}}
                       numberOfLines={1}>{raceInfo.location}</Text>
                 {this._ticket_price(ticket)}
@@ -136,11 +136,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     lbPrice: {
-        fontSize: Fonts.size.h12,
         color: Colors._888,
     },
     txtPrice: {
-        fontSize: Fonts.size.h15,
         color: '#DF1D0F',
     }
 });
