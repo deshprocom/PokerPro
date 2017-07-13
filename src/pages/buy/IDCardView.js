@@ -41,12 +41,12 @@ class IDCardView extends Component {
     };
 
     state = {
-        realName: '',
-        idCard: '',
-        cardImage: '',
+
         editable: true,
         imageName: '',
-        choice_id: 'chinese_id'
+        choice_id: 'chinese_id',
+        chinese: {},
+        passport: {}
     };
 
     componentDidMount() {
@@ -61,15 +61,22 @@ class IDCardView extends Component {
             router.pop();
         } else if (newProps.actionType === GET_CERTIFICATION &&
             newProps.hasData) {
-            if (!isEmptyObject(user_extra)) {
-                let editable = true;
-                if (user_extra.status === Verified.PASSED) {
-                    editable = false;
-                }
+            if (isEmptyObject(user_extra))
+                return;
+
+            let editable = true;
+            if (user_extra.status === Verified.PASSED) {
+                editable = false;
+            }
+            if (user_extra.cert_type === 'chinese_id') {
+
                 this.setState({
-                    cardImage: user_extra.image,
-                    realName: user_extra.real_name,
-                    idCard: user_extra.cert_no,
+                    chinese: user_extra,
+                    editable: editable
+                })
+            } else {
+                this.setState({
+                    passport: user_extra,
                     editable: editable
                 })
             }
@@ -119,7 +126,7 @@ class IDCardView extends Component {
 
     _btnSubmit = () => {
         umengEvent('true_name_submit');
-        const {realName, idCard, cardImage, imageName, choice_id} = this.state;
+        const {realName, idCard, cardImage, imageName, choice_id, chineseID, passID} = this.state;
         if (strNotNull(realName) && strNotNull(idCard) && !isEmptyObject(cardImage)) {
 
             if (cardImage.indexOf("http") == -1) {
@@ -150,11 +157,11 @@ class IDCardView extends Component {
         if (isEmptyObject(cardImage)) {
             return ( <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
                 <Image
-                    source={Images.name_id}
-                    style={{height:35,width:49}}/>
+                    source={Images.post_id_image}
+                    style={{height:85,width:134}}/>
 
-                <Text style={{fontSize:Fonts.size.h18,color:Colors._AAA,marginTop:31}}>
-                    {I18n.t('ple_upload_name_id')}</Text>
+                {/*<Text style={{fontSize:Fonts.size.h18,color:Colors._AAA,marginTop:31}}>*/}
+                {/*{I18n.t('ple_upload_name_id')}</Text>*/}
 
             </View>)
         } else {
@@ -168,28 +175,37 @@ class IDCardView extends Component {
 
     render() {
 
-        const {realName, idCard, editable,choice_id} = this.state;
+        const {chinese, passport, editable, choice_id} = this.state;
+        if(choice_id === '')
 
         return (<ScrollView
             testID="page_real_name"
             style={ApplicationStyles.bgContainer}>
 
+            <Text style={{paddingLeft: 15, marginTop: 13, color: Colors._333, fontSize: 15}}>请选择上传证件</Text>
+
             <View style={styles.choice_view}>
                 <Button style={[styles.choice_btn, styles.choice_btn_right,
-                {backgroundColor:choice_id==='chinese_id'?Colors.bg_black :Colors.bg_f5}]}
+                {backgroundColor:choice_id==='chinese_id'?'#16181D' :Colors.bg_f5}]}
                         textStyle={[styles.choice_text_btn,{color: choice_id==='chinese_id'?Colors.text_choice_btn :Colors.txt_444}]}
                         onPress={() =>{
                     this.setState({
-                        choice_id:'chinese_id'
+                        choice_id:'chinese_id',
+                        realName: '',
+                        idCard: '',
+                        cardImage: ''
                     })
                 }}>
                     身份证</Button>
 
-                <Button style={[styles.choice_btn,{backgroundColor:choice_id==='passport_id'?Colors.bg_black :Colors.bg_f5}]}
+                <Button style={[styles.choice_btn,{backgroundColor:choice_id==='passport_id'?'#16181D' :Colors.bg_f5}]}
                         textStyle={[styles.choice_text_btn,{color: choice_id==='passport_id'?Colors.text_choice_btn :Colors.txt_444}]}
                         onPress={() => {
                     this.setState({
-                        choice_id:'passport_id'
+                        choice_id:'passport_id',
+                        realName: '',
+                        idCard: '',
+                        cardImage: ''
                     })
                 }}>
                     护照</Button>
@@ -221,7 +237,8 @@ class IDCardView extends Component {
                     marginTop:1,backgroundColor:Colors.white,paddingLeft: 18}}>
 
                 <Text style={[styles.text_input,{width: choice_id==='chinese_id'?76 :0}]}>{I18n.t('ID_card')}</Text>
-                <Text style={[styles.text_input,{width: choice_id==='passport_id'?66 :0}]}>{I18n.t('password_card')}</Text>
+                <Text
+                    style={[styles.text_input,{width: choice_id==='passport_id'?66 :0}]}>{I18n.t('password_card')}</Text>
                 <InputView
                     testID="input_id_card"
                     editable={editable}
@@ -252,7 +269,7 @@ class IDCardView extends Component {
 
             </TouchableOpacity>
 
-            <Text style={{fontSize:Fonts.size.h12,marginTop:114,alignSelf:'center',
+            <Text style={{fontSize:Fonts.size.h12,marginTop:84,alignSelf:'center',
             color:Colors._AAA,paddingLeft: 15,paddingRight: 15}}>
                 {I18n.t('upload_issue')}</Text>
 
@@ -343,7 +360,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         paddingTop: 8,
-        backgroundColor: Colors.bg_f5,
+        backgroundColor: '#16181D',
         borderRadius: 2
     },
     choice_btn_right: {
@@ -355,7 +372,7 @@ const styles = StyleSheet.create({
     },
     text_input: {
         // backgroundColor: 'red',
-        fontSize:15,
-        color:Colors.txt_666
+        fontSize: 15,
+        color: Colors.txt_666
     }
 })

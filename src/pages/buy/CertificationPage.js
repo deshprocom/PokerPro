@@ -28,8 +28,15 @@ export default class CertificationPage extends Component {
                     leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
                     leftBtnPress={()=>this.props.router.pop()}/>
 
+
                 <IDCardView
                     tabLabel={I18n.t('identification')}/>
+
+                {/*<ScrollableTabView>*/}
+                    {/*<IDCardView*/}
+                        {/*tabLabel={I18n.t('identification')}/>*/}
+                    {/*<PassportView tabLabel={I18n.t('passport')}/>*/}
+                {/*</ScrollableTabView>*/}
 
 
             </View>

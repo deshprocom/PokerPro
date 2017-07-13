@@ -14,6 +14,7 @@ import {
     sellable, raceStatusConvert,FontSize
 } from '../../utils/ComonHelper';
 import {SellStatus} from '../../configs/Status';
+import ImageLoad from '../ImageLoad';
 
 export default class RaceRowView extends Component {
 
@@ -123,7 +124,7 @@ export default class RaceRowView extends Component {
                     backgroundColor: ticket_sellable ? 'transparent' : 'white'
                 }]}>
 
-            <Image
+            <ImageLoad
                 defaultSource={Images.empty_image}
                 style={styles.imgRace}
                 source={{uri: logo}}/>
