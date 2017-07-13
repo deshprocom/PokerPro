@@ -44,6 +44,7 @@ const colors = {
     bg_ec:'#ececee',
     text_choice_btn: '#FFE9AD',
 
+
     _F4E:'#F4E3A1',
     _DF1:'#DF1D0F',
     _161: '#161718',
@@ -53,6 +54,6 @@ const colors = {
     _CCC: '#CCCCCC',
     _ECE: '#ECECEE',
 
-}
+};
 
 export default colors

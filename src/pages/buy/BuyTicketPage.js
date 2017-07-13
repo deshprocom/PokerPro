@@ -316,7 +316,7 @@ class BuyTicketPage extends Component {
             <Text
                 style={{
                     fontSize: 15,
-                    color: isEntity == ENTITY ? Colors.txt_F28 : Colors._AAA
+                    color: isEntity == ENTITY ? Colors.txt_F28 : Colors._333
                 }}>{I18n.t('ticket_paper')}</Text>
         </TouchableOpacity>)
     };
@@ -442,7 +442,7 @@ class BuyTicketPage extends Component {
                                 <Text
                                     style={{
                                         fontSize: 15,
-                                        color: isEntity == ENTITY ? Colors._AAA : Colors.txt_F28
+                                        color: isEntity == ENTITY ? Colors._333 : Colors.txt_F28
                                     }}>{I18n.t('ticket_web')}</Text>
                             </TouchableOpacity>
 

@@ -10,6 +10,7 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {convertDate, YYYY_MM_DD, isEmptyObject, moneyFormat} from '../../utils/ComonHelper'
 import {Verified, OrderStatus} from '../../configs/Status';
+import {ImageLoad} from '../../components';
 
 export default class RaceInfoView extends Component {
 
@@ -90,7 +91,7 @@ export default class RaceInfoView extends Component {
             style={{height:149,width:Metrics.screenWidth,
                     flexDirection:'row',alignItems:'center',
                     backgroundColor:Colors.white}}>
-            <Image style={{height:115,width:81,
+            <ImageLoad style={{height:115,width:81,
                         marginLeft:17,marginRight:13}}
                    source={{uri:this.logoUrl()}}
             />

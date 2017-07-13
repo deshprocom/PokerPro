@@ -128,7 +128,7 @@ export default class RaceRowView extends Component {
                 defaultSource={Images.empty_image}
                 style={styles.imgRace}
                 source={{uri: logo}}/>
-            <View style={{backgroundColor: 'transparent'}}>
+            <View>
                 <Text
                     style={[styles.txtTitle,{fontSize:FontSize.h17}]}
                     numberOfLines={2}>{name}</Text>
@@ -149,7 +149,7 @@ export default class RaceRowView extends Component {
 
                 </View>
 
-                <View style={[styles.viewClock, {marginTop: 10}]}>
+                <View style={[styles.viewClock, {marginTop: 8}]}>
                     <Text style={[styles.lbPrice,{fontSize:FontSize.h13}]}>{I18n.t('prize')}</Text>
                     <Text style={[styles.txtPrice,{fontSize:FontSize.h13}]}> {prize}</Text>
                 </View>
@@ -377,8 +377,8 @@ const styles = StyleSheet.create({
     },
     txtTitle: {
         color: '#333333',
-        lineHeight: 20,
-        width: 200
+        width: 200,
+        marginBottom:5
     },
     imgClock: {
         height: 12,

@@ -24,7 +24,7 @@ import {
 import TestRouter from '../../components/TestRouter';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import RaceSideView from './RaceSideView';
-import {MarkdownPlat} from '../../components';
+import {MarkdownPlat,ImageLoad} from '../../components';
 import MainRaceResultView from './MainRaceResultView';
 import {umengEvent} from '../../utils/UmengEvent';
 
@@ -126,7 +126,7 @@ class RacesInfoPage extends Component {
                     </View>
 
                     {isEmptyObject(raceInfo) ? null : <View style={styles.headerInfo}>
-                        <Image style={styles.logoImg}
+                        <ImageLoad style={styles.logoImg}
                                source={{uri: raceInfo.logo}}/>
                         <View style={styles.viewInfo}>
                             <View style={styles.viewTime}>

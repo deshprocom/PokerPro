@@ -46,7 +46,11 @@ class IDCardView extends Component {
         imageName: '',
         choice_id: 'chinese_id',
         chinese: {},
-        passport: {}
+        passport: {},
+        cardImage: '',
+        realName: '',
+        idCard: ''
+
     };
 
     componentDidMount() {
@@ -90,11 +94,23 @@ class IDCardView extends Component {
     }
 
     _setImage = (image) => {
-        this.setState({
-            cardImage: image.path,
-            imageName: this._fileName(image.fileName)
-        });
-    }
+        const {chinese, passport, editable, choice_id} = this.state;
+        if (choice_id === 'chinese_id') {
+            chinese.image = image.path;
+            this.setState({
+                chinese: chinese,
+                imageName: this._fileName(image.fileName)
+            })
+        } else {
+            passport.image = image.path;
+            this.setState({
+                passport: passport,
+                imageName: this._fileName(image.fileName)
+            })
+        }
+
+
+    };
 
     handlePress = (i) => {
         switch (i) {
@@ -126,19 +142,26 @@ class IDCardView extends Component {
 
     _btnSubmit = () => {
         umengEvent('true_name_submit');
-        const {realName, idCard, cardImage, imageName, choice_id, chineseID, passID} = this.state;
-        if (strNotNull(realName) && strNotNull(idCard) && !isEmptyObject(cardImage)) {
+        const { imageName, choice_id, chinese,passport} = this.state;
+        let body = {};
+        if (choice_id === 'chinese_id')
+            body = chinese;
+        else
+            body = passport;
+        const {cert_no, cert_type, image, real_name, status} = body;
 
-            if (cardImage.indexOf("http") == -1) {
+        if (strNotNull(real_name) && strNotNull(cert_no) && !isEmptyObject(image)) {
+
+            if (image.indexOf("http") == -1) {
                 let formData = new FormData();
-                let file = {uri: cardImage, type: 'multipart/form-data', name: imageName};
+                let file = {uri: image, type: 'multipart/form-data', name: imageName};
                 formData.append("image", file);
                 this.props._postCardImage(formData);
             }
             // router.log(choice_id);
             const body = {
-                real_name: realName,
-                cert_no: idCard,
+                real_name: real_name,
+                cert_no: cert_no,
                 cert_type: choice_id
             };
             this.props._postCertification(body);
@@ -151,23 +174,19 @@ class IDCardView extends Component {
 
     }
 
-    _cardImageView = () => {
-        let {cardImage} = this.state;
+    _cardImageView = (image) => {
 
-        if (isEmptyObject(cardImage)) {
-            return ( <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
+        if (!strNotNull(image)) {
+            return ( <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                 <Image
                     source={Images.post_id_image}
-                    style={{height:85,width:134}}/>
-
-                {/*<Text style={{fontSize:Fonts.size.h18,color:Colors._AAA,marginTop:31}}>*/}
-                {/*{I18n.t('ple_upload_name_id')}</Text>*/}
+                    style={{height: 85, width: 134}}/>
 
             </View>)
         } else {
             return (<Image
-                style={{height:150,width:250}}
-                source={{uri:cardImage}}>
+                style={{height: 150, width: 250}}
+                source={{uri: image}}>
 
             </Image>)
         }
@@ -176,81 +195,112 @@ class IDCardView extends Component {
     render() {
 
         const {chinese, passport, editable, choice_id} = this.state;
-        if(choice_id === '')
+        let body = {};
+        if (choice_id === 'chinese_id')
+            body = chinese;
+        else
+            body = passport;
+        const {cert_no, cert_type, image, real_name, status} = body;
 
         return (<ScrollView
             testID="page_real_name"
             style={ApplicationStyles.bgContainer}>
 
-            <Text style={{paddingLeft: 15, marginTop: 13, color: Colors._333, fontSize: 15}}>请选择上传证件</Text>
+            {editable ? <View>
+                <Text style={{paddingLeft: 15, marginTop: 13, color: Colors._333, fontSize: 15}}>请选择上传证件</Text>
 
-            <View style={styles.choice_view}>
-                <Button style={[styles.choice_btn, styles.choice_btn_right,
-                {backgroundColor:choice_id==='chinese_id'?'#16181D' :Colors.bg_f5}]}
-                        textStyle={[styles.choice_text_btn,{color: choice_id==='chinese_id'?Colors.text_choice_btn :Colors.txt_444}]}
-                        onPress={() =>{
-                    this.setState({
-                        choice_id:'chinese_id',
-                        realName: '',
-                        idCard: '',
-                        cardImage: ''
-                    })
-                }}>
-                    身份证</Button>
+                <View style={styles.choice_view}>
+                    <Button style={[styles.choice_btn, styles.choice_btn_right,
+                        {backgroundColor: choice_id === 'chinese_id' ? '#16181D' : Colors.bg_f5}]}
+                            textStyle={[styles.choice_text_btn, {color: choice_id === 'chinese_id' ? Colors.text_choice_btn : Colors.txt_444}]}
+                            onPress={() => {
+                                this.setState({
+                                    choice_id: 'chinese_id',
 
-                <Button style={[styles.choice_btn,{backgroundColor:choice_id==='passport_id'?'#16181D' :Colors.bg_f5}]}
-                        textStyle={[styles.choice_text_btn,{color: choice_id==='passport_id'?Colors.text_choice_btn :Colors.txt_444}]}
+                                })
+                            }}>
+                        身份证</Button>
+
+                    <Button
+                        style={[styles.choice_btn, {backgroundColor: choice_id === 'passport_id' ? '#16181D' : Colors.bg_f5}]}
+                        textStyle={[styles.choice_text_btn, {color: choice_id === 'passport_id' ? Colors.text_choice_btn : Colors.txt_444}]}
                         onPress={() => {
-                    this.setState({
-                        choice_id:'passport_id',
-                        realName: '',
-                        idCard: '',
-                        cardImage: ''
-                    })
-                }}>
-                    护照</Button>
-            </View>
+                            this.setState({
+                                choice_id: 'passport_id',
+                            })
+                        }}>
+                        护照</Button>
+                </View>
+            </View> : null}
+
 
             <View
-                style={{height:50,alignItems:'center',flexDirection:'row',
-                    marginTop:8,backgroundColor:Colors.white}}>
+                style={{
+                    height: 50, alignItems: 'center', flexDirection: 'row',
+                    marginTop: 8, backgroundColor: Colors.white
+                }}>
 
-                <Text style={{fontSize:15,color:Colors.txt_666,marginLeft:18}}>{I18n.t('real_name')}:</Text>
+                <Text style={{fontSize: 15, color: Colors.txt_666, marginLeft: 18}}>{I18n.t('real_name')}:</Text>
                 <InputView
                     editable={editable}
                     testID="input_real_name"
-                    stateText={text=>{
-                                this.setState({
-                                    realName:text
-                                })
-                            }}
-                    inputValue={realName}
-                    inputView={{height:50, borderBottomColor: Colors.white,
-        borderBottomWidth: 1,flex:1}}
-                    inputText={{height:50,fontSize:15,marginLeft:15}}
+                    stateText={text => {
+                        if (choice_id === 'chinese_id') {
+                            chinese.real_name = text;
+                            this.setState({
+                                chinese: chinese
+                            })
+                        } else {
+                            passport.real_name = text;
+                            this.setState({
+                                passport: passport
+                            })
+                        }
+
+
+                    }}
+                    inputValue={real_name}
+                    inputView={{
+                        height: 50, borderBottomColor: Colors.white,
+                        borderBottomWidth: 1, flex: 1
+                    }}
+                    inputText={{height: 50, fontSize: 15, marginLeft: 15}}
                     placeholder={I18n.t('ple_real_name')}/>
 
 
             </View>
             <View
-                style={{height:50,alignItems:'center',flexDirection:'row',
-                    marginTop:1,backgroundColor:Colors.white,paddingLeft: 18}}>
+                style={{
+                    height: 50, alignItems: 'center', flexDirection: 'row',
+                    marginTop: 1, backgroundColor: Colors.white, paddingLeft: 18
+                }}>
 
-                <Text style={[styles.text_input,{width: choice_id==='chinese_id'?76 :0}]}>{I18n.t('ID_card')}</Text>
                 <Text
-                    style={[styles.text_input,{width: choice_id==='passport_id'?66 :0}]}>{I18n.t('password_card')}</Text>
+                    style={[styles.text_input, {width: choice_id === 'chinese_id' ? 76 : 0}]}>{I18n.t('ID_card')}</Text>
+                <Text
+                    style={[styles.text_input, {width: choice_id === 'passport_id' ? 66 : 0}]}>{I18n.t('password_card')}</Text>
                 <InputView
                     testID="input_id_card"
                     editable={editable}
-                    stateText={text=>{
-                                this.setState({
-                                    idCard:text
-                                })
-                            }}
-                    inputView={{height:50, borderBottomColor: Colors.white,
-        borderBottomWidth: 1,flex:1}}
-                    inputValue={idCard}
-                    inputText={{height:50,fontSize:15,marginLeft:15}}
+                    stateText={text => {
+                        if (choice_id === 'chinese_id') {
+                            chinese.cert_no = text;
+                            this.setState({
+                                chinese: chinese
+                            })
+                        } else {
+                            passport.cert_no = text;
+                            this.setState({
+                                passport: passport
+                            })
+                        }
+                    }}
+                    inputView={{
+                        height: 50, borderBottomColor: Colors.white,
+                        borderBottomWidth: 1, flex: 1
+                    }}
+                    inputValue={cert_no}
+                    inputText={{height: 50, fontSize: 15, marginLeft: 15}}
                     placeholder={I18n.t('ple_id_card')}/>
 
 
@@ -261,16 +311,20 @@ class IDCardView extends Component {
                 activeOpacity={1}
                 testID="btn_picker_image"
                 onPress={this.showPickImage}
-                style={{height:198,width:Metrics.screenWidth-34,
-                alignSelf:'center',backgroundColor:Colors.txt_CCCCCC,
-                marginTop:14,alignItems:'center',justifyContent:'center'}}>
+                style={{
+                    height: 198, width: Metrics.screenWidth - 34,
+                    alignSelf: 'center', backgroundColor: Colors.txt_CCCCCC,
+                    marginTop: 14, alignItems: 'center', justifyContent: 'center'
+                }}>
 
-                {this._cardImageView()}
+                {this._cardImageView(image)}
 
             </TouchableOpacity>
 
-            <Text style={{fontSize:Fonts.size.h12,marginTop:84,alignSelf:'center',
-            color:Colors._AAA,paddingLeft: 15,paddingRight: 15}}>
+            <Text style={{
+                fontSize: Fonts.size.h12, marginTop: 84, alignSelf: 'center',
+                color: Colors._AAA, paddingLeft: 15, paddingRight: 15
+            }}>
                 {I18n.t('upload_issue')}</Text>
 
             {this._hasRealBtn()}
@@ -293,10 +347,12 @@ class IDCardView extends Component {
                 testID="btn_submit"
                 activeOpacity={1}
                 onPress={this._btnSubmit}
-                style={{height:49,width:Metrics.screenWidth-34,
-            alignSelf:'center',backgroundColor:'#161718',
-            marginTop:25,justifyContent:'center',marginBottom:10}}
-                textStyle={{fontSize:Fonts.size.h17,color:Colors.txt_E0C}}>
+                style={{
+                    height: 49, width: Metrics.screenWidth - 34,
+                    alignSelf: 'center', backgroundColor: '#161718',
+                    marginTop: 25, justifyContent: 'center', marginBottom: 10
+                }}
+                textStyle={{fontSize: Fonts.size.h17, color: Colors.txt_E0C}}>
                 {I18n.t('submit')}
 
             </Button>)
@@ -305,10 +361,12 @@ class IDCardView extends Component {
                 testID="btn_contact_customer_service"
                 activeOpacity={1}
                 onPress={this._btnService}
-                style={{height:49,width:Metrics.screenWidth-34,
-            alignSelf:'center',backgroundColor:Colors.white,
-            marginTop:25,justifyContent:'center',marginBottom:10}}
-                textStyle={{fontSize:Fonts.size.h17,color:Colors.txt_666}}>
+                style={{
+                    height: 49, width: Metrics.screenWidth - 34,
+                    alignSelf: 'center', backgroundColor: Colors.white,
+                    marginTop: 25, justifyContent: 'center', marginBottom: 10
+                }}
+                textStyle={{fontSize: Fonts.size.h17, color: Colors.txt_666}}>
                 {I18n.t('contact_customer_service')}
 
             </Button>)
