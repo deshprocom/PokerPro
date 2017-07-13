@@ -175,8 +175,20 @@ export default class AdrListPage extends Component {
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={() => {
-                    this.swipeList.safeCloseOpenRow();
-                    this._delAdr(data.id)
+                    Alert.alert('删除收货地址', '', [
+                        {
+                            text: '取消', onPress: () => {
+                            this.swipeList.safeCloseOpenRow();
+                        }
+                        },
+                        {
+                            text: '确认', onPress: () => {
+                            this.swipeList.safeCloseOpenRow();
+                            this._delAdr(data.id)
+                        }
+                        }
+                    ]);
+
                 }}
                 style={[styles.btnHidden, {backgroundColor: Colors._DF1}]}>
                 <Text style={styles.txtDel}>删除</Text>
