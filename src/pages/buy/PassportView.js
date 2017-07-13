@@ -46,7 +46,7 @@ class PassportView extends Component {
         editable: true,
         realName: '',
         passwordCard:'',
-        cardImage:'',
+        passImage:'',
         imageName:'',
         passport_id: ''
     }
@@ -63,13 +63,13 @@ class PassportView extends Component {
             router.pop();
         } else if (newProps.actionType === GET_CERTIFICATION &&
             newProps.hasData) {
-            if (!isEmptyObject(user_extra)) {
+            if (!isEmptyObject(user_extra)&&user_extra.cert_type === 'passport_id') {
                 let editable = true;
                 if (user_extra.status === Verified.PASSED) {
                     editable = false;
                 }
                 this.setState({
-                    cardImage: user_extra.image,
+                    passImage: user_extra.image,
                     realName: user_extra.real_name,
                     passwordCard: user_extra.cert_no,
                     editable: editable
@@ -85,7 +85,7 @@ class PassportView extends Component {
 
     _setImage = (image) => {
         this.setState({
-            cardImage: image.path,
+            passImage: image.path,
             imageName: this._fileName(image.fileName)
         });
     }
@@ -118,8 +118,8 @@ class PassportView extends Component {
     }
 
     _cardImageView = () => {
-        let {cardImage} = this.state;
-        if(isEmptyObject(cardImage)){
+        let {passImage} = this.state;
+        if(isEmptyObject(passImage)){
             return(
                 <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
                     <Image
@@ -127,14 +127,14 @@ class PassportView extends Component {
                         style={{height:35,width:49}}/>
 
                     <Text style={{fontSize:Fonts.size.h18,color:Colors._AAA,marginTop:31}}>
-                        {I18n.t('ple_upload_name_id')}
+                        {I18n.t('ple_upload_pass_id')}
                     </Text>
                 </View>
             )
         }else{
             return (<Image
                 style={{height:150,width:250}}
-                source={{uri:cardImage}}>
+                source={{uri:passImage}}>
 
             </Image>)
         }
@@ -142,12 +142,12 @@ class PassportView extends Component {
 
     _btnSubmit = () => {
         umengEvent('true_name_submit');
-        const {realName, passwordCard, cardImage, imageName, passport_id} = this.state;
-        if (strNotNull(realName) && strNotNull(passwordCard) && !isEmptyObject(cardImage)) {
+        const {realName, passwordCard, passImage, imageName, passport_id} = this.state;
+        if (strNotNull(realName) && strNotNull(passwordCard) && !isEmptyObject(passImage)) {
 
-            if (cardImage.indexOf("http") == -1) {
+            if (passImage.indexOf("http") == -1) {
                 let formData = new FormData();
-                let file = {uri: cardImage, type: 'multipart/form-data', name: imageName};
+                let file = {uri: passImage, type: 'multipart/form-data', name: imageName};
                 formData.append("image", file);
                 this.props._postPasswordImage(formData);
             }

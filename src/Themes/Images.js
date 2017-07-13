@@ -166,7 +166,8 @@ const images = {
     adr_right: require('../../source/buy/adr_right.png'),
     adr_select: require('../../source/buy/adr_select.png'),
     adr_selected: require('../../source/buy/adr_selected.png'),
-    video_play:require('../../source/news/video_play.png')
+    video_play:require('../../source/news/video_play.png'),
+    post_id_image: require('../../source/buy/postIDImage.png')
 
 
 };
