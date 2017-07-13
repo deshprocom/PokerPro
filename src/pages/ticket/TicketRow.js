@@ -8,7 +8,7 @@ import {
     ListView, Animated, Platform, InteractionManager
 } from 'react-native';
 import I18n from 'react-native-i18n';
-import {convertDate, ticketStatusConvert} from '../../utils/ComonHelper';
+import {convertDate, ticketStatusConvert, FontSize} from '../../utils/ComonHelper';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {ImageLoad} from '../../components';
 
@@ -57,8 +57,8 @@ export const itemListView = (item, index) => {
                         </View>
 
                         <View style={styles.price_view}>
-                            <Text style={{color: '#454545', fontSize: 13}}>奖池：</Text>
-                            <Text style={[styles.itemPrice,{fontSize: 13}]}>{prize}</Text>
+                            <Text style={{color: '#454545', fontSize: FontSize.h13}}>奖池：</Text>
+                            <Text style={[styles.itemPrice,{fontSize: FontSize.h13}]}>{prize}</Text>
                         </View>
 
                         <View style={sellStyle(ticket_status)}>
@@ -127,18 +127,18 @@ const styles = StyleSheet.create({
     itemTitle: {
         width: 270,
         color: '#161718',
-        fontSize: 17,
+        fontSize: FontSize.h17,
         alignSelf: 'flex-start'
     },
     itemTime: {
         color: '#999999',
-        fontSize: 14,
+        fontSize: FontSize.h14,
         alignItems: 'center',
         marginLeft: 5
     },
     itemAddr: {
         color: '#999999',
-        fontSize: 14,
+        fontSize: FontSize.h14,
         marginLeft: 5
     },
     itemPrice: {
