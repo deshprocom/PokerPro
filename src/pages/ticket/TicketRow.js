@@ -20,20 +20,20 @@ export const itemListView = (item, index) => {
     } = item;
     return (
         <TouchableOpacity
-            testID={'btn_ticket_row_'+index}
-            onPress={()=>
+            testID={'btn_ticket_row_' + index}
+            onPress={() =>
                 router.toRacesInfoPage(this.props, race_id, false)}
             disabled={!describable}
             activeOpacity={1}>
             <View style={styles.marginLine}/>
 
             <Image source={Images.item_sale}
-            resizeMode="cover"
-            style={styles.bg_img}>
+                   resizeMode="cover"
+                   style={styles.bg_img}>
                 <View style={styles.itemView}>
                     <Image
                         defaultSource={Images.empty_ticket}
-                        source={{uri:logo}}
+                        source={{uri: logo}}
                         style={styles.itemImg}/>
                     <View style={styles.itemInfo}>
                         <Text
@@ -48,14 +48,14 @@ export const itemListView = (item, index) => {
 
                         <View style={styles.view_time}>
                             <Image source={Images.race_time}
-                            style={{width: 11, height: 11}}/>
+                                   style={{width: 11, height: 11}}/>
                             <Text style={styles.itemTime}>
                                 {convertDate(begin_date, 'YYYY.MM.DD') + '-' + convertDate(end_date, 'YYYY.MM.DD')}</Text>
                         </View>
 
                         <View style={styles.price_view}>
-                            <Text style={{color: '#454545'}}>奖池：</Text>
-                            <Text style={styles.itemPrice}>{prize}</Text>
+                            <Text style={{color: '#454545', fontSize: 13}}>奖池：</Text>
+                            <Text style={[styles.itemPrice, {fontSize: 13}]}>{prize}</Text>
                         </View>
 
                         <View style={sellStyle(ticket_status)}>
@@ -63,9 +63,9 @@ export const itemListView = (item, index) => {
                         </View>
 
                         {/*<View style={styles.status_view}>*/}
-                            {/*<Image source={Images.race_doing}*/}
-                                {/*style={{width: 8, height: 9, alignItems: 'center', marginRight: 5}}/>*/}
-                            {/*<Text style={sellTxt(ticket_status)}>{ticketStatusConvert(ticket_status)}</Text>*/}
+                        {/*<Image source={Images.race_doing}*/}
+                        {/*style={{width: 8, height: 9, alignItems: 'center', marginRight: 5}}/>*/}
+                        {/*<Text style={sellTxt(ticket_status)}>{ticketStatusConvert(ticket_status)}</Text>*/}
                         {/*</View>*/}
                     </View>
                 </View>
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: 12,
-        fontSize: 13
+
     },
     itemImg: {
         width: 67,
