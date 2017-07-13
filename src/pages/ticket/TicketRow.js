@@ -41,7 +41,7 @@ export const itemListView = (item, index) => {
                     <View style={styles.itemInfo}>
                         <Text
                             numberOfLines={1}
-                            style={styles.itemTitle}>{name}</Text>
+                            style={[styles.itemTitle,{fontSize: FontSize.h17}]}>{name}</Text>
 
                         <View style={styles.viewLocation}>
                             <Image source={Images.race_location}
@@ -52,7 +52,7 @@ export const itemListView = (item, index) => {
                         <View style={styles.view_time}>
                             <Image source={Images.home_clock}
                             style={{width: 10, height: 10}}/>
-                            <Text style={styles.itemTime}>
+                            <Text style={[styles.itemTime, {fontSize: FontSize.h14}]}>
                                 {convertDate(begin_date, 'YYYY.MM.DD') + '-' + convertDate(end_date, 'YYYY.MM.DD')}</Text>
                         </View>
 
@@ -127,12 +127,10 @@ const styles = StyleSheet.create({
     itemTitle: {
         width: 270,
         color: '#161718',
-        fontSize: FontSize.h17,
         alignSelf: 'flex-start'
     },
     itemTime: {
         color: '#999999',
-        fontSize: FontSize.h14,
         alignItems: 'center',
         marginLeft: 5
     },

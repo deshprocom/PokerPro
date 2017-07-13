@@ -47,9 +47,6 @@ class IDCardView extends Component {
         choice_id: 'chinese_id',
         chinese: {},
         passport: {},
-        cardImage: '',
-        realName: '',
-        idCard: ''
 
     };
 
