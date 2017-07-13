@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
         borderRadius: 2,
         position: 'absolute',
         top: 30,
-        right: 6
+        right: 10
     },
     sellTxt: {
         color: '#ED3445',
