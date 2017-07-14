@@ -47,6 +47,8 @@ import TicketInfoPage from '../pages/ticket/TicketInfoPage';
 import WebViewPage from '../components/WebViewPage';
 import NewAddressPage from '../pages/buy/NewAddressPage';
 import AdrListPage from '../pages/buy/AdrListPage';
+import MainRankPage from '../pages/rank/MainRankPage';
+import FocusPlayer from '../pages/rank/FocusPlayer'
 
 
 const customFloatFromRight = Navigator.SceneConfigs.FadeAndroid;
@@ -204,6 +206,14 @@ export default class Router {
             name: 'MainVideoPage',
             sceneConfig: customFloatFromRight,
 
+        })
+    }
+
+    toMainRankPage(props) {
+        this.push(props, {
+            page: MainRankPage,
+            name: 'MainRankPage',
+            sceneConfig: customFloatFromRight
         })
     }
 
@@ -506,6 +516,13 @@ export default class Router {
         })
     }
 
+    toFocusPlayer(props){
+        this.push(props, {
+            page: FocusPlayer,
+            name: 'FocusPlayer',
+            sceneConfig: customFloatFromRight
+        })
+    }
 
     toForgetPage(props) {
         this.push(props, {

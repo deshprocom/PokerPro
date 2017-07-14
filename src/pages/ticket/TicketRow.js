@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     price_view: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 12
+        marginTop: 8
     },
     itemImg: {
         width: 67,
