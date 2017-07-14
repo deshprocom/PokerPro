@@ -20,9 +20,6 @@ import StorageKey from '../../configs/StorageKey';
 
 import {setLocalLanguage} from '../../services/ConfigDao';
 
-const CANCEL_INDEX = 0;
-const options = [I18n.t('cancel'), '标准', '中', '大'];
-
 
 class SettingPage extends Component {
     state = {
@@ -107,7 +104,7 @@ class SettingPage extends Component {
                     onPress={() => {
                         this.ActionSheet.show();
                     }}
-                    name={'字体设置'}/>
+                    name={I18n.t('font_set')}/>
 
                 <View
                     style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>
@@ -136,9 +133,9 @@ class SettingPage extends Component {
 
             <ActionSheet
                 ref={o => this.ActionSheet = o}
-                title={'字体选择'}
-                options={options}
-                cancelButtonIndex={CANCEL_INDEX}
+                title={I18n.t('font_select')}
+                options={[I18n.t('cancel'), I18n.t('font_stan'), I18n.t('font_mid'), I18n.t('font_big')]}
+                cancelButtonIndex={0}
                 destructiveButtonIndex={DESTRUCTIVE_INDEX}
                 onPress={this.handlePress}
             />
@@ -191,15 +188,15 @@ class SettingPage extends Component {
 
 
     _switchLanguage = () => {
-        Alert.alert('语言切换', '', [
+        Alert.alert(I18n.t('language_switch'), '', [
             {
-                text: '中文', onPress: () => {
+                text: I18n.t('chinese'), onPress: () => {
                 this._switch('zh')
 
             }
             },
             {
-                text: '英语', onPress: () => {
+                text: I18n.t('english'), onPress: () => {
                 this._switch('en')
 
             }

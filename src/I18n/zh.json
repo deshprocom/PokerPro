@@ -231,5 +231,17 @@
   "ple_password_card":"请输入护照号",
   "add_new_adr":"新增收货地址",
   "save":"保存",
-  "receive_adr":"收货地址"
+  "receive_adr":"收货地址",
+  "font_select":"字体选择",
+  "font_set":"字体设置",
+  "font_stan":"标准",
+  "font_mid":"中",
+  "font_big":"大",
+  "language_switch":"语言切换",
+  "chinese":"中文",
+  "english":"英语",
+  "order_num":"订单编号",
+  "is_cancel_order":"您是否要取消订单",
+  "confirm":"确认",
+  "all":"全部"
 }
