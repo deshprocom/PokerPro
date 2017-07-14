@@ -55,7 +55,7 @@ export default class OrderListPage extends Component {
                 <ListOrderView
                     status="all"
                     testViewID="page_all_order"
-                    tabLabel="全部"
+                    tabLabel={I18n.t('all')}
                     router={this.props.router}/>
                 <ListOrderView
                     status="unpaid"
