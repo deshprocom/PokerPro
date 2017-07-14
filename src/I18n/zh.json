@@ -236,5 +236,8 @@
   "font_set":"字体设置",
   "font_stan":"标准",
   "font_mid":"中",
-  "font_big":"大"
+  "font_big":"大",
+  "language_switch":"语言切换",
+  "chinese":"中文",
+  "english":"英语"
 }

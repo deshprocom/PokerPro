@@ -188,15 +188,15 @@ class SettingPage extends Component {
 
 
     _switchLanguage = () => {
-        Alert.alert('语言切换', '', [
+        Alert.alert(I18n.t('language_switch'), '', [
             {
-                text: '中文', onPress: () => {
+                text: I18n.t('chinese'), onPress: () => {
                 this._switch('zh')
 
             }
             },
             {
-                text: '英语', onPress: () => {
+                text: I18n.t('english'), onPress: () => {
                 this._switch('en')
 
             }
