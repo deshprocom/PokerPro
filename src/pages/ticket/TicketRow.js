@@ -40,7 +40,7 @@ export const itemListView = (item, index) => {
                         {/*style={styles.itemImg}/>*/}
                     <View style={styles.itemInfo}>
                         <Text
-                            numberOfLines={1}
+                            numberOfLines={2}
                             style={[styles.itemTitle,{fontSize: FontSize.h17}]}>{name}</Text>
 
                         <View style={styles.viewLocation}>
@@ -125,9 +125,10 @@ const styles = StyleSheet.create({
         width: '98%'
     },
     itemTitle: {
-        width: 270,
+        width: 200,
         color: '#161718',
-        alignSelf: 'flex-start'
+        alignSelf: 'flex-start',
+        marginRight: 70
     },
     itemTime: {
         color: '#999999',
