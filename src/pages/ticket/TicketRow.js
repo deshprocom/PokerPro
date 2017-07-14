@@ -34,10 +34,6 @@ export const itemListView = (item, index) => {
                     <ImageLoad defaultSource={Images.empty_ticket}
                        source={{uri:logo}}
                        style={styles.itemImg}/>
-                    {/*<Image*/}
-                        {/*defaultSource={Images.empty_ticket}*/}
-                        {/*source={{uri:logo}}*/}
-                        {/*style={styles.itemImg}/>*/}
                     <View style={styles.itemInfo}>
                         <Text
                             numberOfLines={2}
@@ -65,11 +61,6 @@ export const itemListView = (item, index) => {
                             <Text style={sellTxt(ticket_status)}>{ticketStatusConvert(ticket_status)}</Text>
                         </View>
 
-                        {/*<View style={styles.status_view}>*/}
-                            {/*<Image source={Images.race_doing}*/}
-                                {/*style={{width: 8, height: 9, alignItems: 'center', marginRight: 5}}/>*/}
-                            {/*<Text style={sellTxt(ticket_status)}>{ticketStatusConvert(ticket_status)}</Text>*/}
-                        {/*</View>*/}
                     </View>
                 </View>
             </Image>
@@ -109,17 +100,17 @@ const styles = StyleSheet.create({
     itemImg: {
         width: 67,
         height: 95,
-        marginLeft: 12,
+        marginLeft: 12
     },
     itemView: {
+        height: 140,
         flexDirection: 'row',
         alignItems: 'center',
-        paddingTop: 16,
-        paddingBottom: 16
+        justifyContent: 'center'
     },
     bg_img: {
         backgroundColor: 'transparent',
-        height: 127,
+        height: 140,
         marginLeft: '1%',
         marginRight: '1%',
         width: '98%'
@@ -146,7 +137,7 @@ const styles = StyleSheet.create({
     },
     itemInfo: {
         marginLeft: 12,
-        height: 95,
+        // height: 95,
     },
     itemTab: {
         flexDirection: 'row',
@@ -169,19 +160,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 2,
         position: 'absolute',
-        top: 30,
+        top: 40,
         right: 10
     },
     sellTxt: {
         color: '#ED3445',
         fontSize: 12
     }
-    // status_view: {
-    //     position: 'absolute',
-    //     bottom: 0,
-    //     right: '4%',
-    //     flexDirection: 'row',
-    //     alignItems: 'center'
-    // }
 
 });
