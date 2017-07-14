@@ -9,7 +9,7 @@ import {
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar,SecurityText} from '../../components';
+import {NavigationBar, SecurityText} from '../../components';
 import RaceInfoView from '../buy/RaceInfoView';
 import {GET_ORDER_DETAIL, POST_ORDER_CANCEL} from '../../actions/ActionTypes';
 import {fetchOrderDetail, fetchOrderCancel} from '../../actions/OrderAction'
@@ -76,13 +76,13 @@ class OrderInfoPage extends React.Component {
 
     _orderCancel = () => {
 
-        Alert.alert("提示", "您是否要取消订单", [{
-            text: "取消",
+        Alert.alert(I18n.t('tint'), I18n.t('is_cancel_order'), [{
+            text: I18n.t('cancel'),
             onPress: () => {
             }
         },
             {
-                text: " 确认",
+                text: I18n.t('confirm'),
                 onPress: () => this._cancelOrder()
             }]);
 
