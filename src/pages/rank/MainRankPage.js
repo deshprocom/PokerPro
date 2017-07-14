@@ -1,13 +1,96 @@
 
 import React,{Component} from 'react';
-import {View, Text} from 'react-native';
-import {RankList} from './RankList';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+
+import {Colors, Images, Metrics} from '../../Themes'
+import {NavigationBar} from '../../components';
+import RankList from './RankList';
 
 export default class MainRankPage extends Component {
+
+    topHeader = () => {
+        return(<View style={styles.header_bar}>
+            <TouchableOpacity onPress={() => router.pop()}
+                style={styles.topBtn}>
+                <Image source={Images.sign_return}
+                    style={styles.back_image}/>
+            </TouchableOpacity>
+
+            <View style={styles.topBtn}></View>
+
+            <View style={styles.header_title}>
+                <Text style={styles.title_color}>排行榜</Text>
+            </View>
+
+            <View style={styles.right_btn}>
+                <TouchableOpacity onPress={this.choiceRank()}
+                    style={styles.topBtn}>
+                    <Image source={Images.race_type}
+                        style={styles.right_image}/>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                    this.props.router.toFocusPlayer()
+                }}
+                    style={styles.topBtn}>
+                    <Image source={Images.race_type}
+                        style={styles.right_image}/>
+                </TouchableOpacity>
+            </View>
+        </View>)
+    };
+
     render(){
         return(<View>
-            <Text>排行</Text>
+            {this.topHeader()}
             <RankList/>
         </View>)
-    }
+    };
+
+    choiceRank = () => {
+
+    };
+    collectRank =() => {
+
+    };
+
 }
+
+const styles = StyleSheet.create({
+    header_bar: {
+        width:Metrics.screenWidth,
+        alignItems: 'center',
+        flexDirection: 'row',
+        backgroundColor: Colors.bg_09,
+        paddingTop: Metrics.statusBarHeight
+    },
+    topBtn: {
+        width: 44,
+        height: 44,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 5,
+        marginRight: 5
+    },
+    back_image: {
+        height: 19,
+        width: 11
+    },
+    header_title: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    title_color: {
+        color: Colors.txt_E0C,
+        fontSize: 18
+    },
+    right_btn: {
+        flexDirection: 'row',
+        height: 44,
+        marginRight: 10
+    },
+    right_image: {
+        width: 22,
+        height: 22
+    }
+})
