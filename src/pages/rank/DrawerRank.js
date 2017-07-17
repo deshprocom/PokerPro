@@ -1,4 +1,4 @@
-import React,{Compontent, PropTypes} from 'react';
+import React, {Compontent, PropTypes} from 'react';
 import {View, Text, StyleSheet, BackAndroid, Navigator} from 'react-native';
 import Drawer from 'react-native-drawer';
 
@@ -8,18 +8,27 @@ import FiltePage from './FiltePage';
 
 class DrawerRank extends Compontent {
 
-    openRankDrawer(){
+    openRankDrawer = () => {
         router.log(111111)
-        this.props.openDrawer()
+        this._drawer.open()
     }
 
-    closeRankDrawer(){
-        this.props.closeDrawer()
+    closeRankDrawer() {
+        this._drawer.close()
     }
 
-    render(){
-        return(<View>
-            <Drawer
+    _handleDrawer(){
+        router.log('_handleDrawer',this._drawer._open);
+        if(this._drawer._open){
+            this._drawer.close()
+        }else{
+            this._drawer.open()
+        }
+    }
+
+    render() {
+        return (<View>
+            <Drawer ref={(ref) => this._drawer=ref}
                 type="static"
                 content={<FiltePage router={this.props.router}/>}
                 tapToClose
@@ -28,7 +37,7 @@ class DrawerRank extends Compontent {
                 tweenHandler={Drawer.tweenPresets.parallax}
                 side="right">
 
-                <MainRankPage openRank={() => {this.openRankDrawer()}} router={this.props.router}/>
+                <MainRankPage openRank={()=>this._handleDrawer()} router={this.props.router}/>
 
             </Drawer>
         </View>)
