@@ -133,7 +133,7 @@
   "load_no_data": "暂无更多内容",
   "load_error": "数据加载失败",
   "business_cooperation": "商务合作",
-  "user_signature": "还未填写个性签名，简单的介绍下自己吧",
+  "user_signature": "请输入您的个性签名！",
   "user_edit_avatar": "修改头像",
   "addr_manager": "地址管理",
   "real_name_manager": "实名信息管理",

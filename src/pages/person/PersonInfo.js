@@ -146,15 +146,18 @@ export default class PersonInfo extends React.Component {
                         activeOpacity={1}
                         style={{height:136,flexDirection:'row',alignItems:'center'}}
                         onPress={this.selectPhotoTapped}>
-                        <Text style={[styles.text_label,{marginRight: '45%'}]}>{I18n.t('user_edit_avatar')}</Text>
+                        <Text style={[styles.text_label,{marginRight: '35%'}]}>{I18n.t('user_edit_avatar')}</Text>
                         <Image style={{height:86,width:86,
-                            alignItems:'center',justifyContent:'center'}}
-                               source={Images.home_def_harid}>
+                            alignItems:'center',justifyContent:'center', marginRight: '10%'}}
+                               source={Images.mask}>
                             <Image style={{height:70,width:70,
                                 borderRadius:35}}
                                    source={strNotNull(profile.avatar)?{uri:profile.avatar}:Images.home_avatar}
                             />
                         </Image>
+
+                        <Image style={{height:20,width:11, marginLeft: 5}}
+                               source={Images.set_more}/>
 
 
                     </TouchableOpacity>
@@ -204,7 +207,7 @@ export default class PersonInfo extends React.Component {
 
                             <Text style={[styles.text_label,{marginRight:20}]}>{I18n.t('signature')}</Text>
                             <TextInput style={[styles.text_value]}
-                                       placeholderTextColor="#555C63"
+                                       placeholderTextColor="#CCC"
                                        underlineColorAndroid='transparent'
                                        maxLength={20}
                                        onChangeText={text=>{
@@ -236,7 +239,7 @@ export default class PersonInfo extends React.Component {
 
                     <View style={styles.view_real}>
                         <Text style={this._colorRealStatus()}>{this._txtRealStatus()}</Text>
-                        <Image style={{height:20,width:11}}
+                        <Image style={{height:20,width:11, marginLeft: 5}}
                                source={Images.set_more}/>
                     </View>
 
@@ -333,11 +336,11 @@ const picker = {
 const styles = StyleSheet.create({
     item_view: {height: 54, alignItems: 'center', flexDirection: 'row'},
     text_label: {
-        color: '#6C7886',
-        fontSize: Fonts.size.h14,
+        color: Colors._333,
+        fontSize: Fonts.size.h17,
         marginRight: 27
     },
-    text_value: {color: Colors._AAA, fontSize: Fonts.size.h14, flex: 1},
+    text_value: {color: Colors._666, fontSize: Fonts.size.h15, flex: 1},
     line: {height: 1, backgroundColor: '#ECECEE'},
     set_view: {
         height: 51, justifyContent: 'space-between',
