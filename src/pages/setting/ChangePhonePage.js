@@ -26,11 +26,11 @@ export default class ChangePhonePage extends Component {
             testID="page_change_bind"
             style={ApplicationStyles.bg_black}>
             <NavigationBar
-                toolbarStyle={{backgroundColor:Colors.bg_09}}
+                toolbarStyle={{backgroundColor: Colors.bg_09}}
                 title={I18n.t('tel')}
                 leftBtnIcon={Images.sign_return}
-                leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
-                leftBtnPress={()=>router.pop()}/>
+                leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                leftBtnPress={() => router.pop()}/>
 
             <View style={styles.viewPhone}>
                 <Text style={styles.txtPhone}>{I18n.t('presentTel')}</Text>
@@ -46,7 +46,7 @@ export default class ChangePhonePage extends Component {
                 </SecurityText>
             </View>
 
-            <Text style={styles.txtTine}>{I18n.t('newTel')}</Text>
+            {/*<Text style={styles.txtTine}>{I18n.t('newTel')}</Text>*/}
 
 
             <ModalPrompt
@@ -54,7 +54,7 @@ export default class ChangePhonePage extends Component {
                 modalVisible={this.state.modalVisible}/>
 
 
-            <View style={{flex:1}}/>
+            <View style={{flex: 1}}/>
             <Button
                 testID="btn_change_phone"
                 onPress={this.modalShow}
@@ -79,26 +79,28 @@ export default class ChangePhonePage extends Component {
 const styles = StyleSheet.create({
     txtPhone: {
         fontSize: 16,
-        color: Colors._BBBB,
+        color: Colors._999,
     },
     txtTine: {
-        fontSize: 13,
+        fontSize: 16,
         color: Colors._999,
         marginTop: 20,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        marginLeft: 17,
+        marginRight: 17
     },
     btnChange: {
         height: 45,
         marginRight: 20,
         marginLeft: 20,
-        backgroundColor: '#E0BB75',
+        backgroundColor: Colors._161,
         justifyContent: 'center',
         borderRadius: 4,
-        marginBottom: 20
+        marginBottom: 240
     },
     txtChange: {
         fontSize: 19,
-        color: Colors._161817,
+        color: Colors._F4E,
     },
     viewPhone: {
         marginTop: 146,

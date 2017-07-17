@@ -18,7 +18,7 @@ const colors = {
     _222: '#222222',
     _E5E5: '#E5E5E5',
     _BBBB: '#BBBBBB',
-    bg_f5: '#f5f5f5',
+    bg_f5: '#ECECEE',
     _AAA: '#AAAAAA',
     txt_777: '#777777',
     txt_FF5: '#FF5837',

@@ -64,8 +64,6 @@ class SearchRacesPage extends Component {
 
                 {this.topBar()}
 
-                {isEmptyObject(dataRaces) ? <NoDataView
-                    pageStyle={{backgroundColor: Colors.bg_ec}}/> : null}
 
 
                 {this.listView()}

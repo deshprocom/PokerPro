@@ -43,8 +43,8 @@ export default class AboutPage extends Component {
 
 const styles = StyleSheet.create({
     logo: {
-        height: 120,
-        width: 120,
+        height: 96,
+        width: 96,
         alignSelf: 'center',
         marginTop: 94
     },

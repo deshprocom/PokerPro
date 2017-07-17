@@ -153,49 +153,36 @@ class NewsListView extends Component {
 
         const {top, name, cover_link, video_duration} = rowData;
 
-        if (top) {
-            return (<TouchableOpacity
-                style={styles.transparent}
-                testID={"btn_news_row_" + rowData.id}
-                activeOpacity={1}
-                onPress={() => this._pressItem(rowData)}>
+        return (<TouchableOpacity
+            style={styles.transparent}
+            testID={"btn_news_row_" + rowData.id}
+            activeOpacity={1}
+            onPress={() => this._pressItem(rowData)}>
+
+            <ImageLoad
+                source={{uri: cover_link}}
+                style={styles.listTopImg}
+            >
+                <View style={styles.itemBack}>
+                    <Image
+                        style={styles.imgPlay}
+                        source={Images.video_play}/>
+
+                    <Text style={[styles.listVideoTime, {fontSize: FontSize.h14}]}>{video_duration}</Text>
+
+                </View>
+
+            </ImageLoad>
+            <View style={styles.viewDesc}>
+                <Text
+                    numberOfLines={1}
+                    style={[styles.listTopTxt, {fontSize: FontSize.h17}]}>{name}</Text>
+
+            </View>
+            <View style={{height: 6}}/>
 
 
-                <ImageLoad
-                    source={{uri: cover_link}}
-                    style={styles.listTopImg}
-                >
-                    <View style={styles.itemBack}/>
-                </ImageLoad>
-
-                <Text style={[styles.listVideoTime, {fontSize: FontSize.h14}]}>{video_duration}</Text>
-                <Text style={[styles.listTopTxt, {fontSize: FontSize.h17}]}>{name}</Text>
-
-            </TouchableOpacity>)
-        } else {
-            return (<TouchableOpacity
-                style={styles.transparent}
-                testID={"btn_news_row_" + rowData.id}
-                activeOpacity={1}
-                onPress={() => this._pressItem(rowData)}>
-
-                <ImageLoad
-                    source={{uri: cover_link}}
-                    style={styles.listTopImg}
-                >
-                    <View style={styles.itemBack}>
-                        <Image
-                            style={styles.imgPlay}
-                            source={Images.video_play}/>
-
-                    </View>
-
-                </ImageLoad>
-
-                <Text style={[styles.listVideoTime, {fontSize: FontSize.h14}]}>{video_duration}</Text>
-                <Text style={[styles.listTopTxt, {fontSize: FontSize.h16}]}>{name}</Text>
-            </TouchableOpacity>)
-        }
+        </TouchableOpacity>)
 
 
     }
@@ -227,7 +214,7 @@ export default connect(mapStateToProps, bindAction)(NewsListView);
 const styles = StyleSheet.create({
 
     listTopImg: {
-        height: 228,
+        height: 208,
         width: Metrics.screenWidth
 
     },
@@ -239,11 +226,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     listTopTxt: {
-        color: Colors.white,
-        left: 17,
-        position: 'absolute',
-        bottom: 12,
-        fontWeight: 'bold'
+        color: Colors._333,
+        fontWeight: 'bold',
+        marginTop: 9,
+        marginLeft: 17
     },
     listView: {
         flexDirection: 'row',
@@ -289,7 +275,6 @@ const styles = StyleSheet.create({
         flex: 1
     },
     itemBack: {
-        backgroundColor: 'rgba(0,0,0,0.4)',
         flex: 1
     },
     transparent: {
@@ -297,14 +282,18 @@ const styles = StyleSheet.create({
     },
     listVideoTime: {
         color: Colors._EEE,
-        left: 17,
+        right: 17,
         position: 'absolute',
-        bottom: 36
+        bottom: 7
     },
     imgPlay: {
         height: 68,
         width: 68,
         alignSelf: 'center',
         marginTop: 68
+    },
+    viewDesc: {
+        height: 68,
+        backgroundColor: 'white'
     }
 });

@@ -143,8 +143,7 @@ export  default class MainVideoPage extends Component {
             {item.select ? <View style={{flex: 1}}/> : null}
             <Text style={item.select ?
                 styles.itemTxtSelect : styles.itemTxt}>{item.name}</Text>
-            {item.select ? <Image style={styles.triangle}
-                                  source={Images.news_triangle}/> : null}
+            {item.select ? <View style={styles.triangle}/> : null}
 
         </TouchableOpacity>)
     }
@@ -226,7 +225,7 @@ const styles = StyleSheet.create({
     },
     newsTypeView: {
         height: 40,
-        backgroundColor: Colors._161817
+        backgroundColor: Colors.white
     },
     itemView: {
         height: 40,
@@ -239,14 +238,15 @@ const styles = StyleSheet.create({
         fontSize: 14
     },
     itemTxtSelect: {
-        color: 'white',
+        color: Colors._333,
         fontSize: 16,
         marginBottom: 5
     },
     triangle: {
         height: 3,
         width: 32,
-        marginBottom:4
+        marginBottom: 4,
+        backgroundColor: Colors._333
     },
     viewPage: {
         flex: 1
