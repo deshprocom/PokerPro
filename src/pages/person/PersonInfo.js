@@ -5,7 +5,7 @@ import React, {PropTypes}from 'react';
 import {
     StyleSheet, Image, Platform, ActivityIndicator,
     Dimensions, View, TextInput, Text, TouchableOpacity,
-    KeyboardAvoidingView, Alert
+    KeyboardAvoidingView, Modal
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import Picker from 'react-native-picker';
@@ -24,7 +24,11 @@ const title = I18n.t('chose_image');
 export default class PersonInfo extends React.Component {
     static propTypes = {
         profile: PropTypes.object,
-        postAvatar: PropTypes.func
+        postAvatar: PropTypes.func,
+    };
+
+    state = {
+        visible: false
     };
 
     _getGender(gender) {
@@ -40,9 +44,11 @@ export default class PersonInfo extends React.Component {
 
     componentWillUnmount() {
         Picker.hide();
+        this._hideModal();
     }
 
     _showSexPicker = () => {
+        this._showModal();
         Picker.init({
             pickerConfirmBtnText: '确定',
             pickerCancelBtnText: '取消',
@@ -57,6 +63,7 @@ export default class PersonInfo extends React.Component {
             pickerFontSize: 21,
             pickerFontColor: [34, 34, 34, 1],
             onPickerConfirm: (pickedValue, pickedIndex) => {
+                this._hideModal();
                 const {profile} = this.props;
                 if (pickedValue == '男')
                     profile.gender = 0;
@@ -69,6 +76,7 @@ export default class PersonInfo extends React.Component {
                 });
             },
             onPickerCancel: (pickedValue, pickedIndex) => {
+                this._hideModal();
                 console.log('sex', pickedValue, pickedIndex);
             },
             onPickerSelect: (pickedValue, pickedIndex) => {
@@ -78,7 +86,20 @@ export default class PersonInfo extends React.Component {
         Picker.show();
     };
 
+    _showModal = () => {
+        this.setState({
+            visible: true
+        });
+    };
+
+    _hideModal = () => {
+        this.setState({
+            visible: false
+        });
+    };
+
     _showDatePicker = () => {
+        this._showModal();
         Picker.init({
             pickerConfirmBtnText: '确定',
             pickerCancelBtnText: '取消',
@@ -95,6 +116,7 @@ export default class PersonInfo extends React.Component {
             pickerFontSize: 21,
             pickerFontColor: [34, 34, 34, 1],
             onPickerConfirm: (pickedValue, pickedIndex) => {
+                this._hideModal();
                 const {profile: edit} = this.props;
                 edit.birthday = pickedValue.toString().replace(',', '-')
                     .replace(',', '-').replace(',', '');
@@ -103,6 +125,7 @@ export default class PersonInfo extends React.Component {
                 });
             },
             onPickerCancel: (pickedValue, pickedIndex) => {
+                this._hideModal();
                 console.log('date', pickedValue, pickedIndex);
             },
             onPickerSelect: (pickedValue, pickedIndex) => {
@@ -138,6 +161,7 @@ export default class PersonInfo extends React.Component {
 
     render() {
         const {profile} = this.props;
+
         return (
             <View style={{backgroundColor: '#FFF'}}>
                 <View style={{marginLeft: 20}}>
@@ -249,15 +273,23 @@ export default class PersonInfo extends React.Component {
 
                 </TouchableOpacity>
 
+                <Modal
+                    transparent={true}
+                    visible={this.state.visible}>
+                    <View style={{
+                        flex: 1,
+                        backgroundColor: 'rgba(0,0,0,0.38)'
+                    }}/>
+                    <ActionSheet
+                        ref={o => this.ActionSheet = o}
+                        title={title}
+                        options={options}
+                        cancelButtonIndex={CANCEL_INDEX}
+                        destructiveButtonIndex={DESTRUCTIVE_INDEX}
+                        onPress={this.handlePress}
+                    />
+                </Modal>
 
-                <ActionSheet
-                    ref={o => this.ActionSheet = o}
-                    title={title}
-                    options={options}
-                    cancelButtonIndex={CANCEL_INDEX}
-                    destructiveButtonIndex={DESTRUCTIVE_INDEX}
-                    onPress={this.handlePress}
-                />
 
             </View>
         )
