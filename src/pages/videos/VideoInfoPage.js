@@ -41,9 +41,9 @@ export default class VideoInfoPage extends Component {
             <View
                 style={styles.video}>
                 <VideoPlayer
-                    ref={ref=>this.player = ref}
+                    ref={ref => this.player = ref}
                     toggleFullscreen={this.toggleFullscreen}
-                    source={{ uri:video_link }}
+                    source={{uri: video_link.trim()}}
                 />
             </View>
 
