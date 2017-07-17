@@ -1,5 +1,5 @@
 
-import React,{Component} from 'react';
+import React,{Component, PropTypes} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
 import {Colors, Images, Metrics} from '../../Themes'
@@ -7,6 +7,9 @@ import {NavigationBar} from '../../components';
 import RankList from './RankList';
 
 export default class MainRankPage extends Component {
+    static propTypes = {
+        openRank: PropTypes.func
+    };
 
     topHeader = () => {
         return(<View style={styles.header_bar}>
@@ -23,7 +26,7 @@ export default class MainRankPage extends Component {
             </View>
 
             <View style={styles.right_btn}>
-                <TouchableOpacity onPress={this.choiceRank()}
+                <TouchableOpacity onPress={this.props.openRank}
                     style={styles.topBtn}>
                     <Image source={Images.race_type}
                         style={styles.right_image}/>
