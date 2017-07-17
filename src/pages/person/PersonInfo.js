@@ -95,7 +95,7 @@ export default class PersonInfo extends React.Component {
             pickerFontSize: 21,
             pickerFontColor: [34, 34, 34, 1],
             onPickerConfirm: (pickedValue, pickedIndex) => {
-                const {profile:edit} = this.props;
+                const {profile: edit} = this.props;
                 edit.birthday = pickedValue.toString().replace(',', '-')
                     .replace(',', '-').replace(',', '');
                 this.setState({
@@ -139,20 +139,24 @@ export default class PersonInfo extends React.Component {
     render() {
         const {profile} = this.props;
         return (
-            <View style={{backgroundColor:'#FFF'}}>
-                <View style={{marginLeft:20}}>
+            <View style={{backgroundColor: '#FFF'}}>
+                <View style={{marginLeft: 20}}>
                     {/*头像*/}
                     <TouchableOpacity
                         activeOpacity={1}
-                        style={{height:136,flexDirection:'row',alignItems:'center'}}
+                        style={{height: 136, flexDirection: 'row', alignItems: 'center'}}
                         onPress={this.selectPhotoTapped}>
-                        <Text style={[styles.text_label,{marginRight: '45%'}]}>{I18n.t('user_edit_avatar')}</Text>
-                        <Image style={{height:86,width:86,
-                            alignItems:'center',justifyContent:'center'}}
+                        <Text style={[styles.text_label, {marginRight: '45%'}]}>{I18n.t('user_edit_avatar')}</Text>
+                        <Image style={{
+                            height: 86, width: 86,
+                            alignItems: 'center', justifyContent: 'center'
+                        }}
                                source={Images.home_def_harid}>
-                            <Image style={{height:70,width:70,
-                                borderRadius:35}}
-                                   source={strNotNull(profile.avatar)?{uri:profile.avatar}:Images.home_avatar}
+                            <Image style={{
+                                height: 70, width: 70,
+                                borderRadius: 35
+                            }}
+                                   source={strNotNull(profile.avatar) ? {uri: profile.avatar} : Images.home_avatar}
                             />
                         </Image>
 
@@ -165,14 +169,14 @@ export default class PersonInfo extends React.Component {
                         <TextInput style={styles.text_value}
 
                                    underlineColorAndroid='transparent'
-                                   onChangeText={text=>{
-                                            const edit = profile;
-                                            edit.nick_name = text;
-                                            this.setState({
-                                                    profile:edit
-                                                })
+                                   onChangeText={text => {
+                                       const edit = profile;
+                                       edit.nick_name = text;
+                                       this.setState({
+                                           profile: edit
+                                       })
 
-                               }}
+                                   }}
                                    value={profile.nick_name}
                                    testID="input_nick"/>
                     </View>
@@ -198,33 +202,33 @@ export default class PersonInfo extends React.Component {
                     </TouchableOpacity>
                     <View style={styles.line}/>
 
-                    <View style={{height:94}}>
+                    <KeyboardAvoidingView style={{height: 94}}>
 
-                        <KeyboardAvoidingView style={styles.item_view}>
+                        <View style={styles.item_view}>
 
-                            <Text style={[styles.text_label,{marginRight:20}]}>{I18n.t('signature')}</Text>
+                            <Text style={[styles.text_label, {marginRight: 20}]}>{I18n.t('signature')}</Text>
                             <TextInput style={[styles.text_value]}
                                        placeholderTextColor="#555C63"
                                        underlineColorAndroid='transparent'
                                        maxLength={20}
-                                       onChangeText={text=>{
-                                             const edit = profile;
-                                            edit.signature = text;
-                                            this.setState({
-                                                    profile:edit
-                                                })
+                                       onChangeText={text => {
+                                           const edit = profile;
+                                           edit.signature = text;
+                                           this.setState({
+                                               profile: edit
+                                           })
 
-                               }}
+                                       }}
 
                                        value={profile.signature}
                                        testID="input_signature"
                                        placeholder={I18n.t('user_signature')}/>
-                        </KeyboardAvoidingView>
+                        </View>
 
-                    </View>
+                    </KeyboardAvoidingView>
                 </View>
 
-                <View style={[styles.line,{height:8}]}/>
+                <View style={[styles.line, {height: 8}]}/>
 
                 {this._addrView()}
                 <TouchableOpacity
@@ -236,7 +240,7 @@ export default class PersonInfo extends React.Component {
 
                     <View style={styles.view_real}>
                         <Text style={this._colorRealStatus()}>{this._txtRealStatus()}</Text>
-                        <Image style={{height:20,width:11}}
+                        <Image style={{height: 20, width: 11}}
                                source={Images.set_more}/>
                     </View>
 
@@ -258,10 +262,10 @@ export default class PersonInfo extends React.Component {
 
     _addrView = () => {
         return false ? ( <View style={styles.set_view}>
-                <Text style={styles.text_label}>{I18n.t('addr_manager')}</Text>
-                <Image style={{height:20,width:11}}
-                       source={Images.set_more}/>
-            </View>) : null
+            <Text style={styles.text_label}>{I18n.t('addr_manager')}</Text>
+            <Image style={{height: 20, width: 11}}
+                   source={Images.set_more}/>
+        </View>) : null
     };
 
 
@@ -298,7 +302,7 @@ export default class PersonInfo extends React.Component {
                 case Verified.PENDING:
                     return I18n.t('pending')
             }
-        }else if(isEmptyObject(user_extra)){
+        } else if (isEmptyObject(user_extra)) {
             return I18n.t('init');
         }
     }
@@ -313,7 +317,7 @@ export default class PersonInfo extends React.Component {
                 case Verified.PENDING:
                     return styles.txt_real;
             }
-        }else if(isEmptyObject(user_extra)){
+        } else if (isEmptyObject(user_extra)) {
             return styles.txt_real_init;
         }
     }
