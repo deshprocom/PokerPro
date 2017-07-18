@@ -151,7 +151,7 @@ class NewsListView extends Component {
 
     _itemNewsView = (rowData, sectionID, rowID) => {
 
-        const {top, name, cover_link, video_duration} = rowData;
+        const {top, name, cover_link, video_duration,title_desc} = rowData;
 
         return (<TouchableOpacity
             style={styles.transparent}
@@ -170,6 +170,7 @@ class NewsListView extends Component {
 
                     <Text style={[styles.listVideoTime, {fontSize: FontSize.h14}]}>{video_duration}</Text>
 
+
                 </View>
 
             </Image>
@@ -177,6 +178,9 @@ class NewsListView extends Component {
                 <Text
                     numberOfLines={2}
                     style={[styles.listTopTxt, {fontSize: FontSize.h17}]}>{name}</Text>
+                <Text
+                    numberOfLines={1}
+                    style={[styles.txtTitle1,{fontSize:FontSize.h14}]}>{title_desc}</Text>
 
             </View>
             <View style={{height: 6}}/>
@@ -230,7 +234,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginTop: 10,
         marginLeft: 17,
-        marginBottom: 12,
         marginRight: 17,
         lineHeight: 24
     },
@@ -297,5 +300,12 @@ const styles = StyleSheet.create({
     },
     viewDesc: {
         backgroundColor: 'white'
+    },
+    txtTitle1:{
+        color:Colors._AAA,
+        marginTop:3,
+        marginLeft: 17,
+        marginBottom: 12,
+        marginRight: 17,
     }
 });
