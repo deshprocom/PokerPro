@@ -24,7 +24,7 @@ import {fetchRacesInfo, fetchGetRecentRaces} from '../../actions/RacesAction';
 import StorageKey from '../../configs/StorageKey';
 import {getBuyRaceTicket, postOrderTicket} from '../../services/OrderDao';
 import {umengEvent} from '../../utils/UmengEvent';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 
 const E_TICKET = 'e_ticket',

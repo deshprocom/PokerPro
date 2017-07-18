@@ -15,6 +15,7 @@ import I18n from 'react-native-i18n';
 import {isEmptyObject, getCurrentDate, strNotNull} from '../../utils/ComonHelper';
 import {Verified} from '../../configs/Status';
 import ActionSheet from 'react-native-actionsheet';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const CANCEL_INDEX = 0;
 const DESTRUCTIVE_INDEX = 2;

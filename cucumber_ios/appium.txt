@@ -1,9 +1,9 @@
 [caps]
-platformName = 'iOS'
-versionNumber = '10.2'
-deviceName = 'iPhone 6s'
+platformName = "iOS"
+platformVersion = 10.2
+deviceName = "iPhone Simulator"
 app = '../ios/build/Build/Products/Debug-iphonesimulator/PokerPro.app'
 automationName = 'XCUITest'
-
 language = 'zh'
 locale = 'zh_CN'
+
