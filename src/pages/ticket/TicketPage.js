@@ -46,9 +46,9 @@ class TicketPage extends Component {
                 this.last_id = last_id;
 
             if (this.listPage == 1) {
-                this.listView.postRefresh(items, 1);
+                this.listView.postRefresh(items, 5);
             } else {
-                this.listView.postPaginate(items, 1)
+                this.listView.postPaginate(items,5)
             }
 
             this.setState({

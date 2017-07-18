@@ -44,7 +44,7 @@ export function strNotNull(str) {
 
 
 export function uShareRace(title, location, icon, raceId) {
-    UMShare.share(title, location, icon, "http://106.75.136.9:8810/race/" + raceId)
+    UMShare.share(title, location, icon, "https://h5.deshpro.com/race/" + raceId)
         .then(() => {
             showToast('分享成功')
         }, (error) => {
@@ -53,7 +53,7 @@ export function uShareRace(title, location, icon, raceId) {
 }
 
 export function newShare(title, location, icon, newsId) {
-    UMShare.share(title, location, icon, "http://106.75.136.9:8810/news/" + newsId)
+    UMShare.share(title, location, icon, "https://h5.deshpro.com/news/" + newsId)
         .then(() => {
             showToast('分享成功')
         }, (error) => {
