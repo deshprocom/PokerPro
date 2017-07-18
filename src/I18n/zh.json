@@ -191,7 +191,7 @@
   "Schudel":"赛程表",
   "Blind":"盲注结构",
   "Ranks":"赛事结果",
-  "time":"时间",
+  "time":"时间(分)",
   "peoples":"参赛人数:",
   "beginChip":"起始筹码:",
   "Level":"级别",
@@ -243,5 +243,7 @@
   "order_num":"订单编号",
   "is_cancel_order":"您是否要取消订单",
   "confirm":"确认",
-  "all":"全部"
+  "all":"全部",
+  "male":"男",
+  "female":"女"
 }

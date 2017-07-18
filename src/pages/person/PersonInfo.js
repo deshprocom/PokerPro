@@ -35,9 +35,9 @@ export default class PersonInfo extends React.Component {
     _getGender(gender) {
         switch (gender) {
             case 0:
-                return '男';
+                return I18n.t('male');
             case 1:
-                return '女';
+                return I18n.t('female');
             default:
                 return '';
         }
@@ -51,10 +51,10 @@ export default class PersonInfo extends React.Component {
     _showSexPicker = () => {
         this._showModal();
         Picker.init({
-            pickerConfirmBtnText: '确定',
-            pickerCancelBtnText: '取消',
+            pickerConfirmBtnText: I18n.t('confirm'),
+            pickerCancelBtnText: I18n.t('cancel'),
             pickerTitleText: '',
-            pickerData: ['男', '女'],
+            pickerData: [I18n.t('male'), I18n.t('female')],
             pickerConfirmBtnColor: [224, 187, 117, 1],
             pickerCancelBtnColor: [102, 102, 102, 1],
             pickerTitleColor: [20, 20, 20, 1],
@@ -66,22 +66,22 @@ export default class PersonInfo extends React.Component {
             onPickerConfirm: (pickedValue, pickedIndex) => {
                 this._hideModal();
                 const {profile} = this.props;
-                if (pickedValue == '男')
+                if (pickedValue == I18n.t('male'))
                     profile.gender = 0;
-                else if (pickedValue == '女')
+                else if (pickedValue == I18n.t('female'))
                     profile.gender = 1;
 
-                console.log('sex', profile.gender);
+
                 this.setState({
                     profile: profile
                 });
             },
             onPickerCancel: (pickedValue, pickedIndex) => {
                 this._hideModal();
-                console.log('sex', pickedValue, pickedIndex);
+
             },
             onPickerSelect: (pickedValue, pickedIndex) => {
-                console.log('sex', pickedValue, pickedIndex);
+
             }
         });
         Picker.show();
@@ -102,8 +102,8 @@ export default class PersonInfo extends React.Component {
     _showDatePicker = () => {
         this._showModal();
         Picker.init({
-            pickerConfirmBtnText: '确定',
-            pickerCancelBtnText: '取消',
+            pickerConfirmBtnText: I18n.t('confirm'),
+            pickerCancelBtnText: I18n.t('cancel'),
             pickerTitleText: '',
             pickerData: _createDateData(),
             isLoop: true,
