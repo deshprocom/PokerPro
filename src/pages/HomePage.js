@@ -48,7 +48,7 @@ class HomePage extends Component {
             this.setState({
                 languageChange: true
             })
-        })
+        });
 
     }
 
