@@ -326,7 +326,7 @@ class HomePage extends Component {
                             testID="btn_home_sort"
                             onPress={() => {
                                 umengEvent('home_ranking');
-                                router.toMainRankPage()
+                                router.toDrawerRank()
 
                             }}
                             style={[{marginRight: 53}, styles.item_center]}>

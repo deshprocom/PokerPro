@@ -209,7 +209,7 @@ export default class Router {
         })
     }
 
-    toMainRankPage(props) {
+    toDrawerRank(props) {
         this.push(props, {
             page: DrawerRank,
             name: 'DrawerRank',
