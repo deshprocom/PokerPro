@@ -15,7 +15,8 @@ class FiltePage extends Component {
 
             <RankCheck/>
 
-            <Text>筛选</Text>
+            <Text>取消</Text>
+            <Text>调用</Text>
         </View>)
     }
 }

@@ -1,5 +1,4 @@
-
-import React,{Component, PropTypes} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
 import {Colors, Images, Metrics} from '../../Themes'
@@ -12,11 +11,11 @@ export default class MainRankPage extends Component {
     };
 
     topHeader = () => {
-        return(<View style={styles.header_bar}>
+        return (<View style={styles.header_bar}>
             <TouchableOpacity onPress={() => router.pop()}
-                style={styles.topBtn}>
+                              style={styles.topBtn}>
                 <Image source={Images.sign_return}
-                    style={styles.back_image}/>
+                       style={styles.back_image}/>
             </TouchableOpacity>
 
             <View style={styles.topBtn}></View>
@@ -26,24 +25,24 @@ export default class MainRankPage extends Component {
             </View>
 
             <View style={styles.right_btn}>
-                <TouchableOpacity onPress={this.props.openRank}
-                    style={styles.topBtn}>
+                <TouchableOpacity onPress={()=> this.props.openRank()}
+                                  style={styles.topBtn}>
                     <Image source={Images.race_type}
-                        style={styles.right_image}/>
+                           style={styles.right_image}/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
                     this.props.router.toFocusPlayer()
                 }}
-                    style={styles.topBtn}>
+                                  style={styles.topBtn}>
                     <Image source={Images.race_type}
-                        style={styles.right_image}/>
+                           style={styles.right_image}/>
                 </TouchableOpacity>
             </View>
         </View>)
     };
 
-    render(){
-        return(<View>
+    render() {
+        return (<View>
             {this.topHeader()}
             <RankList/>
         </View>)
@@ -52,7 +51,7 @@ export default class MainRankPage extends Component {
     choiceRank = () => {
 
     };
-    collectRank =() => {
+    collectRank = () => {
 
     };
 
@@ -60,7 +59,7 @@ export default class MainRankPage extends Component {
 
 const styles = StyleSheet.create({
     header_bar: {
-        width:Metrics.screenWidth,
+        width: Metrics.screenWidth,
         alignItems: 'center',
         flexDirection: 'row',
         backgroundColor: Colors.bg_09,
