@@ -113,13 +113,15 @@ class HomePage extends Component {
             />)
         } else {
             return (
-                <NoDataView/>)
+                <NoDataView
+                    pageStyle={{backgroundColor:'white'}}/>)
         }
 
     };
 
     _loadErrorPage = () => {
         return (<LoadErrorView
+            pageStyle={{backgroundColor:'white'}}
             onPress={() => this._refreshPage()}/>)
     };
 
