@@ -243,5 +243,11 @@
   "order_num":"订单编号",
   "is_cancel_order":"您是否要取消订单",
   "confirm":"确认",
-  "all":"全部"
+  "all":"全部",
+  "data_fail":"获取赛票数据失败",
+  "buy_success":"购票成功",
+  "keep_phone":"工作人员将及时与您联系，请保持手机畅通",
+  "add_adr":"请添加收货地址",
+  "ple_ren_zhen":"请先进行实名认证",
+  "xia_dan":"购票下单"
 }

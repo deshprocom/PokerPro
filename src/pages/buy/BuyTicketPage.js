@@ -87,7 +87,7 @@ class BuyTicketPage extends Component {
                 email: recent_email
             })
         }, err => {
-            showToast("获取赛票数据失败！")
+            showToast(`${I18n.t('data_fail')}`)
         });
 
         this.props._getCertification();
@@ -151,7 +151,7 @@ class BuyTicketPage extends Component {
 
 
     _postOrderOk = () => {
-        Alert.alert('购票成功', '工作人员将及时与您联系，请保持手机畅通');
+        Alert.alert(`${I18n.t('buy_success')}`, `${I18n.t('keep_phone')}`);
 
 
         const {user_id} = getLoginUser();
@@ -189,7 +189,7 @@ class BuyTicketPage extends Component {
         if (isNameReal) {
             if (isEntity === ENTITY) {
                 if (isEmptyObject(shipping_address)) {
-                    showToast('请添加收货地址')
+                    showToast(`${I18n.t('add_adr')}`)
                     return;
                 }
                 const {race_id, ticket_id} = this.props.params;
@@ -228,7 +228,7 @@ class BuyTicketPage extends Component {
             }
 
         } else {
-            showToast('请先进行实名认证')
+            showToast(`${I18n.t('ple_ren_zhen')}`)
         }
 
     };
@@ -426,7 +426,7 @@ class BuyTicketPage extends Component {
                             <Text style={{fontSize: 15, color: Colors.txt_666}}>
                                 {I18n.t('ticket_type')}</Text>
                             <Text style={{fontSize: 14, color: Colors.txt_FF3, marginLeft: 18}}>
-                                (剩余{this.eTicketNum(ticket_info)}张)</Text>
+                                ({I18n.t('surplus')}{this.eTicketNum(ticket_info)}{I18n.t('spread')})</Text>
                         </View>
                         <View
                             style={{height: 66, flex: 1, flexDirection: 'row', alignItems: 'center'}}>
@@ -483,7 +483,7 @@ class BuyTicketPage extends Component {
                         shadowRadius: 3
                     }}>
                     <View style={{flex: 1, flexDirection: 'row', marginLeft: 19, alignItems: 'flex-end'}}>
-                        <Text style={{fontSize: 14, color: Colors.txt_666}}>票价: </Text>
+                        <Text style={{fontSize: 14, color: Colors.txt_666}}>{I18n.t('ticket_price')} </Text>
 
                         <Text style={{fontSize: 18, color: Colors._DF1}}
                               testID="txt_ticket_price">
@@ -498,7 +498,7 @@ class BuyTicketPage extends Component {
                         style={{width: 77, height: 62, alignItems: 'center', justifyContent: 'center'}}>
                         <Image style={{width: 25, height: 21}}
                                source={Images.prompt_service}/>
-                        <Text style={{fontSize: 12, color: Colors.txt_666}}>客服</Text>
+                        <Text style={{fontSize: 12, color: Colors.txt_666}}>{I18n.t('customer_service')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         disabled={ordered}
@@ -509,7 +509,7 @@ class BuyTicketPage extends Component {
                             width: 103, height: 62, alignItems: 'center', justifyContent: 'center',
                             backgroundColor: ordered ? Colors._999 : Colors.bg_09
                         }}>
-                        <Text style={{fontSize: 18, color: ordered ? Colors.white : Colors.txt_E0C}}>购票下单</Text>
+                        <Text style={{fontSize: 18, color: ordered ? Colors.white : Colors.txt_E0C}}>{I18n.t('xia_dan')}</Text>
                     </TouchableOpacity>
 
 
