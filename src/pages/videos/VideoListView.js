@@ -175,7 +175,7 @@ class NewsListView extends Component {
             </ImageLoad>
             <View style={styles.viewDesc}>
                 <Text
-                    numberOfLines={1}
+                    numberOfLines={2}
                     style={[styles.listTopTxt, {fontSize: FontSize.h17}]}>{name}</Text>
 
             </View>
@@ -228,8 +228,11 @@ const styles = StyleSheet.create({
     listTopTxt: {
         color: Colors._333,
         fontWeight: 'bold',
-        marginTop: 9,
-        marginLeft: 17
+        marginTop: 10,
+        marginLeft: 17,
+        marginBottom: 12,
+        marginRight: 17,
+        lineHeight: 24
     },
     listView: {
         flexDirection: 'row',
@@ -293,7 +296,6 @@ const styles = StyleSheet.create({
         marginTop: 68
     },
     viewDesc: {
-        height: 68,
         backgroundColor: 'white'
     }
 });
