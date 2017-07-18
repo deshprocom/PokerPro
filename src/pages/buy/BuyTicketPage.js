@@ -24,6 +24,7 @@ import {fetchRacesInfo, fetchGetRecentRaces} from '../../actions/RacesAction';
 import StorageKey from '../../configs/StorageKey';
 import {getBuyRaceTicket, postOrderTicket} from '../../services/OrderDao';
 import {umengEvent} from '../../utils/UmengEvent';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
 const E_TICKET = 'e_ticket',
@@ -339,7 +340,7 @@ class BuyTicketPage extends Component {
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
-                <ScrollView
+                <KeyboardAwareScrollView
                     style={{marginBottom: 62}}>
                     {/*赛事简介*/}
                     <View style={{height: 7}}/>
@@ -464,7 +465,7 @@ class BuyTicketPage extends Component {
                     <View style={{height: 20, flex: 1}}/>
 
 
-                </ScrollView>
+                </KeyboardAwareScrollView>
                 <View
                     style={{
                         height: 62,
