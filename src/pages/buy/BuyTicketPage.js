@@ -483,8 +483,8 @@ class BuyTicketPage extends Component {
                         shadowRadius: 3
                     }}>
                     <View style={{flex: 1, flexDirection: 'row', marginLeft: 19, alignItems: 'flex-end'}}>
-                        <Text style={{fontSize: 14, color: Colors.txt_666}}>票价:</Text>
-                        <Text style={{fontSize: 12, color: Colors._DF1, marginLeft: 10}}>¥</Text>
+                        <Text style={{fontSize: 14, color: Colors.txt_666}}>票价: </Text>
+
                         <Text style={{fontSize: 18, color: Colors._DF1}}
                               testID="txt_ticket_price">
                             {price}
