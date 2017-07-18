@@ -191,7 +191,7 @@
   "Schudel":"赛程表",
   "Blind":"盲注结构",
   "Ranks":"赛事结果",
-  "time":"时间",
+  "time":"时间(分)",
   "peoples":"参赛人数:",
   "beginChip":"起始筹码:",
   "Level":"级别",
@@ -249,5 +249,7 @@
   "keep_phone":"工作人员将及时与您联系，请保持手机畅通",
   "add_adr":"请添加收货地址",
   "ple_ren_zhen":"请先进行实名认证",
-  "xia_dan":"购票下单"
+  "xia_dan":"购票下单",
+  "male":"男",
+  "female":"女"
 }
