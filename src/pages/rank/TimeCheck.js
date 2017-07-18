@@ -1,7 +1,7 @@
-import React,{Compontent} from 'react';
+import React,{Component} from 'react';
 import {View, Text} from 'react-native';
 
-class TimeCheck extends Compontent {
+class TimeCheck extends Component {
     render(){
         return(<View>
             <Text>时间筛选</Text>

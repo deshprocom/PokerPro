@@ -1,4 +1,4 @@
-import React, {Compontent, PropTypes} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {View, Text, StyleSheet, BackAndroid, Navigator} from 'react-native';
 import Drawer from 'react-native-drawer';
 
@@ -6,14 +6,14 @@ import MainRankPage from './MainRankPage';
 import FiltePage from './FiltePage';
 
 
-class DrawerRank extends Compontent {
+class DrawerRank extends Component {
 
     openRankDrawer = () => {
         router.log(111111)
         this._drawer.open()
     }
 
-    closeRankDrawer() {
+    closeRankDrawer = () => {
         this._drawer.close()
     }
 
@@ -32,7 +32,7 @@ class DrawerRank extends Compontent {
                 type="static"
                 content={<FiltePage router={this.props.router}/>}
                 tapToClose
-                onClose={this.closeRankDrawer()}
+                onClose={this.closeRankDrawer}
                 openDrawerOffset={100}
                 tweenHandler={Drawer.tweenPresets.parallax}
                 side="right">
@@ -43,5 +43,11 @@ class DrawerRank extends Compontent {
         </View>)
     }
 }
+
+const styles = StyleSheet.create({
+    drawer_style: {
+
+    }
+})
 
 export default DrawerRank;
