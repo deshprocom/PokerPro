@@ -2,7 +2,7 @@
  * Created by lorne on 2017/4/21.
  */
 import React from 'react';
-import {Image, ActivityIndicator} from 'react-native';
+import {Image, ActivityIndicator, View} from 'react-native';
 import {Images} from '../Themes';
 import {strNotNull} from '../utils/ComonHelper'
 
@@ -29,6 +29,7 @@ class ImageLoad extends React.Component {
 
     render() {
         const {uri} = this.props.source;
+        const {emptyBg} = this.props;
 
         if (strNotNull(uri))
             return (
@@ -36,25 +37,23 @@ class ImageLoad extends React.Component {
                     {...this.props}
                     onLoadEnd={this.onLoadEnd.bind(this)}
                     onError={this.onError.bind(this)}
-                    defaultSource={Images.empty_image}
-                />
+                    defaultSource={emptyBg ? null : Images.empty_image}
+                >
+                    {
+                        emptyBg && this.state.isError ? <View style={{flex: 1, backgroundColor: '#cccccc'}}/> : null
+
+                    }
+
+                </Image>
 
             );
         else {
             return (<Image
-                style={[this.props.style, { alignItems: 'center' }]}
+                style={[this.props.style, {alignItems: 'center'}]}
                 source={Images.empty_image}/>)
         }
     }
 }
 
-const styles = {
-    imagePlaceholderStyles: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'gray'
-    }
-}
 
 export default ImageLoad;

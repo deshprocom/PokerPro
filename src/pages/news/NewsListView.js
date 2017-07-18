@@ -155,7 +155,8 @@ class NewsListView extends Component {
                 activeOpacity={1}
                 onPress={() => this._pressItem(rowData)}>
                 <Image
-                    source={strNotNull(image) ? {uri: image} : Images.empty_image}
+                    emptyBg={true}
+                    source={ {uri: image}}
                     style={styles.listTopImg}
                 >
 
@@ -189,8 +190,10 @@ class NewsListView extends Component {
                 </View>
 
                 <View style={{flex: 1}}/>
-                <ImageLoad style={styles.listImg}
-                           source={{uri: image_thumb}}/>
+                <ImageLoad
+                    emptyBg={true}
+                    style={styles.listImg}
+                    source={{uri: image_thumb}}/>
 
             </TouchableOpacity>)
         }

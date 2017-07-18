@@ -159,7 +159,7 @@ class NewsListView extends Component {
             activeOpacity={1}
             onPress={() => this._pressItem(rowData)}>
 
-            <ImageLoad
+            <Image
                 source={{uri: cover_link}}
                 style={styles.listTopImg}
             >
@@ -172,7 +172,7 @@ class NewsListView extends Component {
 
                 </View>
 
-            </ImageLoad>
+            </Image>
             <View style={styles.viewDesc}>
                 <Text
                     numberOfLines={2}
