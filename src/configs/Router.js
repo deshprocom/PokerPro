@@ -47,7 +47,7 @@ import TicketInfoPage from '../pages/ticket/TicketInfoPage';
 import WebViewPage from '../components/WebViewPage';
 import NewAddressPage from '../pages/buy/NewAddressPage';
 import AdrListPage from '../pages/buy/AdrListPage';
-import MainRankPage from '../pages/rank/MainRankPage';
+import DrawerRank from '../pages/rank/DrawerRank';
 import FocusPlayer from '../pages/rank/FocusPlayer'
 
 
@@ -209,10 +209,10 @@ export default class Router {
         })
     }
 
-    toMainRankPage(props) {
+    toDrawerRank(props) {
         this.push(props, {
-            page: MainRankPage,
-            name: 'MainRankPage',
+            page: DrawerRank,
+            name: 'DrawerRank',
             sceneConfig: customFloatFromRight
         })
     }
