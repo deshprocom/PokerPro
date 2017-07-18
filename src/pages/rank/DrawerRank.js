@@ -27,26 +27,28 @@ class DrawerRank extends Component {
     }
 
     render() {
-        return (<View>
+        return (
             <Drawer ref={(ref) => this._drawer=ref}
                 type="static"
-                content={<FiltePage router={this.props.router}/>}
+                content={<FiltePage/>}
                 tapToClose
                 onClose={this.closeRankDrawer}
                 openDrawerOffset={100}
+                style={styles.drawer_style}
                 tweenHandler={Drawer.tweenPresets.parallax}
                 side="right">
 
-                <MainRankPage openRank={()=>this._handleDrawer()} router={this.props.router}/>
+                <MainRankPage openRank={()=>this._handleDrawer()}/>
 
-            </Drawer>
-        </View>)
+            </Drawer>)
     }
 }
 
 const styles = StyleSheet.create({
     drawer_style: {
-
+        shadowColor: '#000000',
+        shadowOpacity: 0.8,
+        shadowRadius: 3
     }
 })
 

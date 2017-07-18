@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
 import {View, Text, FlatList, TouchableOpacity, StyleSheet, ListView} from 'react-native';
 
+import {Metrics} from '../../Themes';
+
 
 class RankList extends Component {
 
@@ -13,7 +15,7 @@ class RankList extends Component {
     }
 
     render(){
-        return(<View>
+        return(<View style={styles.test}>
             <ListView dataSource={this.state.dataSource}
                       renderRow={(data) => <Text>{data}</Text>}/>
         </View>)
@@ -34,7 +36,13 @@ class RankList extends Component {
 export default RankList;
 
 const styles = StyleSheet.create({
+    test: {
+        width: Metrics.screenWidth,
+        height: Metrics.screenHeight,
+        // backgroundColor: 'blue'
+    },
     list_header: {
+        width: Metrics.screenWidth,
         flex: 1,
         height: 44,
         alignItems: 'center',
