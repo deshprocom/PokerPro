@@ -10,17 +10,20 @@ export function init(resolve) {
     storage.load({key: StorageKey.Language})
         .then(ret => {
             console.log('Config', ret);
-            setLanguage(ret);
-            setDpLang(ret);
+            switchLang(ret);
+
             resolve();
         });
     getSize();
 }
 
+function switchLang(lang) {
+    setLanguage(lang);
+    setDpLang(lang);
+}
 
 export function setLocalLanguage(language) {
-    setLanguage(language);
-    setDpLang(language);
+    switchLang(language);
     storage.save({
         key: StorageKey.Language,
         rawData: language
