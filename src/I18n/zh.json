@@ -243,5 +243,7 @@
   "order_num":"订单编号",
   "is_cancel_order":"您是否要取消订单",
   "confirm":"确认",
-  "all":"全部"
+  "all":"全部",
+  "male":"男",
+  "female":"女"
 }

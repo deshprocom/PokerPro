@@ -24,7 +24,7 @@ import {fetchRacesInfo, fetchGetRecentRaces} from '../../actions/RacesAction';
 import StorageKey from '../../configs/StorageKey';
 import {getBuyRaceTicket, postOrderTicket} from '../../services/OrderDao';
 import {umengEvent} from '../../utils/UmengEvent';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 
 const E_TICKET = 'e_ticket',
@@ -636,12 +636,12 @@ class BuyTicketPage extends Component {
 
 const styles = StyleSheet.create({
     ticketSelect: {
-        height: 30, width: 91, borderRadius: 5, borderWidth: 1, borderColor: Colors.txt_F28,
-        alignItems: 'center', justifyContent: 'center'
+        height: 35, width: 91, borderRadius: 5, borderWidth: 1, borderColor: Colors.txt_F28,
+        alignItems: 'center', justifyContent: 'center', textAlign: 'center'
     },
     ticketUnSelect: {
-        height: 30, width: 91, borderRadius: 5, backgroundColor: '#E5E5E5',
-        alignItems: 'center', justifyContent: 'center'
+        height: 35, width: 91, borderRadius: 5, backgroundColor: '#E5E5E5',
+        alignItems: 'center', justifyContent: 'center', textAlign: 'center'
     },
     itemView: {
         flexDirection: 'row',

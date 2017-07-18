@@ -243,5 +243,7 @@
   "order_num": "Order number",
   "is_cancel_order": "Cancel order?",
   "confirm": "OK",
-  "all": "All"
+  "all": "All",
+  "male": "Male",
+  "female": "Female"
 }
