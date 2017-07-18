@@ -14,20 +14,19 @@ class RankList extends Component {
         };
     }
 
-    render(){
-        return(<View style={styles.test}>
-            <ListView dataSource={this.state.dataSource}
-                      renderRow={(data) => <Text>{data}</Text>}/>
+    headerList = () => {
+        return(<View style={{flexDirection: 'row',width: Metrics.screenWidth}}>
+            <Text style={styles.list_header}>排名</Text>
+            <Text style={styles.list_header}>姓名</Text>
+            <Text style={styles.list_header}>奖金</Text>
         </View>)
     }
 
-    headerList = () => {
-        return(<View>
-            <TouchableOpacity style={{flexDirection: 'row',alignItems: 'center'}}>
-                <Text style={styles.list_header}>排名</Text>
-                <Text style={styles.list_header}>姓名</Text>
-                <Text style={styles.list_header}>奖金</Text>
-            </TouchableOpacity>
+    render(){
+        return(<View style={styles.rank_list}>
+            {this.headerList()}
+            <ListView dataSource={this.state.dataSource}
+                      renderRow={(data) => <Text>{data}</Text>}/>
         </View>)
     }
 
@@ -36,16 +35,17 @@ class RankList extends Component {
 export default RankList;
 
 const styles = StyleSheet.create({
-    test: {
+    rank_list: {
         width: Metrics.screenWidth,
         height: Metrics.screenHeight,
-        // backgroundColor: 'blue'
+        backgroundColor: '#fff',
+        opacity: 1
     },
     list_header: {
-        width: Metrics.screenWidth,
         flex: 1,
         height: 44,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: '#acdf34'
     }
 });
