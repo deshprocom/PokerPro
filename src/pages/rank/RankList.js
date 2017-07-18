@@ -15,10 +15,10 @@ class RankList extends Component {
     }
 
     headerList = () => {
-        return(<View style={{flexDirection: 'row',width: Metrics.screenWidth}}>
-            <Text style={styles.list_header}>排名</Text>
-            <Text style={styles.list_header}>姓名</Text>
-            <Text style={styles.list_header}>奖金</Text>
+        return(<View style={{flexDirection: 'row',width: Metrics.screenWidth, backgroundColor: '#a23def'}}>
+            <View style={styles.list_header}><Text >排名</Text></View>
+            <View style={styles.list_header}><Text >姓名</Text></View>
+            <View style={styles.list_header}><Text >奖金</Text></View>
         </View>)
     }
 
@@ -42,10 +42,9 @@ const styles = StyleSheet.create({
         opacity: 1
     },
     list_header: {
-        flex: 1,
+        alignItems:'center',
+        justifyContent:'center',
         height: 44,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#acdf34'
+        flex:1
     }
 });
