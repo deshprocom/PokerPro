@@ -14,7 +14,7 @@ import PersonInfo from './PersonInfo';
 import {PUT_PROFILE, GET_CERTIFICATION} from '../../actions/ActionTypes'
 import {NavigationBar} from '../../components'
 import {getLoginUser, strNotNull, getDispatchAction} from '../../utils/ComonHelper';
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 class PersonPage extends React.Component {
 
     state = {
@@ -84,7 +84,7 @@ class PersonPage extends React.Component {
                     leftBtnPress={()=>this.props.router.pop()}
                     rightBtnPress={this._putProfile}/>
 
-                <View>
+                <KeyboardAwareScrollView>
                     {loading ? this._renderLoading() : null}
                     <PersonInfo
                         postAvatar={this.props._postAvatar}
@@ -92,7 +92,7 @@ class PersonPage extends React.Component {
                         profile={profile}/>
 
 
-                </View>
+                </KeyboardAwareScrollView>
             </View>
         )
     }

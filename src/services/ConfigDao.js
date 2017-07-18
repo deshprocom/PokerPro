@@ -3,28 +3,31 @@
  */
 import StorageKey from '../configs/StorageKey';
 import {setLanguage} from '../I18n/I18n';
-import I18n from 'react-native-i18n';
 import {getSize} from '../utils/ComonHelper';
+import {setDpLang} from '../services/RequestHelper';
 
 export function init(resolve) {
-    storage.load({key:StorageKey.Language})
-        .then(ret=>{
-            console.log('Config',ret);
-            setLanguage(ret);
+    storage.load({key: StorageKey.Language})
+        .then(ret => {
+            console.log('Config', ret);
+            switchLang(ret);
+
             resolve();
         });
     getSize();
 }
 
-const config = {
-    language: I18n.locale
-};
+function switchLang(lang) {
+    setLanguage(lang);
+    setDpLang(lang);
+}
 
 export function setLocalLanguage(language) {
+    switchLang(language);
     storage.save({
         key: StorageKey.Language,
         rawData: language
     });
-    setLanguage(language);
+
 }
 
