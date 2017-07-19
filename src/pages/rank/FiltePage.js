@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
-import {Metrics} from '../../Themes';
+import {Metrics, Colors} from '../../Themes';
 
 import AddrCheck from './AddrCheck';
 import TimeCheck from './TimeCheck';
@@ -30,7 +30,7 @@ export default FiltePage;
 
 const styles = StyleSheet.create({
     view_bg: {
-        backgroundColor: 'red',
-        // height: Metrics.screenHeight,
+        backgroundColor: '#fff',
+        height: Metrics.screenHeight,
     }
 })

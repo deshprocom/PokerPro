@@ -31,10 +31,10 @@ export default class MainRankPage extends Component {
                            style={styles.right_image}/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
-                    this.props.router.toFocusPlayer()
+                    router.toFocusPlayer()
                 }}
                                   style={styles.topBtn}>
-                    <Image source={Images.race_type}
+                    <Image source={Images.shape}
                            style={styles.right_image}/>
                 </TouchableOpacity>
             </View>

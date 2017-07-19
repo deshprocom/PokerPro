@@ -14,17 +14,17 @@ class RankList extends Component {
         };
     }
 
-    headerList = () => {
-        return(<View style={{flexDirection: 'row',width: Metrics.screenWidth, backgroundColor: '#a23def'}}>
-            <View style={styles.list_header}><Text >排名</Text></View>
-            <View style={styles.list_header}><Text >姓名</Text></View>
-            <View style={styles.list_header}><Text >奖金</Text></View>
-        </View>)
-    }
+    // headerList = () => {
+    //     return(<View style={{flexDirection: 'row',width: Metrics.screenWidth, backgroundColor: '#a23def'}}>
+    //         <View style={styles.list_header}><Text >排名</Text></View>
+    //         <View style={styles.list_header}><Text >姓名</Text></View>
+    //         <View style={styles.list_header}><Text >奖金</Text></View>
+    //     </View>)
+    // }
 
     render(){
         return(<View style={styles.rank_list}>
-            {this.headerList()}
+            {/*{this.headerList()}*/}
             <ListView dataSource={this.state.dataSource}
                       renderRow={(data) => <Text>{data}</Text>}/>
         </View>)
