@@ -1,4 +1,4 @@
-import React,{Component} from 'react';
+import React,{Component, PropTypes} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
 import {Metrics, Colors} from '../../Themes';
@@ -8,6 +8,10 @@ import TimeCheck from './TimeCheck';
 import RankCheck from './RankCheck';
 
 class FiltePage extends Component {
+    static propTypes = {
+        cancelDrawer: PropTypes.func
+    };
+
     render(){
         return(<View style={styles.view_bg}>
 
@@ -17,11 +21,8 @@ class FiltePage extends Component {
 
             <RankCheck/>
 
-            <Text>取消</Text>
-            <Text>调用</Text>
-            <Text>调用侧边页</Text>
-            <Text>调用侧边页</Text>
-            <Text>调用侧边页</Text>
+            <Text onPress={() => this.props.cancelDrawer()}>取消</Text>
+            <Text onPress={() => this.props.cancelDrawer()}>确定</Text>
         </View>)
     }
 }

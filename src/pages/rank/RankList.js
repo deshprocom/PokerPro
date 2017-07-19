@@ -27,7 +27,7 @@ class RankList extends Component {
                 <View style={styles.list_row}><Text>{data}</Text></View>
                 <View style={styles.list_row}><Text>{data}</Text></View>
             </View>
-            <View></View>
+            <View style={{height:1,backgroundColor: Colors.bg_f5,marginLeft: 16}}></View>
         </View>)
     }
 
@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     list_row: {
         alignItems:'center',
         justifyContent:'center',
+        height: 69,
         flex:1
     }
 

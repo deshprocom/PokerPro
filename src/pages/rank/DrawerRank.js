@@ -44,7 +44,7 @@ class DrawerRank extends Component {
         return (
             <Drawer ref={(ref) => this._drawer=ref}
                 type='overlay'
-                content={<FiltePage/>}
+                content={<FiltePage cancelDrawer={() => this.closeRankDrawer()}/>}
                 tapToClose
                 onClose={()=>{
                     this.setState({
@@ -64,9 +64,6 @@ class DrawerRank extends Component {
     }
 }
 
-const styles = StyleSheet.create({
-
-});
 const drawerStyles = {
     // drawer: { shadowColor: Colors._000, shadowOpacity: 0.8, shadowRadius: 3},
     main: {backgroundColor: null},
