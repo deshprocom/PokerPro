@@ -38,7 +38,6 @@ export default class RaceRowView extends Component {
     }
 
 
-
     _itemRender = () => {
         const {
             ticket_sellable
@@ -73,13 +72,15 @@ export default class RaceRowView extends Component {
                 source={{uri: logo}}/>
             <View>
                 <Text
-                    style={[styles.txtTitle, {fontSize: FontSize.h17}]}
+                    style={[ticket_sellable ? styles.txtTitle1 : styles.txtTitle, {fontSize: FontSize.h17}]}
                     numberOfLines={2}>{name}</Text>
                 <View style={styles.viewClock}>
                     <Image source={Images.home_adr}
                            style={styles.imgAdr}/>
 
-                    <Text style={[styles.txtClock, {fontSize: FontSize.h13}]}>{location}</Text>
+                    <Text
+                        numberOfLines={1}
+                        style={[ticket_sellable ? styles.txtClock1 : styles.txtClock, {fontSize: FontSize.h13}]}>{location}</Text>
 
                 </View>
 
@@ -94,7 +95,9 @@ export default class RaceRowView extends Component {
 
                 <View style={[styles.viewClock, {marginTop: 8}]}>
                     <Text style={[styles.lbPrice, {fontSize: FontSize.h13}]}>{I18n.t('prize')}</Text>
-                    <Text style={[styles.txtPrice, {fontSize: FontSize.h13}]}> {prize}</Text>
+                    <Text
+                        numberOfLines={1}
+                        style={[styles.txtPrice, {fontSize: FontSize.h13}]}> {prize}</Text>
                 </View>
             </View>
 
@@ -320,7 +323,12 @@ const styles = StyleSheet.create({
     },
     txtTitle: {
         color: '#333333',
-        width: 200,
+        width: 220,
+        marginBottom: 5
+    },
+    txtTitle1: {
+        color: '#333333',
+        width: 190,
         marginBottom: 5
     },
     imgClock: {
@@ -332,22 +340,25 @@ const styles = StyleSheet.create({
         width: 10
     },
     txtClock: {
-
         color: '#888888',
         marginLeft: 5
+    },
+    txtClock1: {
+        color: '#888888',
+        marginLeft: 5,
+        width: 170
     },
     viewClock: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 5
+        marginTop: 5,
     },
     lbPrice: {
-
         color: '#454545'
     },
     txtPrice: {
-
-        color: '#daa647'
+        color: '#daa647',
+        width: 120,
     },
     btnStatus: {
         height: 32,
