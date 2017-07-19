@@ -298,5 +298,6 @@
   "buy_put_success":"提交成功",
   "message_from":"来自：Poker Pro官方客服",
   "person_page":"获取中...",
-  "api_setting":"Api设置"
+  "api_setting":"Api设置",
+  "order_ways":"收票方式"
 }

@@ -176,7 +176,7 @@ class OrderInfoPage extends React.Component {
                     <View>
                         <View style={{height: 40, alignItems: 'center', flexDirection: 'row'}}>
                             <Text style={{fontSize: Fonts.size.h16, color: Colors.txt_444}}
-                            >收票方式-{this._txtTicketType(order_info.ticket_type)}</Text>
+                            >{I18n.t('order_ways')}-{this._txtTicketType(order_info.ticket_type)}</Text>
                         </View>
                         <View style={{height: 1, backgroundColor: Colors.bg_f5}}/>
                         {this._viewTicketType(order_info)}
