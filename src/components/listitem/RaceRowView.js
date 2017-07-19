@@ -11,7 +11,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {
     strNotNull, getLoginUser,
     convertDate, YYYY_MM_DD, racesStatusImage,
-    sellable, raceStatusConvert,FontSize
+    sellable, raceStatusConvert, FontSize
 } from '../../utils/ComonHelper';
 import {SellStatus} from '../../configs/Status';
 import ImageLoad from '../ImageLoad';
@@ -130,13 +130,13 @@ export default class RaceRowView extends Component {
                 source={{uri: logo}}/>
             <View>
                 <Text
-                    style={[styles.txtTitle,{fontSize:FontSize.h17}]}
+                    style={[styles.txtTitle, {fontSize: FontSize.h17}]}
                     numberOfLines={2}>{name}</Text>
                 <View style={styles.viewClock}>
                     <Image source={Images.home_adr}
                            style={styles.imgAdr}/>
 
-                    <Text style={[styles.txtClock,{fontSize:FontSize.h13}]}>{location}</Text>
+                    <Text style={[styles.txtClock, {fontSize: FontSize.h13}]}>{location}</Text>
 
                 </View>
 
@@ -144,14 +144,14 @@ export default class RaceRowView extends Component {
                     <Image source={Images.home_clock}
                            style={styles.imgClock}/>
 
-                    <Text style={[styles.txtClock,{fontSize:FontSize.h13}]}>
+                    <Text style={[styles.txtClock, {fontSize: FontSize.h13}]}>
                         {this._time(begin_date, end_date)}</Text>
 
                 </View>
 
                 <View style={[styles.viewClock, {marginTop: 8}]}>
-                    <Text style={[styles.lbPrice,{fontSize:FontSize.h13}]}>{I18n.t('prize')}</Text>
-                    <Text style={[styles.txtPrice,{fontSize:FontSize.h13}]}> {prize}</Text>
+                    <Text style={[styles.lbPrice, {fontSize: FontSize.h13}]}>{I18n.t('prize')}</Text>
+                    <Text style={[styles.txtPrice, {fontSize: FontSize.h13}]}> {prize}</Text>
                 </View>
             </View>
 
@@ -161,7 +161,7 @@ export default class RaceRowView extends Component {
             <View style={styles.raceStatus}>
                 <Image
                     source={this._imgRaceStatus(status)}
-                    style={styles.imgRaceStatus}/>
+                    style={status === 'go_ahead' ? styles.imgRaceStatus1 : styles.imgRaceStatus}/>
 
                 <Text style={this._txtColorStatus(status)}>{raceStatusConvert(status)}</Text>
 
@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
     txtTitle: {
         color: '#333333',
         width: 200,
-        marginBottom:5
+        marginBottom: 5
     },
     imgClock: {
         height: 12,
@@ -434,8 +434,11 @@ const styles = StyleSheet.create({
     },
     imgRaceStatus: {
         height: 12,
+        width: 12
+    },
+    imgRaceStatus1: {
+        height: 12,
         width: 10
-
     },
     txtRaceStatus: {
         fontSize: Fonts.size.h9,
