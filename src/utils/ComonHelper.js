@@ -31,7 +31,13 @@ export function strToDate(date) {
 }
 
 const shareIcon = 'https://www.deshpro.com/pokerpro.png';
-export const DayHeadings = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+export const DayHeadings = [I18n.t('calendar_7'),
+    I18n.t('calendar_1'),
+    I18n.t('calendar_2'),
+    I18n.t('calendar_3'),
+    I18n.t('calendar_4'),
+    I18n.t('calendar_5'),
+    I18n.t('calendar_6')];
 export const MonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May',
     'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 /*判断是否为Null*/
