@@ -57,7 +57,7 @@ class LoginCodeView extends React.Component {
             };
             this.props._fetchPostLogin(body);
         } else {
-            showToast('请填写完整');
+            showToast(`${I18n.t('fillWhole')}`);
         }
 
 

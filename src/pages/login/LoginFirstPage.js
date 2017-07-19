@@ -73,7 +73,7 @@ class LoginFirstPage extends React.Component {
             if (!!this._toast_box) {
                 Toast.hide(this._toast_box);
             }
-            this._toast_box = showToast('请填写完整');
+            this._toast_box = showToast(`${I18n.t('fillWhole')}`);
         }
 
 

@@ -30,7 +30,7 @@ export default FiltePage;
 
 const styles = StyleSheet.create({
     view_bg: {
-        backgroundColor: '#fff',
+        backgroundColor: 'red',
         height: Metrics.screenHeight,
     }
 })
