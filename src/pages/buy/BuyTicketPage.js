@@ -279,7 +279,7 @@ class BuyTicketPage extends Component {
                     style={styles.txtItemTitle}>{title}</Text>
 
                 <Text style={[styles.txtLabel, styles.top8]}>{this._date()}</Text>
-                <Text style={styles.txtLabel}>地址: {this._location()}</Text>
+                <Text style={styles.txtLabel}>{I18n.t('location')} {this._location()}</Text>
 
                 <View style={styles.viewInfo}>
                     <Text style={styles.txtPrice}>{price}</Text>

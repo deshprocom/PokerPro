@@ -11,6 +11,7 @@ import {NavigationBar, SetItemView, SecurityText} from '../../components';
 import StorageKey from '../../configs/StorageKey';
 import {setBaseURL} from '../../services/RequestHelper'
 import Api from '../../configs/ApiConfig';
+import I18n from 'react-native-i18n';
 
 export default class ApiSettingPage extends Component {
     state = {
@@ -47,7 +48,7 @@ export default class ApiSettingPage extends Component {
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 toolbarStyle={{backgroundColor:Colors.bg_09}}
-                title={'Api设置'}
+                title={I18n.t('api_setting')}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
                 leftBtnPress={()=>router.pop()}/>

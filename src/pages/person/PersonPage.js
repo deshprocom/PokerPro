@@ -53,7 +53,7 @@ class PersonPage extends React.Component {
                 <ActivityIndicator
                     color={Colors._E0C294}
                 />
-                <Text style={{marginLeft: 10, color: Colors._E0C294}}>获取中...</Text>
+                <Text style={{marginLeft: 10, color: Colors._E0C294}}>{I18n.t('person_page')}</Text>
             </View>
         );
     }

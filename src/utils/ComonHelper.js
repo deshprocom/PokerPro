@@ -52,7 +52,7 @@ export function strNotNull(str) {
 export function uShareRace(title, location, icon, raceId) {
     UMShare.share(title, location, icon, "https://h5.deshpro.com/race/" + raceId)
         .then(() => {
-            showToast('分享成功')
+            showToast(`${I18n.t('show_success')}`)
         }, (error) => {
             alert(error)
         })
@@ -61,7 +61,7 @@ export function uShareRace(title, location, icon, raceId) {
 export function newShare(title, location, icon, newsId) {
     UMShare.share(title, location, icon, "https://h5.deshpro.com/news/" + newsId)
         .then(() => {
-            showToast('分享成功')
+            showToast(`${I18n.t('show_success')}`)
         }, (error) => {
             alert(error)
         })
@@ -147,7 +147,7 @@ var myreg = /^1(3|4|5|7|8)\d{9}$/;
 export function checkPhone(phone) {
     if (phone != null && phone != undefined) {
         if (!myreg.test(phone.trim())) {
-            showToast('请输入有效的手机号码！');
+            showToast(`${I18n.t('show_put_phone')}`);
             return false;
         }
         return true;
@@ -159,7 +159,7 @@ export function checkMail(mail) {
 
     if (strNotNull(mail) && filter.test(mail.trim())) return true;
     else {
-        showToast('您的电子邮件格式不正确');
+        showToast(`${I18n.t('show_mail_fail')}`);
         return false;
     }
 }
@@ -179,7 +179,7 @@ export function pwdVaild(password) {
     if (PWD_VALID_FORMAT_REGEX.test(password))
         return true;
     else {
-        showToast('密码格式不正确');
+        showToast(`${I18n.t('show_password_fail')}`);
         return false;
     }
 
@@ -505,8 +505,8 @@ export function getDispatchAction() {
 
 //正在开发提示
 export function developing() {
-    Alert.alert('开发中', '敬请期待', [{
-        text: '确定', onPress: () => {
+    Alert.alert(`${I18n.t('alert_doing')}`, `${I18n.t('alert_help')}`, [{
+        text: `${I18n.t('alert_sure')}`, onPress: () => {
         }
     }])
 }

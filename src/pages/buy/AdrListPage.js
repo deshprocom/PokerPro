@@ -95,7 +95,7 @@ export default class AdrListPage extends Component {
                     router.toNewAddressPage(this.props, this._getAddressList, {})
                 }}
                 style={styles.viewAdd}>
-                <Text style={styles.txtName}>+新建地址</Text>
+                <Text style={styles.txtName}>{I18n.t('buy_new_adr')}</Text>
             </TouchableOpacity>
 
         </View>)
@@ -128,7 +128,7 @@ export default class AdrListPage extends Component {
                 </SecurityText>
 
                 {item.default ? <View style={styles.tabView}>
-                    <Text style={styles.txtDefault}>默认</Text>
+                    <Text style={styles.txtDefault}>{I18n.t('buy_mo_ren')}</Text>
                 </View> : null}
             </View>
 
@@ -154,7 +154,7 @@ export default class AdrListPage extends Component {
                     style={styles.imgEdit}
                     source={Images.edit}/>
 
-                <Text style={styles.txtEdit}>编辑</Text>
+                <Text style={styles.txtEdit}>{I18n.t('buy_editor')}</Text>
             </TouchableOpacity>
             <View style={{flex: 1}}/>
             <View style={styles.line}/>
@@ -171,18 +171,18 @@ export default class AdrListPage extends Component {
                     this._setAdrDefault(data.id)
                 }}
                 style={[styles.btnHidden, {backgroundColor: '#BBBBBB'}]}>
-                <Text style={styles.txtDel}>设为默认</Text>
+                <Text style={styles.txtDel}>{I18n.t('buy_set_mo')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={() => {
-                    Alert.alert('删除收货地址', '', [
+                    Alert.alert(`${I18n.t('buy_del_adr')}`, '', [
                         {
-                            text: '取消', onPress: () => {
+                            text: `${I18n.t('cancel')}`, onPress: () => {
                             this.swipeList.safeCloseOpenRow();
                         }
                         },
                         {
-                            text: '确认', onPress: () => {
+                            text: `${I18n.t('confirm')}`, onPress: () => {
                             this.swipeList.safeCloseOpenRow();
                             this._delAdr(data.id)
                         }
@@ -191,7 +191,7 @@ export default class AdrListPage extends Component {
 
                 }}
                 style={[styles.btnHidden, {backgroundColor: Colors._DF1}]}>
-                <Text style={styles.txtDel}>删除</Text>
+                <Text style={styles.txtDel}>{I18n.t('buy_del')}</Text>
             </TouchableOpacity>
 
         </View>)
@@ -200,7 +200,7 @@ export default class AdrListPage extends Component {
     _setAdrDefault = (adr_id) => {
         const {selectAdrData} = this.state;
         postAdrDefault(adr_id, data => {
-            showToast('设置默认成功');
+            showToast(`${I18n.t('buy_set_success')}`);
             if (adr_id === selectAdrData.id) {
                 this.setState({
                     selectAdrData: {}
@@ -212,7 +212,7 @@ export default class AdrListPage extends Component {
 
     _delAdr = (adr_id) => {
         postAdrDelete(adr_id, data => {
-            showToast('删除成功');
+            showToast(`${I18n.t('buy_del_success')}`);
             this._getAddressList();
         }, err => {
 

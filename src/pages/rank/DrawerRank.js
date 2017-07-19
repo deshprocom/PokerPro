@@ -36,7 +36,8 @@ class DrawerRank extends Component {
                 openDrawerOffset={100}
                 style={styles.drawer_style}
                 tweenHandler={Drawer.tweenPresets.parallax}
-                side="right">
+                side="right"
+                    keyboardDismissMode="on-drag">
 
                 <MainRankPage openRank={()=>this._handleDrawer()}/>
 
