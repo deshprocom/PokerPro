@@ -48,13 +48,6 @@ export default class MainRankPage extends Component {
         </View>)
     };
 
-    choiceRank = () => {
-
-    };
-    collectRank = () => {
-
-    };
-
 }
 
 const styles = StyleSheet.create({

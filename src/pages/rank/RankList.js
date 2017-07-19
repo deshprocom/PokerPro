@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {View, Text, FlatList, TouchableOpacity, StyleSheet, ListView} from 'react-native';
 
-import {Metrics} from '../../Themes';
+import {Metrics, Colors} from '../../Themes';
 
 
 class RankList extends Component {
@@ -21,12 +21,21 @@ class RankList extends Component {
     //         <View style={styles.list_header}><Text >奖金</Text></View>
     //     </View>)
     // }
+    listRenderRow = (data) => {
+        return(<View style={styles.row_view}>
+            <View style={{flexDirection: 'row'}}>
+                <View style={styles.list_row}><Text>{data}</Text></View>
+                <View style={styles.list_row}><Text>{data}</Text></View>
+            </View>
+            <View></View>
+        </View>)
+    }
 
     render(){
         return(<View style={styles.rank_list}>
             {/*{this.headerList()}*/}
             <ListView dataSource={this.state.dataSource}
-                      renderRow={(data) => <Text>{data}</Text>}/>
+                renderRow={this.listRenderRow}/>
         </View>)
     }
 
@@ -38,13 +47,17 @@ const styles = StyleSheet.create({
     rank_list: {
         width: Metrics.screenWidth,
         height: Metrics.screenHeight,
-        backgroundColor: '#fff',
-        opacity: 1
+        backgroundColor: Colors.bg_f5,
+        paddingTop: 6
     },
-    list_header: {
+    row_view: {
+        height: 70,
+        backgroundColor: Colors.white
+    },
+    list_row: {
         alignItems:'center',
         justifyContent:'center',
-        height: 44,
         flex:1
     }
+
 });
