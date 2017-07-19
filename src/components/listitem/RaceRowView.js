@@ -37,63 +37,6 @@ export default class RaceRowView extends Component {
         </TouchableOpacity>)
     }
 
-    oldView = () => {
-        const {rowData} = this.props;
-        return <TouchableOpacity
-            disabled={!rowData.describable}
-            activeOpacity={1}
-            testID={'btn_races_' + rowData.race_id}
-            onPress={() => this._itemClick(rowData)}>
-
-            {this._lineView()}
-
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-
-                {this.describableView(rowData.describable)}
-                {/*月份*/}
-                {this.monthView(rowData.begin_date)}
-
-                <View style={{flex: 1}}>
-
-                    <Text style={[Fonts.H17, {
-                        color: '#BBBBBB', marginTop: 20,
-                        marginRight: 24, lineHeight: 22
-                    }]}
-                          numberOfLines={2}>{rowData.name}</Text>
-
-                    {this.tabRaces(rowData.followed, rowData.status)}
-
-
-                    <View style={{
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        flexDirection: 'row',
-                        marginTop: 12
-                    }}>
-                        <View>
-                            {strNotNull(rowData.prize) ? this.prizeView(rowData.prize) : null}
-                        </View>
-
-
-                        <View>
-                            {this.orderedView(rowData)}
-                        </View>
-
-
-                    </View>
-
-                    <Text
-                        numberOfLines={1}
-                        style={[Fonts.H13, {
-                            color: Colors.txt_666,
-                            marginTop: 4
-                        }]}>{I18n.t('address') + rowData.location}</Text>
-                    {this.racesTimeView(rowData.begin_date, rowData.end_date)}
-
-                </View>
-            </View>
-        </TouchableOpacity>
-    }
 
 
     _itemRender = () => {
