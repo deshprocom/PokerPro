@@ -161,7 +161,7 @@ class PassportView extends Component {
 
 
         } else {
-            showToast('内容填写不完整')
+            showToast(I18n.t('fillWhole'))
         }
 
 

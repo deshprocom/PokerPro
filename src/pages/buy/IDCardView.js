@@ -165,7 +165,7 @@ class IDCardView extends Component {
 
 
         } else {
-            showToast('内容填写不完整')
+            showToast(`${I18n.t('ple_write_all')}`)
         }
 
 
@@ -204,7 +204,7 @@ class IDCardView extends Component {
             style={ApplicationStyles.bgContainer}>
 
             {editable ? <View>
-                <Text style={{paddingLeft: 15, marginTop: 13, color: Colors._333, fontSize: 15}}>请选择上传证件</Text>
+                <Text style={{paddingLeft: 15, marginTop: 13, color: Colors._333, fontSize: 15}}>{I18n.t('ple_put_password')}</Text>
 
                 <View style={styles.choice_view}>
                     <Button style={[styles.choice_btn, styles.choice_btn_right,
@@ -216,7 +216,7 @@ class IDCardView extends Component {
 
                                 })
                             }}>
-                        身份证</Button>
+                        {I18n.t('identification')}</Button>
 
                     <Button
                         style={[styles.choice_btn, {backgroundColor: choice_id === 'passport_id' ? '#16181D' : Colors.bg_f5}]}
@@ -226,7 +226,7 @@ class IDCardView extends Component {
                                 choice_id: 'passport_id',
                             })
                         }}>
-                        护照</Button>
+                        {I18n.t('passport')}</Button>
                 </View>
             </View> : null}
 

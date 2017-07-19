@@ -93,7 +93,7 @@ class MessagePage extends Component {
                 <TouchableOpacity
                     onPress={()=>this._delNotice(data,secId, rowId, rowMap)}
                     style={styles.rightSwipe}>
-                    <Text style={styles.txtSwipe}>删除</Text>
+                    <Text style={styles.txtSwipe}>{I18n.t('buy_del')}</Text>
                 </TouchableOpacity>
 
             </View>
@@ -164,7 +164,7 @@ class MessagePage extends Component {
 
                                 <Text
                                     testID={'txt_order_num_'+id}
-                                    style={styles.txtNum}>订单编号:{order_number}</Text>
+                                    style={styles.txtNum}>{I18n.t('order_num')}:{order_number}</Text>
 
                             </View>
 
@@ -194,7 +194,7 @@ class MessagePage extends Component {
                         testID={'txt_content_'+id}
                         style={styles.txtNotice}>{content}</Text>
 
-                    <Text style={styles.txtSource}>来自：Poker Pro官方客服</Text>
+                    <Text style={styles.txtSource}>{I18n.t('message_from')}</Text>
 
                 </View>
             </View>)
