@@ -114,14 +114,14 @@ class HomePage extends Component {
         } else {
             return (
                 <NoDataView
-                    pageStyle={{backgroundColor:'white'}}/>)
+                    pageStyle={{backgroundColor: 'white'}}/>)
         }
 
     };
 
     _loadErrorPage = () => {
         return (<LoadErrorView
-            pageStyle={{backgroundColor:'white'}}
+            pageStyle={{backgroundColor: 'white'}}
             onPress={() => this._refreshPage()}/>)
     };
 
@@ -225,7 +225,7 @@ class HomePage extends Component {
                     <Text style={{
                         color: 'rgba(244,227,161,' + opacity + ')',
                         fontSize: Fonts.size.h17
-                    }}>扑客</Text>
+                    }}>{I18n.t('app_name')}</Text>
                     <View style={{flex: 1}}/>
                     <TouchableOpacity
                         testID="btn_bar_right"
