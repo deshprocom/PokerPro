@@ -28,14 +28,14 @@ export default class MainRankPage extends Component {
                 <TouchableOpacity onPress={()=> this.props.openRank()}
                                   style={styles.topBtn}>
                     <Image source={Images.race_type}
-                           style={styles.right_image}/>
+                           style={styles.right_image1}/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
                     router.toFocusPlayer()
                 }}
                                   style={styles.topBtn}>
                     <Image source={Images.shape}
-                           style={styles.right_image}/>
+                           style={styles.right_image2}/>
                 </TouchableOpacity>
             </View>
         </View>)
@@ -84,8 +84,12 @@ const styles = StyleSheet.create({
         height: 44,
         marginRight: 10
     },
-    right_image: {
-        width: 22,
-        height: 22
+    right_image1: {
+        width: 20,
+        height: 20
+    },
+    right_image2: {
+        width: 20.9,
+        height: 20
     }
 })

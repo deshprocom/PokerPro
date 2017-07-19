@@ -169,7 +169,10 @@ const images = {
     video_play:require('../../source/news/video_play.png'),
     post_id_image: require('../../source/buy/postIDImage.png'),
     mask: require('../../source/Mask@2x.png'),
-    shape: require('../../source/rank/Shape@2x.png')
+    shape: require('../../source/rank/Shape@2x.png'),
+    gold: require('../../source/rank/gold@2x.png'),
+    silver: require('../../source/rank/silver@2x.png'),
+    copper: require('../../source/rank/copper@2x.png')
 
 
 };

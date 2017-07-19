@@ -17,13 +17,12 @@ class DrawerRank extends Component {
     }
 
     openRankDrawer = () => {
-        router.log(111111)
         this._drawer.open()
-    }
+    };
 
     closeRankDrawer = () => {
         this._drawer.close()
-    }
+    };
 
     _handleDrawer(){
         router.log('_handleDrawer',this._drawer._open);
@@ -51,7 +50,7 @@ class DrawerRank extends Component {
                         drawerState : false
                     });
                 }}
-                openDrawerOffset={100}
+                openDrawerOffset={63}
                 styles={this.state.drawerState?drawerStyles:drawerStylesColse}
                 tweenHandler={(ratio) => ({
                     main: { opacity:(2-ratio)/2 }
