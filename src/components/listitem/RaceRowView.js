@@ -94,11 +94,11 @@ export default class RaceRowView extends Component {
                 </View>
 
                 <View style={[styles.viewClock, {marginTop: 8}]}>
-
+                    <Text style={[styles.lbPrice, {fontSize: FontSize.h13}]}>{I18n.t('prize')}</Text>
                     <Text
                         numberOfLines={1}
                         style={[styles.txtPrice, {fontSize: FontSize.h13}]}> {prize}</Text>
-                    <Text style={[styles.lbPrice, {fontSize: FontSize.h12}]}>{I18n.t('home_up')}</Text>
+
                 </View>
             </View>
 
@@ -355,10 +355,10 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
     lbPrice: {
-        color: '#454545'
+        color: Colors._333
     },
     txtPrice: {
-        color: '#daa647',
+        color: Colors._DF1,
     },
     btnStatus: {
         height: 32,

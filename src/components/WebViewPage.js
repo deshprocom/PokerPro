@@ -49,10 +49,10 @@ export default class WebViewPage extends Component {
                     // }).start();
                 }
                 if (y < -this.moveYThreshold && this.animationFlag) {  //drag up
-                    if (this.state.bottomInfoBarBottomValue === -45) return;
+                    if (this.state.bottomInfoBarBottomValue === -50) return;
                     this.animationFlag = false;
                     Animated.timing(this.state.bottomInfoBarBottomValue, {
-                        toValue: -45,
+                        toValue: -50,
                         duration: 300
                     }).start(() => this.animationFlag = true);
                     // Animated.timing(this.state.toolbarTopValue, {
@@ -157,10 +157,11 @@ export default class WebViewPage extends Component {
     };
 
     topBarView = () => {
+        const {url} = this.props.params;
         return (
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors.bg_09}}
-                title="详细内容"
+                title={url}
                 titleStyle={styles.barTitle}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
