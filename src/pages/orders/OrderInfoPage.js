@@ -130,7 +130,7 @@ class OrderInfoPage extends React.Component {
                 {/*订单信息*/}
                 <View style={{height: 141, backgroundColor: Colors.white, paddingLeft: 17, marginTop: 10}}>
                     <View style={{height: 40, alignItems: 'center', flexDirection: 'row'}}>
-                        <Text style={{fontSize: Fonts.size.h16, color: Colors.txt_444}}>订单信息</Text>
+                        <Text style={{fontSize: Fonts.size.h16, color: Colors.txt_444}}>{I18n.t('order_detail')}</Text>
                     </View>
 
                     <View style={{height: 1, backgroundColor: Colors.bg_f5}}/>
@@ -138,20 +138,29 @@ class OrderInfoPage extends React.Component {
                     <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
                         <View>
                             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                <Text style={{fontSize: 14, color: Colors.txt_666, marginRight: 18}}>订单编号:</Text>
+                                <Text
+                                    style={{fontSize: 14, color: Colors.txt_666, marginRight: 18}}>{I18n.t('order_num')}:</Text>
                                 <Text
                                     testID="txt_ticket_type"
                                     style={{fontSize: 15, color: Colors._888}}>{order_info.order_id}</Text>
                             </View>
                             <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
-                                <Text style={{fontSize: 14, color: Colors.txt_666, marginRight: 18}}>下单时间:</Text>
+                                <Text style={{
+                                    fontSize: 14,
+                                    color: Colors.txt_666,
+                                    marginRight: 18
+                                }}>{I18n.t('order_time')}:</Text>
                                 <Text
                                     testID="txt_created_at"
                                     style={{fontSize: 15, color: Colors._888}}>
                                     {convertDate(order_info.created_at, DATA_SS)}</Text>
                             </View>
                             <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
-                                <Text style={{fontSize: 14, color: Colors.txt_666, marginRight: 18}}>订单状态:</Text>
+                                <Text style={{
+                                    fontSize: 14,
+                                    color: Colors.txt_666,
+                                    marginRight: 18
+                                }}>{I18n.t('order_status')}:</Text>
                                 <Text
                                     testID="txt_order_status"
                                     style={{fontSize: 15, color: Colors._888}}>{orderStatus(order_info.status)}</Text>
@@ -167,7 +176,7 @@ class OrderInfoPage extends React.Component {
                     <View>
                         <View style={{height: 40, alignItems: 'center', flexDirection: 'row'}}>
                             <Text style={{fontSize: Fonts.size.h16, color: Colors.txt_444}}
-                            >收票方式-{this._txtTicketType(order_info.ticket_type)}</Text>
+                            >{I18n.t('order_ways')}-{this._txtTicketType(order_info.ticket_type)}</Text>
                         </View>
                         <View style={{height: 1, backgroundColor: Colors.bg_f5}}/>
                         {this._viewTicketType(order_info)}
@@ -177,7 +186,7 @@ class OrderInfoPage extends React.Component {
                 <View style={{height: 121, backgroundColor: Colors.white, paddingLeft: 17, marginTop: 5}}>
 
                     <View style={{height: 40, alignItems: 'center', flexDirection: 'row'}}>
-                        <Text style={{fontSize: Fonts.size.h16, color: Colors.txt_444}}>订单明细</Text>
+                        <Text style={{fontSize: Fonts.size.h16, color: Colors.txt_444}}>{I18n.t('order_msg')}</Text>
                     </View>
                     <View style={{height: 1, backgroundColor: Colors.bg_f5}}/>
 
@@ -185,7 +194,7 @@ class OrderInfoPage extends React.Component {
                     <View style={{flex: 1}}>
                         <View
                             style={{justifyContent: 'space-between', flexDirection: 'row', marginTop: 14}}>
-                            <Text style={{fontSize: 14, color: Colors.txt_666}}>商品金额</Text>
+                            <Text style={{fontSize: 14, color: Colors.txt_666}}>{I18n.t('order_price')}</Text>
                             <Text
                                 testID="txt_original_price"
                                 style={{
@@ -195,7 +204,7 @@ class OrderInfoPage extends React.Component {
                         </View>
                         <View
                             style={{justifyContent: 'space-between', flexDirection: 'row', marginTop: 16}}>
-                            <Text style={{fontSize: 14, color: Colors.txt_666}}>应付金额</Text>
+                            <Text style={{fontSize: 14, color: Colors.txt_666}}>{I18n.t('order_pay')}</Text>
                             <Text
 
                                 testID="txt_price"
@@ -212,7 +221,7 @@ class OrderInfoPage extends React.Component {
         const {consignee, address, mobile} = order_info;
         if (order_info.ticket_type === 'e_ticket')
             return <View style={{flexDirection: 'row', alignItems: 'center', paddingTop: 10, paddingBottom: 10}}>
-                <Text style={[{marginRight: 18}, styles.txtAdr]}>电子邮件:</Text>
+                <Text style={[{marginRight: 18}, styles.txtAdr]}>{I18n.t('order_email')}:</Text>
                 <Text
                     testID="txt_email"
                     style={styles.txtAdr}>{legalValue(order_info.email)}</Text>
@@ -241,9 +250,9 @@ class OrderInfoPage extends React.Component {
 
     _txtTicketType = (ticket_type) => {
         if (ticket_type === "e_ticket")
-            return '电子邮件';
+            return I18n.t('order_email');
         else
-            return '收货地址'
+            return I18n.t('receive_adr')
     };
 
     _bottomBar = (order_info) => {
@@ -263,7 +272,7 @@ class OrderInfoPage extends React.Component {
 
 
                 <View style={{flexDirection: 'row', marginLeft: 19, alignItems: 'flex-end'}}>
-                    <Text style={{fontSize: 14, color: Colors.txt_666}}>合计: </Text>
+                    <Text style={{fontSize: 14, color: Colors.txt_666}}>{I18n.t('order_total')}: </Text>
 
                     <Text
                         testID="txt_total_price"
@@ -281,7 +290,7 @@ class OrderInfoPage extends React.Component {
                             borderColor: Colors._AAA, borderWidth: 1, borderRadius: 5,
                             height: 32, width: 68, alignItems: 'center', justifyContent: 'center', marginRight: 15
                         }}>
-                        <Text style={{fontSize: 12, color: Colors.txt_666}}>取消订单</Text>
+                        <Text style={{fontSize: 12, color: Colors.txt_666}}>{I18n.t('order_cancel')}</Text>
                     </View>
                 </TouchableOpacity>
                 {this._user_real_call_btn()}
@@ -340,7 +349,7 @@ class OrderInfoPage extends React.Component {
                     height: 49, flex: 1, marginLeft: 17, marginRight: 17, marginBottom: 17
                 }}
             >
-                联系客服
+                {I18n.t('contact_customer_service')}
             </Button>)
     };
 
@@ -360,7 +369,10 @@ class OrderInfoPage extends React.Component {
                     alignItems: 'center',
                     backgroundColor: '#F56666'
                 }}>
-                <Text style={[Fonts.H15, {color: Colors.white, marginLeft: 17}]}>实名审核失败，原因:{user_extra.memo}</Text>
+                <Text style={[Fonts.H15, {
+                    color: Colors.white,
+                    marginLeft: 17
+                }]}>{I18n.t('order_reason')}:{user_extra.memo}</Text>
             </View>)
     }
 
@@ -396,25 +408,16 @@ class OrderInfoPage extends React.Component {
                     {/*购票须知*/}
                     <View style={{backgroundColor: Colors.white, paddingLeft: 17, marginTop: 10}}>
                         <View style={{height: 40, alignItems: 'center', flexDirection: 'row'}}>
-                            <Text style={{fontSize: Fonts.size.h16, color: Colors.txt_444}}>购票须知</Text>
+                            <Text style={{
+                                fontSize: Fonts.size.h16,
+                                color: Colors.txt_444
+                            }}>{I18n.t('ticket_prompt')}</Text>
                         </View>
                         <Text style={{
                             fontSize: 14, color: Colors._888, textAlign: 'left',
                             marginRight: 17, paddingBottom: 30
                         }}>
-                            1.购买赛事票，赛事当天凭需购票人身份证件登记入场，请务必正确填写参赛的身份证件。
-                            {'\n\n'}
-                            2.本赛事所有票务暂支持线下付款，订单成功后我们将在及时与您取得联系，请您耐心等待！
-                            {'\n\n'}
-                            3.本赛事暂不支持在线选座，购票后将随机配票。
-                            {'\n\n'}
-                            4.本赛事所有订单付款成功后不支持调整和退换，请付款前确保订单地址、身份信息、邮件地址正确，感谢您对扑客的支持！
-                            {'\n\n'}
-                            5.实体票支付成功后我们将在1-5个工作日内陆续为您配送，请您耐心等待！
-                            {'\n\n'}
-                            6.电子票支付成功后，我们将赛票信息发送到您预留的邮箱，请及时查收。如若邮箱收不到信息，请及时与客服人员取得联系！
-                            {'\n\n'}
-                            7.客服服务热线：{I18n.t('hot_phone')}；服务时间：10：30-19:30
+                            {I18n.t('order_known')}
                         </Text>
                     </View>
 

@@ -56,15 +56,11 @@ class SearchRacesPage extends Component {
 
     render() {
 
-        const {dataRaces} = this.state;
-
         return (
             <View style={styles.flatBg}
                   testID="page_more_races">
 
                 {this.topBar()}
-
-
 
                 {this.listView()}
 
@@ -79,7 +75,7 @@ class SearchRacesPage extends Component {
 
 
     listView = () => {
-        return (<View style={{flex: 1}}>
+        return (
             <PullListView
                 key="list"
                 ref={ (component) => this._pullToRefreshListView = component }
@@ -87,15 +83,11 @@ class SearchRacesPage extends Component {
                 dataSource={this.state.componentDataSource}
                 renderSectionHeader={this._renderSectionHeader}
                 renderRow={this._renderRow}
-                renderHeader={(viewState) => _renderHeader(viewState, headerStyle)}
-                renderFooter={(viewState) => _renderFooter(viewState, headerStyle)}
                 onRefresh={this._onRefresh}
                 onLoadMore={this._onLoadMore}
-                autoLoadMore={true}
-                enableEmptySections={true}/>
-
-
-        </View>)
+                renderHeader={(viewState) => _renderHeader(viewState, headerStyle)}
+                renderFooter={(viewState) => _renderFooter(viewState, headerStyle)}
+                enableEmptySections={true}/>)
     };
 
     topBar = () => {
