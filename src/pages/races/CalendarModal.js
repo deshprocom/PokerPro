@@ -16,6 +16,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import Calendar from '../../components/calendar/Calendar';
 import {SEARCH_RANGE_LIST} from '../../actions/ActionTypes';
 import {fetchRangeList} from '../../actions/RacesAction';
+import I18n from 'react-native-i18n';
 
 const Y_M_D = 'YYYY-MM-DD';
 
@@ -47,7 +48,13 @@ class CalendarModal extends Component {
                     scrollEnabled
                     showControls
                     showEventIndicators
-                    dayHeadings={DayHeadings}
+                    dayHeadings={[I18n.t('calendar_7'),
+                        I18n.t('calendar_1'),
+                        I18n.t('calendar_2'),
+                        I18n.t('calendar_3'),
+                        I18n.t('calendar_4'),
+                        I18n.t('calendar_5'),
+                        I18n.t('calendar_6')]}
                     monthNames={MonthNames}
                     titleFormat={YYYY年MM月}
                     onDateSelect={(date) =>{
