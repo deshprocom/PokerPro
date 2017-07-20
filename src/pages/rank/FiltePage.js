@@ -4,8 +4,6 @@ import Button from 'react-native-smart-button';
 
 import {Metrics, Colors} from '../../Themes';
 
-import AddrCheck from './AddrCheck';
-import TimeCheck from './TimeCheck';
 import RankCheck from './RankCheck';
 
 class FiltePage extends Component {
@@ -15,13 +13,13 @@ class FiltePage extends Component {
 
     render(){
         return(<View style={styles.view_bg}>
-            <ScrollView style={{marginTop: 41,paddingLeft: 36}}>
-                <AddrCheck/>
-                <TimeCheck/>
-                <RankCheck/>
+            <ScrollView style={{marginTop: 41,paddingRight: 20, paddingLeft: 36}}>
+                <RankCheck checkTitle={'地区'} checkData={['全球','国内']}/>
+                <RankCheck checkTitle={'年份'} checkData={['全部','2014','2015','2016','2017']}/>
+                <RankCheck checkTitle={'排名'} checkData={['全部','1-100','100-200','200-300','300-600','600以上']}/>
             </ScrollView>
 
-            <View style={{flexDirection: 'row',paddingLeft: 36, position: 'absolute', bottom: 36}}>
+            <View style={{flexDirection: 'row',paddingLeft: 36,position: 'absolute', bottom: 36}}>
                 <View style={[{borderColor: Colors._161817,borderRadius: 2,borderWidth: 1},styles.side_btn]}>
                     <Text style={{color: Colors._333}}>取消</Text>
                 </View>

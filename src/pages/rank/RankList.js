@@ -2,15 +2,16 @@ import React,{Component} from 'react';
 import {View, Text, FlatList, TouchableOpacity, StyleSheet, ListView, Image} from 'react-native';
 
 import {Metrics, Colors, Images} from '../../Themes';
+import {PullListView} from '../../components';
 
 
 class RankList extends Component {
 
     constructor(props){
         super(props);
-        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
-            dataSource: ds.cloneWithRows(['1','2','3','4','5','6'])
+            dataSource: this.ds.cloneWithRows(['1','2','3','4','5','6'])
         };
     }
 
@@ -64,12 +65,18 @@ class RankList extends Component {
             </View>
             <View style={{height:1,backgroundColor: Colors.bg_f5,marginLeft: 16}}></View>
         </View>)
-    }
+    };
 
     render(){
         return(<View style={styles.rank_list}>
             {/*{this.headerList()}*/}
-            <ListView dataSource={this.state.dataSource}
+            {/*<ListView dataSource={this.state.dataSource}*/}
+                {/*renderRow={this.listRenderRow}/>*/}
+            <PullListView
+                key="list"
+                ref={ (component) => this._pullToRefreshListView = component }
+                viewType={PullListView.constants.viewType.listView}
+                dataSource={this.state.dataSource}
                 renderRow={this.listRenderRow}/>
         </View>)
     }
