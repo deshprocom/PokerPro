@@ -32,7 +32,7 @@ export default class TicketInfoPage extends Component {
                 ticket_id: ticket_id
             };
             getBuyRaceTicket(body, data => {
-                const {tickets, ordered, race} =data;
+                const {tickets, ordered, race} = data;
                 this.setState({
                     tickets: tickets,
                     ordered: ordered,
@@ -48,12 +48,12 @@ export default class TicketInfoPage extends Component {
     render() {
         return ( <View
             testID="page_ticket"
-            style={ApplicationStyles.bgContainer}>
+            style={styles.bgPage}>
 
             {this._topBar()}
 
             {this._content()}
-
+            { this._viewGoBuy() }
 
         </View>)
 
@@ -61,9 +61,9 @@ export default class TicketInfoPage extends Component {
 
     _viewGoBuy = () => {
         return ( <TouchableOpacity
-            onPress={()=>{
-                 const {race_id, ticket_id} = this.props.params;
-                 router.toBuyTicketPage(this.props, race_id, ticket_id)
+            onPress={() => {
+                const {race_id, ticket_id} = this.props.params;
+                router.toBuyTicketPage(this.props, race_id, ticket_id)
             }}
             style={styles.btnBuy}>
             <Text style={styles.txtGoBuy}>{I18n.t('goBuy')}</Text>
@@ -84,7 +84,7 @@ export default class TicketInfoPage extends Component {
             <Image
                 resizeMode={'cover'}
                 defaultSource={Images.empty_image}
-                source={{uri:logo}}
+                source={{uri: logo}}
                 style={styles.imgLogo}>
 
             </Image>
@@ -95,12 +95,14 @@ export default class TicketInfoPage extends Component {
                     style={styles.txtName}>{name} {title}</Text>
 
                 <View style={styles.viewSell}>
+                    <Text style={styles.lbPrice}>{I18n.t('price')}: </Text>
                     <Text style={styles.txtPrice}>{price}</Text>
-                    <Text style={styles.lbPrice}>{I18n.t('part')}</Text>
+
                 </View>
 
 
             </View>
+            <View style={styles.viewLine}/>
 
             <View style={styles.margin108}>
                 <MarkdownPlat
@@ -108,21 +110,21 @@ export default class TicketInfoPage extends Component {
                     noScroll={false}/>
             </View>
 
-            { this._viewGoBuy() }
+
         </ScrollView>)
     };
 
     _topBar = () => {
         const {opacity} = this.state;
-        return ( <View style={[styles.topBar,{ backgroundColor: 'rgba(255,255,255,'+opacity+')'}]}>
-            <StatusBar barStyle="dark-content"/>
+        return ( <View style={[styles.topBar, {backgroundColor: 'rgba(255,255,255,' + opacity + ')'}]}>
+            <StatusBar/>
             <TouchableOpacity
                 testID="btn_bar_left"
-                onPress={()=>router.pop()}
+                onPress={() => router.pop()}
                 style={styles.topBtn}
                 activeOpacity={1}>
                 <Image
-                    source={Images.ic_back}
+                    source={Images.sign_return}
                     style={styles.topImgLeft}/>
 
             </TouchableOpacity>
@@ -186,8 +188,8 @@ const styles = StyleSheet.create({
         marginBottom: 18,
     },
     lbPrice: {
-        fontSize: 14,
-        color: '#F24A4A',
+        fontSize: 20,
+        color: Colors._161,
 
     },
     markdown: {
@@ -211,8 +213,14 @@ const styles = StyleSheet.create({
         fontSize: 18
     },
     margin108: {
-        marginBottom: 108,
         backgroundColor: 'white',
-        marginTop: 6
+    },
+    bgPage: {
+        flex: 1,
+        backgroundColor: 'white'
+    },
+    viewLine: {
+        height: 6,
+        backgroundColor: Colors._ECE
     }
 });

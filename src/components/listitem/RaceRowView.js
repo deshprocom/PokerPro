@@ -11,7 +11,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {
     strNotNull, getLoginUser,
     convertDate, YYYY_MM_DD, racesStatusImage,
-    sellable, raceStatusConvert,FontSize
+    sellable, raceStatusConvert, FontSize
 } from '../../utils/ComonHelper';
 import {SellStatus} from '../../configs/Status';
 import ImageLoad from '../ImageLoad';
@@ -35,64 +35,6 @@ export default class RaceRowView extends Component {
             {this._itemRender()}
             <View style={this.props.isMoreRace ? styles.viewLine1 : styles.viewLine}/>
         </TouchableOpacity>)
-    }
-
-    oldView = () => {
-        const {rowData} = this.props;
-        return <TouchableOpacity
-            disabled={!rowData.describable}
-            activeOpacity={1}
-            testID={'btn_races_' + rowData.race_id}
-            onPress={() => this._itemClick(rowData)}>
-
-            {this._lineView()}
-
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-
-                {this.describableView(rowData.describable)}
-                {/*月份*/}
-                {this.monthView(rowData.begin_date)}
-
-                <View style={{flex: 1}}>
-
-                    <Text style={[Fonts.H17, {
-                        color: '#BBBBBB', marginTop: 20,
-                        marginRight: 24, lineHeight: 22
-                    }]}
-                          numberOfLines={2}>{rowData.name}</Text>
-
-                    {this.tabRaces(rowData.followed, rowData.status)}
-
-
-                    <View style={{
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        flexDirection: 'row',
-                        marginTop: 12
-                    }}>
-                        <View>
-                            {strNotNull(rowData.prize) ? this.prizeView(rowData.prize) : null}
-                        </View>
-
-
-                        <View>
-                            {this.orderedView(rowData)}
-                        </View>
-
-
-                    </View>
-
-                    <Text
-                        numberOfLines={1}
-                        style={[Fonts.H13, {
-                            color: Colors.txt_666,
-                            marginTop: 4
-                        }]}>{I18n.t('address') + rowData.location}</Text>
-                    {this.racesTimeView(rowData.begin_date, rowData.end_date)}
-
-                </View>
-            </View>
-        </TouchableOpacity>
     }
 
 
@@ -130,13 +72,15 @@ export default class RaceRowView extends Component {
                 source={{uri: logo}}/>
             <View>
                 <Text
-                    style={[styles.txtTitle,{fontSize:FontSize.h17}]}
+                    style={[ticket_sellable ? styles.txtTitle1 : styles.txtTitle, {fontSize: FontSize.h17}]}
                     numberOfLines={2}>{name}</Text>
                 <View style={styles.viewClock}>
                     <Image source={Images.home_adr}
                            style={styles.imgAdr}/>
 
-                    <Text style={[styles.txtClock,{fontSize:FontSize.h13}]}>{location}</Text>
+                    <Text
+                        numberOfLines={1}
+                        style={[ticket_sellable ? styles.txtClock1 : styles.txtClock, {fontSize: FontSize.h13}]}>{location}</Text>
 
                 </View>
 
@@ -144,14 +88,16 @@ export default class RaceRowView extends Component {
                     <Image source={Images.home_clock}
                            style={styles.imgClock}/>
 
-                    <Text style={[styles.txtClock,{fontSize:FontSize.h13}]}>
+                    <Text style={[styles.txtClock, {fontSize: FontSize.h13}]}>
                         {this._time(begin_date, end_date)}</Text>
 
                 </View>
 
                 <View style={[styles.viewClock, {marginTop: 8}]}>
-                    <Text style={[styles.lbPrice,{fontSize:FontSize.h13}]}>{I18n.t('prize')}</Text>
-                    <Text style={[styles.txtPrice,{fontSize:FontSize.h13}]}> {prize}</Text>
+                    <Text style={[styles.lbPrice, {fontSize: FontSize.h13}]}>{I18n.t('prize')}</Text>
+                    <Text
+                        numberOfLines={1}
+                        style={[styles.txtPrice, {fontSize: FontSize.h13}]}> {prize}</Text>
                 </View>
             </View>
 
@@ -161,7 +107,7 @@ export default class RaceRowView extends Component {
             <View style={styles.raceStatus}>
                 <Image
                     source={this._imgRaceStatus(status)}
-                    style={styles.imgRaceStatus}/>
+                    style={status === 'go_ahead' ? styles.imgRaceStatus1 : styles.imgRaceStatus}/>
 
                 <Text style={this._txtColorStatus(status)}>{raceStatusConvert(status)}</Text>
 
@@ -377,8 +323,13 @@ const styles = StyleSheet.create({
     },
     txtTitle: {
         color: '#333333',
-        width: 200,
-        marginBottom:5
+        width: 220,
+        marginBottom: 5
+    },
+    txtTitle1: {
+        color: '#333333',
+        width: 190,
+        marginBottom: 5
     },
     imgClock: {
         height: 12,
@@ -389,22 +340,25 @@ const styles = StyleSheet.create({
         width: 10
     },
     txtClock: {
-
         color: '#888888',
         marginLeft: 5
+    },
+    txtClock1: {
+        color: '#888888',
+        marginLeft: 5,
+        width: 170
     },
     viewClock: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 5
+        marginTop: 5,
     },
     lbPrice: {
-
         color: '#454545'
     },
     txtPrice: {
-
-        color: '#daa647'
+        color: '#daa647',
+        width: 120,
     },
     btnStatus: {
         height: 32,
@@ -434,8 +388,11 @@ const styles = StyleSheet.create({
     },
     imgRaceStatus: {
         height: 12,
+        width: 12
+    },
+    imgRaceStatus1: {
+        height: 12,
         width: 10
-
     },
     txtRaceStatus: {
         fontSize: Fonts.size.h9,
