@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
 import {Colors, Images} from '../../Themes';
 
-class AddrCheck extends Component {
+class RankCheck extends Component {
     static propTypes = {
         checkTitle: PropTypes.isString,
         checkData: PropTypes.isArray,
@@ -43,11 +43,11 @@ class AddrCheck extends Component {
             {
                 this.props.checkData.map((item,index) => {
                     return(
-                        <TouchableOpacity onPress=""
+                        <TouchableOpacity key={index} onPress={() => router.log(111)}
                                           style={styles.btn_style}>
-                            <Image source={this.state.check?Images.Group:''}
+                            <Image source={this.state.check?Images.Group:Images.Group_em}
                                    style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center'}}>
-                                <Text key={index}>{item}</Text>
+                                <Text style={{color: Colors._333,fontSize: 15}}>{item}</Text>
                             </Image>
                         </TouchableOpacity>
                     )
@@ -65,17 +65,12 @@ class AddrCheck extends Component {
     }
 }
 
-export default AddrCheck;
+export default RankCheck;
 
 const styles = StyleSheet.create({
     btn_style: {
-        color: Colors._333,
-        fontSize: 15,
         width: 72,
         height: 30,
-        borderRadius: 2,
-        borderColor: Colors._CCC,
-        borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: 16,
