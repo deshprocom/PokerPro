@@ -174,7 +174,7 @@
   "mainRace":"主赛",
   "sideRace":"边赛",
   "pleaseSelectRace":"请选择赛事",
-  "RaceIntro":"赛事介绍",
+  "RaceIntro":"旅游套餐",
   "PrizePond":"奖池",
   "MainInformation":"主赛信息",
   "SideInformation":"边赛信息",
@@ -301,5 +301,6 @@
   "api_setting":"Api设置",
   "order_ways":"收票方式",
   "home_buy":"购票",
-  "home_up":""
+  "home_up":"",
+  "race_day":"赛程"
 }

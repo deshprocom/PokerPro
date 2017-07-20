@@ -144,7 +144,7 @@ class RacesInfoPage extends Component {
                                     style={styles.txtLocation}>{raceInfo.location}</Text>
                             </View>
                             <View style={styles.viewPrice}>
-                                <Text style={styles.txtLabel}>{I18n.t('PrizePond')}:</Text>
+
                                 <Text
                                     testID="txt_races_prize"
                                     style={styles.txtPrice}>{raceInfo.prize}</Text>
