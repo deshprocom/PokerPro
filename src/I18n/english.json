@@ -299,5 +299,6 @@
   "message_from": "From: Poker Pro official customer service",
   "person_page": "Loading...",
   "api_setting": "Api settings",
-  "order_ways": "Collection"
+  "order_ways": "Collection",
+  "home_buy": "Buy"
 }

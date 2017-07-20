@@ -39,7 +39,7 @@
   "home_video": "视频",
   "home_info": "资讯",
   "home_sort": "排行",
-  "home_recent_races": "即将到来的赛事",
+  "home_recent_races": "即将到来的活动",
   "prize": "奖池:",
   "address": "地点:",
   "have_no_races": "暂无更多赛事...",
@@ -184,7 +184,7 @@
   "date":"日期",
   "beginDate":"开始时间",
   "serachMore":"点击搜索更多赛事",
-  "GameList":"赛事表",
+  "GameList":"活动表",
   "buy":"买入",
   "GameInformation":"赛事信息",
   "GameResult":"赛事结果",
@@ -299,5 +299,7 @@
   "message_from":"来自：Poker Pro官方客服",
   "person_page":"获取中...",
   "api_setting":"Api设置",
-  "order_ways":"收票方式"
+  "order_ways":"收票方式",
+  "home_buy":"购票",
+  "home_up":""
 }
