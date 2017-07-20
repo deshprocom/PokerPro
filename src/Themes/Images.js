@@ -166,7 +166,7 @@ const images = {
     adr_right: require('../../source/buy/adr_right.png'),
     adr_select: require('../../source/buy/adr_select.png'),
     adr_selected: require('../../source/buy/adr_selected.png'),
-    video_play:require('../../source/news/video_play.png'),
+    video_play: require('../../source/news/video_play.png'),
     post_id_image: require('../../source/buy/postIDImage.png'),
     mask: require('../../source/Mask@2x.png'),
     shape: require('../../source/rank/Shape@2x.png'),
@@ -174,7 +174,11 @@ const images = {
     silver: require('../../source/rank/silver@2x.png'),
     copper: require('../../source/rank/copper@2x.png'),
     Group: require('../../source/rank/Group 6@2x.png'),
-    Group_em: require('../../source/rank/Rectangle 24@2x.png')
+    Group_em: require('../../source/rank/Rectangle 24@2x.png'),
+    web_left: require('../../source/news/web_left.png'),
+    web_page: require('../../source/news/web_page.png'),
+    web_right: require('../../source/news/web_right.png'),
+    web_refresh: require('../../source/news/web_refresh.png')
 
 
 };

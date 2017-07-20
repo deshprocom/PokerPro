@@ -98,6 +98,7 @@ export default class RaceRowView extends Component {
                     <Text
                         numberOfLines={1}
                         style={[styles.txtPrice, {fontSize: FontSize.h13}]}> {prize}</Text>
+
                 </View>
             </View>
 
@@ -234,7 +235,7 @@ export default class RaceRowView extends Component {
                         , alignItems: 'center'
                     }}
                            source={Images.home_gold}>
-                        <Text style={styles.txtBuy}>{'购票'}</Text >
+                        <Text style={styles.txtBuy}>{I18n.t('home_buy')}</Text >
                     </Image>
                 </TouchableOpacity>)
 
@@ -354,11 +355,10 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
     lbPrice: {
-        color: '#454545'
+        color: Colors._333
     },
     txtPrice: {
-        color: '#daa647',
-        width: 120,
+        color: Colors._DF1,
     },
     btnStatus: {
         height: 32,

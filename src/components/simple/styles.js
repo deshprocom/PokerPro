@@ -61,6 +61,7 @@ const styles = {
         fontWeight: 'bold',
     },
     link: {
+        color: '#4990E2',
         textDecorationLine: 'underline',
     },
     listItem: {
@@ -116,9 +117,7 @@ const styles = {
     tableRowCell: {
         padding: 5,
     },
-    text: {
-
-    },
+    text: {},
     u: {
         textDecorationLine: 'underline'
     },
