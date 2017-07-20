@@ -1,6 +1,5 @@
 import React,{Component, PropTypes} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import Button from 'react-native-smart-button';
 
 import {Colors, Images} from '../../Themes';
 
@@ -8,7 +7,8 @@ class AddrCheck extends Component {
     static propTypes = {
         checkTitle: PropTypes.isString,
         checkData: PropTypes.isArray,
-        checkType: PropTypes.func
+        checkType: PropTypes.func,
+        checkList: PropTypes.func
     };
 
     constructor(props){
