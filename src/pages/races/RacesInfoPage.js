@@ -24,7 +24,7 @@ import {
 import TestRouter from '../../components/TestRouter';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import RaceSideView from './RaceSideView';
-import {MarkdownPlat,ImageLoad} from '../../components';
+import {MarkdownPlat, ImageLoad} from '../../components';
 import MainRaceResultView from './MainRaceResultView';
 import {umengEvent} from '../../utils/UmengEvent';
 
@@ -127,7 +127,7 @@ class RacesInfoPage extends Component {
 
                     {isEmptyObject(raceInfo) ? null : <View style={styles.headerInfo}>
                         <ImageLoad style={styles.logoImg}
-                               source={{uri: raceInfo.logo}}/>
+                                   source={{uri: raceInfo.logo}}/>
                         <View style={styles.viewInfo}>
                             <View style={styles.viewTime}>
                                 <Image style={styles.imgTime}
@@ -143,12 +143,7 @@ class RacesInfoPage extends Component {
                                     testID="txt_races_address"
                                     style={styles.txtLocation}>{raceInfo.location}</Text>
                             </View>
-                            <View style={styles.viewPrice}>
-                                <Text style={styles.txtLabel}>{I18n.t('PrizePond')}:</Text>
-                                <Text
-                                    testID="txt_races_prize"
-                                    style={styles.txtPrice}>{raceInfo.prize}</Text>
-                            </View>
+
 
                             <View style={styles.viewPrice}>
                                 <Text
@@ -516,7 +511,7 @@ const styles = StyleSheet.create({
     viewLocation: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 10
+        marginTop: 5
     },
     txtTime: {
         color: '#cccccc',
@@ -539,7 +534,7 @@ const styles = StyleSheet.create({
     viewPrice: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 7
+        marginTop: 16
     },
     txtStatus: {
         fontSize: 10,

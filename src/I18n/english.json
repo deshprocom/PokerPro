@@ -264,13 +264,13 @@
   "order_cancel": "Cancel",
   "order_reason": "Reason",
   "order_known": "1.Buy event tickets, you must register with the ticket holder's ID on the day of the event. Please fill in the ID correctly.\n\n 2.All tickets for this event will be supported by offline payment. When the order is successful, we will contact you in time. Please be patient! \n\n 3.This event does not support online seat selection. Tickets will be randomly allocated.\n\n 4.After the payment of all orders in this event , which is not supported by adjustment and replacement. Please ensure that the order address, identity information and email address are correct before payment. Thank you for your support!\n\n 5.After the successful payment of the entity ticket, we will deliver it for you within 1-5 working days. Please be patient!\n\n 6.After the successful payment of the electronic ticket, we will send the ticket information to your reserved email, please check it in time. If the email does not receive the information, please contact the customer service staff in time!\n\n 7.Customer service hotline：0755-23919844；Service time：10：30-19:30",
-  "calendar_7": "Sun.",
-  "calendar_1": "Mon.",
-  "calendar_2": "Tues.",
-  "calendar_3": "Wed.",
-  "calendar_4": "Thur.",
-  "calendar_5": "Fri.",
-  "calendar_6": "Sat.",
+  "calendar_7": "Sun",
+  "calendar_1": "Mon",
+  "calendar_2": "Tues",
+  "calendar_3": "Wed",
+  "calendar_4": "Thur",
+  "calendar_5": "Fri",
+  "calendar_6": "Sat",
   "ple_write_all": "Contents are incomplete",
   "ple_put_password": "Select upload certificate",
   "show_success": "Share successfully",
@@ -299,5 +299,6 @@
   "message_from": "From: Poker Pro official customer service",
   "person_page": "Loading...",
   "api_setting": "Api settings",
-  "order_ways": "Collection"
+  "order_ways": "Collection",
+  "home_buy": "Buy"
 }

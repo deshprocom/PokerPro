@@ -31,7 +31,7 @@ export default class ScheduleList extends Component {
 
     _listHeader = () => {
         return ( <View style={styles.tableTitle}>
-            <Text style={styles.title}>Day</Text>
+            <Text style={styles.title}>{I18n.t('race_day')}</Text>
             <Text style={styles.title}>{I18n.t('date')}</Text>
             <Text style={styles.title}>{I18n.t('beginDate')}</Text>
         </View>)
