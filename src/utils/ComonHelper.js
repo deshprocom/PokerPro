@@ -20,6 +20,7 @@ export const DATA_SS = 'YYYY-MM-DD hh:mm:ss';
 export const YYYY_MM = 'YYYY-MM';
 export const YYYY年MM月 = 'YYYY年MM月';
 export const YYYYMMDD = 'YYYYMMDD';
+export const MM_DD = 'MM-DD';
 
 export function strToDate(date) {
     let t = Date.parse(date);
