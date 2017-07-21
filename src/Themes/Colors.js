@@ -53,6 +53,7 @@ const colors = {
     _999: '#999999',
     _CCC: '#CCCCCC',
     _ECE: '#ECECEE',
+    _000: '#000000'
 
 };
 

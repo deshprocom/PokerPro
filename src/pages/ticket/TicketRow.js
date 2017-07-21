@@ -42,7 +42,8 @@ export const itemListView = (item, index) => {
                         <View style={styles.viewLocation}>
                             <Image source={Images.race_location}
                                    style={styles.img_ico}/>
-                            <Text style={styles.itemAddr}>{I18n.t('location')}:{location}</Text>
+                            <Text numberOfLines={1}
+                                  style={styles.itemAddr}>{I18n.t('location')}:{location}</Text>
                         </View>
 
                         <View style={styles.view_time}>
@@ -53,8 +54,9 @@ export const itemListView = (item, index) => {
                         </View>
 
                         <View style={styles.price_view}>
-                            <Text style={{color: '#454545', fontSize: FontSize.h13}}>奖池：</Text>
-                            <Text style={[styles.itemPrice,{fontSize: FontSize.h13}]}>{prize}</Text>
+                            <Text style={{color: '#454545', fontSize: FontSize.h13}}>{I18n.t('prize')}</Text>
+                            <Text numberOfLines={1}
+                                  style={[styles.itemPrice,{fontSize: FontSize.h13}]}>{prize}</Text>
                         </View>
 
                         <View style={sellStyle(ticket_status)}>
@@ -129,11 +131,14 @@ const styles = StyleSheet.create({
     itemAddr: {
         color: '#999999',
         fontSize: FontSize.h14,
-        marginLeft: 5
+        marginLeft: 5,
+        width: 180,
+
     },
     itemPrice: {
         color: '#DAA647',
-        fontSize: 13
+        fontSize: 13,
+        width: 120
     },
     itemInfo: {
         marginLeft: 12,
