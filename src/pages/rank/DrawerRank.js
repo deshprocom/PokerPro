@@ -42,7 +42,7 @@ class DrawerRank extends Component {
     // 事例ref
     _search = ()=>{
         this.mainRank.topHeader()
-    }
+    };
 
     render() {
         return (

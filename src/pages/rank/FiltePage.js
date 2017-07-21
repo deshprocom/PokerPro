@@ -15,7 +15,8 @@ class FiltePage extends Component {
     render(){
         return(<View style={styles.view_bg}>
             <ScrollView style={{marginTop: 41,paddingRight: 20, paddingLeft: 36}}>
-                <RankCheck checkTitle='地区' checkData={['全球','国内']}/>
+                <RankCheck ref={ref=>this.rankCheck = ref}
+                           checkTitle='全部' checkData={['全球','国内']}/>
                 <RankCheck checkTitle='年份' checkData={['全部','2014','2015','2016','2017']}/>
                 <RankCheck checkTitle='排名' checkData={['全部','1-100','100-200','200-300','300-600','600以上']}/>
             </ScrollView>
