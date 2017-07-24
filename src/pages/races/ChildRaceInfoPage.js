@@ -29,18 +29,22 @@ class ChildRaceInfoPage extends Component {
             testID="page_sub_race"
             style={ApplicationStyles.bgContainer}>
             <NavigationBar
-                refreshPage={()=>{ this.props.getSubInfo(this.props.params.race_ids)}}
-                toolbarStyle={{backgroundColor:Colors.bg_09}}
+                refreshPage={() => {
+                    this.props.getSubInfo(this.props.params.race_ids)
+                }}
+                toolbarStyle={{backgroundColor: Colors.bg_09}}
                 router={this.props.router}
                 title={this.raceTitle()}
                 leftBtnIcon={Images.sign_return}
-                leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
-                leftBtnPress={()=>this.props.router.pop()}/>
+                leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                leftBtnPress={() => this.props.router.pop()}/>
 
 
-            {this.subRaceInfoView()}
-
-            {this.raceView()}
+            <ScrollView style={{backgroundColor: 'white'}}>
+                {this.subRaceInfoView()}
+                <View style={{height:5,backgroundColor:Colors._ECE}}/>
+                {this.raceView()}
+            </ScrollView>
         </View>)
     }
 
@@ -60,26 +64,22 @@ class ChildRaceInfoPage extends Component {
                     testID="txt_race_addr"
                     style={styles.txtLocation}>{I18n.t('address')}{subRaceInfo.location}</Text>
 
-                <View
-                    style={styles.viewPrice}>
+                <View>
+                    <Text
+                        testID="txt_race_price"
+                        style={styles.txtPrice}>{I18n.t('prize')}{subRaceInfo.prize}</Text>
+                    <Text
+                        testID="txt_race_joinNum"
+                        style={styles.txtNum}>{I18n.t('peoples')}{subRaceInfo.participants}</Text>
                     <Text
                         testID="txt_race_buy_in"
                         style={styles.txtPrice}>{I18n.t('buy')}：{subRaceInfo.ticket_price}</Text>
                     <Text
-                        testID="txt_race_price"
-                        style={styles.txtPrice}>{I18n.t('prize')}{subRaceInfo.prize}</Text>
-                </View>
-
-                <View style={styles.viewPrice}>
-
-                    <Text
-                        testID="txt_race_joinNum"
-                        style={styles.txtNum}>{I18n.t('peoples')}{subRaceInfo.participants}</Text>
-
-                    <Text
                         testID="txt_race_begin_chips"
                         style={styles.txtNum}>{I18n.t('beginChip')}{subRaceInfo.blind}</Text>
+
                 </View>
+
 
             </View>)
         }
@@ -108,12 +108,10 @@ class ChildRaceInfoPage extends Component {
             return;
         const {schedules, ranks, blinds} = subRaceInfo;
 
-        return ( <ScrollView style={styles.page}>
-            <MainRaceResultView
-                blinds={blinds}
-                schedules={schedules}
-                raceRanks={ranks}/>
-        </ScrollView>)
+        return ( <MainRaceResultView
+            blinds={blinds}
+            schedules={schedules}
+            raceRanks={ranks}/>)
     }
 
 }
@@ -139,7 +137,6 @@ const styles = StyleSheet.create({
         marginTop: 6,
         padding: 17,
         backgroundColor: Colors.white,
-        marginBottom: 5
     },
     txtTitle: {
         color: '#444444',
@@ -160,19 +157,17 @@ const styles = StyleSheet.create({
         color: Colors.txt_666,
         fontSize: 14,
         flex: 2,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginTop: 8
     },
     txtNum: {
         color: Colors.txt_666,
         fontSize: 14,
         flex: 3,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginTop: 8
     },
-    viewPrice: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 6
-    },
+    viewPrice: {},
     viewInfo: {
         marginTop: 5,
         backgroundColor: Colors.white,
