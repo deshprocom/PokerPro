@@ -132,26 +132,40 @@ export default class WebViewPage extends Component {
     bottomBarView = () => {
         return ( <Animated.View
             style={[styles.bottomInfoBar, {bottom: this.state.bottomInfoBarBottomValue}]}>
-            <View style={styles.btn}>
+            <TouchableOpacity
+                onPress={() => this.webView.goBack()}
+                style={styles.btn}>
                 <Image style={styles.imgBk}
                        source={Images.web_left}/>
 
-            </View>
-            <View style={styles.btn}>
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => this.webView.goForward()}
+                style={styles.btn}>
                 <Image style={styles.imgBk}
                        source={Images.web_right}/>
 
-            </View>
-            <View style={styles.btn}>
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => this.webView.reload()}
+                style={styles.btn}>
                 <Image style={styles.imgRef}
                        source={Images.web_refresh}/>
 
-            </View>
-            <View style={styles.btn}>
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => {
+                    Linking.canOpenURL(this.props.params.url).then(supported => {
+                        if (supported) {
+                            Linking.openURL(this.props.params.url);
+                        }
+                    });
+                }}
+                style={styles.btn}>
                 <Image style={styles.imgRef}
                        source={Images.web_page}/>
 
-            </View>
+            </TouchableOpacity>
 
 
         </Animated.View>)
