@@ -3,7 +3,7 @@
  */
 import StorageKey from '../configs/StorageKey';
 import {setLanguage} from '../I18n/I18n';
-import {getSize} from '../utils/ComonHelper';
+import {getSize, setLang} from '../utils/ComonHelper';
 import {setDpLang} from '../services/RequestHelper';
 
 export function init(resolve) {
@@ -20,6 +20,7 @@ export function init(resolve) {
 function switchLang(lang) {
     setLanguage(lang);
     setDpLang(lang);
+    setLang(lang);
 }
 
 export function setLocalLanguage(language) {
