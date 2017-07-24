@@ -72,13 +72,13 @@ class ModifyPwdPage extends Component {
 
                 <Button
                     onPress={this._certain}
-                    textStyle={[Fonts.H17,{color:Colors.txt_btn_21}]}
+                    textStyle={[Fonts.H17,{color:Colors._F4E}]}
                     testID="btn_certain"
                     style={{
                     height:50,
                     marginRight:17,
                     marginLeft:17,
-                    backgroundColor:Colors.btn_bg,
+                    backgroundColor:Colors._161,
                     justifyContent:'center',
                     marginTop:60,
                     borderRadius:4

@@ -22,6 +22,10 @@ const client = create({
     timeout: 20000,
 });
 
+export function setDpLang(lang) {
+    client.setHeader('X-DP-LANG', lang)
+}
+
 export function getApiType() {
     let type = 'production';
     let ret = client.getBaseURL();
@@ -57,7 +61,8 @@ export function getBaseURL() {
         .then((ret) => {
             client.setBaseURL(ret)
         }).catch(err => {
-        client.setBaseURL(Api.test)
+        client.setBaseURL(Api.production)
+        setBaseURL(Api.production)
     });
 }
 

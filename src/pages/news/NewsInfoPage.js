@@ -40,9 +40,9 @@ export default class NewsInfoPage extends Component {
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={()=>router.pop()}
                 rightBtnIcon={Images.match_share}
-                rightImageStyle={{height:20,width:16,marginRight:15}}
+                rightImageStyle={{height:23,width:18,marginRight:15}}
                 rightBtnPress={()=>{
-                    newShare(title,date+'\n'+source,image,id);
+                    newShare(title,date+'\n'+source,image);
                     {/*router.log(title,date+'\n'+source,image,id);*/}
                 }}/>
 

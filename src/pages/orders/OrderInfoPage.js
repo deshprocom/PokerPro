@@ -9,7 +9,7 @@ import {
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar} from '../../components';
+import {NavigationBar, SecurityText} from '../../components';
 import RaceInfoView from '../buy/RaceInfoView';
 import {GET_ORDER_DETAIL, POST_ORDER_CANCEL} from '../../actions/ActionTypes';
 import {fetchOrderDetail, fetchOrderCancel} from '../../actions/OrderAction'
@@ -76,13 +76,13 @@ class OrderInfoPage extends React.Component {
 
     _orderCancel = () => {
 
-        Alert.alert("提示", "您是否要取消订单", [{
-            text: "取消",
+        Alert.alert(I18n.t('tint'), I18n.t('is_cancel_order'), [{
+            text: I18n.t('cancel'),
             onPress: () => {
             }
         },
             {
-                text: " 确认",
+                text: I18n.t('confirm'),
                 onPress: () => this._cancelOrder()
             }]);
 
@@ -128,33 +128,42 @@ class OrderInfoPage extends React.Component {
         if (!isEmptyObject(order_info))
             return (<View>
                 {/*订单信息*/}
-                <View style={{height:141,backgroundColor:Colors.white,paddingLeft:17,marginTop:10}}>
-                    <View style={{height:40,alignItems:'center',flexDirection:'row'}}>
-                        <Text style={{fontSize:Fonts.size.h16,color:Colors.txt_444}}>订单信息</Text>
+                <View style={{height: 141, backgroundColor: Colors.white, paddingLeft: 17, marginTop: 10}}>
+                    <View style={{height: 40, alignItems: 'center', flexDirection: 'row'}}>
+                        <Text style={{fontSize: Fonts.size.h16, color: Colors.txt_444}}>{I18n.t('order_detail')}</Text>
                     </View>
 
-                    <View style={{height:1,backgroundColor:Colors.bg_f5}}/>
+                    <View style={{height: 1, backgroundColor: Colors.bg_f5}}/>
 
-                    <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
+                    <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
                         <View>
-                            <View style={{flexDirection:'row',alignItems:'center'}}>
-                                <Text style={{fontSize:14,color:Colors.txt_666,marginRight:18}}>订单编号:</Text>
+                            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                <Text
+                                    style={{fontSize: 14, color: Colors.txt_666, marginRight: 18}}>{I18n.t('order_num')}:</Text>
                                 <Text
                                     testID="txt_ticket_type"
-                                    style={{fontSize:15,color:Colors._888}}>{order_info.order_id}</Text>
+                                    style={{fontSize: 15, color: Colors._888}}>{order_info.order_id}</Text>
                             </View>
-                            <View style={{flexDirection:'row',alignItems:'center',marginTop:10}}>
-                                <Text style={{fontSize:14,color:Colors.txt_666,marginRight:18}}>下单时间:</Text>
+                            <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
+                                <Text style={{
+                                    fontSize: 14,
+                                    color: Colors.txt_666,
+                                    marginRight: 18
+                                }}>{I18n.t('order_time')}:</Text>
                                 <Text
                                     testID="txt_created_at"
-                                    style={{fontSize:15,color:Colors._888}}>
+                                    style={{fontSize: 15, color: Colors._888}}>
                                     {convertDate(order_info.created_at, DATA_SS)}</Text>
                             </View>
-                            <View style={{flexDirection:'row',alignItems:'center',marginTop:10}}>
-                                <Text style={{fontSize:14,color:Colors.txt_666,marginRight:18}}>订单状态:</Text>
+                            <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
+                                <Text style={{
+                                    fontSize: 14,
+                                    color: Colors.txt_666,
+                                    marginRight: 18
+                                }}>{I18n.t('order_status')}:</Text>
                                 <Text
                                     testID="txt_order_status"
-                                    style={{fontSize:15,color:Colors._888}}>{orderStatus(order_info.status)}</Text>
+                                    style={{fontSize: 15, color: Colors._888}}>{orderStatus(order_info.status)}</Text>
                             </View>
                         </View>
 
@@ -163,51 +172,88 @@ class OrderInfoPage extends React.Component {
 
                 </View>
                 {/*地址 邮箱*/}
-                <View style={{height:81,backgroundColor:Colors.white,paddingLeft:17,marginTop:5}}>
+                <View style={{backgroundColor: Colors.white, paddingLeft: 17, marginTop: 5}}>
                     <View>
-                        <View style={{height:40,alignItems:'center',flexDirection:'row'}}>
-                            <Text style={{fontSize:Fonts.size.h16,color:Colors.txt_444}}>收票方式-电子邮件</Text>
+                        <View style={{height: 40, alignItems: 'center', flexDirection: 'row'}}>
+                            <Text style={{fontSize: Fonts.size.h16, color: Colors.txt_444}}
+                            >{I18n.t('order_ways')}-{this._txtTicketType(order_info.ticket_type)}</Text>
                         </View>
-                        <View style={{height:1,backgroundColor:Colors.bg_f5}}/>
-                        <View style={{flexDirection:'row',alignItems:'center',marginTop:10}}>
-                            <Text style={{fontSize:14,color:Colors.txt_666,marginRight:18}}>电子邮件:</Text>
-                            <Text
-                                testID="txt_email"
-                                style={{fontSize:14,color:Colors._888}}>{legalValue(order_info.email)}</Text>
-                        </View>
+                        <View style={{height: 1, backgroundColor: Colors.bg_f5}}/>
+                        {this._viewTicketType(order_info)}
                     </View>
                 </View>
                 {/*订单明细*/}
-                <View style={{height:121,backgroundColor:Colors.white,paddingLeft:17,marginTop:5}}>
+                <View style={{height: 121, backgroundColor: Colors.white, paddingLeft: 17, marginTop: 5}}>
 
-                    <View style={{height:40,alignItems:'center',flexDirection:'row'}}>
-                        <Text style={{fontSize:Fonts.size.h16,color:Colors.txt_444}}>订单明细</Text>
+                    <View style={{height: 40, alignItems: 'center', flexDirection: 'row'}}>
+                        <Text style={{fontSize: Fonts.size.h16, color: Colors.txt_444}}>{I18n.t('order_msg')}</Text>
                     </View>
-                    <View style={{height:1,backgroundColor:Colors.bg_f5}}/>
+                    <View style={{height: 1, backgroundColor: Colors.bg_f5}}/>
 
 
-                    <View style={{flex:1}}>
+                    <View style={{flex: 1}}>
                         <View
-                            style={{justifyContent:'space-between',flexDirection:'row',marginTop:14}}>
-                            <Text style={{fontSize:14,color:Colors.txt_666}}>商品金额</Text>
+                            style={{justifyContent: 'space-between', flexDirection: 'row', marginTop: 14}}>
+                            <Text style={{fontSize: 14, color: Colors.txt_666}}>{I18n.t('order_price')}</Text>
                             <Text
                                 testID="txt_original_price"
-                                style={{fontSize:14,color:Colors.bg_black,marginRight:18,
-                                textDecorationLine: 'line-through'}}>{order_info.original_price}</Text>
+                                style={{
+                                    fontSize: 14, color: Colors.bg_black, marginRight: 18,
+                                    textDecorationLine: 'line-through'
+                                }}>{order_info.original_price}</Text>
                         </View>
                         <View
-                            style={{justifyContent:'space-between',flexDirection:'row',marginTop:16}}>
-                            <Text style={{fontSize:14,color:Colors.txt_666}}>应付金额</Text>
+                            style={{justifyContent: 'space-between', flexDirection: 'row', marginTop: 16}}>
+                            <Text style={{fontSize: 14, color: Colors.txt_666}}>{I18n.t('order_pay')}</Text>
                             <Text
 
                                 testID="txt_price"
-                                style={{fontSize:14,color:'#DF1D0F',marginRight:18}}>{order_info.price}</Text>
+                                style={{fontSize: 14, color: '#DF1D0F', marginRight: 18}}>{order_info.price}</Text>
                         </View>
                     </View>
 
                 </View>
             </View>)
-    }
+    };
+
+
+    _viewTicketType = (order_info) => {
+        const {consignee, address, mobile} = order_info;
+        if (order_info.ticket_type === 'e_ticket')
+            return <View style={{flexDirection: 'row', alignItems: 'center', paddingTop: 10, paddingBottom: 10}}>
+                <Text style={[{marginRight: 18}, styles.txtAdr]}>{I18n.t('order_email')}:</Text>
+                <Text
+                    testID="txt_email"
+                    style={styles.txtAdr}>{legalValue(order_info.email)}</Text>
+            </View>;
+        else
+            return ( <View style={{paddingTop: 10, paddingBottom: 10}}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={[{marginRight: 18}, styles.txtAdr]}>{consignee}</Text>
+                    <SecurityText
+                        testID="txt_phone_security"
+                        securityOptions={{
+                            isSecurity: true,
+                            startIndex: 3,
+                            endIndex: 7,
+                        }}
+                        style={styles.txtAdr}>
+                        {mobile}
+                    </SecurityText>
+                </View>
+
+                <Text
+                    testID="txt_adr"
+                    style={[styles.txtAdr, {marginTop: 11}]}>{address}</Text>
+            </View>)
+    };
+
+    _txtTicketType = (ticket_type) => {
+        if (ticket_type === "e_ticket")
+            return I18n.t('order_email');
+        else
+            return I18n.t('receive_adr')
+    };
 
     _bottomBar = (order_info) => {
 
@@ -217,30 +263,34 @@ class OrderInfoPage extends React.Component {
                 activeOpacity={1}
                 testID="btn_buy"
                 onPress={this.props.onPress}
-                style={{height:62,width:Metrics.screenWidth,
-                        backgroundColor:Colors.white,flexDirection:'row',
-                        alignItems:'center',
-                        position:'absolute',bottom: 0,left: 0,right: 0,}}>
+                style={{
+                    height: 62, width: Metrics.screenWidth,
+                    backgroundColor: Colors.white, flexDirection: 'row',
+                    alignItems: 'center',
+                    position: 'absolute', bottom: 0, left: 0, right: 0,
+                }}>
 
 
-                <View style={{flexDirection:'row',marginLeft:19,alignItems:'flex-end'}}>
-                    <Text style={{fontSize:14,color:Colors.txt_666}}>合计:  </Text>
+                <View style={{flexDirection: 'row', marginLeft: 19, alignItems: 'flex-end'}}>
+                    <Text style={{fontSize: 14, color: Colors.txt_666}}>{I18n.t('order_total')}: </Text>
 
                     <Text
                         testID="txt_total_price"
-                        style={{fontSize:18,color:'#DF1D0F'}}>
-                         {isEmptyObject(order_info) ? '' : order_info.price}</Text>
+                        style={{fontSize: 18, color: '#DF1D0F'}}>
+                        {isEmptyObject(order_info) ? '' : order_info.price}</Text>
                 </View>
 
                 <TouchableOpacity
                     onPress={this._orderCancel}
                     activeOpacity={1}
                     testID="btn_order_cancel"
-                    style={{flex:1,alignItems:'flex-end'}}>
+                    style={{flex: 1, alignItems: 'flex-end'}}>
                     <View
-                        style={{borderColor:Colors._AAA,borderWidth:1,borderRadius:5,
-                    height:32,width:68,alignItems:'center',justifyContent:'center',marginRight:15}}>
-                        <Text style={{fontSize:12,color:Colors.txt_666}}>取消订单</Text>
+                        style={{
+                            borderColor: Colors._AAA, borderWidth: 1, borderRadius: 5,
+                            height: 32, width: 68, alignItems: 'center', justifyContent: 'center', marginRight: 15
+                        }}>
+                        <Text style={{fontSize: 12, color: Colors.txt_666}}>{I18n.t('order_cancel')}</Text>
                     </View>
                 </TouchableOpacity>
                 {this._user_real_call_btn()}
@@ -254,18 +304,22 @@ class OrderInfoPage extends React.Component {
                 testID="btn_user_real"
                 onPress={this._goUserReal}
                 activeOpacity={1}
-                style={{width:130,height:62,alignItems:'center',justifyContent:'center',
-                    backgroundColor:Colors.bg_09}}>
-                <Text style={{fontSize:18,color:Colors.txt_E0C}}>{I18n.t('edit_real_name')}</Text>
+                style={{
+                    width: 130, height: 62, alignItems: 'center', justifyContent: 'center',
+                    backgroundColor: Colors.bg_09
+                }}>
+                <Text style={{fontSize: 18, color: Colors.txt_E0C}}>{I18n.t('edit_real_name')}</Text>
             </TouchableOpacity>)
         else
             return (<TouchableOpacity
                 testID="btn_call"
                 onPress={this._hotLine}
                 activeOpacity={1}
-                style={{width:130,height:62,alignItems:'center',justifyContent:'center',
-                    backgroundColor:Colors.bg_09}}>
-                <Text style={{fontSize:18,color:Colors.txt_E0C}}>{I18n.t('service_pay')}</Text>
+                style={{
+                    width: 130, height: 62, alignItems: 'center', justifyContent: 'center',
+                    backgroundColor: Colors.bg_09
+                }}>
+                <Text style={{fontSize: 18, color: Colors.txt_E0C}}>{I18n.t('service_pay')}</Text>
             </TouchableOpacity>)
     }
 
@@ -289,12 +343,13 @@ class OrderInfoPage extends React.Component {
                 onPress={this._hotLine}
                 touchableType={Button.constants.touchableTypes.fadeContent}
                 testID="btn_refresh"
-                textStyle={{color:Colors.txt_666,fontSize:17}}
-                style={{justifyContent:'center',backgroundColor:Colors.white,
-                    height:49,flex:1,marginLeft:17,marginRight:17,marginBottom:17
-                    }}
+                textStyle={{color: Colors.txt_666, fontSize: 17}}
+                style={{
+                    justifyContent: 'center', backgroundColor: Colors.white,
+                    height: 49, flex: 1, marginLeft: 17, marginRight: 17, marginBottom: 17
+                }}
             >
-                联系客服
+                {I18n.t('contact_customer_service')}
             </Button>)
     };
 
@@ -307,8 +362,17 @@ class OrderInfoPage extends React.Component {
     _userRealFail = () => {
         if (user_extra.status === Verified.FAILED)
             return (<View
-                style={{width:Metrics.screenWidth,height:40,flexDirection:'row',alignItems:'center',backgroundColor:'#F56666'}}>
-                <Text style={[Fonts.H15,{color:Colors.white,marginLeft:17}]}>实名审核失败，原因:{user_extra.memo}</Text>
+                style={{
+                    width: Metrics.screenWidth,
+                    height: 40,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    backgroundColor: '#F56666'
+                }}>
+                <Text style={[Fonts.H15, {
+                    color: Colors.white,
+                    marginLeft: 17
+                }]}>{I18n.t('order_reason')}:{user_extra.memo}</Text>
             </View>)
     }
 
@@ -322,16 +386,16 @@ class OrderInfoPage extends React.Component {
                 testID="page_order_info"
                 style={ApplicationStyles.bgContainer}>
                 <NavigationBar
-                    refreshPage={()=>this._refreshPage()}
-                    toolbarStyle={{backgroundColor:Colors.bg_09}}
+                    refreshPage={() => this._refreshPage()}
+                    toolbarStyle={{backgroundColor: Colors.bg_09}}
                     router={this.props.router}
-                    title={orderStatus(!isEmptyObject(order_info)?order_info.status:I18n.t('order_info'))}
+                    title={orderStatus(!isEmptyObject(order_info) ? order_info.status : I18n.t('order_info'))}
                     leftBtnIcon={Images.sign_return}
-                    leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
+                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={this._exitOrder}/>
                 {this._userRealFail()}
                 <ScrollView style={this.scrollStyle(order_info)}>
-                    <View style={{height:7}}/>
+                    <View style={{height: 7}}/>
                     {/*赛事简介*/}
                     <RaceInfoView
                         ticket={ticket}
@@ -342,29 +406,22 @@ class OrderInfoPage extends React.Component {
                     {this._orderView(order_info)}
 
                     {/*购票须知*/}
-                    <View style={{backgroundColor:Colors.white,paddingLeft:17,marginTop:10}}>
-                        <View style={{height:40,alignItems:'center',flexDirection:'row'}}>
-                            <Text style={{fontSize:Fonts.size.h16,color:Colors.txt_444}}>购票须知</Text>
+                    <View style={{backgroundColor: Colors.white, paddingLeft: 17, marginTop: 10}}>
+                        <View style={{height: 40, alignItems: 'center', flexDirection: 'row'}}>
+                            <Text style={{
+                                fontSize: Fonts.size.h16,
+                                color: Colors.txt_444
+                            }}>{I18n.t('ticket_prompt')}</Text>
                         </View>
-                        <Text style={{fontSize:14,color:Colors._888,textAlign:'left',
-                        marginRight:17,paddingBottom:30}}>
-                            1.购买赛事票，赛事当天凭需购票人身份证件登记入场，请务必正确填写参赛的身份证件。
-                            {'\n\n'}
-                            2.本赛事所有票务暂支持线下付款，订单成功后我们将在及时与您取得联系，请您耐心等待！
-                            {'\n\n'}
-                            3.本赛事暂不支持在线选座，购票后将随机配票。
-                            {'\n\n'}
-                            4.本赛事所有订单付款成功后不支持调整和退换，请付款前确保订单地址、身份信息、邮件地址正确，感谢您对扑客的支持！
-                            {'\n\n'}
-                            5.实体票支付成功后我们将在1-5个工作日内陆续为您配送，请您耐心等待！
-                            {'\n\n'}
-                            6.电子票支付成功后，我们将赛票信息发送到您预留的邮箱，请及时查收。如若邮箱收不到信息，请及时与客服人员取得联系！
-                            {'\n\n'}
-                            7.客服服务热线：{I18n.t('hot_phone')}；服务时间：10：30-19:30
+                        <Text style={{
+                            fontSize: 14, color: Colors._888, textAlign: 'left',
+                            marginRight: 17, paddingBottom: 30
+                        }}>
+                            {I18n.t('order_known')}
                         </Text>
                     </View>
 
-                    <View style={{height:30}}/>
+                    <View style={{height: 30}}/>
 
 
                     {this._serviceBtn(order_info)}
@@ -397,9 +454,12 @@ const
 export
 default
 
-connect(mapStateToProps, bindAction)
+connect(mapStateToProps, bindAction)(OrderInfoPage);
 
-(
-    OrderInfoPage
-)
-;
+
+const styles = StyleSheet.create({
+    txtAdr: {
+        fontSize: 15,
+        color: Colors._888
+    }
+});

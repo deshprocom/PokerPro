@@ -21,6 +21,7 @@
     "react-native-i18n": "^0.1.1",
     "react-native-image-crop-picker": "^0.12.9",
     "react-native-image-zoom-viewer": "^2.0.5",
+    "react-native-keyboard-aware-scroll-view": "^0.2.9",
     "react-native-markdown-view": "^1.0.0",
     "react-native-md5": "^1.0.0",
     "react-native-network-info": "^2.2.0",

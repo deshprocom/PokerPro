@@ -48,7 +48,7 @@ class HomePage extends Component {
             this.setState({
                 languageChange: true
             })
-        })
+        });
 
     }
 
@@ -113,13 +113,15 @@ class HomePage extends Component {
             />)
         } else {
             return (
-                <NoDataView/>)
+                <NoDataView
+                    pageStyle={{backgroundColor: 'white'}}/>)
         }
 
     };
 
     _loadErrorPage = () => {
         return (<LoadErrorView
+            pageStyle={{backgroundColor: 'white'}}
             onPress={() => this._refreshPage()}/>)
     };
 
@@ -221,9 +223,9 @@ class HomePage extends Component {
                     </TouchableOpacity>
                     <View style={{flex: 1}}/>
                     <Text style={{
-                        color: 'rgba(255,255,255,' + opacity + ')',
-                        fontSize: Fonts.size.h15
-                    }}>扑客</Text>
+                        color: 'rgba(244,227,161,' + opacity + ')',
+                        fontSize: Fonts.size.h17
+                    }}>{I18n.t('app_name')}</Text>
                     <View style={{flex: 1}}/>
                     <TouchableOpacity
                         testID="btn_bar_right"
@@ -326,6 +328,7 @@ class HomePage extends Component {
                             testID="btn_home_sort"
                             onPress={() => {
                                 umengEvent('home_ranking');
+                                // router.toDrawerRank()
 
                             }}
                             style={[{marginRight: 53}, styles.item_center]}>
@@ -534,8 +537,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     gif_fuc: {
-        height: 30,
-        width: 30
+        height: 27,
+        width: 27
     },
     recent_races: {
         flexDirection: 'row',

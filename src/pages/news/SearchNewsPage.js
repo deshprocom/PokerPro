@@ -163,13 +163,11 @@ class SearchNewsPage extends Component {
     _navSearchBar = () => {
         return (<View style={styles.navBar}>
             <View style={styles.topBar}>
-                <TouchableOpacity
+                <View
                     testID="btn_bar_left"
-                    style={styles.popBtn}
-                    onPress={()=>router.pop()}>
-                    <Image style={styles.backImg}
-                           source={Images.sign_return}/>
-                </TouchableOpacity>
+                    style={styles.popBtn}>
+
+                </View>
                 <TestRouter/>
                 <View
                     style={styles.searchView}>
@@ -199,6 +197,13 @@ class SearchNewsPage extends Component {
                     </View>
 
                 </View>
+
+                <TouchableOpacity
+                    testID="btn_bar_right"
+                    style={styles.popBtn}
+                    onPress={()=>router.pop()}>
+                    <Text style={styles.barTxt}>{I18n.t('cancel')}</Text>
+                </TouchableOpacity>
 
             </View>
         </View>)
@@ -318,5 +323,9 @@ const styles = StyleSheet.create({
         color: '#444444',
         fontSize: 16,
         width: 216
+    },
+    barTxt: {
+        fontSize: 15,
+        color: '#E4D57F'
     },
 });

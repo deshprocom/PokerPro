@@ -6,6 +6,24 @@ import Api from '../configs/ApiConfig';
 import StorageKey from '../configs/StorageKey';
 import {showToast} from '../utils/ComonHelper';
 
+
+export function postAdrDelete(adr_id, resolve, reject) {
+    helper.post(Api.adrDelete(adr_id), {}, (ret) => {
+        resolve(ret.data)
+    }, err => {
+        showToast('操作失败');
+        reject(err)
+    })
+}
+
+export function postAdrDefault(adr_id, resolve) {
+    helper.post(Api.setAdrDefault(adr_id), {}, (ret) => {
+        resolve(ret.data)
+    }, err => {
+        showToast('操作失败');
+    })
+}
+
 export function getAddressList(resolve) {
     helper.get(Api.addAddress(), (ret) => {
         resolve(ret.data)

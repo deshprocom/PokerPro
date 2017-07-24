@@ -24,7 +24,7 @@ import {
 import TestRouter from '../../components/TestRouter';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import RaceSideView from './RaceSideView';
-import {MarkdownPlat} from '../../components';
+import {MarkdownPlat, ImageLoad} from '../../components';
 import MainRaceResultView from './MainRaceResultView';
 import {umengEvent} from '../../utils/UmengEvent';
 
@@ -126,29 +126,24 @@ class RacesInfoPage extends Component {
                     </View>
 
                     {isEmptyObject(raceInfo) ? null : <View style={styles.headerInfo}>
-                        <Image style={styles.logoImg}
-                               source={{uri: raceInfo.logo}}/>
+                        <ImageLoad style={styles.logoImg}
+                                   source={{uri: raceInfo.logo}}/>
                         <View style={styles.viewInfo}>
                             <View style={styles.viewTime}>
                                 <Image style={styles.imgTime}
-                                       source={Images.race_time}/>
+                                       source={Images.home_clock}/>
                                 <Text
                                     testID="txt_races_period"
                                     style={styles.txtTime}>{this.race_time(raceInfo)}</Text>
                             </View>
                             <View style={styles.viewLocation}>
                                 <Image style={styles.imgLocation}
-                                       source={Images.race_location}/>
+                                       source={Images.home_adr}/>
                                 <Text
                                     testID="txt_races_address"
                                     style={styles.txtLocation}>{raceInfo.location}</Text>
                             </View>
-                            <View style={styles.viewPrice}>
-                                <Text style={styles.txtLabel}>{I18n.t('PrizePond')}:</Text>
-                                <Text
-                                    testID="txt_races_prize"
-                                    style={styles.txtPrice}>{raceInfo.prize}</Text>
-                            </View>
+
 
                             <View style={styles.viewPrice}>
                                 <Text
@@ -502,12 +497,12 @@ const styles = StyleSheet.create({
         marginTop: 4
     },
     imgTime: {
-        height: 16,
-        width: 14
+        height: 10,
+        width: 10
     },
     imgLocation: {
-        height: 15,
-        width: 11
+        height: 11,
+        width: 8
     },
     viewTime: {
         flexDirection: 'row',
@@ -516,20 +511,20 @@ const styles = StyleSheet.create({
     viewLocation: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 10
+        marginTop: 5
     },
     txtTime: {
         color: '#cccccc',
-        fontSize: 12,
-        marginLeft: 11
+        fontSize: 13,
+        marginLeft: 7
     },
     txtLocation: {
         color: '#cccccc',
-        fontSize: 12,
-        marginLeft: 14
+        fontSize: 13,
+        marginLeft: 7
     },
     txtLabel: {
-        fontSize: 14,
+        fontSize: 15,
         color: '#D2C476'
     },
     txtPrice: {
@@ -539,7 +534,7 @@ const styles = StyleSheet.create({
     viewPrice: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 7
+        marginTop: 16
     },
     txtStatus: {
         fontSize: 10,

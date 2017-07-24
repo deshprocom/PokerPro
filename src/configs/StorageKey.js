@@ -8,6 +8,8 @@ export default {
     BuyKnow: 'BuyKnow',
     ApiSever:'ApiSever',
     BuyEmail:'BuyEmail',
-    UserData:'UserData'
+    UserData:'UserData',
+    FontNum:'FontNum',
+    FontSizeNum: 'FontSizeNum'
 
 }

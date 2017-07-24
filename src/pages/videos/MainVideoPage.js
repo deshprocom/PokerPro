@@ -56,12 +56,12 @@ export  default class MainVideoPage extends Component {
                 testID="page_news_main"
                 style={ApplicationStyles.bgContainer}>
                 <NavigationBar
-                    toolbarStyle={{backgroundColor:Colors._161817}}
+                    toolbarStyle={{backgroundColor: Colors._161817}}
                     router={router}
                     title={I18n.t('home_video')}
                     leftBtnIcon={Images.sign_return}
-                    leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
-                    leftBtnPress={()=>router.pop()}/>
+                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                    leftBtnPress={() => router.pop()}/>
 
                 {this._newsTypeView()}
 
@@ -87,63 +87,63 @@ export  default class MainVideoPage extends Component {
 
 
         return (  <ScrollableTabView
-            onChangeTab={({i})=>{
-                router.log('tab',i);
-                if(i== undefined || i < 0 || i>pages.length)
+            onChangeTab={({i}) => {
+                router.log('tab', i);
+                if (i == undefined || i < 0 || i > pages.length)
                     return;
                 let item = typeListData[i];
 
-                if(isEmptyObject(item))
+                if (isEmptyObject(item))
                     return;
 
                 this.setState({
-                    selectTypeId:item.id
+                    selectTypeId: item.id
                 });
                 this.typeList.scrollToIndex({viewPosition: 1, index: Number(i)});
                 this._pressItem(item);
             }}
             renderTabBar={false}
-            ref={ref=>this.newsPages = ref}>
+            ref={ref => this.newsPages = ref}>
             {pages}
         </ScrollableTabView>)
 
-    }
+    };
 
 
     _newsTypeView = () => {
 
         return ( <View style={styles.newsTypeView}>
             <FlatList
-                ref={ref=>this.typeList = ref}
+                ref={ref => this.typeList = ref}
                 legacyImplementation={false}
                 showsHorizontalScrollIndicator={false}
                 data={this.state.typeListData}
                 renderItem={this._itemView}
                 horizontal={true}
-                keyExtractor={item=> item.id}
+                keyExtractor={item => item.id}
+                style={{marginLeft: 10}}
             />
         </View> )
-    }
+    };
 
 
     _itemView = ({item}) => {
 
         return (<TouchableOpacity
-            testID={"btn_news_type_"+item.id}
-            onPress={()=>{
+            testID={"btn_news_type_" + item.id}
+            onPress={() => {
                 this._pressItem(item);
 
-                  this.setState({
-                    selectTypeId:item.id
+                this.setState({
+                    selectTypeId: item.id
                 });
                 this.newsPages.goToPage(this._page(item))
             }}
             style={styles.itemView}>
-            {item.select ? <View style={{flex:1}}/> : null}
-            <Text style={item.select?
-            styles.itemTxtSelect:styles.itemTxt}>{item.name}</Text>
-            {item.select ? <Image style={styles.triangle}
-                                  source={Images.news_triangle}/> : null}
+            {item.select ? <View style={{flex: 1}}/> : null}
+            <Text style={item.select ?
+                styles.itemTxtSelect : styles.itemTxt}>{item.name}</Text>
+            {item.select ? <View style={styles.triangle}/> : null}
 
         </TouchableOpacity>)
     }
@@ -234,17 +234,19 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     itemTxt: {
-        color: Colors._AAA,
+        color: Colors._888,
         fontSize: 14
     },
     itemTxtSelect: {
-        color: '#444444',
+        color: Colors._333,
         fontSize: 16,
         marginBottom: 5
     },
     triangle: {
-        height: 9,
-        width: 16
+        height: 3,
+        width: 32,
+        marginBottom: 4,
+        backgroundColor: Colors._333
     },
     viewPage: {
         flex: 1

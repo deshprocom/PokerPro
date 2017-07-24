@@ -140,7 +140,7 @@ class RegisterPage extends React.Component {
 
             }
             else
-                showToast('内容请填写完整');
+                showToast(`${I18n.t('fillWhole')}`);
         }
         else
             showToast(I18n.t('need_agree'));

@@ -81,7 +81,8 @@ export default Object.freeze({
         fontWeight: '500',
     },
     link: {
-        color: '#0366d6',
+        color: '#4990E2',
+        textDecorationLine: 'underline'
     },
     list: {
         margin: 8,

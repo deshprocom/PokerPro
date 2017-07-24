@@ -9,8 +9,8 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, SwipeListView, SecurityText} from '../../components';
 import I18n from 'react-native-i18n';
-import {getAddressList} from '../../services/OrderDao';
-import {isEmptyObject} from '../../utils/ComonHelper';
+import {getAddressList, postAdrDefault, postAdrDelete} from '../../services/OrderDao';
+import {isEmptyObject, showToast} from '../../utils/ComonHelper';
 
 export default class AdrListPage extends Component {
 
@@ -50,7 +50,6 @@ export default class AdrListPage extends Component {
                 });
 
 
-
             this.setState({
                 dataList: items,
                 dataSource: this._dataSource.cloneWithRows(items),
@@ -80,6 +79,7 @@ export default class AdrListPage extends Component {
 
             <View style={{height: 7}}/>
             <SwipeListView
+                ref={ref => this.swipeList = ref}
                 enableEmptySections={true}
                 dataSource={dataSource}
                 renderHiddenRow={this.hiddenRow}
@@ -95,7 +95,7 @@ export default class AdrListPage extends Component {
                     router.toNewAddressPage(this.props, this._getAddressList, {})
                 }}
                 style={styles.viewAdd}>
-                <Text style={styles.txtName}>+新建地址</Text>
+                <Text style={styles.txtName}>{I18n.t('buy_new_adr')}</Text>
             </TouchableOpacity>
 
         </View>)
@@ -112,7 +112,9 @@ export default class AdrListPage extends Component {
             }}
             style={styles.itemView}>
             <View style={styles.rowView}>
-                <Text style={styles.txtName}>{consignee}    </Text>
+                <Text
+                    style={[styles.txtName,
+                        {color: item.id === id ? Colors._DF1 : Colors._666}]}>{consignee}    </Text>
                 <SecurityText
                     testID="txt_phone_security"
                     securityOptions={{
@@ -120,16 +122,20 @@ export default class AdrListPage extends Component {
                         startIndex: 3,
                         endIndex: 7,
                     }}
-                    style={styles.txtName}>
+                    style={[styles.txtName,
+                        {color: item.id === id ? Colors._DF1 : Colors._666}]}>
                     {mobile}
                 </SecurityText>
+
+                {item.default ? <View style={styles.tabView}>
+                    <Text style={styles.txtDefault}>{I18n.t('buy_mo_ren')}</Text>
+                </View> : null}
             </View>
 
             <View style={styles.rowView}>
-                {item.default ? <View style={styles.tabView}>
-                    <Text style={styles.txtDefault}>默认</Text>
-                </View> : <Image style={styles.imgSelect}
-                                 source={item.id === id ? Images.adr_selected : Images.adr_select}/>}
+
+                {item.id === id ? <Image style={styles.imgSelect}
+                                         source={Images.adr_selected}/> : null}
 
 
                 <Text style={styles.txtAdr}
@@ -148,7 +154,7 @@ export default class AdrListPage extends Component {
                     style={styles.imgEdit}
                     source={Images.edit}/>
 
-                <Text style={styles.txtEdit}>编辑</Text>
+                <Text style={styles.txtEdit}>{I18n.t('buy_editor')}</Text>
             </TouchableOpacity>
             <View style={{flex: 1}}/>
             <View style={styles.line}/>
@@ -156,17 +162,61 @@ export default class AdrListPage extends Component {
         </TouchableOpacity>)
     };
 
-    hiddenRow = () => {
+    hiddenRow = (data, secId, rowId, rowMap) => {
         return (<View style={styles.hiddenView}>
             <View style={{flex: 1}}/>
-            <View style={[styles.btnHidden, {backgroundColor: '#BBBBBB'}]}>
-                <Text>设为默认</Text>
-            </View>
-            <View style={[styles.btnHidden, {backgroundColor: '#F05656'}]}>
-                <Text>删除</Text>
-            </View>
+            <TouchableOpacity
+                onPress={() => {
+                    this.swipeList.safeCloseOpenRow();
+                    this._setAdrDefault(data.id)
+                }}
+                style={[styles.btnHidden, {backgroundColor: '#BBBBBB'}]}>
+                <Text style={styles.txtDel}>{I18n.t('buy_set_mo')}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => {
+                    Alert.alert(`${I18n.t('buy_del_adr')}`, '', [
+                        {
+                            text: `${I18n.t('cancel')}`, onPress: () => {
+                            this.swipeList.safeCloseOpenRow();
+                        }
+                        },
+                        {
+                            text: `${I18n.t('confirm')}`, onPress: () => {
+                            this.swipeList.safeCloseOpenRow();
+                            this._delAdr(data.id)
+                        }
+                        }
+                    ]);
+
+                }}
+                style={[styles.btnHidden, {backgroundColor: Colors._DF1}]}>
+                <Text style={styles.txtDel}>{I18n.t('buy_del')}</Text>
+            </TouchableOpacity>
 
         </View>)
+    };
+
+    _setAdrDefault = (adr_id) => {
+        const {selectAdrData} = this.state;
+        postAdrDefault(adr_id, data => {
+            showToast(`${I18n.t('buy_set_success')}`);
+            if (adr_id === selectAdrData.id) {
+                this.setState({
+                    selectAdrData: {}
+                })
+            }
+            this._getAddressList();
+        })
+    };
+
+    _delAdr = (adr_id) => {
+        postAdrDelete(adr_id, data => {
+            showToast(`${I18n.t('buy_del_success')}`);
+            this._getAddressList();
+        }, err => {
+
+        })
     }
 }
 
@@ -200,15 +250,17 @@ const styles = StyleSheet.create({
     tabView: {
         height: 15,
         width: 32,
-        backgroundColor: '#AAAAAA',
         borderRadius: 2,
         alignItems: 'center',
         justifyContent: 'center',
-        marginRight: 5
+        marginRight: 5,
+        borderWidth: 1,
+        borderColor: Colors._DF1,
+        marginLeft: 19
     },
     txtDefault: {
         fontSize: 12,
-        color: 'white'
+        color: Colors._DF1
     },
     line: {
         height: 3,
@@ -228,10 +280,11 @@ const styles = StyleSheet.create({
     viewEdit: {
         position: 'absolute',
         top: 10,
-        right: 17,
+        right: 0,
         flexDirection: 'row',
         alignItems: 'center',
-        height: 50
+        height: 60,
+        width: 60
     },
     imgEdit: {
         height: 14,
@@ -250,7 +303,11 @@ const styles = StyleSheet.create({
     imgSelect: {
         height: 12,
         width: 12,
-        marginRight: 20
+        marginRight: 10
+    },
+    txtDel: {
+        color: 'white',
+        fontSize: 14
     }
 
 });

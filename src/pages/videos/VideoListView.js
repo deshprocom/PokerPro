@@ -15,7 +15,7 @@ import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {GET_VIDEO_LIST} from '../../actions/ActionTypes';
-import {isEmptyObject, uniqueArray, strNotNull, newsUnique} from '../../utils/ComonHelper';
+import {isEmptyObject, uniqueArray, FontSize, newsUnique} from '../../utils/ComonHelper';
 import {ImageLoad, PullListView, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {fetchVideoList} from '../../actions/NewsAction';
@@ -56,7 +56,7 @@ class NewsListView extends Component {
 
         return (<View
             style={styles.pullView}
-            testID={'page_news_'+this.props.newsTypeItem.id}>
+            testID={'page_news_' + this.props.newsTypeItem.id}>
 
             <UltimateListView
                 key={this.state.layout}
@@ -70,11 +70,11 @@ class NewsListView extends Component {
                 dateTitle={I18n.t('last_refresh')}
                 allLoadedText={I18n.t('no_more')}
                 waitingSpinnerText={I18n.t('loading')}
-                emptyView={()=>{
-                    return this.state.error? <LoadErrorView
-                    onPress={()=>{
-                        this.listView.refresh()
-                    }}/>: <NoDataView/>;
+                emptyView={() => {
+                    return this.state.error ? <LoadErrorView
+                        onPress={() => {
+                            this.listView.refresh()
+                        }}/> : <NoDataView/>;
                 }}
             />
 
@@ -149,52 +149,44 @@ class NewsListView extends Component {
     };
 
 
-
-
-
-
-
     _itemNewsView = (rowData, sectionID, rowID) => {
 
-        const {top, name, cover_link} = rowData;
+        const {top, name, cover_link, video_duration,title_desc} = rowData;
 
-        if (top) {
-            return (<TouchableOpacity
-                style={styles.transparent}
-                testID={"btn_news_row_"+rowData.id}
-                activeOpacity={1}
-                onPress={()=>this._pressItem(rowData)}>
+        return (<TouchableOpacity
+            style={styles.transparent}
+            testID={"btn_news_row_" + rowData.id}
+            activeOpacity={1}
+            onPress={() => this._pressItem(rowData)}>
 
+            <Image
+                source={{uri: cover_link}}
+                style={styles.listTopImg}
+            >
+                <View style={styles.itemBack}>
+                    <Image
+                        style={styles.imgPlay}
+                        source={Images.video_play}/>
 
-                <ImageLoad
-                    source={{uri:cover_link}}
-                    style={styles.listTopImg}
-                >
-                    <View style={styles.itemBack}/>
-                </ImageLoad>
-
-                <Text style={styles.listTopTxt}>{name}</Text>
-
-            </TouchableOpacity>)
-        } else {
-            return (<TouchableOpacity
-                style={styles.transparent}
-                testID={"btn_news_row_"+rowData.id}
-                activeOpacity={1}
-                onPress={()=>this._pressItem(rowData)}>
-
-                <ImageLoad
-                    source={{uri:cover_link}}
-                    style={styles.listTopImg}
-                >
-                    <View style={styles.itemBack}/>
-
-                </ImageLoad>
+                    <Text style={[styles.listVideoTime, {fontSize: FontSize.h14}]}>{video_duration}</Text>
 
 
-                <Text style={styles.listTopTxt}>{name}</Text>
-            </TouchableOpacity>)
-        }
+                </View>
+
+            </Image>
+            <View style={styles.viewDesc}>
+                <Text
+                    numberOfLines={2}
+                    style={[styles.listTopTxt, {fontSize: FontSize.h17}]}>{name}</Text>
+                <Text
+                    numberOfLines={1}
+                    style={[styles.txtTitle1,{fontSize:FontSize.h14}]}>{title_desc}</Text>
+
+            </View>
+            <View style={{height: 6}}/>
+
+
+        </TouchableOpacity>)
 
 
     }
@@ -226,7 +218,7 @@ export default connect(mapStateToProps, bindAction)(NewsListView);
 const styles = StyleSheet.create({
 
     listTopImg: {
-        height: 228,
+        height: 208,
         width: Metrics.screenWidth
 
     },
@@ -238,11 +230,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     listTopTxt: {
-        fontSize: 16,
-        color: Colors.white,
-        left: 17,
-        position: 'absolute',
-        bottom: 33
+        color: Colors._333,
+        fontWeight: 'bold',
+        marginTop: 10,
+        marginLeft: 17,
+        marginRight: 17,
+        lineHeight: 24
     },
     listView: {
         flexDirection: 'row',
@@ -288,10 +281,31 @@ const styles = StyleSheet.create({
         flex: 1
     },
     itemBack: {
-        backgroundColor: 'rgba(0,0,0,0.4)',
         flex: 1
     },
     transparent: {
         backgroundColor: 'transparent',
+    },
+    listVideoTime: {
+        color: Colors._EEE,
+        right: 17,
+        position: 'absolute',
+        bottom: 7
+    },
+    imgPlay: {
+        height: 68,
+        width: 68,
+        alignSelf: 'center',
+        marginTop: 68
+    },
+    viewDesc: {
+        backgroundColor: 'white'
+    },
+    txtTitle1:{
+        color:Colors._AAA,
+        marginTop:3,
+        marginLeft: 17,
+        marginBottom: 12,
+        marginRight: 17,
     }
 });

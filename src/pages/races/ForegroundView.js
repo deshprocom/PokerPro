@@ -40,7 +40,7 @@ export default class ForegroundView extends Component {
                 <View style={{flexDirection:'row',marginTop:26,
                                 alignItems:'center'}}>
                     <Text style={{fontSize:14,
-                                    color:Colors.txt_E0C}}>奖池:</Text>
+                                    color:Colors.txt_E0C}}>{I18n.t('prize')}</Text>
                     <Text
                         testID="txt_races_prize"
                         style={{fontSize:19,

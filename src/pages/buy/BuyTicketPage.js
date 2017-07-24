@@ -24,6 +24,7 @@ import {fetchRacesInfo, fetchGetRecentRaces} from '../../actions/RacesAction';
 import StorageKey from '../../configs/StorageKey';
 import {getBuyRaceTicket, postOrderTicket} from '../../services/OrderDao';
 import {umengEvent} from '../../utils/UmengEvent';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 
 const E_TICKET = 'e_ticket',
@@ -82,11 +83,11 @@ class BuyTicketPage extends Component {
                 tickets: tickets,
                 ordered: ordered,
                 race: race,
-                shipping_address: shipping_address,
+                shipping_address: isEmptyObject(shipping_address) ? {} : shipping_address,
                 email: recent_email
             })
         }, err => {
-            showToast("获取赛票数据失败！")
+            showToast(`${I18n.t('data_fail')}`)
         });
 
         this.props._getCertification();
@@ -150,7 +151,7 @@ class BuyTicketPage extends Component {
 
 
     _postOrderOk = () => {
-        Alert.alert('购票成功', '工作人员将及时与您联系，请保持手机畅通');
+        Alert.alert(`${I18n.t('buy_success')}`, `${I18n.t('keep_phone')}`);
 
 
         const {user_id} = getLoginUser();
@@ -187,6 +188,10 @@ class BuyTicketPage extends Component {
         let {isEntity, email, isNameReal, shipping_address} = this.state;
         if (isNameReal) {
             if (isEntity === ENTITY) {
+                if (isEmptyObject(shipping_address)) {
+                    showToast(`${I18n.t('add_adr')}`)
+                    return;
+                }
                 const {race_id, ticket_id} = this.props.params;
                 let param = {
                     race_id: race_id,
@@ -223,7 +228,7 @@ class BuyTicketPage extends Component {
             }
 
         } else {
-            showToast('请先进行实名认证')
+            showToast(`${I18n.t('ple_ren_zhen')}`)
         }
 
     };
@@ -274,7 +279,7 @@ class BuyTicketPage extends Component {
                     style={styles.txtItemTitle}>{title}</Text>
 
                 <Text style={[styles.txtLabel, styles.top8]}>{this._date()}</Text>
-                <Text style={styles.txtLabel}>地址: {this._location()}</Text>
+                <Text style={styles.txtLabel}>{I18n.t('location')} {this._location()}</Text>
 
                 <View style={styles.viewInfo}>
                     <Text style={styles.txtPrice}>{price}</Text>
@@ -312,7 +317,7 @@ class BuyTicketPage extends Component {
             <Text
                 style={{
                     fontSize: 15,
-                    color: isEntity == ENTITY ? Colors.txt_F28 : Colors._AAA
+                    color: isEntity == ENTITY ? Colors.txt_F28 : Colors._333
                 }}>{I18n.t('ticket_paper')}</Text>
         </TouchableOpacity>)
     };
@@ -335,7 +340,7 @@ class BuyTicketPage extends Component {
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
-                <ScrollView
+                <KeyboardAwareScrollView
                     style={{marginBottom: 62}}>
                     {/*赛事简介*/}
                     <View style={{height: 7}}/>
@@ -421,7 +426,7 @@ class BuyTicketPage extends Component {
                             <Text style={{fontSize: 15, color: Colors.txt_666}}>
                                 {I18n.t('ticket_type')}</Text>
                             <Text style={{fontSize: 14, color: Colors.txt_FF3, marginLeft: 18}}>
-                                (剩余{this.eTicketNum(ticket_info)}张)</Text>
+                                ({I18n.t('surplus')}{this.eTicketNum(ticket_info)}{I18n.t('spread')})</Text>
                         </View>
                         <View
                             style={{height: 66, flex: 1, flexDirection: 'row', alignItems: 'center'}}>
@@ -438,7 +443,7 @@ class BuyTicketPage extends Component {
                                 <Text
                                     style={{
                                         fontSize: 15,
-                                        color: isEntity == ENTITY ? Colors._AAA : Colors.txt_F28
+                                        color: isEntity == ENTITY ? Colors._333 : Colors.txt_F28
                                     }}>{I18n.t('ticket_web')}</Text>
                             </TouchableOpacity>
 
@@ -460,7 +465,7 @@ class BuyTicketPage extends Component {
                     <View style={{height: 20, flex: 1}}/>
 
 
-                </ScrollView>
+                </KeyboardAwareScrollView>
                 <View
                     style={{
                         height: 62,
@@ -478,9 +483,9 @@ class BuyTicketPage extends Component {
                         shadowRadius: 3
                     }}>
                     <View style={{flex: 1, flexDirection: 'row', marginLeft: 19, alignItems: 'flex-end'}}>
-                        <Text style={{fontSize: 14, color: Colors.txt_666}}>票价:</Text>
-                        <Text style={{fontSize: 12, color: Colors.txt_FF9, marginLeft: 10}}>¥</Text>
-                        <Text style={{fontSize: 18, color: Colors.txt_FF9}}
+                        <Text style={{fontSize: 14, color: Colors.txt_666}}>{I18n.t('ticket_price')} </Text>
+
+                        <Text style={{fontSize: 18, color: Colors._DF1}}
                               testID="txt_ticket_price">
                             {price}
                         </Text>
@@ -493,7 +498,7 @@ class BuyTicketPage extends Component {
                         style={{width: 77, height: 62, alignItems: 'center', justifyContent: 'center'}}>
                         <Image style={{width: 25, height: 21}}
                                source={Images.prompt_service}/>
-                        <Text style={{fontSize: 12, color: Colors.txt_666}}>客服</Text>
+                        <Text style={{fontSize: 12, color: Colors.txt_666}}>{I18n.t('customer_service')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         disabled={ordered}
@@ -504,7 +509,7 @@ class BuyTicketPage extends Component {
                             width: 103, height: 62, alignItems: 'center', justifyContent: 'center',
                             backgroundColor: ordered ? Colors._999 : Colors.bg_09
                         }}>
-                        <Text style={{fontSize: 18, color: ordered ? Colors.white : Colors.txt_E0C}}>购票下单</Text>
+                        <Text style={{fontSize: 18, color: ordered ? Colors.white : Colors.txt_E0C}}>{I18n.t('xia_dan')}</Text>
                     </TouchableOpacity>
 
 
@@ -550,7 +555,7 @@ class BuyTicketPage extends Component {
 
     _addrView = () => {
         const {shipping_address} = this.state;
-        const {address, address_detail, consignee, mobile} = shipping_address;
+
 
         if (isEmptyObject(shipping_address))
             return (  <TouchableOpacity
@@ -577,7 +582,8 @@ class BuyTicketPage extends Component {
                            source={Images.ticket_arrow}/>
                 </View>
             </TouchableOpacity>);
-        else
+        else {
+            const {address, address_detail, consignee, mobile} = shipping_address;
             return (<TouchableOpacity
                 activeOpacity={1}
                 onPress={() => {
@@ -620,6 +626,8 @@ class BuyTicketPage extends Component {
                            source={Images.ticket_arrow}/>
                 </View>
             </TouchableOpacity>)
+        }
+
     }
 
 
@@ -628,12 +636,12 @@ class BuyTicketPage extends Component {
 
 const styles = StyleSheet.create({
     ticketSelect: {
-        height: 30, width: 91, borderRadius: 5, borderWidth: 1, borderColor: Colors.txt_F28,
-        alignItems: 'center', justifyContent: 'center'
+        height: 35, width: 91, borderRadius: 5, borderWidth: 1, borderColor: Colors.txt_F28,
+        alignItems: 'center', justifyContent: 'center',
     },
     ticketUnSelect: {
-        height: 30, width: 91, borderRadius: 5, backgroundColor: '#E5E5E5',
-        alignItems: 'center', justifyContent: 'center'
+        height: 35, width: 91, borderRadius: 5, backgroundColor: '#E5E5E5',
+        alignItems: 'center', justifyContent: 'center',
     },
     itemView: {
         flexDirection: 'row',

@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {YYYY_MM_DD, convertDate, strValid, isEmptyObject} from '../../utils/ComonHelper';
+import {MM_DD, convertDate, strValid, isEmptyObject} from '../../utils/ComonHelper';
 import {NoDataView, NoNetWorkView, LoadErrorView} from '../../components/load';
 
 export default class RaceSideView extends Component {
@@ -48,9 +48,9 @@ export default class RaceSideView extends Component {
 
         const {item, index} = rowData;
         return (<TouchableOpacity
-            onPress={()=>this.toInfoPage(item)}
+            onPress={() => this.toInfoPage(item)}
             activeOpacity={1}
-            testID={'btn_races_side_'+index}
+            testID={'btn_races_side_' + index}
             style={styles.item}>
 
             <View style={styles.leftLine}/>
@@ -65,9 +65,10 @@ export default class RaceSideView extends Component {
 
             <View style={styles.content}>
                 <Text style={styles.txtTitle}
-                      numberOfLines={2}>{item.name}</Text>
+                      numberOfLines={1}>{item.name}</Text>
+                <Text style={styles.txtStart}>起始时间</Text>
                 <View style={styles.buyView}>
-                    <Text style={styles.txtBuy}>{I18n.t('buy')}:{item.ticket_price}</Text>
+                    <Text style={styles.txtBuy}>{item.ticket_price}</Text>
                     {this._royView(item.roy)}
                 </View>
 
@@ -77,7 +78,7 @@ export default class RaceSideView extends Component {
     };
 
     _beginDate = (beiginDate) => {
-        return convertDate(beiginDate, 'M月D日')
+        return convertDate(beiginDate, MM_DD)
     };
 
 
@@ -128,14 +129,12 @@ const styles = StyleSheet.create({
     txtTitle: {
         fontSize: 17,
         color: Colors.txt_444,
-        lineHeight: 22,
         marginTop: 17,
-        height: 44,
         width: 240
     },
     txtBuy: {
         fontSize: 14,
-        color: Colors.txt_444,
+        color: Colors._DF1,
     },
     content: {
         marginRight: 33,
@@ -167,6 +166,11 @@ const styles = StyleSheet.create({
     },
     flatListView: {
         backgroundColor: Colors.white,
+    },
+    txtStart: {
+        color: Colors._CCC,
+        fontSize: 14,
+        marginTop: 8
     }
 
 });
