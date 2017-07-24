@@ -73,7 +73,7 @@ prizeView = (prize) => {
         return <View style={styles.price_view}>
             <Text style={{color: '#454545', fontSize: FontSize.h13}}>{I18n.t('prize')}</Text>
             <Text numberOfLines={1}
-                  style={[styles.itemPrice, {fontSize: FontSize.h13}]}>{prize}</Text>
+                  style={[styles.itemPrice, {fontSize: FontSize.h13}]}> {prize}</Text>
         </View>
 };
 
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
 
     },
     itemPrice: {
-        color: '#DAA647',
+        color: Colors._DF1,
         fontSize: 13,
         width: 120
     },
