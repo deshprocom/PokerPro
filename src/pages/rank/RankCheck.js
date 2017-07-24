@@ -90,18 +90,17 @@ class RankCheck extends Component {
         return(<View style={{flexDirection: 'row', flexWrap: 'wrap',justifyContent: 'flex-start'}}>
             {
                 this.props.checkData.map((item,key) => {
-                    {/*this.selectArr.push({index:key,check:false});*/}
                     let is_select = null;
-                    let infoData = null;
+                    let info = null;
                     if(arr[key].index == key){
                         is_select = arr[key].select;
-                        infoData = arr[key].infoData
+                        info = arr[key].infoData
                     }
 
                     return(
                         <TouchableOpacity key={key} onPress={() => {
                             {this.selectedBtn(key);
-                            router.log(infoData);}
+                            router.log(info);}
                         }}
                                   style={styles.btn_style}>
                             <Image source={is_select?Images.Group:Images.Group_em}
