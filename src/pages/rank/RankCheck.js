@@ -49,9 +49,16 @@ class RankCheck extends Component {
 
     cancelBtn = () => {
         let arr = this.state.itemArr;
+        let length= arr.length;
+        let arrClear = [];
+        for(let i = 0 ;i < length;i++){
+            let item = {index:i,select:false};
+            arrClear.push(item);
+        }
+
         this.setState({
-            itemArr: arr
-        })
+            itemArr:arrClear,
+        });
     };
 
     lineView = (checkData) => {
