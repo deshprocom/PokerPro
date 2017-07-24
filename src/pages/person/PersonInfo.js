@@ -367,7 +367,7 @@ const picker = {
     cropperCircleOverlay: true,
     compressImageMaxWidth: 800,
     compressImageMaxHeight: 800,
-    compressImageQuality: 0.8,
+    compressImageQuality: 0.5,
 };
 
 const styles = StyleSheet.create({

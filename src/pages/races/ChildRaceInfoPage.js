@@ -42,7 +42,7 @@ class ChildRaceInfoPage extends Component {
 
             <ScrollView style={{backgroundColor: 'white'}}>
                 {this.subRaceInfoView()}
-                <View style={{height:5,backgroundColor:Colors._ECE}}/>
+                <View style={{height: 5, backgroundColor: Colors._ECE}}/>
                 {this.raceView()}
             </ScrollView>
         </View>)
@@ -106,9 +106,11 @@ class ChildRaceInfoPage extends Component {
         const {subRaceInfo} = this.props;
         if (isEmptyObject(subRaceInfo))
             return;
-        const {schedules, ranks, blinds} = subRaceInfo;
+        const {schedules, ranks, blinds,schedules_markdown} = subRaceInfo;
 
         return ( <MainRaceResultView
+            schedules_markdown={schedules_markdown}
+            isSideRace={true}
             blinds={blinds}
             schedules={schedules}
             raceRanks={ranks}/>)

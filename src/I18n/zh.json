@@ -170,7 +170,7 @@
   "ticketType": "选择票务类型",
   "onlyRace": "仅赛事",
   "ticketBinds": "赛票套餐",
-  "selectRace": "选择赛事",
+  "selectRace": "选择套餐",
   "mainRace": "主套餐",
   "sideRace": "副套餐",
   "pleaseSelectRace": "请选择赛事",
@@ -302,5 +302,6 @@
   "order_ways": "收票方式",
   "home_buy": "购票",
   "home_up": "",
-  "race_day": "赛程"
+  "race_day": "赛程",
+  "race_start_time":"起始时间"
 }
