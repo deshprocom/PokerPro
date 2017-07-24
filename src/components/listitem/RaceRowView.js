@@ -58,7 +58,8 @@ export default class RaceRowView extends Component {
     _itemView = () => {
         const {
             logo, name, begin_date, end_date, status,
-            location, prize, ticket_status, ticket_sellable
+            location, prize, ticket_status, ticket_sellable,
+            min_price
         } = this.props.rowData;
         return (<View
             style={this.props.isMoreRace ? styles.backMore : [styles.viewItem,
@@ -94,7 +95,7 @@ export default class RaceRowView extends Component {
 
                 </View>
 
-                {this._priceView(prize)}
+                {this._priceView(min_price)}
 
             </View>
 

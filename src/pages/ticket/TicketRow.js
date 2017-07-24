@@ -8,7 +8,7 @@ import {
     ListView, Animated, Platform, InteractionManager
 } from 'react-native';
 import I18n from 'react-native-i18n';
-import {convertDate, ticketStatusConvert, FontSize} from '../../utils/ComonHelper';
+import {convertDate, ticketStatusConvert, FontSize, strNotNull} from '../../utils/ComonHelper';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {ImageLoad} from '../../components';
 
@@ -16,28 +16,29 @@ export const itemListView = (item, index) => {
     const {
         begin_date, logo, describable, end_date,
         followed, location, name, ordered, prize, race_id,
-        status, ticket_status, ticket_sellable
+        status, ticket_status, ticket_sellable,
+        min_price
     } = item;
     return (
         <TouchableOpacity
-            testID={'btn_ticket_row_'+index}
-            onPress={()=>
+            testID={'btn_ticket_row_' + index}
+            onPress={() =>
                 router.toRacesInfoPage(this.props, race_id, false)}
             disabled={!describable}
             activeOpacity={1}>
             <View style={styles.marginLine}/>
 
             <Image source={Images.item_sale}
-            resizeMode="cover"
-            style={styles.bg_img}>
+                   resizeMode="cover"
+                   style={styles.bg_img}>
                 <View style={styles.itemView}>
                     <ImageLoad defaultSource={Images.empty_ticket}
-                       source={{uri:logo}}
-                       style={styles.itemImg}/>
+                               source={{uri: logo}}
+                               style={styles.itemImg}/>
                     <View style={styles.itemInfo}>
                         <Text
                             numberOfLines={2}
-                            style={[styles.itemTitle,{fontSize: FontSize.h17}]}>{name}</Text>
+                            style={[styles.itemTitle, {fontSize: FontSize.h17}]}>{name}</Text>
 
                         <View style={styles.viewLocation}>
                             <Image source={Images.race_location}
@@ -48,16 +49,12 @@ export const itemListView = (item, index) => {
 
                         <View style={styles.view_time}>
                             <Image source={Images.home_clock}
-                            style={{width: 10, height: 10}}/>
+                                   style={{width: 10, height: 10}}/>
                             <Text style={[styles.itemTime, {fontSize: FontSize.h14}]}>
                                 {convertDate(begin_date, 'YYYY.MM.DD') + '-' + convertDate(end_date, 'YYYY.MM.DD')}</Text>
                         </View>
 
-                        <View style={styles.price_view}>
-                            <Text style={{color: '#454545', fontSize: FontSize.h13}}>{I18n.t('prize')}</Text>
-                            <Text numberOfLines={1}
-                                  style={[styles.itemPrice,{fontSize: FontSize.h13}]}>{prize}</Text>
-                        </View>
+                        {this.prizeView(min_price)}
 
                         <View style={sellStyle(ticket_status)}>
                             <Text style={sellTxt(ticket_status)}>{ticketStatusConvert(ticket_status)}</Text>
@@ -69,6 +66,15 @@ export const itemListView = (item, index) => {
 
         </TouchableOpacity>
     )
+};
+
+prizeView = (prize) => {
+    if (strNotNull(prize))
+        return <View style={styles.price_view}>
+            <Text style={{color: '#454545', fontSize: FontSize.h13}}>{I18n.t('prize')}</Text>
+            <Text numberOfLines={1}
+                  style={[styles.itemPrice, {fontSize: FontSize.h13}]}>{prize}</Text>
+        </View>
 };
 
 function sellStyle(status) {

@@ -47,6 +47,7 @@ export default class RaceSideView extends Component {
     _renderRow = (rowData) => {
 
         const {item, index} = rowData;
+        const {begin_time,name,days,begin_date,ticket_price,roy} = item;
         return (<TouchableOpacity
             onPress={() => this.toInfoPage(item)}
             activeOpacity={1}
@@ -57,19 +58,19 @@ export default class RaceSideView extends Component {
 
             <View style={styles.dateView}>
                 <View>
-                    <Text style={styles.txtDate}>{this._beginDate(item.begin_date)}</Text>
-                    <Text style={styles.txtDay}>{item.days + 'Days'}</Text>
+                    <Text style={styles.txtDate}>{this._beginDate(begin_date)}</Text>
+                    <Text style={styles.txtDay}>{days + 'Days'}</Text>
                 </View>
 
             </View>
 
             <View style={styles.content}>
                 <Text style={styles.txtTitle}
-                      numberOfLines={1}>{item.name}</Text>
-                <Text style={styles.txtStart}>起始时间</Text>
+                      numberOfLines={1}>{name}</Text>
+                <Text style={styles.txtStart}>起始时间: {begin_time}</Text>
                 <View style={styles.buyView}>
-                    <Text style={styles.txtBuy}>{item.ticket_price}</Text>
-                    {this._royView(item.roy)}
+                    <Text style={styles.txtBuy}>{ticket_price}</Text>
+                    {this._royView(roy)}
                 </View>
 
             </View>
