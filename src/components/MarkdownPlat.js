@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/4/25.
  */
-import React, {PropTypes, Component}from 'react';
+import React, {PropTypes, Component,createElement}from 'react';
 import {
     TouchableOpacity, View, ScrollView,
     StyleSheet, Text, Platform
@@ -72,7 +72,32 @@ export default class MarkdownPlat extends Component {
             } else {
 
                 return ( <Markdown
-                    rules={markRules}
+                    rules={{
+                        image: {
+                            react: (node, output, state) => (
+                                <ImageMark
+                                    key={state.key}
+                                    src={ node.target }
+                                />
+                            ),
+                        },
+                        link: {
+                            react: (node, output, state) => {
+                                state.withinText = true
+                                const openUrl = (url) => {
+                                    router.toWebViewPage(this.props,url);
+                                };
+                                return createElement(Text, {
+                                    style: {
+                                        color: '#4990E2',
+                                        textDecorationLine: 'underline',
+                                    },
+                                    key: state.key,
+                                    onPress: () => openUrl(node.target)
+                                }, output(node.content, state))
+                            }
+                        },
+                    }}
                     styles={{
                         view: {
                             padding: 20,
@@ -116,6 +141,19 @@ export const markRules = {
                 src={ node.target }
             />
         ),
+    },
+    link: {
+        react: (node, output, state) => {
+            state.withinText = true
+            const openUrl = (url) => {
+                Linking.openURL(url).catch(error => console.warn('An error occurred: ', error))
+            }
+            return createElement(Text, {
+                style: node.target.match(/@/) ? styles.mailTo : styles.link,
+                key: state.key,
+                onPress: () => openUrl(node.target)
+            }, output(node.content, state))
+        }
     },
 };
 //markdown 样式
