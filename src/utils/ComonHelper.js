@@ -52,7 +52,7 @@ export function strNotNull(str) {
 let Lang = 'zh';
 export function setLang(lang) {
     Lang = lang;
-    console.log('分享页语言'+Lang);
+    // console.log('分享页语言'+Lang);
 }
 
 export function uShareRace(title, location, icon, raceId) {
