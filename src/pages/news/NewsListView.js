@@ -189,7 +189,6 @@ class NewsListView extends Component {
 
                 </View>
 
-                <View style={{flex: 1}}/>
                 <ImageLoad
                     emptyBg={true}
                     style={styles.listImg}
@@ -275,6 +274,7 @@ const styles = StyleSheet.create({
         marginLeft: 17,
         marginTop: 13,
         marginBottom: 16,
+        marginRight:12
     },
     listTitleTxt: {
         color: '#444444',

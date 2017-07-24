@@ -9,7 +9,8 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
 import NavigationBar from './NavigationBar';
-import theme from '../styles/theme'
+import theme from '../styles/theme';
+import I18n from 'react-native-i18n';
 
 export default class WebViewPage extends Component {
 
@@ -131,26 +132,40 @@ export default class WebViewPage extends Component {
     bottomBarView = () => {
         return ( <Animated.View
             style={[styles.bottomInfoBar, {bottom: this.state.bottomInfoBarBottomValue}]}>
-            <View style={styles.btn}>
+            <TouchableOpacity
+                onPress={() => this.webView.goBack()}
+                style={styles.btn}>
                 <Image style={styles.imgBk}
                        source={Images.web_left}/>
 
-            </View>
-            <View style={styles.btn}>
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => this.webView.goForward()}
+                style={styles.btn}>
                 <Image style={styles.imgBk}
                        source={Images.web_right}/>
 
-            </View>
-            <View style={styles.btn}>
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => this.webView.reload()}
+                style={styles.btn}>
                 <Image style={styles.imgRef}
                        source={Images.web_refresh}/>
 
-            </View>
-            <View style={styles.btn}>
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => {
+                    Linking.canOpenURL(this.props.params.url).then(supported => {
+                        if (supported) {
+                            Linking.openURL(this.props.params.url);
+                        }
+                    });
+                }}
+                style={styles.btn}>
                 <Image style={styles.imgRef}
                        source={Images.web_page}/>
 
-            </View>
+            </TouchableOpacity>
 
 
         </Animated.View>)
@@ -161,7 +176,7 @@ export default class WebViewPage extends Component {
         return (
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors.bg_09}}
-                title={url}
+                title={I18n.t('app_name')}
                 titleStyle={styles.barTitle}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}

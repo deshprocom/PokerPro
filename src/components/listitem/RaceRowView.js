@@ -74,6 +74,7 @@ export default class RaceRowView extends Component {
                 <Text
                     style={[ticket_sellable ? styles.txtTitle1 : styles.txtTitle, {fontSize: FontSize.h17}]}
                     numberOfLines={2}>{name}</Text>
+
                 <View style={styles.viewClock}>
                     <Image source={Images.home_adr}
                            style={styles.imgAdr}/>
@@ -93,13 +94,8 @@ export default class RaceRowView extends Component {
 
                 </View>
 
-                <View style={[styles.viewClock, {marginTop: 8}]}>
-                    <Text style={[styles.lbPrice, {fontSize: FontSize.h13}]}>{I18n.t('prize')}</Text>
-                    <Text
-                        numberOfLines={1}
-                        style={[styles.txtPrice, {fontSize: FontSize.h13}]}> {prize}</Text>
+                {this._priceView(prize)}
 
-                </View>
             </View>
 
 
@@ -116,6 +112,18 @@ export default class RaceRowView extends Component {
 
 
         </View>)
+    };
+
+    _priceView = (prize) => {
+        if (strNotNull(prize))
+            return <View style={[styles.viewClock, {marginTop: 8}]}>
+                <Text style={[styles.lbPrice, {fontSize: FontSize.h13}]}>{I18n.t('prize')}</Text>
+                <Text
+                    numberOfLines={1}
+                    style={[styles.txtPrice, {fontSize: FontSize.h13}]}> {prize}</Text>
+
+            </View>;
+
     };
 
 

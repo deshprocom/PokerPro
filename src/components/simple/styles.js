@@ -61,7 +61,6 @@ const styles = {
         fontWeight: 'bold',
     },
     link: {
-        color: '#4990E2',
         textDecorationLine: 'underline',
     },
     listItem: {
@@ -119,6 +118,7 @@ const styles = {
     },
     text: {},
     u: {
+        color: '#4990E2',
         textDecorationLine: 'underline'
     },
     video: {

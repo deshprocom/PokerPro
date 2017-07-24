@@ -637,11 +637,11 @@ class BuyTicketPage extends Component {
 const styles = StyleSheet.create({
     ticketSelect: {
         height: 35, width: 91, borderRadius: 5, borderWidth: 1, borderColor: Colors.txt_F28,
-        alignItems: 'center', justifyContent: 'center', textAlign: 'center'
+        alignItems: 'center', justifyContent: 'center',
     },
     ticketUnSelect: {
         height: 35, width: 91, borderRadius: 5, backgroundColor: '#E5E5E5',
-        alignItems: 'center', justifyContent: 'center', textAlign: 'center'
+        alignItems: 'center', justifyContent: 'center',
     },
     itemView: {
         flexDirection: 'row',
