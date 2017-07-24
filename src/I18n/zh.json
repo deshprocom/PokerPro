@@ -302,5 +302,6 @@
   "order_ways": "收票方式",
   "home_buy": "购票",
   "home_up": "",
-  "race_day": "赛程"
+  "race_day": "赛程",
+  "race_start_time":"起始时间"
 }
