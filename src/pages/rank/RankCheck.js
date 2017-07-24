@@ -16,7 +16,9 @@ class RankCheck extends Component {
         this.selectArr = [];
         this.state = {
             check: false,
-            itemArr: []
+            itemArr: [],
+            name: '',
+            testarr: []
         }
     }
 
@@ -28,7 +30,8 @@ class RankCheck extends Component {
         let length= this.props.checkData.length;
         let arr = [];
         for(let i = 0 ;i < length;i++){
-            let item = {index:i,select:false};
+            let data = this.props.checkData[i];
+            let item = {index:i,infoData: data,select:false};
             arr.push(item);
         }
 
@@ -52,7 +55,8 @@ class RankCheck extends Component {
         let length= arr.length;
         let arrClear = [];
         for(let i = 0 ;i < length;i++){
-            let item = {index:i,select:false};
+            let infoData = this.props.checkData[i];
+            let item = {index:i,infoData: infoData,select:false};
             arrClear.push(item);
         }
 
@@ -86,13 +90,19 @@ class RankCheck extends Component {
         return(<View style={{flexDirection: 'row', flexWrap: 'wrap',justifyContent: 'flex-start'}}>
             {
                 this.props.checkData.map((item,key) => {
-                    this.selectArr.push({index:key,check:false});
+                    {/*this.selectArr.push({index:key,check:false});*/}
                     let is_select = null;
+                    let infoData = null;
                     if(arr[key].index == key){
-                        is_select = arr[key].select
+                        is_select = arr[key].select;
+                        infoData = arr[key].infoData
                     }
+
                     return(
-                        <TouchableOpacity key={key} onPress={() => this.selectedBtn(key)}
+                        <TouchableOpacity key={key} onPress={() => {
+                            {this.selectedBtn(key);
+                            router.log(infoData);}
+                        }}
                                   style={styles.btn_style}>
                             <Image source={is_select?Images.Group:Images.Group_em}
                                    style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center'}}>
@@ -108,7 +118,7 @@ class RankCheck extends Component {
 
     render(){
         return(<View>
-            <Text style={{lineHeight: 21,fontSize: 15,color: Colors._888}} onPress={()=>this.cancelBtn()}>{this.props.checkTitle}</Text>
+            <Text style={{lineHeight: 21,fontSize: 15,color: Colors._888}}>{this.props.checkTitle}</Text>
             {this.lineView()}
             {this.choiceBtn()}
         </View>)
