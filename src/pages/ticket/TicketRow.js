@@ -44,7 +44,7 @@ export const itemListView = (item, index) => {
                             <Image source={Images.race_location}
                                    style={styles.img_ico}/>
                             <Text numberOfLines={1}
-                                  style={styles.itemAddr}>{I18n.t('location')}:{location}</Text>
+                                  style={styles.itemAddr}>{location}</Text>
                         </View>
 
                         <View style={styles.view_time}>

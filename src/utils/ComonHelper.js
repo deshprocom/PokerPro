@@ -49,9 +49,14 @@ export function strNotNull(str) {
         return true;
 }
 
+let Lang = 'zh';
+export function setLang(lang) {
+    Lang = lang;
+    // console.log('分享页语言'+Lang);
+}
 
 export function uShareRace(title, location, icon, raceId) {
-    UMShare.share(title, location, icon, "https://h5.deshpro.com/race/" + raceId)
+    UMShare.share(title, location, icon, "https://h5.deshpro.com/race/" + raceId + "/" +Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
@@ -60,7 +65,7 @@ export function uShareRace(title, location, icon, raceId) {
 }
 
 export function newShare(title, location, icon, newsId) {
-    UMShare.share(title, location, icon, "https://h5.deshpro.com/news/" + newsId)
+    UMShare.share(title, location, icon, "https://h5.deshpro.com/news/" + newsId + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
