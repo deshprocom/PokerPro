@@ -274,10 +274,11 @@ const styles = StyleSheet.create({
     },
     triangle: {
         height: 3,
-        width: 32,
+        width: 60,
         marginBottom: 4,
         backgroundColor: Colors._333,
-        alignSelf: 'center'
+        marginLeft: 12
+        // alignSelf: 'center',
     },
     viewPage: {
         flex: 1

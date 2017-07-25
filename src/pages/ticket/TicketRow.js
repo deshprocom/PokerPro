@@ -41,7 +41,7 @@ export const itemListView = (item, index) => {
                             style={[styles.itemTitle, {fontSize: FontSize.h17}]}>{name}</Text>
 
                         <View style={styles.viewLocation}>
-                            <Image source={Images.race_location}
+                            <Image source={Images.home_adr}
                                    style={styles.img_ico}/>
                             <Text numberOfLines={1}
                                   style={styles.itemAddr}>{location}</Text>
@@ -56,10 +56,9 @@ export const itemListView = (item, index) => {
 
                         {this.prizeView(min_price)}
 
-                        <View style={sellStyle(ticket_status)}>
-                            <Text style={sellTxt(ticket_status)}>{ticketStatusConvert(ticket_status)}</Text>
-                        </View>
-
+                    </View>
+                    <View style={sellStyle(ticket_status)}>
+                        <Text style={sellTxt(ticket_status)}>{ticketStatusConvert(ticket_status)}</Text>
                     </View>
                 </View>
             </Image>
@@ -171,7 +170,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 2,
         position: 'absolute',
-        top: 40,
+        top: 53,
         right: 10
     },
     sellTxt: {
