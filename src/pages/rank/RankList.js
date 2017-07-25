@@ -1,18 +1,41 @@
 import React,{Component} from 'react';
 import {View, Text, FlatList, TouchableOpacity, StyleSheet, ListView, Image} from 'react-native';
+import I18n from 'react-native-i18n';
 
 import {Metrics, Colors, Images} from '../../Themes';
-import {PullListView} from '../../components';
-
+import {PullListView, UltimateListView} from '../../components';
+import {NoDataView, LoadErrorView} from '../../components/load';
+import {getMainRank} from '../../services/RankDao';
 
 class RankList extends Component {
+    // state = {
+    //     rankData: []
+    // }
 
     constructor(props){
         super(props);
-        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        this._dataSource = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1.race_id !== r2.race_id
+        });
         this.state = {
-            dataSource: this.ds.cloneWithRows(['1','2','3','4','5','6'])
+            dataSource: this._dataSource.cloneWithRows([]),
+            rankData: []
         };
+    }
+
+    componentDidMount(){
+        getMainRank(data => {
+            router.log(data);
+            let items = data;
+            if(items.length>0){
+                this.setState({
+                    rankData: items
+                });
+                router.log(this.state.rankData)
+            }
+        },err =>{
+
+        })
     }
 
     rankNum = (rowID) => {
@@ -72,14 +95,75 @@ class RankList extends Component {
             {/*{this.headerList()}*/}
             {/*<ListView dataSource={this.state.dataSource}*/}
                 {/*renderRow={this.listRenderRow}/>*/}
-            <PullListView
-                key="list"
-                ref={ (component) => this._pullToRefreshListView = component }
-                viewType={PullListView.constants.viewType.listView}
-                dataSource={this.state.dataSource}
-                renderRow={this.listRenderRow}/>
+            {/*<PullListView*/}
+                {/*key="list"*/}
+                {/*ref={ (component) => this._pullToRefreshListView = component }*/}
+                {/*viewType={PullListView.constants.viewType.listView}*/}
+                {/*dataSource={this.state.dataSource}*/}
+                {/*renderRow={this.listRenderRow}/>*/}
+            <UltimateListView
+                key={this.state.layout}
+                keyExtractor={(item, index) => `${this.state.layout} - ${item.race_id}`}
+                ref={(ref) => this.listView = ref}
+                onFetch={this.onFetch}
+                legacyImplementation
+                rowView={this.listRenderRow}
+                refreshableTitlePull={I18n.t('pull_refresh')}
+                refreshableTitleRelease={I18n.t('release_refresh')}
+                dateTitle={I18n.t('last_refresh')}
+                allLoadedText={I18n.t('no_more')}
+                waitingSpinnerText={I18n.t('loading')}
+                emptyView={() => {
+                    return this.state.error ? <LoadErrorView
+                        onPress={() => {
+                            this.listView.refresh()
+                        }}/> : <NoDataView/>;
+                }}
+            />
         </View>)
     }
+    onFetch = (page = 1, startFetch, abortFetch) => {
+        try{
+            this.listPage = page;
+            if(page === 1){
+                this.refresh(startFetch,abortFetch);
+            }else{
+                this.loadMore(startFetch,abortFetch);
+            }
+        } catch (err){
+            abortFetch();
+        }
+    };
+
+    refresh = (startFetch,abortFetch) => {
+        getMainRank(data => {
+            router.log(data);
+            let items = data;
+            if(items.length>0){
+                this.setState({
+                    rankData: items
+                });
+                router.log(this.state.rankData)
+            }
+        },(err) =>{
+            abortFetch()
+        })
+    };
+
+    loadMore = (startFetch,abortFetch) => {
+        getMainRank(data => {
+            router.log(data);
+            let items = data;
+            if(items.length>0){
+                this.setState({
+                    rankData: items
+                });
+                router.log(this.state.rankData)
+            }
+        },(err) =>{
+
+        })
+    };
 
     // headerList = () => {
     //     return(<View style={{flexDirection: 'row',width: Metrics.screenWidth, backgroundColor: '#a23def'}}>
