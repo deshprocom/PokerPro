@@ -7,6 +7,7 @@ import {clearLoginUser} from '../utils/ComonHelper';
 import StorageKey from '../configs/StorageKey';
 import {NetworkInfo} from 'react-native-network-info';
 import {Platform} from 'react-native';
+import I18n from 'react-native-i18n';
 
 
 let TAG = 'PuKeHttp:';
@@ -17,7 +18,8 @@ const client = create({
     baseURL: Api.production,
     headers: {
         'X-DP-APP-KEY': '467109f4b44be6398c17f6c058dfa7ee',
-        'X-DP-CLIENT-IP': '192.168.2.231'
+        'X-DP-CLIENT-IP': '192.168.2.231',
+        'Content-Type': 'application/json'
     },
     timeout: 20000,
 });
@@ -108,8 +110,7 @@ export function post(url, body, resolve, reject) {
                     reject(msg);
                 }
             } else {
-                reject(response.problem);
-                netError(response);
+                netError(response, reject);
             }
 
 
@@ -132,11 +133,11 @@ export function del(url, body, resolve, reject) {
                     reject(msg);
                 }
             } else {
-                reject(response.problem);
-                netError(response);
+                netError(response, reject);
             }
 
         }).catch((error) => {
+
         router.log(TAG, error);
         reject('Network response was not ok.');
     });
@@ -155,8 +156,7 @@ export function put(url, body, resolve, reject) {
                     reject(msg);
                 }
             } else {
-                reject(response.problem);
-                netError(response);
+                netError(response, reject);
             }
 
         }).catch((error) => {
@@ -177,8 +177,7 @@ export function get(url, resolve, reject) {
                     reject(msg);
                 }
             } else {
-                reject(response.problem);
-                netError(response);
+                netError(response, reject);
             }
 
         }).catch((error) => {
@@ -188,12 +187,17 @@ export function get(url, resolve, reject) {
 }
 
 /*token过期*/
-function netError(response) {
+function netError(response, reject) {
     if (response.status === 804 ||
-        response.status === 805) {
+        response.status === 805 ||
+        response.status === 809) {
         clearLoginUser();
         router.popToLoginFirstPage();
     }
+    if (response.status === 809)
+        reject(I18n.t('net_809'));
+    else
+        reject(response.problem);
 }
 
 
