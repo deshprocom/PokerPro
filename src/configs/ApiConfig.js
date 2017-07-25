@@ -62,7 +62,8 @@ export default {
     orderTicket: orderTicket,
     addAddress: addAddress,
     setAdrDefault: setAdrDefault,
-    adrDelete:adrDelete
+    adrDelete: adrDelete,
+    login_count: login_count
 
 }
 
@@ -75,6 +76,10 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+export function login_count() {
+    return 'users/' + getUserId() + '/login_count';
+}
 
 
 export function adrDelete(address_id) {

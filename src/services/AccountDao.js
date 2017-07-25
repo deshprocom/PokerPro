@@ -6,6 +6,9 @@ import Api from '../configs/ApiConfig';
 import StorageKey from '../configs/StorageKey';
 import JpushHelp from './JpushHelper';
 
+export function postLoginCount() {
+    helper.post(Api.login_count(),{},ret=>{},err=>{})
+}
 
 export function delNotification(body, resolve, reject) {
     helper.del(Api.delNotice(body), {}, (ret) => {
