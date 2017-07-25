@@ -404,7 +404,7 @@ export function dataBlob(arr) {
 
     for (var i = 0; i < len; i++) {
 
-        var begin_date = convertDate(arr[i].begin_date, YYYY年MM月);
+        var begin_date = convertDate(arr[i].begin_date, YYYY_MM);
         var Value = arr[i];
 
         if (!objArr[begin_date]) {        //objArr[Id]未定义或不存在
