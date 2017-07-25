@@ -56,7 +56,7 @@ export function setLang(lang) {
 }
 
 export function uShareRace(title, location, icon, raceId) {
-    UMShare.share(title, location, icon, "https://h5.deshpro.com/race/" + raceId + "/" +Lang)
+    UMShare.share(title, location, icon, "https://h5.deshpro.com/race/" + raceId + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
@@ -236,9 +236,12 @@ export function ticketStatusConvert(status) {
 }
 
 
-export function sellable(status) {
+export function sellable(status, sellable) {
 
-    return status === SellStatus.selling ? true : false;
+    if (sellable)
+        return status === SellStatus.selling;
+    else
+        return false;
 
 }
 
