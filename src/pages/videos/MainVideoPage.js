@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     },
     triangle: {
         height: 3,
-        width: 32,
+        width: 60,
         marginBottom: 4,
         backgroundColor: Colors._333
     },
