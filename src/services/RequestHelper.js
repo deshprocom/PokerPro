@@ -7,6 +7,7 @@ import {clearLoginUser} from '../utils/ComonHelper';
 import StorageKey from '../configs/StorageKey';
 import {NetworkInfo} from 'react-native-network-info';
 import {Platform} from 'react-native';
+import I18n from 'react-native-i18n';
 
 
 let TAG = 'PuKeHttp:';
@@ -108,8 +109,7 @@ export function post(url, body, resolve, reject) {
                     reject(msg);
                 }
             } else {
-                reject(response.problem);
-                netError(response);
+                netError(response, reject);
             }
 
 
@@ -132,11 +132,11 @@ export function del(url, body, resolve, reject) {
                     reject(msg);
                 }
             } else {
-                reject(response.problem);
-                netError(response);
+                netError(response, reject);
             }
 
         }).catch((error) => {
+
         router.log(TAG, error);
         reject('Network response was not ok.');
     });
@@ -155,8 +155,7 @@ export function put(url, body, resolve, reject) {
                     reject(msg);
                 }
             } else {
-                reject(response.problem);
-                netError(response);
+                netError(response, reject);
             }
 
         }).catch((error) => {
@@ -177,8 +176,7 @@ export function get(url, resolve, reject) {
                     reject(msg);
                 }
             } else {
-                reject(response.problem);
-                netError(response);
+                netError(response, reject);
             }
 
         }).catch((error) => {
@@ -188,12 +186,17 @@ export function get(url, resolve, reject) {
 }
 
 /*token过期*/
-function netError(response) {
+function netError(response, reject) {
     if (response.status === 804 ||
-        response.status === 805) {
+        response.status === 805 ||
+        response.status === 809) {
         clearLoginUser();
         router.popToLoginFirstPage();
     }
+    if (response.status === 809)
+        reject(I18n.t('net_809'));
+    else
+        reject(response.problem);
 }
 
 

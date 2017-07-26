@@ -303,5 +303,12 @@
   "home_buy": "购票",
   "home_up": "",
   "race_day": "赛程",
-  "race_start_time":"起始时间"
+  "race_start_time":"起始时间",
+  "net_809":"您被封禁,无法进行该操作",
+  "rank_focus":"+关注",
+  "rank_no":"名次",
+  "rank_number":"积分",
+  "rank_prize":"奖金",
+  "rank_buyIn":"买入",
+  "rank_participate":"参赛人数"
 }

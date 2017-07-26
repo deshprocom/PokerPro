@@ -48,7 +48,8 @@ import WebViewPage from '../components/WebViewPage';
 import NewAddressPage from '../pages/buy/NewAddressPage';
 import AdrListPage from '../pages/buy/AdrListPage';
 import DrawerRank from '../pages/rank/DrawerRank';
-import FocusPlayer from '../pages/rank/FocusPlayer'
+import FocusPlayer from '../pages/rank/FocusPlayer';
+import PokerRankPage from '../pages/rank/info/PokerRankPage';
 
 
 const customFloatFromRight = Navigator.SceneConfigs.FadeAndroid;
@@ -124,6 +125,16 @@ export default class Router {
 
     popToTop() {
         this.navigator.popToTop();
+    }
+
+
+    toPokerRankPage(props){
+        this.push(props, {
+            page: PokerRankPage,
+            name: 'PokerRankPage',
+            sceneConfig: customFloatFromRight
+
+        })
     }
 
     toAdrListPage(props, selectAdr, adrData) {
