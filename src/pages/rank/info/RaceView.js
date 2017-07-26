@@ -40,11 +40,11 @@ export default class RaceView extends Component {
                             <View style={[styles.viewTime, {marginTop: 8}]}>
                                 <Image
                                     source={Images.home_adr}
-                                    style={{height: 12, width: 9, marginRight: 8}}/>
+                                    style={{height: 12, width: 9, marginRight: 10}}/>
 
                                 <Text
                                     numberOfLines={1}
-                                    style={styles.txtTime}>澳大利亚墨尔本皇冠娱乐场澳大是寿...</Text>
+                                    style={styles.txtTime}>澳大利亚墨尔本皇冠娱乐场澳大是寿阿克苏就会觉得开放后</Text>
                             </View>
                         </View>
                     </View>
@@ -175,7 +175,8 @@ const styles = StyleSheet.create({
     },
     txtTime: {
         color: Colors._AAA,
-        fontSize: 13
+        fontSize: 13,
+        marginRight: 17
     },
     line: {
         height: 1,
@@ -203,6 +204,6 @@ const styles = StyleSheet.create({
         color: Colors._888,
         fontSize: 15,
         fontWeight: 'bold',
-        marginTop:8
+        marginTop: 8
     },
 });
