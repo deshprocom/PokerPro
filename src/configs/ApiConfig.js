@@ -63,7 +63,8 @@ export default {
     addAddress: addAddress,
     setAdrDefault: setAdrDefault,
     adrDelete: adrDelete,
-    login_count: login_count
+    login_count: login_count,
+    players: 'players'
 
 }
 
