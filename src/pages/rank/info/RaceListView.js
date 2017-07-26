@@ -92,7 +92,7 @@ export default class RaceListView extends Component {
                     <View style={[styles.viewTime, {marginTop: 8}]}>
                         <Image
                             source={Images.home_adr}
-                            style={{height: 12, width: 9, marginRight: 8}}/>
+                            style={{height: 12, width: 9, marginRight: 10}}/>
 
                         <Text
                             numberOfLines={1}
