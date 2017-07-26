@@ -18,6 +18,7 @@ export default class PokerRankPage extends Component {
         return (<View style={ApplicationStyles.bgContainer}>
             <PokerView/>
 
+            <RaceListView/>
 
         </View>)
     }
