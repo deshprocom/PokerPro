@@ -22,8 +22,8 @@ import {LoadErrorView, LoadingView, NoDataView} from '../components/load'
 import {isEmptyObject, strNotNull, putLoginUser, getUserData} from '../utils/ComonHelper';
 import {NavigationBar, ParallaxScrollView} from '../components';
 import JpushHelp from '../services/JpushHelper';
-import TestRouter from '../components/TestRouter';
 import {umengEvent} from '../utils/UmengEvent';
+import {postLoginCount} from '../services/AccountDao';
 
 var maxDown = 0;
 
@@ -94,6 +94,7 @@ class HomePage extends Component {
                     number: 8
                 };
                 this.props._getRecentRaces(recentRaces);
+                postLoginCount();
 
             }).catch(err => {
 
@@ -329,6 +330,7 @@ class HomePage extends Component {
                             onPress={() => {
                                 umengEvent('home_ranking');
                                 // router.toDrawerRank()
+                                // router.toPokerRankPage()
 
                             }}
                             style={[{marginRight: 53}, styles.item_center]}>

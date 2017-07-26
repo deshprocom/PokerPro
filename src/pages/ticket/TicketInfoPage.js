@@ -76,6 +76,7 @@ export default class TicketInfoPage extends Component {
         const {description, title, price} = tickets;
         const {name, logo} = race;
         return (  <ScrollView
+            style={{marginBottom:70}}
             iosalwaysBounceVertical={false}
             scrollEventThrottle={16}
             onScroll={this._onScroll}
@@ -116,7 +117,7 @@ export default class TicketInfoPage extends Component {
 
     _topBar = () => {
         const {opacity} = this.state;
-        return ( <View style={[styles.topBar, {backgroundColor: 'rgba(255,255,255,' + opacity + ')'}]}>
+        return ( <View style={[styles.topBar, {backgroundColor: 'rgba(0,0,0,' + opacity + ')'}]}>
             <StatusBar/>
             <TouchableOpacity
                 testID="btn_bar_left"

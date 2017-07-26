@@ -178,7 +178,8 @@ const images = {
     web_left: require('../../source/news/web_left.png'),
     web_page: require('../../source/news/web_page.png'),
     web_right: require('../../source/news/web_right.png'),
-    web_refresh: require('../../source/news/web_refresh.png')
+    web_refresh: require('../../source/news/web_refresh.png'),
+    rank_bg:require('../../source/rank/rank_bg.png')
 
 
 };

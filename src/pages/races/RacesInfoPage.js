@@ -357,7 +357,7 @@ class RacesInfoPage extends Component {
 
         const {ticket_status, ticket_sellable} = raceInfo;
 
-        if (!this.props.params.fromBuy && sellable(ticket_status))
+        if (!this.props.params.fromBuy && sellable(ticket_status,ticket_sellable))
             return (    <RaceInfoBottomView
                 raceInfo={raceInfo}
                 onPress={() => {

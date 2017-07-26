@@ -90,7 +90,7 @@ class LoginFirstPage extends React.Component {
                 <NavigationBar
                     router={this.props.router}
                     leftBtnIcon={Images.sign_close}
-                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                    leftImageStyle={{height: 18, width: 18, marginLeft: 20, marginRight: 20}}
                     rightBtnText={I18n.t('register')}
                     btnTextStyle={{
                         color: Colors.txt_E0C,
