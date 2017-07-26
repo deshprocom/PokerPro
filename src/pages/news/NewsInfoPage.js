@@ -42,7 +42,7 @@ export default class NewsInfoPage extends Component {
                 rightBtnIcon={Images.match_share}
                 rightImageStyle={{height:23,width:18,marginRight:15}}
                 rightBtnPress={()=>{
-                    newShare(title,date+'\n'+source,image);
+                    newShare(title,date+'\n'+source,image,id);
                     {/*router.log(title,date+'\n'+source,image,id);*/}
                 }}/>
 

@@ -62,7 +62,8 @@ export default {
     orderTicket: orderTicket,
     addAddress: addAddress,
     setAdrDefault: setAdrDefault,
-    adrDelete:adrDelete
+    adrDelete:adrDelete,
+    players:'players'
 
 }
 
