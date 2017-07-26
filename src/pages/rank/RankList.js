@@ -7,6 +7,8 @@ import {PullListView, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView} from '../../components/load';
 import {getMainRank} from '../../services/RankDao';
 
+import {uniqueArray} from '../../utils/ComonHelper';
+
 class RankList extends Component {
     // state = {
     //     rankData: []
@@ -25,13 +27,13 @@ class RankList extends Component {
 
     componentDidMount(){
         getMainRank(data => {
-            router.log(data);
+            // router.log(data);
             let items = data;
             if(items.length>0){
                 this.setState({
                     rankData: items
                 });
-                router.log(this.state.rankData)
+                // router.log(this.state.rankData)
             }
         },err =>{
 
@@ -39,47 +41,49 @@ class RankList extends Component {
     }
 
     rankNum = (rowID) => {
-        if(rowID == 0){
+        if(rowID == 1){
             return(
                 <Image source={Images.gold}
                    style={{width: 25,height: 25}}/>
             )
-        }else if(rowID == 1){
+        }else if(rowID == 2){
             return(
                 <Image source={Images.silver}
                    style={{width: 25,height: 25}}/>
             )
-        }else if(rowID == 2){
+        }else if(rowID == 3){
             return(
                 <Image source={Images.copper}
                    style={{width: 25,height: 25}}/>
             )
         }else {
             return(
-                <Text>{parseInt(rowID)+1}</Text>
+                <Text>{rowID}</Text>
+                // <Text>{parseInt(rowID)+1}</Text>
             )
         }
     };
 
-    listRenderRow = (data, sectionID, rowID) => {
+    listRenderRow = (rowData, sectionID, rowID) => {
+        const {avatar, country, dpi_total_earning, dpi_total_score, id, memo, name, rank} = rowData;
         return(<View style={styles.row_view}>
             <View style={{flexDirection: 'row'}}>
                 <View style={[{width: 53},styles.list_row]}>
-                    {this.rankNum(rowID)}
+                    {this.rankNum(rank)}
                 </View>
                 <View style={styles.list_row}>
-                    <Image source={Images.mask}
+                    <Image source={{uri: avatar}}
                            style={{width: 49.7,height: 49.7, marginLeft: 12, marginRight: 15.3}}>
                         <Image/>
                     </Image>
                 </View>
                 <View style={{flex: 1,alignItems: 'flex-start', justifyContent:'center',height: 69}}>
-                    <Text style={{color: Colors._333, fontSize: 14, lineHeight: 20}}>{rowID}</Text>
-                    <Text style={{color: Colors._AAA, fontSize: 12, lineHeight: 17}}>{data}</Text>
+                    <Text style={{color: Colors._333, fontSize: 14, lineHeight: 20}}>{name}</Text>
+                    <Text style={{color: Colors._AAA, fontSize: 12, lineHeight: 17}}>{country}</Text>
                 </View>
                 <View style={{flex: 1,alignItems: 'flex-end', justifyContent:'center',height: 69}}>
-                    <Text style={{color: Colors._666, fontSize: 15, lineHeight: 21}}>{data}sdg</Text>
-                    <Text style={{color: Colors._AAA, fontSize: 12, lineHeight: 17}}>{data}d</Text>
+                    <Text style={{color: Colors._666, fontSize: 15, lineHeight: 21}}>{dpi_total_earning}</Text>
+                    <Text style={{color: Colors._AAA, fontSize: 12, lineHeight: 17}}>奖金</Text>
                 </View>
                 <View style={styles.list_row}>
                     <Image source={Images.set_more}
@@ -92,15 +96,6 @@ class RankList extends Component {
 
     render(){
         return(<View style={styles.rank_list}>
-            {/*{this.headerList()}*/}
-            {/*<ListView dataSource={this.state.dataSource}*/}
-                {/*renderRow={this.listRenderRow}/>*/}
-            {/*<PullListView*/}
-                {/*key="list"*/}
-                {/*ref={ (component) => this._pullToRefreshListView = component }*/}
-                {/*viewType={PullListView.constants.viewType.listView}*/}
-                {/*dataSource={this.state.dataSource}*/}
-                {/*renderRow={this.listRenderRow}/>*/}
             <UltimateListView
                 key={this.state.layout}
                 keyExtractor={(item, index) => `${this.state.layout} - ${item.race_id}`}
@@ -137,15 +132,16 @@ class RankList extends Component {
 
     refresh = (startFetch,abortFetch) => {
         getMainRank(data => {
-            router.log(data);
-            let items = data;
-            if(items.length>0){
-                this.setState({
-                    rankData: items
-                });
-                router.log(this.state.rankData)
-            }
+            let rows = data;
+            startFetch(rows,10);
+
+            this.setState({
+                rankData: data
+            });
         },(err) =>{
+            this.setState({
+                error: true
+            });
             abortFetch()
         })
     };
@@ -153,25 +149,19 @@ class RankList extends Component {
     loadMore = (startFetch,abortFetch) => {
         getMainRank(data => {
             router.log(data);
-            let items = data;
-            if(items.length>0){
-                this.setState({
-                    rankData: items
-                });
-                router.log(this.state.rankData)
-            }
-        },(err) =>{
+            let rows = data;
+            // router.log(rows.length);
+            startFetch(rows,10);
 
+            this.setState({
+                rankData: data
+            });
+            router.log(this.state.rankData)
+        },(err) =>{
+            abortFetch()
         })
     };
 
-    // headerList = () => {
-    //     return(<View style={{flexDirection: 'row',width: Metrics.screenWidth, backgroundColor: '#a23def'}}>
-    //         <View style={styles.list_header}><Text >排名</Text></View>
-    //         <View style={styles.list_header}><Text >姓名</Text></View>
-    //         <View style={styles.list_header}><Text >奖金</Text></View>
-    //     </View>)
-    // }
 }
 
 export default RankList;
