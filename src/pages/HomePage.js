@@ -330,7 +330,7 @@ class HomePage extends Component {
                             onPress={() => {
                                 umengEvent('home_ranking');
                                 // router.toDrawerRank()
-                                // router.toPokerRankPage()
+                                router.toPokerRacePage()
 
                             }}
                             style={[{marginRight: 53}, styles.item_center]}>

@@ -158,8 +158,7 @@ const styles = StyleSheet.create({
         height: 1,
         backgroundColor: Colors._ECE,
         marginLeft: 20,
-        marginRight: 17,
-        flex: 1
+        marginRight: 17
 
     },
     txtTime: {
