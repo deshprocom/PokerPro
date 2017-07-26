@@ -21,24 +21,25 @@ class RankList extends Component {
         });
         this.state = {
             dataSource: this._dataSource.cloneWithRows([]),
-            rankData: []
+            rankData: [],
+            rankListNextID: '0'
         };
     }
 
-    componentDidMount(){
-        getMainRank(data => {
-            // router.log(data);
-            let items = data;
-            if(items.length>0){
-                this.setState({
-                    rankData: items
-                });
-                // router.log(this.state.rankData)
-            }
-        },err =>{
-
-        })
-    }
+    // componentDidMount(){
+    //     getMainRank(data => {
+    //         // router.log(data);
+    //         let items = data;
+    //         if(items.length>0){
+    //             this.setState({
+    //                 rankData: items
+    //             });
+    //             // router.log(this.state.rankData)
+    //         }
+    //     },err =>{
+    //
+    //     })
+    // }
 
     rankNum = (rowID) => {
         if(rowID == 1){
@@ -131,12 +132,19 @@ class RankList extends Component {
     };
 
     refresh = (startFetch,abortFetch) => {
-        getMainRank(data => {
+        let body = {
+            next_id: '0'
+        };
+        getMainRank(body,data => {
+            let {next_id} = data;
             let rows = data;
+            // let next_id = parseInt(rankListNextID) + 1;
+            // router.log(next_id);
             startFetch(rows,10);
 
             this.setState({
-                rankData: data
+                rankData: data,
+                rankListNextID: next_id
             });
         },(err) =>{
             this.setState({
@@ -147,16 +155,20 @@ class RankList extends Component {
     };
 
     loadMore = (startFetch,abortFetch) => {
-        getMainRank(data => {
+        const {rankListNextID} = this.state;
+        let body = {
+          next_id: rankListNextID
+        };
+        getMainRank(body,data => {
             router.log(data);
+            let {next_id} = data;
             let rows = data;
-            // router.log(rows.length);
             startFetch(rows,10);
 
             this.setState({
-                rankData: data
+                rankData: data,
+                rankListNextID: next_id === 0 ?rankListNextID : next_id
             });
-            router.log(this.state.rankData)
         },(err) =>{
             abortFetch()
         })

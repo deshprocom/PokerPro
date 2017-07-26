@@ -64,7 +64,7 @@ export default {
     setAdrDefault: setAdrDefault,
     adrDelete: adrDelete,
     login_count: login_count,
-    players: 'players'
+    players_list: players_list
 
 }
 
@@ -168,6 +168,10 @@ export function news_list(body) {
     const {type_id, next_id} = body;
 
     return 'news/types/' + type_id + '?page_size=' + page_size + '&next_id=' + next_id;
+}
+export function players_list(body) {
+    const {next_id} = body;
+    return 'players?next_id=' + next_id;
 }
 export function player_info(body) {
     const {player_id} = body;
