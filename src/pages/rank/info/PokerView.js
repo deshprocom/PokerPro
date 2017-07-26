@@ -17,6 +17,45 @@ export default class PokerView extends Component {
             style={styles.page}>
             {this._topView()}
 
+            <Image
+                source={Images.home_avatar}
+                style={styles.avatar}/>
+
+            <View style={styles.viewName}>
+                <Text style={styles.name}>阿拉斯加卡德罗夫</Text>
+                <Text style={styles.location}>中国</Text>
+            </View>
+
+            <View style={styles.btnFocus}>
+                <Text style={styles.focus}>{I18n.t('rank_focus')}</Text>
+            </View>
+
+
+            <View style={styles.tabView}>
+                <View style={styles.tab}>
+                    <Text style={styles.tabValue}>NO.1</Text>
+                    <View style={styles.tabNameView}>
+                        <Text style={styles.tabName}>{I18n.t('rank_no')}</Text>
+                    </View>
+
+                </View>
+                <View style={styles.tab}>
+                    <Text style={styles.tabValue}>NO.1</Text>
+                    <View style={styles.tabNameView}>
+                        <Text style={styles.tabName}>{I18n.t('rank_number')}</Text>
+                    </View>
+
+                </View>
+                <View style={styles.tab}>
+                    <Text style={styles.tabValue}>NO.1</Text>
+                    <View style={styles.tabNameView}>
+                        <Text style={styles.tabName}>{I18n.t('rank_prize')}</Text>
+                    </View>
+
+                </View>
+
+            </View>
+
         </Image>)
     }
 
@@ -108,5 +147,78 @@ const styles = StyleSheet.create({
         width: 18,
         marginRight: 20,
         marginLeft: 10
+    },
+    avatar: {
+        height: 74,
+        width: 74,
+        position: 'absolute',
+        left: 20,
+        top: 84,
+        borderRadius: 37
+    },
+    name: {
+        fontSize: 15,
+        color: 'white',
+        fontWeight: 'bold'
+    },
+    location: {
+        fontSize: 14,
+        color: Colors._AAA,
+        marginTop: 8,
+        fontWeight: 'bold'
+    },
+    viewName: {
+        marginTop: 105,
+        marginLeft: 105,
+        backgroundColor: 'transparent'
+    },
+    btnFocus: {
+        height: 32,
+        width: 64,
+        borderRadius: 2,
+        borderWidth: 0.5,
+        borderColor: 'white',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+        top: 111,
+        right: 28
+    },
+    focus: {
+        color: 'white',
+        fontSize: 15,
+        backgroundColor: 'transparent'
+    },
+    tab: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    tabValue: {
+        color: Colors._CCC,
+        fontSize: 17,
+        fontWeight: 'bold'
+    },
+    tabName: {
+        fontSize: 12,
+        color: Colors._888,
+        fontWeight: 'bold'
+    },
+    tabNameView: {
+        height: 20,
+        width: 50,
+        backgroundColor: '#282828',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 18,
+        marginTop: 12
+    },
+    tabView: {
+        height: 80,
+        flexDirection: 'row',
+        backgroundColor: 'transparent',
+        marginTop: 40
     }
+
+
 });
