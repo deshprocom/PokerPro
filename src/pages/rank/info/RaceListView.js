@@ -35,7 +35,11 @@ export default class RaceListView extends Component {
 
     _itemNewsView = (rowData, sectionID, rowID) => {
 
-        return (<View>
+        return (<TouchableOpacity
+            activeOpacity={1}
+            onPress={() => {
+                router.toPokerRacePage();
+            }}>
 
             <View style={{height: 6}}/>
 
@@ -88,7 +92,7 @@ export default class RaceListView extends Component {
                     <View style={[styles.viewTime, {marginTop: 8}]}>
                         <Image
                             source={Images.home_adr}
-                            style={{height: 12, width: 9, marginRight: 8}}/>
+                            style={{height: 12, width: 9, marginRight: 10}}/>
 
                         <Text
                             numberOfLines={1}
@@ -97,7 +101,7 @@ export default class RaceListView extends Component {
                 </View>
 
             </View>
-        </View>)
+        </TouchableOpacity>)
     };
 
     onFetch = (page = 1, startFetch, abortFetch) => {
@@ -152,14 +156,13 @@ const styles = StyleSheet.create({
         color: Colors._888,
         fontSize: 15,
         fontWeight: 'bold',
-        marginTop:8
+        marginTop: 8
     },
     line: {
         height: 1,
         backgroundColor: Colors._ECE,
         marginLeft: 20,
-        marginRight: 17,
-        flex: 1
+        marginRight: 17
 
     },
     txtTime: {

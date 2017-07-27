@@ -94,7 +94,7 @@ export default class PokerView extends Component {
                     style={styles.topBtn}
                     activeOpacity={1}>
                     <Image
-                        source={Images.match_share}
+                        source={Images.share}
                         style={styles.imgShare}/>
                 </TouchableOpacity>
             </View>
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     },
     imgShare: {
         height: 23,
-        width: 18,
+        width: 22,
         marginRight: 20,
         marginLeft: 10
     },
