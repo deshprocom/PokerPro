@@ -128,11 +128,14 @@ export default class Router {
         this.navigator.popToTop();
     }
 
-    toPokerRacePage(props){
+    toPokerRacePage(props,race_id){
         this.push(props, {
             page: PokerRacePage,
             name: 'PokerRacePage',
-            sceneConfig: customFloatFromRight
+            sceneConfig: customFloatFromRight,
+            params:{
+                race_id:race_id
+            }
 
         })
     }

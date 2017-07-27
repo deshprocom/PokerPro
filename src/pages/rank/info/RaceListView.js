@@ -52,7 +52,7 @@ export default class RaceListView extends Component {
         return (<TouchableOpacity
             activeOpacity={1}
             onPress={() => {
-                router.toPokerRacePage();
+                router.toPokerRacePage(race_id);
             }}>
 
             <View style={{height: 6}}/>
