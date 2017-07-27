@@ -20,6 +20,7 @@ export default class RaceListView extends Component {
     render() {
         return (<UltimateListView
             refreshable={false}
+            pagination={false}
             ref={(ref) => this.listView = ref}
             onFetch={this.onFetch}
             legacyImplementation
@@ -27,7 +28,7 @@ export default class RaceListView extends Component {
             refreshableTitlePull={I18n.t('pull_refresh')}
             refreshableTitleRelease={I18n.t('release_refresh')}
             dateTitle={I18n.t('last_refresh')}
-            allLoadedText={''}
+            allLoadedText={I18n.t('no_more')}
             waitingSpinnerText={I18n.t('loading')}
             emptyView={() => {
                 return this.state.error ? <LoadErrorView

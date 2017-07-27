@@ -15,7 +15,7 @@ import {NoDataView, LoadErrorView} from '../../../components/load';
 export default class RankListView extends Component {
     render() {
         return (
-            <View>
+            <View style={{flex: 1}}>
 
                 <View style={styles.tableHead}>
                     <Text style={styles.tableTitle}>{I18n.t('rank_no')}</Text>
@@ -25,6 +25,8 @@ export default class RankListView extends Component {
                 </View>
 
                 <UltimateListView
+                    refreshable={false}
+                    pagination={false}
                     ref={(ref) => this.listView = ref}
                     onFetch={this.onFetch}
                     legacyImplementation
@@ -46,18 +48,21 @@ export default class RankListView extends Component {
 
     _itemNewsView = (rowData, sectionID, rowID) => {
 
+        const {earning, player, ranking, score} = rowData;
         return (<View style={[styles.item, {backgroundColor: rowID % 2 === 0 ? 'white' : '#F5F5F5'}]}>
-            <Text style={styles.txtItem}>{I18n.t('rank_no')}</Text>
-            <Text style={styles.txtPoker}>{I18n.t('contestant')}</Text>
-            <Text style={styles.txtItem}>{I18n.t('rank_prize')}</Text>
-            <Text style={styles.txtItem}>{I18n.t('rank_number')}</Text>
+            <Text style={styles.txtItem}>{ranking}</Text>
+            <Text style={styles.txtPoker}>{player.name}</Text>
+            <Text style={styles.txtItem}>{earning}</Text>
+            <Text style={styles.txtItem}>{score}</Text>
         </View>)
 
     };
 
     onFetch = (page = 1, startFetch, abortFetch) => {
         if (page === 1)
-            startFetch([1, 2, 3, 4], 5)
+            startFetch(this.props.ranks, 10);
+        else
+            abortFetch()
     }
 }
 
