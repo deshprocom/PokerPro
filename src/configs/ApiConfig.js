@@ -83,7 +83,7 @@ const page_size = 10;
 
 export function player_focus(body) {
     const {player_id} = body;
-    return 'players/' + player_id + '/follow'
+    return 'players/' + player_id + '/follow'
 }
 
 export function login_count() {
