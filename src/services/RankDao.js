@@ -5,8 +5,8 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 // 排行榜
-export function getMainRank(resolve,reject) {
-    helper.get(Api.players,(ret) => {
+export function getMainRank(body,resolve,reject) {
+    helper.get(Api.players_list(body),(ret) => {
         resolve(ret.data)
     },reject)
 }
