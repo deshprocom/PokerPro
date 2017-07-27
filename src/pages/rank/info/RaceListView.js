@@ -11,10 +11,15 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import I18n from 'react-native-i18n';
 import {UltimateListView} from '../../../components';
 import {NoDataView, LoadErrorView} from '../../../components/load';
+import {getPokerRanks} from '../../../services/RankDao';
+import {convertDate, YYYY_MM_DD} from '../../../utils/ComonHelper';
 
 export default class RaceListView extends Component {
+
+
     render() {
         return (<UltimateListView
+            refreshable={false}
             ref={(ref) => this.listView = ref}
             onFetch={this.onFetch}
             legacyImplementation
@@ -22,7 +27,7 @@ export default class RaceListView extends Component {
             refreshableTitlePull={I18n.t('pull_refresh')}
             refreshableTitleRelease={I18n.t('release_refresh')}
             dateTitle={I18n.t('last_refresh')}
-            allLoadedText={I18n.t('no_more')}
+            allLoadedText={''}
             waitingSpinnerText={I18n.t('loading')}
             emptyView={() => {
                 return this.state.error ? <LoadErrorView
@@ -33,8 +38,17 @@ export default class RaceListView extends Component {
         />)
     }
 
+    _time = (begin, end) => {
+        let beginDate = convertDate(begin, YYYY_MM_DD);
+        let endDate = convertDate(end, YYYY_MM_DD);
+        return beginDate + '-' + endDate;
+    };
+
     _itemNewsView = (rowData, sectionID, rowID) => {
 
+        const {race, rank} = rowData;
+        const {begin_date, end_date, location, name, participants, ticket_price, race_id} = race;
+        const {earning, ranking, score} = rank;
         return (<TouchableOpacity
             activeOpacity={1}
             onPress={() => {
@@ -45,11 +59,11 @@ export default class RaceListView extends Component {
 
             <View style={{backgroundColor: 'white'}}>
                 <View style={styles.viewTop}>
-                    <Text style={styles.name}>2017年扑克王杯</Text>
+                    <Text style={styles.name}>{name}</Text>
                     <View style={{flex: 1}}/>
 
                     <View style={styles.viewRank}>
-                        <Text style={styles.rank}>第12名</Text>
+                        <Text style={styles.rank}>第{ranking}名</Text>
                     </View>
 
                 </View>
@@ -57,22 +71,22 @@ export default class RaceListView extends Component {
                 <View style={styles.viewInfo}>
                     <View style={styles.viewItem}>
                         <Text style={styles.txtTabName}>{I18n.t('rank_buyIn')}</Text>
-                        <Text style={styles.txtTabValue}>$223422</Text>
+                        <Text style={styles.txtTabValue}>{ticket_price}</Text>
 
                     </View>
                     <View style={styles.viewItem}>
                         <Text style={styles.txtTabName}>{I18n.t('rank_participate')}</Text>
-                        <Text style={styles.txtTabValue}>$223422</Text>
+                        <Text style={styles.txtTabValue}>{participants}</Text>
 
                     </View>
                     <View style={styles.viewItem}>
                         <Text style={styles.txtTabName}>{I18n.t('rank_prize')}</Text>
-                        <Text style={styles.txtTabValue}>$223422</Text>
+                        <Text style={styles.txtTabValue}>{earning}</Text>
 
                     </View>
                     <View style={styles.viewItem}>
                         <Text style={styles.txtTabName}>{I18n.t('rank_number')}</Text>
-                        <Text style={styles.txtTabValue}>$223422</Text>
+                        <Text style={styles.txtTabValue}>{score}</Text>
 
                     </View>
 
@@ -87,7 +101,7 @@ export default class RaceListView extends Component {
                             source={Images.home_clock}
                             style={{height: 11, width: 11, marginRight: 8}}/>
 
-                        <Text style={styles.txtTime}>2017.04.23-2017.05.12</Text>
+                        <Text style={styles.txtTime}>{this._time(begin_date, end_date)}</Text>
                     </View>
                     <View style={[styles.viewTime, {marginTop: 8}]}>
                         <Image
@@ -96,7 +110,7 @@ export default class RaceListView extends Component {
 
                         <Text
                             numberOfLines={1}
-                            style={styles.txtTime}>澳大利亚墨尔本皇冠娱乐场澳大是寿...</Text>
+                            style={styles.txtTime}>{location}</Text>
                     </View>
                 </View>
 
@@ -105,8 +119,17 @@ export default class RaceListView extends Component {
     };
 
     onFetch = (page = 1, startFetch, abortFetch) => {
-        if (page === 1)
-            startFetch([1, 2, 3, 4], 5)
+        if (page === 1) {
+            const body = {
+                player_id: '4bbd9cc2'
+            };
+            getPokerRanks(body, data => {
+                startFetch(data, 10)
+            }, err => {
+                abortFetch()
+            })
+        }
+
     }
 }
 

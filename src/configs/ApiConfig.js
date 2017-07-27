@@ -64,7 +64,8 @@ export default {
     setAdrDefault: setAdrDefault,
     adrDelete: adrDelete,
     login_count: login_count,
-    players_list: players_list
+    players_list: players_list,
+    poker_ranks: poker_ranks
 
 }
 
@@ -176,6 +177,11 @@ export function players_list(body) {
 export function player_info(body) {
     const {player_id} = body;
     return 'players/' + player_id;
+}
+
+export function poker_ranks(body) {
+    const {player_id} = body;
+    return 'players/' + player_id + '/ranks';
 }
 
 export function sub_race_info(body) {
