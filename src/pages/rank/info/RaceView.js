@@ -101,6 +101,11 @@ export default class RaceView extends Component {
             </TouchableOpacity>
 
             <TouchableOpacity
+                onPress={
+                    () => {
+                        router.popToTop();
+                    }
+                }
                 testID="btn_bar_close"
                 style={styles.topBtn}
                 activeOpacity={1}>

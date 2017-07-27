@@ -18,8 +18,9 @@ export default class PokerView extends Component {
     };
 
     componentDidMount() {
+        const {playerId} = this.props;
         const body = {
-            player_id: '4bbd9cc2'
+            player_id: playerId
         };
         playerInfo(body, data => {
             this.setState({
@@ -32,7 +33,7 @@ export default class PokerView extends Component {
 
 
     render() {
-        const {name,country,avatar,dpi_total_earning,dpi_total_score} = this.state.poker;
+        const {name, country, avatar, dpi_total_earning, dpi_total_score} = this.state.poker;
         return (<Image
             source={Images.rank_bg}
             style={styles.page}>
@@ -96,6 +97,11 @@ export default class PokerView extends Component {
             </TouchableOpacity>
 
             <TouchableOpacity
+                onPress={
+                    () => {
+                        router.popToTop();
+                    }
+                }
                 testID="btn_bar_close"
                 style={styles.topBtn}
                 activeOpacity={1}>

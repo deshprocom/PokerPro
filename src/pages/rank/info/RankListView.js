@@ -49,12 +49,18 @@ export default class RankListView extends Component {
     _itemNewsView = (rowData, sectionID, rowID) => {
 
         const {earning, player, ranking, score} = rowData;
-        return (<View style={[styles.item, {backgroundColor: rowID % 2 === 0 ? 'white' : '#F5F5F5'}]}>
+        return (<TouchableOpacity
+            onPress={
+                () => {
+                    router.toPokerRankPage(this.props, player.player_id)
+                }}
+            activeOpacity={1}
+            style={[styles.item, {backgroundColor: rowID % 2 === 0 ? 'white' : '#F5F5F5'}]}>
             <Text style={styles.txtItem}>{ranking}</Text>
             <Text style={styles.txtPoker}>{player.name}</Text>
             <Text style={styles.txtItem}>{earning}</Text>
             <Text style={styles.txtItem}>{score}</Text>
-        </View>)
+        </TouchableOpacity>)
 
     };
 

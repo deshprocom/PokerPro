@@ -128,23 +128,26 @@ export default class Router {
         this.navigator.popToTop();
     }
 
-    toPokerRacePage(props,race_id){
+    toPokerRacePage(props, race_id) {
         this.push(props, {
             page: PokerRacePage,
             name: 'PokerRacePage',
             sceneConfig: customFloatFromRight,
-            params:{
-                race_id:race_id
+            params: {
+                race_id: race_id
             }
 
         })
     }
 
-    toPokerRankPage(props){
+    toPokerRankPage(props, player_id) {
         this.push(props, {
             page: PokerRankPage,
             name: 'PokerRankPage',
-            sceneConfig: customFloatFromRight
+            sceneConfig: customFloatFromRight,
+            params: {
+                player_id: player_id
+            }
 
         })
     }
@@ -539,7 +542,7 @@ export default class Router {
         })
     }
 
-    toFocusPlayer(props){
+    toFocusPlayer(props) {
         this.push(props, {
             page: FocusPlayer,
             name: 'FocusPlayer',
@@ -654,7 +657,6 @@ export default class Router {
             sceneConfig: customFloatFromRight,
         })
     }
-
 
     popToLogin() {
         let routes = this.navigator.getCurrentRoutes();
