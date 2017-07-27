@@ -18,6 +18,15 @@ class FiltePage extends Component {
         this.checkScore.cancelBtn();
     };
 
+    _sureSendType =() => {
+        let a = this.checkArr.sureBtn();
+        let b = this.checkDay.sureBtn();
+        let c = this.checkScore.sureBtn();
+        let arr =[];
+        router.log(a,b,c);
+        this.props.cancelDrawer();
+    };
+
     render(){
         return(<View style={styles.view_bg}>
             <ScrollView style={{marginTop: 41,paddingRight: 20, paddingLeft: 36}}>
@@ -36,7 +45,7 @@ class FiltePage extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity style={[{backgroundColor: Colors._161817,marginLeft: 48},styles.side_btn]}>
                     <Text style={{fontSize: 15,color: Colors.text_choice_btn}}
-                          onPress={() => this.props.cancelDrawer()}>确定</Text>
+                          onPress={() => this._sureSendType()}>确定</Text>
                 </TouchableOpacity>
             </View>
         </View>)

@@ -329,7 +329,7 @@ class HomePage extends Component {
                             testID="btn_home_sort"
                             onPress={() => {
                                 umengEvent('home_ranking');
-                                // router.toDrawerRank()
+                                 router.toDrawerRank()
                                 // router.toPokerRankPage()
 
                             }}
