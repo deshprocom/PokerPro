@@ -275,7 +275,7 @@ function recent_races(body) {
 
 function races_info(body) {
     const {user_id, race_id} = body;
-    return 'u/' + user_id + '/races/' + race_id;
+    return 'u/' + getUserId() + '/races/' + race_id;
 }
 
 function new_order(race_id) {
