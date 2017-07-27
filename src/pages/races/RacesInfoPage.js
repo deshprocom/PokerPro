@@ -119,7 +119,7 @@ class RacesInfoPage extends Component {
                                     this.props.params.race_id)
                             }}>
                             <Image style={styles.imgShare}
-                                   source={Images.match_share}/>
+                                   source={Images.share}/>
                         </TouchableOpacity>
 
 
@@ -589,9 +589,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     imgShare: {
-        height: 23,
-        width: 18,
-        marginLeft: 15
+        height: 22,
+        width: 23,
+        marginRight: 24.8
     }
 
 
