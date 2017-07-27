@@ -9,8 +9,18 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
+import {playerInfo} from '../../../services/AccountDao';
 
 export default class PokerView extends Component {
+
+    state = {
+        poker: {}
+    };
+
+    componentDidMount(){
+
+    }
+
     render() {
         return (<Image
             source={Images.rank_bg}

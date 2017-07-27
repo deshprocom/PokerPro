@@ -204,7 +204,7 @@ class HomePage extends Component {
         return (
 
             <View
-                style={ {flex: 1, backgroundColor: '#ececee'}}
+                style={ApplicationStyles.bgContainer}
                 testID="home_page">
 
                 <View style={[styles.topBar, {backgroundColor: 'rgba(0,0,0,' + opacity + ')'}]}>
@@ -242,11 +242,11 @@ class HomePage extends Component {
 
                 </View>
                 <ParallaxScrollView
+                    contentBackgroundColor="#ECECEE"
                     fadeOutForeground={false}
                     fadeOutBackground={false}
                     renderBackground={() => <View style={{
                         height: 300, width: Metrics.screenWidth,
-                        backgroundColor: 'white'
                     }}>
                         <Image
                             style={styles.homeImg}
@@ -291,56 +291,57 @@ class HomePage extends Component {
 
 
                     {/*功能模块*/}
-                    <View style={styles.menu}>
-                        <TouchableOpacity
-                            testID="btn_home_ticket"
-                            onPress={() => {
-                                umengEvent('home_ticket');
-                                router.toTicketPage()
-                            }}
-                            style={[{marginLeft: 53}, styles.item_center]}>
-                            <Image style={styles.gif_fuc}
-                                   source={Images.home_ticket1}/>
-                            <Text style={styles.txtMenu}>{I18n.t('home_ticket')}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            testID="btn_home_news"
-                            onPress={() => {
-                                umengEvent('home_news');
-                                router.toMainNewsPage()
-                            }}
-                            style={styles.item_center}>
-                            <Image style={styles.gif_fuc}
-                                   source={Images.home_news}/>
-                            <Text style={styles.txtMenu}>{I18n.t('home_info')}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            testID="btn_home_video"
-                            onPress={() => {
-                                umengEvent('home_videos');
-                                router.toVideoPage()
-                            }}
-                            style={styles.item_center}>
-                            <Image style={styles.gif_fuc}
-                                   source={Images.home_video1}/>
-                            <Text style={styles.txtMenu}>{I18n.t('home_video')}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            testID="btn_home_sort"
-                            onPress={() => {
-                                umengEvent('home_ranking');
-                                // router.toDrawerRank()
-                                router.toPokerRankPage()
+                    <View style={{backgroundColor: 'white'}}>
+                        <View style={styles.menu}>
+                            <TouchableOpacity
+                                testID="btn_home_ticket"
+                                onPress={() => {
+                                    umengEvent('home_ticket');
+                                    router.toTicketPage()
+                                }}
+                                style={[{marginLeft: 53}, styles.item_center]}>
+                                <Image style={styles.gif_fuc}
+                                       source={Images.home_ticket1}/>
+                                <Text style={styles.txtMenu}>{I18n.t('home_ticket')}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                testID="btn_home_news"
+                                onPress={() => {
+                                    umengEvent('home_news');
+                                    router.toMainNewsPage()
+                                }}
+                                style={styles.item_center}>
+                                <Image style={styles.gif_fuc}
+                                       source={Images.home_news}/>
+                                <Text style={styles.txtMenu}>{I18n.t('home_info')}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                testID="btn_home_video"
+                                onPress={() => {
+                                    umengEvent('home_videos');
+                                    router.toVideoPage()
+                                }}
+                                style={styles.item_center}>
+                                <Image style={styles.gif_fuc}
+                                       source={Images.home_video1}/>
+                                <Text style={styles.txtMenu}>{I18n.t('home_video')}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                testID="btn_home_sort"
+                                onPress={() => {
+                                    umengEvent('home_ranking');
+                                    // router.toDrawerRank()
+                                    router.toPokerRankPage()
 
-                            }}
-                            style={[{marginRight: 53}, styles.item_center]}>
-                            <Image style={styles.gif_fuc}
-                                   source={Images.home_sort1}/>
-                            <Text style={styles.txtMenu}>{I18n.t('home_sort')}</Text>
-                        </TouchableOpacity>
+                                }}
+                                style={[{marginRight: 53}, styles.item_center]}>
+                                <Image style={styles.gif_fuc}
+                                       source={Images.home_sort1}/>
+                                <Text style={styles.txtMenu}>{I18n.t('home_sort')}</Text>
+                            </TouchableOpacity>
 
+                        </View>
                     </View>
-
 
                     <View style={styles.viewRace}>
                         <View style={styles.viewRecent}>
