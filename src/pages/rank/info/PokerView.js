@@ -33,14 +33,15 @@ export default class PokerView extends Component {
 
 
     render() {
-        const {name, country, avatar, dpi_total_earning, dpi_total_score} = this.state.poker;
+        const {name, country, avatar, dpi_total_earning, dpi_total_score,ranking,followed} = this.state.poker;
         return (<Image
             source={Images.rank_bg}
             style={styles.page}>
             {this._topView()}
 
             <Image
-                source={Images.home_avatar}
+                defaultSource={Images.home_avatar}
+                source={{uri: avatar}}
                 style={styles.avatar}/>
 
             <View style={styles.viewName}>
@@ -49,13 +50,13 @@ export default class PokerView extends Component {
             </View>
 
             <View style={styles.btnFocus}>
-                <Text style={styles.focus}>{I18n.t('rank_focus')}</Text>
+                <Text style={styles.focus}>{followed?I18n.t('rank_focused'):I18n.t('rank_focus')}</Text>
             </View>
 
 
             <View style={styles.tabView}>
                 <View style={styles.tab}>
-                    <Text style={styles.tabValue}>NO.1</Text>
+                    <Text style={styles.tabValue}>NO.{ranking}</Text>
                     <View style={styles.tabNameView}>
                         <Text style={styles.tabName}>{I18n.t('rank_no')}</Text>
                     </View>
