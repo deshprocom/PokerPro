@@ -64,7 +64,9 @@ export default {
     setAdrDefault: setAdrDefault,
     adrDelete: adrDelete,
     login_count: login_count,
-    players_list: players_list
+    players_list: players_list,
+    poker_ranks: poker_ranks,
+    player_focus: player_focus
 
 }
 
@@ -77,6 +79,12 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+
+export function player_focus(body) {
+    const {player_id} = body;
+    return 'players/' + player_id + '/follow'
+}
 
 export function login_count() {
     return 'users/' + getUserId() + '/login_count';
@@ -178,6 +186,11 @@ export function player_info(body) {
     return 'players/' + player_id;
 }
 
+export function poker_ranks(body) {
+    const {player_id} = body;
+    return 'players/' + player_id + '/ranks';
+}
+
 export function sub_race_info(body) {
     const {race_id_1, race_id_2} = body;
     return 'races/' + race_id_1 + '/sub_races/' + race_id_2;
@@ -269,7 +282,7 @@ function recent_races(body) {
 
 function races_info(body) {
     const {user_id, race_id} = body;
-    return 'u/' + user_id + '/races/' + race_id;
+    return 'u/' + getUserId() + '/races/' + race_id;
 }
 
 function new_order(race_id) {
