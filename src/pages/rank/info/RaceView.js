@@ -107,7 +107,7 @@ export default class RaceView extends Component {
                     style={styles.topBtn}
                     activeOpacity={1}>
                     <Image
-                        source={Images.match_share}
+                        source={Images.share}
                         style={styles.imgShare}/>
                 </TouchableOpacity>
             </View>
@@ -147,8 +147,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row-reverse'
     },
     imgShare: {
-        height: 23,
-        width: 18,
+        height: 22,
+        width: 22,
         marginRight: 20,
         marginLeft: 10
     },
