@@ -10,22 +10,32 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import {ImageLoad} from '../../../components';
 import I18n from 'react-native-i18n';
+import {convertDate, YYYY_MM_DD} from '../../../utils/ComonHelper';
 
 export default class RaceView extends Component {
+
+
+    _time = (begin, end) => {
+        let beginDate = convertDate(begin, YYYY_MM_DD);
+        let endDate = convertDate(end, YYYY_MM_DD);
+        return beginDate + '-' + endDate;
+    };
+
     render() {
+        const {begin_date, end_date, logo, prize, ticket_price, location, name} = this.props.race;
         return (<View>
             {this._topView()}
             <View style={styles.page}>
                 <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
                     <ImageLoad
-                        source={{uri: ''}}
+                        source={{uri: logo}}
                         style={styles.imgRace}/>
 
                     <View style={{marginLeft: 15, marginRight: 15, flex: 1}}>
 
                         <Text
                             numberOfLines={2}
-                            style={styles.name}>无限注德州扑克锦标赛#3拉开就收到两份健康阿里空间啊说 啊三六九等发生的法律是独家开发 </Text>
+                            style={styles.name}>{name}</Text>
 
                         <View style={{flex: 1}}/>
                         <View>
@@ -35,7 +45,7 @@ export default class RaceView extends Component {
                                     source={Images.home_clock}
                                     style={{height: 11, width: 11, marginRight: 8}}/>
 
-                                <Text style={styles.txtTime}>2017.04.23-2017.05.12</Text>
+                                <Text style={styles.txtTime}>{this._time(begin_date, end_date)}</Text>
                             </View>
                             <View style={[styles.viewTime, {marginTop: 8}]}>
                                 <Image
@@ -44,7 +54,7 @@ export default class RaceView extends Component {
 
                                 <Text
                                     numberOfLines={1}
-                                    style={styles.txtTime}>澳大利亚墨尔本皇冠娱乐场澳大是寿阿克苏就会觉得开放后</Text>
+                                    style={styles.txtTime}>{location}</Text>
                             </View>
                         </View>
                     </View>
@@ -54,7 +64,7 @@ export default class RaceView extends Component {
                 <View style={styles.viewInfo}>
                     <View style={styles.viewItem}>
                         <Text style={styles.txtTabName}>{I18n.t('rank_buyIn')}</Text>
-                        <Text style={styles.txtTabValue}>$223422</Text>
+                        <Text style={styles.txtTabValue}>{ticket_price}</Text>
 
                     </View>
                     <View style={styles.viewItem}>
@@ -64,7 +74,7 @@ export default class RaceView extends Component {
                     </View>
                     <View style={styles.viewItem}>
                         <Text style={styles.txtTabName}>{I18n.t('rank_prize')}</Text>
-                        <Text style={styles.txtTabValue}>$223422</Text>
+                        <Text style={styles.txtTabValue}>{prize}</Text>
 
                     </View>
 
@@ -91,6 +101,11 @@ export default class RaceView extends Component {
             </TouchableOpacity>
 
             <TouchableOpacity
+                onPress={
+                    () => {
+                        router.popToTop();
+                    }
+                }
                 testID="btn_bar_close"
                 style={styles.topBtn}
                 activeOpacity={1}>
@@ -148,7 +163,7 @@ const styles = StyleSheet.create({
     },
     imgShare: {
         height: 22,
-        width: 22,
+        width: 23,
         marginRight: 20,
         marginLeft: 10
     },

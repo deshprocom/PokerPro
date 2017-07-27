@@ -11,3 +11,9 @@ export function getMainRank(body,resolve,reject) {
     },reject)
 }
 
+export function getPokerRanks(body, resolve, reject) {
+    helper.get(Api.poker_ranks(body),(ret) => {
+        resolve(ret.data)
+    },reject)
+}
+

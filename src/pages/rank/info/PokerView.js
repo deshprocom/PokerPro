@@ -9,9 +9,31 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
+import {playerInfo} from '../../../services/AccountDao';
 
 export default class PokerView extends Component {
+
+    state = {
+        poker: {}
+    };
+
+    componentDidMount() {
+        const {playerId} = this.props;
+        const body = {
+            player_id: playerId
+        };
+        playerInfo(body, data => {
+            this.setState({
+                poker: data
+            })
+        }, err => {
+
+        })
+    }
+
+
     render() {
+        const {name, country, avatar, dpi_total_earning, dpi_total_score} = this.state.poker;
         return (<Image
             source={Images.rank_bg}
             style={styles.page}>
@@ -22,8 +44,8 @@ export default class PokerView extends Component {
                 style={styles.avatar}/>
 
             <View style={styles.viewName}>
-                <Text style={styles.name}>阿拉斯加卡德罗夫</Text>
-                <Text style={styles.location}>中国</Text>
+                <Text style={styles.name}>{name}</Text>
+                <Text style={styles.location}>{country}</Text>
             </View>
 
             <View style={styles.btnFocus}>
@@ -40,14 +62,14 @@ export default class PokerView extends Component {
 
                 </View>
                 <View style={styles.tab}>
-                    <Text style={styles.tabValue}>NO.1</Text>
+                    <Text style={styles.tabValue}>{dpi_total_score}</Text>
                     <View style={styles.tabNameView}>
                         <Text style={styles.tabName}>{I18n.t('rank_number')}</Text>
                     </View>
 
                 </View>
                 <View style={styles.tab}>
-                    <Text style={styles.tabValue}>NO.1</Text>
+                    <Text style={styles.tabValue}>{dpi_total_earning}</Text>
                     <View style={styles.tabNameView}>
                         <Text style={styles.tabName}>{I18n.t('rank_prize')}</Text>
                     </View>
@@ -60,6 +82,7 @@ export default class PokerView extends Component {
     }
 
     _topView = () => {
+        const {name} = this.state.poker;
         return (<View style={styles.topBar}>
 
             <TouchableOpacity
@@ -74,6 +97,11 @@ export default class PokerView extends Component {
             </TouchableOpacity>
 
             <TouchableOpacity
+                onPress={
+                    () => {
+                        router.popToTop();
+                    }
+                }
                 testID="btn_bar_close"
                 style={styles.topBtn}
                 activeOpacity={1}>
@@ -85,7 +113,7 @@ export default class PokerView extends Component {
             <View style={{flex: 1}}/>
             <Text
                 numberOfLines={1}
-                style={styles.title}>阿斯顿发</Text>
+                style={styles.title}>{name}</Text>
             <View style={{flex: 1}}/>
 
             <View style={styles.right}>
@@ -143,8 +171,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row-reverse'
     },
     imgShare: {
-        height: 23,
-        width: 22,
+        height: 22,
+        width: 23,
         marginRight: 20,
         marginLeft: 10
     },
