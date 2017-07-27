@@ -17,11 +17,22 @@ export default class PokerView extends Component {
         poker: {}
     };
 
-    componentDidMount(){
+    componentDidMount() {
+        const body = {
+            player_id: '4bbd9cc2'
+        };
+        playerInfo(body, data => {
+            this.setState({
+                poker: data
+            })
+        }, err => {
 
+        })
     }
 
+
     render() {
+        const {name,country,avatar,dpi_total_earning,dpi_total_score} = this.state.poker;
         return (<Image
             source={Images.rank_bg}
             style={styles.page}>
@@ -32,8 +43,8 @@ export default class PokerView extends Component {
                 style={styles.avatar}/>
 
             <View style={styles.viewName}>
-                <Text style={styles.name}>阿拉斯加卡德罗夫</Text>
-                <Text style={styles.location}>中国</Text>
+                <Text style={styles.name}>{name}</Text>
+                <Text style={styles.location}>{country}</Text>
             </View>
 
             <View style={styles.btnFocus}>
@@ -50,14 +61,14 @@ export default class PokerView extends Component {
 
                 </View>
                 <View style={styles.tab}>
-                    <Text style={styles.tabValue}>NO.1</Text>
+                    <Text style={styles.tabValue}>{dpi_total_score}</Text>
                     <View style={styles.tabNameView}>
                         <Text style={styles.tabName}>{I18n.t('rank_number')}</Text>
                     </View>
 
                 </View>
                 <View style={styles.tab}>
-                    <Text style={styles.tabValue}>NO.1</Text>
+                    <Text style={styles.tabValue}>{dpi_total_earning}</Text>
                     <View style={styles.tabNameView}>
                         <Text style={styles.tabName}>{I18n.t('rank_prize')}</Text>
                     </View>
@@ -70,6 +81,7 @@ export default class PokerView extends Component {
     }
 
     _topView = () => {
+        const {name} = this.state.poker;
         return (<View style={styles.topBar}>
 
             <TouchableOpacity
@@ -95,7 +107,7 @@ export default class PokerView extends Component {
             <View style={{flex: 1}}/>
             <Text
                 numberOfLines={1}
-                style={styles.title}>阿斯顿发</Text>
+                style={styles.title}>{name}</Text>
             <View style={{flex: 1}}/>
 
             <View style={styles.right}>
