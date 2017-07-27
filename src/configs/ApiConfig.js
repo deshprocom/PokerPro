@@ -65,7 +65,8 @@ export default {
     adrDelete: adrDelete,
     login_count: login_count,
     players_list: players_list,
-    poker_ranks: poker_ranks
+    poker_ranks: poker_ranks,
+    player_focus: player_focus
 
 }
 
@@ -78,6 +79,12 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+
+export function player_focus(body) {
+    const {player_id} = body;
+    return 'players/' + player_id + '/follow'
+}
 
 export function login_count() {
     return 'users/' + getUserId() + '/login_count';

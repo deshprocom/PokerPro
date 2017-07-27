@@ -10,11 +10,13 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 import {playerInfo} from '../../../services/AccountDao';
+import {postFocus, deleteFocus} from '../../../services/RankDao';
 
 export default class PokerView extends Component {
 
     state = {
-        poker: {}
+        poker: {},
+        followed: false
     };
 
     componentDidMount() {
@@ -24,7 +26,8 @@ export default class PokerView extends Component {
         };
         playerInfo(body, data => {
             this.setState({
-                poker: data
+                poker: data,
+                followed: data.followed
             })
         }, err => {
 
@@ -32,8 +35,33 @@ export default class PokerView extends Component {
     }
 
 
+    _btnFocus = () => {
+        const {playerId} = this.props;
+        const {followed} = this.state;
+        const body = {
+            player_id: playerId
+        };
+
+        if (followed) {
+            deleteFocus(body, data => {
+                this.setState({
+                    followed: !followed
+                })
+            }, err => {
+            })
+        } else
+            postFocus(body, data => {
+                this.setState({
+                    followed: !followed
+                })
+            }, err => {
+            })
+
+    };
+
+
     render() {
-        const {name, country, avatar, dpi_total_earning, dpi_total_score,ranking,followed} = this.state.poker;
+        const {name, country, avatar, dpi_total_earning, dpi_total_score, ranking} = this.state.poker;
         return (<Image
             source={Images.rank_bg}
             style={styles.page}>
@@ -49,9 +77,12 @@ export default class PokerView extends Component {
                 <Text style={styles.location}>{country}</Text>
             </View>
 
-            <View style={styles.btnFocus}>
-                <Text style={styles.focus}>{followed?I18n.t('rank_focused'):I18n.t('rank_focus')}</Text>
-            </View>
+            <TouchableOpacity
+                activeOpacity={1}
+                onPress={this._btnFocus}
+                style={styles.btnFocus}>
+                <Text style={styles.focus}>{this.state.followed ? I18n.t('rank_focused') : I18n.t('rank_focus')}</Text>
+            </TouchableOpacity>
 
 
             <View style={styles.tabView}>
