@@ -22,10 +22,6 @@ class RankCheck extends Component {
         }
     }
 
-    getArr = ()=>{
-        return this.state.itemArr;
-    };
-
     componentWillMount(checkData){
         let length= this.props.checkData.length;
         let arr = [];

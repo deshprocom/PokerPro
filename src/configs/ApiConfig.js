@@ -170,8 +170,8 @@ export function news_list(body) {
     return 'news/types/' + type_id + '?page_size=' + page_size + '&next_id=' + next_id;
 }
 export function players_list(body) {
-    const {next_id} = body;
-    return 'players?next_id=' + next_id;
+    const {page_index, region, year} = body;
+    return 'players?page_index=' + page_index + '&region=' + region + '&year=' + year;
 }
 export function player_info(body) {
     const {player_id} = body;
