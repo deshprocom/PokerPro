@@ -5,6 +5,7 @@ import I18n from 'react-native-i18n';
 import {Images, Colors, Metrics} from '../../Themes';
 import {NavigationBar, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView} from '../../components/load';
+import {getFocusPlayer} from '../../services/RankDao';
 
 class FocusPlayer extends Component {
 

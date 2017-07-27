@@ -12,7 +12,7 @@ class FiltePage extends Component {
     };
 
     _cancelSelect = () => {
-        this.checkArr.cancelBtn();
+        // this.checkArr.cancelBtn();
         this.checkDay.cancelBtn();
         this.checkScore.cancelBtn();
     };

@@ -38,12 +38,62 @@ class RankCheck extends Component {
 
     selectedBtn = (key) => {
         let arr = this.state.itemArr;
+
         if(arr[key].index == key){
             arr[key].select = !arr[key].select;
             this.setState({
                 itemArr: arr
             });
         }
+
+        let selectArr = [];
+        for(let i=0;i<arr.length;i++){
+            if(arr[i].select){
+                selectArr.push(i)
+            }
+        }
+        let selectLength = selectArr.length;
+        let selectNum = selectArr[1] - selectArr[0];
+        if(selectLength==2 && selectNum>1){
+            let start = selectArr[0] +1;
+            let end = selectArr[1];
+            for(let i=start;i<end;i++){
+                arr[i].select = !arr[i].select;
+                this.setState({
+                    itemArr: arr
+                })
+            }
+        }
+
+        if(selectLength>2){
+            for(let i=0;i<selectLength;i++){
+                if(selectArr[i] == key){
+                    // arr[key].select = true;
+                }else{
+                    arr[selectArr[i]].select = false;
+                }
+            }
+            arr[key].select = true;
+            router.log(9999);
+            router.log(arr);
+            router.log(9999);
+            this.setState({
+                itemArr: arr
+            })
+        }
+
+        // while (selectLength--){
+        //     if(selectArr[selectLength] == key){
+        //         this.setState({
+        //             itemArr: arr
+        //         })
+        //     }else{
+        //         arr[selectLength].select = !arr[selectLength].select;
+        //         this.setState({
+        //             itemArr: arr
+        //         })
+        //     }
+        // }
     };
 
     cancelBtn = () => {
@@ -62,7 +112,7 @@ class RankCheck extends Component {
 
     sureBtn = () => {
         let arr = this.state.itemArr;
-        let newArr = []
+        let newArr = [];
         for(let i=0;i<arr.length;i++){
             if(arr[i].info){
                 newArr.push(arr[i].info);

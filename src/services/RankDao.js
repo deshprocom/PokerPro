@@ -10,4 +10,8 @@ export function getMainRank(body,resolve,reject) {
         resolve(ret.data)
     },reject)
 }
+//我关注牌手
+export function getFocusPlayer(body,resolve,reject) {
+    
+}
 
