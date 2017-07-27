@@ -56,10 +56,18 @@ export default class RankListView extends Component {
                 }}
             activeOpacity={1}
             style={[styles.item, {backgroundColor: rowID % 2 === 0 ? 'white' : '#F5F5F5'}]}>
-            <Text style={styles.txtItem}>{ranking}</Text>
-            <Text style={styles.txtPoker}>{player.name}</Text>
-            <Text style={styles.txtItem}>{earning}</Text>
-            <Text style={styles.txtItem}>{score}</Text>
+            <View style={styles.viewAlign}>
+                <Text style={styles.txtItem}>{ranking}</Text>
+            </View>
+            <View style={styles.viewAlign}>
+                <Text style={styles.txtPoker}>{player.name}</Text>
+            </View>
+            <View style={styles.viewAlign}>
+                <Text style={styles.txtItem}>{earning}</Text>
+            </View>
+            <View style={styles.viewAlign}>
+                <Text style={styles.txtItem}>{score}</Text>
+            </View>
         </TouchableOpacity>)
 
     };
@@ -91,15 +99,20 @@ const styles = StyleSheet.create({
         height: 48,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-around',
     },
     txtItem: {
         color: Colors._666,
         fontSize: 14,
+
     },
     txtPoker: {
         color: '#3F9FFF',
         fontSize: 14,
+    },
+    viewAlign: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 
 
