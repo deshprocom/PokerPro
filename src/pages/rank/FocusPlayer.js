@@ -1,12 +1,25 @@
 import React,{Component} from 'react';
-import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, Image, TouchableOpacity, StyleSheet, ListView} from 'react-native';
+import I18n from 'react-native-i18n';
 
 import {Images, Colors, Metrics} from '../../Themes';
-import {NavigationBar} from '../../components';
+import {NavigationBar, UltimateListView} from '../../components';
+import {NoDataView, LoadErrorView} from '../../components/load';
 
 class FocusPlayer extends Component {
 
-    focusRow = () => {
+    constructor(props){
+        super(props);
+        this._dataSource = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1.race_id !== r2.race_id
+        });
+        this.state = {
+            dataSource: this._dataSource.cloneWithRows([]),
+            focusData: []
+        }
+    }
+
+    focusRow = (focusData, sectionID, rowID) => {
         return(<View style={styles.row_view}>
             <View style={{alignItems: 'center', justifyContent: 'center', marginRight: 12.5}}>
                 <Image source={Images.mask}
@@ -31,10 +44,53 @@ class FocusPlayer extends Component {
                leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
                 title={'我关注牌手'}/>
             <View style={styles.list_view}>
-                {this.focusRow()}
+                <UltimateListView
+                    key={this.state.layout}
+                    keyExtractor={(item, index) => `${this.state.layout} - ${item.race_id}`}
+                    ref={(ref) => this.listView = ref}
+                    onFetch={this.onFetch}
+                    legacyImplementation
+                    rowView={this.focusRow}
+                    refreshableTitlePull={I18n.t('pull_refresh')}
+                    refreshableTitleRelease={I18n.t('release_refresh')}
+                    dateTitle={I18n.t('last_refresh')}
+                    allLoadedText={I18n.t('no_more')}
+                    waitingSpinnerText={I18n.t('loading')}
+                    emptyView={() => {
+                    return this.state.error ? <LoadErrorView
+                        onPress={() => {
+                            this.listView.refresh()
+                        }}/> : <NoDataView/>;
+                }}
+                />
             </View>
         </View>)
     }
+
+    onFetch = (page = 1,startFetch,abortFetch) => {
+        if (page === 1)
+            startFetch([1, 2, 3, 4], 5)
+    }
+
+    refresh = (startFetch,abortFetch) => {
+        let data = [1,2,3,4,5,6,4];
+        let rows = data
+        startFetch(rows,10)
+
+        this.setState({
+            focusData: data
+        })
+    };
+
+    loadMore = (startFetch,abortFetch) => {
+        let data = [1,2,3,4,5,6,4];
+        let rows = data
+        startFetch(rows,10)
+
+        this.setState({
+            focusData: data
+        })
+    };
 }
 
 export default FocusPlayer;

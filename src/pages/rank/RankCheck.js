@@ -62,14 +62,15 @@ class RankCheck extends Component {
 
     sureBtn = () => {
         let arr = this.state.itemArr;
+        let newArr = []
         for(let i=0;i<arr.length;i++){
             if(arr[i].info){
-                var check_type = arr[i].info;
-                return check_type
+                newArr.push(arr[i].info);
             }else{
                 return null
             }
         };
+        return newArr;
     };
 
     lineView = (checkData) => {
@@ -93,7 +94,6 @@ class RankCheck extends Component {
     };
 
     choiceBtn = (checkData) => {
-        const {testarr} = this.state;
         let arr = this.state.itemArr;
         return(<View style={{flexDirection: 'row', flexWrap: 'wrap',justifyContent: 'flex-start'}}>
             {

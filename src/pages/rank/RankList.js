@@ -7,8 +7,6 @@ import {PullListView, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView} from '../../components/load';
 import {getMainRank} from '../../services/RankDao';
 
-import {uniqueArray} from '../../utils/ComonHelper';
-
 class RankList extends Component {
 
     constructor(props){
