@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     },
     imgShare: {
         height: 22,
-        width: 22,
+        width: 23,
         marginRight: 20,
         marginLeft: 10
     },
