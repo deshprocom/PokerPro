@@ -311,5 +311,12 @@
   "rank_number":"积分",
   "rank_prize":"奖金",
   "rank_buyIn":"买入",
-  "rank_participate":"参赛人数"
+  "rank_participate":"参赛人数",
+  "rank_filte_adr":"地区",
+  "rank_filte_global":"全球",
+  "rank_filte_country":"国内",
+  "rank_filte_year":"年份",
+  "rank_filte_rank":"排名",
+  "rank_focus_player":"我关注牌手",
+  "main_rank":"排行榜"
 }

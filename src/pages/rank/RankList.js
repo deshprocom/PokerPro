@@ -7,12 +7,7 @@ import {PullListView, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView} from '../../components/load';
 import {getMainRank} from '../../services/RankDao';
 
-import {uniqueArray} from '../../utils/ComonHelper';
-
 class RankList extends Component {
-    // state = {
-    //     rankData: []
-    // }
 
     constructor(props){
         super(props);
@@ -25,21 +20,6 @@ class RankList extends Component {
             rankListNextID: '0'
         };
     }
-
-    // componentDidMount(){
-    //     getMainRank(data => {
-    //         // router.log(data);
-    //         let items = data;
-    //         if(items.length>0){
-    //             this.setState({
-    //                 rankData: items
-    //             });
-    //             // router.log(this.state.rankData)
-    //         }
-    //     },err =>{
-    //
-    //     })
-    // }
 
     rankNum = (rowID) => {
         if(rowID == 1){
@@ -73,7 +53,8 @@ class RankList extends Component {
                     {this.rankNum(rank)}
                 </View>
                 <View style={styles.list_row}>
-                    <Image source={{uri: avatar}}
+                    <Image defaultSource={Images.mask}
+                           source={{uri: avatar}}
                            style={{width: 49.7,height: 49.7, marginLeft: 12, marginRight: 15.3}}>
                         <Image/>
                     </Image>
@@ -84,7 +65,7 @@ class RankList extends Component {
                 </View>
                 <View style={{flex: 1,alignItems: 'flex-end', justifyContent:'center',height: 69}}>
                     <Text style={{color: Colors._666, fontSize: 15, lineHeight: 21}}>{dpi_total_earning}</Text>
-                    <Text style={{color: Colors._AAA, fontSize: 12, lineHeight: 17}}>奖金</Text>
+                    <Text style={{color: Colors._AAA, fontSize: 12, lineHeight: 17}}>{I18n.t('rank_prize')}</Text>
                 </View>
                 <View style={styles.list_row}>
                     <Image source={Images.set_more}
@@ -124,7 +105,7 @@ class RankList extends Component {
             if(page === 1){
                 this.refresh(startFetch,abortFetch);
             }else{
-                this.loadMore(startFetch,abortFetch);
+                this.loadMore(startFetch,abortFetch,page);
             }
         } catch (err){
             abortFetch();
@@ -133,18 +114,16 @@ class RankList extends Component {
 
     refresh = (startFetch,abortFetch) => {
         let body = {
-            next_id: '0'
+            page_index: '0',
+            region: 'global',
+            year: '2017'
         };
         getMainRank(body,data => {
-            let {next_id} = data;
             let rows = data;
-            // let next_id = parseInt(rankListNextID) + 1;
-            // router.log(next_id);
             startFetch(rows,10);
 
             this.setState({
-                rankData: data,
-                rankListNextID: next_id
+                rankData: data
             });
         },(err) =>{
             this.setState({
@@ -154,20 +133,21 @@ class RankList extends Component {
         })
     };
 
-    loadMore = (startFetch,abortFetch) => {
-        const {rankListNextID} = this.state;
+    loadMore = (startFetch,abortFetch,page) => {
         let body = {
-          next_id: rankListNextID
+          page_index: page - 1,
+            region: 'global',
+            year: '2017'
         };
+        router.log(6666);
+        router.log(body);
         getMainRank(body,data => {
             router.log(data);
-            let {next_id} = data;
             let rows = data;
             startFetch(rows,10);
 
             this.setState({
-                rankData: data,
-                rankListNextID: next_id === 0 ?rankListNextID : next_id
+                rankData: data
             });
         },(err) =>{
             abortFetch()
