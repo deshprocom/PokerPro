@@ -103,7 +103,7 @@ export default class RaceView extends Component {
             <TouchableOpacity
                 onPress={
                     () => {
-                        router.popToTop();
+                        router.popToDrawerRank();
                     }
                 }
                 testID="btn_bar_close"

@@ -36,12 +36,6 @@ export default class RankListView extends Component {
                     dateTitle={I18n.t('last_refresh')}
                     allLoadedText={I18n.t('no_more')}
                     waitingSpinnerText={I18n.t('loading')}
-                    emptyView={() => {
-                        return this.state.error ? <LoadErrorView
-                            onPress={() => {
-                                this.listView.refresh()
-                            }}/> : <NoDataView/>;
-                    }}
                 />
             </View>)
     }
