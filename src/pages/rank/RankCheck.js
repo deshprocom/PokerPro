@@ -22,16 +22,12 @@ class RankCheck extends Component {
         }
     }
 
-    getArr = ()=>{
-        return this.state.itemArr;
-    };
-
     componentWillMount(checkData){
         let length= this.props.checkData.length;
         let arr = [];
         for(let i = 0 ;i < length;i++){
             let data = this.props.checkData[i];
-            let item = {index:i,infoData: data,select:false};
+            let item = {index:i,infoData: data,select:false, info: ''};
             arr.push(item);
         }
 
@@ -42,27 +38,89 @@ class RankCheck extends Component {
 
     selectedBtn = (key) => {
         let arr = this.state.itemArr;
+
         if(arr[key].index == key){
             arr[key].select = !arr[key].select;
             this.setState({
                 itemArr: arr
             });
         }
+
+        let selectArr = [];
+        for(let i=0;i<arr.length;i++){
+            if(arr[i].select){
+                selectArr.push(i)
+            }
+        }
+        let selectLength = selectArr.length;
+        let selectNum = selectArr[1] - selectArr[0];
+        if(selectLength==2 && selectNum>1){
+            let start = selectArr[0] +1;
+            let end = selectArr[1];
+            for(let i=start;i<end;i++){
+                arr[i].select = !arr[i].select;
+                this.setState({
+                    itemArr: arr
+                })
+            }
+        }
+
+        if(selectLength>2){
+            for(let i=0;i<selectLength;i++){
+                if(selectArr[i] == key){
+                    // arr[key].select = true;
+                }else{
+                    arr[selectArr[i]].select = false;
+                }
+            }
+            arr[key].select = true;
+            router.log(9999);
+            router.log(arr);
+            router.log(9999);
+            this.setState({
+                itemArr: arr
+            })
+        }
+
+        // while (selectLength--){
+        //     if(selectArr[selectLength] == key){
+        //         this.setState({
+        //             itemArr: arr
+        //         })
+        //     }else{
+        //         arr[selectLength].select = !arr[selectLength].select;
+        //         this.setState({
+        //             itemArr: arr
+        //         })
+        //     }
+        // }
     };
 
     cancelBtn = () => {
         let arr = this.state.itemArr;
-        let length= arr.length;
         let arrClear = [];
-        for(let i = 0 ;i < length;i++){
+        for(let i = 0 ;i < arr.length;i++){
             let infoData = this.props.checkData[i];
-            let item = {index:i,infoData: infoData,select:false};
+            let item = {index:i,infoData: infoData,select:false,info: ''};
             arrClear.push(item);
         }
 
         this.setState({
             itemArr:arrClear,
         });
+    };
+
+    sureBtn = () => {
+        let arr = this.state.itemArr;
+        let newArr = [];
+        for(let i=0;i<arr.length;i++){
+            if(arr[i].info){
+                newArr.push(arr[i].info);
+            }else{
+                return null
+            }
+        };
+        return newArr;
     };
 
     lineView = (checkData) => {
@@ -94,13 +152,16 @@ class RankCheck extends Component {
                     let info = null;
                     if(arr[key].index == key){
                         is_select = arr[key].select;
-                        info = arr[key].infoData
+                    }
+                    if(arr[key].select){
+                        arr[key].info = arr[key].infoData;
+                    }else{
+                        arr[key].info = '';
                     }
 
                     return(
                         <TouchableOpacity key={key} onPress={() => {
-                            {this.selectedBtn(key);
-                            router.log(info);}
+                            {this.selectedBtn(key);}
                         }}
                                   style={styles.btn_style}>
                             <Image source={is_select?Images.Group:Images.Group_em}
@@ -117,7 +178,7 @@ class RankCheck extends Component {
 
     render(){
         return(<View>
-            <Text style={{lineHeight: 21,fontSize: 15,color: Colors._888}}>{this.props.checkTitle}</Text>
+            <Text style={{lineHeight: 21,fontSize: 15,color: Colors._888}} onPress={() => this.sureBtn()}>{this.props.checkTitle}</Text>
             {this.lineView()}
             {this.choiceBtn()}
         </View>)

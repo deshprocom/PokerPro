@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import I18n from 'react-native-i18n';
 
 import {Colors, Images, Metrics} from '../../Themes'
 import {NavigationBar} from '../../components';
@@ -21,7 +22,7 @@ export default class MainRankPage extends Component {
             <View style={styles.topBtn}></View>
 
             <View style={styles.header_title}>
-                <Text style={styles.title_color}>排行榜</Text>
+                <Text style={styles.title_color}>{I18n.t('main_rank')}</Text>
             </View>
 
             <View style={styles.right_btn}>

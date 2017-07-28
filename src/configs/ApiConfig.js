@@ -66,7 +66,8 @@ export default {
     login_count: login_count,
     players_list: players_list,
     poker_ranks: poker_ranks,
-    player_focus: player_focus
+    player_focus: player_focus,
+    focus_list: focus_list
 
 }
 
@@ -178,8 +179,8 @@ export function news_list(body) {
     return 'news/types/' + type_id + '?page_size=' + page_size + '&next_id=' + next_id;
 }
 export function players_list(body) {
-    const {next_id} = body;
-    return 'players?next_id=' + next_id;
+    const {page_index, region, year} = body;
+    return 'players?page_index=' + page_index + '&region=' + region + '&year=' + year;
 }
 export function player_info(body) {
     const {player_id} = body;
@@ -189,6 +190,11 @@ export function player_info(body) {
 export function poker_ranks(body) {
     const {player_id} = body;
     return 'players/' + player_id + '/ranks';
+}
+
+export function focus_list(body) {
+    const {next_id} = body;
+    return 'users/' + getUserId() + '/followed_players?next_id=' + next_id
 }
 
 export function sub_race_info(body) {
