@@ -24,7 +24,7 @@ export default class ImageGallery extends React.Component {
                 saveToLocalByLongPress={false}
                 imageUrls={images}
                 index={index}
-                onClick={()=>this.props.router.pop()}/>
+                onClick={()=>router.pop()}/>
         )
     }
 }

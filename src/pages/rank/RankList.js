@@ -17,7 +17,8 @@ class RankList extends Component {
         this.state = {
             dataSource: this._dataSource.cloneWithRows([]),
             rankData: [],
-            rankListNextID: '0'
+            rankListNextID: '0',
+            error:false
         };
     }
 

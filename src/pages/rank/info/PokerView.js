@@ -11,6 +11,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import I18n from 'react-native-i18n';
 import {playerInfo} from '../../../services/AccountDao';
 import {postFocus, deleteFocus} from '../../../services/RankDao';
+import {strNotNull} from '../../../utils/ComonHelper';
 
 export default class PokerView extends Component {
 
@@ -67,10 +68,19 @@ export default class PokerView extends Component {
             style={styles.page}>
             {this._topView()}
 
-            <Image
-                defaultSource={Images.home_avatar}
-                source={{uri: avatar}}
-                style={styles.avatar}/>
+            <TouchableOpacity
+                onPress={() => {
+                    if (strNotNull(avatar)) {
+                        let images = [{url: avatar}];
+                        router.toImageGalleryPage(this.props, images, 0);
+                    }
+
+                }}>
+                <Image
+                    defaultSource={Images.home_avatar}
+                    source={{uri: avatar}}
+                    style={styles.avatar}/>
+            </TouchableOpacity>
 
             <View style={styles.viewName}>
                 <Text style={styles.name}>{name}</Text>
