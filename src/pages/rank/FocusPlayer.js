@@ -36,7 +36,7 @@ class FocusPlayer extends Component {
                 <Text style={styles.country_text}>{country}</Text>
             </View>
             <TouchableOpacity style={{alignItems: 'flex-end', justifyContent: 'center'}}>
-                <Text>+ 关注</Text>
+                <Text>{I18n.t('rank_focused')}</Text>
             </TouchableOpacity>
         </View>)
     };
@@ -47,7 +47,7 @@ class FocusPlayer extends Component {
                toolbarStyle={{backgroundColor:Colors.bg_09}}
                leftBtnPress = {() => this.props.router.pop()}
                leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
-                title={'我关注牌手'}/>
+                title={I18n.t('rank_focus_player')}/>
             <View style={styles.list_view}>
                 <UltimateListView
                     key={this.state.layout}

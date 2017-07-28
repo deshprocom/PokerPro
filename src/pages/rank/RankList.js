@@ -65,7 +65,7 @@ class RankList extends Component {
                 </View>
                 <View style={{flex: 1,alignItems: 'flex-end', justifyContent:'center',height: 69}}>
                     <Text style={{color: Colors._666, fontSize: 15, lineHeight: 21}}>{dpi_total_earning}</Text>
-                    <Text style={{color: Colors._AAA, fontSize: 12, lineHeight: 17}}>奖金</Text>
+                    <Text style={{color: Colors._AAA, fontSize: 12, lineHeight: 17}}>{I18n.t('rank_prize')}</Text>
                 </View>
                 <View style={styles.list_row}>
                     <Image source={Images.set_more}
