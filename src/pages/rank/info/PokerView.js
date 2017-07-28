@@ -11,6 +11,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import I18n from 'react-native-i18n';
 import {playerInfo} from '../../../services/AccountDao';
 import {postFocus, deleteFocus} from '../../../services/RankDao';
+import {strNotNull} from '../../../utils/ComonHelper';
 
 export default class PokerView extends Component {
 
@@ -67,10 +68,19 @@ export default class PokerView extends Component {
             style={styles.page}>
             {this._topView()}
 
-            <Image
-                defaultSource={Images.home_avatar}
-                source={{uri: avatar}}
-                style={styles.avatar}/>
+            <TouchableOpacity
+                onPress={() => {
+                    if (strNotNull(avatar)) {
+                        let images = [{url: avatar}];
+                        router.toImageGalleryPage(this.props, images, 0);
+                    }
+
+                }}>
+                <Image
+                    defaultSource={Images.home_avatar}
+                    source={{uri: avatar}}
+                    style={styles.avatar}/>
+            </TouchableOpacity>
 
             <View style={styles.viewName}>
                 <Text style={styles.name}>{name}</Text>
@@ -131,7 +141,7 @@ export default class PokerView extends Component {
             <TouchableOpacity
                 onPress={
                     () => {
-                        router.popToTop();
+                        router.popToDrawerRank();
                     }
                 }
                 testID="btn_bar_close"
@@ -233,8 +243,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent'
     },
     btnFocus: {
-        height: 32,
-        width: 64,
         borderRadius: 2,
         borderWidth: 0.5,
         borderColor: 'white',
@@ -247,7 +255,8 @@ const styles = StyleSheet.create({
     focus: {
         color: 'white',
         fontSize: 15,
-        backgroundColor: 'transparent'
+        backgroundColor: 'transparent',
+        margin: 5
     },
     tab: {
         flex: 1,
@@ -262,15 +271,14 @@ const styles = StyleSheet.create({
     tabName: {
         fontSize: 12,
         color: Colors._888,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        margin: 5
     },
     tabNameView: {
-        height: 20,
-        width: 50,
         backgroundColor: '#282828',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 18,
+        borderRadius: 20,
         marginTop: 12
     },
     tabView: {

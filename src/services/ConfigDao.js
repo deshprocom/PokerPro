@@ -18,6 +18,7 @@ export function init(resolve) {
 }
 
 function switchLang(lang) {
+    global.language = lang;
     setLanguage(lang);
     setDpLang(lang);
     setLang(lang);
