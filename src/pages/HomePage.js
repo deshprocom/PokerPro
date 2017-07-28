@@ -291,55 +291,6 @@ class HomePage extends Component {
 
 
                     {/*功能模块*/}
-<<<<<<< HEAD
-                    <View style={styles.menu}>
-                        <TouchableOpacity
-                            testID="btn_home_ticket"
-                            onPress={() => {
-                                umengEvent('home_ticket');
-                                router.toTicketPage()
-                            }}
-                            style={[{marginLeft: 53}, styles.item_center]}>
-                            <Image style={styles.gif_fuc}
-                                   source={Images.home_ticket1}/>
-                            <Text style={styles.txtMenu}>{I18n.t('home_ticket')}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            testID="btn_home_news"
-                            onPress={() => {
-                                umengEvent('home_news');
-                                router.toMainNewsPage()
-                            }}
-                            style={styles.item_center}>
-                            <Image style={styles.gif_fuc}
-                                   source={Images.home_news}/>
-                            <Text style={styles.txtMenu}>{I18n.t('home_info')}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            testID="btn_home_video"
-                            onPress={() => {
-                                umengEvent('home_videos');
-                                router.toVideoPage()
-                            }}
-                            style={styles.item_center}>
-                            <Image style={styles.gif_fuc}
-                                   source={Images.home_video1}/>
-                            <Text style={styles.txtMenu}>{I18n.t('home_video')}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            testID="btn_home_sort"
-                            onPress={() => {
-                                umengEvent('home_ranking');
-                                 router.toDrawerRank()
-                                // router.toPokerRankPage()
-
-                            }}
-                            style={[{marginRight: 53}, styles.item_center]}>
-                            <Image style={styles.gif_fuc}
-                                   source={Images.home_sort1}/>
-                            <Text style={styles.txtMenu}>{I18n.t('home_sort')}</Text>
-                        </TouchableOpacity>
-
                     <View style={{backgroundColor: 'white'}}>
                         <View style={styles.menu}>
                             <TouchableOpacity
@@ -388,7 +339,6 @@ class HomePage extends Component {
                                        source={Images.home_sort1}/>
                                 <Text style={styles.txtMenu}>{I18n.t('home_sort')}</Text>
                             </TouchableOpacity>
-
 
                         </View>
                     </View>
