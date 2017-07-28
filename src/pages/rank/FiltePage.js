@@ -12,21 +12,32 @@ class FiltePage extends Component {
         cancelDrawer: PropTypes.func
     };
 
+    constructor(props){
+        super(props);
+        this.state = {
+            adrSelected: 0,
+            adrValue: 'global',
+            scoreSelected: 0,
+            scoreValue: 'all'
+        }
+    }
+
     _cancelSelect = () => {
-        // this.checkArr.cancelBtn();
+        this.setState({
+            adrSelected: 0,
+            scoreSelected: 0
+        });
         this.checkDay.cancelBtn();
-        this.checkScore.cancelBtn();
     };
 
     _sureSendType =() => {
+        const {adrValue, scoreValue} = this.state;
+        let adr = this.state.adrValue;
         let time = this.checkDay.sureBtn();
-        let score = this.checkScore.sureBtn();
-        router.log(time,score);
+        let score = this.state.scoreValue;
+        let typeArr = [adr,time,score];
+        router.log(typeArr);
         this.props.cancelDrawer();
-    };
-
-    handleData = () => {
-
     };
 
     render(){
@@ -34,9 +45,8 @@ class FiltePage extends Component {
             <ScrollView style={{marginTop: 41,paddingRight: 20, paddingLeft: 36}}>
                 {this.adrCheck()}
                 <RankCheck ref={ref => this.checkDay = ref}
-                           checkTitle={I18n.t('rank_filte_year')} checkData={[I18n.t('all'),'2014','2015','2016','2017']}/>
-                <RankCheck ref={ref => this.checkScore =ref}
-                           checkTitle={I18n.t('rank_filte_rank')} checkData={[I18n.t('all'),'1-100','100-200','200-300','300-600','600以上']}/>
+                           checkTitle={I18n.t('rank_filte_year')} checkData={['2014','2015','2016','2017']}/>
+                {this.scoreCheck()}
             </ScrollView>
 
             <View style={{flexDirection: 'row',paddingLeft: 36,position: 'absolute', bottom: 36}}>
@@ -53,18 +63,31 @@ class FiltePage extends Component {
     }
 
     adrCheck = () => {
+        const {adrSelected, adrValue} = this.state;
         return(<View>
             <Text style={{lineHeight: 21,fontSize: 15,color: Colors._888}}>{I18n.t('rank_filte_adr')}</Text>
             <View style={{height:1,backgroundColor: Colors.bg_f5,marginTop: 5,marginBottom: 20,width: 155}}></View>
             <View style={{flexDirection: 'row', flexWrap: 'wrap',justifyContent: 'flex-start'}}>
-                <TouchableOpacity style={{marginBottom: 16,marginRight: 13}}>
-                    <Image source={Images.Group_em}
+                <TouchableOpacity key="1" style={{marginBottom: 16,marginRight: 13}}
+                    onPress={() => {
+                        this.setState({
+                            adrSelected: 1,
+                            adrValue: 'global'
+                        });
+                    }}>
+                    <Image source={adrSelected==1 ? Images.Group : Images.Group_em}
                            style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center'}}>
                         <Text>{I18n.t('rank_filte_global')}</Text>
                     </Image>
                 </TouchableOpacity>
-                <TouchableOpacity style={{marginBottom: 16}}>
-                    <Image source={Images.Group_em}
+                <TouchableOpacity key="2" style={{marginBottom: 16}}
+                    onPress={() => {
+                        this.setState({
+                            adrSelected: 2,
+                            adrValue: 'domestic'
+                        })
+                    }}>
+                    <Image source={adrSelected==2 ? Images.Group : Images.Group_em}
                            style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center'}}>
                         <Text>{I18n.t('rank_filte_country')}</Text>
                     </Image>
@@ -78,7 +101,85 @@ class FiltePage extends Component {
     };
 
     scoreCheck = () => {
-
+        const {scoreSelected, scoreValue} = this.state;
+        return(<View>
+            <Text style={{lineHeight: 21,fontSize: 15,color: Colors._888}}>{I18n.t('rank_filte_adr')}</Text>
+            <View style={{height:1,backgroundColor: Colors.bg_f5,marginTop: 5,marginBottom: 20,width: 239}}></View>
+            <View style={{flexDirection: 'row', flexWrap: 'wrap',justifyContent: 'flex-start'}}>
+                <TouchableOpacity key="1" style={{marginBottom: 16,marginRight: 13}}
+                                  onPress={() => {
+                        this.setState({
+                            scoreSelected: 1,
+                            scoreValue: 'all'
+                        });
+                    }}>
+                    <Image source={scoreSelected==1 ? Images.Group : Images.Group_em}
+                           style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center'}}>
+                        <Text>{I18n.t('all')}</Text>
+                    </Image>
+                </TouchableOpacity>
+                <TouchableOpacity key="2" style={{marginBottom: 16,marginRight: 13}}
+                                  onPress={() => {
+                        this.setState({
+                            scoreSelected: 2,
+                            scoreValue: '1-100'
+                        })
+                    }}>
+                    <Image source={scoreSelected==2 ? Images.Group : Images.Group_em}
+                           style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center'}}>
+                        <Text>1-100</Text>
+                    </Image>
+                </TouchableOpacity>
+                <TouchableOpacity key="3" style={{marginBottom: 16}}
+                                  onPress={() => {
+                        this.setState({
+                            scoreSelected: 3,
+                            scoreValue: '100-200'
+                        })
+                    }}>
+                    <Image source={scoreSelected==3 ? Images.Group : Images.Group_em}
+                           style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center'}}>
+                        <Text>100-200</Text>
+                    </Image>
+                </TouchableOpacity>
+                <TouchableOpacity key="4" style={{marginBottom: 16,marginRight: 13}}
+                                  onPress={() => {
+                        this.setState({
+                            scoreSelected: 4,
+                            scoreValue: '200-300'
+                        })
+                    }}>
+                    <Image source={scoreSelected==4 ? Images.Group : Images.Group_em}
+                           style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center'}}>
+                        <Text>200-300</Text>
+                    </Image>
+                </TouchableOpacity>
+                <TouchableOpacity key="5" style={{marginBottom: 16,marginRight: 13}}
+                                  onPress={() => {
+                        this.setState({
+                            scoreSelected: 5,
+                            scoreValue: '300-600'
+                        })
+                    }}>
+                    <Image source={scoreSelected==5 ? Images.Group : Images.Group_em}
+                           style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center'}}>
+                        <Text>300-600</Text>
+                    </Image>
+                </TouchableOpacity>
+                <TouchableOpacity key="6" style={{marginBottom: 16}}
+                                  onPress={() => {
+                        this.setState({
+                            scoreSelected: 6,
+                            scoreValue: '600以上'
+                        })
+                    }}>
+                    <Image source={scoreSelected==6 ? Images.Group : Images.Group_em}
+                           style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center'}}>
+                        <Text>600以上</Text>
+                    </Image>
+                </TouchableOpacity>
+            </View>
+        </View>)
     }
 }
 

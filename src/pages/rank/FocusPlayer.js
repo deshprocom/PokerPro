@@ -24,11 +24,12 @@ class FocusPlayer extends Component {
 
     focusRow = (focusData, sectionID, rowID) => {
         const {avatar, country, dpi_total_earning, dpi_total_score, id, name} = focusData;
-        return(<View style={styles.row_view}>
+        return(<TouchableOpacity style={styles.row_view}
+            onPress={() => router.toPokerRankPage(this.props,id)}>
             <View style={{alignItems: 'center', justifyContent: 'center', marginRight: 12.5}}>
                 <Image defaultSource={Images.mask}
                        source={{uri: avatar}}
-                       style={{width: 73.5, height: 73.5}}>
+                       style={{width: 73.5, height: 73.5, borderRadius: 36.75}}>
                 </Image>
             </View>
             <View style={{alignItems: 'flex-start', justifyContent: 'center',flex: 1}}>
@@ -38,7 +39,7 @@ class FocusPlayer extends Component {
             <TouchableOpacity style={{alignItems: 'flex-end', justifyContent: 'center'}}>
                 <Text>{I18n.t('rank_focused')}</Text>
             </TouchableOpacity>
-        </View>)
+        </TouchableOpacity>)
     };
 
     render(){
@@ -131,7 +132,6 @@ const styles = StyleSheet.create({
     list_view: {
         backgroundColor: Colors.bg_f5,
         height:Metrics.screenHeight,
-        paddingTop: 10
     },
     row_view: {
         backgroundColor: Colors.white,
@@ -139,17 +139,19 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingLeft: 19,
         paddingRight: 19,
-        marginBottom: 5
+        marginTop: 5
     },
     name_text: {
         fontSize: 15,
         color: Colors._333,
         lineHeight: 21,
-        marginBottom: 3
+        marginBottom: 3,
+        fontWeight: 'bold'
     },
     country_text: {
         fontSize: 14,
         color: Colors._AAA,
-        lineHeight: 20
+        lineHeight: 20,
+        fontWeight: 'bold'
     }
 });
