@@ -31,6 +31,8 @@ export function getPokerRanks(body, resolve, reject) {
 }
 //我关注牌手
 export function getFocusPlayer(body,resolve,reject) {
-    
+    helper.get(Api.focus_list(body), (ret) => {
+        resolve(ret.data)
+    }, reject)
 }
 

@@ -53,7 +53,8 @@ class RankList extends Component {
                     {this.rankNum(rank)}
                 </View>
                 <View style={styles.list_row}>
-                    <Image source={{uri: avatar}}
+                    <Image defaultSource={Images.mask}
+                           source={{uri: avatar}}
                            style={{width: 49.7,height: 49.7, marginLeft: 12, marginRight: 15.3}}>
                         <Image/>
                     </Image>

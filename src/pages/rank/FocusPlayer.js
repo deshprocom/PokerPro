@@ -6,6 +6,7 @@ import {Images, Colors, Metrics} from '../../Themes';
 import {NavigationBar, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView} from '../../components/load';
 import {getFocusPlayer} from '../../services/RankDao';
+import {uniqueArray} from '../../utils/ComonHelper';
 
 class FocusPlayer extends Component {
 
@@ -16,20 +17,23 @@ class FocusPlayer extends Component {
         });
         this.state = {
             dataSource: this._dataSource.cloneWithRows([]),
-            focusData: []
+            focusData: [],
+            nextID: '0'
         }
     }
 
     focusRow = (focusData, sectionID, rowID) => {
+        const {avatar, country, dpi_total_earning, dpi_total_score, id, name} = focusData;
         return(<View style={styles.row_view}>
             <View style={{alignItems: 'center', justifyContent: 'center', marginRight: 12.5}}>
-                <Image source={Images.mask}
+                <Image defaultSource={Images.mask}
+                       source={{uri: avatar}}
                        style={{width: 73.5, height: 73.5}}>
                 </Image>
             </View>
             <View style={{alignItems: 'flex-start', justifyContent: 'center',flex: 1}}>
-                <Text style={styles.name_text}>名字</Text>
-                <Text style={styles.country_text}>国家</Text>
+                <Text style={styles.name_text}>{name}</Text>
+                <Text style={styles.country_text}>{country}</Text>
             </View>
             <TouchableOpacity style={{alignItems: 'flex-end', justifyContent: 'center'}}>
                 <Text>+ 关注</Text>
@@ -69,28 +73,55 @@ class FocusPlayer extends Component {
     }
 
     onFetch = (page = 1,startFetch,abortFetch) => {
-        if (page === 1)
-            startFetch([1, 2, 3, 4], 5)
-    }
+        try {
+            this.listPage = page;
+            if(page === 1){
+                this.refresh(startFetch,abortFetch)
+            }else{
+                this.loadMore(startFetch,abortFetch)
+            }
+        }catch (err){
+            abortFetch()
+        }
+    };
 
     refresh = (startFetch,abortFetch) => {
-        let data = [1,2,3,4,5,6,4];
-        let rows = data
-        startFetch(rows,10)
-
-        this.setState({
-            focusData: data
-        })
+        let body = {
+            next_id: '0'
+        };
+        getFocusPlayer(body, data => {
+            let {followed_players, next_id} = data;
+            let rows = uniqueArray(this.listView.getRows(),followed_players);
+            startFetch(rows,10);
+            this.setState({
+                focusData: rows,
+                nextID: next_id
+            })
+        },(err) => {
+            this.setState({
+                error: true
+            });
+            abortFetch()
+        });
     };
 
     loadMore = (startFetch,abortFetch) => {
-        let data = [1,2,3,4,5,6,4];
-        let rows = data
-        startFetch(rows,10)
-
-        this.setState({
-            focusData: data
+        const {nextID} = this.state;
+        let body = {
+            next_id: nextID
+        };
+        getFocusPlayer(body, data => {
+            let {followed_players, next_id} = data;
+            let rows = uniqueArray(this.listView.getRows(),followed_players);
+            startFetch(rows,10);
+            this.setState({
+                focusData: rows,
+                nextID: next_id === 0 ? nextID : next_id
+            })
+        },(err) => {
+            abortFetch()
         })
+
     };
 }
 

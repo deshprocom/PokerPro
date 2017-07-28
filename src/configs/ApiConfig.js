@@ -66,7 +66,8 @@ export default {
     login_count: login_count,
     players_list: players_list,
     poker_ranks: poker_ranks,
-    player_focus: player_focus
+    player_focus: player_focus,
+    focus_list: focus_list
 
 }
 
@@ -189,6 +190,11 @@ export function player_info(body) {
 export function poker_ranks(body) {
     const {player_id} = body;
     return 'players/' + player_id + '/ranks';
+}
+
+export function focus_list(body) {
+    const {next_id} = body;
+    return 'users/' + getUserId() + '/followed_players?next_id=' + next_id
 }
 
 export function sub_race_info(body) {
