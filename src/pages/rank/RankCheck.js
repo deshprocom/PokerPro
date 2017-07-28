@@ -1,5 +1,6 @@
 import React,{Component, PropTypes} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import I18n from 'react-native-i18n';
 
 import {Colors, Images} from '../../Themes';
 
@@ -13,12 +14,11 @@ class RankCheck extends Component {
 
     constructor(props){
         super(props);
-        this.selectArr = [];
         this.state = {
             check: false,
             itemArr: [],
             name: '',
-            testarr: []
+            allSelect: false
         }
     }
 
@@ -37,63 +37,53 @@ class RankCheck extends Component {
     }
 
     selectedBtn = (key) => {
-        let arr = this.state.itemArr;
+        const {allSelect} = this.state;
+        if(allSelect){
 
-        if(arr[key].index == key){
-            arr[key].select = !arr[key].select;
-            this.setState({
-                itemArr: arr
-            });
-        }
+        }else{
+            let arr = this.state.itemArr;
 
-        let selectArr = [];
-        for(let i=0;i<arr.length;i++){
-            if(arr[i].select){
-                selectArr.push(i)
+            if(arr[key].index == key){
+                arr[key].select = !arr[key].select;
+                this.setState({
+                    itemArr: arr
+                });
             }
-        }
-        let selectLength = selectArr.length;
-        let selectNum = selectArr[1] - selectArr[0];
-        if(selectLength==2 && selectNum>1){
-            let start = selectArr[0] +1;
-            let end = selectArr[1];
-            for(let i=start;i<end;i++){
-                arr[i].select = !arr[i].select;
+
+            let selectArr = [];
+            for(let i=0;i<arr.length;i++){
+                if(arr[i].select){
+                    selectArr.push(i)
+                }
+            }
+            let selectLength = selectArr.length;
+            let selectNum = selectArr[1] - selectArr[0];
+            if(selectLength==2 && selectNum>1){
+                let start = selectArr[0] +1;
+                let end = selectArr[1];
+                for(let i=start;i<end;i++){
+                    arr[i].select = !arr[i].select;
+                    this.setState({
+                        itemArr: arr
+                    })
+                }
+            }
+
+            if(selectLength>2){
+                for(let i=0;i<selectLength;i++){
+                    if(selectArr[i] == key){
+                        // arr[key].select = true;
+                    }else{
+                        arr[selectArr[i]].select = false;
+                    }
+                }
+                arr[key].select = true;
                 this.setState({
                     itemArr: arr
                 })
             }
         }
 
-        if(selectLength>2){
-            for(let i=0;i<selectLength;i++){
-                if(selectArr[i] == key){
-                    // arr[key].select = true;
-                }else{
-                    arr[selectArr[i]].select = false;
-                }
-            }
-            arr[key].select = true;
-            router.log(9999);
-            router.log(arr);
-            router.log(9999);
-            this.setState({
-                itemArr: arr
-            })
-        }
-
-        // while (selectLength--){
-        //     if(selectArr[selectLength] == key){
-        //         this.setState({
-        //             itemArr: arr
-        //         })
-        //     }else{
-        //         arr[selectLength].select = !arr[selectLength].select;
-        //         this.setState({
-        //             itemArr: arr
-        //         })
-        //     }
-        // }
     };
 
     cancelBtn = () => {
@@ -116,11 +106,23 @@ class RankCheck extends Component {
         for(let i=0;i<arr.length;i++){
             if(arr[i].info){
                 newArr.push(arr[i].info);
-            }else{
-                return null
-            }
+            }else{}
         };
         return newArr;
+    };
+
+    allSelected = () => {
+        const {allSelect} = this.state;
+        this.setState({
+            allSelect: !allSelect
+        });
+        let arr = this.state.itemArr;
+        for(let i=0;i<arr.length;i++){
+            arr[i].select = false
+        }
+        this.setState({
+            itemArr: arr
+        })
     };
 
     lineView = (checkData) => {
@@ -145,11 +147,20 @@ class RankCheck extends Component {
 
     choiceBtn = (checkData) => {
         let arr = this.state.itemArr;
+        const {allSelect} = this.state;
         return(<View style={{flexDirection: 'row', flexWrap: 'wrap',justifyContent: 'flex-start'}}>
+            <TouchableOpacity onPress={() => {
+                            this.allSelected()
+                        }}
+                              style={styles.btn_style}>
+                <Image source={allSelect?Images.Group:Images.Group_em}
+                       style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center'}}>
+                    <Text style={{color: Colors._333,fontSize: 15}}>{I18n.t('all')}</Text>
+                </Image>
+            </TouchableOpacity>
             {
                 this.props.checkData.map((item,key) => {
                     let is_select = null;
-                    let info = null;
                     if(arr[key].index == key){
                         is_select = arr[key].select;
                     }
