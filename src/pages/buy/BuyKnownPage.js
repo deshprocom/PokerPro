@@ -55,7 +55,7 @@ export default class BuyKnowPage extends Component {
                         height: 250, width: Metrics.screenWidth - 60,
                         alignSelf: 'center'
                     }}
-                    source={Images.e_ticket_buy}/>
+                    source={language === 'zh' ? Images.e_ticket_buy_zh : Images.e_ticket_buy_en}/>
 
                 <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 37, marginBottom: 10}}>
                     <Image style={{
@@ -72,7 +72,7 @@ export default class BuyKnowPage extends Component {
                         height: 250, width: Metrics.screenWidth - 60,
                         alignSelf: 'center'
                     }}
-                    source={Images.entity_ticket_buy}/>
+                    source={language === 'zh' ? Images.entity_ticket_buy_zh : Images.entity_ticket_buy_en}/>
                 <View style={{height: 40}}/>
 
             </ScrollView>
