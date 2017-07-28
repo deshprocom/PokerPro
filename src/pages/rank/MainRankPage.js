@@ -5,10 +5,19 @@ import I18n from 'react-native-i18n';
 import {Colors, Images, Metrics} from '../../Themes'
 import {NavigationBar} from '../../components';
 import RankList from './RankList';
+import {isLoginUser} from '../../utils/ComonHelper';
 
 export default class MainRankPage extends Component {
     static propTypes = {
         openRank: PropTypes.func
+    };
+
+    isLogin = () => {
+        if(isLoginUser()){
+            router.toFocusPlayer()
+        }else{
+            router.toLoginFirstPage()
+        }
     };
 
     topHeader = () => {
@@ -32,7 +41,7 @@ export default class MainRankPage extends Component {
                            style={styles.right_image1}/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
-                    router.toFocusPlayer()
+                    this.isLogin()
                 }}
                                   style={styles.topBtn}>
                     <Image source={Images.shape}
