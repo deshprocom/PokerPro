@@ -128,7 +128,7 @@ export default class NameRealView extends Component {
         if (user_extra.status !== Verified.INIT) {
             return (  <View style={{
                 borderRadius: 2, backgroundColor: '#cccccc',
-                height: 20, width: 50, justifyContent: 'center', alignItems: 'center',
+                height: 25, width: 55, justifyContent: 'center', alignItems: 'center',
                 marginRight: 20
             }}>
                 <Text style={[Fonts.H12, {color: Colors.white}]}>
