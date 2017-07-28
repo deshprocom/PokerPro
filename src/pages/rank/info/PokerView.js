@@ -233,8 +233,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent'
     },
     btnFocus: {
-        height: 32,
-        width: 64,
         borderRadius: 2,
         borderWidth: 0.5,
         borderColor: 'white',
@@ -247,7 +245,8 @@ const styles = StyleSheet.create({
     focus: {
         color: 'white',
         fontSize: 15,
-        backgroundColor: 'transparent'
+        backgroundColor: 'transparent',
+        margin: 5
     },
     tab: {
         flex: 1,
@@ -262,15 +261,14 @@ const styles = StyleSheet.create({
     tabName: {
         fontSize: 12,
         color: Colors._888,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        margin: 5
     },
     tabNameView: {
-        height: 20,
-        width: 50,
         backgroundColor: '#282828',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 18,
+        borderRadius: 20,
         marginTop: 12
     },
     tabView: {

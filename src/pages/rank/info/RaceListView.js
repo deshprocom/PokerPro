@@ -149,8 +149,6 @@ const styles = StyleSheet.create({
         marginLeft: 20
     },
     viewRank: {
-        height: 23,
-        width: 58,
         backgroundColor: '#F34A4A',
         borderRadius: 23,
         alignItems: 'center',
@@ -159,7 +157,8 @@ const styles = StyleSheet.create({
     },
     rank: {
         fontSize: 13,
-        color: 'white'
+        color: 'white',
+        margin: 5
     },
     viewInfo: {
         height: 80,
