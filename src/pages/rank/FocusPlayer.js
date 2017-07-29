@@ -5,7 +5,7 @@ import I18n from 'react-native-i18n';
 import {Images, Colors, Metrics} from '../../Themes';
 import {NavigationBar, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView} from '../../components/load';
-import {getFocusPlayer} from '../../services/RankDao';
+import {getFocusPlayer, deleteFocus} from '../../services/RankDao';
 import {uniqueArray} from '../../utils/ComonHelper';
 
 class FocusPlayer extends Component {
@@ -18,12 +18,14 @@ class FocusPlayer extends Component {
         this.state = {
             dataSource: this._dataSource.cloneWithRows([]),
             focusData: [],
-            nextID: '0'
+            nextID: '0',
+            followed: false
         }
     }
 
     focusRow = (focusData, sectionID, rowID) => {
         const {avatar, country, dpi_total_earning, dpi_total_score, id, name} = focusData;
+        const {followed} = this.state;
         return(<TouchableOpacity style={styles.row_view}
             onPress={() => router.toPokerRankPage(this.props,id)}>
             <View style={{alignItems: 'center', justifyContent: 'center', marginRight: 12.5}}>
@@ -36,10 +38,25 @@ class FocusPlayer extends Component {
                 <Text style={styles.name_text}>{name}</Text>
                 <Text style={styles.country_text}>{country}</Text>
             </View>
-            <TouchableOpacity style={{alignItems: 'flex-end', justifyContent: 'center'}}>
-                <Text>{I18n.t('rank_focused')}</Text>
+            <TouchableOpacity style={[{alignItems: 'center', justifyContent: 'center', width: 70,height: 31},styles.focus_border]}
+                >
+                <Text>{this.state.followed ? I18n.t('rank_focused') : I18n.t('rank_focus')}</Text>
             </TouchableOpacity>
         </TouchableOpacity>)
+    };
+
+    delFocus = (id) => {
+        const {followed} = this.state;
+        const body = {
+            player_id: id
+        };
+        deleteFocus(body, data => {
+            this.setState({
+                followed: !followed
+            })
+        },err => {
+
+        })
     };
 
     render(){
@@ -139,7 +156,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingLeft: 19,
         paddingRight: 19,
-        marginTop: 5
+        marginTop: 5,
+        alignItems: 'center'
     },
     name_text: {
         fontSize: 15,
@@ -153,5 +171,10 @@ const styles = StyleSheet.create({
         color: Colors._AAA,
         lineHeight: 20,
         fontWeight: 'bold'
+    },
+    focus_border: {
+        borderWidth: 1,
+        borderColor: '#161718',
+        borderRadius: 2
     }
 });

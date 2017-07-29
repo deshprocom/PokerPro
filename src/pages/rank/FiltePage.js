@@ -2,6 +2,9 @@ import React,{Component, PropTypes} from 'react';
 import {View, Text, StyleSheet, ScrollView, TouchableOpacity, Image} from 'react-native';
 import Button from 'react-native-smart-button';
 import I18n from 'react-native-i18n';
+import {RANK_CHECK_TYPE} from '../../actions/ActionTypes';
+import {connect} from 'react-redux';
+import {getRankPlayer} from '../../actions/RankAction';
 
 import {Metrics, Colors, Images} from '../../Themes';
 
@@ -18,7 +21,19 @@ class FiltePage extends Component {
             adrSelected: 0,
             adrValue: 'global',
             scoreSelected: 0,
-            scoreValue: 'all'
+            scoreValue: 'all',
+            typeData: []
+        }
+    }
+
+    componentWillReceiveProps(newProps){
+        const {actionType, typeData, loading, hasData, error} = newProps;
+
+        if(actionType === RANK_CHECK_TYPE
+            && loading != this.props.loading
+            && hasData){
+            const {} = typeData;
+
         }
     }
 
@@ -31,16 +46,23 @@ class FiltePage extends Component {
     };
 
     _sureSendType =() => {
-        const {adrValue, scoreValue} = this.state;
+        const {adrValue, scoreValue, typeData} = this.state;
         let adr = this.state.adrValue;
         let time = this.checkDay.sureBtn();
         let score = this.state.scoreValue;
-        let typeArr = [adr,time,score];
-        router.log(typeArr);
+        // let typeArr = [adr,time,score];
+        // router.log(typeArr);
+        let body = {
+            region: adr,
+            year: time
+        };
         this.props.cancelDrawer();
+        this.props._getRankPlayer(body);
+
     };
 
     render(){
+        // console.log('receive',this.props)
         return(<View style={styles.view_bg}>
             <ScrollView style={{marginTop: 41,paddingRight: 20, paddingLeft: 36}}>
                 {this.adrCheck()}
@@ -94,10 +116,6 @@ class FiltePage extends Component {
                 </TouchableOpacity>
             </View>
         </View>)
-    };
-
-    timeCheck = () => {
-
     };
 
     scoreCheck = () => {
@@ -183,7 +201,18 @@ class FiltePage extends Component {
     }
 }
 
-export default FiltePage;
+const bindAction = dispatch => ({
+    _getRankPlayer: (body) => dispatch(getRankPlayer(body))
+});
+
+const mapStateToProps = state => ({
+    loading: state.RankState.loading,
+    hasData: state.RankState.hasData,
+    error: state.RankState.error,
+    typeData: state.RankState.typeData
+});
+
+export default connect(mapStateToProps, bindAction)(FiltePage);
 
 const styles = StyleSheet.create({
     view_bg: {
