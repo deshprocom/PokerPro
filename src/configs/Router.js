@@ -668,6 +668,16 @@ export default class Router {
 
     }
 
+    popToDrawerRank() {
+        let routes = this.navigator.getCurrentRoutes();
+        for (var route of routes) {
+            if (route.name === 'DrawerRank') {
+                this.navigator.popToRoute(route)
+            }
+        }
+
+    }
+
     resetToHome() {
         this.navigator.resetTo({
             name: 'HomePage',

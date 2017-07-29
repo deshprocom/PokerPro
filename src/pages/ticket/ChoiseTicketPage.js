@@ -364,9 +364,9 @@ export default class ChoiseTicketPage extends Component {
                 <View style={styles.viewInfo}>
                     <Text style={styles.txtPrice}>{price}</Text>
                     <View style={styles.viewNum}>
-                        <Text style={styles.lbNum}> {I18n.t('surplus')}</Text>
+                        <Text style={styles.lbNum}>  ({I18n.t('surplus')}</Text>
                         <Text style={styles.txtNum}>{this._ticketNum(ticket_info)}</Text>
-                        <Text style={styles.lbNum}>{I18n.t('spread')}</Text>
+                        <Text style={styles.lbNum}>{I18n.t('spread')})</Text>
                     </View>
 
                     <View style={{flex: 1}}/>

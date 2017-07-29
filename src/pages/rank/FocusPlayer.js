@@ -19,7 +19,8 @@ class FocusPlayer extends Component {
             dataSource: this._dataSource.cloneWithRows([]),
             focusData: [],
             nextID: '0',
-            followed: false
+            followed: false,
+            error:false
         }
     }
 
