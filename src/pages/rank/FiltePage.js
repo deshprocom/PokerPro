@@ -53,6 +53,7 @@ class FiltePage extends Component {
         // let typeArr = [adr,time,score];
         // router.log(typeArr);
         let body = {
+            page_index: '0',
             region: adr,
             year: time
         };
