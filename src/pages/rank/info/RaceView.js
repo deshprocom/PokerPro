@@ -22,11 +22,16 @@ export default class RaceView extends Component {
     };
 
     render() {
-        const {begin_date, end_date, logo, prize, ticket_price, location, name} = this.props.race;
+        const {begin_date, end_date, logo, prize, ticket_price, location, name, race_id} = this.props.race;
         return (<View>
 
             <View style={styles.page}>
-                <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
+                <TouchableOpacity
+                    activeOpacity={1}
+                    onPress={() => {
+                        router.toRacesInfoPage(this.props, race_id, false)
+                    }}
+                    style={{flexDirection: 'row', alignItems: 'flex-end'}}>
                     <ImageLoad
                         source={{uri: logo}}
                         style={styles.imgRace}/>
@@ -58,7 +63,7 @@ export default class RaceView extends Component {
                             </View>
                         </View>
                     </View>
-                </View>
+                </TouchableOpacity>
 
                 <View style={styles.line}/>
                 <View style={styles.viewInfo}>

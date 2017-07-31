@@ -58,14 +58,7 @@ class PersonPage extends React.Component {
         );
     }
 
-    shouldComponentUpdate(newProps, nextState) {
-        const {router} = this.props;
-        if (newProps.actionType === PUT_PROFILE && newProps.hasData) {
-            router.pop();
-            return false;
-        }
-        return true;
-    }
+
 
     render() {
 

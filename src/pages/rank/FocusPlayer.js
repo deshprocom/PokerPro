@@ -41,17 +41,17 @@ class FocusPlayer extends Component {
                     };
                     deleteFocus(body, data => {
                         if (this.listView)
-                            this.listView.refresh()
+                            this.listView.refresh();
 
                     }, err => {
 
                     })
                 }}
                 style={[{alignItems: 'center', justifyContent: 'center'},
-                    followed ? styles.focused_border : styles.focus_border]}
+                    followed ? styles.focus_border : styles.focused_border]}
             >
                 <Text
-                    style={followed ? styles.txtFocused : focus}>{followed ? I18n.t('rank_del_focus') : I18n.t('rank_focus')}</Text>
+                    style={followed ? styles.txtFocus : styles.txtFocused }>{followed ? I18n.t('rank_del_focus') : I18n.t('rank_focus')}</Text>
             </TouchableOpacity>
         </TouchableOpacity>)
     };
