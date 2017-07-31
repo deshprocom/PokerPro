@@ -18,9 +18,9 @@ class FiltePage extends Component {
     constructor(props){
         super(props);
         this.state = {
-            adrSelected: 0,
+            adrSelected: 1,
             adrValue: 'global',
-            scoreSelected: 0,
+            scoreSelected: 1,
             scoreValue: 'all',
             typeData: []
         }
@@ -39,8 +39,8 @@ class FiltePage extends Component {
 
     _cancelSelect = () => {
         this.setState({
-            adrSelected: 0,
-            scoreSelected: 0
+            adrSelected: 1,
+            scoreSelected: 1
         });
         this.checkDay.cancelBtn();
     };
@@ -75,7 +75,7 @@ class FiltePage extends Component {
             <View style={{flexDirection: 'row',paddingLeft: 36,position: 'absolute', bottom: 36}}>
                 <TouchableOpacity style={[{borderColor: Colors._161817,borderRadius: 2,borderWidth: 1},styles.side_btn]}>
                     <Text style={{fontSize: 15,color: Colors._333}}
-                        onPress={() => this._cancelSelect()}>{I18n.t('cancel')}</Text>
+                        onPress={() => this._cancelSelect()}>{I18n.t('rank_filte_clear')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[{backgroundColor: Colors._161817,marginLeft: 48},styles.side_btn]}>
                     <Text style={{fontSize: 15,color: Colors.text_choice_btn}}
@@ -99,7 +99,7 @@ class FiltePage extends Component {
                         });
                     }}>
                     <Image source={adrSelected==1 ? Images.Group : Images.Group_em}
-                           style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center'}}>
+                           style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center',backgroundColor: 'transparent'}}>
                         <Text>{I18n.t('rank_filte_global')}</Text>
                     </Image>
                 </TouchableOpacity>
@@ -111,7 +111,7 @@ class FiltePage extends Component {
                         })
                     }}>
                     <Image source={adrSelected==2 ? Images.Group : Images.Group_em}
-                           style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center'}}>
+                           style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center',backgroundColor: 'transparent'}}>
                         <Text>{I18n.t('rank_filte_country')}</Text>
                     </Image>
                 </TouchableOpacity>
@@ -133,7 +133,7 @@ class FiltePage extends Component {
                         });
                     }}>
                     <Image source={scoreSelected==1 ? Images.Group : Images.Group_em}
-                           style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center'}}>
+                           style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center',backgroundColor: 'transparent'}}>
                         <Text>{I18n.t('all')}</Text>
                     </Image>
                 </TouchableOpacity>
@@ -145,7 +145,7 @@ class FiltePage extends Component {
                         })
                     }}>
                     <Image source={scoreSelected==2 ? Images.Group : Images.Group_em}
-                           style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center'}}>
+                           style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center',backgroundColor: 'transparent'}}>
                         <Text>1-100</Text>
                     </Image>
                 </TouchableOpacity>
@@ -157,7 +157,7 @@ class FiltePage extends Component {
                         })
                     }}>
                     <Image source={scoreSelected==3 ? Images.Group : Images.Group_em}
-                           style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center'}}>
+                           style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center',backgroundColor: 'transparent'}}>
                         <Text>100-200</Text>
                     </Image>
                 </TouchableOpacity>
@@ -169,7 +169,7 @@ class FiltePage extends Component {
                         })
                     }}>
                     <Image source={scoreSelected==4 ? Images.Group : Images.Group_em}
-                           style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center'}}>
+                           style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center',backgroundColor: 'transparent'}}>
                         <Text>200-300</Text>
                     </Image>
                 </TouchableOpacity>
@@ -181,7 +181,7 @@ class FiltePage extends Component {
                         })
                     }}>
                     <Image source={scoreSelected==5 ? Images.Group : Images.Group_em}
-                           style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center'}}>
+                           style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center',backgroundColor: 'transparent'}}>
                         <Text>300-600</Text>
                     </Image>
                 </TouchableOpacity>
@@ -193,7 +193,7 @@ class FiltePage extends Component {
                         })
                     }}>
                     <Image source={scoreSelected==6 ? Images.Group : Images.Group_em}
-                           style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center'}}>
+                           style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center',backgroundColor: 'transparent'}}>
                         <Text>600以上</Text>
                     </Image>
                 </TouchableOpacity>

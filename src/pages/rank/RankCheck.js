@@ -18,7 +18,7 @@ class RankCheck extends Component {
             check: false,
             itemArr: [],
             name: '',
-            allSelect: false
+            allSelect: true
         }
     }
 
@@ -97,6 +97,7 @@ class RankCheck extends Component {
 
         this.setState({
             itemArr:arrClear,
+            allSelect: true
         });
     };
 
@@ -176,7 +177,7 @@ class RankCheck extends Component {
                         }}
                                   style={styles.btn_style}>
                             <Image source={is_select?Images.Group:Images.Group_em}
-                                   style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center'}}>
+                                   style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center',backgroundColor: 'transparent'}}>
                                 <Text style={{color: Colors._333,fontSize: 15}}>{item}</Text>
                             </Image>
                         </TouchableOpacity>
