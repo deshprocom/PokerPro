@@ -58,14 +58,7 @@ class PersonPage extends React.Component {
         );
     }
 
-    shouldComponentUpdate(newProps, nextState) {
-        const {router} = this.props;
-        if (newProps.actionType === PUT_PROFILE && newProps.hasData) {
-            router.pop();
-            return false;
-        }
-        return true;
-    }
+
 
     render() {
 
@@ -80,8 +73,9 @@ class PersonPage extends React.Component {
                     toolbarStyle={{backgroundColor: '#161718'}}
                     title={I18n.t('edit_info')}
                     rightBtnText={I18n.t('complete')}
-                    leftBtnText={I18n.t('cancel')}
-                    leftBtnPress={()=>this.props.router.pop()}
+                    leftBtnIcon={Images.sign_return}
+                    leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
+                    leftBtnPress={()=>router.pop()}
                     rightBtnPress={this._putProfile}/>
 
                 <KeyboardAwareScrollView>

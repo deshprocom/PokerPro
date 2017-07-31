@@ -13,12 +13,17 @@ export default class MainRankPage extends Component {
     };
 
     isLogin = () => {
-        if(isLoginUser()){
+        if (isLoginUser()) {
             router.toFocusPlayer()
-        }else{
+        } else {
             router.toLoginFirstPage()
         }
     };
+
+    filter = (param) => {
+        this.rankList.filterRank(param)
+    };
+
 
     topHeader = () => {
         return (<View style={styles.header_bar}>
@@ -35,7 +40,7 @@ export default class MainRankPage extends Component {
             </View>
 
             <View style={styles.right_btn}>
-                <TouchableOpacity onPress={()=> this.props.openRank()}
+                <TouchableOpacity onPress={() => this.props.openRank()}
                                   style={styles.topBtn}>
                     <Image source={Images.race_type}
                            style={styles.right_image1}/>
@@ -54,7 +59,8 @@ export default class MainRankPage extends Component {
     render() {
         return (<View>
             {this.topHeader()}
-            <RankList/>
+            <RankList
+                ref={ref=>{this.rankList = ref}}/>
         </View>)
     };
 
@@ -86,7 +92,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     title_color: {
-        color: Colors.txt_E0C,
+        color: Colors._F4E,
         fontSize: 18
     },
     right_btn: {
@@ -99,7 +105,7 @@ const styles = StyleSheet.create({
         height: 20
     },
     right_image2: {
-        width: 20.9,
-        height: 20
+        width: 22,
+        height: 21
     }
 })

@@ -58,7 +58,7 @@ export default class RaceListView extends Component {
                     <View style={{flex: 1}}/>
 
                     <View style={styles.viewRank}>
-                        <Text style={styles.rank}>第{ranking}名</Text>
+                        <Text style={styles.rank}>NO.{ranking}</Text>
                     </View>
 
                 </View>
@@ -116,7 +116,7 @@ export default class RaceListView extends Component {
     onFetch = (page = 1, startFetch, abortFetch) => {
         if (page === 1) {
             const body = {
-                player_id: '4bbd9cc2'
+                player_id: this.props.playerId
             };
             getPokerRanks(body, data => {
                 startFetch(data, 10)
@@ -129,69 +129,70 @@ export default class RaceListView extends Component {
 }
 
 
-const styles = StyleSheet.create({
-    viewTop: {
-        height: 35,
-        width: Metrics.screenWidth,
-        flexDirection: 'row',
-        alignItems: 'flex-end'
-    },
-    name: {
-        fontSize: 17,
-        fontWeight: 'bold',
-        color: Colors._333,
-        marginLeft: 20
-    },
-    viewRank: {
-        backgroundColor: '#F34A4A',
-        borderRadius: 23,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginRight: 17
-    },
-    rank: {
-        fontSize: 13,
-        color: 'white',
-        margin: 5
-    },
-    viewInfo: {
-        height: 80,
-        width: Metrics.screenWidth,
-        flexDirection: 'row'
-    },
-    viewItem: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    txtTabName: {
-        color: Colors._AAA,
-        fontSize: 12,
-        fontWeight: 'bold'
-    },
-    txtTabValue: {
-        color: Colors._888,
-        fontSize: 15,
-        fontWeight: 'bold',
-        marginTop: 8
-    },
-    line: {
-        height: 1,
-        backgroundColor: Colors._ECE,
-        marginLeft: 20,
-        marginRight: 17
+const
+    styles = StyleSheet.create({
+        viewTop: {
+            height: 35,
+            width: Metrics.screenWidth,
+            flexDirection: 'row',
+            alignItems: 'flex-end'
+        },
+        name: {
+            fontSize: 17,
+            fontWeight: 'bold',
+            color: Colors._333,
+            marginLeft: 20
+        },
+        viewRank: {
+            backgroundColor: '#F34A4A',
+            borderRadius: 23,
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginRight: 17
+        },
+        rank: {
+            fontSize: 13,
+            color: 'white',
+            margin: 5
+        },
+        viewInfo: {
+            height: 80,
+            width: Metrics.screenWidth,
+            flexDirection: 'row'
+        },
+        viewItem: {
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center'
+        },
+        txtTabName: {
+            color: Colors._AAA,
+            fontSize: 12,
+            fontWeight: 'bold'
+        },
+        txtTabValue: {
+            color: Colors._888,
+            fontSize: 15,
+            fontWeight: 'bold',
+            marginTop: 8
+        },
+        line: {
+            height: 1,
+            backgroundColor: Colors._ECE,
+            marginLeft: 20,
+            marginRight: 17
 
-    },
-    txtTime: {
-        fontSize: 13,
-        color: Colors._666
-    },
-    viewTime: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginLeft: 20
-    },
-    viewBottom: {
-        height: 70
-    }
-});
+        },
+        txtTime: {
+            fontSize: 13,
+            color: Colors._666
+        },
+        viewTime: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginLeft: 20
+        },
+        viewBottom: {
+            height: 70
+        }
+    });

@@ -127,16 +127,6 @@ class HomePage extends Component {
     };
 
 
-    _userIdView = (profile) => {
-        return (
-            <View style={styles.person_feature}>
-                <Text style={styles.person_id}>ID:</Text>
-                <Text style={styles.person_id}>{profile.user_name}</Text>
-                <Text style={styles.person_honer}></Text>
-            </View>
-        )
-    };
-
 
     _onScroll = (event) => {
         let offsetY = event.nativeEvent.contentOffset.y;
@@ -377,74 +367,6 @@ class HomePage extends Component {
         )
     }
 
-    _topView = () => {
-        return <View>
-            <View
-                style={styles.homeImg}/>
-            <View style={styles.viewNick}>
-                {this._showNick(profile.nick_name)}
-
-                <Text style={styles.txtSign}>{profile.signature ? profile.signature :
-                    I18n.t('ple_sign')}</Text>
-            </View>
-
-            <TouchableOpacity
-                style={styles.btnAvatar}
-                activeOpacity={1}
-                onPress={this._btnHeader}>
-                <View
-                    style={styles.viewAvatar}>
-                    <Image style={styles.avatar}
-                           source={strNotNull(profile.avatar) ?
-                               {uri: profile.avatar} : Images.home_avatar}
-                    />
-                </View>
-            </TouchableOpacity>
-
-        </View>
-
-    };
-
-    old = () => {
-        const {profile, router, error, loading, hasData, actionType, listRaces} = this.props;
-        const {opacity, badge} = this.state;
-        return <ScrollView
-            scrollEventThrottle={16}
-            bounces={false}
-            onScroll={this._onScroll}>
-            <View>
-                <Image
-                    style={styles.homeImg}
-                    source={Images.home_img}/>
-                <View style={styles.viewNick}>
-                    {this._showNick(profile.nick_name)}
-
-                    <Text style={styles.txtSign}>{profile.signature ? profile.signature :
-                        I18n.t('ple_sign')}</Text>
-                </View>
-
-                <TouchableOpacity
-                    style={styles.btnAvatar}
-                    activeOpacity={1}
-                    onPress={this._btnHeader}>
-                    <View
-                        style={styles.viewAvatar}>
-                        <Image style={styles.avatar}
-                               source={strNotNull(profile.avatar) ?
-                                   {uri: profile.avatar} : Images.home_avatar}
-                        />
-                    </View>
-                </TouchableOpacity>
-
-            </View>
-
-            {this._showLoading()}
-            {/*赛事列表*/}
-            {!loading && error ? this._loadErrorPage()
-                : this._showListView(listRaces)}
-
-        </ScrollView>;
-    }
 
 
     _btnHeader = () => {

@@ -20,7 +20,8 @@ export default class PokerRankPage extends Component {
             <PokerView
                 playerId={player_id}/>
 
-            <RaceListView/>
+            <RaceListView
+                playerId={player_id}/>
 
         </View>)
     }
