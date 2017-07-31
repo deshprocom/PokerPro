@@ -107,7 +107,7 @@ class RankCheck extends Component {
         for(let i=0;i<arr.length;i++){
             if(arr[i].info){
                 newArr.push(arr[i].info);
-            }else{}
+            }
         };
         return newArr;
     };
@@ -155,7 +155,7 @@ class RankCheck extends Component {
                         }}
                               style={styles.btn_style}>
                 <Image source={allSelect?Images.Group:Images.Group_em}
-                       style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center'}}>
+                       style={{width: 72,height: 30,alignItems: 'center',justifyContent: 'center', backgroundColor:'transparent'}}>
                     <Text style={{color: Colors._333,fontSize: 15}}>{I18n.t('all')}</Text>
                 </Image>
             </TouchableOpacity>

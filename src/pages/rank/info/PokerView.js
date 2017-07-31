@@ -69,6 +69,10 @@ export default class PokerView extends Component {
             {this._topView()}
 
             <TouchableOpacity
+                style={{
+                    height: 74,
+                    width: 74,
+                }}
                 onPress={() => {
                     if (strNotNull(avatar)) {
                         let images = [{url: avatar}];
@@ -279,13 +283,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 20,
-        marginTop: 12
+        marginTop: 6
     },
     tabView: {
         height: 80,
         flexDirection: 'row',
         backgroundColor: 'transparent',
-        marginTop: 40
+        marginTop: 36
     }
 
 

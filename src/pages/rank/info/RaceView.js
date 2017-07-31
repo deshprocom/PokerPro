@@ -22,11 +22,16 @@ export default class RaceView extends Component {
     };
 
     render() {
-        const {begin_date, end_date, logo, prize, ticket_price, location, name} = this.props.race;
+        const {begin_date, end_date, logo, prize, ticket_price, location, name, race_id,participants} = this.props.race;
         return (<View>
-            {this._topView()}
+
             <View style={styles.page}>
-                <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
+                <TouchableOpacity
+                    activeOpacity={1}
+                    onPress={() => {
+                        router.toRacesInfoPage(this.props, race_id, false)
+                    }}
+                    style={{flexDirection: 'row', alignItems: 'flex-end'}}>
                     <ImageLoad
                         source={{uri: logo}}
                         style={styles.imgRace}/>
@@ -58,7 +63,7 @@ export default class RaceView extends Component {
                             </View>
                         </View>
                     </View>
-                </View>
+                </TouchableOpacity>
 
                 <View style={styles.line}/>
                 <View style={styles.viewInfo}>
@@ -67,14 +72,15 @@ export default class RaceView extends Component {
                         <Text style={styles.txtTabValue}>{ticket_price}</Text>
 
                     </View>
-                    <View style={styles.viewItem}>
-                        <Text style={styles.txtTabName}>{I18n.t('rank_participate')}</Text>
-                        <Text style={styles.txtTabValue}>$223422</Text>
 
-                    </View>
                     <View style={styles.viewItem}>
                         <Text style={styles.txtTabName}>{I18n.t('rank_prize')}</Text>
                         <Text style={styles.txtTabValue}>{prize}</Text>
+
+                    </View>
+                    <View style={styles.viewItem}>
+                        <Text style={styles.txtTabName}>{I18n.t('rank_participate')}</Text>
+                        <Text style={styles.txtTabValue}>{participants}</Text>
 
                     </View>
 
@@ -86,48 +92,7 @@ export default class RaceView extends Component {
         </View>)
     }
 
-    _topView = () => {
-        return (<View style={styles.topBar}>
 
-            <TouchableOpacity
-                testID="btn_bar_left"
-                onPress={() => router.pop()}
-                style={styles.topBtn}
-                activeOpacity={1}>
-                <Image
-                    source={Images.sign_return}
-                    style={styles.topImgLeft}/>
-
-            </TouchableOpacity>
-
-            <TouchableOpacity
-                onPress={
-                    () => {
-                        router.popToDrawerRank();
-                    }
-                }
-                testID="btn_bar_close"
-                style={styles.topBtn}
-                activeOpacity={1}>
-                <Image
-                    source={Images.sign_close}
-                    style={styles.imgClose}/>
-            </TouchableOpacity>
-
-            <View style={{flex: 1}}/>
-
-            <View style={styles.right}>
-                <TouchableOpacity
-                    testID="btn_bar_close"
-                    style={styles.topBtn}
-                    activeOpacity={1}>
-                    <Image
-                        source={Images.share}
-                        style={styles.imgShare}/>
-                </TouchableOpacity>
-            </View>
-        </View>)
-    }
 }
 
 const styles = StyleSheet.create({

@@ -19,7 +19,6 @@ import {RACE_HOSTS, GET_SEARCH_RACES} from '../../actions/ActionTypes';
 import RaceRowView from '../../components/listitem/RaceRowView';
 import {_renderFooter, _renderHeader} from '../../components/LoadingView';
 import TimerMixin from 'react-timer-mixin';
-import {NoDataView, LoadErrorView, LoadingView} from '../../components/load'
 
 
 const Forward = 'forward',

@@ -671,7 +671,7 @@ export default class Router {
     popToDrawerRank() {
         let routes = this.navigator.getCurrentRoutes();
         for (var route of routes) {
-            if (route.name === 'DrawerRank') {
+            if (route.name === 'DrawerRank' || route.name === 'RacesInfoPage') {
                 this.navigator.popToRoute(route)
             }
         }

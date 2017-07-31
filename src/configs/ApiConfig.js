@@ -179,8 +179,9 @@ export function news_list(body) {
     return 'news/types/' + type_id + '?page_size=' + page_size + '&next_id=' + next_id;
 }
 export function players_list(body) {
-    const {page_index, region, year} = body;
-    return 'players?page_index=' + page_index + '&region=' + region + '&year=' + year;
+    const {page_index, region, page_size, begin_year, end_year} = body;
+    return 'players?page_index=' + page_index + '&page_size=' + page_size
+        + '&region=' + region + '&begin_year=' + begin_year + '&end_year=' + end_year;
 }
 export function player_info(body) {
     const {player_id} = body;
