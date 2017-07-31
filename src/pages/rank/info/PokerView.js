@@ -279,13 +279,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 20,
-        marginTop: 12
+        marginTop: 6
     },
     tabView: {
         height: 80,
         flexDirection: 'row',
         backgroundColor: 'transparent',
-        marginTop: 40
+        marginTop: 36
     }
 
 

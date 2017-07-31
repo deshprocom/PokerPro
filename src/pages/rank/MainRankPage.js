@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     title_color: {
-        color: Colors.txt_E0C,
+        color: Colors._F4E,
         fontSize: 18
     },
     right_btn: {
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
         height: 20
     },
     right_image2: {
-        width: 20.9,
-        height: 20
+        width: 22,
+        height: 21
     }
 })

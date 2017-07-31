@@ -105,6 +105,7 @@ export default class RankList extends Component {
 
         return (<View style={styles.rank_list}>
             <UltimateListView
+                style={{paddingTop: 6}}
                 key={this.state.layout}
                 keyExtractor={(item, index) => `${this.state.layout} - ${item.race_id}`}
                 ref={(ref) => this.listView = ref}
@@ -170,7 +171,7 @@ export default class RankList extends Component {
         const {region, begin_year, end_year, page_index, page_size} = this.filterParam;
         const body = {
             page_size: page_size ? page_size : 100,
-            page_index: page,
+            page_index: page - 1,
             region: region ? region : 'global',
             begin_year: begin_year ? begin_year : ['2017'],
             end_year: end_year ? end_year : ['2017'],
@@ -193,8 +194,7 @@ const styles = StyleSheet.create({
     rank_list: {
         width: Metrics.screenWidth,
         height: Metrics.screenHeight,
-        backgroundColor: Colors.bg_f5,
-        paddingTop: 6
+        backgroundColor: Colors.bg_f5
     },
     row_view: {
         height: 70,
