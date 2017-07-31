@@ -80,7 +80,8 @@ class PersonPage extends React.Component {
                     toolbarStyle={{backgroundColor: '#161718'}}
                     title={I18n.t('edit_info')}
                     rightBtnText={I18n.t('complete')}
-                    leftBtnText={I18n.t('back')}
+                    leftBtnIcon={Images.sign_return}
+                    leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
                     leftBtnPress={()=>router.pop()}
                     rightBtnPress={this._putProfile}/>
 

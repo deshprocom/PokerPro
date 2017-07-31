@@ -24,7 +24,7 @@ export default class RaceView extends Component {
     render() {
         const {begin_date, end_date, logo, prize, ticket_price, location, name} = this.props.race;
         return (<View>
-            {this._topView()}
+
             <View style={styles.page}>
                 <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
                     <ImageLoad
@@ -86,48 +86,7 @@ export default class RaceView extends Component {
         </View>)
     }
 
-    _topView = () => {
-        return (<View style={styles.topBar}>
 
-            <TouchableOpacity
-                testID="btn_bar_left"
-                onPress={() => router.pop()}
-                style={styles.topBtn}
-                activeOpacity={1}>
-                <Image
-                    source={Images.sign_return}
-                    style={styles.topImgLeft}/>
-
-            </TouchableOpacity>
-
-            <TouchableOpacity
-                onPress={
-                    () => {
-                        router.popToDrawerRank();
-                    }
-                }
-                testID="btn_bar_close"
-                style={styles.topBtn}
-                activeOpacity={1}>
-                <Image
-                    source={Images.sign_close}
-                    style={styles.imgClose}/>
-            </TouchableOpacity>
-
-            <View style={{flex: 1}}/>
-
-            <View style={styles.right}>
-                <TouchableOpacity
-                    testID="btn_bar_close"
-                    style={styles.topBtn}
-                    activeOpacity={1}>
-                    <Image
-                        source={Images.share}
-                        style={styles.imgShare}/>
-                </TouchableOpacity>
-            </View>
-        </View>)
-    }
 }
 
 const styles = StyleSheet.create({

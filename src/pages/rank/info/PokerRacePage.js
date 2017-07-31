@@ -37,11 +37,97 @@ export default class PokerRacePage extends Component {
     render() {
         const {race, ranks} = this.state;
         return (<View style={ApplicationStyles.bgContainer}>
-            <RaceView
-                race={race}/>
-            <RankListView
-                ranks={ranks}/>
+            {this._topView()}
+            <ScrollView>
+                <RaceView
+                    race={race}/>
+                <RankListView
+                    ranks={ranks}/>
+            </ScrollView>
 
         </View>)
     }
+
+    _topView = () => {
+        return (<View style={styles.topBar}>
+
+            <TouchableOpacity
+                testID="btn_bar_left"
+                onPress={() => router.pop()}
+                style={styles.topBtn}
+                activeOpacity={1}>
+                <Image
+                    source={Images.sign_return}
+                    style={styles.topImgLeft}/>
+
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                onPress={
+                    () => {
+                        router.popToDrawerRank();
+                    }
+                }
+                testID="btn_bar_close"
+                style={styles.topBtn}
+                activeOpacity={1}>
+                <Image
+                    source={Images.sign_close}
+                    style={styles.imgClose}/>
+            </TouchableOpacity>
+
+            <View style={{flex: 1}}/>
+
+            <View style={styles.right}>
+                <TouchableOpacity
+                    testID="btn_bar_close"
+                    style={styles.topBtn}
+                    activeOpacity={1}>
+                    <Image
+                        source={Images.share}
+                        style={styles.imgShare}/>
+                </TouchableOpacity>
+            </View>
+        </View>)
+    }
 }
+
+
+const styles = StyleSheet.create({
+    topBar: {
+        height: Metrics.navBarHeight,
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: Metrics.screenWidth,
+        paddingTop: Metrics.statusBarHeight,
+        backgroundColor: Colors._161
+    },
+    topImgLeft: {
+        height: 19,
+        width: 11,
+        marginLeft: 20,
+        marginRight: 10
+    },
+    topBtn: {
+        height: 44,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    imgClose: {
+        height: 18,
+        width: 18,
+        marginLeft: 15,
+        marginRight: 15
+    },
+
+    right: {
+        width: 90,
+        flexDirection: 'row-reverse'
+    },
+    imgShare: {
+        height: 22,
+        width: 23,
+        marginRight: 20,
+        marginLeft: 10
+    },
+});
