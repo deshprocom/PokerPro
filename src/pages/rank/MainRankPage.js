@@ -13,12 +13,17 @@ export default class MainRankPage extends Component {
     };
 
     isLogin = () => {
-        if(isLoginUser()){
+        if (isLoginUser()) {
             router.toFocusPlayer()
-        }else{
+        } else {
             router.toLoginFirstPage()
         }
     };
+
+    filter = (param) => {
+        this.rankList.filterRank(param)
+    };
+
 
     topHeader = () => {
         return (<View style={styles.header_bar}>
@@ -35,7 +40,7 @@ export default class MainRankPage extends Component {
             </View>
 
             <View style={styles.right_btn}>
-                <TouchableOpacity onPress={()=> this.props.openRank()}
+                <TouchableOpacity onPress={() => this.props.openRank()}
                                   style={styles.topBtn}>
                     <Image source={Images.race_type}
                            style={styles.right_image1}/>
@@ -54,7 +59,8 @@ export default class MainRankPage extends Component {
     render() {
         return (<View>
             {this.topHeader()}
-            <RankList/>
+            <RankList
+                ref={ref=>{this.rankList = ref}}/>
         </View>)
     };
 

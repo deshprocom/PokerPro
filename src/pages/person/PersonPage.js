@@ -80,8 +80,8 @@ class PersonPage extends React.Component {
                     toolbarStyle={{backgroundColor: '#161718'}}
                     title={I18n.t('edit_info')}
                     rightBtnText={I18n.t('complete')}
-                    leftBtnText={I18n.t('cancel')}
-                    leftBtnPress={()=>this.props.router.pop()}
+                    leftBtnText={I18n.t('back')}
+                    leftBtnPress={()=>router.pop()}
                     rightBtnPress={this._putProfile}/>
 
                 <KeyboardAwareScrollView>

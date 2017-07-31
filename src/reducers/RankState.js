@@ -11,7 +11,6 @@ const initialState = {
 };
 
 export default function rankList(state = initialState, action) {
-    console.log('rankRedux',action)
     switch (action.type){
         case GET_MAIN_RANK:
             state.typeData = [];

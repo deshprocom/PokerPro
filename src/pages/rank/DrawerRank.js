@@ -1,12 +1,12 @@
 import React, {Component, PropTypes} from 'react';
-import {View, Text, StyleSheet, BackAndroid, Navigator} from 'react-native';
+import {View, Text, StyleSheet, BackAndroid, InteractionManager} from 'react-native';
 import Drawer from 'react-native-drawer';
 
 import {Colors, Images, Metrics} from '../../Themes'
 
 import MainRankPage from './MainRankPage';
 import FiltePage from './FiltePage';
-
+import TimerMixin from 'react-timer-mixin';
 
 class DrawerRank extends Component {
     constructor(props) {
@@ -16,16 +16,21 @@ class DrawerRank extends Component {
         }
     }
 
-    openRankDrawer = () => {
-        this._drawer.open()
-    };
 
-    closeRankDrawer = () => {
-        this._drawer.close()
+    closeRankDrawer = (params) => {
+
+        this._drawer.close();
+
+        TimerMixin.setTimeout(() => {
+            if (this.mainRank && this.filterPage)
+                this.mainRank.filter(params)
+
+        }, 200);
+
     };
 
     _handleDrawer() {
-        router.log('_handleDrawer', this._drawer._open);
+
         if (this._drawer._open) {
             this._drawer.close();
             this.setState({
@@ -39,32 +44,30 @@ class DrawerRank extends Component {
         }
     }
 
-    // 事例ref
-    _search = ()=>{
-        this.mainRank.topHeader()
-    };
 
     render() {
         return (
-            <Drawer ref={(ref) => this._drawer=ref}
+            <Drawer ref={(ref) => this._drawer = ref}
                     type='overlay'
-                    content={<FiltePage cancelDrawer={() => this.closeRankDrawer()}/>}
+                    content={<FiltePage
+                        ref={ref => this.filterPage = ref}
+                        cancelDrawer={this.closeRankDrawer}/>}
                     tapToClose
-                    onClose={()=>{
-                    this.setState({
-                        drawerState : false
-                    });
-                }}
+                    onClose={() => {
+                        this.setState({
+                            drawerState: false
+                        });
+                    }}
                     openDrawerOffset={63}
-                    styles={this.state.drawerState?drawerStyles:drawerStylesColse}
+                    styles={this.state.drawerState ? drawerStyles : drawerStylesColse}
                     tweenHandler={(ratio) => ({
-                    main: { opacity:(2-ratio)/2 }
-                })}
+                        main: {opacity: (2 - ratio) / 2}
+                    })}
                     side="right">
 
                 <MainRankPage
-                    ref={ref=>this.mainRank = ref}
-                    openRank={()=>this._handleDrawer()}/>
+                    ref={ref => this.mainRank = ref}
+                    openRank={() => this._handleDrawer()}/>
 
             </Drawer>)
     }
