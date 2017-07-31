@@ -69,10 +69,7 @@ export default class PokerView extends Component {
             {this._topView()}
 
             <TouchableOpacity
-                style={{
-                    height: 74,
-                    width: 74,
-                }}
+                style={styles.btnAvatar}
                 onPress={() => {
                     if (strNotNull(avatar)) {
                         let images = [{url: avatar}];
@@ -100,13 +97,7 @@ export default class PokerView extends Component {
 
 
             <View style={styles.tabView}>
-                <View style={styles.tab}>
-                    <Text style={styles.tabValue}>NO.{ranking}</Text>
-                    <View style={styles.tabNameView}>
-                        <Text style={styles.tabName}>{I18n.t('rank_no')}</Text>
-                    </View>
 
-                </View>
                 <View style={styles.tab}>
                     <Text style={styles.tabValue}>{dpi_total_score}</Text>
                     <View style={styles.tabNameView}>
@@ -114,6 +105,15 @@ export default class PokerView extends Component {
                     </View>
 
                 </View>
+
+                <View style={styles.tab}>
+                    <Text style={styles.tabValue}>{ranking}</Text>
+                    <View style={styles.tabNameView}>
+                        <Text style={styles.tabName}>{I18n.t('rank_no')}</Text>
+                    </View>
+
+                </View>
+
                 <View style={styles.tab}>
                     <Text style={styles.tabValue}>{dpi_total_earning}</Text>
                     <View style={styles.tabNameView}>
@@ -222,12 +222,16 @@ const styles = StyleSheet.create({
         marginRight: 20,
         marginLeft: 10
     },
-    avatar: {
+    btnAvatar: {
         height: 74,
         width: 74,
         position: 'absolute',
         left: 20,
-        top: 84,
+        top: 84
+    },
+    avatar:{
+        height: 74,
+        width: 74,
         borderRadius: 37
     },
     name: {

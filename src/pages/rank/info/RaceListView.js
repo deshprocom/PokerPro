@@ -54,11 +54,13 @@ export default class RaceListView extends Component {
 
             <View style={{backgroundColor: 'white'}}>
                 <View style={styles.viewTop}>
-                    <Text style={styles.name}>{name}</Text>
+                    <Text
+                        numberOfLines={1}
+                        style={styles.name}>{name}</Text>
                     <View style={{flex: 1}}/>
 
                     <View style={styles.viewRank}>
-                        <Text style={styles.rank}>NO.{ranking}</Text>
+                        <Text style={styles.rank}>第{ranking}名</Text>
                     </View>
 
                 </View>
