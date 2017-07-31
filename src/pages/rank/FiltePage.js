@@ -38,8 +38,8 @@ export default class FiltePage extends Component {
     _sureSendType = () => {
         const {adrValue, scoreSelected} = this.state;
         let time = this.checkDay.sureBtn();
-        let begin_year = 2017;
-        let end_year = 2017;
+        let begin_year = '';
+        let end_year = '';
         if (time && time.length) {
             begin_year = time[0];
             end_year = time[time.length - 1]
@@ -122,7 +122,7 @@ export default class FiltePage extends Component {
     scoreCheck = () => {
         const {scoreSelected, scoreValue} = this.state;
         return (<View>
-            <Text style={{lineHeight: 21, fontSize: 15, color: Colors._888}}>{I18n.t('rank_filte_adr')}</Text>
+            <Text style={{lineHeight: 21, fontSize: 15, color: Colors._888}}>{I18n.t('rank_filte_rank')}</Text>
             <View style={{height: 1, backgroundColor: Colors.bg_f5, marginTop: 5, marginBottom: 20, width: 239}}></View>
             <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-start'}}>
                 <TouchableOpacity key="1" style={{marginBottom: 16, marginRight: 13}}

@@ -135,7 +135,7 @@ export default class RankList extends Component {
             console.log(page);
             if (page === 1) {
                 this.refresh(startFetch, abortFetch);
-                this.listView.scrollTo(0)
+                this.listView.scrollTo({x: 0, y: 0, animated: true})
             } else {
                 console.log('loadmore')
                 this.loadMore(startFetch, abortFetch);
