@@ -138,7 +138,7 @@ export default class RankList extends Component {
                 this.listView.scrollTo(0)
             } else {
                 console.log('loadmore')
-                this.loadMore(startFetch, abortFetch, page);
+                this.loadMore(startFetch, abortFetch);
             }
         } catch (err) {
             abortFetch();
@@ -152,8 +152,8 @@ export default class RankList extends Component {
             page_size: page_size ? page_size : 100,
             page_index: page_index ? page_index : 0,
             region: region ? region : 'global',
-            begin_year: begin_year ? begin_year : ['2017'],
-            end_year: end_year ? end_year : ['2017'],
+            begin_year: begin_year ? begin_year : '',
+            end_year: end_year ? end_year : '',
         };
 
         getMainRank(body, data => {
@@ -173,10 +173,10 @@ export default class RankList extends Component {
         const {region, begin_year, end_year, page_index, page_size} = this.filterParam;
         const body = {
             page_size: page_size ? page_size : 100,
-            page_index: page - 1,
+            page_index: this.state.page,
             region: region ? region : 'global',
-            begin_year: begin_year ? begin_year : ['2017'],
-            end_year: end_year ? end_year : ['2017'],
+            begin_year: begin_year ? begin_year : '',
+            end_year: end_year ? end_year : '',
         };
 
         getMainRank(body, data => {

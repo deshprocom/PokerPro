@@ -69,6 +69,10 @@ export default class PokerView extends Component {
             {this._topView()}
 
             <TouchableOpacity
+                style={{
+                    height: 74,
+                    width: 74,
+                }}
                 onPress={() => {
                     if (strNotNull(avatar)) {
                         let images = [{url: avatar}];
