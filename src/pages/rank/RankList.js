@@ -5,6 +5,7 @@ import {Metrics, Colors, Images} from '../../Themes';
 import {PullListView, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView} from '../../components/load';
 import {getMainRank} from '../../services/RankDao';
+import {strNotNull} from '../../utils/ComonHelper';
 
 export default class RankList extends Component {
 
@@ -65,8 +66,8 @@ export default class RankList extends Component {
                     {this.rankNum(rank)}
                 </View>
                 <View style={styles.list_row}>
-                    <Image defaultSource={Images.mask}
-                           source={{uri: avatar}}
+                    <Image defaultSource={Images.home_avatar}
+                           source={strNotNull(avatar) ? {uri: avatar} : Images.home_avatar}
                            style={{width: 49.7, height: 49.7, marginLeft: 12, marginRight: 15.3, borderRadius: 24.85}}>
                         <Image/>
                     </Image>
@@ -134,6 +135,7 @@ export default class RankList extends Component {
             console.log(page);
             if (page === 1) {
                 this.refresh(startFetch, abortFetch);
+                this.listView.scrollTo(0)
             } else {
                 console.log('loadmore')
                 this.loadMore(startFetch, abortFetch, page);

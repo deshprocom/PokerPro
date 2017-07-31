@@ -22,7 +22,7 @@ export default class RaceView extends Component {
     };
 
     render() {
-        const {begin_date, end_date, logo, prize, ticket_price, location, name, race_id} = this.props.race;
+        const {begin_date, end_date, logo, prize, ticket_price, location, name, race_id,participants} = this.props.race;
         return (<View>
 
             <View style={styles.page}>
@@ -72,14 +72,15 @@ export default class RaceView extends Component {
                         <Text style={styles.txtTabValue}>{ticket_price}</Text>
 
                     </View>
-                    <View style={styles.viewItem}>
-                        <Text style={styles.txtTabName}>{I18n.t('rank_participate')}</Text>
-                        <Text style={styles.txtTabValue}>$223422</Text>
 
-                    </View>
                     <View style={styles.viewItem}>
                         <Text style={styles.txtTabName}>{I18n.t('rank_prize')}</Text>
                         <Text style={styles.txtTabValue}>{prize}</Text>
+
+                    </View>
+                    <View style={styles.viewItem}>
+                        <Text style={styles.txtTabName}>{I18n.t('rank_participate')}</Text>
+                        <Text style={styles.txtTabValue}>{participants}</Text>
 
                     </View>
 

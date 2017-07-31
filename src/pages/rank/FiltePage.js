@@ -51,7 +51,7 @@ export default class FiltePage extends Component {
             end_year: end_year,
             begin_year: begin_year,
             page_size: 100,
-            page_index: scoreSelected === 1 ? 0 : scoreSelected
+            page_index: scoreSelected === 0 ? 0 : scoreSelected - 1
         };
 
         this.props.cancelDrawer(body);

@@ -50,21 +50,21 @@ export default class RaceResultList extends Component {
         const {player} = item;
 
         return (<View
-            style={singleOrdouble(index)?styles.item1:styles.item2}>
+            style={singleOrdouble(index) ? styles.item1 : styles.item2}>
             <Text
-                testID={"txt_ranking_"+index}
+                testID={"txt_ranking_" + index}
                 style={styles.txtInfo}>{item.ranking}</Text>
             <Text
-                onPress={()=>{
-                    router.toPokerPersonPage(this.props,player)
+                onPress={() => {
+                    router.toPokerRankPage(this.props, player.player_id)
                 }}
-                testID={"txt_name_"+index}
+                testID={"txt_name_" + index}
                 style={styles.txtPerson}>{player.name}</Text>
             <Text
-                testID={"txt_earning_"+index}
+                testID={"txt_earning_" + index}
                 style={styles.txtInfo}>{item.earning}</Text>
             <Text
-                testID={"txt_score_"+index}
+                testID={"txt_score_" + index}
                 style={styles.txtInfo}>{item.score}</Text>
         </View>)
     }
