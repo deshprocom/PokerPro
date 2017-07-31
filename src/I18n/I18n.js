@@ -19,7 +19,7 @@ export function setLanguage(language) {
 I18n.fallbacks = true;
 
 I18n.translations = {
-    en: require('./english.json')
+    zh: require('./zh.json')
 };
 
 let languageCode = I18n.locale.substr(0, 2);

@@ -319,7 +319,7 @@
   "rank_filte_rank": "Ranking",
   "rank_focus_player": "Follow",
   "main_rank": "Ranking",
-  "rank_del_focus": "Cancel Follow",
+  "rank_del_focus": "UnFollow",
   "back": "Back"
 }
 

@@ -158,7 +158,7 @@ export default class RankList extends Component {
 
         getMainRank(body, data => {
             this.setState({
-                page: this.state.page + 1
+                page: body.page_index + 1
             });
             startFetch(data, 10)
         }, err => {
