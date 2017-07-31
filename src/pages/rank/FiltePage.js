@@ -54,7 +54,6 @@ export default class FiltePage extends Component {
             page_index: scoreSelected === 1 ? 0 : scoreSelected
         };
 
-
         this.props.cancelDrawer(body);
 
 
@@ -71,13 +70,16 @@ export default class FiltePage extends Component {
 
             <View style={{flexDirection: 'row', paddingLeft: 36, position: 'absolute', bottom: 36}}>
                 <TouchableOpacity
+                    onPress={() => this._cancelSelect()}
                     style={[{borderColor: Colors._161817, borderRadius: 2, borderWidth: 1}, styles.side_btn]}>
                     <Text style={{fontSize: 15, color: Colors._333}}
-                          onPress={() => this._cancelSelect()}>{I18n.t('cancel')}</Text>
+                    >{I18n.t('cancel')}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[{backgroundColor: Colors._161817, marginLeft: 48}, styles.side_btn]}>
+                <TouchableOpacity
+                    onPress={this._sureSendType}
+                    style={[{backgroundColor: Colors._161817, marginLeft: 48}, styles.side_btn]}>
                     <Text style={{fontSize: 15, color: Colors.text_choice_btn}}
-                          onPress={() => this._sureSendType()}>{I18n.t('alert_sure')}</Text>
+                    >{I18n.t('alert_sure')}</Text>
                 </TouchableOpacity>
             </View>
         </View>)

@@ -106,7 +106,7 @@ class RankCheck extends Component {
         for(let i=0;i<arr.length;i++){
             if(arr[i].info){
                 newArr.push(arr[i].info);
-            }else{}
+            }
         };
         return newArr;
     };
