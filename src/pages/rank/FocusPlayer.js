@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Image, TouchableOpacity, StyleSheet, ListView} from 'react-native';
+import {View, Text, Image, TouchableOpacity, StyleSheet, Alert} from 'react-native';
 import I18n from 'react-native-i18n';
 
 import {Images, Colors, Metrics} from '../../Themes';
@@ -35,18 +35,7 @@ class FocusPlayer extends Component {
                 <Text style={styles.country_text}>{country}</Text>
             </View>
             <TouchableOpacity
-                onPress={() => {
-                    const body = {
-                        player_id: id
-                    };
-                    deleteFocus(body, data => {
-                        if (this.listView)
-                            this.listView.refresh();
-
-                    }, err => {
-
-                    })
-                }}
+                onPress={() => this.tineFocus(id)}
                 style={[{alignItems: 'center', justifyContent: 'center'},
                     followed ? styles.focus_border : styles.focused_border]}
             >
@@ -54,6 +43,34 @@ class FocusPlayer extends Component {
                     style={followed ? styles.txtFocus : styles.txtFocused }>{followed ? I18n.t('rank_del_focus') : I18n.t('rank_focus')}</Text>
             </TouchableOpacity>
         </TouchableOpacity>)
+    };
+
+
+    tineFocus = (id) => {
+        Alert.alert(I18n.t('tint'), I18n.t('rank_del_focus'), [{
+            text: I18n.t('cancel'),
+            onPress: () => {
+            }
+        },
+            {
+                text: I18n.t('confirm'),
+                onPress: () => this.delFocus(id)
+            }]);
+    };
+
+
+    delFocus = (id) => {
+
+        const body = {
+            player_id: id
+        };
+        deleteFocus(body, data => {
+            if (this.listView)
+                this.listView.refresh();
+
+        }, err => {
+
+        })
     };
 
 
