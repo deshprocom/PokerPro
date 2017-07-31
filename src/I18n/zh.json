@@ -320,5 +320,6 @@
   "rank_focus_player":"我关注牌手",
   "main_rank":"排行榜",
   "rank_del_focus":"取消关注",
-  "back":"返回"
+  "back":"返回",
+  "rank_filte_clear":"清空"
 }
