@@ -28,17 +28,17 @@ class RankList extends Component {
         if (rowID == 1) {
             return (
                 <Image source={Images.gold}
-                       style={{width: 25,height: 25}}/>
+                       style={{width: 25.3,height: 33.3}}/>
             )
         } else if (rowID == 2) {
             return (
                 <Image source={Images.silver}
-                       style={{width: 25,height: 25}}/>
+                       style={{width: 25.3,height: 33.3}}/>
             )
         } else if (rowID == 3) {
             return (
                 <Image source={Images.copper}
-                       style={{width: 25,height: 25}}/>
+                       style={{width: 25.3,height: 33.3}}/>
             )
         } else {
             return (
@@ -132,7 +132,7 @@ class RankList extends Component {
         let body = {
             page_index: '0',
             region: 'global',
-            year: '2017'
+            year: ''
         };
         // console.log('player')
         this.props._getRankPlayer(body);
@@ -155,7 +155,7 @@ class RankList extends Component {
         let body = {
             page_index: page - 1,
             region: 'global',
-            year: '2017'
+            year: ''
         };
         this.props._getRankPlayer(body);
         // router.log(6666);
