@@ -56,11 +56,31 @@ export default class MainRankPage extends Component {
         </View>)
     };
 
+    searchBar = () => {
+        return (<TouchableOpacity
+            activeOpacity={1}
+            style={styles.viewSearch}>
+            <View style={styles.search}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Image
+                        source={Images.poker_search}
+                        style={styles.imgSearch}/>
+                    <Text style={styles.txtSearch}>{I18n.t('poker_search')}</Text>
+                </View>
+
+            </View>
+
+        </TouchableOpacity>)
+    };
+
     render() {
         return (<View>
             {this.topHeader()}
+            {this.searchBar()}
             <RankList
-                ref={ref=>{this.rankList = ref}}/>
+                ref={ref => {
+                    this.rankList = ref
+                }}/>
         </View>)
     };
 
@@ -107,5 +127,29 @@ const styles = StyleSheet.create({
     right_image2: {
         width: 22,
         height: 21
+    },
+    viewSearch: {
+        height: 58,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'white'
+    },
+    search: {
+        backgroundColor: Colors._ECE,
+        borderRadius: 3,
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 30,
+        width: 330
+    },
+    imgSearch: {
+        height: 17,
+        width: 17
+    },
+    txtSearch: {
+        fontSize: 14,
+        color: Colors._AAA,
+        marginLeft: 10
     }
-})
+
+});

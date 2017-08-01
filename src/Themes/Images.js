@@ -183,7 +183,8 @@ const images = {
     web_right: require('../../source/news/web_right.png'),
     web_refresh: require('../../source/news/web_refresh.png'),
     rank_bg: require('../../source/rank/rank_bg.png'),
-    share: require('../../source/rank/share.png')
+    share: require('../../source/rank/share.png'),
+    poker_search:require('../../source/rank/search_poker.png')
 
 
 };

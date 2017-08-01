@@ -106,7 +106,6 @@ export default class RankList extends Component {
 
         return (<View style={styles.rank_list}>
             <UltimateListView
-                style={{paddingTop: 6}}
                 key={this.state.layout}
                 keyExtractor={(item, index) => `${this.state.layout} - ${item.race_id}`}
                 ref={(ref) => this.listView = ref}
