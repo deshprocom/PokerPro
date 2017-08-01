@@ -107,7 +107,7 @@ export default class RaceRowView extends Component {
                     source={this._imgRaceStatus(status)}
                     style={status === 'go_ahead' ? styles.imgRaceStatus1 : styles.imgRaceStatus}/>
 
-                <Text style={this._txtColorStatus(status)}>{raceStatusConvert(status)}</Text>
+                <Text style={this._txtColorStatus(status)}>  {raceStatusConvert(status)}</Text>
 
             </View>
 
