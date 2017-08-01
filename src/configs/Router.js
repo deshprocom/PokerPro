@@ -51,6 +51,7 @@ import DrawerRank from '../pages/rank/DrawerRank';
 import FocusPlayer from '../pages/rank/FocusPlayer';
 import PokerRankPage from '../pages/rank/info/PokerRankPage';
 import PokerRacePage from '../pages/rank/info/PokerRacePage';
+import SearchPoker from '../pages/rank/SearchPoker';
 
 
 const customFloatFromRight = Navigator.SceneConfigs.FadeAndroid;
@@ -126,6 +127,16 @@ export default class Router {
 
     popToTop() {
         this.navigator.popToTop();
+    }
+
+
+    toSearchPoker(props) {
+        this.push(props, {
+            page: SearchPoker,
+            name: 'SearchPoker',
+            sceneConfig: customFloatFromRight,
+
+        })
     }
 
     toPokerRacePage(props, race_id) {

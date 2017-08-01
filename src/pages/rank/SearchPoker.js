@@ -1,5 +1,5 @@
 /**
- * Created by lorne on 2017/5/31.
+ * Created by lorne on 2017/8/1.
  */
 import React, {Component, PropTypes} from 'react';
 import {
@@ -9,100 +9,8 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {isEmptyObject, strNotNull, convertDate, ticketStatusConvert} from '../../utils/ComonHelper';
-import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
-import {getRaceTickets} from '../../services/RacesDao';
-import {UltimateListView} from '../../components'
-import {itemListView} from './TicketRow';
 
-export default class TicketSearchPage extends Component {
-
-    constructor(props) {
-        super(props);
-        this.keyword = '';
-        this.state = {
-            layout: 'list',
-            items: [],
-            last_id: 0,
-            loadErr: false
-        };
-    }
-
-
-    render() {
-        return (<View style={ApplicationStyles.bgContainer}>
-            {this._navSearchBar()}
-            <UltimateListView
-                ref={(ref) => this.listView = ref}
-                key={this.state.layout}
-                keyExtractor={(item, index) => `${this.state.layout} - ${item.race_id}`}
-                onFetch={this.onFetch}
-                legacyImplementation
-                rowView={itemListView}
-                refreshableTitlePull={I18n.t('pull_refresh')}
-                refreshableTitleRelease={I18n.t('release_refresh')}
-                dateTitle={I18n.t('last_refresh')}
-                allLoadedText={I18n.t('no_more')}
-                waitingSpinnerText={I18n.t('loading')}
-                emptyView={() => {
-                    return this.state.loadErr ? <LoadErrorView/> : <NoDataView/>;
-                }}
-            />
-        </View>)
-    }
-
-
-    onFetch = (page = 1, startFetch, abortFetch) => {
-        try {
-
-            let {last_id} = this.state;
-            if (strNotNull(this.keyword)) {
-
-                if (page === 1) {
-                    let body = {
-                        keyword: this.keyword
-                    };
-                    this.fetch(body, startFetch, abortFetch)
-                } else {
-                    let body = {
-                        keyword: this.keyword,
-                        seq_id: last_id
-                    };
-                    this.fetch(body, startFetch, abortFetch)
-                }
-            } else {
-                startFetch([], 5)
-            }
-
-        } catch (err) {
-            abortFetch();
-        }
-    };
-
-
-    fetch = (body, startFetch, abortFetch) => {
-
-        getRaceTickets(body, (data) => {
-
-            let {items, last_id} = data;
-
-            if (last_id !== 0) {
-                this.setState({
-                    items: items,
-                    last_id: last_id
-                });
-                startFetch(this.state.items, 5);
-            } else {
-                startFetch([], 5)
-            }
-
-        }, (err) => {
-            abortFetch();
-            this.setState({
-                loadErr: true
-            })
-        })
-    };
+export default class SearchPoker extends Component {
 
     _navSearchBar = () => {
         return (<View style={styles.navBar}>
@@ -146,14 +54,20 @@ export default class TicketSearchPage extends Component {
             </View>
         </View>)
     };
-
     _searchInput = () => {
         if (Platform.OS === 'ios')
             return styles.searchTextInput;
         else
             return styles.androidInput;
-    }
+    };
 
+    render() {
+
+        return (<View style={ApplicationStyles.bgContainer}>
+            {this._navSearchBar()}
+
+        </View>)
+    }
 }
 
 
@@ -194,7 +108,7 @@ const styles = StyleSheet.create({
     searchImg: {
         height: 16,
         width: 16,
-        marginLeft: 10,
+        marginLeft: 20,
         marginRight: 10
     },
     searchTextInput: {
@@ -215,4 +129,3 @@ const styles = StyleSheet.create({
     },
 
 });
-

@@ -58,6 +58,9 @@ export default class MainRankPage extends Component {
 
     searchBar = () => {
         return (<TouchableOpacity
+            onPress={() => {
+                router.toSearchPoker()
+            }}
             activeOpacity={1}
             style={styles.viewSearch}>
             <View style={styles.search}>
@@ -144,7 +147,7 @@ const styles = StyleSheet.create({
     },
     imgSearch: {
         height: 17,
-        width: 17
+        width: 17,
     },
     txtSearch: {
         fontSize: 14,
