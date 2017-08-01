@@ -12,7 +12,7 @@ import I18n from 'react-native-i18n';
 import {UltimateListView} from '../../../components';
 import {NoDataView, LoadErrorView} from '../../../components/load';
 import {getPokerRanks} from '../../../services/RankDao';
-import {convertDate, YYYY_MM_DD} from '../../../utils/ComonHelper';
+import {convertDate, YYYY_MM_DD,moneyFormat} from '../../../utils/ComonHelper';
 
 export default class RaceListView extends Component {
 
@@ -78,7 +78,7 @@ export default class RaceListView extends Component {
                     </View>
                     <View style={styles.viewItem}>
                         <Text style={styles.txtTabName}>{I18n.t('rank_prize')}</Text>
-                        <Text style={styles.txtTabValue}>{earning}</Text>
+                        <Text style={styles.txtTabValue}>¥{moneyFormat(earning)}</Text>
 
                     </View>
                     <View style={styles.viewItem}>

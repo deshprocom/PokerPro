@@ -5,7 +5,7 @@ import {Metrics, Colors, Images} from '../../Themes';
 import {PullListView, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView} from '../../components/load';
 import {getMainRank} from '../../services/RankDao';
-import {strNotNull} from '../../utils/ComonHelper';
+import {strNotNull,moneyFormat} from '../../utils/ComonHelper';
 
 export default class RankList extends Component {
 
@@ -84,7 +84,7 @@ export default class RankList extends Component {
                             fontSize: 15,
                             lineHeight: 21,
                             fontWeight: 'bold'
-                        }}>{dpi_total_earning}</Text>
+                        }}>¥{moneyFormat(dpi_total_earning)}</Text>
                     <Text
                         style={{
                             color: Colors._AAA,

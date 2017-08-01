@@ -11,7 +11,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import I18n from 'react-native-i18n';
 import {playerInfo} from '../../../services/AccountDao';
 import {postFocus, deleteFocus} from '../../../services/RankDao';
-import {strNotNull} from '../../../utils/ComonHelper';
+import {strNotNull,moneyFormat} from '../../../utils/ComonHelper';
 
 export default class PokerView extends Component {
 
@@ -115,7 +115,7 @@ export default class PokerView extends Component {
                 </View>
 
                 <View style={styles.tab}>
-                    <Text style={styles.tabValue}>{dpi_total_earning}</Text>
+                    <Text style={styles.tabValue}>¥{moneyFormat(dpi_total_earning)}</Text>
                     <View style={styles.tabNameView}>
                         <Text style={styles.tabName}>{I18n.t('rank_prize')}</Text>
                     </View>
