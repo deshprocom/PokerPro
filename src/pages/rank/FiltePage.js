@@ -188,11 +188,11 @@ export default class FiltePage extends Component {
                 <TouchableOpacity key="6" style={{marginBottom: 16}}
                                   onPress={() => {
                                       this.setState({
-                                          scoreSelected: 5,
+                                          scoreSelected: 7,
                                           scoreValue: '600以上'
                                       })
                                   }}>
-                    <Image source={scoreSelected == 5 ? Images.Group : Images.Group_em}
+                    <Image source={scoreSelected == 7 ? Images.Group : Images.Group_em}
                            style={{width: 72, height: 30, alignItems: 'center', justifyContent: 'center', backgroundColor:'transparent'}}>
                         <Text>600以上</Text>
                     </Image>
