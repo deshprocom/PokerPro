@@ -147,11 +147,11 @@ export default class RaceRowView extends Component {
             case 'unsold':
                 return I18n.t('ticket_unsold');
             case 'selling':
-                return '购票';
+                return I18n.t('ticket_selling');
             case 'end':
                 return I18n.t('ticket_end');
             case 'sold_out':
-                return '售完';
+                return I18n.t('ticket_sold_out');
         }
     };
 
