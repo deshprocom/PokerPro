@@ -73,6 +73,24 @@ export function newShare(title, location, icon, newsId) {
         })
 }
 
+export function rankPlayerShare(title, location, icon, playerId) {
+    UMShare.share(title, location, icon, "https://h5.deshpro.com/rankPlayer/" + playerId + "/" + Lang)
+        .then(() => {
+            showToast(`${I18n.t('show_success')}`)
+        }, (error) => {
+            alert(error)
+        })
+}
+
+export function rankGameShare(title, location, icon, gameId) {
+    UMShare.share(title, location, icon, "https://h5.deshpro.com/rankPlayer/" + gameId + "/" + Lang)
+        .then(() => {
+            showToast(`${I18n.t('show_success')}`)
+        }, (error) => {
+            alert(error)
+        })
+}
+
 export function strValid(str) {
     if (str == undefined || str == null || str.length == 0)
         return '';
