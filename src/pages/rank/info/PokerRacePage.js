@@ -89,7 +89,7 @@ export default class PokerRacePage extends Component {
                     style={styles.topBtn}
                     activeOpacity={1}
                     onPress={() => {
-                        rankGameShare(race.name, race.begin_date+'\n'+race.location, race.logo, race.race_id)
+                        rankGameShare(race.race.name, race.race.begin_date+'\n'+race.race.location, race.race.logo, race.race.race_id)
                     }}>
                     <Image
                         source={Images.share}

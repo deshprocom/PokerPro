@@ -169,7 +169,7 @@ export default class PokerView extends Component {
                     style={styles.topBtn}
                     activeOpacity={1}
                     onPress={() => {
-                        rankPlayerShare(name, country, avatar, id)
+                        rankPlayerShare(name, country + '\n', avatar, id)
                     }}>
                     <Image
                         source={Images.share}
