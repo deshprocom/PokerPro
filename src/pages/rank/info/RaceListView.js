@@ -12,7 +12,7 @@ import I18n from 'react-native-i18n';
 import {UltimateListView} from '../../../components';
 import {NoDataView, LoadErrorView} from '../../../components/load';
 import {getPokerRanks} from '../../../services/RankDao';
-import {convertDate, YYYY_MM_DD, moneyFormat} from '../../../utils/ComonHelper';
+import {convertDate, YYYY_MM_DD, moneyFormat, isEmptyObject} from '../../../utils/ComonHelper';
 
 export default class RaceListView extends Component {
 
@@ -39,9 +39,18 @@ export default class RaceListView extends Component {
         return beginDate + '-' + endDate;
     };
 
+
+    _name = (parent_race, race) => {
+
+        if (isEmptyObject(parent_race))
+            return race.name;
+        else
+            return parent_race.name + '-' + race.name
+    };
+
     _itemNewsView = (rowData, sectionID, rowID) => {
 
-        const {race, rank} = rowData;
+        const {race, rank, parent_race} = rowData;
         const {begin_date, end_date, location, name, participants, ticket_price, race_id} = race;
         const {earning, ranking, score} = rank;
         return (<TouchableOpacity
@@ -56,7 +65,7 @@ export default class RaceListView extends Component {
                 <View style={styles.viewTop}>
                     <Text
                         numberOfLines={1}
-                        style={styles.name}>{name}</Text>
+                        style={styles.name}>{this._name(parent_race, race)}</Text>
                     <View style={{flex: 1}}/>
 
                     <View style={styles.viewRank}>
@@ -140,10 +149,11 @@ const
             alignItems: 'flex-end'
         },
         name: {
-            fontSize: 17,
+            fontSize: 15,
             fontWeight: 'bold',
             color: Colors._333,
-            marginLeft: 20
+            marginLeft: 20,
+            marginRight: 20
         },
         viewRank: {
             backgroundColor: '#F34A4A',
