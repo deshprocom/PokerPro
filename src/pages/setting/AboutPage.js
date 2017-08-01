@@ -23,13 +23,13 @@ export default class AboutPage extends Component {
                 leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
                 leftBtnPress={()=>router.pop()}/>
 
-            <TouchableOpacity
+            <View
                 activeOpacity={1}
                 onPress={()=>router.toApiSettingPage()}
             >
                 <Image style={styles.logo}
                        source={Images.set_poker}/>
-            </TouchableOpacity>
+            </View>
 
 
             <Text style={styles.txtCode}>V3.2</Text>
