@@ -11,7 +11,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import I18n from 'react-native-i18n';
 import {playerInfo} from '../../../services/AccountDao';
 import {postFocus, deleteFocus} from '../../../services/RankDao';
-import {strNotNull} from '../../../utils/ComonHelper';
+import {strNotNull, rankPlayerShare} from '../../../utils/ComonHelper';
 
 export default class PokerView extends Component {
 
@@ -128,7 +128,7 @@ export default class PokerView extends Component {
     }
 
     _topView = () => {
-        const {name} = this.state.poker;
+        const {name, country, avatar, id} = this.state.poker;
         return (<View style={styles.topBar}>
 
             <TouchableOpacity
@@ -166,7 +166,10 @@ export default class PokerView extends Component {
                 <TouchableOpacity
                     testID="btn_bar_close"
                     style={styles.topBtn}
-                    activeOpacity={1}>
+                    activeOpacity={1}
+                    onPress={() => {
+                        rankPlayerShare(name, country, avatar, id)
+                    }}>
                     <Image
                         source={Images.share}
                         style={styles.imgShare}/>

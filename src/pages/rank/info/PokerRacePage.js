@@ -11,6 +11,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import RaceView from './RaceView';
 import RankListView from './RankListView';
 import {getRacesInfo} from '../../../services/RacesDao';
+import {rankGameShare} from '../../../utils/ComonHelper';
 
 export default class PokerRacePage extends Component {
 
@@ -37,7 +38,7 @@ export default class PokerRacePage extends Component {
     render() {
         const {race, ranks} = this.state;
         return (<View style={ApplicationStyles.bgContainer}>
-            {this._topView()}
+            {this._topView(race)}
             <ScrollView>
                 <RaceView
                     race={race}/>
@@ -48,7 +49,7 @@ export default class PokerRacePage extends Component {
         </View>)
     }
 
-    _topView = () => {
+    _topView = (race) => {
         return (<View style={styles.topBar}>
 
             <TouchableOpacity
@@ -82,7 +83,10 @@ export default class PokerRacePage extends Component {
                 <TouchableOpacity
                     testID="btn_bar_close"
                     style={styles.topBtn}
-                    activeOpacity={1}>
+                    activeOpacity={1}
+                    onPress={() => {
+                        rankGameShare(race.name, race.begin_date+'\n'+race.location, race.logo, race.race_id)
+                    }}>
                     <Image
                         source={Images.share}
                         style={styles.imgShare}/>
