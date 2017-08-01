@@ -14,7 +14,7 @@ import {NavigationBar, ImageLoad, SwipeListView} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {GET_NOTIFICATIONS, DEL_NOTIFICATIONS} from '../../actions/ActionTypes';
 import {fetchNotifications, fetchDelNotice} from '../../actions/AccountAction';
-import {isEmptyObject, utcDate} from '../../utils/ComonHelper';
+import {isEmptyObject, utcDate,YYYY_MM_DD} from '../../utils/ComonHelper';
 
 class MessagePage extends Component {
 
@@ -149,7 +149,7 @@ class MessagePage extends Component {
                             <View style={{flex:1}}/>
                             <Text
                                 testID={'txt_notice_time_1'+id}
-                                style={styles.txtTime}>{utcDate(created_at, "YYYY年MM月DD日")}</Text>
+                                style={styles.txtTime}>{utcDate(created_at, YYYY_MM_DD)}</Text>
                         </View>
 
                         <View style={styles.itemView}>
@@ -187,7 +187,7 @@ class MessagePage extends Component {
                         <View style={{flex:1}}/>
                         <Text
                             testID={'txt_notice_time_1'+id}
-                            style={styles.txtTime}>{utcDate(created_at, "YYYY年MM月DD日")}</Text>
+                            style={styles.txtTime}>{utcDate(created_at, YYYY_MM_DD)}</Text>
                     </View>
 
                     <Text
