@@ -69,7 +69,7 @@ export default class RaceListView extends Component {
                     <View style={{flex: 1}}/>
 
                     <View style={styles.viewRank}>
-                        <Text style={styles.rank}> {ranking} </Text>
+                        <Text style={styles.rank}>{ranking}</Text>
                     </View>
 
                 </View>
@@ -168,7 +168,9 @@ const
             marginTop: 3,
             marginBottom: 3,
             marginRight: 6,
-            marginLeft: 6
+            marginLeft: 6,
+            minWidth: 30,
+            textAlign: 'center'
         },
         viewInfo: {
             height: 80,
