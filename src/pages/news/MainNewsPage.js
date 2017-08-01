@@ -150,7 +150,6 @@ export default class MainNewsPage extends Component {
     _itemView = ({item}) => {
 
         return (
-            <View>
                 <TouchableOpacity
                     testID={"btn_news_type_" + item.id}
                     onPress={() => {
@@ -162,16 +161,14 @@ export default class MainNewsPage extends Component {
                         this.newsPages.goToPage(this._page(item))
                     }}
                     style={styles.itemView}>
-
+                    {item.select ? <View style={{flex: 1}}/> : null}
                     <Text
-                        numberOfLines={2}
+                        numberOfLines={1}
                         style={item.select ?
                             styles.itemTxtSelect : styles.itemTxt}>{item.name}</Text>
-
+                    {item.select ? <View style={styles.triangle}/> : null}
 
                 </TouchableOpacity>
-                {item.select ? <View style={styles.triangle}/> : null}
-            </View>
         )
     };
 
@@ -251,34 +248,29 @@ const styles = StyleSheet.create({
         fontSize: 12
     },
     newsTypeView: {
-        height: 50,
+        height: 40,
         backgroundColor: Colors.white
     },
     itemView: {
-        height: 43,
+        height: 40,
+        width: 80,
         alignItems: 'center',
-        justifyContent: 'center',
-        minWidth: 80,
-        maxWidth: 120,
-        marginRight: 10
+        justifyContent: 'center'
     },
     itemTxt: {
         color: Colors._888,
-        fontSize: 14,
-        textAlign: 'center'
+        fontSize: 14
     },
     itemTxtSelect: {
         color: Colors._333,
         fontSize: 16,
-        textAlign: 'center'
+        marginBottom: 5
     },
     triangle: {
         height: 3,
         width: 60,
         marginBottom: 4,
-        backgroundColor: Colors._333,
-        marginLeft: 12
-        // alignSelf: 'center',
+        backgroundColor: Colors._333
     },
     viewPage: {
         flex: 1
