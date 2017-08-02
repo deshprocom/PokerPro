@@ -326,7 +326,7 @@ class BuyTicketPage extends Component {
             }}
             activeOpacity={1}
             testID="btn_entity_ticket"
-            style={{alignItems: 'center', justifyContent: 'center', marginLeft: 37}}>
+            style={{alignItems: 'center', justifyContent: 'center', marginLeft: 35}}>
             <Image style={{height: 44, width: 44}}
                    source={isEntity === ENTITY ? Images.selected_entity : Images.select_entity}/>
 
@@ -362,7 +362,7 @@ class BuyTicketPage extends Component {
                     marginLeft: 17, marginTop: 10, marginBottom: 10
                 }}>
                     {I18n.t('buy_send')}</Text>
-                <View style={{marginLeft: 17, marginRight: 17, height: 1, backgroundColor: Colors._ECE}}/>
+                <View style={{marginLeft: 18, marginRight: 18, height: 1, backgroundColor: Colors._ECE}}/>
             </View>
             <View
                 style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
@@ -503,7 +503,7 @@ class BuyTicketPage extends Component {
                         <Text style={{
                             color: Colors._AAA,
                             fontSize: 14,
-                            marginLeft: 17,
+                            marginLeft: 18,
                             marginTop: 12
                         }}>{I18n.t('buy_pay_after')}</Text>
 
@@ -575,10 +575,10 @@ class BuyTicketPage extends Component {
             <View style={{height: 35}}>
                 <Text style={{
                     fontSize: 15, color: Colors._333, fontWeight: 'bold',
-                    marginLeft: 17, marginTop: 10, marginBottom: 10
+                    marginLeft: 18, marginTop: 10, marginBottom: 10
                 }}>
                     {I18n.t('buy_pay')}</Text>
-                <View style={{marginLeft: 17, marginRight: 17, height: 1, backgroundColor: Colors._ECE}}/>
+                <View style={{marginLeft: 18, marginRight: 18, height: 1, backgroundColor: Colors._ECE}}/>
             </View>
 
             <View style={styles.viewPrice}>
@@ -588,7 +588,7 @@ class BuyTicketPage extends Component {
                     style={{
                         color: Colors._AAA,
                         fontSize: 14,
-                        marginRight: 17,
+                        marginRight: 18,
                         textDecorationLine: 'line-through'
                     }}>{original_price}</Text>
 
@@ -794,7 +794,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     viewPrice: {flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 42},
-    txtPrice1: {color: Colors._333, fontSize: 14, marginLeft: 17}
+    txtPrice1: {color: Colors._333, fontSize: 14, marginLeft: 18}
 
 
 });
