@@ -79,7 +79,7 @@ export default class MainRankPage extends Component {
     render() {
         return (<View>
             {this.topHeader()}
-            {/*{this.searchBar()}*/}
+            {this.searchBar()}
             <RankList
                 ref={ref => {
                     this.rankList = ref

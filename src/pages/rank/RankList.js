@@ -7,6 +7,81 @@ import {NoDataView, LoadErrorView} from '../../components/load';
 import {getMainRank} from '../../services/RankDao';
 import {strNotNull, moneyFormat, nameRow} from '../../utils/ComonHelper';
 
+export function listRenderRow(rowData, sectionID, rowID, isSearch) {
+    const {avatar, country, dpi_total_earning, dpi_total_score, id, memo, name, rank} = rowData;
+    return (<TouchableOpacity style={styles.row_view}
+                              onPress={() => router.toPokerRankPage(this.props, id)}>
+        <View style={{flexDirection: 'row'}}>
+
+            {isSearch ? null : <View style={[{width: 53}, styles.list_row]}>
+                {rankNum(rank)}
+            </View>}
+
+            <View style={styles.list_row}>
+                <Image defaultSource={Images.home_avatar}
+                       source={strNotNull(avatar) ? {uri: avatar} : Images.home_avatar}
+                       style={{width: 49.7, height: 49.7, marginLeft: 12, marginRight: 15.3, borderRadius: 24.85}}>
+                    <Image/>
+                </Image>
+            </View>
+            <View style={{flex: 1, alignItems: 'flex-start', justifyContent: 'center', height: 69}}>
+                <Text
+                    numberOfLines={2}
+                    style={{
+                        color: Colors._333,
+                        fontSize: 14,
+                        lineHeight: 20,
+                        fontWeight: 'bold'
+                    }}>{nameRow(name)}</Text>
+                <Text
+                    style={{color: Colors._AAA, fontSize: 12, lineHeight: 17, fontWeight: 'bold'}}>{country}</Text>
+            </View>
+            <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'center', height: 69}}>
+                <Text
+                    style={{
+                        color: Colors._666,
+                        fontSize: 15,
+                        lineHeight: 21,
+                        fontWeight: 'bold'
+                    }}>¥{moneyFormat(dpi_total_earning)}</Text>
+                <Text
+                    style={{
+                        color: Colors._AAA,
+                        fontSize: 12,
+                        lineHeight: 17,
+                        fontWeight: 'bold'
+                    }}>{I18n.t('rank_prize')}</Text>
+            </View>
+            <View style={styles.list_row}>
+                <Image source={Images.set_more}
+                       style={{width: 5.7, height: 11.6, marginLeft: 17.5, marginRight: 16.8}}/>
+            </View>
+        </View>
+        <View style={{height: 1, backgroundColor: Colors.bg_f5, marginLeft: 16}}></View>
+    </TouchableOpacity>)
+}
+rankNum = (rowID) => {
+    if (rowID == 1) {
+        return (
+            <Image source={Images.gold}
+                   style={{width: 20, height: 28}}/>
+        )
+    } else if (rowID == 2) {
+        return (
+            <Image source={Images.silver}
+                   style={{width: 20, height: 28}}/>
+        )
+    } else if (rowID == 3) {
+        return (
+            <Image source={Images.copper}
+                   style={{width: 20, height: 28}}/>
+        )
+    } else {
+        return (
+            <Text>{rowID}</Text>
+        )
+    }
+}
 export default class RankList extends Component {
 
     constructor(props) {
@@ -26,29 +101,6 @@ export default class RankList extends Component {
     }
 
 
-    rankNum = (rowID) => {
-        if (rowID == 1) {
-            return (
-                <Image source={Images.gold}
-                       style={{width: 20, height: 28}}/>
-            )
-        } else if (rowID == 2) {
-            return (
-                <Image source={Images.silver}
-                       style={{width: 20, height: 28}}/>
-            )
-        } else if (rowID == 3) {
-            return (
-                <Image source={Images.copper}
-                       style={{width: 20, height: 28}}/>
-            )
-        } else {
-            return (
-                <Text>{rowID}</Text>
-            )
-        }
-    };
-
     filterRank = (param) => {
         console.log(param)
         this.filterParam = param;
@@ -57,68 +109,17 @@ export default class RankList extends Component {
         this.listView.refresh();
     };
 
-    listRenderRow = (rowData, sectionID, rowID) => {
-        const {avatar, country, dpi_total_earning, dpi_total_score, id, memo, name, rank} = rowData;
-        return (<TouchableOpacity style={styles.row_view}
-                                  onPress={() => router.toPokerRankPage(this.props, id)}>
-            <View style={{flexDirection: 'row'}}>
-                <View style={[{width: 53}, styles.list_row]}>
-                    {this.rankNum(rank)}
-                </View>
-                <View style={styles.list_row}>
-                    <Image defaultSource={Images.home_avatar}
-                           source={strNotNull(avatar) ? {uri: avatar} : Images.home_avatar}
-                           style={{width: 49.7, height: 49.7, marginLeft: 12, marginRight: 15.3, borderRadius: 24.85}}>
-                        <Image/>
-                    </Image>
-                </View>
-                <View style={{flex: 1, alignItems: 'flex-start', justifyContent: 'center', height: 69}}>
-                    <Text
-                        numberOfLines={2}
-                        style={{
-                            color: Colors._333,
-                            fontSize: 14,
-                            lineHeight: 20,
-                            fontWeight: 'bold'
-                        }}>{nameRow(name)}</Text>
-                    <Text
-                        style={{color: Colors._AAA, fontSize: 12, lineHeight: 17, fontWeight: 'bold'}}>{country}</Text>
-                </View>
-                <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'center', height: 69}}>
-                    <Text
-                        style={{
-                            color: Colors._666,
-                            fontSize: 15,
-                            lineHeight: 21,
-                            fontWeight: 'bold'
-                        }}>¥{moneyFormat(dpi_total_earning)}</Text>
-                    <Text
-                        style={{
-                            color: Colors._AAA,
-                            fontSize: 12,
-                            lineHeight: 17,
-                            fontWeight: 'bold'
-                        }}>{I18n.t('rank_prize')}</Text>
-                </View>
-                <View style={styles.list_row}>
-                    <Image source={Images.set_more}
-                           style={{width: 5.7, height: 11.6, marginLeft: 17.5, marginRight: 16.8}}/>
-                </View>
-            </View>
-            <View style={{height: 1, backgroundColor: Colors.bg_f5, marginLeft: 16}}></View>
-        </TouchableOpacity>)
-    };
 
     render() {
 
         return (<View style={styles.rank_list}>
             <UltimateListView
                 key={this.state.layout}
-                keyExtractor={(item, index) => `${this.state.layout} - ${item.race_id}`}
+                keyExtractor={(item, index) => `${this.state.layout} - ${index}`}
                 ref={(ref) => this.listView = ref}
                 onFetch={this.onFetch}
                 legacyImplementation
-                rowView={this.listRenderRow}
+                rowView={(rowData, sectionID, rowID) => listRenderRow(rowData, sectionID, rowID, false)}
                 refreshableTitlePull={I18n.t('pull_refresh')}
                 refreshableTitleRelease={I18n.t('release_refresh')}
                 dateTitle={I18n.t('last_refresh')}

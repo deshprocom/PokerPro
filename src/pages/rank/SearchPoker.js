@@ -9,9 +9,16 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
+import {UltimateListView} from '../../components';
+import {NoDataView, LoadErrorView} from '../../components/load';
+import {listRenderRow} from './RankList';
+import {getMainRank} from '../../services/RankDao';
 
 export default class SearchPoker extends Component {
 
+    state = {
+        error: false
+    }
     _navSearchBar = () => {
         return (<View style={styles.navBar}>
             <View style={styles.topBar}>
@@ -32,10 +39,19 @@ export default class SearchPoker extends Component {
                             clearButtonMode="always"
                             underlineColorAndroid="transparent"
                             style={this._searchInput()}
-                            onChangeText={text => {
-                                this.keyword = text;
-                                if (this.listView)
-                                    this.listView.refresh();
+                            returnKeyType={I18n.t('search')}
+                            onSubmitEditing={(event) => {
+                                const body = {
+                                    keyword: event.nativeEvent.text
+                                };
+                                getMainRank(body, data => {
+                                    if (this.listView)
+                                        this.listView.updateRows(data);
+                                }, err => {
+                                    this.setState({
+                                        error: true
+                                    })
+                                })
                             }}
 
                         />
@@ -65,7 +81,28 @@ export default class SearchPoker extends Component {
 
         return (<View style={ApplicationStyles.bgContainer}>
             {this._navSearchBar()}
+            <UltimateListView
+                refreshable={false}
+                pagination={false}
+                onFetch={(startFetch, abortFetch) => {
 
+                }}
+                keyExtractor={(item, index) => `${index}`}
+                ref={(ref) => this.listView = ref}
+                legacyImplementation
+                rowView={(rowData, sectionID, rowID) => listRenderRow(rowData, sectionID, rowID, true)}
+                refreshableTitlePull={I18n.t('pull_refresh')}
+                refreshableTitleRelease={I18n.t('release_refresh')}
+                dateTitle={I18n.t('last_refresh')}
+                allLoadedText={I18n.t('no_more')}
+                waitingSpinnerText={''}
+                emptyView={() => {
+                    return this.state.error ? <LoadErrorView
+                        onPress={() => {
+                            this.listView.refresh()
+                        }}/> : <NoDataView/>;
+                }}
+            />
         </View>)
     }
 }
