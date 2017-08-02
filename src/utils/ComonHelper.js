@@ -83,7 +83,7 @@ export function rankPlayerShare(title, location, icon, playerId) {
 }
 
 export function rankGameShare(title, location, icon, gameId) {
-    UMShare.share(title, location, icon, "https://h5.deshpro.com/rankPlayer/" + gameId + "/" + Lang)
+    UMShare.share(title, location, icon, "https://h5.deshpro.com/rankGame/" + gameId + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
