@@ -147,7 +147,7 @@ export default class RaceRowView extends Component {
             case 'unsold':
                 return I18n.t('ticket_unsold');
             case 'selling':
-                return I18n.t('ticket_selling');
+                return I18n.t('home_buy');
             case 'end':
                 return I18n.t('ticket_end');
             case 'sold_out':

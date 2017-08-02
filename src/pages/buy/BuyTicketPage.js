@@ -313,21 +313,78 @@ class BuyTicketPage extends Component {
             }}
             activeOpacity={1}
             testID="btn_entity_ticket"
-            style={isEntity == ENTITY ? styles.ticketSelect : styles.ticketUnSelect}>
+            style={{alignItems: 'center', justifyContent: 'center', marginLeft: 37}}>
+            <Image style={{height: 44, width: 44}}
+                   source={isEntity === ENTITY ? Images.selected_entity : Images.select_entity}/>
+
             <Text
                 style={{
                     fontSize: 15,
-                    color: isEntity == ENTITY ? Colors.txt_F28 : Colors._333
+                    marginTop: 12,
+                    color: isEntity === ENTITY ? Colors._DF1 : Colors._999
                 }}>{I18n.t('ticket_paper')}</Text>
         </TouchableOpacity>)
     };
 
 
+    sendTypeView = () => {
+        let {tickets, isEntity} = this.state;
+
+        if (isEmptyObject(tickets))
+            return;
+        const {e_ticket_number, e_ticket_sold_number, entity_ticket_number, entity_ticket_sold_number} = tickets.ticket_info;
+
+        let e_num = e_ticket_number - e_ticket_sold_number;
+        let entity_num = entity_ticket_number - entity_ticket_sold_number;
+
+        if (e_num === 0) {
+            isEntity = ENTITY;
+        } else if (entity_num === 0) {
+            isEntity = E_TICKET;
+        }
+
+        return (   <View style={{
+            height: 140,
+            backgroundColor: Colors.white,
+            marginTop: 8
+        }}>
+            <View style={{height: 35}}>
+                <Text style={{fontSize: 15, color: Colors._333, marginLeft: 17, marginTop: 10, marginBottom: 10}}>
+                    {I18n.t('buy_send')}</Text>
+                <View style={{marginLeft: 17, marginRight: 17, height: 1, backgroundColor: Colors._ECE}}/>
+            </View>
+            <View
+                style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+                {e_num > 0 ? <TouchableOpacity
+                    onPress={() => {
+                        this.setState({
+                            isEntity: E_TICKET
+                        })
+                    }}
+                    activeOpacity={1}
+                    style={{alignItems: 'center', justifyContent: 'center', marginLeft: 35}}
+                    testID="btn_e_ticket">
+                    <Image style={{height: 44, width: 44}}
+                           source={isEntity === E_TICKET ? Images.selected_e_ticket : Images.select_e_ticket}/>
+                    <Text
+                        style={{
+                            fontSize: 15,
+                            marginTop: 12,
+                            color: isEntity === E_TICKET ? Colors._DF1 : Colors._999
+                        }}>{I18n.t('ticket_web')}</Text>
+                </TouchableOpacity> : null}
+
+                {entity_num > 0 ? this._entityView() : null}
+
+            </View>
+        </View>)
+    }
+
+
     render() {
         const {user_extra} = this.props;
-        const {race, tickets, ordered} = this.state;
+        const {race, tickets, ordered, isEntity, knowRed, email} = this.state;
         const {ticket_info, price} = tickets;
-        const {isEntity, knowRed, email} = this.state;
 
         return (
             <View
@@ -418,40 +475,8 @@ class BuyTicketPage extends Component {
 
                     </TouchableOpacity>
                     {/*票务类型*/}
-                    <View style={{
-                        height: 96, flex: 1,
-                        backgroundColor: Colors.white, marginTop: 6
-                    }}>
-                        <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 18, marginTop: 18}}>
-                            <Text style={{fontSize: 15, color: Colors.txt_666}}>
-                                {I18n.t('ticket_type')}</Text>
-                            <Text style={{fontSize: 14, color: Colors.txt_FF3, marginLeft: 18}}>
-                                ({I18n.t('surplus')}{this.eTicketNum(ticket_info)}{I18n.t('spread')})</Text>
-                        </View>
-                        <View
-                            style={{height: 66, flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    this.setState({
-                                        isEntity: E_TICKET
-                                    })
-                                }}
-                                activeOpacity={1}
-                                testID="btn_e_ticket"
-                                style={[isEntity == ENTITY ? styles.ticketUnSelect : styles.ticketSelect,
-                                    {marginRight: 20, marginLeft: 18}]}>
-                                <Text
-                                    style={{
-                                        fontSize: 15,
-                                        color: isEntity == ENTITY ? Colors._333 : Colors.txt_F28
-                                    }}>{I18n.t('ticket_web')}</Text>
-                            </TouchableOpacity>
+                    {this.sendTypeView()}
 
-                            {this._entityView()}
-
-
-                        </View>
-                    </View>
                     {/*电子邮件*/}
 
                     {/*收货地址*/}
@@ -509,7 +534,10 @@ class BuyTicketPage extends Component {
                             width: 103, height: 62, alignItems: 'center', justifyContent: 'center',
                             backgroundColor: ordered ? Colors._999 : Colors.bg_09
                         }}>
-                        <Text style={{fontSize: 18, color: ordered ? Colors.white : Colors.txt_E0C}}>{I18n.t('xia_dan')}</Text>
+                        <Text style={{
+                            fontSize: 18,
+                            color: ordered ? Colors.white : Colors.txt_E0C
+                        }}>{I18n.t('xia_dan')}</Text>
                     </TouchableOpacity>
 
 
