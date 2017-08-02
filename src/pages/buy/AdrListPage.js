@@ -248,19 +248,20 @@ const styles = StyleSheet.create({
         marginLeft: 17
     },
     tabView: {
-        height: 15,
-        width: 32,
         borderRadius: 2,
         alignItems: 'center',
         justifyContent: 'center',
-        marginRight: 5,
         borderWidth: 1,
         borderColor: Colors._DF1,
-        marginLeft: 19
+        marginLeft: 12
     },
     txtDefault: {
         fontSize: 12,
-        color: Colors._DF1
+        color: Colors._DF1,
+        marginTop: 2,
+        marginBottom: 2,
+        marginLeft: 4,
+        marginRight: 4
     },
     line: {
         height: 3,

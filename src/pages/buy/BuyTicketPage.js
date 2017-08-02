@@ -651,7 +651,7 @@ class BuyTicketPage extends Component {
                     router.toAdrListPage(this.props, this._selectAdr, {});
                 }}
                 style={{height: 89, flex: 1, marginTop: 10, backgroundColor: Colors.white}}>
-                <View style={{height: 44, flex: 1, alignItems: 'center', flexDirection: 'row'}}>
+                <View style={{height: 44, alignItems: 'center', flexDirection: 'row'}}>
 
                     <Text style={{
                         fontSize: 15, color: Colors.txt_666, marginLeft: 18,
