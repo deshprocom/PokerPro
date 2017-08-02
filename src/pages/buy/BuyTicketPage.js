@@ -357,7 +357,10 @@ class BuyTicketPage extends Component {
             marginTop: 8
         }}>
             <View style={{height: 35}}>
-                <Text style={{fontSize: 15, color: Colors._333, marginLeft: 17, marginTop: 10, marginBottom: 10}}>
+                <Text style={{
+                    fontSize: 15, color: Colors._333, fontWeight: 'bold',
+                    marginLeft: 17, marginTop: 10, marginBottom: 10
+                }}>
                     {I18n.t('buy_send')}</Text>
                 <View style={{marginLeft: 17, marginRight: 17, height: 1, backgroundColor: Colors._ECE}}/>
             </View>
@@ -489,13 +492,22 @@ class BuyTicketPage extends Component {
 
                     {/*收货地址*/}
 
-                    {isEntity == ENTITY ? this._addrView() : this._emailViwe(email)}
+                    {isEntity === ENTITY ? this._addrView() : this._emailViwe(email)}
 
                     <NameRealView user_extra={user_extra}
                                   router={router}/>
 
+                    {this._priceView()}
 
-                    <View style={{height: 20, flex: 1}}/>
+                    <View style={{height: 68, flex: 1}}>
+                        <Text style={{
+                            color: Colors._AAA,
+                            fontSize: 14,
+                            marginLeft: 17,
+                            marginTop: 12
+                        }}>{I18n.t('buy_pay_after')}</Text>
+
+                    </View>
 
 
                 </KeyboardAwareScrollView>
@@ -558,16 +570,36 @@ class BuyTicketPage extends Component {
         const {tickets} = this.state;
         if (isEmptyObject(tickets))
             return;
-        const {original_price, price} = tickets.ticket_info;
-        return (<View>
+        const {original_price, price} = tickets;
+        return (<View style={{backgroundColor: 'white', marginTop: 3}}>
             <View style={{height: 35}}>
-                <Text style={{fontSize: 15, color: Colors._333, marginLeft: 17, marginTop: 10, marginBottom: 10}}>
-                    {I18n.t('buy_send')}</Text>
+                <Text style={{
+                    fontSize: 15, color: Colors._333, fontWeight: 'bold',
+                    marginLeft: 17, marginTop: 10, marginBottom: 10
+                }}>
+                    {I18n.t('buy_pay')}</Text>
                 <View style={{marginLeft: 17, marginRight: 17, height: 1, backgroundColor: Colors._ECE}}/>
             </View>
 
-            <View style={{flexDirection:'row',}}>
-                <Text>{I18n.t('order_price')}</Text>
+            <View style={styles.viewPrice}>
+                <Text style={styles.txtPrice1}>{I18n.t('order_price')}</Text>
+
+                <Text
+                    style={{
+                        color: Colors._AAA,
+                        fontSize: 14,
+                        marginRight: 17,
+                        textDecorationLine: 'line-through'
+                    }}>{original_price}</Text>
+
+            </View>
+
+            <View style={styles.viewPrice}>
+                <Text style={styles.txtPrice1}>{I18n.t('order_pay')}</Text>
+
+                <Text
+                    style={{color: Colors._DF1, fontSize: 14, marginRight: 17}}>{price}</Text>
+
             </View>
 
         </View>)
@@ -760,7 +792,10 @@ const styles = StyleSheet.create({
     ViewRow: {
         flexDirection: 'row',
         alignItems: 'center'
-    }
+    },
+    viewPrice: {flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 42},
+    txtPrice1: {color: Colors._333, fontSize: 14, marginLeft: 17}
+
 
 });
 
