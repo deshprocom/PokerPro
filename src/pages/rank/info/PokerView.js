@@ -70,6 +70,7 @@ export default class PokerView extends Component {
             {this._topView()}
 
             <TouchableOpacity
+                activeOpacity={1}
                 style={styles.btnAvatar}
                 onPress={() => {
                     if (strNotNull(avatar)) {

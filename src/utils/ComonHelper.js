@@ -265,7 +265,7 @@ export function ticketStatusConvert(status) {
         case 'unsold':
             return I18n.t('ticket_unsold');
         case 'selling':
-            return I18n.t('home_buy');
+            return I18n.t('ticket_selling');
         case 'end':
             return I18n.t('ticket_end');
         case 'sold_out':

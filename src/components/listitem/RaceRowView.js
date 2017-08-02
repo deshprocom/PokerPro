@@ -253,10 +253,10 @@ export default class RaceRowView extends Component {
 
     _buyTicket = (rowData) => {
         if (strNotNull(login_user.user_id)) {
-            this.props.router.toChoiseTicketPage(this.props, rowData.race_id);
+            router.toChoiseTicketPage(this.props, rowData.race_id);
         }
         else
-            this.props.router.toLoginFirstPage();
+            router.toLoginFirstPage();
     };
 
     statusView = (status) => {
