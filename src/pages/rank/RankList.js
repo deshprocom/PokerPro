@@ -20,9 +20,8 @@ export function listRenderRow(rowData, sectionID, rowID, isSearch) {
             <View style={styles.list_row}>
                 <Image defaultSource={Images.home_avatar}
                        source={strNotNull(avatar) ? {uri: avatar} : Images.home_avatar}
-                       style={{width: 49.7, height: 49.7, marginLeft: 12, marginRight: 15.3, borderRadius: 24.85}}>
-                    <Image/>
-                </Image>
+                       style={{width: 50, height: 50, marginLeft: 12, marginRight: 15, borderRadius: 25}}/>
+
             </View>
             <View style={{flex: 1, alignItems: 'flex-start', justifyContent: 'center', height: 69}}>
                 <Text
