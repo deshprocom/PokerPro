@@ -12,7 +12,7 @@ import I18n from 'react-native-i18n';
 import {playerInfo} from '../../../services/AccountDao';
 import {postFocus, deleteFocus} from '../../../services/RankDao';
 
-import {strNotNull,moneyFormat,rankPlayerShare} from '../../../utils/ComonHelper';
+import {strNotNull, moneyFormat, rankPlayerShare, nameRow} from '../../../utils/ComonHelper';
 
 export default class PokerView extends Component {
 
@@ -85,7 +85,9 @@ export default class PokerView extends Component {
             </TouchableOpacity>
 
             <View style={styles.viewName}>
-                <Text style={styles.name}>{name}</Text>
+                <Text
+                    numberOfLines={3}
+                    style={styles.name}>{nameRow(name)}</Text>
                 <Text style={styles.location}>{country}</Text>
             </View>
 
@@ -215,6 +217,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: Colors._F4E,
         backgroundColor: 'transparent',
+        maxWidth: 200
     },
     right: {
         width: 90,
@@ -233,7 +236,7 @@ const styles = StyleSheet.create({
         left: 20,
         top: 84
     },
-    avatar:{
+    avatar: {
         height: 74,
         width: 74,
         borderRadius: 37

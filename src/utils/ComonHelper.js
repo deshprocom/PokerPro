@@ -92,10 +92,30 @@ export function rankGameShare(title, location, icon, gameId) {
 }
 
 export function strValid(str) {
-    if (str == undefined || str == null || str.length == 0)
+    if (str === undefined || str === null || str.length === 0)
         return '';
     else
         return str;
+}
+
+
+export function getGetOrdinal(n) {
+    var s=["th","st","nd","rd"],
+        v=n%100;
+    return n+(s[(v-20)%10]||s[v]||s[0]);
+}
+
+
+export function strRow(str) {
+    if (strValid(str)) {
+        return str.replace('|', '\n');
+    }
+}
+
+export function nameRow(name) {
+    if (strValid(name)) {
+        return name.replace(' ', '\n');
+    }
 }
 
 /*日期数据*/

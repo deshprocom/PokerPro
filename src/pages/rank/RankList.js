@@ -5,7 +5,7 @@ import {Metrics, Colors, Images} from '../../Themes';
 import {PullListView, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView} from '../../components/load';
 import {getMainRank} from '../../services/RankDao';
-import {strNotNull,moneyFormat} from '../../utils/ComonHelper';
+import {strNotNull, moneyFormat, nameRow} from '../../utils/ComonHelper';
 
 export default class RankList extends Component {
 
@@ -73,7 +73,14 @@ export default class RankList extends Component {
                     </Image>
                 </View>
                 <View style={{flex: 1, alignItems: 'flex-start', justifyContent: 'center', height: 69}}>
-                    <Text style={{color: Colors._333, fontSize: 14, lineHeight: 20, fontWeight: 'bold'}}>{name}</Text>
+                    <Text
+                        numberOfLines={2}
+                        style={{
+                            color: Colors._333,
+                            fontSize: 14,
+                            lineHeight: 20,
+                            fontWeight: 'bold'
+                        }}>{nameRow(name)}</Text>
                     <Text
                         style={{color: Colors._AAA, fontSize: 12, lineHeight: 17, fontWeight: 'bold'}}>{country}</Text>
                 </View>

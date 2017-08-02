@@ -12,7 +12,7 @@ import I18n from 'react-native-i18n';
 import {UltimateListView} from '../../../components';
 import {NoDataView, LoadErrorView} from '../../../components/load';
 import {getPokerRanks} from '../../../services/RankDao';
-import {convertDate, YYYY_MM_DD, moneyFormat, isEmptyObject} from '../../../utils/ComonHelper';
+import {convertDate, YYYY_MM_DD, moneyFormat, isEmptyObject, getGetOrdinal} from '../../../utils/ComonHelper';
 
 export default class RaceListView extends Component {
 
@@ -69,7 +69,7 @@ export default class RaceListView extends Component {
                     <View style={{flex: 1}}/>
 
                     <View style={styles.viewRank}>
-                        <Text style={styles.rank}>{ranking}</Text>
+                        <Text style={styles.rank}>{getGetOrdinal(ranking)}</Text>
                     </View>
 
                 </View>
