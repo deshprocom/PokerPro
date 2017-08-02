@@ -39,7 +39,7 @@ export default class SearchPoker extends Component {
                             clearButtonMode="always"
                             underlineColorAndroid="transparent"
                             style={this._searchInput()}
-                            returnKeyType={I18n.t('search')}
+                            returnKeyType='search'
                             onSubmitEditing={(event) => {
                                 const body = {
                                     keyword: event.nativeEvent.text
