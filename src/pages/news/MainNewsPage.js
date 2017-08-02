@@ -150,25 +150,25 @@ export default class MainNewsPage extends Component {
     _itemView = ({item}) => {
 
         return (
-                <TouchableOpacity
-                    testID={"btn_news_type_" + item.id}
-                    onPress={() => {
-                        this._pressItem(item);
+            <TouchableOpacity
+                testID={"btn_news_type_" + item.id}
+                onPress={() => {
+                    this._pressItem(item);
 
-                        this.setState({
-                            selectTypeId: item.id
-                        });
-                        this.newsPages.goToPage(this._page(item))
-                    }}
-                    style={styles.itemView}>
-                    {item.select ? <View style={{flex: 1}}/> : null}
-                    <Text
-                        numberOfLines={1}
-                        style={item.select ?
-                            styles.itemTxtSelect : styles.itemTxt}>{item.name}</Text>
-                    {item.select ? <View style={styles.triangle}/> : null}
+                    this.setState({
+                        selectTypeId: item.id
+                    });
+                    this.newsPages.goToPage(this._page(item))
+                }}
+                style={styles.itemView}>
+                {item.select ? <View style={{flex: 1}}/> : null}
+                <Text
+                    numberOfLines={1}
+                    style={item.select ?
+                        styles.itemTxtSelect : styles.itemTxt}>{item.name}</Text>
+                {item.select ? <View style={styles.triangle}/> : null}
 
-                </TouchableOpacity>
+            </TouchableOpacity>
         )
     };
 
@@ -248,11 +248,11 @@ const styles = StyleSheet.create({
         fontSize: 12
     },
     newsTypeView: {
-        height: 40,
+        height: 50,
         backgroundColor: Colors.white
     },
     itemView: {
-        height: 40,
+        height: 50,
         width: 80,
         alignItems: 'center',
         justifyContent: 'center'
@@ -264,13 +264,13 @@ const styles = StyleSheet.create({
     itemTxtSelect: {
         color: Colors._333,
         fontSize: 16,
-        marginBottom: 5
+        marginBottom: 10
     },
     triangle: {
         height: 3,
         width: 60,
-        marginBottom: 4,
-        backgroundColor: Colors._333
+        backgroundColor: Colors._333,
+        marginBottom: 4
     },
     viewPage: {
         flex: 1

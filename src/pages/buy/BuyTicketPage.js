@@ -79,12 +79,25 @@ class BuyTicketPage extends Component {
         };
         getBuyRaceTicket(body, data => {
             const {tickets, ordered, race, recent_email, shipping_address} = data;
+            const {e_ticket_number, e_ticket_sold_number, entity_ticket_number, entity_ticket_sold_number} = tickets.ticket_info;
+
+            let e_num = e_ticket_number - e_ticket_sold_number;
+            let entity_num = entity_ticket_number - entity_ticket_sold_number;
+
+            let type = E_TICKET;
+            if (e_num === 0) {
+                type = ENTITY;
+            } else if (entity_num === 0) {
+                type = E_TICKET;
+            }
+
             this.setState({
                 tickets: tickets,
                 ordered: ordered,
                 race: race,
                 shipping_address: isEmptyObject(shipping_address) ? {} : shipping_address,
-                email: recent_email
+                email: recent_email,
+                isEntity: type
             })
         }, err => {
             showToast(`${I18n.t('data_fail')}`)
@@ -337,11 +350,6 @@ class BuyTicketPage extends Component {
         let e_num = e_ticket_number - e_ticket_sold_number;
         let entity_num = entity_ticket_number - entity_ticket_sold_number;
 
-        if (e_num === 0) {
-            isEntity = ENTITY;
-        } else if (entity_num === 0) {
-            isEntity = E_TICKET;
-        }
 
         return (   <View style={{
             height: 140,
@@ -545,6 +553,25 @@ class BuyTicketPage extends Component {
             </View>
         )
     }
+
+    _priceView = () => {
+        const {tickets} = this.state;
+        if (isEmptyObject(tickets))
+            return;
+        const {original_price, price} = tickets.ticket_info;
+        return (<View>
+            <View style={{height: 35}}>
+                <Text style={{fontSize: 15, color: Colors._333, marginLeft: 17, marginTop: 10, marginBottom: 10}}>
+                    {I18n.t('buy_send')}</Text>
+                <View style={{marginLeft: 17, marginRight: 17, height: 1, backgroundColor: Colors._ECE}}/>
+            </View>
+
+            <View style={{flexDirection:'row',}}>
+                <Text>{I18n.t('order_price')}</Text>
+            </View>
+
+        </View>)
+    };
 
     _emailViwe = (email) => {
         return (  <View
