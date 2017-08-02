@@ -11,7 +11,8 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import I18n from 'react-native-i18n';
 import {playerInfo} from '../../../services/AccountDao';
 import {postFocus, deleteFocus} from '../../../services/RankDao';
-import {strNotNull, rankPlayerShare} from '../../../utils/ComonHelper';
+
+import {strNotNull, moneyFormat, rankPlayerShare, nameRow} from '../../../utils/ComonHelper';
 
 export default class PokerView extends Component {
 
@@ -69,10 +70,8 @@ export default class PokerView extends Component {
             {this._topView()}
 
             <TouchableOpacity
-                style={{
-                    height: 74,
-                    width: 74,
-                }}
+                activeOpacity={1}
+                style={styles.btnAvatar}
                 onPress={() => {
                     if (strNotNull(avatar)) {
                         let images = [{url: avatar}];
@@ -87,7 +86,9 @@ export default class PokerView extends Component {
             </TouchableOpacity>
 
             <View style={styles.viewName}>
-                <Text style={styles.name}>{name}</Text>
+                <Text
+                    numberOfLines={3}
+                    style={styles.name}>{nameRow(name)}</Text>
                 <Text style={styles.location}>{country}</Text>
             </View>
 
@@ -100,13 +101,7 @@ export default class PokerView extends Component {
 
 
             <View style={styles.tabView}>
-                <View style={styles.tab}>
-                    <Text style={styles.tabValue}>NO.{ranking}</Text>
-                    <View style={styles.tabNameView}>
-                        <Text style={styles.tabName}>{I18n.t('rank_no')}</Text>
-                    </View>
 
-                </View>
                 <View style={styles.tab}>
                     <Text style={styles.tabValue}>{dpi_total_score}</Text>
                     <View style={styles.tabNameView}>
@@ -114,8 +109,17 @@ export default class PokerView extends Component {
                     </View>
 
                 </View>
+
                 <View style={styles.tab}>
-                    <Text style={styles.tabValue}>{dpi_total_earning}</Text>
+                    <Text style={styles.tabValue}>{ranking}</Text>
+                    <View style={styles.tabNameView}>
+                        <Text style={styles.tabName}>{I18n.t('rank_no')}</Text>
+                    </View>
+
+                </View>
+
+                <View style={styles.tab}>
+                    <Text style={styles.tabValue}>¥{moneyFormat(dpi_total_earning)}</Text>
                     <View style={styles.tabNameView}>
                         <Text style={styles.tabName}>{I18n.t('rank_prize')}</Text>
                     </View>
@@ -214,6 +218,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: Colors._F4E,
         backgroundColor: 'transparent',
+        maxWidth: 200
     },
     right: {
         width: 90,
@@ -225,12 +230,16 @@ const styles = StyleSheet.create({
         marginRight: 20,
         marginLeft: 10
     },
-    avatar: {
+    btnAvatar: {
         height: 74,
         width: 74,
         position: 'absolute',
         left: 20,
-        top: 84,
+        top: 84
+    },
+    avatar: {
+        height: 74,
+        width: 74,
         borderRadius: 37
     },
     name: {

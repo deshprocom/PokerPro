@@ -39,7 +39,7 @@
   "home_video": "视频",
   "home_info": "资讯",
   "home_sort": "排行",
-  "home_recent_races": "即将到来的活动",
+  "home_recent_races": "即将到来",
   "prize": "金额:",
   "address": "地点:",
   "have_no_races": "暂无更多赛事...",
@@ -321,5 +321,9 @@
   "main_rank":"排行榜",
   "rank_del_focus":"取消关注",
   "back":"返回",
-  "rank_filte_clear":"清空"
+  "rank_filte_clear":"清空",
+  "poker_search":"搜索牌手",
+  "buy_send":"配送方式",
+  "buy_pay_after":"支付后立即出票，不支持退换",
+  "buy_pay":"结算信息"
 }

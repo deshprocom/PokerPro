@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {singleOrdouble, convertDate, strNotNull,MM_DD} from '../../utils/ComonHelper';
+import {singleOrdouble, convertDate, strNotNull, MM_DD, strRow} from '../../utils/ComonHelper';
 
 
 export default class ScheduleList extends Component {
@@ -41,13 +41,6 @@ export default class ScheduleList extends Component {
         return item.schedule_id;
     };
 
-    _txtSchedule = (schedule) => {
-        if (schedule) {
-            return schedule.replace('|', '\n');
-        }
-
-    };
-
 
     _renderRow = (rowData) => {
         const {item, index} = rowData;
@@ -56,7 +49,7 @@ export default class ScheduleList extends Component {
             style={singleOrdouble(index) ? styles.item1 : styles.item2}>
             <Text
                 testID={"txt_day_" + item.schedule_id}
-                style={styles.txtInfo}>{this._txtSchedule(item.schedule)}</Text>
+                style={styles.txtInfo}>{strRow(item.schedule)}</Text>
 
             <Text
                 testID={"txt_month_" + item.schedule_id}

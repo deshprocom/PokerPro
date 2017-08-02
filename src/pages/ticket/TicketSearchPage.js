@@ -44,8 +44,8 @@ export default class TicketSearchPage extends Component {
                 dateTitle={I18n.t('last_refresh')}
                 allLoadedText={I18n.t('no_more')}
                 waitingSpinnerText={I18n.t('loading')}
-                emptyView={()=>{
-                    return this.state.loadErr?<LoadErrorView/>:<NoDataView/>;
+                emptyView={() => {
+                    return this.state.loadErr ? <LoadErrorView/> : <NoDataView/>;
                 }}
             />
         </View>)
@@ -107,12 +107,6 @@ export default class TicketSearchPage extends Component {
     _navSearchBar = () => {
         return (<View style={styles.navBar}>
             <View style={styles.topBar}>
-                <View
-                    testID="btn_bar_left"
-                    style={styles.popBtn}
-                    onPress={()=>router.pop()}>
-
-                </View>
 
                 <View
                     style={styles.searchView}>
@@ -121,6 +115,7 @@ export default class TicketSearchPage extends Component {
                         <Image style={styles.searchImg}
                                source={Images.news_outline}/>
                         <TextInput
+                            autoFocus={true}
                             testID="input_news_search"
                             placeholderTextColor={Colors.txt_666}
                             placeholder={I18n.t('news_outline')}
@@ -129,24 +124,24 @@ export default class TicketSearchPage extends Component {
                             clearButtonMode="always"
                             underlineColorAndroid="transparent"
                             style={this._searchInput()}
-                            onChangeText={text=>{
+                            onChangeText={text => {
                                 this.keyword = text;
-                                 if(this.listView)
-                                     this.listView.refresh();
+                                if (this.listView)
+                                    this.listView.refresh();
                             }}
 
                         />
 
                     </View>
 
+                    <TouchableOpacity
+                        testID="btn_bar_right"
+                        style={styles.popBtn}
+                        onPress={() => router.pop()}>
+                        <Text style={styles.barTxt}>{I18n.t('cancel')}</Text>
+                    </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity
-                    testID="btn_bar_right"
-                    style={styles.popBtn}
-                    onPress={()=>router.pop()}>
-                    <Text style={styles.barTxt}>{I18n.t('cancel')}</Text>
-                </TouchableOpacity>
 
             </View>
         </View>)
@@ -171,8 +166,7 @@ const styles = StyleSheet.create({
 
     },
     popBtn: {
-        height: 44,
-        width: 50,
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -183,7 +177,8 @@ const styles = StyleSheet.create({
     searchView: {
         flex: 1,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginLeft: 20
     },
     searchBar: {
         backgroundColor: '#212325',

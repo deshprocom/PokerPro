@@ -57,15 +57,41 @@ export const itemListView = (item, index) => {
                         {this.prizeView(min_price)}
 
                     </View>
-                    <View style={sellStyle(ticket_status)}>
-                        <Text style={sellTxt(ticket_status)}>{ticketStatusConvert(ticket_status)}</Text>
-                    </View>
+                    <TouchableOpacity
+                        activeOpacity={1}
+                        onPress={() => this._buyTicket(item)}
+                        style={sellStyle(ticket_status)}>
+                        <Text style={sellTxt(ticket_status)}>{this._txtTicketStatus(ticket_status)}</Text>
+                    </TouchableOpacity>
                 </View>
             </Image>
 
         </TouchableOpacity>
     )
 };
+
+_buyTicket = (rowData) => {
+    if (strNotNull(login_user.user_id)) {
+        router.toChoiseTicketPage(this.props, rowData.race_id);
+    }
+    else
+       router.toLoginFirstPage();
+};
+
+
+_txtTicketStatus = (status) => {
+    switch (status) {
+        case 'unsold':
+            return I18n.t('ticket_unsold');
+        case 'selling':
+            return I18n.t('home_buy');
+        case 'end':
+            return I18n.t('ticket_end');
+        case 'sold_out':
+            return I18n.t('ticket_sold_out');
+    }
+};
+
 
 prizeView = (prize) => {
     if (strNotNull(prize))

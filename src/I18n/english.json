@@ -39,7 +39,7 @@
   "home_video": "Video",
   "home_info": "News",
   "home_sort": "Ranking",
-  "home_recent_races": "Upcoming Event",
+  "home_recent_races": "Upcoming",
   "prize": "Prize:",
   "address": "Address:",
   "have_no_races": "To be continued",
@@ -66,7 +66,7 @@
   "birth": "Birthday",
   "gender": "Gender",
   "signature": "Introduce yourself",
-  "donging": "In-going",
+  "donging": "Going",
   "ended": "Previous",
   "closed": "Closed",
   "ordered": "Successfully",
@@ -321,6 +321,10 @@
   "main_rank": "Ranking",
   "rank_del_focus": "UnFollow",
   "back": "Back",
-  "rank_filte_clear":"clear"
+  "rank_filte_clear": "clear",
+  "poker_search": "Search Poker",
+  "buy_send": "配送方式",
+  "buy_pay_after": "支付后立即出票，不支持退换",
+  "buy_pay": "结算信息"
 }
 

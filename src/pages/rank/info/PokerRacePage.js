@@ -17,7 +17,8 @@ export default class PokerRacePage extends Component {
 
     state = {
         race: {},
-        ranks: []
+        ranks: [],
+        parent_race: {}
     };
 
     componentDidMount() {
@@ -27,20 +28,23 @@ export default class PokerRacePage extends Component {
             race_id: race_id
         };
         getRacesInfo(body, data => {
+            const {ranks, race, parent_race} = data;
             this.setState({
-                race: data,
-                ranks: data.ranks
+                race: race,
+                ranks: ranks,
+                parent_race: parent_race
             })
         }, err => {
         })
     }
 
     render() {
-        const {race, ranks} = this.state;
+        const {race, ranks,parent_race} = this.state;
         return (<View style={ApplicationStyles.bgContainer}>
             {this._topView(race)}
             <ScrollView>
                 <RaceView
+                    parent_race={parent_race}
                     race={race}/>
                 <RankListView
                     ranks={ranks}/>

@@ -9,11 +9,14 @@ import {setDpLang} from '../services/RequestHelper';
 export function init(resolve) {
     storage.load({key: StorageKey.Language})
         .then(ret => {
-            console.log('Config', ret);
+
             switchLang(ret);
 
             resolve();
-        });
+        }).catch(err => {
+
+        switchLang(language);
+    });
     getSize();
 }
 

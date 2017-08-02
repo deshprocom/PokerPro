@@ -364,7 +364,7 @@ export default class ChoiseTicketPage extends Component {
                 <View style={styles.viewInfo}>
                     <Text style={styles.txtPrice}>{price}</Text>
                     <View style={styles.viewNum}>
-                        <Text style={styles.lbNum}>  ({I18n.t('surplus')}</Text>
+                        <Text style={styles.lbNum}> ({I18n.t('surplus')}</Text>
                         <Text style={styles.txtNum}>{this._ticketNum(ticket_info)}</Text>
                         <Text style={styles.lbNum}>{I18n.t('spread')})</Text>
                     </View>
@@ -386,8 +386,8 @@ export default class ChoiseTicketPage extends Component {
 
     _ticketNum = (ticket_info) => {
         if (!isEmptyObject(ticket_info)) {
-            const {e_ticket_number, e_ticket_sold_number} = ticket_info;
-            return e_ticket_number - e_ticket_sold_number;
+            const {e_ticket_number, e_ticket_sold_number, entity_ticket_number, entity_ticket_sold_number} = ticket_info;
+            return e_ticket_number + entity_ticket_number - e_ticket_sold_number - entity_ticket_sold_number;
         }
 
     };

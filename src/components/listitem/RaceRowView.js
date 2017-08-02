@@ -107,7 +107,7 @@ export default class RaceRowView extends Component {
                     source={this._imgRaceStatus(status)}
                     style={status === 'go_ahead' ? styles.imgRaceStatus1 : styles.imgRaceStatus}/>
 
-                <Text style={this._txtColorStatus(status)}>{raceStatusConvert(status)}</Text>
+                <Text style={this._txtColorStatus(status)}>  {raceStatusConvert(status)}</Text>
 
             </View>
 
@@ -147,11 +147,11 @@ export default class RaceRowView extends Component {
             case 'unsold':
                 return I18n.t('ticket_unsold');
             case 'selling':
-                return '购票';
+                return I18n.t('home_buy');
             case 'end':
                 return I18n.t('ticket_end');
             case 'sold_out':
-                return '售完';
+                return I18n.t('ticket_sold_out');
         }
     };
 
@@ -253,10 +253,10 @@ export default class RaceRowView extends Component {
 
     _buyTicket = (rowData) => {
         if (strNotNull(login_user.user_id)) {
-            this.props.router.toChoiseTicketPage(this.props, rowData.race_id);
+            router.toChoiseTicketPage(this.props, rowData.race_id);
         }
         else
-            this.props.router.toLoginFirstPage();
+            router.toLoginFirstPage();
     };
 
     statusView = (status) => {

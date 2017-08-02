@@ -10,7 +10,7 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import {ImageLoad} from '../../../components';
 import I18n from 'react-native-i18n';
-import {convertDate, YYYY_MM_DD} from '../../../utils/ComonHelper';
+import {convertDate, YYYY_MM_DD, isEmptyObject} from '../../../utils/ComonHelper';
 
 export default class RaceView extends Component {
 
@@ -21,26 +21,37 @@ export default class RaceView extends Component {
         return beginDate + '-' + endDate;
     };
 
+    _name = () => {
+        const {parent_race, race} = this.props;
+        if (isEmptyObject(parent_race))
+            return race.name;
+        else
+            return parent_race.name + '-' + race.name
+    };
+
     render() {
-        const {begin_date, end_date, logo, prize, ticket_price, location, name, race_id,participants} = this.props.race;
+        const {begin_date, end_date, logo, prize, ticket_price, location, name, race_id, participants} = this.props.race;
+        const {parent_race} = this.props;
         return (<View>
 
             <View style={styles.page}>
                 <TouchableOpacity
                     activeOpacity={1}
                     onPress={() => {
-                        router.toRacesInfoPage(this.props, race_id, false)
+                        if (isEmptyObject(parent_race))
+                            router.toRacesInfoPage(this.props, race_id, false);
+
                     }}
                     style={{flexDirection: 'row', alignItems: 'flex-end'}}>
                     <ImageLoad
-                        source={{uri: logo}}
+                        source={{uri: isEmptyObject(parent_race) ? logo : parent_race.logo}}
                         style={styles.imgRace}/>
 
                     <View style={{marginLeft: 15, marginRight: 15, flex: 1}}>
 
                         <Text
                             numberOfLines={2}
-                            style={styles.name}>{name}</Text>
+                            style={styles.name}>{this._name()}</Text>
 
                         <View style={{flex: 1}}/>
                         <View>

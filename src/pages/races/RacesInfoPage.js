@@ -54,13 +54,13 @@ class RacesInfoPage extends Component {
 
     componentWillReceiveProps(newProps) {
         const {raceInfo, actionType, subRaces} = newProps;
-        const {ranks, schedules, blinds} = raceInfo;
+        const {ranks, schedules, blinds,race} = raceInfo;
 
         if (actionType === GET_RACE_INFO
             && !isEmptyObject(raceInfo)) {
 
             this.setState({
-                raceInfo: raceInfo,
+                raceInfo: race,
                 raceRanks: isEmptyObject(ranks) ? [] : ranks,
                 schedules: isEmptyObject(schedules) ? [] : schedules,
                 blinds: isEmptyObject(blinds) ? [] : blinds

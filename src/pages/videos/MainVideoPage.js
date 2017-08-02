@@ -224,11 +224,11 @@ const styles = StyleSheet.create({
         fontSize: 12
     },
     newsTypeView: {
-        height: 40,
+        height: 50,
         backgroundColor: Colors.white
     },
     itemView: {
-        height: 40,
+        height: 50,
         width: 80,
         alignItems: 'center',
         justifyContent: 'center'
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
     itemTxtSelect: {
         color: Colors._333,
         fontSize: 16,
-        marginBottom: 5
+        marginBottom: 10
     },
     triangle: {
         height: 3,

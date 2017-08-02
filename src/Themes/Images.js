@@ -1,6 +1,5 @@
-// @flow
+import {China} from '../configs/Constants';
 
-// leave off @2x/@3x
 const images = {
     nav_close: require('../../source/nav_Close@2x.png'),
     icon_biyan: require('../../source/icon_biyan@2x.png'),
@@ -119,7 +118,9 @@ const images = {
     load_wifi: require('../../source/load/load_wifi@3x.png'),
     races_bg: require('../../source/races/races_bg.png'),
     user_real_failed: require('../../source/order/user_real_failed.png'),
-    user_real_pending: require('../../source/order/user_real_pending.png'),
+    user_real_pending: require( '../../source/order/user_real_pending.png'),
+    en_real_failed: require('../../source/order/en_real_fail.png'),
+    en_real_pending: require( '../../source/order/en_real_handing.png'),
     schedule: require('../../source/races/schedule@3x.png'),
     search: require('../../source/races/search@3x.png'),
     prev: require('../../source/races/prev@3x.png'),
@@ -181,8 +182,13 @@ const images = {
     web_page: require('../../source/news/web_page.png'),
     web_right: require('../../source/news/web_right.png'),
     web_refresh: require('../../source/news/web_refresh.png'),
-    rank_bg:require('../../source/rank/rank_bg.png'),
-    share:require('../../source/rank/share.png')
+    rank_bg: require('../../source/rank/rank_bg.png'),
+    share: require('../../source/rank/share.png'),
+    poker_search:require('../../source/rank/search_poker.png'),
+    select_e_ticket:require('../../source/buy/select_e_ticket.png'),
+    selected_e_ticket:require('../../source/buy/selected_e_ticket.png'),
+    select_entity:require('../../source/buy/select_entity.png'),
+    selected_entity:require('../../source/buy/selected_entity.png')
 
 
 };

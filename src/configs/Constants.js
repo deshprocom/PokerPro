@@ -19,3 +19,7 @@ export const WB_KEY = 'e1049869ddd670771459d154fe1a9207';
 
 export const WX_URL = 'http://mobile.umeng.com/social';
 export const WB_URL = 'https://sns.whalecloud.com/sina2/callback';
+
+
+export const China = 'zh';
+export const English = 'en';
