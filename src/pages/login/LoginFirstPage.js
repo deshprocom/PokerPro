@@ -42,7 +42,7 @@ class LoginFirstPage extends React.Component {
                 this.props._getRecentRaces(recentRaces);
                 this.props._getProfile(user_id);
                 this.props.closeDrawer();
-                router.popToTop();
+                router.pop();
                 return false;
 
             }
@@ -96,8 +96,8 @@ class LoginFirstPage extends React.Component {
                         color: Colors.txt_E0C,
                         fontSize: 16, marginRight: 20
                     }}
-                    leftBtnPress={() => this.props.router.popToTop()}
-                    rightBtnPress={() => this.props.router.toRegisterPage()}/>
+                    leftBtnPress={() => router.pop()}
+                    rightBtnPress={() => router.toRegisterPage()}/>
 
                 <Image style={{
                     width: 91, height: 91,
