@@ -8,7 +8,7 @@ import React, {Component, PropTypes} from 'react';
 import {
     StyleSheet, Text, View, ListView,
     TouchableOpacity, Image, StatusBar,
-    ScrollView, Animated, InteractionManager,
+    ScrollView, Modal, InteractionManager,
     ActivityIndicator
 } from 'react-native';
 import {connect} from 'react-redux';
@@ -44,7 +44,8 @@ class NewsListView extends Component {
             topped: {},
             componentDataSource: this._dataSource.cloneWithRows([]),
             error: false,
-            played: ''
+            modalVisible: false,
+            video_link: ''
         }
 
 
@@ -79,9 +80,45 @@ class NewsListView extends Component {
                 }}
             />
 
-
+            {this._showVideo()}
         </View>)
     }
+
+    _showVideo = () => {
+
+        const {modalVisible, video_link} = this.state;
+        return ( <Modal
+            style={styles.container}
+            transparent={true}
+            visible={modalVisible}>
+
+            <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => {
+                    this.setState({
+                        modalVisible: false
+                    })
+                }}
+                style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.5)'}}/>
+            <View style={{height: 300, width: Metrics.screenWidth}}>
+                <VideoPlayer
+                    controlTimeout={ 1000 }
+                    paused={!modalVisible}
+                    ref={ref => this.player = ref}
+                    toggleFullscreen={this.toggleFullscreen}
+                    source={{uri: video_link.trim()}}
+                />
+            </View>
+            <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => {
+                    this.setState({
+                        modalVisible: false
+                    })
+                }}
+                style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.5)'}}/>
+        </Modal>)
+    };
 
     onFetch = (page = 1, startFetch, abortFetch) => {
         try {
@@ -152,51 +189,52 @@ class NewsListView extends Component {
 
     _playView = (item) => {
         const {id, cover_link, video_duration, video_link} = item;
+        return <View style={styles.listTopImg}>
 
-        return this.state.played !== id ? <View style={styles.listTopImg}>
-            <VideoPlayer
-                paused={true}
-                ref={ref => this.player = ref}
-                toggleFullscreen={this.toggleFullscreen}
-                source={{uri: video_link.trim()}}
-            />
-        </View> : <Image
-            source={{uri: cover_link}}
-            style={styles.listTopImg}
-        >
-            <View style={styles.itemBack}>
-                <TouchableOpacity
-                    onPress={() => {
-
-                        this.setState({
-                            played: id
-                        })
-                    }}
-                    style={styles.btnPlay}>
-                    <Image
-                        style={styles.imgPlay}
-                        source={Images.video_play}/>
-                </TouchableOpacity>
-                <Text style={[styles.listVideoTime, {fontSize: FontSize.h14}]}>{video_duration}</Text>
+            <Image
+                source={{uri: cover_link}}
+                style={styles.listTopImg}
+            >
+                <View style={styles.itemBack}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            this.setState({
+                                modalVisible: true,
+                                video_link: video_link
+                            })
+                        }}
+                        style={styles.btnPlay}>
+                        <Image
+                            style={styles.imgPlay}
+                            source={Images.video_play}/>
+                    </TouchableOpacity>
+                    <Text style={[styles.listVideoTime, {fontSize: FontSize.h14}]}>{video_duration}</Text>
 
 
-            </View>
+                </View>
 
-        </Image>
+            </Image>
+
+
+        </View>
+
     };
 
     _itemNewsView = (rowData, sectionID, rowID) => {
 
         const {top, name, cover_link, video_duration, title_desc} = rowData;
 
-        return (<TouchableOpacity
+        return (<View
             style={styles.transparent}
             testID={"btn_news_row_" + rowData.id}
             activeOpacity={1}
             onPress={() => this._pressItem(rowData)}>
 
             {this._playView(rowData)}
-            <View style={styles.viewDesc}>
+            <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => this._pressItem(rowData)}
+                style={styles.viewDesc}>
                 <Text
                     numberOfLines={2}
                     style={[styles.listTopTxt, {fontSize: FontSize.h17}]}>{name}</Text>
@@ -204,11 +242,11 @@ class NewsListView extends Component {
                     numberOfLines={1}
                     style={[styles.txtTitle1, {fontSize: FontSize.h14}]}>{title_desc}</Text>
 
-            </View>
+            </TouchableOpacity>
             <View style={{height: 6}}/>
 
 
-        </TouchableOpacity>)
+        </View>)
 
 
     }
@@ -333,5 +371,15 @@ const styles = StyleSheet.create({
         marginLeft: 17,
         marginBottom: 12,
         marginRight: 17,
-    }
+    },
+    container: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 5
+    },
 });
