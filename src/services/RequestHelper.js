@@ -100,7 +100,6 @@ export function post(url, body, resolve, reject) {
     router.log(url, body)
     client.post(url, body)
         .then((response) => {
-
             if (response.ok) {
                 const {code, msg} = response.data;
                 if (code === 0) {
@@ -193,6 +192,7 @@ function netError(response, reject) {
         clearLoginUser();
         router.popToLoginFirstPage();
     }
+
     if (response.status === 809)
         reject(I18n.t('net_809'));
     else

@@ -27,7 +27,6 @@ export default class ChoiseTicketPage extends Component {
 
     state = {
         selectRace: '',
-        selectTicket: '',
         selectRaceData: {},
         selectSub: {},
         sub_races: [],
@@ -50,7 +49,7 @@ export default class ChoiseTicketPage extends Component {
         };
 
         subRaces(body, data => {
-            router.log('subRace', data)
+
             this.setState({
                 sub_races: data.items
             })
@@ -58,10 +57,13 @@ export default class ChoiseTicketPage extends Component {
 
         });
         getSelectRaceTicket(body, (data) => {
-            router.log('data', data);
+
             this.setState({
-                selectRaceData: data
-            })
+                selectRaceData: data,
+                selectRace: RACE_MAIN
+            });
+            if (this.listView)
+                this.listView.updateDataSource(data.tickets);
         }, (err) => {
 
         })
@@ -457,7 +459,6 @@ export default class ChoiseTicketPage extends Component {
 
         this.setState({
             selectRace: race,
-            selectTicket: '',
             ticket: {}
         });
         if (race !== this.state.selectRace)
