@@ -10,6 +10,7 @@ import {
     FETCH_SUCCESS, FETCHING, FETCH_FAIL,FETCH_PASS, FETCH_PASS_SUCCESS,FETCH_PASS_FAIL
 } from '../actions/ActionTypes';
 import {showToast} from '../utils/ComonHelper';
+import I18n from 'react-native-i18n';
 
 
 import {
@@ -235,6 +236,7 @@ export function fetchPostEmailResetPwd(email, vcode, password) {
         dispatch(_postResetPassword());
         postResetPwdCode(body, (ret) => {
             dispatch(_postResetPasswordOk(ret))
+            showToast(I18n.t('reset_password'))
         }, (err) => {
             showToast(err);
             dispatch(_postResetPasswordFail(err))
@@ -253,6 +255,7 @@ export function fetchPostMobileResetPwd(mobile, vcode, password) {
         dispatch(_postResetPassword());
         postResetPwdCode(body, (ret) => {
             dispatch(_postResetPasswordOk(ret))
+            showToast(I18n.t('reset_password'))
         }, (err) => {
             showToast(err);
             dispatch(_postResetPasswordFail(err))
