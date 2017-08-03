@@ -73,7 +73,7 @@ export default class TicketInfoPage extends Component {
 
     _content = () => {
         const {race, tickets, ordered} = this.state;
-        const {description, title, price} = tickets;
+        const {description, title, price, banner} = tickets;
         const {name, logo} = race;
         return (  <ScrollView
             style={{marginBottom:70}}
@@ -85,7 +85,7 @@ export default class TicketInfoPage extends Component {
             <Image
                 resizeMode={'cover'}
                 defaultSource={Images.empty_image}
-                source={{uri: logo}}
+                source={{uri: banner}}
                 style={styles.imgLogo}>
 
             </Image>

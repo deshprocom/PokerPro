@@ -325,5 +325,6 @@
   "poker_search":"搜索牌手",
   "buy_send":"配送方式",
   "buy_pay_after":"支付后立即出票，不支持退换",
-  "buy_pay":"结算信息"
+  "buy_pay":"结算信息",
+  "ticke_online":"搜索票务"
 }
