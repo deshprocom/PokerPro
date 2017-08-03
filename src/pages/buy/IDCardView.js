@@ -204,9 +204,11 @@ class IDCardView extends Component {
             style={ApplicationStyles.bgContainer}>
 
             {editable ? <View>
+
                 <Text style={{
                     paddingLeft: 15,
                     marginTop: 13,
+                    marginBottom: 13,
                     color: Colors._333,
                     fontSize: 15
                 }}>{I18n.t('ple_put_password')}</Text>
