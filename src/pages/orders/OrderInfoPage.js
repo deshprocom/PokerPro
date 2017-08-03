@@ -198,7 +198,7 @@ class OrderInfoPage extends React.Component {
                             <Text
                                 testID="txt_original_price"
                                 style={{
-                                    fontSize: 14, color: Colors.bg_black, marginRight: 18,
+                                    fontSize: 14, color: Colors._333, marginRight: 18,
                                     textDecorationLine: 'line-through'
                                 }}>{order_info.original_price}</Text>
                         </View>
@@ -206,7 +206,6 @@ class OrderInfoPage extends React.Component {
                             style={{justifyContent: 'space-between', flexDirection: 'row', marginTop: 16}}>
                             <Text style={{fontSize: 14, color: Colors.txt_666}}>{I18n.t('order_pay')}</Text>
                             <Text
-
                                 testID="txt_price"
                                 style={{fontSize: 14, color: '#DF1D0F', marginRight: 18}}>{order_info.price}</Text>
                         </View>
