@@ -288,7 +288,10 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: Colors._888,
         fontWeight: 'bold',
-        margin: 5
+        marginTop: 3,
+        marginBottom: 3,
+        marginRight: 8,
+        marginLeft: 8
     },
     tabNameView: {
         backgroundColor: '#282828',
