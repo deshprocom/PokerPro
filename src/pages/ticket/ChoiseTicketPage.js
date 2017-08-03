@@ -188,63 +188,6 @@ export default class ChoiseTicketPage extends Component {
     };
 
 
-    ticketTypeView = () => {
-        const {selectTicket} = this.state;
-
-        return (<View style={styles.viewRace}>
-            <Text style={styles.txtSelectRace}>{I18n.t('ticketType')}</Text>
-            <View style={styles.viewMainSide}>
-
-                <TouchableOpacity
-                    disabled={!this._single_tickets()}
-                    onPress={() => {
-                        this.listView.updateDataSource([]);
-                        this._selectTicket(ONLY_TICKET)
-                    }}
-                    style={this._selectedBg(ONLY_TICKET === selectTicket)}>
-                    <Text style={this._single_tickets() ? this._selectTxt(ONLY_TICKET === selectTicket) :
-                        styles.txtDisabled}>{I18n.t('onlyRace')}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    disabled={!this._package_tickets()}
-                    onPress={() => {
-                        this._selectTicket(TICKETS);
-                        this.listView.updateDataSource(this._listTicket());
-
-                    }}
-                    style={[this._selectedBg(TICKETS === selectTicket), styles.marginLeft]}>
-                    <Text style={this._package_tickets() ?
-                        this._selectTxt(TICKETS === selectTicket) :
-                        styles.txtDisabled}>{I18n.t('ticketBinds')}</Text>
-                </TouchableOpacity>
-            </View>
-        </View>)
-    };
-
-    _single_tickets = () => {
-        const {selectSub, selectRaceData, selectRace} = this.state;
-        if (selectRace === RACE_MAIN) {
-            let {single_tickets} = selectRaceData;
-            return !isEmptyObject(single_tickets) && single_tickets.length > 0
-        } else if (selectRace === RACE_SIDE) {
-            let {single_tickets} = selectSub;
-            return !isEmptyObject(single_tickets) && single_tickets.length > 0
-        }
-    };
-
-    _package_tickets = () => {
-        const {selectSub, selectRaceData, selectRace} = this.state;
-        if (selectRace === RACE_MAIN) {
-            let {package_tickets} = selectRaceData;
-            return !isEmptyObject(package_tickets) && package_tickets.length > 0
-        } else if (selectRace === RACE_SIDE) {
-            let {package_tickets} = selectSub;
-            return !isEmptyObject(package_tickets) && package_tickets.length > 0
-        }
-
-
-    };
-
     listTicketView = () => {
         const {selectRace} = this.state;
         return (<UltimateListView
@@ -511,20 +454,14 @@ export default class ChoiseTicketPage extends Component {
     };
 
     _selectRace = (race) => {
-        this.listView.updateDataSource(this._listTicket(race));
+
         this.setState({
             selectRace: race,
             selectTicket: '',
             ticket: {}
         });
-
-    };
-
-    _selectTicket = (ticket) => {
-        this.setState({
-            selectTicket: ticket,
-            ticket: {}
-        })
+        if (race !== this.state.selectRace)
+            this.listView.updateDataSource(this._listTicket(race));
     };
 
     _listTicket = (selectRace) => {
