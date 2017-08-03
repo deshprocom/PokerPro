@@ -821,7 +821,7 @@ export default class VideoPlayer extends Component {
                         <View style={ styles.controls.pullRight }>
                             {/*{ this.renderVolume() }*/}
                             {this.renderTitle()}
-                            { this.renderFullscreen() }
+                            {this.props.closeFull ? null : this.renderFullscreen() }
                         </View>
                     </View>
                 </Image>

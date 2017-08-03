@@ -102,9 +102,9 @@ class NewsListView extends Component {
                 style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.5)'}}/>
             <View style={{height: 300, width: Metrics.screenWidth}}>
                 <VideoPlayer
-                    paused={!modalVisible}
                     ref={ref => this.player = ref}
-                    toggleFullscreen={this.toggleFullscreen}
+                    closeFull={true}
+                    paused={!modalVisible}
                     source={{uri: video_link.trim()}}
                 />
             </View>
@@ -118,6 +118,7 @@ class NewsListView extends Component {
                 style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.5)'}}/>
         </Modal>)
     };
+
 
     onFetch = (page = 1, startFetch, abortFetch) => {
         try {
