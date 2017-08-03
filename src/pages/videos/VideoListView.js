@@ -16,7 +16,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {GET_VIDEO_LIST} from '../../actions/ActionTypes';
 import {isEmptyObject, uniqueArray, FontSize, newsUnique} from '../../utils/ComonHelper';
-import {ImageLoad, PullListView, UltimateListView} from '../../components';
+import {ImageLoad, VideoPlayer, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {fetchVideoList} from '../../actions/NewsAction';
 import {getVideoList} from '../../services/NewsDao';
@@ -43,7 +43,8 @@ class NewsListView extends Component {
             newsListNextId: 0,
             topped: {},
             componentDataSource: this._dataSource.cloneWithRows([]),
-            error: false
+            error: false,
+            played: ''
         }
 
 
@@ -149,9 +150,44 @@ class NewsListView extends Component {
     };
 
 
+    _playView = (item) => {
+        const {id, cover_link, video_duration, video_link} = item;
+
+        return this.state.played !== id ? <View style={styles.listTopImg}>
+            <VideoPlayer
+                paused={true}
+                ref={ref => this.player = ref}
+                toggleFullscreen={this.toggleFullscreen}
+                source={{uri: video_link.trim()}}
+            />
+        </View> : <Image
+            source={{uri: cover_link}}
+            style={styles.listTopImg}
+        >
+            <View style={styles.itemBack}>
+                <TouchableOpacity
+                    onPress={() => {
+
+                        this.setState({
+                            played: id
+                        })
+                    }}
+                    style={styles.btnPlay}>
+                    <Image
+                        style={styles.imgPlay}
+                        source={Images.video_play}/>
+                </TouchableOpacity>
+                <Text style={[styles.listVideoTime, {fontSize: FontSize.h14}]}>{video_duration}</Text>
+
+
+            </View>
+
+        </Image>
+    };
+
     _itemNewsView = (rowData, sectionID, rowID) => {
 
-        const {top, name, cover_link, video_duration,title_desc} = rowData;
+        const {top, name, cover_link, video_duration, title_desc} = rowData;
 
         return (<TouchableOpacity
             style={styles.transparent}
@@ -159,28 +195,14 @@ class NewsListView extends Component {
             activeOpacity={1}
             onPress={() => this._pressItem(rowData)}>
 
-            <Image
-                source={{uri: cover_link}}
-                style={styles.listTopImg}
-            >
-                <View style={styles.itemBack}>
-                    <Image
-                        style={styles.imgPlay}
-                        source={Images.video_play}/>
-
-                    <Text style={[styles.listVideoTime, {fontSize: FontSize.h14}]}>{video_duration}</Text>
-
-
-                </View>
-
-            </Image>
+            {this._playView(rowData)}
             <View style={styles.viewDesc}>
                 <Text
                     numberOfLines={2}
                     style={[styles.listTopTxt, {fontSize: FontSize.h17}]}>{name}</Text>
                 <Text
                     numberOfLines={1}
-                    style={[styles.txtTitle1,{fontSize:FontSize.h14}]}>{title_desc}</Text>
+                    style={[styles.txtTitle1, {fontSize: FontSize.h14}]}>{title_desc}</Text>
 
             </View>
             <View style={{height: 6}}/>
@@ -294,6 +316,10 @@ const styles = StyleSheet.create({
     },
     imgPlay: {
         height: 68,
+        width: 68
+    },
+    btnPlay: {
+        height: 68,
         width: 68,
         alignSelf: 'center',
         marginTop: 68
@@ -301,9 +327,9 @@ const styles = StyleSheet.create({
     viewDesc: {
         backgroundColor: 'white'
     },
-    txtTitle1:{
-        color:Colors._AAA,
-        marginTop:3,
+    txtTitle1: {
+        color: Colors._AAA,
+        marginTop: 3,
         marginLeft: 17,
         marginBottom: 12,
         marginRight: 17,
