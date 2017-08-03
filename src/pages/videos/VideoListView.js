@@ -102,7 +102,6 @@ class NewsListView extends Component {
                 style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.5)'}}/>
             <View style={{height: 300, width: Metrics.screenWidth}}>
                 <VideoPlayer
-                    controlTimeout={ 1000 }
                     paused={!modalVisible}
                     ref={ref => this.player = ref}
                     toggleFullscreen={this.toggleFullscreen}
