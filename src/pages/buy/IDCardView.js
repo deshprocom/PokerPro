@@ -139,7 +139,7 @@ class IDCardView extends Component {
 
     _btnSubmit = () => {
         umengEvent('true_name_submit');
-        const { imageName, choice_id, chinese,passport} = this.state;
+        const {imageName, choice_id, chinese, passport} = this.state;
         let body = {};
         if (choice_id === 'chinese_id')
             body = chinese;
@@ -157,8 +157,8 @@ class IDCardView extends Component {
             }
             // router.log(choice_id);
             const body = {
-                real_name: real_name,
-                cert_no: cert_no,
+                real_name: real_name.trim(),
+                cert_no: cert_no.trim(),
                 cert_type: choice_id
             };
             this.props._postCertification(body);
@@ -204,7 +204,12 @@ class IDCardView extends Component {
             style={ApplicationStyles.bgContainer}>
 
             {editable ? <View>
-                <Text style={{paddingLeft: 15, marginTop: 13, color: Colors._333, fontSize: 15}}>{I18n.t('ple_put_password')}</Text>
+                <Text style={{
+                    paddingLeft: 15,
+                    marginTop: 13,
+                    color: Colors._333,
+                    fontSize: 15
+                }}>{I18n.t('ple_put_password')}</Text>
 
                 <View style={styles.choice_view}>
                     <Button style={[styles.choice_btn, styles.choice_btn_right,
