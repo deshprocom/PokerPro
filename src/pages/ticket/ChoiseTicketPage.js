@@ -60,9 +60,9 @@ export default class ChoiseTicketPage extends Component {
 
             this.setState({
                 selectRaceData: data,
-                selectRace: RACE_MAIN
+                selectRace: data.tickets.length > 0 ? RACE_MAIN : ''
             });
-            if (this.listView)
+            if (this.listView && data.tickets.length > 0)
                 this.listView.updateDataSource(data.tickets);
         }, (err) => {
 
