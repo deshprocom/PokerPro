@@ -118,7 +118,7 @@ export default class TicketSearchPage extends Component {
                             autoFocus={true}
                             testID="input_news_search"
                             placeholderTextColor={Colors.txt_666}
-                            placeholder={I18n.t('news_outline')}
+                            placeholder={I18n.t('ticke_online')}
                             autoCapitalize="none"
                             autoCorrect={false}
                             clearButtonMode="always"
