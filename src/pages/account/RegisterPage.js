@@ -15,6 +15,7 @@ import {fetchPostVerifyCode, fetchPostVCode}from '../../actions/AccountAction';
 import {checkPhone, strNotNull, showToast, checkMail} from '../../utils/ComonHelper';
 import {POST_VERIFY_CODE, POST_V_CODE} from '../../actions/ActionTypes';
 import {BtnLong, BtnSoild, InputView} from '../../components';
+import {postVCode} from '../../services/AccountDao';
 
 class RegisterPage extends React.Component {
 
@@ -48,11 +49,22 @@ class RegisterPage extends React.Component {
                 vcode_type: 'mobile',
                 mobile: mobile
             };
-            this.props.fetchVCode(body);
-            this.setState({
-                getCodeDisable: true
+
+            postVCode(body, ret => {
+                this.setState({
+                    getCodeDisable: true
+                });
+                this.countDownText.start();
+                if (body.vcode_type === 'mobile') {
+                    showToast("已发送到手机，注意查看短信")
+                } else {
+                    showToast("已发送到邮箱：" + body.email)
+                }
+            }, err => {
+                showToast(err);
             });
-            this.countDownText.start();
+
+
         }
     }
 
@@ -73,10 +85,10 @@ class RegisterPage extends React.Component {
                 <InputView
                     testID="input_phone"
                     placeholder={I18n.t('please_input_phone')}
-                    stateText={(text)=>{
+                    stateText={(text) => {
                         this.setState({
-                             mobile:text,
-                             canNextDisable:!(text.length>0&&this.state.vcode.length>0)
+                            mobile: text,
+                            canNextDisable: !(text.length > 0 && this.state.vcode.length > 0)
                         })
                     }}
                 />
@@ -85,26 +97,30 @@ class RegisterPage extends React.Component {
                     <TextInput style={styles.input}
                                placeholderTextColor={Colors._BBBB}
                                underlineColorAndroid='transparent'
-                               onChangeText={text=>{
+                               onChangeText={text => {
                                    this.setState({
-                                       vcode:text,
-                                       canNextDisable:!(text.length>0&&this.state.mobile.length>0)
+                                       vcode: text,
+                                       canNextDisable: !(text.length > 0 && this.state.mobile.length > 0)
                                    })
                                }}
                                testID="input_code"
                                placeholder={I18n.t('vcode')}/>
 
                     <TouchableOpacity
-                        style={{alignItems:'center',
-            justifyContent:'center',
-            height:60,width:135,
-            backgroundColor:getCodeDisable?Colors._BBBB:Colors.bg_09}}
+                        style={{
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            height: 60, width: 135,
+                            backgroundColor: getCodeDisable ? Colors._BBBB : Colors.bg_09
+                        }}
                         onPress={this._sendCode}
                         testID="btn_get_code"
                         disabled={getCodeDisable}>
 
-                        <CountDownText style={{color:getCodeDisable?Colors._747474:Colors.txt_E0C,
-                                           fontSize:15}}
+                        <CountDownText style={{
+                            color: getCodeDisable ? Colors._747474 : Colors.txt_E0C,
+                            fontSize: 15
+                        }}
                                        countType='seconds' // 计时类型：seconds / date
                                        afterEnd={this._can_get_code} // 结束回调
                                        auto={false} // 自动开始
@@ -112,7 +128,7 @@ class RegisterPage extends React.Component {
                                        step={-1} // 计时步长，以秒为单位，正数则为正计时，负数为倒计时
                                        startText={I18n.t('get_vcode')} // 开始的文本
                                        endText={I18n.t('get_vcode')} // 结束的文本
-                                       ref={ref=>this.countDownText = ref}
+                                       ref={ref => this.countDownText = ref}
                                        intervalText={(sec) => sec + 's'} // 定时的文本回调
                         />
 
@@ -152,23 +168,25 @@ class RegisterPage extends React.Component {
         return (
             <View
                 testID="page_phone_register"
-                style={{flex:1,backgroundColor:Colors.bg_f5}}>
+                style={{flex: 1, backgroundColor: Colors.bg_f5}}>
                 <TouchableOpacity
                     testID="btn_home_page"
-                    onPress={()=>this.props.router.popToTop()}/>
-                <View style={{backgroundColor:Colors.bg_09}}>
+                    onPress={() => this.props.router.popToTop()}/>
+                <View style={{backgroundColor: Colors.bg_09}}>
                     <NavigationBar
                         router={this.props.router}
                         title={I18n.t('register_with_phone')}
                         leftBtnIcon={Images.sign_return}
-                        leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
-                        leftBtnPress={()=>this.props.router.pop()}/>
+                        leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                        leftBtnPress={() => this.props.router.pop()}/>
                 </View>
 
                 {this._inputMobileCodeView()}
 
-                <Text style={{color:Colors._AAA,fontSize:12,
-                    marginTop:17,alignSelf:'center'}}>
+                <Text style={{
+                    color: Colors._AAA, fontSize: 12,
+                    marginTop: 17, alignSelf: 'center'
+                }}>
                     {I18n.t('chang_use_phone')}</Text>
 
                 {/*下一步按钮*/}
@@ -176,20 +194,24 @@ class RegisterPage extends React.Component {
                     testID="btn_next"
                     onPress={this._next}
                     name={I18n.t('next')}
-                    style={{marginTop:19,
-                        backgroundColor: canNextDisable?Colors._AAA:Colors.bg_09}}
+                    style={{
+                        marginTop: 19,
+                        backgroundColor: canNextDisable ? Colors._AAA : Colors.bg_09
+                    }}
                     disabled={canNextDisable}
-                    textStyle={{color:canNextDisable? Colors.white:Colors.txt_E0C}}/>
+                    textStyle={{color: canNextDisable ? Colors.white : Colors.txt_E0C}}/>
 
                 <TouchableOpacity
-                    style={{ borderBottomWidth:0.5,
-        borderBottomColor:Colors._999,
-        alignSelf: 'flex-end',
-        marginTop: 29,
-        marginRight: 20}}
+                    style={{
+                        borderBottomWidth: 0.5,
+                        borderBottomColor: Colors._999,
+                        alignSelf: 'flex-end',
+                        marginTop: 29,
+                        marginRight: 20
+                    }}
                     transparent
                     testID="btn_have_account"
-                    onPress={()=>this.props.router.pop()}>
+                    onPress={() => this.props.router.pop()}>
 
                     <Text style={styles.text_problem}>{I18n.t('i_have_account')}</Text>
 
@@ -197,27 +219,27 @@ class RegisterPage extends React.Component {
 
                 {/*使用邮箱注册*/}
                 <BtnLong
-                    style={{marginTop:35}}
+                    style={{marginTop: 35}}
                     testID="btn_switch_email_register"
-                    onPress={()=>{
-                              this.countDownText.end();
-                             this.props.router.toEmailRegisterPage()
-                        }}
+                    onPress={() => {
+                        this.countDownText.end();
+                        this.props.router.toEmailRegisterPage()
+                    }}
                     name={ I18n.t('email_register')}/>
 
 
-                <View style={{flex:1}}/>
+                <View style={{flex: 1}}/>
                 <TouchableOpacity
-                    onPress={()=>{
-                    this.setState({
-                        checkAgree:!checkAgree
-                    })
-                }}
-                    style={{marginBottom:49}}>
-                    <View style={{alignSelf:'center',flexDirection:'row'}}>
-                        <Image style={{height:12,width:12,marginRight:8}}
-                               source={checkAgree?Images.sign_choice_no:Images.sign_choice}/>
-                        <Text style={{color:Colors._AAA,fontSize:12}}>
+                    onPress={() => {
+                        this.setState({
+                            checkAgree: !checkAgree
+                        })
+                    }}
+                    style={{marginBottom: 49}}>
+                    <View style={{alignSelf: 'center', flexDirection: 'row'}}>
+                        <Image style={{height: 12, width: 12, marginRight: 8}}
+                               source={checkAgree ? Images.sign_choice_no : Images.sign_choice}/>
+                        <Text style={{color: Colors._AAA, fontSize: 12}}>
                             {I18n.t('protocol')}</Text>
                     </View>
                 </TouchableOpacity>
