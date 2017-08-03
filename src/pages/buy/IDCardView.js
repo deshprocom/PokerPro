@@ -280,7 +280,7 @@ class IDCardView extends Component {
                 }}>
 
                 <Text
-                    style={[styles.text_input, {width: choice_id === 'chinese_id' ? 76 : 0}]}>{I18n.t('ID_card')}</Text>
+                    style={[styles.text_input, {width: choice_id === 'chinese_id' ? 66 : 0}]}>{I18n.t('ID_card')}</Text>
                 <Text
                     style={[styles.text_input, {width: choice_id === 'passport_id' ? 66 : 0}]}>{I18n.t('password_card')}</Text>
                 <InputView
