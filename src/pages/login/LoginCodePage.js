@@ -17,7 +17,7 @@ import {fetchGetProfile} from '../../actions/PersonAction';
 import {fetchGetRecentRaces} from '../../actions/RacesAction';
 import {POST_VCODE_LOGIN} from '../../actions/ActionTypes';
 import {closeDrawer} from '../../reducers/DrawerRedux';
-import {postVCode} from '../../services/AccountDao';
+import {postVCode, postLogin} from '../../services/AccountDao';
 
 class LoginCodeView extends React.Component {
 
@@ -28,26 +28,6 @@ class LoginCodeView extends React.Component {
         phoneClear: false,
     };
 
-    shouldComponentUpdate(newProps) {
-
-        if (newProps.loading != this.props.loading)
-            if (newProps.actionType === POST_VCODE_LOGIN && newProps.hasData) {
-                console.log('LoginCodePage', newProps.loginUser)
-                const {user_id} = newProps.loginUser.data;
-                const recentRaces = {
-                    user_id: user_id,
-                    number: 8
-                };
-                this.props.closeDrawer();
-                this.props._getRecentRaces(recentRaces);
-                this.props._getProfile(user_id);
-                this.props.router.popToTop();
-                return false;
-
-            }
-        return true;
-    }
-
     doLogin = () => {
         const {mobile, vcode} = this.state;
         if (strNotNull(mobile) && strNotNull(vcode)) {
@@ -56,7 +36,20 @@ class LoginCodeView extends React.Component {
                 mobile: mobile,
                 vcode: vcode
             };
-            this.props._fetchPostLogin(body);
+            postLogin(body, data => {
+
+                const {user_id} = data.data;
+                const recentRaces = {
+                    user_id: user_id,
+                    number: 8
+                };
+                this.props.closeDrawer();
+                this.props._getRecentRaces(recentRaces);
+                this.props._getProfile(user_id);
+                router.popToTop();
+            }, err => {
+                showToast(err)
+            });
         } else {
             showToast(`${I18n.t('fillWhole')}`);
         }
