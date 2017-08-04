@@ -12,7 +12,10 @@ import I18n from 'react-native-i18n';
 import {UltimateListView} from '../../../components';
 import {NoDataView, LoadErrorView} from '../../../components/load';
 import {getPokerRanks} from '../../../services/RankDao';
-import {convertDate, YYYY_MM_DD, moneyFormat, isEmptyObject, getGetOrdinal} from '../../../utils/ComonHelper';
+import {
+    convertDate, YYYY_MM_DD, moneyFormat, isEmptyObject, getGetOrdinal,
+    strNull__, strNotNull
+} from '../../../utils/ComonHelper';
 
 export default class RaceListView extends Component {
 
@@ -77,22 +80,23 @@ export default class RaceListView extends Component {
                 <View style={styles.viewInfo}>
                     <View style={styles.viewItem}>
                         <Text style={styles.txtTabName}>{I18n.t('rank_buyIn')}</Text>
-                        <Text style={styles.txtTabValue}>{ticket_price}</Text>
+                        <Text style={styles.txtTabValue}>{strNull__(ticket_price)}</Text>
 
                     </View>
                     <View style={styles.viewItem}>
                         <Text style={styles.txtTabName}>{I18n.t('rank_participate')}</Text>
-                        <Text style={styles.txtTabValue}>{participants}</Text>
+                        <Text style={styles.txtTabValue}>{strNull__(participants)}</Text>
 
                     </View>
                     <View style={styles.viewItem}>
                         <Text style={styles.txtTabName}>{I18n.t('rank_prize')}</Text>
-                        <Text style={styles.txtTabValue}>¥{moneyFormat(earning)}</Text>
+                        <Text
+                            style={styles.txtTabValue}>{strNotNull(earning) ? '¥' + moneyFormat(earning) : '--'}</Text>
 
                     </View>
                     <View style={styles.viewItem}>
                         <Text style={styles.txtTabName}>{I18n.t('rank_number')}</Text>
-                        <Text style={styles.txtTabValue}>{score}</Text>
+                        <Text style={styles.txtTabValue}>{strNull__(score)}</Text>
 
                     </View>
 
