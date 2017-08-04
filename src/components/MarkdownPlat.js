@@ -57,7 +57,7 @@ export default class MarkdownPlat extends Component {
                             marginTop: 10,
                             marginBottom: 10,
                             fontSize:  FontSize.h15,
-                            lineHeight: 20,
+                            lineHeight: 25,
                             letterSpacing: 0.3,
                             color: '#777777'
                         },
@@ -106,7 +106,7 @@ export default class MarkdownPlat extends Component {
                         text: {
                             color: '#777777',
                             fontSize:  FontSize.h15,
-                            lineHeight: 20,
+                            lineHeight: 25,
                             letterSpacing: 0.3
                         },
                         heading1: {
