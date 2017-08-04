@@ -326,7 +326,9 @@
   "buy_send": "配送方式",
   "buy_pay_after": "支付后立即出票，不支持退换",
   "buy_pay": "结算信息",
-  "reset_password":"修改密码成功！",
-  "ticke_online":"搜索票务"
+  "reset_password": "修改密码成功！",
+  "ticke_online": "搜索票务",
+  "mobile_code_send": "已发送到手机，注意查看短信",
+  "email_code_send": "已发送到邮箱:"
 }
 

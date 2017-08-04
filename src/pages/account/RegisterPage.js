@@ -56,9 +56,9 @@ class RegisterPage extends React.Component {
                 });
                 this.countDownText.start();
                 if (body.vcode_type === 'mobile') {
-                    showToast("已发送到手机，注意查看短信")
+                    showToast(I18n.t('mobile_code_send'))
                 } else {
-                    showToast("已发送到邮箱：" + body.email)
+                    showToast(I18n.t('email_code_send') + body.email)
                 }
             }, err => {
                 showToast(err);
