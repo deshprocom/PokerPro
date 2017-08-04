@@ -60,7 +60,7 @@ export function uShareRace(title, location, icon, raceId) {
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
-            alert(error)
+            showToast(error)
         })
 }
 
@@ -69,7 +69,7 @@ export function newShare(title, location, icon, newsId) {
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
-            alert(error)
+            showToast(error)
         })
 }
 
@@ -78,7 +78,7 @@ export function rankPlayerShare(title, location, icon, playerId) {
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
-            alert(error)
+            showToast(error)
         })
 }
 
@@ -87,7 +87,7 @@ export function rankGameShare(title, location, icon, gameId) {
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
-            alert(error)
+            showToast(error)
         })
 }
 
@@ -100,7 +100,7 @@ export function strValid(str) {
 
 
 export function getGetOrdinal(n) {
-    var s=["th","st","nd","rd"],
+    let s=["th","st","nd","rd"],
         v=n%100;
     return n+(s[(v-20)%10]||s[v]||s[0]);
 }
