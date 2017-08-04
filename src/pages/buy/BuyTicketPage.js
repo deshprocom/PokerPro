@@ -565,7 +565,7 @@ class BuyTicketPage extends Component {
 
                 </View>
 
-                <PayModal ref={ref=>this.payModal = ref}/>
+                <PayModal ref={ref => this.payModal = ref}/>
             </View>
         )
     }
@@ -786,7 +786,7 @@ const styles = StyleSheet.create({
     viewAdrInfo: {
         alignItems: 'center', flexDirection: 'row',
         justifyContent: 'space-between', marginLeft: 18,
-        marginTop: 20
+        marginTop: 15
     },
     txtAdrInfo: {
         fontSize: 14,
