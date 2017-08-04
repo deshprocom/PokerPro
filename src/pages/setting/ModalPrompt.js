@@ -40,18 +40,6 @@ class ModalPrompt extends Component {
         this.verifyType = '';
     }
 
-    componentWillUnmount() {
-        console.log('init')
-        this.state = {
-            popup: 1,
-            codeDisable: false,
-            phone: login_user.mobile,
-            codeSend: false,
-            old_code: '',
-            new_code: ''
-        };
-    }
-
 
     render() {
         return (<Modal
@@ -351,9 +339,14 @@ class ModalPrompt extends Component {
     };
 
     _close = () => {
-        this.setState({
-            codeDisable: false
-        });
+        this.state = {
+            popup: 1,
+            codeDisable: false,
+            phone: login_user.mobile,
+            codeSend: false,
+            old_code: '',
+            new_code: ''
+        };
         this.props.modalShow()
     };
 
