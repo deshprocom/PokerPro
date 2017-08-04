@@ -188,7 +188,12 @@ const images = {
     select_e_ticket:require('../../source/buy/select_e_ticket.png'),
     selected_e_ticket:require('../../source/buy/selected_e_ticket.png'),
     select_entity:require('../../source/buy/select_entity.png'),
-    selected_entity:require('../../source/buy/selected_entity.png')
+    selected_entity:require('../../source/buy/selected_entity.png'),
+    pay_select:require('../../source/pay/pay_select.png'),
+    pay_selected:require('../../source/pay/pay_selected.png'),
+    pay_close:require('../../source/pay/pay_close.png'),
+    pay_card:require('../../source/pay/pay_card.png'),
+    pay_ticket:require('../../source/pay/pay_ticket.png')
 
 
 };

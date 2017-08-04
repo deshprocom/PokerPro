@@ -329,5 +329,10 @@
   "reset_password":"修改密码成功！",
   "ticke_online":"搜索票务",
   "mobile_code_send":"已发送到手机，注意查看短信",
-  "email_code_send":"已发送到邮箱:"
+  "email_code_send":"已发送到邮箱:",
+  "pay_online":"在线支付",
+  "pay_need":"需付款",
+  "pay_card":"银行卡支付",
+  "pay_tine":"信用卡储蓄卡付款，快捷支付",
+  "pay_confirm":"确认支付"
 }
