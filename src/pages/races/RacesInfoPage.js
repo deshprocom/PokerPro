@@ -54,7 +54,7 @@ class RacesInfoPage extends Component {
 
     componentWillReceiveProps(newProps) {
         const {raceInfo, actionType, subRaces} = newProps;
-        const {ranks, schedules, blinds,race} = raceInfo;
+        const {ranks, schedules, blinds, race} = raceInfo;
 
         if (actionType === GET_RACE_INFO
             && !isEmptyObject(raceInfo)) {
@@ -149,9 +149,11 @@ class RacesInfoPage extends Component {
                                 <Text
                                     testID="txt_races_status"
                                     style={styles.txtStatus}>{raceStatusConvert(raceInfo.status)}</Text>
-                                <Text
+
+                                {raceInfo.ticket_sellable ? <Text
                                     testID="txt_races_ticket"
-                                    style={[styles.txtStatus, styles.txtStatus1]}> {ticketStatusConvert(raceInfo.ticket_status)}</Text>
+                                    style={[styles.txtStatus, styles.txtStatus1]}> {ticketStatusConvert(raceInfo.ticket_status)}</Text> : null}
+
                             </View>
 
                         </View>
@@ -357,7 +359,7 @@ class RacesInfoPage extends Component {
 
         const {ticket_status, ticket_sellable} = raceInfo;
 
-        if (!this.props.params.fromBuy && sellable(ticket_status,ticket_sellable))
+        if (!this.props.params.fromBuy && sellable(ticket_status, ticket_sellable))
             return (    <RaceInfoBottomView
                 raceInfo={raceInfo}
                 onPress={() => {
