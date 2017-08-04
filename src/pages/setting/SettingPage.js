@@ -12,7 +12,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, SetItemView, Button, ActionSheet} from '../../components';
 import {
     clearLoginUser, getLoginUser, strNotNull,
-    isLoginUser, share, setSize
+    isLoginUser, share, setSize, loadApp
 } from '../../utils/ComonHelper';
 import {fetchGetRecentRaces, _getProfileOk, _getRecentRaces} from '../../actions/RacesAction';
 import {umengEvent} from '../../utils/UmengEvent';
@@ -112,7 +112,7 @@ class SettingPage extends Component {
                 <SetItemView
                     onPress={() => {
                         umengEvent('setting_recommend');
-                        share(`${I18n.t('share_friend')}`, "http://www.deshpro.com")
+                        share(`${I18n.t('share_friend')}`, loadApp)
                     }}
                     testID="btn_share"
                     name={I18n.t('recommend_friend')}/>

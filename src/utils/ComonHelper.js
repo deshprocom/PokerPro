@@ -55,6 +55,8 @@ export function setLang(lang) {
     // console.log('分享页语言'+Lang);
 }
 
+export const loadApp = 'https://h5.deshpro.com/race/181/zh/loadAPP';
+
 export function uShareRace(title, location, icon, raceId) {
     UMShare.share(title, location, icon, "https://h5.deshpro.com/race/" + raceId + "/" + Lang)
         .then(() => {
