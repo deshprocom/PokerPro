@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {isEmptyObject, convertDate,newShare} from '../../utils/ComonHelper';
+import {isEmptyObject, convertDate, newShare} from '../../utils/ComonHelper';
 import {LoadingView} from '../../components/load'
 import {NavigationBar, MarkdownPlat} from '../../components';
 
@@ -34,22 +34,24 @@ export default class NewsInfoPage extends Component {
             testID="page_news_info"
             style={styles.page}>
             <NavigationBar
-                toolbarStyle={{backgroundColor:Colors.bg_09}}
+                toolbarStyle={{backgroundColor: Colors.bg_09}}
                 router={router}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                leftBtnPress={()=>router.pop()}
+                leftBtnPress={() => router.pop()}
                 rightBtnIcon={Images.share}
-                rightImageStyle={{height:22,width:23,marginRight:24.8}}
-                rightBtnPress={()=>{
-                    newShare(title,date+'\n'+source,image,id);
-                    {/*router.log(title,date+'\n'+source,image,id);*/}
+                rightImageStyle={{height: 22, width: 23, marginRight: 24.8}}
+                rightBtnPress={() => {
+                    newShare(title, date + '\n' + source, image, id);
+                    {/*router.log(title,date+'\n'+source,image,id);*/
+                    }
                 }}/>
 
             <ScrollView>
 
                 <View style={styles.headerView}>
                     <Text
+                        numberOfLines={2}
                         testID="txt_news_title"
                         style={styles.txtTitle}>{title}</Text>
                     <View style={styles.sourceView}>
@@ -68,7 +70,6 @@ export default class NewsInfoPage extends Component {
                     markdownStr={description}
                 />
             </ScrollView>
-
 
 
         </View>)
