@@ -18,7 +18,7 @@ export default class FiltePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            adrSelected: 1,
+            adrSelected: language === 'zh' ? 2 : 1,
             adrValue: 'global',
             scoreSelected: 0,
             scoreValue: 'all'
@@ -77,7 +77,7 @@ export default class FiltePage extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={this._sureSendType}
-                    style={[{backgroundColor: Colors._161817, marginLeft: 48,borderRadius: 2}, styles.side_btn]}>
+                    style={[{backgroundColor: Colors._161817, marginLeft: 48, borderRadius: 2}, styles.side_btn]}>
                     <Text style={{fontSize: 15, color: Colors.text_choice_btn}}
                     >{I18n.t('alert_sure')}</Text>
                 </TouchableOpacity>
@@ -99,7 +99,13 @@ export default class FiltePage extends Component {
                                       });
                                   }}>
                     <Image source={adrSelected == 1 ? Images.Group : Images.Group_em}
-                           style={{width: 72, height: 30, alignItems: 'center', justifyContent: 'center', backgroundColor:'transparent'}}>
+                           style={{
+                               width: 72,
+                               height: 30,
+                               alignItems: 'center',
+                               justifyContent: 'center',
+                               backgroundColor: 'transparent'
+                           }}>
                         <Text>{I18n.t('rank_filte_global')}</Text>
                     </Image>
                 </TouchableOpacity>
@@ -111,7 +117,13 @@ export default class FiltePage extends Component {
                                       })
                                   }}>
                     <Image source={adrSelected == 2 ? Images.Group : Images.Group_em}
-                           style={{width: 72, height: 30, alignItems: 'center', justifyContent: 'center', backgroundColor:'transparent'}}>
+                           style={{
+                               width: 72,
+                               height: 30,
+                               alignItems: 'center',
+                               justifyContent: 'center',
+                               backgroundColor: 'transparent'
+                           }}>
                         <Text>{I18n.t('rank_filte_country')}</Text>
                     </Image>
                 </TouchableOpacity>
@@ -133,7 +145,13 @@ export default class FiltePage extends Component {
                                       });
                                   }}>
                     <Image source={scoreSelected === 0 ? Images.Group : Images.Group_em}
-                           style={{width: 72, height: 30, alignItems: 'center', justifyContent: 'center', backgroundColor:'transparent'}}>
+                           style={{
+                               width: 72,
+                               height: 30,
+                               alignItems: 'center',
+                               justifyContent: 'center',
+                               backgroundColor: 'transparent'
+                           }}>
                         <Text>{I18n.t('all')}</Text>
                     </Image>
                 </TouchableOpacity>
@@ -145,7 +163,13 @@ export default class FiltePage extends Component {
                                       })
                                   }}>
                     <Image source={scoreSelected === 1 ? Images.Group : Images.Group_em}
-                           style={{width: 72, height: 30, alignItems: 'center', justifyContent: 'center', backgroundColor:'transparent'}}>
+                           style={{
+                               width: 72,
+                               height: 30,
+                               alignItems: 'center',
+                               justifyContent: 'center',
+                               backgroundColor: 'transparent'
+                           }}>
                         <Text>1-100</Text>
                     </Image>
                 </TouchableOpacity>
@@ -157,7 +181,13 @@ export default class FiltePage extends Component {
                                       })
                                   }}>
                     <Image source={scoreSelected === 2 ? Images.Group : Images.Group_em}
-                           style={{width: 72, height: 30, alignItems: 'center', justifyContent: 'center', backgroundColor:'transparent'}}>
+                           style={{
+                               width: 72,
+                               height: 30,
+                               alignItems: 'center',
+                               justifyContent: 'center',
+                               backgroundColor: 'transparent'
+                           }}>
                         <Text>100-200</Text>
                     </Image>
                 </TouchableOpacity>
@@ -169,7 +199,13 @@ export default class FiltePage extends Component {
                                       })
                                   }}>
                     <Image source={scoreSelected === 3 ? Images.Group : Images.Group_em}
-                           style={{width: 72, height: 30, alignItems: 'center', justifyContent: 'center', backgroundColor:'transparent'}}>
+                           style={{
+                               width: 72,
+                               height: 30,
+                               alignItems: 'center',
+                               justifyContent: 'center',
+                               backgroundColor: 'transparent'
+                           }}>
                         <Text>200-300</Text>
                     </Image>
                 </TouchableOpacity>
@@ -181,7 +217,13 @@ export default class FiltePage extends Component {
                                       })
                                   }}>
                     <Image source={scoreSelected === 4 ? Images.Group : Images.Group_em}
-                           style={{width: 72, height: 30, alignItems: 'center', justifyContent: 'center', backgroundColor:'transparent'}}>
+                           style={{
+                               width: 72,
+                               height: 30,
+                               alignItems: 'center',
+                               justifyContent: 'center',
+                               backgroundColor: 'transparent'
+                           }}>
                         <Text>300-600</Text>
                     </Image>
                 </TouchableOpacity>
@@ -193,7 +235,13 @@ export default class FiltePage extends Component {
                                       })
                                   }}>
                     <Image source={scoreSelected == 7 ? Images.Group : Images.Group_em}
-                           style={{width: 72, height: 30, alignItems: 'center', justifyContent: 'center', backgroundColor:'transparent'}}>
+                           style={{
+                               width: 72,
+                               height: 30,
+                               alignItems: 'center',
+                               justifyContent: 'center',
+                               backgroundColor: 'transparent'
+                           }}>
                         <Text>600以上</Text>
                     </Image>
                 </TouchableOpacity>

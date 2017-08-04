@@ -151,13 +151,17 @@ export default class RankList extends Component {
         }
     };
 
+    _region = () => {
+        return language === 'zh' ? 'domestic' : 'global';
+    };
+
     refresh = (startFetch, abortFetch) => {
 
         const {region, begin_year, end_year, page_index, page_size} = this.filterParam;
         const body = {
             page_size: page_size ? page_size : 100,
             page_index: page_index ? page_index : 0,
-            region: region ? region : 'global',
+            region: region ? region : this._region(),
             begin_year: begin_year ? begin_year : '',
             end_year: end_year ? end_year : '',
         };
