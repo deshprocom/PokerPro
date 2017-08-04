@@ -41,10 +41,10 @@ const colors = {
     txt_E4D: '#E4D57F',
     txt_race_type: '#CAC6CA',
     txt_price:'#DF1D0F',
-    bg_ec:'#ececee',
+
     text_choice_btn: '#FFE9AD',
 
-
+    bg_ec:'#ECECEE',
     _F4E:'#F4E3A1',
     _DF1:'#DF1D0F',
     _161: '#161718',

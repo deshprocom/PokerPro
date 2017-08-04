@@ -25,6 +25,7 @@ import StorageKey from '../../configs/StorageKey';
 import {getBuyRaceTicket, postOrderTicket} from '../../services/OrderDao';
 import {umengEvent} from '../../utils/UmengEvent';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import PayModal from './PayModal';
 
 
 const E_TICKET = 'e_ticket',
@@ -196,7 +197,7 @@ class BuyTicketPage extends Component {
     };
 
     _btnBuyTicket = () => {
-
+        this.payModal.toggle();
         umengEvent('ticket_buy_contain');
         let {isEntity, email, isNameReal, shipping_address} = this.state;
         if (isNameReal) {
@@ -221,6 +222,7 @@ class BuyTicketPage extends Component {
                 }, err => {
                     showToast(err)
                 });
+
 
             } else if (checkMail(email)) {
                 this._saveBuyEmail();
@@ -562,6 +564,8 @@ class BuyTicketPage extends Component {
 
 
                 </View>
+
+                <PayModal ref={ref=>this.payModal = ref}/>
             </View>
         )
     }
