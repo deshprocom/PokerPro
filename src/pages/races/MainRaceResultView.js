@@ -46,12 +46,24 @@ export default class MainRaceResultView extends Component {
     _tabView = () => {
 
         const {curTab} = this.state;
-        const {raceRanks, schedules, blinds} = this.props;
+        const {raceRanks, schedules, blinds, isSideRace, schedules_markdown} = this.props;
 
         this.tabs = [];
 
+        if (isSideRace && strNotNull(schedules_markdown)) {
+            this.tabs.push(<Button
+                onPress={() => this.btnSelectTab(TAB_INFO)}
+                activeOpacity={1}
+                testID="btn_race_info"
+                key={TAB_INFO}
+                style={curTab === TAB_INFO ? styles.btnSelect : styles.btn}
+                textStyle={curTab === TAB_INFO ? styles.txtBtnSelect : styles.txtBtn}
+            >
+                {I18n.t('Schudel')}
+            </Button>)
 
-        if (!isEmptyObject(schedules) &&
+        }
+        else if (!isSideRace && !isEmptyObject(schedules) &&
             schedules.length > 0) {
             this.tabs.push(<Button
                 onPress={() => this.btnSelectTab(TAB_INFO)}
