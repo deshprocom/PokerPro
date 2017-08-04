@@ -281,7 +281,7 @@ class BuyTicketPage extends Component {
                 if (ticket_class === 'single_ticket')
                     router.toRacesInfoPage(this.props, race_id, false);
                 else
-                    router.toTicketInfoPage(this.props, race_id, ticket_id)
+                    router.toTicketInfoPage(this.props, race_id, ticket_id, true)
             }}
             style={styles.itemView}>
             <ImageLoad

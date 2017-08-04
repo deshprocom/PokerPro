@@ -53,7 +53,7 @@ export default class TicketInfoPage extends Component {
             {this._topBar()}
 
             {this._content()}
-            { this._viewGoBuy() }
+            { this.props.params.isBuy ? null : this._viewGoBuy() }
 
         </View>)
 
@@ -76,7 +76,7 @@ export default class TicketInfoPage extends Component {
         const {description, title, price, banner} = tickets;
         const {name, logo} = race;
         return (  <ScrollView
-            style={{marginBottom:70}}
+            style={this.props.params.isBuy ? {} : {marginBottom: 70}}
             iosalwaysBounceVertical={false}
             scrollEventThrottle={16}
             onScroll={this._onScroll}
@@ -129,6 +129,17 @@ export default class TicketInfoPage extends Component {
                     style={styles.topImgLeft}/>
 
             </TouchableOpacity>
+
+            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <Text style={{
+                    color: 'rgba(228,213,127,' + opacity + ')',
+                    fontSize: 17,
+                    alignSelf: 'center'
+                }}>{I18n.t('ticket_info')}</Text>
+            </View>
+
+
+            <View style={styles.topBtn}/>
 
         </View>)
     };

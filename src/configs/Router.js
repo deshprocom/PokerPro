@@ -202,14 +202,15 @@ export default class Router {
     }
 
 
-    toTicketInfoPage(props, race_id, ticket_id) {
+    toTicketInfoPage(props, race_id, ticket_id,isBuy) {
         this.push(props, {
             page: TicketInfoPage,
             name: 'TicketInfoPage',
             sceneConfig: customFloatFromRight,
             params: {
                 race_id: race_id,
-                ticket_id: ticket_id
+                ticket_id: ticket_id,
+                isBuy:isBuy
             }
 
         })
