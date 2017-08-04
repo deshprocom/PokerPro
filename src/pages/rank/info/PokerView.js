@@ -12,7 +12,10 @@ import I18n from 'react-native-i18n';
 import {playerInfo} from '../../../services/AccountDao';
 import {postFocus, deleteFocus} from '../../../services/RankDao';
 
-import {strNotNull, moneyFormat, rankPlayerShare, nameRow} from '../../../utils/ComonHelper';
+import {
+    strNotNull, moneyFormat, rankPlayerShare, nameRow,
+    strNull__
+} from '../../../utils/ComonHelper';
 
 export default class PokerView extends Component {
 
@@ -103,23 +106,24 @@ export default class PokerView extends Component {
             <View style={styles.tabView}>
 
                 <View style={styles.tab}>
-                    <Text style={styles.tabValue}>{dpi_total_score}</Text>
+                    <Text style={styles.tabValue}>{strNull__(ranking)}</Text>
+                    <View style={styles.tabNameView}>
+                        <Text style={styles.tabName}>{I18n.t('rank_no')}</Text>
+                    </View>
+                </View>
+
+                <View style={styles.tab}>
+                    <Text style={styles.tabValue}>{strNull__(dpi_total_score)}</Text>
                     <View style={styles.tabNameView}>
                         <Text style={styles.tabName}>{I18n.t('rank_number')}</Text>
                     </View>
 
                 </View>
 
-                <View style={styles.tab}>
-                    <Text style={styles.tabValue}>{ranking}</Text>
-                    <View style={styles.tabNameView}>
-                        <Text style={styles.tabName}>{I18n.t('rank_no')}</Text>
-                    </View>
-
-                </View>
 
                 <View style={styles.tab}>
-                    <Text style={styles.tabValue}>¥{moneyFormat(dpi_total_earning)}</Text>
+                    <Text
+                        style={styles.tabValue}>{strNotNull(dpi_total_earning) ? '¥' + moneyFormat(dpi_total_earning) : '--'}</Text>
                     <View style={styles.tabNameView}>
                         <Text style={styles.tabName}>{I18n.t('rank_prize')}</Text>
                     </View>

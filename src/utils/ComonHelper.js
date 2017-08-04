@@ -91,6 +91,13 @@ export function rankGameShare(title, location, icon, gameId) {
         })
 }
 
+export function strNull__(str) {
+    if (strNotNull(str))
+        return str;
+    else
+        return '--';
+}
+
 export function strValid(str) {
     if (str === undefined || str === null || str.length === 0)
         return '';
@@ -100,9 +107,9 @@ export function strValid(str) {
 
 
 export function getGetOrdinal(n) {
-    let s=["th","st","nd","rd"],
-        v=n%100;
-    return n+(s[(v-20)%10]||s[v]||s[0]);
+    let s = ["th", "st", "nd", "rd"],
+        v = n % 100;
+    return n + (s[(v - 20) % 10] || s[v] || s[0]);
 }
 
 
