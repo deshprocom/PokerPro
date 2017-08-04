@@ -19,7 +19,7 @@ export default class FiltePage extends Component {
         super(props);
         this.state = {
             adrSelected: language === 'zh' ? 2 : 1,
-            adrValue: 'global',
+            adrValue: language === 'zh' ? 'domestic' : 'global',
             scoreSelected: 0,
             scoreValue: 'all'
         }
