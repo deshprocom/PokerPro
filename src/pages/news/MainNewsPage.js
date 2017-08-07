@@ -141,6 +141,7 @@ export default class MainNewsPage extends Component {
                 renderItem={this._itemView}
                 horizontal={true}
                 keyExtractor={item => item.id}
+                style={{marginLeft: 10}}
             />
         </View> )
     };
@@ -148,24 +149,27 @@ export default class MainNewsPage extends Component {
 
     _itemView = ({item}) => {
 
-        return (<TouchableOpacity
-            testID={"btn_news_type_" + item.id}
-            onPress={() => {
-                this._pressItem(item);
+        return (
+            <TouchableOpacity
+                testID={"btn_news_type_" + item.id}
+                onPress={() => {
+                    this._pressItem(item);
 
-                this.setState({
-                    selectTypeId: item.id
-                });
-                this.newsPages.goToPage(this._page(item))
-            }}
-            style={styles.itemView}>
-            {item.select ? <View style={{flex: 1}}/> : null}
-            <Text style={item.select ?
-                styles.itemTxtSelect : styles.itemTxt}>{item.name}</Text>
-            {item.select ? <Image style={styles.triangle}
-                                  source={Images.news_triangle}/> : null}
+                    this.setState({
+                        selectTypeId: item.id
+                    });
+                    this.newsPages.goToPage(this._page(item))
+                }}
+                style={styles.itemView}>
+                {item.select ? <View style={{flex: 1}}/> : null}
+                <Text
+                    numberOfLines={1}
+                    style={item.select ?
+                        styles.itemTxtSelect : styles.itemTxt}>{item.name}</Text>
+                {item.select ? <View style={styles.triangle}/> : null}
 
-        </TouchableOpacity>)
+            </TouchableOpacity>
+        )
     };
 
     _page = (item) => {
@@ -244,27 +248,29 @@ const styles = StyleSheet.create({
         fontSize: 12
     },
     newsTypeView: {
-        height: 40,
+        height: 50,
         backgroundColor: Colors.white
     },
     itemView: {
-        height: 40,
+        height: 50,
         width: 80,
         alignItems: 'center',
         justifyContent: 'center'
     },
     itemTxt: {
-        color: Colors._AAA,
+        color: Colors._888,
         fontSize: 14
     },
     itemTxtSelect: {
-        color: '#444444',
+        color: Colors._333,
         fontSize: 16,
-        marginBottom: 5
+        marginBottom: 10
     },
     triangle: {
-        height: 9,
-        width: 16
+        height: 3,
+        width: 60,
+        backgroundColor: Colors._333,
+        marginBottom: 4
     },
     viewPage: {
         flex: 1

@@ -20,6 +20,7 @@ export const DATA_SS = 'YYYY-MM-DD hh:mm:ss';
 export const YYYY_MM = 'YYYY-MM';
 export const YYYY年MM月 = 'YYYY年MM月';
 export const YYYYMMDD = 'YYYYMMDD';
+export const MM_DD = 'MM-DD';
 
 export function strToDate(date) {
     let t = Date.parse(date);
@@ -31,7 +32,13 @@ export function strToDate(date) {
 }
 
 const shareIcon = 'https://www.deshpro.com/pokerpro.png';
-export const DayHeadings = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+export const DayHeadings = [I18n.t('calendar_7'),
+    I18n.t('calendar_1'),
+    I18n.t('calendar_2'),
+    I18n.t('calendar_3'),
+    I18n.t('calendar_4'),
+    I18n.t('calendar_5'),
+    I18n.t('calendar_6')];
 export const MonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May',
     'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 /*判断是否为Null*/
@@ -42,30 +49,82 @@ export function strNotNull(str) {
         return true;
 }
 
+let Lang = 'zh';
+export function setLang(lang) {
+    Lang = lang;
+    // console.log('分享页语言'+Lang);
+}
+
+export const loadApp = 'https://h5.deshpro.com/race/181/zh/loadAPP';
 
 export function uShareRace(title, location, icon, raceId) {
-    UMShare.share(title, location, icon, "http://106.75.136.9:8810/race/" + raceId)
+    UMShare.share(title, location, icon, "https://h5.deshpro.com/race/" + raceId + "/" + Lang)
         .then(() => {
-            showToast('分享成功')
+            showToast(`${I18n.t('show_success')}`)
         }, (error) => {
-            alert(error)
+            showToast(error)
         })
 }
 
-export function newShare(title,location,icon,newsId) {
-    UMShare.share(title,location,icon,"http://106.75.136.9:8810/news/"+newsId)
+export function newShare(title, location, icon, newsId) {
+    UMShare.share(title, location, icon, "https://h5.deshpro.com/news/" + newsId + "/" + Lang)
         .then(() => {
-            showToast('分享成功')
-        },(error) => {
-            alert(error)
+            showToast(`${I18n.t('show_success')}`)
+        }, (error) => {
+            showToast(error)
         })
+}
+
+export function rankPlayerShare(title, location, icon, playerId) {
+    UMShare.share(title, location, icon, "https://h5.deshpro.com/rankPlayer/" + playerId + "/" + Lang)
+        .then(() => {
+            showToast(`${I18n.t('show_success')}`)
+        }, (error) => {
+            showToast(error)
+        })
+}
+
+export function rankGameShare(title, location, icon, gameId) {
+    UMShare.share(title, location, icon, "https://h5.deshpro.com/rankGame/" + gameId + "/" + Lang)
+        .then(() => {
+            showToast(`${I18n.t('show_success')}`)
+        }, (error) => {
+            showToast(error)
+        })
+}
+
+export function strNull__(str) {
+    if (strNotNull(str))
+        return str;
+    else
+        return '--';
 }
 
 export function strValid(str) {
-    if (str == undefined || str == null || str.length == 0)
+    if (str === undefined || str === null || str.length === 0)
         return '';
     else
         return str;
+}
+
+
+export function getGetOrdinal(n) {
+    let s = ["th", "st", "nd", "rd"],
+        v = n % 100;
+    return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
+
+export function strRow(str) {
+    if (strValid(str)) {
+        return str.replace('|', '\n');
+    }
+}
+
+export function nameRow(name) {
+    if (strValid(name)) {
+        return name.replace(' ', '\n');
+    }
 }
 
 /*日期数据*/
@@ -141,7 +200,7 @@ var myreg = /^1(3|4|5|7|8)\d{9}$/;
 export function checkPhone(phone) {
     if (phone != null && phone != undefined) {
         if (!myreg.test(phone.trim())) {
-            showToast('请输入有效的手机号码！');
+            showToast(`${I18n.t('show_put_phone')}`);
             return false;
         }
         return true;
@@ -151,9 +210,9 @@ export function checkPhone(phone) {
 var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 export function checkMail(mail) {
 
-    if (filter.test(mail.trim())) return true;
+    if (strNotNull(mail) && filter.test(mail.trim())) return true;
     else {
-        showToast('您的电子邮件格式不正确');
+        showToast(`${I18n.t('show_mail_fail')}`);
         return false;
     }
 }
@@ -173,7 +232,7 @@ export function pwdVaild(password) {
     if (PWD_VALID_FORMAT_REGEX.test(password))
         return true;
     else {
-        showToast('密码格式不正确');
+        showToast(`${I18n.t('show_password_fail')}`);
         return false;
     }
 
@@ -224,9 +283,12 @@ export function ticketStatusConvert(status) {
 }
 
 
-export function sellable(status) {
+export function sellable(status, sellable) {
 
-    return status === SellStatus.selling ? true : false;
+    if (sellable)
+        return status === SellStatus.selling;
+    else
+        return false;
 
 }
 
@@ -324,6 +386,65 @@ export function getUserData() {
         })
 }
 
+export let FontSize = {
+    h19: 19,
+    h18: 18,
+    h17: 17,
+    h16: 16,
+    h15: 15,
+    h14: 14,
+    h13: 13,
+    h12: 12,
+    h9: 9,
+};
+let sizeNum = 0;
+
+export function getSize() {
+    storage.load({key: StorageKey.FontNum})
+        .then((ret) => {
+            sizeNum = ret;
+            console.log('sizeNum:' + sizeNum);
+            FontSize = {
+                h19: 19 + sizeNum,
+                h18: 18 + sizeNum,
+                h17: 17 + sizeNum,
+                h16: 16 + sizeNum,
+                h15: 15 + sizeNum,
+                h14: 14 + sizeNum,
+                h13: 13 + sizeNum,
+                h12: 12 + sizeNum,
+                h9: 9 + sizeNum,
+            }
+        });
+}
+
+
+export function setSize(num) {
+    sizeNum = num;
+    FontSize = {
+        h19: 19 + sizeNum,
+        h18: 18 + sizeNum,
+        h17: 17 + sizeNum,
+        h16: 16 + sizeNum,
+        h15: 15 + sizeNum,
+        h14: 14 + sizeNum,
+        h13: 13 + sizeNum,
+        h12: 12 + sizeNum,
+        h9: 9 + sizeNum,
+    };
+    storage.save({
+        key: StorageKey.FontNum,
+        rawData: num
+    });
+}
+
+export function setFontSize(num) {
+    storage.save({
+        key: StorageKey.FontSizeNum,
+        rawData: num
+    })
+}
+
 
 /*数组格式 转 字典数组*/
 export function dataBlob(arr) {
@@ -333,7 +454,7 @@ export function dataBlob(arr) {
 
     for (var i = 0; i < len; i++) {
 
-        var begin_date = convertDate(arr[i].begin_date, YYYY年MM月);
+        var begin_date = convertDate(arr[i].begin_date, YYYY_MM);
         var Value = arr[i];
 
         if (!objArr[begin_date]) {        //objArr[Id]未定义或不存在
@@ -440,8 +561,8 @@ export function getDispatchAction() {
 
 //正在开发提示
 export function developing() {
-    Alert.alert('开发中', '敬请期待', [{
-        text: '确定', onPress: () => {
+    Alert.alert(`${I18n.t('alert_doing')}`, `${I18n.t('alert_help')}`, [{
+        text: `${I18n.t('alert_sure')}`, onPress: () => {
         }
     }])
 }

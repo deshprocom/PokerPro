@@ -3,7 +3,7 @@
  */
 import React, {Component, PropTypes}from 'react';
 import {
-    TouchableOpacity, View, TextInput, Alert,
+    TouchableOpacity, View, TextInput, Keyboard,
     StyleSheet, Image, Text, ScrollView, Platform
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
@@ -54,13 +54,20 @@ export default class NewAddress extends Component {
         return address_detail;
     };
 
+    _getTitle = () => {
+        if (isEmptyObject(this.state.addressEdit)) {
+            return I18n.t('add_new_adr');
+        } else
+            return I18n.t('buy_editor_adr');
+    };
+
     render() {
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 refreshPage={this.refreshPage}
                 toolbarStyle={{backgroundColor: Colors.bg_09}}
                 rightBtnPress={this._postAdr}
-                title={I18n.t('add_new_adr')}
+                title={this._getTitle()}
                 rightBtnText={I18n.t('save')}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
@@ -68,7 +75,7 @@ export default class NewAddress extends Component {
 
             <View style={styles.view1}>
                 <View style={styles.inputView}>
-                    <Text style={styles.lbAdr}>收货人: </Text>
+                    <Text style={styles.lbAdr}>{I18n.t('buy_person')}</Text>
                     <TextInput style={styles.input}
                                defaultValue={this._getName()}
                                onChangeText={txt => {
@@ -77,7 +84,7 @@ export default class NewAddress extends Component {
                 </View>
                 <View style={styles.line}/>
                 <View style={styles.inputView}>
-                    <Text style={styles.lbAdr}>联系电话: </Text>
+                    <Text style={styles.lbAdr}>{I18n.t('line')}: </Text>
                     <TextInput style={styles.input}
                                defaultValue={this._getPhone()}
                                onChangeText={txt => {
@@ -87,15 +94,16 @@ export default class NewAddress extends Component {
                 <View style={styles.line}/>
                 <TouchableOpacity
                     onPress={() => {
+                        Keyboard.dismiss();
                         this.setState({
                             regionVisible: !this.state.regionVisible
                         })
                     }}
                     style={styles.inputView}>
-                    <Text style={styles.lbAdr}>所在地:</Text>
+                    <Text style={styles.lbAdr}>{I18n.t('buy_adr')}</Text>
                     <Text style={styles.lbAdr}>{this.state.regionTxt}</Text>
                     <View style={{flex: 1}}/>
-                    <Text style={styles.txtSelect}>请选择</Text>
+                    <Text style={styles.txtSelect}>{I18n.t('buy_ple_choice')}</Text>
                     <Image style={styles.imgRight}
                            source={Images.adr_right}/>
 
@@ -107,7 +115,7 @@ export default class NewAddress extends Component {
                         multiline={true}
                         style={styles.inputAdr}
                         defaultValue={this._getAdrDetail()}
-                        placeholder={'请输入详细地址，不少于5个字'}
+                        placeholder={I18n.t('buy_adr_name')}
                         placeholderTextColor={'#AAAAAA'}
                         onChangeText={txt => {
                             this.receiverAdr2 = txt;
@@ -117,9 +125,9 @@ export default class NewAddress extends Component {
             </View>
 
             <View style={styles.view2}>
-                <Text style={styles.lbDefault}>设默认地址: </Text>
+                <Text style={styles.lbDefault}>{I18n.t('buy_set_adr')}</Text>
 
-                <Text style={styles.lbRemark}>注：每次下单时会使用该地址（电子票下单除外）</Text>
+                <Text style={styles.lbRemark}>{I18n.t('buy_zhu')}</Text>
 
                 <TouchableOpacity
                     onPress={() => {
@@ -182,7 +190,7 @@ export default class NewAddress extends Component {
 
             postAddress(body, data => {
                 console.log(data);
-                showToast('提交成功');
+                showToast(I18n.t('buy_put_success'));
                 this.props.params.getList();
                 router.pop();
 
@@ -192,7 +200,7 @@ export default class NewAddress extends Component {
 
 
         } else {
-            showToast('请填写完整')
+            showToast(I18n.t('fillWhole'))
         }
     }
 

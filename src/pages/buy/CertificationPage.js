@@ -28,16 +28,16 @@ export default class CertificationPage extends Component {
                     leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
                     leftBtnPress={()=>this.props.router.pop()}/>
 
-                <ScrollableTabView
-                    tabBarActiveTextColor="#444444"
-                    tabBarInactiveTextColor="#999999"
-                    tabBarTextStyle={{fontSize: 18}}
-                    tabBarUnderlineStyle={{backgroundColor:'#111213'}}>
-                    <IDCardView
-                        tabLabel={I18n.t('identification')}/>
-                    <PassportView tabLabel={I18n.t('passport')}/>
 
-                </ScrollableTabView>
+                <IDCardView
+                    tabLabel={I18n.t('identification')}/>
+
+                {/*<ScrollableTabView>*/}
+                    {/*<IDCardView*/}
+                        {/*tabLabel={I18n.t('identification')}/>*/}
+                    {/*<PassportView tabLabel={I18n.t('passport')}/>*/}
+                {/*</ScrollableTabView>*/}
+
 
             </View>
         )

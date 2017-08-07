@@ -1,5 +1,5 @@
 [caps]
-platformName = "ios"
+platformName = "iOS"
 deviceName = "iPhone 6s"
 platformVersion = "10.2"
 app = '../ios/build/Build/Products/Release-iphoneos/PokerPro.app'

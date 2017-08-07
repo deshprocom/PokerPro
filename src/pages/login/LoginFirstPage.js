@@ -42,7 +42,7 @@ class LoginFirstPage extends React.Component {
                 this.props._getRecentRaces(recentRaces);
                 this.props._getProfile(user_id);
                 this.props.closeDrawer();
-                router.popToTop();
+                router.pop();
                 return false;
 
             }
@@ -73,7 +73,7 @@ class LoginFirstPage extends React.Component {
             if (!!this._toast_box) {
                 Toast.hide(this._toast_box);
             }
-            this._toast_box = showToast('请填写完整');
+            this._toast_box = showToast(`${I18n.t('fillWhole')}`);
         }
 
 
@@ -90,14 +90,14 @@ class LoginFirstPage extends React.Component {
                 <NavigationBar
                     router={this.props.router}
                     leftBtnIcon={Images.sign_close}
-                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                    leftImageStyle={{height: 18, width: 18, marginLeft: 20, marginRight: 20}}
                     rightBtnText={I18n.t('register')}
                     btnTextStyle={{
                         color: Colors.txt_E0C,
                         fontSize: 16, marginRight: 20
                     }}
-                    leftBtnPress={() => this.props.router.popToTop()}
-                    rightBtnPress={() => this.props.router.toRegisterPage()}/>
+                    leftBtnPress={() => router.pop()}
+                    rightBtnPress={() => router.toRegisterPage()}/>
 
                 <Image style={{
                     width: 91, height: 91,

@@ -27,7 +27,6 @@ export default class ChoiseTicketPage extends Component {
 
     state = {
         selectRace: '',
-        selectTicket: '',
         selectRaceData: {},
         selectSub: {},
         sub_races: [],
@@ -50,7 +49,7 @@ export default class ChoiseTicketPage extends Component {
         };
 
         subRaces(body, data => {
-            router.log('subRace', data)
+
             this.setState({
                 sub_races: data.items
             })
@@ -58,10 +57,13 @@ export default class ChoiseTicketPage extends Component {
 
         });
         getSelectRaceTicket(body, (data) => {
-            router.log('data', data);
+
             this.setState({
-                selectRaceData: data
-            })
+                selectRaceData: data,
+                selectRace: data.tickets.length > 0 ? RACE_MAIN : ''
+            });
+            if (this.listView && data.tickets.length > 0)
+                this.listView.updateDataSource(data.tickets);
         }, (err) => {
 
         })
@@ -78,7 +80,7 @@ export default class ChoiseTicketPage extends Component {
 
             <ActionSide
                 getSubTicket={this._getSubTicket}
-                ref={ref=>this.actionSide = ref}/>
+                ref={ref => this.actionSide = ref}/>
 
         </View>)
     }
@@ -87,12 +89,14 @@ export default class ChoiseTicketPage extends Component {
     topBar = () => {
         return (<View style={styles.topView}>
             <NavigationBar
-                barStyle="dark-content"
+                toolbarStyle={{backgroundColor: Colors.bg_09}}
                 title={I18n.t('selectTicket')}
-                titleStyle={styles.barTitle}
-                leftBtnIcon={Images.ic_back}
-                leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
-                leftBtnPress={()=>router.pop()}/>
+                leftBtnIcon={Images.sign_return}
+                leftImageStyle={{
+                    height: 19, width: 11,
+                    marginLeft: 20, marginRight: 20
+                }}
+                leftBtnPress={() => router.pop()}/>
 
         </View>)
     };
@@ -154,7 +158,8 @@ export default class ChoiseTicketPage extends Component {
             <View style={styles.viewMainSide}>
 
                 <TouchableOpacity
-                    onPress={()=>{
+                    activeOpacity={1}
+                    onPress={() => {
                         this._selectRace(RACE_MAIN);
                         umengEvent('ticket_main')
                     }}
@@ -162,15 +167,16 @@ export default class ChoiseTicketPage extends Component {
                     <Text style={this._selectTxt(selectRace === RACE_MAIN)}>{I18n.t('mainRace')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
+                    activeOpacity={1}
                     disabled={!this.btnSideDisabled()}
-                    onPress={()=>{
+                    onPress={() => {
                         umengEvent('ticket_side');
                         this._selectRace(RACE_SIDE);
                         this.showSubTicket();
                     }}
-                    style={[this._selectedBg(selectRace === RACE_SIDE),styles.marginLeft]}>
-                    <Text style={this.btnSideDisabled()?
-                        this._selectTxt(selectRace === RACE_SIDE):
+                    style={[this._selectedBg(selectRace === RACE_SIDE), styles.marginLeft]}>
+                    <Text style={this.btnSideDisabled() ?
+                        this._selectTxt(selectRace === RACE_SIDE) :
                         styles.txtDisabled}>{I18n.t('sideRace')}</Text>
                 </TouchableOpacity>
             </View>
@@ -184,63 +190,6 @@ export default class ChoiseTicketPage extends Component {
     };
 
 
-    ticketTypeView = () => {
-        const {selectTicket} = this.state;
-
-        return (<View style={styles.viewRace}>
-            <Text style={styles.txtSelectRace}>{I18n.t('ticketType')}</Text>
-            <View style={styles.viewMainSide}>
-
-                <TouchableOpacity
-                    disabled={!this._single_tickets()}
-                    onPress={()=>{
-                        this.listView.updateDataSource([]);
-                        this._selectTicket(ONLY_TICKET)
-                    }}
-                    style={this._selectedBg(ONLY_TICKET === selectTicket)}>
-                    <Text style={this._single_tickets()?this._selectTxt(ONLY_TICKET === selectTicket):
-                     styles.txtDisabled}>{I18n.t('onlyRace')}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    disabled={!this._package_tickets()}
-                    onPress={()=>{
-                         this._selectTicket(TICKETS);
-                         this.listView.updateDataSource(this._listTicket());
-
-                    }}
-                    style={[this._selectedBg(TICKETS === selectTicket),styles.marginLeft]}>
-                    <Text style={this._package_tickets()?
-                    this._selectTxt(TICKETS === selectTicket):
-                    styles.txtDisabled}>{I18n.t('ticketBinds')}</Text>
-                </TouchableOpacity>
-            </View>
-        </View>)
-    };
-
-    _single_tickets = () => {
-        const {selectSub, selectRaceData, selectRace} = this.state;
-        if (selectRace === RACE_MAIN) {
-            let {single_tickets} = selectRaceData;
-            return !isEmptyObject(single_tickets) && single_tickets.length > 0
-        } else if (selectRace === RACE_SIDE) {
-            let {single_tickets} = selectSub;
-            return !isEmptyObject(single_tickets) && single_tickets.length > 0
-        }
-    };
-
-    _package_tickets = () => {
-        const {selectSub, selectRaceData, selectRace} = this.state;
-        if (selectRace === RACE_MAIN) {
-            let {package_tickets} = selectRaceData;
-            return !isEmptyObject(package_tickets) && package_tickets.length > 0
-        } else if (selectRace === RACE_SIDE) {
-            let {package_tickets} = selectSub;
-            return !isEmptyObject(package_tickets) && package_tickets.length > 0
-        }
-
-
-    };
-
     listTicketView = () => {
         const {selectRace} = this.state;
         return (<UltimateListView
@@ -251,27 +200,26 @@ export default class ChoiseTicketPage extends Component {
             onFetch={this.onFetch}
             legacyImplementation
             rowView={this.itemListView}
-            headerView={()=>{
-              return(<View>
-            {this.titleView()}
+            headerView={() => {
+                return (<View>
+                    {this.titleView()}
 
-            {this.raceTypeView()}
+                    {this.raceTypeView()}
 
-            {selectRace===RACE_SIDE?this.selectSideView():null}
-
-
-
-            <View style={{height:10}}/>
+                    {selectRace === RACE_SIDE ? this.selectSideView() : null}
 
 
-</View>)
+                    <View style={{height: 10}}/>
+
+
+                </View>)
             }}
             separator={() => {
-            return <View style={styles.separator}/>
-        }}
-            emptyView={()=>{
-                    return this.props.error? <LoadErrorView/>: <View/>;
-                }}
+                return <View style={styles.separator}/>
+            }}
+            emptyView={() => {
+                return this.props.error ? <LoadErrorView/> : <View/>;
+            }}
         />)
     };
 
@@ -288,13 +236,13 @@ export default class ChoiseTicketPage extends Component {
 
     selectSideView = () => {
         return (<TouchableOpacity
-            onPress={()=>{
-               this.showSubTicket();
+            onPress={() => {
+                this.showSubTicket();
             }}
             style={styles.viewSide}>
-            <View style={{flex:1}}/>
+            <View style={{flex: 1}}/>
             <Text style={this._txtSub()}>{this._selectSub()}</Text>
-            <View style={{flex:1}}>
+            <View style={{flex: 1}}>
                 <Image
                     resizeMode={'contain'}
                     style={styles.imgDown}
@@ -340,14 +288,14 @@ export default class ChoiseTicketPage extends Component {
 
         return (<TouchableOpacity
             activeOpacity={1}
-            onPress={()=>{
+            onPress={() => {
                 this.setState({
-                    ticket:rowData
+                    ticket: rowData
                 })
             }}
             style={this._selectItemStyle(rowData)}>
             <ImageLoad
-                source={{uri:this._logo()}}
+                source={{uri: this._logo()}}
                 style={styles.itemImg}/>
 
             <View style={styles.itemContent}>
@@ -361,15 +309,15 @@ export default class ChoiseTicketPage extends Component {
                 <View style={styles.viewInfo}>
                     <Text style={styles.txtPrice}>{price}</Text>
                     <View style={styles.viewNum}>
-                        <Text style={styles.lbNum}> {I18n.t('surplus')}</Text>
+                        <Text style={styles.lbNum}> ({I18n.t('surplus')}</Text>
                         <Text style={styles.txtNum}>{this._ticketNum(ticket_info)}</Text>
-                        <Text style={styles.lbNum}>{I18n.t('spread')}</Text>
+                        <Text style={styles.lbNum}>{I18n.t('spread')})</Text>
                     </View>
 
-                    <View style={{flex:1}}/>
+                    <View style={{flex: 1}}/>
 
                     <TouchableOpacity
-                        onPress={()=>this._toTicketInfo(rowData)}
+                        onPress={() => this._toTicketInfo(rowData)}
                         style={styles.btnInfo}>
                         <Text style={styles.btnTxt}>{I18n.t('lookDetail')}</Text>
                     </TouchableOpacity>
@@ -383,8 +331,8 @@ export default class ChoiseTicketPage extends Component {
 
     _ticketNum = (ticket_info) => {
         if (!isEmptyObject(ticket_info)) {
-            const {e_ticket_number, e_ticket_sold_number} = ticket_info;
-            return e_ticket_number - e_ticket_sold_number;
+            const {e_ticket_number, e_ticket_sold_number, entity_ticket_number, entity_ticket_sold_number} = ticket_info;
+            return e_ticket_number + entity_ticket_number - e_ticket_sold_number - entity_ticket_sold_number;
         }
 
     };
@@ -432,7 +380,7 @@ export default class ChoiseTicketPage extends Component {
         return (<View style={styles.viewBottom}>
             <Text style={styles.txtMoney}>{I18n.t('price')}: </Text>
             <Text style={styles.txtMoneyNum}>{this._prize()}</Text>
-            <View style={{flex:1}}/>
+            <View style={{flex: 1}}/>
             <TouchableOpacity
                 onPress={this._toBuy}
                 disabled={this._btnOkDisabled()}
@@ -508,20 +456,13 @@ export default class ChoiseTicketPage extends Component {
     };
 
     _selectRace = (race) => {
-        this.listView.updateDataSource(this._listTicket(race));
+
         this.setState({
             selectRace: race,
-            selectTicket: '',
             ticket: {}
         });
-
-    };
-
-    _selectTicket = (ticket) => {
-        this.setState({
-            selectTicket: ticket,
-            ticket: {}
-        })
+        if (race !== this.state.selectRace)
+            this.listView.updateDataSource(this._listTicket(race));
     };
 
     _listTicket = (selectRace) => {
@@ -530,7 +471,7 @@ export default class ChoiseTicketPage extends Component {
             const {tickets} = selectRaceData;
             return tickets;
         } else if (selectRace === RACE_SIDE && !isEmptyObject(selectSub)) {
-            const {tickets} =selectSub;
+            const {tickets} = selectSub;
             return tickets;
         }
     };
@@ -663,7 +604,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: Colors._161817,
         fontWeight: 'bold',
-        marginTop:3
+        marginTop: 3
     },
     txtMoneyNum: {
         fontSize: 20,

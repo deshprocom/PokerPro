@@ -1,6 +1,5 @@
-// @flow
+import {China} from '../configs/Constants';
 
-// leave off @2x/@3x
 const images = {
     nav_close: require('../../source/nav_Close@2x.png'),
     icon_biyan: require('../../source/icon_biyan@2x.png'),
@@ -100,8 +99,10 @@ const images = {
     ticket_security: require('../../source/buy/ticket_security@3x.png'),
     ticket_security2: require('../../source/buy/ticket_securitys@3x.png'),
     prompt_service: require('../../source/buy/prompt_service@3x.png'),
-    e_ticket_buy: require('../../source/buy/e_ticket_buy.png'),
-    entity_ticket_buy: require('../../source/buy/entity_tickey_buy.png'),
+    e_ticket_buy_zh: require('../../source/buy/e_ticket_buy_zh.png'),
+    entity_ticket_buy_zh: require('../../source/buy/entity_tickey_buy_zh.png'),
+    e_ticket_buy_en: require('../../source/buy/e_ticket_buy_en.png'),
+    entity_ticket_buy_en: require('../../source/buy/entity_tickey_buy_en.png'),
     name_id: require('../../source/buy/name_id@3x.png'),
     name_passport: require('../../source/buy/name_passport@3x.png'),
     set_closed: require('../../source/setting/set_closed@3x.png'),
@@ -117,7 +118,9 @@ const images = {
     load_wifi: require('../../source/load/load_wifi@3x.png'),
     races_bg: require('../../source/races/races_bg.png'),
     user_real_failed: require('../../source/order/user_real_failed.png'),
-    user_real_pending: require('../../source/order/user_real_pending.png'),
+    user_real_pending: require( '../../source/order/user_real_pending.png'),
+    en_real_failed: require('../../source/order/en_real_fail.png'),
+    en_real_pending: require( '../../source/order/en_real_handing.png'),
     schedule: require('../../source/races/schedule@3x.png'),
     search: require('../../source/races/search@3x.png'),
     prev: require('../../source/races/prev@3x.png'),
@@ -165,12 +168,35 @@ const images = {
     handle2: require('../../source/buy/handle2@2x.png'),
     adr_right: require('../../source/buy/adr_right.png'),
     adr_select: require('../../source/buy/adr_select.png'),
-    adr_selected: require('../../source/buy/adr_selected.png')
+    adr_selected: require('../../source/buy/adr_selected.png'),
+    video_play: require('../../source/news/video_play.png'),
+    post_id_image: require('../../source/buy/postIDImage.png'),
+    mask: require('../../source/Mask@2x.png'),
+    shape: require('../../source/rank/Shape@2x.png'),
+    gold: require('../../source/rank/gold@2x.png'),
+    silver: require('../../source/rank/silver@2x.png'),
+    copper: require('../../source/rank/copper@2x.png'),
+    Group: require('../../source/rank/Group 6@2x.png'),
+    Group_em: require('../../source/rank/Rectangle 24@2x.png'),
+    web_left: require('../../source/news/web_left.png'),
+    web_page: require('../../source/news/web_page.png'),
+    web_right: require('../../source/news/web_right.png'),
+    web_refresh: require('../../source/news/web_refresh.png'),
+    rank_bg: require('../../source/rank/rank_bg.png'),
+    share: require('../../source/rank/share.png'),
+    poker_search:require('../../source/rank/search_poker.png'),
+    select_e_ticket:require('../../source/buy/select_e_ticket.png'),
+    selected_e_ticket:require('../../source/buy/selected_e_ticket.png'),
+    select_entity:require('../../source/buy/select_entity.png'),
+    selected_entity:require('../../source/buy/selected_entity.png'),
+    pay_select:require('../../source/pay/pay_select.png'),
+    pay_selected:require('../../source/pay/pay_selected.png'),
+    pay_close:require('../../source/pay/pay_close.png'),
+    pay_card:require('../../source/pay/pay_card.png'),
+    pay_ticket:require('../../source/pay/pay_ticket.png')
 
 
 };
 
 export default images
 
-
-const avatar = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QUY2NzBEMDdENkU1MTFFNjk2MDQ5QzM1RjMzODg1NTciIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QUY2NzBEMDhENkU1MTFFNjk2MDQ5QzM1RjMzODg1NTciPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpBRjY3MEQwNUQ2RTUxMUU2OTYwNDlDMzVGMzM4ODU1NyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpBRjY3MEQwNkQ2RTUxMUU2OTYwNDlDMzVGMzM4ODU1NyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PhEuCZEAAAipSURBVHja7J3rchJLFIUhEAUiJqBGq/Sf7/8mPoZV3hIkCXdy8avZdSgOJCSQGbJ3z1o/KNRImO6v117dM9NT/fbtW0WS7tOBmkASHJLgkASHJDgkwSEJDklwSIJDEhyS4JAkwSEJDklwSIJDEhyS4JAEhyQ4JMEhCQ5JEhyS4JAEhyQ4gqparQoO6X7d3d1FpERwvAwlgkNS5pAEhyQ4JElwSIJD2ln1Uh98vV6r1Q4y2QqETTXvMt3e3t7c3FxfXwuOEpjkwUHtP/H+MNMyH/ZjCzIQZMxmM14XoKBYaxWC4xEmcAUIaLVazWaz0Wi8fv3agKgsLVnaG17p+5V1TP4GJiaTyXg8Ho1GvBouyVOSOBygcJTJgDAmFhwsfmz9/crf8N9fvXrF55idAMplprSLTj1Vt3jz5o1ZhfXrOgSP/nEdF2oQb/i0Zqbj42Nc5OrqajgcCo4YGZNuAwvgYKBbmdjgExuw2HCSjH+y30IQ4bcMBoNhpsQKTTpwmPkzmk9OTqgm6338RCYe/adlUaf4dfxS+Dg/P8dF5vN5MojUkyGDHnr//j0DeiVpbtX3u51S539hVPxqEDk7OyOLpMFHCnBg751Op91uLxvGSuetz0F2w2IDVVQ0ACWR8H3+/PmTQFatJ2AYkPH27duV8rFCw7apYmd0IMOWT3q9XvSgGhgO6j1kfPjwgf4ounBsJeA4PT3llRJDColbYqLCQbDodruQQQjdAMGj1SQvz1gXQRX/4HsSQW5vbwXH/qoJQ5P4yejM0SfyNRVLqcBhJSYiH/WInoFhGBl5dWdBtYaPXay19Pv9m5ubYE0dLmdQTbANJgW51ItqpqInU9BMZF6c2xMchXgGCfTjx4+LarIbEwsg9najAP6B1VFlVFaKEoOPJl5PoMt9bAl0JYeur6DvX+12+/r6ejwez+dzOUfOajQaFBSG4LoN3FssNv/YSy3JYHuBikuML0rLQgaDz06477ko5BiYOp0OU1zeCI4854TAYWfMC51fFC3SEuH0oWV+wbFLQbHpSSW+bHJLeFoGXXDsPkPBNpZPnSTABy7IEQmOHCaBNGW4FYJHvRA4Hlr4FxxPtQ0acWWGkobMDgXH7mplSqagLAvb8J88/MJhCwNJ2saiuOAfntH3C0etVoOMKEsCO4j5l3PzcAoHaQMy0pi+bp6IeabfKRyMJ7tYppK0oJ/w4bayOIXD7l5MuKYschWVxa1BOoXj8PAw7ZqyqCyMAcGxnW2Q5BNb+HpIzWbzOZenlA4OGivV5Y17R4LgUE3ZFEt9Rm+PcNBSz79ENJDcDganmcOt0xY0GHwer0c48IySpNEFHCorW8BRKZNwSsHxVDKSX/ta7YOl7eoER8iWKvSQfZql4FDGClVWypY53B6ytreW4sBhGwiXqg/cHrI7OG4ylQoO20pbcARuqUIP2ed48Jg5yuYctt++4JB5CI5nO0egTSxygcPn8TqFYzablWfOwsFOp1PB8SQxjGiv8jgHx6tAukVjjcfjkjiH25rit6yMRqMyZFIGwGQyERyqLPfDwTBwe6RO4cA2ymAewDEcDuUcW1fii4uL5Ce0eAbpyu0Y8OscV1dXPid4OUYrjtHzY1kOPLedZ8vNJVfhjoJjR/X7fVw3VTiYp5CrPM/YXcNB22EeScZSKubl5aXzU4zerwSzp3KmBwfHhS86X+jzvjsKke3w8PDo6Cilq44pKPaQUeff03uL20pA6Celrev8/Jwo6v97BhiOs9ns7OwsmWkLBcX5JCUSHLbm0ev1ErhCzECPcmYgRiEHi1+/fvlPcJuFW/z9+xfbiEL5QaCWtYfFx4WDuSuIB3pSdaQpAMkUPoIui2EYv3//jpWcIsFB+GDwUbPDnXMBa8gIt2ATbPEATyaZxuJjNBr9/PkzYkGMt7IEH8BBfQnBB27x48cPakrEKB1y/2jjg8z/7t27VqvlPIHGXcGLurk4yQ7zgA+fD/MlHjHxhuDQ06vAO89DBvkDSvCPdrvtZ0O+2WyGZ5Azol+sFPuxBNi1nfh2slsjhgEQ55kCrWekCUcl2xYH2/DwpFZbAEVMT9K4Fzw2HLVardvtEjtedgdguxoUD+N1MplUUlE9NBnHx8enp6cv+AxO4gU0MF+FjMFgUElLUeGwx9g8+uhvQgk5IPft+mz7IbvUj1lJSm6RAhxGxuZnR4IFo3k8HhNX+clcHpjFZ9p1XPbJ5IyEt5qpB/UMqgn9/VBn21mYi4sLsiH9h20wlwER+Gg2m7ySUZ44u+Gj+AQrH9AwzzTLVEld9aBkMEO5lwx6jjENE4NMi78354cSypCRASukFttNe3lnXNvbDz+wDYZ4YzfCTzOVaqfDSHDQi5DB3GT9Qd/0oo1mgOj1eg+tPtktuOh/TZBRYqAYGeYWZduaLDAcNmslZ1AXlvMmoiPtUg/IsK7ddn0igQWr8sJBLcAwOp3O8noG9jDMhBNYDijb7raCo2JxEuewe9ItEi5yAGGibPuWCo7VmEnVIBNYGkj77nvBsfXSgrrqBTxbTSAJDklwSIJDEhySZiv2VbJl7DJ3hp3HKSMc1Wr1JNPR0VGpHlX/fGLm8/loNOpn2ucq8J7ggIkvX7684CVbcWUnBRuNRrfbnU6n379/B5F0Msfnz5+/fv0qMp4v2pCWpD0TgYMj+fTpk/o1R9Ge++GjWDg6nY7IKIgP2jYwHEROcoY6siDRtkWH+gLhWLn8QspXtG3R5lEgHMxQ1IVFzwGjwrH5vgHJfwsXCIef295TVdEtXGwgVf8VqsCBVIquouAo+Sk0wSE4BIcCh+CQpD3BoZvPBMeD0l1ogkPOITgEh+AQHJJmK5KcQ5JzSIJDEhyS4JDKC4dOvAkOSXBIgkOSBIckOCSfcGj5XHBIgkMSHJIkOCTBIQkOSXBIgkMSHJLgkASHJDgkwSFJgkMSHJLgkASHJDikF9c/AQYA8ZuW2tFmOKwAAAAASUVORK5CYII='

@@ -24,7 +24,7 @@ import {
 import TestRouter from '../../components/TestRouter';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import RaceSideView from './RaceSideView';
-import {MarkdownPlat} from '../../components';
+import {MarkdownPlat, ImageLoad} from '../../components';
 import MainRaceResultView from './MainRaceResultView';
 import {umengEvent} from '../../utils/UmengEvent';
 
@@ -54,13 +54,13 @@ class RacesInfoPage extends Component {
 
     componentWillReceiveProps(newProps) {
         const {raceInfo, actionType, subRaces} = newProps;
-        const {ranks, schedules, blinds} = raceInfo;
+        const {ranks, schedules, blinds, race} = raceInfo;
 
         if (actionType === GET_RACE_INFO
             && !isEmptyObject(raceInfo)) {
 
             this.setState({
-                raceInfo: raceInfo,
+                raceInfo: race,
                 raceRanks: isEmptyObject(ranks) ? [] : ranks,
                 schedules: isEmptyObject(schedules) ? [] : schedules,
                 blinds: isEmptyObject(blinds) ? [] : blinds
@@ -119,44 +119,41 @@ class RacesInfoPage extends Component {
                                     this.props.params.race_id)
                             }}>
                             <Image style={styles.imgShare}
-                                   source={Images.match_share}/>
+                                   source={Images.share}/>
                         </TouchableOpacity>
 
 
                     </View>
 
                     {isEmptyObject(raceInfo) ? null : <View style={styles.headerInfo}>
-                        <Image style={styles.logoImg}
-                               source={{uri: raceInfo.logo}}/>
+                        <ImageLoad style={styles.logoImg}
+                                   source={{uri: raceInfo.logo}}/>
                         <View style={styles.viewInfo}>
                             <View style={styles.viewTime}>
                                 <Image style={styles.imgTime}
-                                       source={Images.race_time}/>
+                                       source={Images.home_clock}/>
                                 <Text
                                     testID="txt_races_period"
                                     style={styles.txtTime}>{this.race_time(raceInfo)}</Text>
                             </View>
                             <View style={styles.viewLocation}>
                                 <Image style={styles.imgLocation}
-                                       source={Images.race_location}/>
+                                       source={Images.home_adr}/>
                                 <Text
                                     testID="txt_races_address"
                                     style={styles.txtLocation}>{raceInfo.location}</Text>
                             </View>
-                            <View style={styles.viewPrice}>
-                                <Text style={styles.txtLabel}>{I18n.t('PrizePond')}:</Text>
-                                <Text
-                                    testID="txt_races_prize"
-                                    style={styles.txtPrice}>{raceInfo.prize}</Text>
-                            </View>
+
 
                             <View style={styles.viewPrice}>
                                 <Text
                                     testID="txt_races_status"
                                     style={styles.txtStatus}>{raceStatusConvert(raceInfo.status)}</Text>
-                                <Text
+
+                                {raceInfo.ticket_sellable ? <Text
                                     testID="txt_races_ticket"
-                                    style={[styles.txtStatus, styles.txtStatus1]}> {ticketStatusConvert(raceInfo.ticket_status)}</Text>
+                                    style={[styles.txtStatus, styles.txtStatus1]}> {ticketStatusConvert(raceInfo.ticket_status)}</Text> : null}
+
                             </View>
 
                         </View>
@@ -362,7 +359,7 @@ class RacesInfoPage extends Component {
 
         const {ticket_status, ticket_sellable} = raceInfo;
 
-        if (!this.props.params.fromBuy && sellable(ticket_status))
+        if (!this.props.params.fromBuy && sellable(ticket_status, ticket_sellable))
             return (    <RaceInfoBottomView
                 raceInfo={raceInfo}
                 onPress={() => {
@@ -502,12 +499,12 @@ const styles = StyleSheet.create({
         marginTop: 4
     },
     imgTime: {
-        height: 16,
-        width: 14
+        height: 10,
+        width: 10
     },
     imgLocation: {
-        height: 15,
-        width: 11
+        height: 11,
+        width: 8
     },
     viewTime: {
         flexDirection: 'row',
@@ -516,20 +513,20 @@ const styles = StyleSheet.create({
     viewLocation: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 10
+        marginTop: 5
     },
     txtTime: {
         color: '#cccccc',
-        fontSize: 12,
-        marginLeft: 11
+        fontSize: 13,
+        marginLeft: 7
     },
     txtLocation: {
         color: '#cccccc',
-        fontSize: 12,
-        marginLeft: 14
+        fontSize: 13,
+        marginLeft: 7
     },
     txtLabel: {
-        fontSize: 14,
+        fontSize: 15,
         color: '#D2C476'
     },
     txtPrice: {
@@ -539,7 +536,7 @@ const styles = StyleSheet.create({
     viewPrice: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 7
+        marginTop: 16
     },
     txtStatus: {
         fontSize: 10,
@@ -594,9 +591,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     imgShare: {
-        height: 23,
-        width: 18,
-        marginLeft: 15
+        height: 22,
+        width: 23,
+        marginRight: 24.8
     }
 
 

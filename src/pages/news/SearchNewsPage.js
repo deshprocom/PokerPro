@@ -93,8 +93,8 @@ class SearchNewsPage extends Component {
                 viewType={PullListView.constants.viewType.listView}
                 dataSource={this.state.componentDataSource}
                 renderRow={this._itemNewsView}
-                renderHeader={(viewState)=>_renderHeader(viewState,headerStyle)}
-                renderFooter={(viewState)=>_renderFooter(viewState,headerStyle)}
+                renderHeader={(viewState) => _renderHeader(viewState, headerStyle)}
+                renderFooter={(viewState) => _renderFooter(viewState, headerStyle)}
                 onRefresh={this._onRefresh}
                 onLoadMore={this._onLoadMore}
                 enableEmptySections={true}
@@ -136,9 +136,9 @@ class SearchNewsPage extends Component {
         const {image, title, source, date, image_thumb} = rowData;
 
         return (<TouchableOpacity
-            testID={"btn_news_row_"+rowData.id}
+            testID={"btn_news_row_" + rowData.id}
             activeOpacity={1}
-            onPress={()=>this._pressItem(rowData)}
+            onPress={() => this._pressItem(rowData)}
             style={styles.listView}>
             <View style={styles.listTitleView}>
                 <Text
@@ -153,9 +153,9 @@ class SearchNewsPage extends Component {
 
             </View>
 
-            <View style={{flex:1}}/>
+            <View style={{flex: 1}}/>
             <ImageLoad style={styles.listImg}
-                       source={{uri:image_thumb}}/>
+                       source={{uri: image_thumb}}/>
 
         </TouchableOpacity>)
     }
@@ -163,14 +163,6 @@ class SearchNewsPage extends Component {
     _navSearchBar = () => {
         return (<View style={styles.navBar}>
             <View style={styles.topBar}>
-                <TouchableOpacity
-                    testID="btn_bar_left"
-                    style={styles.popBtn}
-                    onPress={()=>router.pop()}>
-                    <Image style={styles.backImg}
-                           source={Images.sign_return}/>
-                </TouchableOpacity>
-                <TestRouter/>
                 <View
                     style={styles.searchView}>
 
@@ -178,6 +170,7 @@ class SearchNewsPage extends Component {
                         <Image style={styles.searchImg}
                                source={Images.news_outline}/>
                         <TextInput
+                            autoFocus={true}
                             testID="input_news_search"
                             placeholderTextColor={Colors.txt_666}
                             placeholder={I18n.t('news_outline')}
@@ -186,19 +179,26 @@ class SearchNewsPage extends Component {
                             clearButtonMode="always"
                             underlineColorAndroid="transparent"
                             style={this._searchInput()}
-                            onChangeText={text=>{
+                            onChangeText={text => {
                                 this.setState({
-                                    keyword:text
+                                    keyword: text
                                 });
-                                if(strNotNull(text))
-                                this._getNewsList(text, '0')
+                                if (strNotNull(text))
+                                    this._getNewsList(text, '0')
                             }}
 
                         />
 
                     </View>
 
+                    <TouchableOpacity
+                        testID="btn_bar_right"
+                        style={styles.popBtn}
+                        onPress={() => router.pop()}>
+                        <Text style={styles.barTxt}>{I18n.t('cancel')}</Text>
+                    </TouchableOpacity>
                 </View>
+
 
             </View>
         </View>)
@@ -239,9 +239,9 @@ const styles = StyleSheet.create({
 
     },
     popBtn: {
-        height: 40,
-        width: 50,
-        justifyContent: 'center'
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     backImg: {
         width: 11,
@@ -251,7 +251,8 @@ const styles = StyleSheet.create({
     searchView: {
         flex: 1,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginLeft: 20
     },
     searchBar: {
         backgroundColor: '#212325',
@@ -318,5 +319,9 @@ const styles = StyleSheet.create({
         color: '#444444',
         fontSize: 16,
         width: 216
+    },
+    barTxt: {
+        fontSize: 15,
+        color: '#E4D57F'
     },
 });

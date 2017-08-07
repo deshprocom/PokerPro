@@ -116,10 +116,9 @@ const styles = {
     tableRowCell: {
         padding: 5,
     },
-    text: {
-
-    },
+    text: {},
     u: {
+        color: '#4990E2',
         textDecorationLine: 'underline'
     },
     video: {

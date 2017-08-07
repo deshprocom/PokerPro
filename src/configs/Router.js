@@ -47,6 +47,11 @@ import TicketInfoPage from '../pages/ticket/TicketInfoPage';
 import WebViewPage from '../components/WebViewPage';
 import NewAddressPage from '../pages/buy/NewAddressPage';
 import AdrListPage from '../pages/buy/AdrListPage';
+import DrawerRank from '../pages/rank/DrawerRank';
+import FocusPlayer from '../pages/rank/FocusPlayer';
+import PokerRankPage from '../pages/rank/info/PokerRankPage';
+import PokerRacePage from '../pages/rank/info/PokerRacePage';
+import SearchPoker from '../pages/rank/SearchPoker';
 
 
 const customFloatFromRight = Navigator.SceneConfigs.FadeAndroid;
@@ -124,6 +129,40 @@ export default class Router {
         this.navigator.popToTop();
     }
 
+
+    toSearchPoker(props) {
+        this.push(props, {
+            page: SearchPoker,
+            name: 'SearchPoker',
+            sceneConfig: customFloatFromRight,
+
+        })
+    }
+
+    toPokerRacePage(props, race_id) {
+        this.push(props, {
+            page: PokerRacePage,
+            name: 'PokerRacePage',
+            sceneConfig: customFloatFromRight,
+            params: {
+                race_id: race_id
+            }
+
+        })
+    }
+
+    toPokerRankPage(props, player_id) {
+        this.push(props, {
+            page: PokerRankPage,
+            name: 'PokerRankPage',
+            sceneConfig: customFloatFromRight,
+            params: {
+                player_id: player_id
+            }
+
+        })
+    }
+
     toAdrListPage(props, selectAdr, adrData) {
         this.push(props, {
             page: AdrListPage,
@@ -163,14 +202,15 @@ export default class Router {
     }
 
 
-    toTicketInfoPage(props, race_id, ticket_id) {
+    toTicketInfoPage(props, race_id, ticket_id,isBuy) {
         this.push(props, {
             page: TicketInfoPage,
             name: 'TicketInfoPage',
             sceneConfig: customFloatFromRight,
             params: {
                 race_id: race_id,
-                ticket_id: ticket_id
+                ticket_id: ticket_id,
+                isBuy:isBuy
             }
 
         })
@@ -204,6 +244,14 @@ export default class Router {
             name: 'MainVideoPage',
             sceneConfig: customFloatFromRight,
 
+        })
+    }
+
+    toDrawerRank(props) {
+        this.push(props, {
+            page: DrawerRank,
+            name: 'DrawerRank',
+            sceneConfig: customFloatFromRight
         })
     }
 
@@ -506,6 +554,13 @@ export default class Router {
         })
     }
 
+    toFocusPlayer(props) {
+        this.push(props, {
+            page: FocusPlayer,
+            name: 'FocusPlayer',
+            sceneConfig: customFloatFromRight
+        })
+    }
 
     toForgetPage(props) {
         this.push(props, {
@@ -615,11 +670,20 @@ export default class Router {
         })
     }
 
-
     popToLogin() {
         let routes = this.navigator.getCurrentRoutes();
         for (var route of routes) {
             if (route.name === 'LoginFirstPage') {
+                this.navigator.popToRoute(route)
+            }
+        }
+
+    }
+
+    popToDrawerRank() {
+        let routes = this.navigator.getCurrentRoutes();
+        for (var route of routes) {
+            if (route.name === 'DrawerRank' || route.name === 'RacesInfoPage') {
                 this.navigator.popToRoute(route)
             }
         }

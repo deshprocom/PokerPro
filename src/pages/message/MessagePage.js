@@ -14,7 +14,7 @@ import {NavigationBar, ImageLoad, SwipeListView} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {GET_NOTIFICATIONS, DEL_NOTIFICATIONS} from '../../actions/ActionTypes';
 import {fetchNotifications, fetchDelNotice} from '../../actions/AccountAction';
-import {isEmptyObject, utcDate} from '../../utils/ComonHelper';
+import {isEmptyObject, utcDate,YYYY_MM_DD} from '../../utils/ComonHelper';
 
 class MessagePage extends Component {
 
@@ -93,7 +93,7 @@ class MessagePage extends Component {
                 <TouchableOpacity
                     onPress={()=>this._delNotice(data,secId, rowId, rowMap)}
                     style={styles.rightSwipe}>
-                    <Text style={styles.txtSwipe}>删除</Text>
+                    <Text style={styles.txtSwipe}>{I18n.t('buy_del')}</Text>
                 </TouchableOpacity>
 
             </View>
@@ -149,7 +149,7 @@ class MessagePage extends Component {
                             <View style={{flex:1}}/>
                             <Text
                                 testID={'txt_notice_time_1'+id}
-                                style={styles.txtTime}>{utcDate(created_at, "YYYY年MM月DD日")}</Text>
+                                style={styles.txtTime}>{utcDate(created_at, YYYY_MM_DD)}</Text>
                         </View>
 
                         <View style={styles.itemView}>
@@ -164,7 +164,7 @@ class MessagePage extends Component {
 
                                 <Text
                                     testID={'txt_order_num_'+id}
-                                    style={styles.txtNum}>订单编号:{order_number}</Text>
+                                    style={styles.txtNum}>{I18n.t('order_num')}:{order_number}</Text>
 
                             </View>
 
@@ -187,14 +187,14 @@ class MessagePage extends Component {
                         <View style={{flex:1}}/>
                         <Text
                             testID={'txt_notice_time_1'+id}
-                            style={styles.txtTime}>{utcDate(created_at, "YYYY年MM月DD日")}</Text>
+                            style={styles.txtTime}>{utcDate(created_at, YYYY_MM_DD)}</Text>
                     </View>
 
                     <Text
                         testID={'txt_content_'+id}
                         style={styles.txtNotice}>{content}</Text>
 
-                    <Text style={styles.txtSource}>来自：Poker Pro官方客服</Text>
+                    <Text style={styles.txtSource}>{I18n.t('message_from')}</Text>
 
                 </View>
             </View>)

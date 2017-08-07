@@ -24,6 +24,8 @@ import {fetchRacesInfo, fetchGetRecentRaces} from '../../actions/RacesAction';
 import StorageKey from '../../configs/StorageKey';
 import {getBuyRaceTicket, postOrderTicket} from '../../services/OrderDao';
 import {umengEvent} from '../../utils/UmengEvent';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import PayModal from './PayModal';
 
 
 const E_TICKET = 'e_ticket',
@@ -78,15 +80,28 @@ class BuyTicketPage extends Component {
         };
         getBuyRaceTicket(body, data => {
             const {tickets, ordered, race, recent_email, shipping_address} = data;
+            const {e_ticket_number, e_ticket_sold_number, entity_ticket_number, entity_ticket_sold_number} = tickets.ticket_info;
+
+            let e_num = e_ticket_number - e_ticket_sold_number;
+            let entity_num = entity_ticket_number - entity_ticket_sold_number;
+
+            let type = E_TICKET;
+            if (e_num === 0) {
+                type = ENTITY;
+            } else if (entity_num === 0) {
+                type = E_TICKET;
+            }
+
             this.setState({
                 tickets: tickets,
                 ordered: ordered,
                 race: race,
-                shipping_address: shipping_address,
-                email: recent_email
+                shipping_address: isEmptyObject(shipping_address) ? {} : shipping_address,
+                email: recent_email,
+                isEntity: type
             })
         }, err => {
-            showToast("获取赛票数据失败！")
+            showToast(`${I18n.t('data_fail')}`)
         });
 
         this.props._getCertification();
@@ -150,7 +165,7 @@ class BuyTicketPage extends Component {
 
 
     _postOrderOk = () => {
-        Alert.alert('购票成功', '工作人员将及时与您联系，请保持手机畅通');
+        Alert.alert(`${I18n.t('buy_success')}`, `${I18n.t('keep_phone')}`);
 
 
         const {user_id} = getLoginUser();
@@ -182,11 +197,15 @@ class BuyTicketPage extends Component {
     };
 
     _btnBuyTicket = () => {
-
+        // this.payModal.toggle();
         umengEvent('ticket_buy_contain');
         let {isEntity, email, isNameReal, shipping_address} = this.state;
         if (isNameReal) {
             if (isEntity === ENTITY) {
+                if (isEmptyObject(shipping_address)) {
+                    showToast(`${I18n.t('add_adr')}`)
+                    return;
+                }
                 const {race_id, ticket_id} = this.props.params;
                 let param = {
                     race_id: race_id,
@@ -203,6 +222,7 @@ class BuyTicketPage extends Component {
                 }, err => {
                     showToast(err)
                 });
+
 
             } else if (checkMail(email)) {
                 this._saveBuyEmail();
@@ -223,7 +243,7 @@ class BuyTicketPage extends Component {
             }
 
         } else {
-            showToast('请先进行实名认证')
+            showToast(`${I18n.t('ple_ren_zhen')}`)
         }
 
     };
@@ -261,7 +281,7 @@ class BuyTicketPage extends Component {
                 if (ticket_class === 'single_ticket')
                     router.toRacesInfoPage(this.props, race_id, false);
                 else
-                    router.toTicketInfoPage(this.props, race_id, ticket_id)
+                    router.toTicketInfoPage(this.props, race_id, ticket_id, true)
             }}
             style={styles.itemView}>
             <ImageLoad
@@ -274,7 +294,7 @@ class BuyTicketPage extends Component {
                     style={styles.txtItemTitle}>{title}</Text>
 
                 <Text style={[styles.txtLabel, styles.top8]}>{this._date()}</Text>
-                <Text style={styles.txtLabel}>地址: {this._location()}</Text>
+                <Text style={styles.txtLabel}>{I18n.t('location')} {this._location()}</Text>
 
                 <View style={styles.viewInfo}>
                     <Text style={styles.txtPrice}>{price}</Text>
@@ -308,21 +328,76 @@ class BuyTicketPage extends Component {
             }}
             activeOpacity={1}
             testID="btn_entity_ticket"
-            style={isEntity == ENTITY ? styles.ticketSelect : styles.ticketUnSelect}>
+            style={{alignItems: 'center', justifyContent: 'center', marginLeft: 35}}>
+            <Image style={{height: 44, width: 44}}
+                   source={isEntity === ENTITY ? Images.selected_entity : Images.select_entity}/>
+
             <Text
                 style={{
                     fontSize: 15,
-                    color: isEntity == ENTITY ? Colors.txt_F28 : Colors._AAA
+                    marginTop: 12,
+                    color: isEntity === ENTITY ? Colors._DF1 : Colors._999
                 }}>{I18n.t('ticket_paper')}</Text>
         </TouchableOpacity>)
     };
 
 
+    sendTypeView = () => {
+        let {tickets, isEntity} = this.state;
+
+        if (isEmptyObject(tickets))
+            return;
+        const {e_ticket_number, e_ticket_sold_number, entity_ticket_number, entity_ticket_sold_number} = tickets.ticket_info;
+
+        let e_num = e_ticket_number - e_ticket_sold_number;
+        let entity_num = entity_ticket_number - entity_ticket_sold_number;
+
+
+        return (   <View style={{
+            height: 140,
+            backgroundColor: Colors.white,
+            marginTop: 8
+        }}>
+            <View style={{height: 35}}>
+                <Text style={{
+                    fontSize: 15, color: Colors._333, fontWeight: 'bold',
+                    marginLeft: 17, marginTop: 10, marginBottom: 10
+                }}>
+                    {I18n.t('buy_send')}</Text>
+                <View style={{marginLeft: 18, marginRight: 18, height: 1, backgroundColor: Colors._ECE}}/>
+            </View>
+            <View
+                style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+                {e_num > 0 ? <TouchableOpacity
+                    onPress={() => {
+                        this.setState({
+                            isEntity: E_TICKET
+                        })
+                    }}
+                    activeOpacity={1}
+                    style={{alignItems: 'center', justifyContent: 'center', marginLeft: 35}}
+                    testID="btn_e_ticket">
+                    <Image style={{height: 44, width: 44}}
+                           source={isEntity === E_TICKET ? Images.selected_e_ticket : Images.select_e_ticket}/>
+                    <Text
+                        style={{
+                            fontSize: 15,
+                            marginTop: 12,
+                            color: isEntity === E_TICKET ? Colors._DF1 : Colors._999
+                        }}>{I18n.t('ticket_web')}</Text>
+                </TouchableOpacity> : null}
+
+                {entity_num > 0 ? this._entityView() : null}
+
+            </View>
+        </View>)
+    }
+
+
     render() {
         const {user_extra} = this.props;
-        const {race, tickets, ordered} = this.state;
+        const {race, tickets, ordered, isEntity, knowRed, email} = this.state;
         const {ticket_info, price} = tickets;
-        const {isEntity, knowRed, email} = this.state;
 
         return (
             <View
@@ -335,7 +410,7 @@ class BuyTicketPage extends Component {
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
-                <ScrollView
+                <KeyboardAwareScrollView
                     style={{marginBottom: 62}}>
                     {/*赛事简介*/}
                     <View style={{height: 7}}/>
@@ -413,54 +488,31 @@ class BuyTicketPage extends Component {
 
                     </TouchableOpacity>
                     {/*票务类型*/}
-                    <View style={{
-                        height: 96, flex: 1,
-                        backgroundColor: Colors.white, marginTop: 6
-                    }}>
-                        <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 18, marginTop: 18}}>
-                            <Text style={{fontSize: 15, color: Colors.txt_666}}>
-                                {I18n.t('ticket_type')}</Text>
-                            <Text style={{fontSize: 14, color: Colors.txt_FF3, marginLeft: 18}}>
-                                (剩余{this.eTicketNum(ticket_info)}张)</Text>
-                        </View>
-                        <View
-                            style={{height: 66, flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    this.setState({
-                                        isEntity: E_TICKET
-                                    })
-                                }}
-                                activeOpacity={1}
-                                testID="btn_e_ticket"
-                                style={[isEntity == ENTITY ? styles.ticketUnSelect : styles.ticketSelect,
-                                    {marginRight: 20, marginLeft: 18}]}>
-                                <Text
-                                    style={{
-                                        fontSize: 15,
-                                        color: isEntity == ENTITY ? Colors._AAA : Colors.txt_F28
-                                    }}>{I18n.t('ticket_web')}</Text>
-                            </TouchableOpacity>
+                    {this.sendTypeView()}
 
-                            {this._entityView()}
-
-
-                        </View>
-                    </View>
                     {/*电子邮件*/}
 
                     {/*收货地址*/}
 
-                    {isEntity == ENTITY ? this._addrView() : this._emailViwe(email)}
+                    {isEntity === ENTITY ? this._addrView() : this._emailViwe(email)}
 
                     <NameRealView user_extra={user_extra}
                                   router={router}/>
 
+                    {this._priceView()}
 
-                    <View style={{height: 20, flex: 1}}/>
+                    <View style={{height: 68, flex: 1}}>
+                        <Text style={{
+                            color: Colors._AAA,
+                            fontSize: 14,
+                            marginLeft: 18,
+                            marginTop: 12
+                        }}>{I18n.t('buy_pay_after')}</Text>
+
+                    </View>
 
 
-                </ScrollView>
+                </KeyboardAwareScrollView>
                 <View
                     style={{
                         height: 62,
@@ -478,9 +530,9 @@ class BuyTicketPage extends Component {
                         shadowRadius: 3
                     }}>
                     <View style={{flex: 1, flexDirection: 'row', marginLeft: 19, alignItems: 'flex-end'}}>
-                        <Text style={{fontSize: 14, color: Colors.txt_666}}>票价:</Text>
-                        <Text style={{fontSize: 12, color: Colors.txt_FF9, marginLeft: 10}}>¥</Text>
-                        <Text style={{fontSize: 18, color: Colors.txt_FF9}}
+                        <Text style={{fontSize: 14, color: Colors.txt_666}}>{I18n.t('ticket_price')} </Text>
+
+                        <Text style={{fontSize: 18, color: Colors._DF1}}
                               testID="txt_ticket_price">
                             {price}
                         </Text>
@@ -493,7 +545,7 @@ class BuyTicketPage extends Component {
                         style={{width: 77, height: 62, alignItems: 'center', justifyContent: 'center'}}>
                         <Image style={{width: 25, height: 21}}
                                source={Images.prompt_service}/>
-                        <Text style={{fontSize: 12, color: Colors.txt_666}}>客服</Text>
+                        <Text style={{fontSize: 12, color: Colors.txt_666}}>{I18n.t('customer_service')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         disabled={ordered}
@@ -504,14 +556,58 @@ class BuyTicketPage extends Component {
                             width: 103, height: 62, alignItems: 'center', justifyContent: 'center',
                             backgroundColor: ordered ? Colors._999 : Colors.bg_09
                         }}>
-                        <Text style={{fontSize: 18, color: ordered ? Colors.white : Colors.txt_E0C}}>购票下单</Text>
+                        <Text style={{
+                            fontSize: 18,
+                            color: ordered ? Colors.white : Colors.txt_E0C
+                        }}>{I18n.t('xia_dan')}</Text>
                     </TouchableOpacity>
 
 
                 </View>
+
+                <PayModal ref={ref => this.payModal = ref}/>
             </View>
         )
     }
+
+    _priceView = () => {
+        const {tickets} = this.state;
+        if (isEmptyObject(tickets))
+            return;
+        const {original_price, price} = tickets;
+        return (<View style={{backgroundColor: 'white', marginTop: 3}}>
+            <View style={{height: 35}}>
+                <Text style={{
+                    fontSize: 15, color: Colors._333, fontWeight: 'bold',
+                    marginLeft: 18, marginTop: 10, marginBottom: 10
+                }}>
+                    {I18n.t('buy_pay')}</Text>
+                <View style={{marginLeft: 18, marginRight: 18, height: 1, backgroundColor: Colors._ECE}}/>
+            </View>
+
+            <View style={styles.viewPrice}>
+                <Text style={styles.txtPrice1}>{I18n.t('order_price')}</Text>
+
+                <Text
+                    style={{
+                        color: Colors._AAA,
+                        fontSize: 14,
+                        marginRight: 18,
+                        textDecorationLine: 'line-through'
+                    }}>{original_price}</Text>
+
+            </View>
+
+            <View style={styles.viewPrice}>
+                <Text style={styles.txtPrice1}>{I18n.t('order_pay')}</Text>
+
+                <Text
+                    style={{color: Colors._DF1, fontSize: 14, marginRight: 17}}>{price}</Text>
+
+            </View>
+
+        </View>)
+    };
 
     _emailViwe = (email) => {
         return (  <View
@@ -550,7 +646,7 @@ class BuyTicketPage extends Component {
 
     _addrView = () => {
         const {shipping_address} = this.state;
-        const {address, address_detail, consignee, mobile} = shipping_address;
+
 
         if (isEmptyObject(shipping_address))
             return (  <TouchableOpacity
@@ -559,7 +655,7 @@ class BuyTicketPage extends Component {
                     router.toAdrListPage(this.props, this._selectAdr, {});
                 }}
                 style={{height: 89, flex: 1, marginTop: 10, backgroundColor: Colors.white}}>
-                <View style={{height: 44, flex: 1, alignItems: 'center', flexDirection: 'row'}}>
+                <View style={{height: 44, alignItems: 'center', flexDirection: 'row'}}>
 
                     <Text style={{
                         fontSize: 15, color: Colors.txt_666, marginLeft: 18,
@@ -577,7 +673,8 @@ class BuyTicketPage extends Component {
                            source={Images.ticket_arrow}/>
                 </View>
             </TouchableOpacity>);
-        else
+        else {
+            const {address, address_detail, consignee, mobile} = shipping_address;
             return (<TouchableOpacity
                 activeOpacity={1}
                 onPress={() => {
@@ -620,6 +717,8 @@ class BuyTicketPage extends Component {
                            source={Images.ticket_arrow}/>
                 </View>
             </TouchableOpacity>)
+        }
+
     }
 
 
@@ -628,12 +727,12 @@ class BuyTicketPage extends Component {
 
 const styles = StyleSheet.create({
     ticketSelect: {
-        height: 30, width: 91, borderRadius: 5, borderWidth: 1, borderColor: Colors.txt_F28,
-        alignItems: 'center', justifyContent: 'center'
+        height: 35, width: 91, borderRadius: 5, borderWidth: 1, borderColor: Colors.txt_F28,
+        alignItems: 'center', justifyContent: 'center',
     },
     ticketUnSelect: {
-        height: 30, width: 91, borderRadius: 5, backgroundColor: '#E5E5E5',
-        alignItems: 'center', justifyContent: 'center'
+        height: 35, width: 91, borderRadius: 5, backgroundColor: '#E5E5E5',
+        alignItems: 'center', justifyContent: 'center',
     },
     itemView: {
         flexDirection: 'row',
@@ -687,7 +786,7 @@ const styles = StyleSheet.create({
     viewAdrInfo: {
         alignItems: 'center', flexDirection: 'row',
         justifyContent: 'space-between', marginLeft: 18,
-        marginTop: 20
+        marginTop: 15
     },
     txtAdrInfo: {
         fontSize: 14,
@@ -697,7 +796,10 @@ const styles = StyleSheet.create({
     ViewRow: {
         flexDirection: 'row',
         alignItems: 'center'
-    }
+    },
+    viewPrice: {flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 42},
+    txtPrice1: {color: Colors._333, fontSize: 14, marginLeft: 18}
+
 
 });
 

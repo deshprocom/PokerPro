@@ -14,7 +14,7 @@ import PersonInfo from './PersonInfo';
 import {PUT_PROFILE, GET_CERTIFICATION} from '../../actions/ActionTypes'
 import {NavigationBar} from '../../components'
 import {getLoginUser, strNotNull, getDispatchAction} from '../../utils/ComonHelper';
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 class PersonPage extends React.Component {
 
     state = {
@@ -53,19 +53,12 @@ class PersonPage extends React.Component {
                 <ActivityIndicator
                     color={Colors._E0C294}
                 />
-                <Text style={{marginLeft: 10, color: Colors._E0C294}}>获取中...</Text>
+                <Text style={{marginLeft: 10, color: Colors._E0C294}}>{I18n.t('person_page')}</Text>
             </View>
         );
     }
 
-    shouldComponentUpdate(newProps, nextState) {
-        const {router} = this.props;
-        if (newProps.actionType === PUT_PROFILE && newProps.hasData) {
-            router.pop();
-            return false;
-        }
-        return true;
-    }
+
 
     render() {
 
@@ -75,15 +68,17 @@ class PersonPage extends React.Component {
         return (
             <View
                 testID="page_profile"
-                style={{backgroundColor:'#161718',flex:1}}>
+                style={{backgroundColor:'#ECECEE',flex:1}}>
                 <NavigationBar
+                    toolbarStyle={{backgroundColor: '#161718'}}
                     title={I18n.t('edit_info')}
                     rightBtnText={I18n.t('complete')}
-                    leftBtnText={I18n.t('cancel')}
-                    leftBtnPress={()=>this.props.router.pop()}
+                    leftBtnIcon={Images.sign_return}
+                    leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
+                    leftBtnPress={()=>router.pop()}
                     rightBtnPress={this._putProfile}/>
 
-                <View>
+                <KeyboardAwareScrollView>
                     {loading ? this._renderLoading() : null}
                     <PersonInfo
                         postAvatar={this.props._postAvatar}
@@ -91,7 +86,7 @@ class PersonPage extends React.Component {
                         profile={profile}/>
 
 
-                </View>
+                </KeyboardAwareScrollView>
             </View>
         )
     }

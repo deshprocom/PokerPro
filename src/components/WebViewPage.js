@@ -4,12 +4,13 @@
 import React, {Component, PropTypes} from 'react';
 import {
     StyleSheet, View, WebView, InteractionManager,
-    Text, TouchableOpacity, ActivityIndicator, Alert,
+    Text, TouchableOpacity, ActivityIndicator, Image,
     Linking, Clipboard, Modal, PanResponder, Animated, ToastAndroid
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
 import NavigationBar from './NavigationBar';
-import theme from '../styles/theme'
+import theme from '../styles/theme';
+import I18n from 'react-native-i18n';
 
 export default class WebViewPage extends Component {
 
@@ -49,10 +50,10 @@ export default class WebViewPage extends Component {
                     // }).start();
                 }
                 if (y < -this.moveYThreshold && this.animationFlag) {  //drag up
-                    if (this.state.bottomInfoBarBottomValue === -45) return;
+                    if (this.state.bottomInfoBarBottomValue === -50) return;
                     this.animationFlag = false;
                     Animated.timing(this.state.bottomInfoBarBottomValue, {
-                        toValue: -45,
+                        toValue: -50,
                         duration: 300
                     }).start(() => this.animationFlag = true);
                     // Animated.timing(this.state.toolbarTopValue, {
@@ -74,7 +75,9 @@ export default class WebViewPage extends Component {
                     {...this._panResponder.panHandlers}>
                     <WebView
 
-                        ref={(ref)=>{this.webView = ref}}
+                        ref={(ref) => {
+                            this.webView = ref
+                        }}
                         style={styles.webView}
                         scalesPageToFit={true}
                         source={{uri: url}}
@@ -111,16 +114,16 @@ export default class WebViewPage extends Component {
 
     _renderLoading() {
         return (
-            <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
-                <ActivityIndicator color={'#E4D57F'} size="large"/>
-                <Text style={{marginTop: 10, color: 'red'}}>玩命加载中...</Text>
+            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                <ActivityIndicator color={Colors._CCC} size="large"/>
+
             </View>
         );
     }
 
     _renderError() {
         return (
-            <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
+            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                 <Text>Oooops~, 出错了, 重新刷新下吧～</Text>
             </View>
         );
@@ -129,30 +132,55 @@ export default class WebViewPage extends Component {
     bottomBarView = () => {
         return ( <Animated.View
             style={[styles.bottomInfoBar, {bottom: this.state.bottomInfoBarBottomValue}]}>
-            {this.bottomIconNames.map((item, i) => {
-                return (
-                    <View key={i} style={{flex: 1, alignItems: 'center'}}>
-                        <TouchableOpacity
-                            onPress={()=>this._btnOnPressCallback(i+1)}
-                            activeOpacity={theme.touchableOpacityActiveOpacity}>
-                            <Text>{item}</Text>
-                        </TouchableOpacity>
-                    </View>
-                );
-            })}
+            <TouchableOpacity
+                onPress={() => this.webView.goBack()}
+                style={styles.btn}>
+                <Image style={styles.imgBk}
+                       source={Images.web_left}/>
+
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => this.webView.goForward()}
+                style={styles.btn}>
+                <Image style={styles.imgBk}
+                       source={Images.web_right}/>
+
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => this.webView.reload()}
+                style={styles.btn}>
+                <Image style={styles.imgRef}
+                       source={Images.web_refresh}/>
+
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => {
+                    Linking.canOpenURL(this.props.params.url).then(supported => {
+                        if (supported) {
+                            Linking.openURL(this.props.params.url);
+                        }
+                    });
+                }}
+                style={styles.btn}>
+                <Image style={styles.imgRef}
+                       source={Images.web_page}/>
+
+            </TouchableOpacity>
+
 
         </Animated.View>)
     };
 
     topBarView = () => {
+        const {url} = this.props.params;
         return (
             <NavigationBar
-                toolbarStyle={{backgroundColor:Colors.bg_09}}
-                title="详细内容"
+                toolbarStyle={{backgroundColor: Colors.bg_09}}
+                title={I18n.t('app_name')}
                 titleStyle={styles.barTitle}
                 leftBtnIcon={Images.sign_return}
-                leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
-                leftBtnPress={()=>router.pop()}
+                leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                leftBtnPress={() => router.pop()}
             />)
 
     }
@@ -176,13 +204,13 @@ const styles = StyleSheet.create({
     },
     bottomInfoBar: {
         position: 'absolute',
-        height: 45,
+        height: 50,
         width: theme.screenWidth,
-        borderTopWidth: theme.segment.width,
         flexDirection: 'row',
         alignItems: 'center',
         zIndex: 1,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        justifyContent: 'space-around'
     },
     moreContentContainerBackground: {
         position: 'absolute',
@@ -207,5 +235,19 @@ const styles = StyleSheet.create({
         height: 30,
         flexDirection: 'row',
         alignItems: 'center'
+    },
+    btn: {
+        height: 50,
+        width: 50,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    imgBk: {
+        height: 26,
+        width: 13
+    },
+    imgRef: {
+        height: 24,
+        width: 24
     }
 });

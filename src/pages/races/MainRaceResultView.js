@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {strNotNull, isEmptyObject} from '../../utils/ComonHelper'
 import I18n from 'react-native-i18n';
-import {Button} from '../../components';
+import {Button, MarkdownPlat} from '../../components';
 import RaceResultList from './RaceResultList';
 import ScheduleList from './ScheduleList';
 import BlindsList from './BlindsList';
@@ -46,20 +46,32 @@ export default class MainRaceResultView extends Component {
     _tabView = () => {
 
         const {curTab} = this.state;
-        const {raceRanks, schedules, blinds} = this.props;
+        const {raceRanks, schedules, blinds, isSideRace, schedules_markdown} = this.props;
 
         this.tabs = [];
 
-
-        if (!isEmptyObject(schedules) &&
-            schedules.length > 0) {
+        if (isSideRace && strNotNull(schedules_markdown)) {
             this.tabs.push(<Button
-                onPress={()=>this.btnSelectTab(TAB_INFO)}
+                onPress={() => this.btnSelectTab(TAB_INFO)}
                 activeOpacity={1}
                 testID="btn_race_info"
                 key={TAB_INFO}
-                style={curTab === TAB_INFO?styles.btnSelect:styles.btn}
-                textStyle={curTab === TAB_INFO?styles.txtBtnSelect:styles.txtBtn}
+                style={curTab === TAB_INFO ? styles.btnSelect : styles.btn}
+                textStyle={curTab === TAB_INFO ? styles.txtBtnSelect : styles.txtBtn}
+            >
+                {I18n.t('Schudel')}
+            </Button>)
+
+        }
+        else if (!isSideRace && !isEmptyObject(schedules) &&
+            schedules.length > 0) {
+            this.tabs.push(<Button
+                onPress={() => this.btnSelectTab(TAB_INFO)}
+                activeOpacity={1}
+                testID="btn_race_info"
+                key={TAB_INFO}
+                style={curTab === TAB_INFO ? styles.btnSelect : styles.btn}
+                textStyle={curTab === TAB_INFO ? styles.txtBtnSelect : styles.txtBtn}
             >
                 {I18n.t('Schudel')}
             </Button>)
@@ -68,12 +80,12 @@ export default class MainRaceResultView extends Component {
         if (!isEmptyObject(blinds)
             && blinds.length > 0) {
             this.tabs.push(<Button
-                onPress={()=>this.btnSelectTab(TAB_BLINDS)}
+                onPress={() => this.btnSelectTab(TAB_BLINDS)}
                 activeOpacity={1}
                 key={TAB_BLINDS}
                 testID="btn_race_blinds"
-                style={curTab === TAB_BLINDS?styles.btnSelect:styles.btn}
-                textStyle={curTab === TAB_BLINDS?styles.txtBtnSelect:styles.txtBtn}
+                style={curTab === TAB_BLINDS ? styles.btnSelect : styles.btn}
+                textStyle={curTab === TAB_BLINDS ? styles.txtBtnSelect : styles.txtBtn}
             >
                 {I18n.t('Blind')}
             </Button>)
@@ -81,12 +93,12 @@ export default class MainRaceResultView extends Component {
         if (!isEmptyObject(raceRanks) &&
             raceRanks.length > 0) {
             this.tabs.push(<Button
-                onPress={()=>this.btnSelectTab(TAB_RESULT)}
+                onPress={() => this.btnSelectTab(TAB_RESULT)}
                 activeOpacity={1}
                 key={TAB_RESULT}
                 testID="btn_race_result"
-                style={curTab === TAB_RESULT?styles.btnSelect:styles.btn1}
-                textStyle={curTab === TAB_RESULT?styles.txtBtnSelect:styles.txtBtn}
+                style={curTab === TAB_RESULT ? styles.btnSelect : styles.btn1}
+                textStyle={curTab === TAB_RESULT ? styles.txtBtnSelect : styles.txtBtn}
             >
                 {I18n.t('Ranks')}
             </Button>)
@@ -115,13 +127,17 @@ export default class MainRaceResultView extends Component {
     _tabPage = () => {
 
         const {curTab} = this.state;
-        const {raceRanks, schedules, blinds} = this.props;
+        const {raceRanks, schedules, blinds, isSideRace, schedules_markdown} = this.props;
 
 
         switch (curTab) {
             case TAB_INFO:
-                return <ScheduleList
-                    schedules={schedules}/>;
+
+                return isSideRace ? <MarkdownPlat
+                    noScroll={true}
+                    markdownStr={schedules_markdown}/> :
+                    <ScheduleList
+                        schedules={schedules}/>;
             case TAB_BLINDS:
                 return <BlindsList
                     blinds={blinds}/>;

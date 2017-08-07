@@ -11,9 +11,10 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {
     strNotNull, getLoginUser,
     convertDate, YYYY_MM_DD, racesStatusImage,
-    sellable, raceStatusConvert
+    sellable, raceStatusConvert, FontSize
 } from '../../utils/ComonHelper';
 import {SellStatus} from '../../configs/Status';
+import ImageLoad from '../ImageLoad';
 
 export default class RaceRowView extends Component {
 
@@ -34,64 +35,6 @@ export default class RaceRowView extends Component {
             {this._itemRender()}
             <View style={this.props.isMoreRace ? styles.viewLine1 : styles.viewLine}/>
         </TouchableOpacity>)
-    }
-
-    oldView = () => {
-        const {rowData} = this.props;
-        return <TouchableOpacity
-            disabled={!rowData.describable}
-            activeOpacity={1}
-            testID={'btn_races_' + rowData.race_id}
-            onPress={() => this._itemClick(rowData)}>
-
-            {this._lineView()}
-
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-
-                {this.describableView(rowData.describable)}
-                {/*月份*/}
-                {this.monthView(rowData.begin_date)}
-
-                <View style={{flex: 1}}>
-
-                    <Text style={[Fonts.H17, {
-                        color: '#BBBBBB', marginTop: 20,
-                        marginRight: 24, lineHeight: 22
-                    }]}
-                          numberOfLines={2}>{rowData.name}</Text>
-
-                    {this.tabRaces(rowData.followed, rowData.status)}
-
-
-                    <View style={{
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        flexDirection: 'row',
-                        marginTop: 12
-                    }}>
-                        <View>
-                            {strNotNull(rowData.prize) ? this.prizeView(rowData.prize) : null}
-                        </View>
-
-
-                        <View>
-                            {this.orderedView(rowData)}
-                        </View>
-
-
-                    </View>
-
-                    <Text
-                        numberOfLines={1}
-                        style={[Fonts.H13, {
-                            color: Colors.txt_666,
-                            marginTop: 4
-                        }]}>{I18n.t('address') + rowData.location}</Text>
-                    {this.racesTimeView(rowData.begin_date, rowData.end_date)}
-
-                </View>
-            </View>
-        </TouchableOpacity>
     }
 
 
@@ -115,7 +58,8 @@ export default class RaceRowView extends Component {
     _itemView = () => {
         const {
             logo, name, begin_date, end_date, status,
-            location, prize, ticket_status, ticket_sellable
+            location, prize, ticket_status, ticket_sellable,
+            min_price
         } = this.props.rowData;
         return (<View
             style={this.props.isMoreRace ? styles.backMore : [styles.viewItem,
@@ -123,19 +67,22 @@ export default class RaceRowView extends Component {
                     backgroundColor: ticket_sellable ? 'transparent' : 'white'
                 }]}>
 
-            <Image
+            <ImageLoad
                 defaultSource={Images.empty_image}
                 style={styles.imgRace}
                 source={{uri: logo}}/>
-            <View style={{backgroundColor: 'transparent'}}>
+            <View>
                 <Text
-                    style={styles.txtTitle}
+                    style={[ticket_sellable ? styles.txtTitle1 : styles.txtTitle, {fontSize: FontSize.h17}]}
                     numberOfLines={2}>{name}</Text>
+
                 <View style={styles.viewClock}>
                     <Image source={Images.home_adr}
                            style={styles.imgAdr}/>
 
-                    <Text style={styles.txtClock}>{location}</Text>
+                    <Text
+                        numberOfLines={1}
+                        style={[ticket_sellable ? styles.txtClock1 : styles.txtClock, {fontSize: FontSize.h13}]}>{location}</Text>
 
                 </View>
 
@@ -143,14 +90,13 @@ export default class RaceRowView extends Component {
                     <Image source={Images.home_clock}
                            style={styles.imgClock}/>
 
-                    <Text style={styles.txtClock}>{this._time(begin_date, end_date)}</Text>
+                    <Text style={[styles.txtClock, {fontSize: FontSize.h13}]}>
+                        {this._time(begin_date, end_date)}</Text>
 
                 </View>
 
-                <View style={[styles.viewClock, {marginTop: 10}]}>
-                    <Text style={styles.lbPrice}>{I18n.t('prize')}</Text>
-                    <Text style={styles.txtPrice}> {prize}</Text>
-                </View>
+                {this._priceView(min_price)}
+
             </View>
 
 
@@ -159,14 +105,26 @@ export default class RaceRowView extends Component {
             <View style={styles.raceStatus}>
                 <Image
                     source={this._imgRaceStatus(status)}
-                    style={styles.imgRaceStatus}/>
+                    style={status === 'go_ahead' ? styles.imgRaceStatus1 : styles.imgRaceStatus}/>
 
-                <Text style={this._txtColorStatus(status)}>{raceStatusConvert(status)}</Text>
+                <Text style={this._txtColorStatus(status)}>  {raceStatusConvert(status)}</Text>
 
             </View>
 
 
         </View>)
+    };
+
+    _priceView = (prize) => {
+        if (strNotNull(prize))
+            return <View style={[styles.viewClock, {marginTop: 8}]}>
+                <Text style={[styles.lbPrice, {fontSize: FontSize.h13}]}>{I18n.t('prize')}</Text>
+                <Text
+                    numberOfLines={1}
+                    style={[styles.txtPrice, {fontSize: FontSize.h13}]}> {prize}</Text>
+
+            </View>;
+
     };
 
 
@@ -189,11 +147,11 @@ export default class RaceRowView extends Component {
             case 'unsold':
                 return I18n.t('ticket_unsold');
             case 'selling':
-                return '购票';
+                return I18n.t('home_buy');
             case 'end':
                 return I18n.t('ticket_end');
             case 'sold_out':
-                return '售完';
+                return I18n.t('ticket_sold_out');
         }
     };
 
@@ -286,7 +244,7 @@ export default class RaceRowView extends Component {
                         , alignItems: 'center'
                     }}
                            source={Images.home_gold}>
-                        <Text style={styles.txtBuy}>{'购票'}</Text >
+                        <Text style={styles.txtBuy}>{I18n.t('home_buy')}</Text >
                     </Image>
                 </TouchableOpacity>)
 
@@ -295,10 +253,10 @@ export default class RaceRowView extends Component {
 
     _buyTicket = (rowData) => {
         if (strNotNull(login_user.user_id)) {
-            this.props.router.toChoiseTicketPage(this.props, rowData.race_id);
+            router.toChoiseTicketPage(this.props, rowData.race_id);
         }
         else
-            this.props.router.toLoginFirstPage();
+            router.toLoginFirstPage();
     };
 
     statusView = (status) => {
@@ -374,11 +332,14 @@ const styles = StyleSheet.create({
         marginRight: 15
     },
     txtTitle: {
-        fontSize: Fonts.size.h15,
         color: '#333333',
-        lineHeight: 20,
-        height: 38,
-        width: 170
+        width: 220,
+        marginBottom: 5
+    },
+    txtTitle1: {
+        color: '#333333',
+        width: 190,
+        marginBottom: 5
     },
     imgClock: {
         height: 12,
@@ -389,22 +350,24 @@ const styles = StyleSheet.create({
         width: 10
     },
     txtClock: {
-        fontSize: Fonts.size.h13,
         color: '#888888',
         marginLeft: 5
+    },
+    txtClock1: {
+        color: '#888888',
+        marginLeft: 5,
+        width: 170
     },
     viewClock: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 5
+        marginTop: 5,
     },
     lbPrice: {
-        fontSize: Fonts.size.h13,
-        color: '#454545'
+        color: Colors._333
     },
     txtPrice: {
-        fontSize: Fonts.size.h13,
-        color: '#daa647'
+        color: Colors._DF1,
     },
     btnStatus: {
         height: 32,
@@ -434,8 +397,11 @@ const styles = StyleSheet.create({
     },
     imgRaceStatus: {
         height: 12,
+        width: 12
+    },
+    imgRaceStatus1: {
+        height: 12,
         width: 10
-
     },
     txtRaceStatus: {
         fontSize: Fonts.size.h9,

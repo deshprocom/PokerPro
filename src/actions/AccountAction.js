@@ -10,6 +10,7 @@ import {
     FETCH_SUCCESS, FETCHING, FETCH_FAIL,FETCH_PASS, FETCH_PASS_SUCCESS,FETCH_PASS_FAIL
 } from '../actions/ActionTypes';
 import {showToast} from '../utils/ComonHelper';
+import I18n from 'react-native-i18n';
 
 
 import {
@@ -169,9 +170,9 @@ export function fetchPostVCode(body) {
         dispatch(_postVCode());
         postVCode(body, (ret) => {
             if (body.vcode_type === 'mobile') {
-                showToast("已发送到手机，注意查看短信")
+                showToast(I18n.t('mobile_code_send'))
             } else {
-                showToast("已发送到邮箱：" + body.email)
+                showToast(I18n.t('email_code_send') + body.email)
             }
             dispatch(_postVCodeOk(ret))
         }, (err) => {
@@ -235,6 +236,7 @@ export function fetchPostEmailResetPwd(email, vcode, password) {
         dispatch(_postResetPassword());
         postResetPwdCode(body, (ret) => {
             dispatch(_postResetPasswordOk(ret))
+            showToast(I18n.t('reset_password'))
         }, (err) => {
             showToast(err);
             dispatch(_postResetPasswordFail(err))
@@ -253,6 +255,7 @@ export function fetchPostMobileResetPwd(mobile, vcode, password) {
         dispatch(_postResetPassword());
         postResetPwdCode(body, (ret) => {
             dispatch(_postResetPasswordOk(ret))
+            showToast(I18n.t('reset_password'))
         }, (err) => {
             showToast(err);
             dispatch(_postResetPasswordFail(err))

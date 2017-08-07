@@ -135,7 +135,7 @@ class ModalPrompt extends Component {
                     </View>
 
 
-                    <View style={{flex:1}}/>
+                    <View style={{flex: 1}}/>
                     <TouchableOpacity
                         testID="btn_bind_know"
                         onPress={this._btnNext}
@@ -152,9 +152,9 @@ class ModalPrompt extends Component {
                     <View style={styles.itemClose}>
                         <TouchableOpacity
                             testID="btn_bind_back"
-                            onPress={()=>{
+                            onPress={() => {
                                 this.setState({
-                                    popup:1
+                                    popup: 1
                                 })
                             }}
                             activeOpacity={1}
@@ -164,7 +164,7 @@ class ModalPrompt extends Component {
 
                         </TouchableOpacity>
 
-                        <View style={{flex:1}}/>
+                        <View style={{flex: 1}}/>
                         <TouchableOpacity
                             testID="btn_bind_close"
                             onPress={this._close}
@@ -181,10 +181,10 @@ class ModalPrompt extends Component {
                         <Text style={styles.txtSendCode}>{I18n.t('sendCode')}</Text>
                         <SecurityText
                             securityOptions={{
-                        isSecurity: true,
-                        startIndex: 3,
-                        endIndex: 7,
-                    }}
+                                isSecurity: true,
+                                startIndex: 3,
+                                endIndex: 7,
+                            }}
                             style={styles.txtSendCode}>
                             {phone}
                         </SecurityText>
@@ -205,7 +205,7 @@ class ModalPrompt extends Component {
                             step={-1} // 计时步长，以秒为单位，正数则为正计时，负数为倒计时
                             startText={I18n.t('get_vcode')} // 开始的文本
                             endText={I18n.t('reSend')} // 结束的文本
-                            ref={ref=>this.countDownText = ref}
+                            ref={ref => this.countDownText = ref}
                             intervalText={(sec) => sec + 's'} // 定时的文本回调
                         />
                     </TouchableOpacity>
@@ -240,10 +240,10 @@ class ModalPrompt extends Component {
                     <View style={styles.inputView}>
                         <TextInput
                             testID="input_bind_phone"
-                            onChangeText={(text)=>{
-                               this.setState({
-                                   phone:text
-                               })
+                            onChangeText={(text) => {
+                                this.setState({
+                                    phone: text
+                                })
                             }}
                             value={phone}
                             clearButtonMode="always"
@@ -252,7 +252,7 @@ class ModalPrompt extends Component {
                             underlineColorAndroid='transparent'
                             style={styles.inputPhone}/>
                     </View>
-                    <View style={{flex:1}}/>
+                    <View style={{flex: 1}}/>
                     <TouchableOpacity
                         testID="btn_bind_next"
                         onPress={this._btnNewNext}
@@ -269,9 +269,9 @@ class ModalPrompt extends Component {
                     <View style={styles.itemClose}>
                         <TouchableOpacity
                             testID="btn_bind_back"
-                            onPress={()=>{
+                            onPress={() => {
                                 this.setState({
-                                    popup:4
+                                    popup: 4
                                 })
                             }}
                             activeOpacity={1}
@@ -281,7 +281,7 @@ class ModalPrompt extends Component {
 
                         </TouchableOpacity>
 
-                        <View style={{flex:1}}/>
+                        <View style={{flex: 1}}/>
                         <TouchableOpacity
                             testID="btn_bind_close"
                             onPress={this._close}
@@ -298,10 +298,10 @@ class ModalPrompt extends Component {
                         <Text style={styles.txtSendCode}>{I18n.t('sendCode')}</Text>
                         <SecurityText
                             securityOptions={{
-                        isSecurity: true,
-                        startIndex: 3,
-                        endIndex: 7,
-                    }}
+                                isSecurity: true,
+                                startIndex: 3,
+                                endIndex: 7,
+                            }}
                             style={styles.txtSendCode}>
                             {phone}
                         </SecurityText>
@@ -322,7 +322,7 @@ class ModalPrompt extends Component {
                             step={-1} // 计时步长，以秒为单位，正数则为正计时，负数为倒计时
                             startText={I18n.t('get_vcode')} // 开始的文本
                             endText={I18n.t('reSend')} // 结束的文本
-                            ref={ref=>this.countDownText = ref}
+                            ref={ref => this.countDownText = ref}
                             intervalText={(sec) => sec + 's'} // 定时的文本回调
                         />
                     </TouchableOpacity>
@@ -339,9 +339,14 @@ class ModalPrompt extends Component {
     };
 
     _close = () => {
-        this.setState({
-            codeDisable: false
-        });
+        this.state = {
+            popup: 1,
+            codeDisable: false,
+            phone: login_user.mobile,
+            codeSend: false,
+            old_code: '',
+            new_code: ''
+        };
         this.props.modalShow()
     };
 

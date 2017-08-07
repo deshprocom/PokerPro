@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {singleOrdouble, convertDate} from '../../utils/ComonHelper';
+import {singleOrdouble, convertDate, strNotNull, MM_DD, strRow} from '../../utils/ComonHelper';
 
 
 export default class ScheduleList extends Component {
@@ -31,7 +31,7 @@ export default class ScheduleList extends Component {
 
     _listHeader = () => {
         return ( <View style={styles.tableTitle}>
-            <Text style={styles.title}>Day</Text>
+            <Text style={styles.title}>{I18n.t('race_day')}</Text>
             <Text style={styles.title}>{I18n.t('date')}</Text>
             <Text style={styles.title}>{I18n.t('beginDate')}</Text>
         </View>)
@@ -39,23 +39,23 @@ export default class ScheduleList extends Component {
 
     _keyExtractor = (item) => {
         return item.schedule_id;
-    }
+    };
 
 
     _renderRow = (rowData) => {
         const {item, index} = rowData;
 
         return (<View
-            style={singleOrdouble(index)?styles.item1:styles.item2}>
+            style={singleOrdouble(index) ? styles.item1 : styles.item2}>
             <Text
-                testID={"txt_day_"+item.schedule_id}
-                style={styles.txtInfo}>{item.schedule}</Text>
+                testID={"txt_day_" + item.schedule_id}
+                style={styles.txtInfo}>{strRow(item.schedule)}</Text>
 
             <Text
-                testID={"txt_month_"+item.schedule_id}
-                style={styles.txtInfo}>{convertDate(item.begin_time, "M月D日")}</Text>
+                testID={"txt_month_" + item.schedule_id}
+                style={styles.txtInfo}>{convertDate(item.begin_time, MM_DD)}</Text>
             <Text
-                testID={"txt_begin_time_"+item.schedule_id}
+                testID={"txt_begin_time_" + item.schedule_id}
                 style={styles.txtInfo}>{convertDate(item.begin_time, "HH:mm")}</Text>
         </View>)
     }

@@ -60,7 +60,14 @@ export default {
     selectRaceTicket: selectRaceTicket,
     buyRaceTicket: buyRaceTicket,
     orderTicket: orderTicket,
-    addAddress: addAddress
+    addAddress: addAddress,
+    setAdrDefault: setAdrDefault,
+    adrDelete: adrDelete,
+    login_count: login_count,
+    players_list: players_list,
+    poker_ranks: poker_ranks,
+    player_focus: player_focus,
+    focus_list: focus_list
 
 }
 
@@ -75,6 +82,23 @@ function getUserId() {
 const page_size = 10;
 
 
+export function player_focus(body) {
+    const {player_id} = body;
+    return 'players/' + player_id + '/follow'
+}
+
+export function login_count() {
+    return 'users/' + getUserId() + '/login_count';
+}
+
+
+export function adrDelete(address_id) {
+    return 'account/users/' + getUserId() + '/address/' + address_id + '/delete';
+}
+
+export function setAdrDefault(address_id) {
+    return 'account/users/' + getUserId() + '/address/' + address_id + '/default';
+}
 export function addAddress() {
     return 'account/users/' + getUserId() + '/address';
 }
@@ -154,9 +178,27 @@ export function news_list(body) {
 
     return 'news/types/' + type_id + '?page_size=' + page_size + '&next_id=' + next_id;
 }
+export function players_list(body) {
+    const {page_index, region, page_size, begin_year, end_year, keyword} = body;
+    if (strNotNull(keyword))
+        return 'players?keyword=' + keyword;
+    else
+        return 'players?page_index=' + page_index + '&page_size=' + page_size
+            + '&region=' + region + '&begin_year=' + begin_year + '&end_year=' + end_year;
+}
 export function player_info(body) {
     const {player_id} = body;
     return 'players/' + player_id;
+}
+
+export function poker_ranks(body) {
+    const {player_id} = body;
+    return 'players/' + player_id + '/ranks';
+}
+
+export function focus_list(body) {
+    const {next_id} = body;
+    return 'users/' + getUserId() + '/followed_players?next_id=' + next_id
 }
 
 export function sub_race_info(body) {
@@ -250,7 +292,7 @@ function recent_races(body) {
 
 function races_info(body) {
     const {user_id, race_id} = body;
-    return 'u/' + user_id + '/races/' + race_id;
+    return 'u/' + getUserId() + '/races/' + race_id;
 }
 
 function new_order(race_id) {
