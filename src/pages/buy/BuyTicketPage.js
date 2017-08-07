@@ -197,7 +197,7 @@ class BuyTicketPage extends Component {
     };
 
     _btnBuyTicket = () => {
-        this.payModal.toggle();
+        // this.payModal.toggle();
         umengEvent('ticket_buy_contain');
         let {isEntity, email, isNameReal, shipping_address} = this.state;
         if (isNameReal) {

@@ -17,7 +17,7 @@ import {GET_ORDER_LIST, POST_ORDER_CANCEL} from '../../actions/ActionTypes';
 import {fetchOrderList} from '../../actions/OrderAction';
 import {LoginUser} from '../../services/AccountDao';
 import PullToRefreshListView from 'react-native-smart-pull-to-refresh-listview';
-import RaceInfoView from '../buy/RaceInfoView';
+import ItemOrderView from './ItemOrderView';
 import {_renderFooter, _renderHeader} from '../../components/LoadingView';
 import {GET_CERTIFICATION} from '../../actions/ActionTypes';
 import {Verified} from '../../configs/Status';
@@ -144,7 +144,7 @@ class ListOrderView extends Component {
             </View>
             <View style={{height:1}}/>
             {/*赛事简介*/}
-            <RaceInfoView
+            <ItemOrderView
                 ticket={ticket}
                 orderInfo={order_info}
                 disabled={true}
