@@ -2,7 +2,7 @@
  * Created by lorne on 2017/1/3.
  */
 import React from 'react';
-import {StyleSheet, BackAndroid, Navigator} from 'react-native';
+import {StyleSheet, BackAndroid, Navigator, Linking} from 'react-native';
 import Drawer from 'react-native-drawer'
 import {connect} from 'react-redux';
 import SidePage from './SidePage';
@@ -14,13 +14,20 @@ import {GET_CERTIFICATION} from '../actions/ActionTypes';
 
 class DrawerPage extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
 
     componentDidMount() {
         setDispatchAction(GET_CERTIFICATION, this.props._getRealName)
+        Linking.addEventListener('url', this._handleOpenURL);
+
     }
+
+    componentWillUnmount() {
+        Linking.removeEventListener('url', this._handleOpenURL);
+    }
+
+    _handleOpenURL = (event) => {
+        console.log('scheme URL:',event.url);
+    };
 
     componentDidUpdate() {
         if (this.props.drawerState === 'opened') {
@@ -45,11 +52,13 @@ class DrawerPage extends React.Component {
     render() {
         return (
             <Drawer
-                ref={(ref)=>{this._drawer = ref;}}
+                ref={(ref) => {
+                    this._drawer = ref;
+                }}
                 type="static"
                 onClose={() => this.closeDrawer()}
                 content={<SidePage
-                router={this.props.router}/>}
+                    router={this.props.router}/>}
                 tapToClose
                 openDrawerOffset={100}
                 styles={drawerStyles}

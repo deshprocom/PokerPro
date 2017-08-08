@@ -19,6 +19,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "Orientation.h"
 #import <UMSocialCore/UMSocialCore.h>
+#import <React/RCTLinkingManager.h>
 
 static NSString *appKey = @"40fc518c7fb0759af5cba44a";     //填写appkey
 static NSString *channel = @"";    //填写channel   一般为nil
@@ -33,7 +34,7 @@ static BOOL isProduction = false;  //填写isProdurion  平时测试时为false 
     JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
      entity.types = UNAuthorizationOptionAlert|UNAuthorizationOptionBadge|UNAuthorizationOptionSound;
      [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
- 
+
 #endif
 } else if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
     [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
@@ -46,7 +47,7 @@ static BOOL isProduction = false;  //填写isProdurion  平时测试时为false 
                                                       UIRemoteNotificationTypeAlert)
                                           categories:nil];
   }
-  
+
   [JPUSHService setupWithOption:launchOptions appKey:appKey
                         channel:nil apsForProduction:isProduction];
   NSURL *jsCodeLocation;
@@ -111,13 +112,17 @@ completionHandler();
 
 //#define __IPHONE_10_0    100000
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > 100000
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options
 {
   //6.3的新的API调用，是为了兼容国外平台(例如:新版facebookSDK,VK等)的调用[如果用6.2的api调用会没有回调],对国内平台没有影响。
   BOOL result = [[UMSocialManager defaultManager]  handleOpenURL:url options:options];
+
+  BOOL other = [RCTLinkingManager application:application openURL:url
+   sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+              annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
   if (!result) {
     // 其他如支付等SDK的回调
-    // result = other;
+    result = other;
   }
   return result;
 }
@@ -144,4 +149,6 @@ completionHandler();
   }
   return result;
 }
+
+
 @end
