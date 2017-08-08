@@ -27,6 +27,7 @@ class DrawerPage extends React.Component {
 
     _handleOpenURL = (event) => {
         console.log('scheme URL:',event.url);
+        router.toOrderListPage()
     };
 
     componentDidUpdate() {

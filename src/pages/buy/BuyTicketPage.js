@@ -197,7 +197,7 @@ class BuyTicketPage extends Component {
     };
 
     _btnBuyTicket = () => {
-        // this.payModal.toggle();
+        this.payModal.toggle();
         umengEvent('ticket_buy_contain');
         let {isEntity, email, isNameReal, shipping_address} = this.state;
         if (isNameReal) {
@@ -217,11 +217,11 @@ class BuyTicketPage extends Component {
                     consignee: shipping_address.consignee,
                     address: shipping_address.address + shipping_address.address_detail
                 };
-                postOrderTicket(param, body, data => {
-                    this._postOrderOk();
-                }, err => {
-                    showToast(err)
-                });
+                // postOrderTicket(param, body, data => {
+                //     this._postOrderOk();
+                // }, err => {
+                //     showToast(err)
+                // });
 
 
             } else if (checkMail(email)) {
