@@ -22,6 +22,8 @@ import {
 import Button from 'react-native-smart-button';
 import {fetchGetRecentRaces, fetchRacesInfo} from '../../actions/RacesAction';
 import {Verified} from '../../configs/Status';
+import PayModal from '../buy/PayModal';
+import {postOrderCancel, postPayOrder} from '../../services/OrderDao';
 
 class OrderInfoPage extends React.Component {
 
@@ -59,7 +61,6 @@ class OrderInfoPage extends React.Component {
 
     _refreshPage = () => {
 
-        console.log('orderE', getLoginUser())
         const {user_id} = getLoginUser();
         if (strNotNull(user_id)) {
             this.setState({
@@ -163,7 +164,7 @@ class OrderInfoPage extends React.Component {
                                 }}>{I18n.t('order_status')}:</Text>
                                 <Text
                                     testID="txt_order_status"
-                                    style={{fontSize: 15, color: Colors._888}}>{orderStatus(order_info.status)}</Text>
+                                    style={{fontSize: 15, color: Colors._DF1}}>{orderStatus(order_info.status)}</Text>
                             </View>
                         </View>
 
@@ -198,7 +199,7 @@ class OrderInfoPage extends React.Component {
                             <Text
                                 testID="txt_original_price"
                                 style={{
-                                    fontSize: 14, color: Colors._333, marginRight: 18,
+                                    fontSize: 14, color: Colors._AAA, marginRight: 18,
                                     textDecorationLine: 'line-through'
                                 }}>{order_info.original_price}</Text>
                         </View>
@@ -257,7 +258,8 @@ class OrderInfoPage extends React.Component {
     _bottomBar = (order_info) => {
 
         if (!isEmptyObject(order_info) &&
-            order_info.status === 'unpaid')
+            (order_info.status === 'unpaid'
+            || order_info.status === 'delivered'))
             return ( <View
                 activeOpacity={1}
                 testID="btn_buy"
@@ -269,32 +271,102 @@ class OrderInfoPage extends React.Component {
                     position: 'absolute', bottom: 0, left: 0, right: 0,
                 }}>
 
-
-                <View style={{flexDirection: 'row', marginLeft: 19, alignItems: 'flex-end'}}>
-                    <Text style={{fontSize: 14, color: Colors.txt_666}}>{I18n.t('order_total')}: </Text>
-
-                    <Text
-                        testID="txt_total_price"
-                        style={{fontSize: 18, color: '#DF1D0F'}}>
-                        {isEmptyObject(order_info) ? '' : order_info.price}</Text>
-                </View>
-
-                <TouchableOpacity
-                    onPress={this._orderCancel}
-                    activeOpacity={1}
-                    testID="btn_order_cancel"
-                    style={{flex: 1, alignItems: 'flex-end'}}>
-                    <View
-                        style={{
-                            borderColor: Colors._AAA, borderWidth: 1, borderRadius: 5,
-                            height: 32, width: 68, alignItems: 'center', justifyContent: 'center', marginRight: 15
-                        }}>
-                        <Text style={{fontSize: 12, color: Colors.txt_666}}>{I18n.t('order_cancel')}</Text>
-                    </View>
-                </TouchableOpacity>
-                {this._user_real_call_btn()}
+                {this.btnBottom(order_info)}
 
             </View>)
+    };
+
+
+    btnBottom = (order_info) => {
+        switch (order_info.status) {
+            case 'unpaid':
+                return this._unPaid(order_info);
+            case 'delivered':
+                return this._paidView(order_info);
+        }
+    };
+
+
+    _paidView = (order_info) => {
+        return (<View style={styles.row}>
+
+            <View style={{flex: 1}}/>
+
+            <TouchableOpacity
+                onPress={this._hotLine}
+                activeOpacity={1}
+                testID="btn_order_cancel"
+                style={[styles.btnCancel, {marginRight: 15}]}>
+
+                <Text style={styles.txtCancel}>{I18n.t('contact_customer_service')}</Text>
+
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                style={styles.btnCancel}>
+
+                <Text style={styles.txtCancel}>{I18n.t('order_logistics')}</Text>
+
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                style={styles.btnGet}>
+
+                <Text style={styles.txtGet}>{I18n.t('order_receipt')}</Text>
+
+            </TouchableOpacity>
+
+        </View>)
+    }
+
+    _unPaid = (order_info) => {
+        return (<View style={styles.row}>
+            <View style={{flexDirection: 'row', marginLeft: 19, alignItems: 'flex-end'}}>
+                <Text style={{fontSize: 14, color: Colors.txt_666, marginRight: 5}}>{I18n.t('order_total')}: </Text>
+
+                <Text
+                    testID="txt_total_price"
+                    style={{fontSize: 18, color: Colors._DF1}}>
+                    {isEmptyObject(order_info) ? '' : order_info.price}</Text>
+            </View>
+            <View style={{flex: 1}}/>
+
+            <TouchableOpacity
+                onPress={this._orderCancel}
+                activeOpacity={1}
+                testID="btn_order_cancel"
+                style={styles.btnCancel}>
+
+                <Text style={styles.txtCancel}>{I18n.t('order_cancel')}</Text>
+
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                onPress={this._pay}
+                activeOpacity={1}
+                testID="btn_order_pay"
+                style={styles.btnPay}>
+
+                <Text style={styles.txtPay}>{I18n.t('pay')}</Text>
+
+            </TouchableOpacity>
+        </View>)
+    };
+
+    _pay = ()=>{
+        const { order_info } = this.props.orderDetail;
+        const body = {
+            order_number: order_info.order_id
+        };
+
+        postPayOrder(body, data => {
+            if (this.payModal) {
+                data['order_number'] = order_info.order_id;
+                data['price'] = order_info.price;
+                this.payModal.setPayUrl(data);
+                this.payModal.toggle();
+            }
+        })
     }
 
     _user_real_call_btn = () => {
@@ -373,7 +445,7 @@ class OrderInfoPage extends React.Component {
                     marginLeft: 17
                 }]}>{I18n.t('order_reason')}:{user_extra.memo}</Text>
             </View>)
-    }
+    };
 
 
     render() {
@@ -428,7 +500,8 @@ class OrderInfoPage extends React.Component {
 
                 {/*底部导航栏*/}
                 {this._bottomBar(order_info)}
-
+                <PayModal
+                    ref={ref => this.payModal = ref}/>
             </View>)
     }
 }
@@ -460,5 +533,37 @@ const styles = StyleSheet.create({
     txtAdr: {
         fontSize: 15,
         color: Colors._888
-    }
+    },
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    btnCancel: {
+        borderColor: Colors._666, borderWidth: 1, borderRadius: 3,
+        alignItems: 'center', justifyContent: 'center', marginRight: 30,
+        minWidth: 80
+    },
+    txtCancel: {
+        fontSize: 14, color: Colors._666,
+        margin: 10
+    },
+    btnPay: {
+        borderColor: Colors._DF1, borderWidth: 1, borderRadius: 3,
+        alignItems: 'center', justifyContent: 'center', marginRight: 17,
+        minWidth: 80
+    },
+    txtPay: {
+        fontSize: 14, color: Colors._DF1,
+        margin: 10
+    },
+    btnGet: {
+        borderRadius: 3, backgroundColor: Colors._DF1,
+        alignItems: 'center', justifyContent: 'center', marginRight: 15,
+        minWidth: 80
+    },
+    txtGet: {
+        fontSize: 14, color: Colors.white,
+        margin: 10
+    },
+
 });

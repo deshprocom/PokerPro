@@ -166,8 +166,9 @@ class BuyTicketPage extends Component {
 
     _postOrderOk = (data) => {
         // Alert.alert(`${I18n.t('buy_success')}`, `${I18n.t('keep_phone')}`);
-
+        const {tickets} = this.state;
         if (this.payModal && !isEmptyObject(data)) {
+            data['price'] = tickets.price;
             this.payModal.setPayUrl(data);
             this.payModal.toggle();
 
@@ -561,6 +562,7 @@ class BuyTicketPage extends Component {
                 </View>
 
                 <PayModal
+                    toOrder={true}
                     ref={ref => this.payModal = ref}/>
             </View>
         )

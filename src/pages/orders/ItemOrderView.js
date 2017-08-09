@@ -67,7 +67,7 @@ export default class ItemOrderView extends Component {
             <View style={styles.top}>
                 <View style={styles.viewTime}>
                     <Text style={styles.total}>{I18n.t('order_total')}: </Text>
-                    <Text style={styles.price}>{ticket.price}</Text>
+                    <Text style={styles.price}>{orderInfo.price}</Text>
                 </View>
 
                 <View style={{flex: 1}}/>
@@ -155,6 +155,7 @@ export default class ItemOrderView extends Component {
                     postPayOrder(body, data => {
                         if (this.payModal) {
                             data['order_number'] = orderInfo.order_id;
+                            data['price'] = orderInfo.price;
                             this.payModal.setPayUrl(data);
                             this.payModal.toggle();
                         }
