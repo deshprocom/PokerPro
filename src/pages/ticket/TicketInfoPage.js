@@ -10,8 +10,9 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {UltimateListView, NavigationBar, ImageLoad, MarkdownPlat} from '../../components';
+import {ImageLoad, MarkdownPlat} from '../../components';
 import {getBuyRaceTicket} from '../../services/OrderDao';
+import {isEmptyObject} from '../../utils/ComonHelper';
 
 export default class TicketInfoPage extends Component {
 
@@ -53,22 +54,43 @@ export default class TicketInfoPage extends Component {
             {this._topBar()}
 
             {this._content()}
-            { this.props.params.isBuy ? null : this._viewGoBuy() }
+            {this._viewGoBuy() }
 
         </View>)
 
     }
 
-    _viewGoBuy = () => {
-        return ( <TouchableOpacity
-            onPress={() => {
-                const {race_id, ticket_id} = this.props.params;
-                router.toBuyTicketPage(this.props, race_id, ticket_id)
-            }}
-            style={styles.btnBuy}>
-            <Text style={styles.txtGoBuy}>{I18n.t('goBuy')}</Text>
+    _ticketNum = (ticket_info) => {
+        if (!isEmptyObject(ticket_info)) {
+            const {e_ticket_number, e_ticket_sold_number, entity_ticket_number, entity_ticket_sold_number} = ticket_info;
+            return e_ticket_number + entity_ticket_number - e_ticket_sold_number - entity_ticket_sold_number;
+        }
 
-        </TouchableOpacity>)
+    };
+
+
+    _showBuy = () => {
+        const {tickets} = this.state;
+        if (!isEmptyObject(tickets)) {
+            let num = this._ticketNum(tickets.ticket_info);
+            return !this.props.params.isBuy && num > 0;
+        } else
+            return false;
+
+    };
+
+    _viewGoBuy = () => {
+
+        if (this._showBuy())
+            return ( <TouchableOpacity
+                onPress={() => {
+                    const {race_id, ticket_id} = this.props.params;
+                    router.toBuyTicketPage(this.props, race_id, ticket_id)
+                }}
+                style={styles.btnBuy}>
+                <Text style={styles.txtGoBuy}>{I18n.t('goBuy')}</Text>
+
+            </TouchableOpacity>)
     };
 
     _content = () => {
@@ -76,7 +98,7 @@ export default class TicketInfoPage extends Component {
         const {description, title, price, banner} = tickets;
         const {name, logo} = race;
         return (  <ScrollView
-            style={this.props.params.isBuy ? {} : {marginBottom: 70}}
+            style={this._showBuy() ? {marginBottom: 70}:{}}
             iosalwaysBounceVertical={false}
             scrollEventThrottle={16}
             onScroll={this._onScroll}

@@ -364,7 +364,8 @@ export default class ChoiseTicketPage extends Component {
 
     _btnOkStyle = () => {
         const {ticket} = this.state;
-        return ticket.status === "selling" ?
+        let num = this._ticketNum(ticket.ticket_info);
+        return ticket.status === "selling" && num > 0 ?
             styles.viewBtnOk : [styles.viewBtnOk, styles.btnDisable]
 
 
@@ -372,7 +373,8 @@ export default class ChoiseTicketPage extends Component {
 
     _btnOkDisabled = () => {
         const {ticket} = this.state;
-        return !(ticket.status === "selling");
+        let num = this._ticketNum(ticket.ticket_info);
+        return !(ticket.status === "selling" && num > 0 );
     };
 
     bottomBar = () => {
