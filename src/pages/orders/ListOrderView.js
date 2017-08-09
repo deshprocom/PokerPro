@@ -17,7 +17,7 @@ import {GET_ORDER_LIST, POST_ORDER_CANCEL} from '../../actions/ActionTypes';
 import {fetchOrderList} from '../../actions/OrderAction';
 import {LoginUser} from '../../services/AccountDao';
 import PullToRefreshListView from 'react-native-smart-pull-to-refresh-listview';
-import RaceInfoView from '../buy/RaceInfoView';
+import ItemOrderView from './ItemOrderView';
 import {_renderFooter, _renderHeader} from '../../components/LoadingView';
 import {GET_CERTIFICATION} from '../../actions/ActionTypes';
 import {Verified} from '../../configs/Status';
@@ -134,22 +134,11 @@ class ListOrderView extends Component {
             style={{marginBottom:5}}>
 
             {rowID == 0 ? <View style={{height:8}}/> : null}
-            <View style={{height:49,flex:1,flexDirection:'row',
-            justifyContent:'space-between',alignItems:'center',
-            backgroundColor:Colors.white,paddingLeft:17,paddingRight:17}}>
-                <Text style={{fontSize:15,color:Colors.txt_666}}>
-                    {I18n.t('order_num')}:{order_info.order_id}</Text>
-                <Text style={{fontSize:15,color:Colors.txt_666}}>
-                    {orderStatus(order_info.status)}</Text>
-            </View>
-            <View style={{height:1}}/>
             {/*赛事简介*/}
-            <RaceInfoView
+            <ItemOrderView
                 ticket={ticket}
                 orderInfo={order_info}
-                disabled={true}
-                raceInfo={race_info}
-                router={this.props.router}/>
+                raceInfo={race_info}/>
 
 
         </TouchableOpacity>)

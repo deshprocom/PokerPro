@@ -335,5 +335,6 @@
   "pay_card":"银行卡支付",
   "pay_tine":"信用卡储蓄卡付款，快捷支付",
   "pay_confirm":"确认支付",
-  "ticket_info":"套票详情"
+  "ticket_info":"套票详情",
+  "pay":"付款"
 }

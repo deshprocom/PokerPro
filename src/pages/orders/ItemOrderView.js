@@ -9,30 +9,39 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {ImageLoad} from '../../components';
+import {orderStatus, YYYY_MM_DD, convertDate} from '../../utils/ComonHelper';
 
 export default class ItemOrderView extends Component {
 
 
+    _time = (begin_date, end_date) => {
+
+        return convertDate(begin_date, YYYY_MM_DD)
+            + '-' + convertDate(end_date, YYYY_MM_DD)
+    }
+
     render() {
+        const {ticket, orderInfo, raceInfo} = this.props;
+
         return (<View style={{backgroundColor: 'white'}}>
             <View style={styles.top}>
                 <Text style={[styles.txtOrder, {marginLeft: 17}]}>{I18n.t('order_num')}:</Text>
-                <Text style={styles.txtOrder}>xx4857349587349</Text>
+                <Text style={styles.txtOrder}>{orderInfo.order_id}</Text>
                 <View style={{flex: 1}}/>
-                <Text style={[styles.txtOrder, {marginRight: 17}]}>待付款</Text>
+                <Text style={[styles.txtOrder, {marginRight: 17}]}>{orderStatus(orderInfo.status)}</Text>
             </View>
             <View style={styles.lineView}/>
 
             <View style={styles.midView}>
                 <ImageLoad
-                    source={{uri: ''}}
+                    source={{uri: raceInfo.logo}}
                     style={styles.imgLog}/>
 
                 <View style={{height: 86}}>
-                    <View style={{flex: 1,width:'86%'}}>
+                    <View style={{flex: 1, width: '86%'}}>
                         <Text
                             numberOfLines={2}
-                            style={styles.name}>2017扑克王杯 - 澳门站澳门展拉链可减少到了放假拉开结束了 啊索朗多吉</Text>
+                            style={styles.name}>{ticket.title}</Text>
 
                     </View>
 
@@ -40,13 +49,13 @@ export default class ItemOrderView extends Component {
                         <Image source={Images.home_adr}
                                style={styles.imgAdr}/>
 
-                        <Text style={styles.txtTime}>澳门威尼斯人</Text>
+                        <Text style={styles.txtTime}>{raceInfo.location}</Text>
                     </View>
 
                     <View style={[styles.viewTime, {marginTop: 7}]}>
                         <Image source={Images.home_clock}
                                style={styles.imgClock}/>
-                        <Text style={styles.txtTime}>2017.5.18-2017.5.26</Text>
+                        <Text style={styles.txtTime}>{this._time(raceInfo.begin_date, raceInfo.end_date)}</Text>
                     </View>
                 </View>
 
@@ -56,7 +65,7 @@ export default class ItemOrderView extends Component {
             <View style={styles.top}>
                 <View style={styles.viewTime}>
                     <Text style={styles.total}>{I18n.t('order_total')}: </Text>
-                    <Text style={styles.price}>16,343</Text>
+                    <Text style={styles.price}>{ticket.price}</Text>
                 </View>
 
                 <View style={{flex: 1}}/>
@@ -65,7 +74,7 @@ export default class ItemOrderView extends Component {
                     <Text style={styles.cancel}>{I18n.t('order_cancel')}</Text>
                 </View>
                 <View style={styles.btnPay}>
-                    <Text style={styles.pay}>付款</Text>
+                    <Text style={styles.pay}>{I18n.t('pay')}</Text>
                 </View>
 
             </View>
@@ -82,7 +91,8 @@ const styles = StyleSheet.create({
     },
     txtOrder: {
         fontSize: 14,
-        color: Colors._666
+        color: Colors._666,
+        marginLeft: 7
     },
     lineView: {
         height: 1,
@@ -105,7 +115,8 @@ const styles = StyleSheet.create({
     },
     txtTime: {
         fontSize: 13,
-        color: Colors._888
+        color: Colors._888,
+        marginLeft: 7
     },
     viewTime: {
         flexDirection: 'row',
@@ -126,7 +137,8 @@ const styles = StyleSheet.create({
     },
     price: {
         color: Colors._DF1,
-        fontSize: 17
+        fontSize: 17,
+        marginLeft: 7
     },
     cancel: {
         color: Colors._333,
@@ -142,13 +154,15 @@ const styles = StyleSheet.create({
     pay: {
         color: Colors._DF1,
         fontSize: 12,
-        margin: 5
+        margin: 5,
+        alignSelf: 'center'
     },
     btnPay: {
         borderRadius: 2,
         borderWidth: 1,
         borderColor: Colors._DF1,
-        marginRight: 17
+        marginRight: 17,
+        minWidth: 60,
     }
 
 

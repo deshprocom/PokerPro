@@ -166,25 +166,9 @@ class BuyTicketPage extends Component {
 
     _postOrderOk = () => {
         Alert.alert(`${I18n.t('buy_success')}`, `${I18n.t('keep_phone')}`);
+        this.payModal.toggle();
 
 
-        const {user_id} = getLoginUser();
-        if (strNotNull(user_id)) {
-            const body = {
-                user_id: user_id,
-                race_id: this.props.params.race_id
-            };
-            this.props._getRacesInfo(body);
-
-            const recentRaces = {
-                user_id: user_id,
-                number: 5
-            };
-            this.props._getRecentRaces(recentRaces);
-            this.refreshPage();
-
-            router.toOrderListPage();
-        }
     };
 
     _saveBuyEmail = () => {
@@ -197,7 +181,7 @@ class BuyTicketPage extends Component {
     };
 
     _btnBuyTicket = () => {
-        this.payModal.toggle();
+
         umengEvent('ticket_buy_contain');
         let {isEntity, email, isNameReal, shipping_address} = this.state;
         if (isNameReal) {
@@ -217,11 +201,12 @@ class BuyTicketPage extends Component {
                     consignee: shipping_address.consignee,
                     address: shipping_address.address + shipping_address.address_detail
                 };
-                // postOrderTicket(param, body, data => {
-                //     this._postOrderOk();
-                // }, err => {
-                //     showToast(err)
-                // });
+                postOrderTicket(param, body, data => {
+                    console.log('order', data)
+                    this._postOrderOk();
+                }, err => {
+                    showToast(err)
+                });
 
 
             } else if (checkMail(email)) {
@@ -236,6 +221,7 @@ class BuyTicketPage extends Component {
                     email: email
                 };
                 postOrderTicket(param, body, data => {
+                    console.log('order', data)
                     this._postOrderOk();
                 }, err => {
                     showToast(err)
