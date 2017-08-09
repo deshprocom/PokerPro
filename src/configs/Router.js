@@ -52,6 +52,7 @@ import FocusPlayer from '../pages/rank/FocusPlayer';
 import PokerRankPage from '../pages/rank/info/PokerRankPage';
 import PokerRacePage from '../pages/rank/info/PokerRacePage';
 import SearchPoker from '../pages/rank/SearchPoker';
+import WebViewPay from '../components/WebViewPay';
 
 
 const customFloatFromRight = Navigator.SceneConfigs.FadeAndroid;
@@ -130,6 +131,18 @@ export default class Router {
     }
 
 
+    toWebViewPay(props, url) {
+        this.push(props, {
+            page: WebViewPay,
+            name: 'WebViewPay',
+            sceneConfig: customFloatFromRight,
+            params: {
+                url: url
+            }
+        })
+    }
+
+
     toSearchPoker(props) {
         this.push(props, {
             page: SearchPoker,
@@ -202,7 +215,7 @@ export default class Router {
     }
 
 
-    toTicketInfoPage(props, race_id, ticket_id,isBuy) {
+    toTicketInfoPage(props, race_id, ticket_id, isBuy) {
         this.push(props, {
             page: TicketInfoPage,
             name: 'TicketInfoPage',
@@ -210,7 +223,7 @@ export default class Router {
             params: {
                 race_id: race_id,
                 ticket_id: ticket_id,
-                isBuy:isBuy
+                isBuy: isBuy
             }
 
         })

@@ -42,7 +42,8 @@ class BuyTicketPage extends Component {
         ordered: false,
         race: {},
         tickets: {},
-        shipping_address: {}
+        shipping_address: {},
+        order: {}
     };
 
     componentWillReceiveProps(newProps) {
@@ -164,9 +165,13 @@ class BuyTicketPage extends Component {
     };
 
 
-    _postOrderOk = () => {
-        Alert.alert(`${I18n.t('buy_success')}`, `${I18n.t('keep_phone')}`);
-        this.payModal.toggle();
+    _postOrderOk = (data) => {
+        // Alert.alert(`${I18n.t('buy_success')}`, `${I18n.t('keep_phone')}`);
+        this.setState({
+            order: data
+        });
+        if (this.payModal && !isEmptyObject(data))
+            this.payModal.toggle();
 
 
     };
@@ -183,7 +188,7 @@ class BuyTicketPage extends Component {
     _btnBuyTicket = () => {
 
         umengEvent('ticket_buy_contain');
-        let {isEntity, email, isNameReal, shipping_address} = this.state;
+        let {isEntity, email, isNameReal, shipping_address, order} = this.state;
         if (isNameReal) {
             if (isEntity === ENTITY) {
                 if (isEmptyObject(shipping_address)) {
@@ -201,12 +206,15 @@ class BuyTicketPage extends Component {
                     consignee: shipping_address.consignee,
                     address: shipping_address.address + shipping_address.address_detail
                 };
-                postOrderTicket(param, body, data => {
-                    console.log('order', data)
-                    this._postOrderOk();
-                }, err => {
-                    showToast(err)
-                });
+                if (!isEmptyObject(order)) {
+                    this._postOrderOk(order);
+                } else {
+                    postOrderTicket(param, body, data => {
+                        this._postOrderOk(data);
+                    }, err => {
+                        showToast(err)
+                    });
+                }
 
 
             } else if (checkMail(email)) {
@@ -220,12 +228,17 @@ class BuyTicketPage extends Component {
                     ticket_type: 'e_ticket',
                     email: email
                 };
-                postOrderTicket(param, body, data => {
-                    console.log('order', data)
-                    this._postOrderOk();
-                }, err => {
-                    showToast(err)
-                });
+                if (!isEmptyObject(order)) {
+                    this._postOrderOk(order);
+                } else {
+                    postOrderTicket(param, body, data => {
+
+                        this._postOrderOk(data);
+                    }, err => {
+                        showToast(err)
+                    });
+                }
+
             }
 
         } else {
@@ -234,10 +247,6 @@ class BuyTicketPage extends Component {
 
     };
 
-    ticketPrice = (race) => {
-        if (!isEmptyObject(race))
-            return race.ticket_price;
-    };
 
     _location = () => {
 
@@ -382,7 +391,7 @@ class BuyTicketPage extends Component {
 
     render() {
         const {user_extra} = this.props;
-        const {race, tickets, ordered, isEntity, knowRed, email} = this.state;
+        const {race, tickets, ordered, isEntity, knowRed, email, order} = this.state;
         const {ticket_info, price} = tickets;
 
         return (
@@ -551,7 +560,9 @@ class BuyTicketPage extends Component {
 
                 </View>
 
-                <PayModal ref={ref => this.payModal = ref}/>
+                <PayModal
+                    order={order}
+                    ref={ref => this.payModal = ref}/>
             </View>
         )
     }

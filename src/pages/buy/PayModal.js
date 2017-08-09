@@ -10,7 +10,7 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 
 
-var testUrl = 'http://localhost:4200/pay/fail'
+var testUrl = 'https://h5.deshpro.com/pay/fail';
 
 export default class PayModal extends Component {
 
@@ -101,10 +101,11 @@ export default class PayModal extends Component {
     };
 
     payView = () => {
+        const {pay_url} = this.props.order;
         return <TouchableOpacity
             onPress={() => {
                 this.toggle();
-                router.toWebViewPage(this.props, testUrl)
+                router.toWebViewPay(this.props, pay_url)
             }}
             style={styles.btnPay}>
             <Text style={styles.txtPay}>{I18n.t('pay_confirm')}</Text>
