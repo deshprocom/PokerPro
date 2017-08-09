@@ -149,20 +149,26 @@ const styles = StyleSheet.create({
         borderRadius: 2,
         borderWidth: 1,
         borderColor: Colors._666,
-        marginRight: 20
+        marginRight: 20,
+        minWidth: 70,
+        minHeight: 30,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     pay: {
-        color: Colors._DF1,
+        color: Colors.white,
         fontSize: 12,
         margin: 5,
-        alignSelf: 'center'
     },
     btnPay: {
         borderRadius: 2,
-        borderWidth: 1,
-        borderColor: Colors._DF1,
+        backgroundColor: Colors._DF1,
         marginRight: 17,
-        minWidth: 60,
+        minWidth: 70,
+        minHeight: 30,
+        alignItems: 'center',
+        justifyContent: 'center'
+
     }
 
 
