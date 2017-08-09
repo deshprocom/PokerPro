@@ -3,13 +3,15 @@
  */
 import React, {Component, PropTypes}from 'react';
 import {
-    TouchableOpacity, View, TextInput,
-    StyleSheet, Image, Text, ListView
+    TouchableOpacity, View,
+    StyleSheet, Image, Text, ListView, Alert
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {ImageLoad} from '../../components';
-import {orderStatus, YYYY_MM_DD, convertDate} from '../../utils/ComonHelper';
+import {orderStatus, YYYY_MM_DD, convertDate, showToast} from '../../utils/ComonHelper';
+import {postOrderCancel, postPayOrder} from '../../services/OrderDao';
+import PayModal from '../buy/PayModal';
 
 export default class ItemOrderView extends Component {
 
@@ -70,16 +72,97 @@ export default class ItemOrderView extends Component {
 
                 <View style={{flex: 1}}/>
 
-                <View style={styles.btnCancel}>
-                    <Text style={styles.cancel}>{I18n.t('order_cancel')}</Text>
-                </View>
-                <View style={styles.btnPay}>
-                    <Text style={styles.pay}>{I18n.t('pay')}</Text>
-                </View>
+                {this.btnView(orderInfo)}
+
 
             </View>
-
+            <PayModal
+                ref={ref => this.payModal = ref}/>
         </View>)
+    }
+
+    btnView = (orderInfo) => {
+        switch (orderInfo.status) {
+            case 'unpaid':
+                return this._unPaidBtn(orderInfo);
+            case 'paid':
+                return this._paidBtn();
+            case 'completed':
+                return null;
+            case 'canceled':
+                return null;
+            case 'delivered':
+                return this._deliveredBtn();
+        }
+    };
+
+    _paidBtn = () => {
+        return <View style={styles.viewBtn}>
+            <TouchableOpacity
+                onPress={() => {
+                    Alert.alert(I18n.t('hot_line'), I18n.t('hot_phone') + '\n' + I18n.t('work_time'),
+                        [{
+                            text: I18n.t('cancel'), onPress: () => {
+                            }
+                        },
+                            {
+                                text: I18n.t('call'), onPress: () => {
+                                Communications.phonecall(I18n.t('hot_phone'), false)
+                            }
+                            }])
+                }}
+                style={styles.btnCancel}>
+                <Text style={styles.cancel}>{I18n.t('contact_customer_service')}</Text>
+            </TouchableOpacity>
+
+        </View>
+    };
+
+    _deliveredBtn = () => {
+        return <View style={styles.viewBtn}>
+            <View style={styles.btnCancel}>
+                <Text style={styles.cancel}>{I18n.t('order_logistics')}</Text>
+            </View>
+            <View style={styles.btnLog}>
+                <Text style={styles.btnGet}>{I18n.t('order_receipt')}</Text>
+            </View>
+        </View>
+    };
+
+    _unPaidBtn = (orderInfo) => {
+        return <View style={styles.viewBtn}>
+            <TouchableOpacity
+                onPress={() => {
+                    const body = {
+                        order_id: orderInfo.order_id
+                    };
+                    postOrderCancel(body, data => {
+                        this.props.refresh();
+                    }, err => {
+                        showToast(err)
+                    })
+                }
+                }
+                style={styles.btnCancel}>
+                <Text style={styles.cancel}>{I18n.t('order_cancel')}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => {
+                    const body = {
+                        order_number: orderInfo.order_id
+                    };
+
+                    postPayOrder(body, data => {
+                        if (this.payModal) {
+                            this.payModal.setPayUrl(data);
+                            this.payModal.toggle();
+                        }
+                    })
+                }}
+                style={styles.btnPay}>
+                <Text style={styles.pay}>{I18n.t('pay')}</Text>
+            </TouchableOpacity>
+        </View>
     }
 }
 
@@ -149,7 +232,7 @@ const styles = StyleSheet.create({
         borderRadius: 2,
         borderWidth: 1,
         borderColor: Colors._666,
-        marginRight: 20,
+        marginRight: 17,
         minWidth: 70,
         minHeight: 30,
         alignItems: 'center',
@@ -169,6 +252,26 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
 
+    },
+    viewBtn: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    btnLog: {
+        borderRadius: 2,
+        borderColor: Colors._DF1,
+        marginRight: 17,
+        minWidth: 70,
+        minHeight: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1
+
+    },
+    btnGet: {
+        color: Colors._DF1,
+        fontSize: 12,
+        margin: 5,
     }
 
 

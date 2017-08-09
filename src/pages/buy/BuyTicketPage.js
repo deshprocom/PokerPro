@@ -43,7 +43,6 @@ class BuyTicketPage extends Component {
         race: {},
         tickets: {},
         shipping_address: {},
-        order: {}
     };
 
     componentWillReceiveProps(newProps) {
@@ -167,11 +166,12 @@ class BuyTicketPage extends Component {
 
     _postOrderOk = (data) => {
         // Alert.alert(`${I18n.t('buy_success')}`, `${I18n.t('keep_phone')}`);
-        this.setState({
-            order: data
-        });
-        if (this.payModal && !isEmptyObject(data))
+
+        if (this.payModal && !isEmptyObject(data)) {
+            this.payModal.setPayUrl(data);
             this.payModal.toggle();
+
+        }
 
 
     };
@@ -188,7 +188,7 @@ class BuyTicketPage extends Component {
     _btnBuyTicket = () => {
 
         umengEvent('ticket_buy_contain');
-        let {isEntity, email, isNameReal, shipping_address, order} = this.state;
+        let {isEntity, email, isNameReal, shipping_address} = this.state;
         if (isNameReal) {
             if (isEntity === ENTITY) {
                 if (isEmptyObject(shipping_address)) {
@@ -206,8 +206,8 @@ class BuyTicketPage extends Component {
                     consignee: shipping_address.consignee,
                     address: shipping_address.address + shipping_address.address_detail
                 };
-                if (!isEmptyObject(order)) {
-                    this._postOrderOk(order);
+                if (this.payModal && !isEmptyObject(this.payModal.getPayUrl())) {
+                    this.payModal.toggle()
                 } else {
                     postOrderTicket(param, body, data => {
                         this._postOrderOk(data);
@@ -228,8 +228,8 @@ class BuyTicketPage extends Component {
                     ticket_type: 'e_ticket',
                     email: email
                 };
-                if (!isEmptyObject(order)) {
-                    this._postOrderOk(order);
+                if (this.payModal && !isEmptyObject(this.payModal.getPayUrl())) {
+                    this.payModal.toggle()
                 } else {
                     postOrderTicket(param, body, data => {
 
@@ -561,7 +561,6 @@ class BuyTicketPage extends Component {
                 </View>
 
                 <PayModal
-                    order={order}
                     ref={ref => this.payModal = ref}/>
             </View>
         )

@@ -7,11 +7,20 @@ import StorageKey from '../configs/StorageKey';
 import {showToast} from '../utils/ComonHelper';
 
 
+export function postPayOrder(body, resolve, reject) {
+    helper.post(Api.pay_order(body), {}, (ret) => {
+        resolve(ret.data)
+    }, err => {
+        reject(err)
+        showToast(err)
+    })
+}
+
 export function postAdrDelete(adr_id, resolve, reject) {
     helper.post(Api.adrDelete(adr_id), {}, (ret) => {
         resolve(ret.data)
     }, err => {
-        showToast('操作失败');
+        showToast(err);
         reject(err)
     })
 }
@@ -20,7 +29,7 @@ export function postAdrDefault(adr_id, resolve) {
     helper.post(Api.setAdrDefault(adr_id), {}, (ret) => {
         resolve(ret.data)
     }, err => {
-        showToast('操作失败');
+        showToast(err);
     })
 }
 

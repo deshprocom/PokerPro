@@ -65,7 +65,7 @@ export default class OrderListPage extends Component {
                 <ListOrderView
                     status="paid"
                     testViewID="page_ship"
-                    tabLabel={I18n.t('unshipped')}
+                    tabLabel={I18n.t('order_receive')}
                     router={this.props.router}/>
                 <ListOrderView
                     status="completed"

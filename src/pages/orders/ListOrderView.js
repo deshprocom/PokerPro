@@ -22,7 +22,6 @@ import {_renderFooter, _renderHeader} from '../../components/LoadingView';
 import {GET_CERTIFICATION} from '../../actions/ActionTypes';
 import {Verified} from '../../configs/Status';
 
-
 class ListOrderView extends Component {
 
     static propTypes = {
@@ -136,6 +135,7 @@ class ListOrderView extends Component {
             <View style={{height: 6}}/>
             {/*赛事简介*/}
             <ItemOrderView
+                refresh={this._beginRefresh}
                 ticket={ticket}
                 orderInfo={order_info}
                 raceInfo={race_info}/>
@@ -163,6 +163,8 @@ class ListOrderView extends Component {
                 ref={ (component) => this._pullToRefreshListView = component }
                 viewType={PullToRefreshListView.constants.viewType.listView}
             />
+
+
         </View>)
     }
 

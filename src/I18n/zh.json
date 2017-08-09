@@ -337,5 +337,8 @@
   "pay_confirm": "确认支付",
   "ticket_info": "套票详情",
   "pay": "付款",
-  "order_receipt":"确认收货"
+  "order_receipt":"确认收货",
+  "order_receive":"待收货",
+  "order_logistics":"物流信息",
+  "delivered":"已发货"
 }

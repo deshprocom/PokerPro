@@ -16,12 +16,23 @@ export default class PayModal extends Component {
 
 
     state = {
-        visible: false
+        visible: false,
+        payUrl: {}
     };
 
     toggle = () => {
         this.setState({
             visible: !this.state.visible
+        })
+    };
+
+    getPayUrl = () => {
+        return this.state.payUrl;
+    };
+
+    setPayUrl = (data) => {
+        this.setState({
+            payUrl: data
         })
     };
 
@@ -101,7 +112,7 @@ export default class PayModal extends Component {
     };
 
     payView = () => {
-        const {pay_url} = this.props.order;
+        const {pay_url} = this.state.payUrl;
         return <TouchableOpacity
             onPress={() => {
                 this.toggle();
