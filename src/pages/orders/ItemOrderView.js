@@ -41,7 +41,7 @@ export default class ItemOrderView extends Component {
                     <View style={{flex: 1, width: '86%'}}>
                         <Text
                             numberOfLines={2}
-                            style={styles.name}>{ticket.title}</Text>
+                            style={styles.name}>{raceInfo.name + '-' + ticket.title}</Text>
 
                     </View>
 

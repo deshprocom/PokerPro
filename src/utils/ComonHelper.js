@@ -310,11 +310,13 @@ export function orderStatus(status) {
         case 'unpaid':
             return I18n.t('unpaid');
         case 'paid':
-            return I18n.t('unshipped');
+            return I18n.t('paid');
         case 'completed':
             return I18n.t('completed');
         case 'canceled':
             return I18n.t('canceled');
+        case 'unshipped':
+            return I18n.t('unshipped');
     }
 }
 

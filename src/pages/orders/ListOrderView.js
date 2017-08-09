@@ -128,12 +128,12 @@ class ListOrderView extends Component {
 
         const {order_info, race_info, ticket} = rowData;
         return (<TouchableOpacity
-            onPress={()=>this._lookOrderDetail(order_info.order_id)}
+            onPress={() => this._lookOrderDetail(order_info.order_id)}
             activeOpacity={1}
-            testID={'btn_orders_'+rowID}
-            style={{marginBottom:5}}>
+            testID={'btn_orders_' + rowID}
+            style={{marginBottom: 5}}>
 
-            {rowID == 0 ? <View style={{height:8}}/> : null}
+            <View style={{height: 6}}/>
             {/*赛事简介*/}
             <ItemOrderView
                 ticket={ticket}
@@ -157,8 +157,8 @@ class ListOrderView extends Component {
                 renderRow={this._renderRow}
                 onLoadMore={this._onLoadMore}
                 onRefresh={this._onRefresh}
-                renderHeader={(viewState)=>_renderHeader(viewState,headerStyle)}
-                renderFooter={(viewState)=>_renderFooter(viewState,headerStyle)}
+                renderHeader={(viewState) => _renderHeader(viewState, headerStyle)}
+                renderFooter={(viewState) => _renderFooter(viewState, headerStyle)}
                 enableEmptySections={true}
                 ref={ (component) => this._pullToRefreshListView = component }
                 viewType={PullToRefreshListView.constants.viewType.listView}
