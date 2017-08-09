@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-
+import {isEmptyObject, strNotNull} from '../../utils/ComonHelper';
 
 var testUrl = 'https://h5.deshpro.com/pay/fail';
 
@@ -31,6 +31,7 @@ export default class PayModal extends Component {
     };
 
     setPayUrl = (data) => {
+        console.log('payUrl', data);
         this.setState({
             payUrl: data
         })
@@ -58,11 +59,16 @@ export default class PayModal extends Component {
     }
 
     topView = () => {
+        const {payUrl} = this.state;
         return <View style={styles.top}>
             <Text style={styles.title}>{I18n.t('pay_online')}</Text>
 
             <TouchableOpacity
-                onPress={this.toggle}
+                onPress={() => {
+                    this.toggle();
+                    if (!isEmptyObject(payUrl))
+                        router.toOrderInfo(this.props, payUrl.order_number)
+                }}
                 style={styles.btnClose}>
                 <Image
                     source={Images.pay_close}
@@ -112,11 +118,11 @@ export default class PayModal extends Component {
     };
 
     payView = () => {
-        const {pay_url} = this.state.payUrl;
+        const {payUrl} = this.state;
         return <TouchableOpacity
             onPress={() => {
                 this.toggle();
-                router.toWebViewPay(this.props, pay_url)
+                router.toWebViewPay(this.props, payUrl)
             }}
             style={styles.btnPay}>
             <Text style={styles.txtPay}>{I18n.t('pay_confirm')}</Text>

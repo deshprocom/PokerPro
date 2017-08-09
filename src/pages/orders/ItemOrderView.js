@@ -154,6 +154,7 @@ export default class ItemOrderView extends Component {
 
                     postPayOrder(body, data => {
                         if (this.payModal) {
+                            data['order_number'] = orderInfo.order_id;
                             this.payModal.setPayUrl(data);
                             this.payModal.toggle();
                         }

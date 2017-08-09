@@ -66,7 +66,7 @@ export default class WebViewPay extends Component {
     }
 
     render() {
-        const {url} = this.props.params;
+        const {pay} = this.props.params;
         return (
             <View style={ApplicationStyles.bgContainer}>
                 {this.topBarView()}
@@ -80,7 +80,7 @@ export default class WebViewPay extends Component {
                         }}
                         style={styles.webView}
                         scalesPageToFit={true}
-                        source={{uri: url}}
+                        source={{uri: pay.pay_url}}
                         renderLoading={this._renderLoading}
                         renderError={this._renderError}
                         startInLoadingState={true}
@@ -169,7 +169,7 @@ export default class WebViewPay extends Component {
     };
 
     topBarView = () => {
-        const {url} = this.props.params;
+
         return (
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors.bg_09}}
