@@ -133,14 +133,26 @@ export default class ItemOrderView extends Component {
         return <View style={styles.viewBtn}>
             <TouchableOpacity
                 onPress={() => {
-                    const body = {
-                        order_id: orderInfo.order_id
-                    };
-                    postOrderCancel(body, data => {
-                        this.props.refresh();
-                    }, err => {
-                        showToast(err)
-                    })
+
+                    Alert.alert(I18n.t('tint'), I18n.t('is_cancel_order'), [{
+                        text: I18n.t('cancel'),
+                        onPress: () => {
+                        }
+                    },
+                        {
+                            text: I18n.t('confirm'),
+                            onPress: () => {
+                                const body = {
+                                    order_id: orderInfo.order_id
+                                };
+                                postOrderCancel(body, data => {
+                                    this.props.refresh();
+                                }, err => {
+                                    showToast(err)
+                                })
+                            }
+                        }]);
+
                 }
                 }
                 style={styles.btnCancel}>
@@ -148,7 +160,7 @@ export default class ItemOrderView extends Component {
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={() => {
-                    router.toOrderInfo(this.props, orderInfo.order_id,orderInfo.price, true)
+                    router.toOrderInfo(this.props, orderInfo.order_id, orderInfo.price, true)
                 }}
                 style={styles.btnPay}>
                 <Text style={styles.pay}>{I18n.t('pay')}</Text>

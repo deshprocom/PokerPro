@@ -25,6 +25,7 @@ import SwipeListView from './swipelist/SwipeListView';
 import VideoPlayer from './VideoPlayer';
 import ActionSide from './ActionSide';
 import ActionSheet from 'react-native-actionsheet';
+import Loading from './Loading';
 
 export {
     BtnLong, BtnSoild, NavigationBar,
@@ -45,5 +46,6 @@ export {
     SwipeListView,
     VideoPlayer,
     ActionSide,
-    ActionSheet
+    ActionSheet,
+    Loading
 }

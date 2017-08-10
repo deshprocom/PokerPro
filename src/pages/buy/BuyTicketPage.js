@@ -10,7 +10,7 @@ import {
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar, InputView, ImageLoad, SecurityText} from '../../components';
+import {NavigationBar, InputView, ImageLoad, SecurityText, Loading} from '../../components';
 import {fetchRaceNewOrder, fetchBuyTicket} from '../../actions/TicketOrderAction'
 import {
     isEmptyObject, showToast, checkMail, moneyFormat,
@@ -22,7 +22,7 @@ import {GET_CERTIFICATION, POST_BUY_TICKET, GET_RACE_NEW_ORDER, POST_CERTIFICATI
 import NameRealView from './NameRealView';
 import {fetchRacesInfo, fetchGetRecentRaces} from '../../actions/RacesAction';
 import StorageKey from '../../configs/StorageKey';
-import {getBuyRaceTicket, postOrderTicket} from '../../services/OrderDao';
+import {getBuyRaceTicket, postOrderTicket, postPayOrder} from '../../services/OrderDao';
 import {umengEvent} from '../../utils/UmengEvent';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import PayModal from './PayModal';
@@ -43,6 +43,7 @@ class BuyTicketPage extends Component {
         race: {},
         tickets: {},
         shipping_address: {},
+        order_number: ''
     };
 
     componentWillReceiveProps(newProps) {
@@ -122,19 +123,6 @@ class BuyTicketPage extends Component {
 
     };
 
-    eTicketNum = (ticket_info) => {
-        if (isEmptyObject(ticket_info))
-            return;
-        const {isEntity} = this.state;
-        const {
-            e_ticket_number, e_ticket_sold_number,
-            entity_ticket_number, entity_ticket_sold_number
-        } = ticket_info;
-        if (isEntity == ENTITY)
-            return entity_ticket_number - entity_ticket_sold_number;
-        else
-            return e_ticket_number - e_ticket_sold_number;
-    };
 
     btnBuyKnow = () => {
         umengEvent('ticket_buy_know');
@@ -177,15 +165,23 @@ class BuyTicketPage extends Component {
     };
 
 
-    _postOrderOk = (data) => {
+    _postOrderOk = (order_number) => {
         // Alert.alert(`${I18n.t('buy_success')}`, `${I18n.t('keep_phone')}`);
+        this.setState({
+            order_number: order_number
+        });
         const {tickets} = this.state;
-        if (this.payModal && !isEmptyObject(data)) {
+        const body = {
+            order_number: order_number
+        };
+        postPayOrder(body, data => {
+            if (this.spinner)
+                this.spinner.close();
+            data['order_number'] = order_number;
             data['price'] = tickets.price;
             this.payModal.setPayUrl(data);
             this.payModal.toggle();
-
-        }
+        });
 
 
     };
@@ -202,7 +198,7 @@ class BuyTicketPage extends Component {
     _btnBuyTicket = () => {
 
         umengEvent('ticket_buy_contain');
-        let {isEntity, email, isNameReal, shipping_address} = this.state;
+        let {isEntity, email, isNameReal, shipping_address, order_number} = this.state;
         if (isNameReal) {
             if (isEntity === ENTITY) {
                 if (isEmptyObject(shipping_address)) {
@@ -222,10 +218,17 @@ class BuyTicketPage extends Component {
                 };
                 if (this.payModal && !isEmptyObject(this.payModal.getPayUrl())) {
                     this.payModal.toggle()
+                } else if (strNotNull(order_number)) {
+                    this._postOrderOk(order_number);
+
                 } else {
+                    if (this.spinner)
+                        this.spinner.open();
                     postOrderTicket(param, body, data => {
-                        this._postOrderOk(data);
+                        this._postOrderOk(data.order_number);
                     }, err => {
+                        if (this.spinner)
+                            this.spinner.close();
                         showToast(err)
                     });
                 }
@@ -244,19 +247,34 @@ class BuyTicketPage extends Component {
                 };
                 if (this.payModal && !isEmptyObject(this.payModal.getPayUrl())) {
                     this.payModal.toggle()
+                } else if (strNotNull(order_number)) {
+                    this._postOrderOk(order_number);
                 } else {
+                    if (this.spinner)
+                        this.spinner.open();
                     postOrderTicket(param, body, data => {
-
-                        this._postOrderOk(data);
+                        this._postOrderOk(data.order_number);
                     }, err => {
+                        if (this.spinner)
+                            this.spinner.close();
                         showToast(err)
                     });
                 }
 
             }
 
-        } else {
-            showToast(`${I18n.t('ple_ren_zhen')}`)
+        }
+        else {
+            showToast(
+                `$ {
+    I18n
+.
+    t(
+
+    'ple_ren_zhen'
+)
+}
+`)
         }
 
     };
@@ -574,6 +592,7 @@ class BuyTicketPage extends Component {
 
                 </View>
 
+                <Loading ref={ref => this.spinner = ref}/>
                 <PayModal
                     toOrder={true}
                     ref={ref => this.payModal = ref}/>
