@@ -131,11 +131,14 @@ export default class Router {
         this.navigator.popToTop();
     }
 
-    replaceOrder() {
+    replaceOrder(order_id) {
         this.navigator.replace({
-            page: OrderListPage,
-            name: 'OrderListPage',
+            page: OrderInfoPage,
+            name: 'OrderInfoPage',
             sceneConfig: customFloatFromRight,
+            params: {
+                order_id: order_id,
+            }
         })
     }
 

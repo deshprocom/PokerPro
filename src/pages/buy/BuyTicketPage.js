@@ -76,7 +76,11 @@ class BuyTicketPage extends Component {
 
     _handleOpenURL = (event) => {
         console.log('scheme URL:', event.url);
-        router.replaceOrder()
+        if (this.payModal) {
+            const {order_number} = this.payModal.getPayUrl();
+            router.replaceOrder(order_number)
+        }
+
     };
 
     refreshPage = () => {
