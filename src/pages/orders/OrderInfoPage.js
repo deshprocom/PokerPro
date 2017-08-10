@@ -562,21 +562,21 @@ const styles = StyleSheet.create({
         fontSize: 14, color: Colors._666,
         margin: 10
     },
-    btnPay: {
+    btnGet: {
         borderColor: Colors._DF1, borderWidth: 1, borderRadius: 3,
         alignItems: 'center', justifyContent: 'center', marginRight: 17,
         minWidth: 80
     },
-    txtPay: {
+    txtGet: {
         fontSize: 14, color: Colors._DF1,
         margin: 10
     },
-    btnGet: {
+    btnPay: {
         borderRadius: 3, backgroundColor: Colors._DF1,
         alignItems: 'center', justifyContent: 'center', marginRight: 15,
         minWidth: 80
     },
-    txtGet: {
+    txtPay: {
         fontSize: 14, color: Colors.white,
         margin: 10
     },
