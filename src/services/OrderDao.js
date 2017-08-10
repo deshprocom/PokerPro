@@ -7,11 +7,10 @@ import StorageKey from '../configs/StorageKey';
 import {showToast} from '../utils/ComonHelper';
 
 
-export function postPayOrder(body, resolve, reject) {
+export function postPayOrder(body, resolve) {
     helper.post(Api.pay_order(body), {}, (ret) => {
         resolve(ret.data)
     }, err => {
-        reject(err)
         showToast(err)
     })
 }

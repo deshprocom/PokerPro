@@ -124,10 +124,19 @@ export default class Router {
 
     pop() {
         this.navigator.pop()
+
     }
 
     popToTop() {
         this.navigator.popToTop();
+    }
+
+    replaceOrder() {
+        this.navigator.replace({
+            page: OrderListPage,
+            name: 'OrderListPage',
+            sceneConfig: customFloatFromRight,
+        })
     }
 
 
@@ -461,13 +470,15 @@ export default class Router {
         })
     }
 
-    toOrderInfo(props, order_id) {
+    toOrderInfo(props, order_id, price, isPay) {
         this.push(props, {
             page: OrderInfoPage,
             name: 'OrderInfoPage',
             sceneConfig: customFloatFromRight,
             params: {
-                order_id: order_id
+                order_id: order_id,
+                isPay: isPay,
+                price: price
             }
 
         })

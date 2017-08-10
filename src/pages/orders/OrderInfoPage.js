@@ -4,7 +4,7 @@
 import React, {Component}from 'react';
 import {
     TouchableOpacity, View, TextInput, Alert,
-    StyleSheet, Image, Text, ScrollView, Platform
+    StyleSheet, Image, Text, ScrollView, Linking
 } from 'react-native';
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
@@ -28,8 +28,23 @@ import {postOrderCancel, postPayOrder} from '../../services/OrderDao';
 class OrderInfoPage extends React.Component {
 
     componentDidMount() {
+        const {isPay} = this.props.params;
+        if (isPay) {
+            this._pay();
+        }
         this._refreshPage();
+        Linking.addEventListener('url', this._handleOpenURL);
     }
+
+    componentWillUnmount() {
+        Linking.removeEventListener('url', this._handleOpenURL);
+    }
+
+    _handleOpenURL = (event) => {
+        console.log('scheme URL:', event.url);
+        router.pop();
+        this._refreshPage();
+    };
 
     state = {
         user_id: ''
@@ -353,16 +368,16 @@ class OrderInfoPage extends React.Component {
         </View>)
     };
 
-    _pay = ()=>{
-        const { order_info } = this.props.orderDetail;
+    _pay = () => {
+        const {order_id,price} = this.props.params;
         const body = {
-            order_number: order_info.order_id
+            order_number: order_id
         };
 
         postPayOrder(body, data => {
             if (this.payModal) {
-                data['order_number'] = order_info.order_id;
-                data['price'] = order_info.price;
+                data['order_number'] = order_id;
+                data['price'] = price;
                 this.payModal.setPayUrl(data);
                 this.payModal.toggle();
             }

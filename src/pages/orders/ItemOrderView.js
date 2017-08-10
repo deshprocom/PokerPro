@@ -148,18 +148,7 @@ export default class ItemOrderView extends Component {
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={() => {
-                    const body = {
-                        order_number: orderInfo.order_id
-                    };
-
-                    postPayOrder(body, data => {
-                        if (this.payModal) {
-                            data['order_number'] = orderInfo.order_id;
-                            data['price'] = orderInfo.price;
-                            this.payModal.setPayUrl(data);
-                            this.payModal.toggle();
-                        }
-                    })
+                    router.toOrderInfo(this.props, orderInfo.order_id,orderInfo.price, true)
                 }}
                 style={styles.btnPay}>
                 <Text style={styles.pay}>{I18n.t('pay')}</Text>

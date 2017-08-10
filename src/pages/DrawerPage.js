@@ -2,7 +2,7 @@
  * Created by lorne on 2017/1/3.
  */
 import React from 'react';
-import {StyleSheet, BackAndroid, Navigator, Linking} from 'react-native';
+import {StyleSheet, BackAndroid, Navigator} from 'react-native';
 import Drawer from 'react-native-drawer'
 import {connect} from 'react-redux';
 import SidePage from './SidePage';
@@ -17,18 +17,9 @@ class DrawerPage extends React.Component {
 
     componentDidMount() {
         setDispatchAction(GET_CERTIFICATION, this.props._getRealName)
-        Linking.addEventListener('url', this._handleOpenURL);
-
     }
 
-    componentWillUnmount() {
-        Linking.removeEventListener('url', this._handleOpenURL);
-    }
 
-    _handleOpenURL = (event) => {
-        console.log('scheme URL:',event.url);
-        router.toOrderListPage()
-    };
 
     componentDidUpdate() {
         if (this.props.drawerState === 'opened') {
