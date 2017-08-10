@@ -9,8 +9,8 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {ImageLoad} from '../../components';
-import {orderStatus, YYYY_MM_DD, convertDate, showToast} from '../../utils/ComonHelper';
-import {postOrderCancel, postPayOrder} from '../../services/OrderDao';
+import {orderStatus, YYYY_MM_DD, convertDate, showToast, isEmptyObject} from '../../utils/ComonHelper';
+import {postOrderCancel, postOrderComplete} from '../../services/OrderDao';
 import PayModal from '../buy/PayModal';
 
 export default class ItemOrderView extends Component {
@@ -118,14 +118,60 @@ export default class ItemOrderView extends Component {
         </View>
     };
 
+    _logistics = () => {
+
+        const {orderInfo} = this.props;
+        if (!isEmptyObject(orderInfo)) {
+            const {ticket_type, email, courier, tracking_no} = orderInfo;
+
+            if (ticket_type === 'e_ticket') {
+                let mail = I18n.t('order_logistics_email') + '\n' + email;
+                Alert.alert(I18n.t('order_logistics'), mail,
+                    [
+                        {
+                            text: I18n.t('I_known'), onPress: () => {
+
+                        }
+                        }])
+            } else {
+                let courierInfo = courier + '\n' + I18n.t('tracking_no') + ': ' + tracking_no;
+                Alert.alert(I18n.t('order_logistics'), courierInfo,
+                    [
+                        {
+                            text: I18n.t('I_known'), onPress: () => {
+
+                        }
+                        }])
+            }
+
+        }
+
+    };
+
+
+    _orderCom = () => {
+        const {orderInfo} = this.props;
+
+        const body = {
+            order_number: orderInfo.order_id
+        };
+        postOrderComplete(body, data => {
+            this.props.refresh();
+        })
+    };
+
     _deliveredBtn = () => {
         return <View style={styles.viewBtn}>
-            <View style={styles.btnCancel}>
+            <TouchableOpacity
+                onPress={this._logistics}
+                style={styles.btnCancel}>
                 <Text style={styles.cancel}>{I18n.t('order_logistics')}</Text>
-            </View>
-            <View style={styles.btnLog}>
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={this._orderCom}
+                style={styles.btnLog}>
                 <Text style={styles.btnGet}>{I18n.t('order_receipt')}</Text>
-            </View>
+            </TouchableOpacity>
         </View>
     };
 

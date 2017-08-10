@@ -137,7 +137,7 @@
   "user_edit_avatar": "Change photo",
   "addr_manager": "Address Management",
   "real_name_manager": " Name",
-  "contact_customer_service": "Contact us.",
+  "contact_customer_service": "Contact us",
   "user_real_pending": "Checking ID information",
   "edit_real_name": "Edit profile",
   "service_pay": "Contact us to pay",
@@ -330,17 +330,18 @@
   "ticke_online": "Search",
   "mobile_code_send": "Sent via SMS",
   "email_code_send": "Sent via email:",
-  "pay_online":"Pay online",
-  "pay_need":"Unpaid",
-  "pay_card":"Bank Card",
-  "pay_tine":"Quick Payment",
-  "pay_confirm":"Confirm",
-  "ticket_info":"Details",
+  "pay_online": "Pay online",
+  "pay_need": "Unpaid",
+  "pay_card": "Bank Card",
+  "pay_tine": "Quick Payment",
+  "pay_confirm": "Confirm",
+  "ticket_info": "Details",
   "pay": "Pay",
-  "order_receipt":"Confirm",
-  "order_receive":"Unreceived",
-  "order_logistics":"Logistics",
-  "delivered":"In-shipping"
-
+  "order_receipt": "Confirm",
+  "order_receive": "Unreceived",
+  "order_logistics": "Logistics",
+  "delivered": "In-shipping",
+  "I_known": "OK",
+  "tracking_no":"运单号"
 }
 

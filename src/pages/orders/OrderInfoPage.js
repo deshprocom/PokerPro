@@ -23,7 +23,7 @@ import Button from 'react-native-smart-button';
 import {fetchGetRecentRaces, fetchRacesInfo} from '../../actions/RacesAction';
 import {Verified} from '../../configs/Status';
 import PayModal from '../buy/PayModal';
-import {postOrderCancel, postPayOrder} from '../../services/OrderDao';
+import {postOrderCancel, postPayOrder, postOrderComplete} from '../../services/OrderDao';
 
 class OrderInfoPage extends React.Component {
 
@@ -88,7 +88,7 @@ class OrderInfoPage extends React.Component {
             this.props._getOrderDetail(body);
         }
 
-    }
+    };
 
     _orderCancel = () => {
 
@@ -102,7 +102,7 @@ class OrderInfoPage extends React.Component {
                 onPress: () => this._cancelOrder()
             }]);
 
-    }
+    };
 
     _cancelOrder = () => {
         const body = {
@@ -137,7 +137,7 @@ class OrderInfoPage extends React.Component {
                         Communications.phonecall(I18n.t('hot_phone'), false)
                     }
                     }])
-    }
+    };
 
 
     _orderView = (order_info) => {
@@ -301,6 +301,46 @@ class OrderInfoPage extends React.Component {
         }
     };
 
+    _logistics = () => {
+
+        const {order_info} = this.props.orderDetail;
+        if (!isEmptyObject(order_info)) {
+            const {ticket_type, email, courier, tracking_no} = order_info;
+
+            if (ticket_type === 'e_ticket') {
+                let mail = I18n.t('order_logistics_email') + '\n' + email;
+                Alert.alert(I18n.t('order_logistics'), mail,
+                    [
+                        {
+                            text: I18n.t('I_known'), onPress: () => {
+
+                        }
+                        }])
+            } else {
+                let courierInfo = courier + '\n' + I18n.t('tracking_no') + ': ' + tracking_no;
+                Alert.alert(I18n.t('order_logistics'), courierInfo,
+                    [
+                        {
+                            text: I18n.t('I_known'), onPress: () => {
+
+                        }
+                        }])
+            }
+
+        }
+
+    };
+
+    _orderCom = () => {
+        const {order_info} = this.props.orderDetail;
+
+        const body = {
+            order_number: order_info.order_id
+        };
+        postOrderComplete(body, data => {
+            this._refreshPage();
+        })
+    };
 
     _paidView = (order_info) => {
         return (<View style={styles.row}>
@@ -318,6 +358,7 @@ class OrderInfoPage extends React.Component {
             </TouchableOpacity>
 
             <TouchableOpacity
+                onPress={this._logistics}
                 style={styles.btnCancel}>
 
                 <Text style={styles.txtCancel}>{I18n.t('order_logistics')}</Text>
@@ -325,6 +366,7 @@ class OrderInfoPage extends React.Component {
             </TouchableOpacity>
 
             <TouchableOpacity
+                onPress={this._orderCom}
                 style={styles.btnGet}>
 
                 <Text style={styles.txtGet}>{I18n.t('order_receipt')}</Text>
@@ -369,7 +411,7 @@ class OrderInfoPage extends React.Component {
     };
 
     _pay = () => {
-        const {order_id,price} = this.props.params;
+        const {order_id, price} = this.props.params;
         const body = {
             order_number: order_id
         };

@@ -68,7 +68,8 @@ export default {
     poker_ranks: poker_ranks,
     player_focus: player_focus,
     focus_list: focus_list,
-    pay_order: pay_order
+    pay_order: pay_order,
+    order_complete: order_complete
 
 }
 
@@ -81,6 +82,12 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+
+export function order_complete(body) {
+    const {order_number} = body;
+    return 'users/' + getUserId() + '/orders/' + order_number + '/complete';
+}
 
 export function pay_order(body) {
     const {order_number} = body;
