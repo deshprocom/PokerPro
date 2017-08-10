@@ -143,7 +143,7 @@ export default class RaceInfoView extends Component {
 const styles = StyleSheet.create({
     viewPrice: {
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'flex-end',
     },
     lbPrice: {
         color: Colors._888,
