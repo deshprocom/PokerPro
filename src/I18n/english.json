@@ -342,6 +342,7 @@
   "order_logistics": "Logistics",
   "delivered": "In-shipping",
   "I_known": "OK",
-  "tracking_no":"运单号"
+  "tracking_no": "ShippingNum",
+  "sold_out": "Sold out"
 }
 

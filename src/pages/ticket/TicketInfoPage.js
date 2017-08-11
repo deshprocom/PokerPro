@@ -98,7 +98,7 @@ export default class TicketInfoPage extends Component {
         const {description, title, price, banner} = tickets;
         const {name, logo} = race;
         return (  <ScrollView
-            style={this._showBuy() ? {marginBottom: 70}:{}}
+            style={this._showBuy() ? {marginBottom: 70} : {}}
             iosalwaysBounceVertical={false}
             scrollEventThrottle={16}
             onScroll={this._onScroll}
@@ -119,7 +119,7 @@ export default class TicketInfoPage extends Component {
 
                 <View style={styles.viewSell}>
                     <Text style={styles.lbPrice}>{I18n.t('price')}: </Text>
-                    <Text style={styles.txtPrice}>{price}</Text>
+                    <Text style={styles.txtPrice}>¥{price}</Text>
 
                 </View>
 

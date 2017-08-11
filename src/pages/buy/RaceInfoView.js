@@ -26,8 +26,8 @@ export default class RaceInfoView extends Component {
     _ticket_price = (ticket) => {
         if (!isEmptyObject(ticket))
             return (<View style={styles.viewPrice}>
-                <Text style={[styles.lbPrice, {fontSize: FontSize.h12}]}>金额:</Text>
-                <Text style={[styles.txtPrice, {fontSize: FontSize.h15}]}>  {ticket.price}</Text>
+                <Text style={[styles.lbPrice, {fontSize: FontSize.h12}]}>金额: </Text>
+                <Text style={[styles.txtPrice, {fontSize: FontSize.h15}]}>¥{ticket.price}</Text>
 
             </View>);
 

@@ -88,7 +88,7 @@ export default class PayModal extends Component {
             <View>
                 <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
                     <Text style={styles.txt3}>{I18n.t('pay_need')}  </Text>
-                    <Text style={styles.txt32}>{price}</Text>
+                    <Text style={styles.txt32}> ¥{price}</Text>
                 </View>
                 <Text style={styles.txt31}>{I18n.t('order_num')}: {order_number}</Text>
             </View>

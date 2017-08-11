@@ -307,7 +307,7 @@ export default class ChoiseTicketPage extends Component {
                 <Text style={styles.txtLabel}>{I18n.t('location')}: {this._location()}</Text>
 
                 <View style={styles.viewInfo}>
-                    <Text style={styles.txtPrice}>{price}</Text>
+                    <Text style={styles.txtPrice}>¥{price}</Text>
                     <View style={styles.viewNum}>
                         <Text style={styles.lbNum}> ({I18n.t('surplus')}</Text>
                         <Text style={styles.txtNum}>{this._ticketNum(ticket_info)}</Text>
@@ -381,7 +381,7 @@ export default class ChoiseTicketPage extends Component {
 
         return (<View style={styles.viewBottom}>
             <Text style={styles.txtMoney}>{I18n.t('price')}: </Text>
-            <Text style={styles.txtMoneyNum}>{this._prize()}</Text>
+            <Text style={styles.txtMoneyNum}> ¥{this._prize()}</Text>
             <View style={{flex: 1}}/>
             <TouchableOpacity
                 onPress={this._toBuy}

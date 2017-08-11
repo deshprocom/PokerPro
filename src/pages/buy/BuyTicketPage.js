@@ -78,8 +78,8 @@ class BuyTicketPage extends Component {
     _handleOpenURL = (event) => {
         console.log('scheme URL:', event.url);
         if (this.payModal) {
-            const {order_number,price} = this.payModal.getPayUrl();
-            router.replaceOrder(order_number,price)
+            const {order_number, price} = this.payModal.getPayUrl();
+            router.replaceOrder(order_number, price)
         }
 
     };
@@ -315,7 +315,7 @@ class BuyTicketPage extends Component {
                 <Text style={styles.txtLabel}>{I18n.t('location')} {this._location()}</Text>
 
                 <View style={styles.viewInfo}>
-                    <Text style={styles.txtPrice}>{price}</Text>
+                    <Text style={styles.txtPrice}>¥{price}</Text>
 
                     <View style={{flex: 1}}/>
 
@@ -552,7 +552,7 @@ class BuyTicketPage extends Component {
 
                         <Text style={{fontSize: 18, color: Colors._DF1}}
                               testID="txt_ticket_price">
-                            {price}
+                            ¥{price}
                         </Text>
                     </View>
                     <View style={{height: 41, width: 1, backgroundColor: Colors.txt_DDD}}/>

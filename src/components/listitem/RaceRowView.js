@@ -124,7 +124,7 @@ export default class RaceRowView extends Component {
                 <Text style={[styles.lbPrice, {fontSize: FontSize.h13}]}>{I18n.t('prize')}</Text>
                 <Text
                     numberOfLines={1}
-                    style={[styles.txtPrice, {fontSize: FontSize.h13}]}> {prize}</Text>
+                    style={[styles.txtPrice, {fontSize: FontSize.h13}]}> ¥{prize}</Text>
 
             </View>;
 
@@ -154,7 +154,7 @@ export default class RaceRowView extends Component {
             case 'end':
                 return I18n.t('ticket_end');
             case 'sold_out':
-                return I18n.t('ticket_sold_out');
+                return I18n.t('sold_out');
         }
     };
 

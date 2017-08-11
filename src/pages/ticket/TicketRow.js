@@ -98,7 +98,7 @@ prizeView = (prize) => {
         return <View style={styles.price_view}>
             <Text style={{color: '#454545', fontSize: 13}}>{I18n.t('prize')}</Text>
             <Text numberOfLines={1}
-                  style={[styles.itemPrice]}> {prize}</Text>
+                  style={[styles.itemPrice]}> ¥{prize}</Text>
         </View>
 };
 

@@ -384,7 +384,7 @@ class OrderInfoPage extends React.Component {
                 <Text
                     testID="txt_total_price"
                     style={{fontSize: 18, color: Colors._DF1}}>
-                    {isEmptyObject(order_info) ? '' : order_info.price}</Text>
+                    ¥{isEmptyObject(order_info) ? '' : order_info.price}</Text>
             </View>
             <View style={{flex: 1}}/>
 
