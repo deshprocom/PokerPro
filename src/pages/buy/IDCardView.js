@@ -52,8 +52,6 @@ class IDCardView extends Component {
 
     componentDidMount() {
         getDispatchAction()[GET_CERTIFICATION]();
-
-
     }
 
     componentWillReceiveProps(newProps) {
@@ -78,7 +76,8 @@ class IDCardView extends Component {
             } else {
                 this.setState({
                     passport: user_extra,
-                    editable: editable
+                    editable: editable,
+                    choice_id:'passport_id'
                 })
             }
         }
