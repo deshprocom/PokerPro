@@ -374,7 +374,7 @@ class OrderInfoPage extends React.Component {
             </TouchableOpacity>
 
         </View>)
-    }
+    };
 
     _unPaid = (order_info) => {
         return (<View style={styles.row}>
@@ -424,7 +424,7 @@ class OrderInfoPage extends React.Component {
                 this.payModal.toggle();
             }
         })
-    }
+    };
 
     _user_real_call_btn = () => {
         if (user_extra.status === Verified.FAILED)
@@ -534,7 +534,7 @@ class OrderInfoPage extends React.Component {
                     {this._orderView(order_info)}
 
                     {/*购票须知*/}
-                    <View style={{backgroundColor: Colors.white, paddingLeft: 17, marginTop: 10}}>
+                    <View style={{ paddingLeft: 17, marginTop: 10}}>
                         <View style={{height: 40, alignItems: 'center', flexDirection: 'row'}}>
                             <Text style={{
                                 fontSize: Fonts.size.h16,

@@ -78,8 +78,8 @@ class BuyTicketPage extends Component {
     _handleOpenURL = (event) => {
         console.log('scheme URL:', event.url);
         if (this.payModal) {
-            const {order_number} = this.payModal.getPayUrl();
-            router.replaceOrder(order_number)
+            const {order_number,price} = this.payModal.getPayUrl();
+            router.replaceOrder(order_number,price)
         }
 
     };
@@ -265,16 +265,7 @@ class BuyTicketPage extends Component {
 
         }
         else {
-            showToast(
-                `$ {
-    I18n
-.
-    t(
-
-    'ple_ren_zhen'
-)
-}
-`)
+            showToast(I18n.t('ple_ren_zhen'))
         }
 
     };

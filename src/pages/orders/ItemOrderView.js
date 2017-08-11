@@ -12,6 +12,7 @@ import {ImageLoad} from '../../components';
 import {orderStatus, YYYY_MM_DD, convertDate, showToast, isEmptyObject} from '../../utils/ComonHelper';
 import {postOrderCancel, postOrderComplete} from '../../services/OrderDao';
 import PayModal from '../buy/PayModal';
+import Communications from 'react-native-communications';
 
 export default class ItemOrderView extends Component {
 
@@ -274,8 +275,7 @@ const styles = StyleSheet.create({
     },
     cancel: {
         color: Colors._333,
-        fontSize: 12,
-        margin: 5
+        fontSize: 13,
     },
     btnCancel: {
         borderRadius: 2,
@@ -289,8 +289,7 @@ const styles = StyleSheet.create({
     },
     pay: {
         color: Colors.white,
-        fontSize: 12,
-        margin: 5,
+        fontSize: 13,
     },
     btnPay: {
         borderRadius: 2,
@@ -319,8 +318,7 @@ const styles = StyleSheet.create({
     },
     btnGet: {
         color: Colors._DF1,
-        fontSize: 12,
-        margin: 5,
+        fontSize: 13,
     }
 
 

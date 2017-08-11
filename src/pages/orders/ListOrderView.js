@@ -92,7 +92,6 @@ class ListOrderView extends Component {
             this.props._getOrderList(body);
         }
 
-
     }
 
     _onLoadMore = () => {
@@ -109,16 +108,16 @@ class ListOrderView extends Component {
         });
 
         this._loadList('0')
-    }
+    };
 
     _beginRefresh = () => {
         this._pullToRefreshListView.beginRefresh();
-    }
+    };
 
-    _lookOrderDetail = (order_id) => {
+    _lookOrderDetail = (order_id, price) => {
         if (user_extra.status !== Verified.PASSED)
             getDispatchAction()[GET_CERTIFICATION]();
-        this.props.router.toOrderInfoPage(this.props, order_id,
+        router.toOrderInfoPage(this.props, order_id, price,
             this._beginRefresh)
     };
 
@@ -127,7 +126,7 @@ class ListOrderView extends Component {
 
         const {order_info, race_info, ticket} = rowData;
         return (<TouchableOpacity
-            onPress={() => this._lookOrderDetail(order_info.order_id)}
+            onPress={() => this._lookOrderDetail(order_info.order_id, order_info.price)}
             activeOpacity={1}
             testID={'btn_orders_' + rowID}
             style={{marginBottom: 5}}>

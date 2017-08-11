@@ -59,7 +59,7 @@ export default class PayModal extends Component {
     }
 
     topView = () => {
-        const {order_number} = this.state.payUrl;
+        const {order_number, price} = this.state.payUrl;
         return <View style={styles.top}>
             <Text style={styles.title}>{I18n.t('pay_online')}</Text>
 
@@ -67,155 +67,155 @@ export default class PayModal extends Component {
                 onPress={() => {
                     this.toggle();
                     if (strNotNull(order_number) && this.props.toOrder)
-                        router.toOrderInfo(this.props, order_number)
+                        router.toOrderInfo(this.props, order_number, price)
                 }}
-                    style={styles.btnClose}>
-                    <Image
+                style={styles.btnClose}>
+                <Image
                     source={Images.pay_close}
                     style={styles.imgClose}/>
 
-                    </TouchableOpacity>
-                    </View>;
-                };
+            </TouchableOpacity>
+        </View>;
+    };
 
-            orderView = () => {
-            const {order_number,price} = this.state.payUrl;
-            return <View style={styles.page3}>
+    orderView = () => {
+        const {order_number, price} = this.state.payUrl;
+        return <View style={styles.page3}>
 
             <Image style={styles.img3}
-            source={Images.pay_ticket}/>
+                   source={Images.pay_ticket}/>
 
             <View>
-            <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
-            <Text style={styles.txt3}>{I18n.t('pay_need')}  </Text>
-            <Text style={styles.txt32}>{price}</Text>
-            </View>
-            <Text style={styles.txt31}>{I18n.t('order_num')}: {order_number}</Text>
+                <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
+                    <Text style={styles.txt3}>{I18n.t('pay_need')}  </Text>
+                    <Text style={styles.txt32}>{price}</Text>
+                </View>
+                <Text style={styles.txt31}>{I18n.t('order_num')}: {order_number}</Text>
             </View>
 
-            </View>;
-        };
+        </View>;
+    };
 
-            cardView = () => {
-            return <View style={styles.page4}>
+    cardView = () => {
+        return <View style={styles.page4}>
 
             <Image style={styles.img4}
-            source={Images.pay_card}/>
+                   source={Images.pay_card}/>
 
             <View>
-            <Text style={styles.txt3}>{I18n.t('pay_card')}  </Text>
-            <Text style={styles.txt31}>{I18n.t('pay_tine')}</Text>
+                <Text style={styles.txt3}>{I18n.t('pay_card')}  </Text>
+                <Text style={styles.txt31}>{I18n.t('pay_tine')}</Text>
             </View>
 
             <View
-            style={styles.btnClose}>
-            <Image
-            source={Images.pay_selected}
-            style={styles.img5}/>
+                style={styles.btnClose}>
+                <Image
+                    source={Images.pay_selected}
+                    style={styles.img5}/>
 
             </View>
 
-            </View>;
-        };
+        </View>;
+    };
 
-            payView = () => {
-            const {payUrl} = this.state;
-            return <TouchableOpacity
+    payView = () => {
+        const {payUrl} = this.state;
+        return <TouchableOpacity
             onPress={() => {
                 this.toggle();
                 router.toWebViewPay(this.props, payUrl)
             }}
             style={styles.btnPay}>
             <Text style={styles.txtPay}>{I18n.t('pay_confirm')}</Text>
-            </TouchableOpacity>
-        }
-            }
+        </TouchableOpacity>
+    }
+}
 
-            const styles=StyleSheet.create({
-            page: {
-            flex: 1
-        },
-            pageTop: {flex: 1, backgroundColor: 'rgba(0,0,0,0.5)'},
-            page2: {
-            flex: 1,
-            backgroundColor: Colors.bg_ec
-        },
-            top: {
-            height: 56,
-            backgroundColor: Colors.white,
-            alignItems: 'center',
-            justifyContent: 'center'
-        },
-            title: {
-            fontSize: 17,
-            color: '#444444'
-        },
-            btnClose: {
-            position: 'absolute',
-            right: 0,
-            height: 56,
-            width: 56,
-            alignItems: 'center',
-            justifyContent: 'center'
-        },
-            imgClose: {
-            height: 19,
-            width: 19,
-        },
-            page3: {
-            height: 72,
-            flexDirection: 'row',
-            alignItems: 'center',
-            backgroundColor: Colors.white
-        },
-            img3: {
-            height: 37,
-            width: 37,
-            marginLeft: 17,
-            marginRight: 22
-        },
-            txt3: {
-            fontSize: 15,
-            color: '#444444',
-        },
-            txt31: {
-            fontSize: 12,
-            color: Colors._888,
-            marginTop: 8
-        },
-            txt32: {
-            fontSize: 18,
-            color: Colors._DF1
-        },
-            page4: {
-            height: 74,
-            flexDirection: 'row',
-            alignItems: 'center',
-            backgroundColor: Colors.white,
-            marginTop: 14
-        },
-            img4: {
-            height: 22,
-            width: 33,
-            marginLeft: 17,
-            marginRight: 22
-        },
-            btnPay: {
-            height: 50,
-            backgroundColor: Colors._DF1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            position: 'absolute',
-            bottom: 0,
-            width: '100%'
-        },
-            txtPay: {
-            fontSize: 17,
-            color: Colors.white
-        },
-            img5: {
-            height: 25,
-            width: 25
-        }
+const styles = StyleSheet.create({
+    page: {
+        flex: 1
+    },
+    pageTop: {flex: 1, backgroundColor: 'rgba(0,0,0,0.5)'},
+    page2: {
+        flex: 1,
+        backgroundColor: Colors.bg_ec
+    },
+    top: {
+        height: 56,
+        backgroundColor: Colors.white,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    title: {
+        fontSize: 17,
+        color: '#444444'
+    },
+    btnClose: {
+        position: 'absolute',
+        right: 0,
+        height: 56,
+        width: 56,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    imgClose: {
+        height: 19,
+        width: 19,
+    },
+    page3: {
+        height: 72,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: Colors.white
+    },
+    img3: {
+        height: 37,
+        width: 37,
+        marginLeft: 17,
+        marginRight: 22
+    },
+    txt3: {
+        fontSize: 15,
+        color: '#444444',
+    },
+    txt31: {
+        fontSize: 12,
+        color: Colors._888,
+        marginTop: 8
+    },
+    txt32: {
+        fontSize: 18,
+        color: Colors._DF1
+    },
+    page4: {
+        height: 74,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: Colors.white,
+        marginTop: 14
+    },
+    img4: {
+        height: 22,
+        width: 33,
+        marginLeft: 17,
+        marginRight: 22
+    },
+    btnPay: {
+        height: 50,
+        backgroundColor: Colors._DF1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+        bottom: 0,
+        width: '100%'
+    },
+    txtPay: {
+        fontSize: 17,
+        color: Colors.white
+    },
+    img5: {
+        height: 25,
+        width: 25
+    }
 
-        });
+});
