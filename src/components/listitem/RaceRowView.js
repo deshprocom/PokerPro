@@ -71,10 +71,13 @@ export default class RaceRowView extends Component {
                 defaultSource={Images.empty_image}
                 style={styles.imgRace}
                 source={{uri: logo}}/>
-            <View>
-                <Text
-                    style={[ticket_sellable ? styles.txtTitle1 : styles.txtTitle, {fontSize: FontSize.h17}]}
-                    numberOfLines={2}>{name}</Text>
+            <View style={{height: 102}}>
+                <View style={{flex: 1}}>
+                    <Text
+                        style={[ticket_sellable ? styles.txtTitle1 : styles.txtTitle]}
+                        numberOfLines={2}>{name}</Text>
+                </View>
+
 
                 <View style={styles.viewClock}>
                     <Image source={Images.home_adr}
@@ -82,7 +85,7 @@ export default class RaceRowView extends Component {
 
                     <Text
                         numberOfLines={1}
-                        style={[ticket_sellable ? styles.txtClock1 : styles.txtClock, {fontSize: FontSize.h13}]}>{location}</Text>
+                        style={[ticket_sellable ? styles.txtClock1 : styles.txtClock]}>{location}</Text>
 
                 </View>
 
@@ -90,7 +93,7 @@ export default class RaceRowView extends Component {
                     <Image source={Images.home_clock}
                            style={styles.imgClock}/>
 
-                    <Text style={[styles.txtClock, {fontSize: FontSize.h13}]}>
+                    <Text style={[styles.txtClock]}>
                         {this._time(begin_date, end_date)}</Text>
 
                 </View>
@@ -222,7 +225,7 @@ export default class RaceRowView extends Component {
                     marginRight: 10
                 }}
                        source={Images.home_prize}/>
-                <Text style={[Fonts.H14, {color: '#B89A5D'}]}>{I18n.t('prize') + prize}</Text>
+                <Text style={{color: '#B89A5D', fontSize: 14}}>{I18n.t('prize') + prize}</Text>
             </View>
         )
     };
@@ -334,12 +337,14 @@ const styles = StyleSheet.create({
     txtTitle: {
         color: '#333333',
         width: 220,
-        marginBottom: 5
+        marginBottom: 5,
+        fontSize: 17
     },
     txtTitle1: {
         color: '#333333',
         width: 190,
-        marginBottom: 5
+        marginBottom: 5,
+        fontSize: 17
     },
     imgClock: {
         height: 12,
@@ -351,12 +356,14 @@ const styles = StyleSheet.create({
     },
     txtClock: {
         color: '#888888',
-        marginLeft: 5
+        marginLeft: 5,
+        fontSize: 13
     },
     txtClock1: {
         color: '#888888',
         marginLeft: 5,
-        width: 170
+        width: 170,
+        fontSize: 13
     },
     viewClock: {
         flexDirection: 'row',
