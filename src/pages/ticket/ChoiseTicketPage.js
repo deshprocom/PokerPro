@@ -166,7 +166,7 @@ export default class ChoiseTicketPage extends Component {
                     style={this._selectedBg(selectRace === RACE_MAIN)}>
                     <Text style={this._selectTxt(selectRace === RACE_MAIN)}>{I18n.t('mainRace')}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
+                {this.btnSideDisabled() ? <TouchableOpacity
                     activeOpacity={1}
                     disabled={!this.btnSideDisabled()}
                     onPress={() => {
@@ -178,7 +178,8 @@ export default class ChoiseTicketPage extends Component {
                     <Text style={this.btnSideDisabled() ?
                         this._selectTxt(selectRace === RACE_SIDE) :
                         styles.txtDisabled}>{I18n.t('sideRace')}</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> : null}
+
             </View>
 
         </View>)
