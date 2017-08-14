@@ -58,7 +58,8 @@ export function setLang(lang) {
 export const loadApp = 'https://h5.deshpro.com/race/181/zh/loadAPP';
 
 export function uShareRace(title, location, icon, raceId) {
-    UMShare.share(title, location, icon, "https://h5.deshpro.com/race/" + raceId + "/" + Lang)
+
+    UMShare.share(title, location, encodeURI(icon), "https://h5.deshpro.com/race/" + raceId + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
@@ -67,7 +68,7 @@ export function uShareRace(title, location, icon, raceId) {
 }
 
 export function newShare(title, location, icon, newsId) {
-    UMShare.share(title, location, icon, "https://h5.deshpro.com/news/" + newsId + "/" + Lang)
+    UMShare.share(title, location, encodeURI(icon), "https://h5.deshpro.com/news/" + newsId + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
@@ -76,7 +77,7 @@ export function newShare(title, location, icon, newsId) {
 }
 
 export function rankPlayerShare(title, location, icon, playerId) {
-    UMShare.share(title, location, icon, "https://h5.deshpro.com/rankPlayer/" + playerId + "/" + Lang)
+    UMShare.share(title, location, encodeURI(icon), "https://h5.deshpro.com/rankPlayer/" + playerId + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
@@ -85,7 +86,7 @@ export function rankPlayerShare(title, location, icon, playerId) {
 }
 
 export function rankGameShare(title, location, icon, gameId) {
-    UMShare.share(title, location, icon, "https://h5.deshpro.com/rankGame/" + gameId + "/" + Lang)
+    UMShare.share(title, location, encodeURI(icon), "https://h5.deshpro.com/rankGame/" + gameId + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
