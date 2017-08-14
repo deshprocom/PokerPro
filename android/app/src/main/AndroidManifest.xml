@@ -3,6 +3,9 @@
           android:versionCode="1"
           android:versionName="1.0">
 
+  <permission
+          android:name="${applicationId}.permission.JPUSH_MESSAGE"
+          android:protectionLevel="signature" />
   <uses-permission android:name="android.permission.INTERNET"/>
   <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
   <uses-permission android:name="android.permission.CAMERA"/>
@@ -68,6 +71,7 @@
             android:name="com.umeng.socialize.editorpage.ShareActivity"
             android:theme="@style/Theme.UMDefault"
             android:excludeFromRecents="true"/>
+
 
     <meta-data android:name="JPUSH_CHANNEL" android:value="${APP_CHANNEL}"/>
     <meta-data android:name="JPUSH_APPKEY" android:value="${JPUSH_APPKEY}"/>

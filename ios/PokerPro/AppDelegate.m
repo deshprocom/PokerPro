@@ -21,9 +21,9 @@
 #import <UMSocialCore/UMSocialCore.h>
 #import <React/RCTLinkingManager.h>
 
-static NSString *appKey = @"40fc518c7fb0759af5cba44a";     //填写appkey
+static NSString *appKey = @"ee91695339fccaadbd1632bc";     //填写appkey
 static NSString *channel = @"";    //填写channel   一般为nil
-static BOOL isProduction = false;  //填写isProdurion  平时测试时为false ，生产时填写true
+static BOOL isProduction = true;  //填写isProdurion  平时测试时为false ，生产时填写true
 
 @implementation AppDelegate
 
