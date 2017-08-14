@@ -28,7 +28,7 @@ export default class ProtocolPage extends Component {
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}/>
             <ScrollView>
-                <Text style={{margin: 20}}>
+                {language === 'zh' ? <Text style={{margin: 20}}>
                     {'\n'}《 扑客APP服务使用协议 》{'\n'}
                     {'\n'}1. 特别提示
                     {'\n'}{'\n'}1.1
@@ -207,7 +207,497 @@ export default class ProtocolPage extends Component {
 
                     {'\n'}{'\n'}12.3 本协议中的标题仅为方便而设，在解释本协议时应被忽略。
 
-                </Text>
+                </Text> : <View>
+                    <Text style={{margin: 20}}>
+                        {'\n'}Poker APP Service Usage Agreement{'\n'}
+                        {'\n'}1. Firstly notes
+
+                        {'\n\n'}1.1 Shenzhen De Shang Quan Cai Sports & Cultural Media Co., Ltd(hereinafter collectively
+                        referred to as
+                        "Desh") a and related enterprises (hereinafter collectively referred to as "PokerPro") agrees to
+                        provide PokerPro services (hereinafter referred to as "APP services") based on mobile network,
+                        according to this agreement and released operation regulations. For attaining APP services, its
+                        users (hereinafter referred to as the "user") should know all the contents of this agreement and
+                        thinking independently before recognizing and agreeing all terms of this agreement and complete
+                        registration processes in accordance with the instructions on the page. Users click "Agree"
+                        button
+                        in the registration process means that user fully accept "The PokerPro Internet Service
+                        Agreement",
+                        "APP Service Usage Agreement", "APP Community Convention (Trial)", rules and regulations
+                        published
+                        on PokerPro.
+
+                        {'\n\n'}1.2 After successful registration, PokerPro will provide APP service according to the
+                        account
+                        registration information. While users’ application and registration for APP service should base
+                        on
+                        objective needs. Users have the right to use APP service, after registration and agreeing.
+                        User’s
+                        account and password should be own-kept; During using APP service, users should take full
+                        responsibility for APP usage, for any information released and published by users through APP
+                        service, and for any consequences because of that. Information submitted, released or displayed
+                        by
+                        users will be visible to other APP users and the third party services and websites (users have
+                        accessibility of their own information by setting).
+
+                        {'\n\n'}1.3 For enhancing user's APP experience, users agree PokerPro has the rights to
+                        investigate,
+                        research
+                        and analyze users’ data basing on the user's operating behaviors, to further optimize APP
+                        service.
+                        Content
+
+                        {'\n\n'}2.1 PokerPro service content depends on real situation, including but not limited,
+                        authorized users
+                        through their account, published views, comments, and pictures on APP. PokerPro has the right to
+                        upgrade or to adjust services or representation form, and will inform users in time.
+
+                        {'\n\n'}2.2 Some services on PokerPro may be charged and needed to pay online. For charged
+                        network
+                        services,
+                        users will receive a clear notification before using. Only having users’ confirmation that he is
+                        willing to pay related costs, can user use the charged network service. If being refused, then
+                        the
+                        platform has the right not to provide such charged network services.
+
+                        {'\n\n'}2.3 Users understand that PokerPro only provide technical services, or related to it.
+                        Additional network
+                        services equipment (such as personal computer, mobile phone, and other related network devices)
+                        and
+                        required for Internet access (such as payments of telephone bill and mobile phone fees and
+                        expenses
+                        of surfing Internet) shall be burden by users.
+                        {'\n\n'}3. Service modified, interrupted or terminated
+                        {'\n\n'}3.1
+                        Considering particularity of network service (including but not limited, server’s stability,
+                        hacker
+                        attacking online and other beyond-controlled situation). User agree that PokerPro has the right
+                        to
+                        suspend or terminate part or all APP service, without any prior notification (including charged
+                        network service). If unexpected situation does happen, PokerPro shall manage to inform affected
+                        users through system notification, private messages, SMS or other reasonable ways. If charged
+                        service being suspended or terminated, PokerPro shall return charged virtual currency into
+                        related
+                        virtual account or provide an equivalent, alternative charged network service instead.
+
+                        {'\n\n'}3.2 Users understand that PokerPro or related equipment have regular or irregular
+                        maintenance (mobile
+                        network, etc.). If service maintenance happens within a controlled time period for reasonable
+                        reasons, PokerPro take no responsibility, but PokerPro shall inform users in advance possibly.
+
+                        {'\n\n'}3.3 In any following circumstances, PokerPro has the right to suspend or terminate APP
+                        services
+                        (including charging services) for users at any time and should take no responsibility to users
+                        or
+                        any third party :
+                        {'\n'}3.3.1 Unreal personal information provided;
+                        {'\n'}3.3.2 Break laws, regulations, national policies or rules in this agreement;
+                        {'\n'}3.3.3 Unpaid APP charged services.
+
+                        {'\n'}3.4 If users don’t actually use the APP service within 90 consecutive days after
+                        successfully
+                        registered, PokerPro has the right to choose any of the following to determinate service:
+                        {'\n'}3.4.1 Take back user’s nickname;
+                        {'\n'}3.4.2 Take back user’s accounts or stop providing APP services.
+
+                        {'\n'}{'\n'}3.5 After User binding APP account with third party account, except unbinding by
+                        user
+                        himself, in any
+                        following circumstances, PokerPro take no responsibility to user or the third party:
+                        {'\n'}3.5.1 Break laws, regulations, national policies, this agreement or "PokerPro APP Service
+                        Usage
+                        Agreement";
+                        {'\n'}3.5.2 Break third party Account User Agreement or its relevant regulations;
+                        {'\n'}3.5.3 Other circumstance.
+                        {'\n'}Usage Rules
+
+                        {'\n'}{'\n'}4.1 Register APP account, to compose, to publish, to spread should use real ID and
+                        personal information.
+                        {'\n'}False, fraudulent residential ID, business license is unaccepted; If user's personal data
+                        has
+                        any
+                        changes, profile in APP should be updated timely.
+
+                        {'\n'}{'\n'}4.2 Users can edit own profile, like account name, head-photo, etc. all registration
+                        information, but
+                        they should follow the "Seven Bottom Line" and relevant regulations, and shall not contain
+                        illegal
+                        or unethical information.
+
+                        {'\n'}{'\n'}4.3 Breaking any rules above, PokerPro has the right to reject registration, to
+                        inform
+                        user correct
+                        information within limited time, to take back user’s account, to suspend or terminate APP
+                        service
+                        etc., according to the relevant laws, regulations and national policy. If user register with
+                        counterfeit, PokerPro has the right to cancel the user's account and reports to Network
+                        Supervision
+                        Bureau.
+
+                        {'\n'}{'\n'}4.4 PokerPro shall complete information safety system and preventive measure and
+                        shall
+                        protect users
+                        private profile after registration.
+
+                        {'\n'}{'\n'}4.5 As APP service is based on user’s account, user should not transfer or lend his
+                        account ID, password
+                        to others. If found account information was stolen, user should inform PokerPro immediately.
+                        PokerPro shall take no responsibility for the illegal use by hacker or user’s improper password
+                        keeping.
+
+                        {'\n'}{'\n'}4.6 Users agree that PokerPro puts all kinds of commercial advertisement or business
+                        information in a
+                        variety of ways during providing APP services. And users agree to accept PokerPro to send
+                        commodity
+                        sales or other related business information by e-mail or other ways to users.
+
+                        {'\n'}{'\n'}4.7 Users know, understand and agree to authorize PokerPro and its associated
+                        company
+                        can re-use content
+                        which being released through APP, including but not limited, text, pictures, video, etc.
+
+                        {'\n'}{'\n'}4.8 Using APP services, users should behave civilized, and respect other people's
+                        rights
+                        of personality
+                        and identity according to law, and establish a harmonious, civilized and polite network social
+                        environment.
+
+                        {'\n\n'}4.9 Users must obey the following principles while attaining APP service:
+                        {'\n'}4.9.1 Shall not violate People's Republic of China’s law and regulations and relevant
+                        international
+                        treaties or rules;
+                        {'\n'}4.9.2 Shall not violate protocols relating to network services, APP services, regulations,
+                        procedures, and industry rules;
+                        {'\n'}4.9.3 Shall not violate the "Seven Bottom Line" requirements of laws, regulations, the
+                        socialist
+                        system, national interests, the legitimate rights and interests of citizens, public order,
+                        social
+                        morality, and information authenticity;
+                        {'\n'}4.9.4 Shall not carry out any act that may adversely affect normal functioning of the
+                        Internet
+                        or
+                        mobile network;
+                        {'\n'}4.9.5 Shall not upload, display or transmit any false, imitated, slanderous, aggressive,
+                        abusive,
+                        threatening, racially discriminatory information, and information about harassment, slander,
+                        breach
+                        of privacy, adult erotic, and malicious plagiarism or any other illegal information;
+                        {'\n'}4.9.6 Shall not infringe in any way patent, copyright, trademark and other intellectual
+                        property
+                        rights, or right of name, of reputation, honor right, portrait right, privacy and other personal
+                        rights, or any other legitimate rights and interests enjoyed by any people according to law;
+                        {'\n'}4.9.7 Shall not in any way infringe upon the rights and/or interests of Desh or APP
+                        company or
+                        make
+                        any act that is detrimental to PokerPro;
+                        {'\n'}4.9.8 Shall not engage in any acts that affect normal operation of the APP platform or
+                        destroy
+                        management model or acts that is harmful to APP platform ecology.
+                        {'\n'}4.9.9 Shall not use APP services for any other illegal purpose.
+                        {'\n'}{'\n'}4.10 Any statement, notifications, warnings and other content shall be regarded as a
+                        part of this
+                        agreement through a variety of ways on PokerPro (including but not limited, system notification,
+                        private messages, SMS alerts, etc.). If users use such APP service, it is deemed that users
+                        agree
+                        the content of statements, notices, warning.
+                        {'\n'}{'\n'}4.11 PokerPro has the right to review, supervise and handle behavior and information
+                        after users
+                        using APP service, including but not limited, user’s information (account information, personal
+                        profile, etc.) published content (location, text, pictures, audio, video, trademarks, patents,
+                        publications, etc.), to user’s behavior (construction relationship, @information, comments and
+                        private messages, participated topic and activities, marketing information publication,
+                        complaints
+                        etc.) etc. If APP company finds out, or receives reports or complaints from third party that
+                        users
+                        violate the 4th usage rules of this agreement when they use APP services, PokerPro or its
+                        authorized
+                        subject has the right to make request to users, based on reasonable judgment:
+                        A. Make correction within a limited time;
+                        B. Takes all necessary measures to mitigate or eliminate bad effects to users without prior
+                        notice,
+                        then inform users after well-handled. All above necessary measures, includes but not limited,
+                        changing, shielding, or deleting related content, warning illegal account, restricting or
+                        prohibiting some or all features of illegal account, pausing, terminating, canceling users’
+                        using
+                        right of APP service, etc.
+
+                        {'\n'}{'\n'}4.12 If found other users to upload illegal content during using APP services, users
+                        can
+                        directly click
+                        "report" button and it will be verified and handled as soon as possible. If it involves the
+                        treatment of personal name , right of name, right of reputation or honor, portrait right,
+                        privacy
+                        and other personal rights disputes , according to "Regulations of the Supreme People's Court on
+                        the
+                        trial of using information network to infringement of personal rights and such civil dispute
+                        cases”,
+                        please refer to the published files to handle; If users think above methods can’t solve the
+                        problems
+                        encountered, or users think it is necessary to seek help from the judicial and administrative
+                        authorities, please send feedback to relevant authorities as soon as possible, and PokerPro will
+                        cooperate for investigation and get evidence in accordance with the law.
+                        {'\n'}{'\n'}5. Intellectual property rights
+
+                        {'\n'}{'\n'}5.1 The PokerPro platform has ownership and intellectual property rights.
+
+                        {'\n'}{'\n'}5.2 The PokerPro platform has ownership and intellectual property rights to its
+                        products. Above APP
+                        product refers to the PokerPro, or its affiliated company, or its authorized subject etc.
+                        through
+                        the APP platform, providing users, includes but not limited, with information sharing,
+                        relationship
+                        chain development, convenient auxiliary tool, application platform, public open platform and
+                        other
+                        functions, software, service etc.
+
+                        {'\n'}{'\n'}5.3 The PokerPro platform has ownership and intellectual property rights to PokerPro
+                        products and all
+                        information in it. Above information includes but not limited, its program code, interface
+                        design,
+                        layout framework, data, accounts, text, pictures, charts, graphics, audio and video, except
+                        relevant
+                        authorized people, in accordance with the laws and regulations.
+
+                        {'\n'}{'\n'}5.4 During using PokerPro, users may use functions, software or services developed
+                        by
+                        the third party
+                        for APP service and operated on APP platform. In addition to complying with the relevant
+                        provisions
+                        of this agreement, users shall also comply with the relevant provisions of the third party, and
+                        respect the relevant authorized people from third party to its function, software and services
+                        and
+                        the contents.
+
+                        {'\n'}{'\n'}5.5 As above, users understand and agree:
+                        {'\n'}5.5.1 Without approval of PokerPro and related authorized people, users shall not reverse
+                        engineer,
+                        decompile or disassemble to functions, software and services; At the same time, users shall not
+                        directly or indirectly release, broadcast content or information in any media. And users shall
+                        not
+                        rewrite or reissue, in purpose of broadcasting or issuing, or for any other purpose.
+                        {'\n'}5.5.2 On the premise of making reasonable efforts in business, PokerPro shall not take any
+                        responsibility to the customer or any third party in any form for the function, software, and
+                        service, and delays, inaccuracies, errors or omissions of its content or any damage it caused;
+                        {'\n'}5.5.3 PokerPro shall not take any guaranteed or joint undertaking or guarantee for any of
+                        the
+                        above
+                        function, software, services or content provided by the third party. Dispute, argument or
+                        damage,
+                        caused by above, should be solved by users and the third party. PokerPro take no responsibility
+                        for
+                        it;
+                        {'\n'}5.5.4 To better maintain the ecology for APP, PokerPro reserved PokerPro disposal of the
+                        product or
+                        the content with ownership and intellectual property rights in any way, any time, including but
+                        not
+                        limited, the revision, shielding, deleting or any other disposal permitted by laws and
+                        regulations.
+                        {'\n'}{'\n'}6. Privacy Protection
+
+                        {'\n'}{'\n'}6.1 "Privacy" refer in this agreement includes "telecommunications and Internet
+                        users'
+                        personal
+                        information protection regulations" the fourth article on personal information, "Provisions of
+                        the
+                        Supreme People's Court on the trial of usage of information network to infringement of personal
+                        rights dispute cases in civil law applicable to a number of issues" the twelfth article on
+                        personal
+                        privacy, the clearly defined privacy formulated or revised laws and regulations from time to
+                        time in
+                        the future.
+
+                        {'\n'}{'\n'}6.2 To protect user’s privacy and other personal information is a basic policy of
+                        PokerPro platform.
+                        PokerPro guarantees that we won’t use individuals’ registration information and their private
+                        contents stored after using APP services for any illegal purpose. PokerPro will ensure each
+                        user’s
+                        registration information for commercial use, and we will obtain users’ consent in advance,
+                        except
+                        the following circumstances:
+                        {'\n'}6.2.1 Obtain user's explicit authorization in advance;
+                        {'\n'}6.2.2 To maintain social public interests;
+                        {'\n'}6.2.3 Schools, scientific research institutions and other institutions basing on public
+                        interests
+                        for academic research or statistical purposes, written consent by natural people, and publicly
+                        is
+                        not enough to identify any specific person;
+                        {'\n'}6.2.4 Personal information publicly post online by users themselves, or other legally
+                        public
+                        personal information;
+                        {'\n'}6.2.5 Personal information obtained through legal channels;
+                        {'\n'}6.2.6 Users infringe upon the legitimate rights and interests of APP or the PokerPro, to
+                        safeguard
+                        lawful rights and interests when necessary within reasonable range;
+                        {'\n'}6.2.7 According to requirements of the relevant government authorities;
+                        {'\n'}6.2.8 According to the requirements of relevant laws, regulations or policies;
+                        {'\n'}6.2.9 Other necessary situation.
+
+                        {'\n'}{'\n'}6.3 To enhance quality of APP service, PokerPro may cooperate with third party to
+                        provide relevant APP
+                        services together. The cooperation may need to, including but not limited, exchange of users’
+                        data.
+                        In that case, users understand and agree that if the third party agrees to bear the same
+                        responsibility of protecting the privacy of users, then PokerPro has the right to provide user
+                        registration information, etc. to the third party, and agrees with third party that users’ data
+                        is
+                        only for the purpose of the cooperation of APP services; and PokerPro will conduct supervision
+                        and
+                        administration on the behavior that the third party uses users’ data , and make all reasonable
+                        efforts to protect the safety of users' personal information.
+                        {'\n'}{'\n'}7. Disclaimer
+
+                        {'\n'}7.1 During using APP services, users should abide by the laws, regulations and
+                        policies of the state,
+                        and any consequences of using APP services shall be burden by the users themselves.
+
+                        {'\n'}{'\n'}7.2 Any information released and any point passed through APP service does not
+                        represent
+                        PokerPro’s
+                        views. PokerPro platform is not responsible for its integrity, authenticity, accuracy or
+                        reliability. Users may be exposed to the illegal, unethical, incorrect or other improper
+                        information, and should make their own judgment on the misclassified or deceptive release
+                        content.
+                        In any case, for any information, including but not limited, any occurred errors or omissions;
+                        or
+                        any loss or damage caused by using the information released by publication, private messages,
+                        communication, other ways or spread elsewhere through the APP service, the relevant behavior
+                        body
+                        takes full responsibility.
+
+                        {'\n'}{'\n'}7.3 Because of external links is not actually controlled by the PokerPro, it can’t
+                        guarantee the
+                        accuracy and integrity of the external link.
+
+                        {'\n'}{'\n'}7.4 PokerPro platform doesn’t take any responsibility for the interruption of APP
+                        service or other
+                        defects caused by force majeure or beyond the control of it, but will do best to reduce losses
+                        and
+                        impacts on the users.
+
+                        {'\n'}{'\n'}7.5 The user agrees that the PokerPro doesn’t need to take any responsibility for
+                        the
+                        quality defects of
+                        the following products or services provided to users and any losses initiated:
+                        {'\n'}7.5.1 PokerPro offers free APP services to users;
+                        {'\n'}7.5.2 Any product or service presented to users by PokerPro;
+                        {'\n'}7.5.3 A variety of complimentary products or services provided by PokerPro to charged
+                        service
+                        users.
+
+                        {'\n'}{'\n'}7.6 Users understand and agree that PokerPro may cooperate with a third party to
+                        provide
+                        products
+                        (including but not limited, game, third party applications etc.) to users. And product’s
+                        upgrades,
+                        maintenance, customer service and other follow-up work shall be provided by third party. The
+                        third
+                        party takes responsibility for all disputes caused by quality of the product or the reason of
+                        itself
+                        or the losses of its users. Users hereby agrees to hold all rights and losses relating to the
+                        third
+                        party.
+
+                        {'\n'}{'\n'}7.7 Products or services provided by APP platform (including but not limited, game
+                        items
+                        and props). If
+                        the life span is not indicated, or its life span is marked "permanent" and "indefinite" or "no
+                        limit", its life span is from the day when users get the game item or props until the day when
+                        product or service in APP is offline. This Agreement terminates caused by PokerPro or the
+                        product or
+                        service in APP is offline. Users will not be able to continue to use the product or service
+                        after
+                        APP offline. PokerPro will return surplus virtual currency refund to user’s virtual currency
+                        account
+                        or provide the equivalent alternative charging network service for the affected users.
+                        {'\n'}{'\n'}8. Liquidated Damages
+
+                    </Text>
+                    <Text style={{margin: 20}}>
+                        {'\n'}8.1 If PokerPro causes any losses to users due to violation of relevant laws, regulations
+                        or
+                        any of the
+                        provisions of this agreement, the PokerPro agrees to undertake the liability for damages.
+
+                        {'\n'}{'\n'}8.2 Users agrees to safeguard and maintain the interests of PokerPro and other
+                        users. If
+                        users violate
+                        relevant laws, regulations or any provisions under this agreement, and cause damage to PokerPro
+                        or
+                        any other third party, users agrees to undertake the liability for damages.
+                        {'\n'}{'\n'}9. Protocol Modification
+
+                        {'\n'}9.1 PokerPro has the right to modify any terms of this agreement at any time. Once
+                        modified,
+                        PokerPro
+                        will publish the modified protocol contents on APP. If users not agree with above changes, they
+                        can
+                        choose to stop using APP service. PokerPro can also choose other appropriate ways, (such as
+                        system
+                        notifications) to inform users of modified contents.
+
+                        {'\n'}{'\n'}9.2If users not agree to the modifications made by the PokerPro for relevant terms
+                        and
+                        conditions of
+                        this agreement, he has the right to stop using APP services. If users continue using APP
+                        service, it
+                        is deemed that users accept the modifications made by the PokerPro regarding the terms and
+                        conditions of this agreement.
+                        {'\n'}{'\n'}10. Notification Service
+
+                        {'\n'}10.1 Under this agreement, for all users’ notification, PokerPro takes the initiative to
+                        contact through
+                        the web page, email, system notification and APP management account, the private messages,
+                        mobile
+                        phone messages or regular mail delivery manner; The notice sent is deemed to have been delivered
+                        to
+                        the recipient.
+
+                        {'\n'}{'\n'}10.2 User's should take notification from official PokerPro platform as
+                        communication
+                        address, fax number
+                        and e-mail address and other contact information.
+                        {'\n'}{'\n'}11. Application of law
+
+                        {'\n'}11.1 APP carry out the requirements of the laws and regulations of People's Republic of
+                        China,
+                        policies
+                        and judicial interpretations, including but not limited，the "National People's Congress Standing
+                        Committee on Strengthening the Network Information Protection Decision", "Several Issues
+                        Interpretation of the Supreme People's court and Supreme People's Procuratorate Concerning the
+                        Application of Law" and the spirit of the document, making "APP Service Usage Agreement".
+
+                        {'\n'}{'\n'}11.2 The conclusion, execution and interpretation of this Agreement and settlement
+                        of
+                        disputes shall
+                        apply to the jurisdiction of People’s Republic of China’s laws and the People’s Republic of
+                        China’s
+                        courts.
+
+                        {'\n\n'}11.3 Any dispute over the contents of the agreement or the execution, both parties shall
+                        try to settle as
+                        amicable as possible. Any party may lodge a lawsuit to the people's court in municipality in
+                        which
+                        PokerPro is when negotiations fail.
+                        {'\n'}{'\n'}12. Other Provisions
+
+                        {'\n'}12.1 This agreement constitutes a complete agreement between the parties on the agreed
+                        items
+                        and other
+                        relevant matters. Except rules and regulations of this agreement, other rights of other parties
+                        are
+                        not granted.
+
+                        {'\n'}{'\n'}12.2 Any provisions of this agreement, no matter what reason, wholly or partially
+                        invalid or no executive
+                        force, left provisions shall be valid and working in this Agreement.
+
+                        {'\n'}{'\n'}12.3 The title in this agreement is only for convenience and shall be omitted
+                        whenever
+                        comes into explanation.
+                    </Text>
+                </View>}
+
+
             </ScrollView>
         </View>)
     }
