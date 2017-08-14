@@ -5,6 +5,7 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 import StorageKey from '../configs/StorageKey';
 import JpushHelp from './JpushHelper';
+import {isEmptyObject} from '../utils/ComonHelper';
 
 export function postLoginCount() {
     helper.post(Api.login_count(), {}, ret => {
@@ -91,17 +92,20 @@ export function setLoginUser(ret) {
     LoginUser = ret;
     global.login_user = ret;
 
-    JpushHelp.getRegistrationID((id) => {
-        router.log('JpushId: ' + id)
-    });
-    let type = helper.getApiType() === 'production' ? 'pro' : helper.getApiType();
-    let alias = type + '_' + ret.user_id;
-    console.log(alias)
-    JpushHelp.setAlias(alias, () => {
-        router.log(alias + ' set jpush alias success')
-    }, () => {
-        router.log(alias + ' set jpush alias fail')
-    })
+    if (!isEmptyObject(ret)) {
+        JpushHelp.getRegistrationID((id) => {
+            router.log('JpushId: ' + id)
+        });
+        let type = helper.getApiType() === 'production' ? 'pro' : helper.getApiType();
+        let alias = type + '_' + ret.user_id;
+        console.log(alias)
+        JpushHelp.setAlias(alias, () => {
+            router.log(alias + ' set jpush alias success')
+        }, () => {
+            router.log(alias + ' set jpush alias fail')
+        })
+    }
+
 }
 
 export function removeToken() {
