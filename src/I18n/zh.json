@@ -344,5 +344,7 @@
   "order_logistics_email":"电子票已发送至您预留的电子邮箱",
   "I_known":"知道了",
   "tracking_no":"运单号",
-  "sold_out": "售完"
+  "sold_out": "售完",
+  "protocol1":"扑客APP服务使用协议",
+  "agree":"同意"
 }

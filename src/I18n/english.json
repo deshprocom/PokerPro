@@ -343,6 +343,8 @@
   "delivered": "In-shipping",
   "I_known": "OK",
   "tracking_no": "ShippingNum",
-  "sold_out": "Sold out"
+  "sold_out": "Sold out",
+  "protocol1": "扑客APP服务使用协议",
+  "agree": "同意"
 }
 

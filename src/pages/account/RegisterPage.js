@@ -23,7 +23,7 @@ class RegisterPage extends React.Component {
         mobile: '',
         vcode: '',
         getCodeDisable: false,
-        checkAgree: true,
+        checkAgree: false,
         canNextDisable: true,
         phoneClear: false
     }
@@ -231,12 +231,10 @@ class RegisterPage extends React.Component {
                 <View style={{flex: 1}}/>
                 <TouchableOpacity
                     onPress={() => {
-                        this.setState({
-                            checkAgree: !checkAgree
-                        })
+                        router.toProtocol(this.props, this._protocol)
                     }}
                     style={{marginBottom: 49}}>
-                    <View style={{alignSelf: 'center', flexDirection: 'row'}}>
+                    <View style={{alignItems: 'flex-end', flexDirection: 'row', alignSelf: 'center'}}>
                         <Image style={{height: 12, width: 12, marginRight: 8}}
                                source={checkAgree ? Images.sign_choice_no : Images.sign_choice}/>
                         <Text style={{color: Colors._AAA, fontSize: 12}}>
@@ -247,7 +245,12 @@ class RegisterPage extends React.Component {
             </View>
 
         )
+    }
 
+    _protocol = () => {
+        this.setState({
+            checkAgree: true
+        })
     }
 }
 

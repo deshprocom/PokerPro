@@ -53,58 +53,12 @@ import PokerRankPage from '../pages/rank/info/PokerRankPage';
 import PokerRacePage from '../pages/rank/info/PokerRacePage';
 import SearchPoker from '../pages/rank/SearchPoker';
 import WebViewPay from '../components/WebViewPay';
+import Protocol from '../pages/setting/ProtocolPage';
 
 
 const customFloatFromRight = Navigator.SceneConfigs.FadeAndroid;
 
-// import {Actions, Scene} from 'react-native-router-flux'
-//
-// const scenes = Actions.create(
-//     <Scene key="root">
-//         <Scene key="DrawerPage" component={DrawerPage} initial/>
-//         <Scene key="InputPwdPage" component={InputPwdPage}/>
-//         <Scene key="PersonPage" component={PersonPage}/>
-//         <Scene key="SettingPage" component={SettingPage}/>
-//         <Scene key="EventPage" component={EventPage}/>
-//         <Scene key="RegisterPage" component={RegisterPage}/>
-//
-//         <Scene key="ForgetPage" component={ForgetPage}/>
-//         <Scene key="RacesInfoPage" component={RacesInfoPage}/>
-//         <Scene key="LoginFirstPage" component={LoginFirstPage}/>
-//         <Scene key="LoginCodePage" component={LoginCodePage}/>
-//         <Scene key="EmailRegisterPage" component={EmailRegisterPage}/>
-//         <Scene key="ImageGallery" component={ImageGallery}/>
-//
-//         <Scene key="ForgetEmailPage" component={ForgetEmailPage}/>
-//         <Scene key="BuyTicketPage" component={BuyTicketPage}/>
-//         <Scene key="OrderInfoPage" component={OrderInfoPage}/>
-//         <Scene key="BuyKnowPage" component={BuyKnowPage}/>
-//         <Scene key="CertificationPage" component={CertificationPage}/>
-//         <Scene key="OrderListPage" component={OrderListPage}/>
-//
-//         <Scene key="SecurityPage" component={SecurityPage}/>
-//         <Scene key="ModifyPwdPage" component={ModifyPwdPage}/>
-//         <Scene key="SearchRacesPage" component={SearchRacesPage}/>
-//         <Scene key="BusinessPage" component={BusinessPage}/>
-//         <Scene key="SearchKeywordPage" component={SearchKeywordPage}/>
-//         <Scene key="AboutPage" component={AboutPage}/>
-//
-//         <Scene key="PokerPersonPage" component={PokerPersonPage}/>
-//         <Scene key="MainNewsPage" component={MainNewsPage}/>
-//         <Scene key="NewsInfoPage" component={NewsInfoPage}/>
-//         <Scene key="SearchNewsPage" component={SearchNewsPage}/>
-//         <Scene key="SearchKeywordPage" component={SearchKeywordPage}/>
-//         <Scene key="TicketPage" component={TicketPage}/>
-//
-//         <Scene key="ApiSettingPage" component={ApiSettingPage}/>
-//         <Scene key="BindingPhonePage" component={BindingPhonePage}/>
-//         <Scene key="ChangePhonePage" component={ChangePhonePage}/>
-//         <Scene key="MessagePage" component={MessagePage}/>
-//         <Scene key="MainVideoPage" component={MainVideoPage}/>
-//         <Scene key="VideoInfoPage" component={VideoInfoPage}/>
-//
-//     </Scene>
-// );
+
 export default class Router {
     constructor(navigator) {
         this.navigator = navigator
@@ -130,6 +84,20 @@ export default class Router {
     popToTop() {
         this.navigator.popToTop();
     }
+
+
+    toProtocol(props, _protocol) {
+        this.push(props, {
+            page: Protocol,
+            name: 'Protocol',
+            sceneConfig: customFloatFromRight,
+            params: {
+                _protocol: _protocol
+            }
+
+        })
+    }
+
 
     replaceOrder(order_id, price) {
         this.navigator.replace({
