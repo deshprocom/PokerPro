@@ -7,7 +7,9 @@ import StorageKey from '../configs/StorageKey';
 import JpushHelp from './JpushHelper';
 
 export function postLoginCount() {
-    helper.post(Api.login_count(),{},ret=>{},err=>{})
+    helper.post(Api.login_count(), {}, ret => {
+    }, err => {
+    })
 }
 
 export function delNotification(body, resolve, reject) {
@@ -92,7 +94,8 @@ export function setLoginUser(ret) {
     JpushHelp.getRegistrationID((id) => {
         router.log('JpushId: ' + id)
     });
-    let alias = helper.getApiType() + '_' + ret.user_id;
+    let type = helper.getApiType() === 'production' ? 'pro' : helper.getApiType();
+    let alias = type + '_' + ret.user_id;
     console.log(alias)
     JpushHelp.setAlias(alias, () => {
         router.log(alias + ' set jpush alias success')

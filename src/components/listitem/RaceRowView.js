@@ -120,7 +120,7 @@ export default class RaceRowView extends Component {
 
     _priceView = (prize) => {
         if (strNotNull(prize))
-            return <View style={[styles.viewClock, {marginTop: 8}]}>
+            return <View style={[styles.viewClock, {marginTop: 3}]}>
                 <Text style={[styles.lbPrice, {fontSize: FontSize.h13}]}>{I18n.t('prize')}</Text>
                 <Text
                     numberOfLines={1}
