@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/4/25.
  */
-import React, {PropTypes, Component,createElement}from 'react';
+import React, {PropTypes, Component, createElement}from 'react';
 import {
     TouchableOpacity, View, ScrollView,
     StyleSheet, Text, Platform
@@ -9,7 +9,7 @@ import {
 import Markdown from './simple';
 import {MarkdownView} from './markview';
 import ImageMark from './simple/ImageMark';
-import {strNotNull,FontSize} from '../utils/ComonHelper';
+import {strNotNull, FontSize, showToast} from '../utils/ComonHelper';
 
 export default class MarkdownPlat extends Component {
 
@@ -32,103 +32,108 @@ export default class MarkdownPlat extends Component {
 
     _markdownView = () => {
         const {markdownStr} = this.props;
-        if (strNotNull(markdownStr))
-            if (Platform.OS === 'ios') {
+        try {
+            if (strNotNull(markdownStr))
+                if (Platform.OS === 'ios') {
 
-                return (<MarkdownView
-                    styles={{
-                        heading1: {
-                            color: '#555555',
-                            fontSize: FontSize.h19,
-                        },
-                        heading2: {
-                            color: '#555555',
-                            fontSize: FontSize.h17,
-                        },
-                        heading3: {
-                            color: '#555555',
-                            fontSize: FontSize.h16,
-                        },
-                        heading4: {
-                            color: '#555555',
-                            fontSize:  FontSize.h15,
-                        },
-                        paragraph: {
-                            marginTop: 10,
-                            marginBottom: 10,
-                            fontSize:  FontSize.h15,
-                            lineHeight: 25,
-                            letterSpacing: 0.3,
-                            color: '#444444'
-                        },
-                    }}
-                    onLinkPress={url=>{
+                    return (<MarkdownView
+                        styles={{
+                            heading1: {
+                                color: '#161718',
+                                fontSize: FontSize.h19,
+                            },
+                            heading2: {
+                                color: '#161718',
+                                fontSize: FontSize.h17,
+                            },
+                            heading3: {
+                                color: '#161718',
+                                fontSize: FontSize.h16,
+                            },
+                            heading4: {
+                                color: '#161718',
+                                fontSize: FontSize.h15,
+                            },
+                            paragraph: {
+                                marginTop: 10,
+                                marginBottom: 10,
+                                fontSize: FontSize.h15,
+                                lineHeight: 25,
+                                letterSpacing: 0.3,
+                                color: '#444444'
+                            },
+                        }}
+                        onLinkPress={url => {
 
-                        router.toWebViewPage(this.props,url);
-                    }}>
-                    {markdownStr}
-                </MarkdownView>)
+                            router.toWebViewPage(this.props, url);
+                        }}>
+                        {markdownStr}
+                    </MarkdownView>)
 
-            } else {
+                } else {
 
-                return ( <Markdown
-                    rules={{
-                        image: {
-                            react: (node, output, state) => (
-                                <ImageMark
-                                    key={state.key}
-                                    src={ node.target }
-                                />
-                            ),
-                        },
-                        link: {
-                            react: (node, output, state) => {
-                                state.withinText = true
-                                const openUrl = (url) => {
-                                    router.toWebViewPage(this.props,url);
-                                };
-                                return createElement(Text, {
-                                    style: {
-                                        color: '#4990E2',
-                                        textDecorationLine: 'underline',
-                                    },
-                                    key: state.key,
-                                    onPress: () => openUrl(node.target)
-                                }, output(node.content, state))
-                            }
-                        },
-                    }}
-                    styles={{
-                        view: {
-                            padding: 20,
-                            paddingBottom: 40
-                        },
-                        text: {
-                            color: '#444444',
-                            fontSize:  FontSize.h15,
-                            lineHeight: 25,
-                            letterSpacing: 0.3
-                        },
-                        heading1: {
-                            color: '#555555',
-                            fontSize: FontSize.h19,
-                        },
-                        heading2: {
-                            color: '#555555',
-                            fontSize: FontSize.h17,
-                        },
-                        heading3: {
-                            color: '#555555',
-                            fontSize: FontSize.h16,
-                        },
-                        heading4: {
-                            color: '#555555',
-                            fontSize:  FontSize.h15,
-                        },
-                    }}>
-                    {markdownStr}
-                </Markdown>)
-            }
+                    return ( <Markdown
+                        rules={{
+                            image: {
+                                react: (node, output, state) => (
+                                    <ImageMark
+                                        key={state.key}
+                                        src={ node.target }
+                                    />
+                                ),
+                            },
+                            link: {
+                                react: (node, output, state) => {
+                                    state.withinText = true
+                                    const openUrl = (url) => {
+                                        router.toWebViewPage(this.props, url);
+                                    };
+                                    return createElement(Text, {
+                                        style: {
+                                            color: '#4990E2',
+                                            textDecorationLine: 'underline',
+                                        },
+                                        key: state.key,
+                                        onPress: () => openUrl(node.target)
+                                    }, output(node.content, state))
+                                }
+                            },
+                        }}
+                        styles={{
+                            view: {
+                                padding: 20,
+                                paddingBottom: 40
+                            },
+                            text: {
+                                color: '#444444',
+                                fontSize: FontSize.h15,
+                                lineHeight: 25,
+                                letterSpacing: 0.3
+                            },
+                            heading1: {
+                                color: '#161718',
+                                fontSize: FontSize.h19,
+                            },
+                            heading2: {
+                                color: '#161718',
+                                fontSize: FontSize.h17,
+                            },
+                            heading3: {
+                                color: '#161718',
+                                fontSize: FontSize.h16,
+                            },
+                            heading4: {
+                                color: '#161718',
+                                fontSize: FontSize.h15,
+                            },
+                        }}>
+                        {markdownStr}
+                    </Markdown>)
+                }
+        } catch (e) {
+            showToast(e)
+        }
+
     }
 }
 
