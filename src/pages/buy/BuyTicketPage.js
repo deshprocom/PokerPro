@@ -3,7 +3,7 @@
  */
 import React, {Component}from 'react';
 import {
-    TouchableOpacity, View, Linking, Alert,
+    TouchableOpacity, View, Alert,
     StyleSheet, Image, Text, ScrollView, Platform,
     InteractionManager
 } from 'react-native';
@@ -64,25 +64,12 @@ class BuyTicketPage extends Component {
 
     componentDidMount() {
         umengEvent('ticket_buy_info');
-        Linking.addEventListener('url', this._handleOpenURL);
+
         InteractionManager.runAfterInteractions(() => {
             this.refreshPage();
         })
 
     }
-
-    componentWillUnmount() {
-        Linking.removeEventListener('url', this._handleOpenURL);
-    }
-
-    _handleOpenURL = (event) => {
-        console.log('scheme URL:', event.url);
-        if (this.payModal) {
-            const {order_number, price} = this.payModal.getPayUrl();
-            router.replaceOrder(order_number, price)
-        }
-
-    };
 
     refreshPage = () => {
         // this.props._getRaceNewOrder(this.props.params.race_id);

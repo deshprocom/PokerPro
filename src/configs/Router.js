@@ -112,13 +112,14 @@ export default class Router {
     }
 
 
-    toWebViewPay(props, pay) {
+    toWebViewPay(props, pay, orderRefresh) {
         this.push(props, {
             page: WebViewPay,
             name: 'WebViewPay',
             sceneConfig: customFloatFromRight,
             params: {
-                pay: pay
+                pay: pay,
+                orderRefresh: orderRefresh
             }
         })
     }

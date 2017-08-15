@@ -66,7 +66,9 @@ export default class WebViewPay extends Component {
     }
 
     render() {
-        const {pay} = this.props.params;
+
+        const {pay_url} = this.props.params.pay;
+        console.log(pay_url)
         return (
             <View style={ApplicationStyles.bgContainer}>
                 {this.topBarView()}
@@ -74,13 +76,12 @@ export default class WebViewPay extends Component {
                     style={styles.contentContainer}
                     {...this._panResponder.panHandlers}>
                     <WebView
-
                         ref={(ref) => {
                             this.webView = ref
                         }}
                         style={styles.webView}
                         scalesPageToFit={true}
-                        source={{uri: pay.pay_url}}
+                        source={{uri: pay_url}}
                         renderLoading={this._renderLoading}
                         renderError={this._renderError}
                         startInLoadingState={true}
@@ -94,8 +95,20 @@ export default class WebViewPay extends Component {
     }
 
 
-    webMessage = (msg) => {
-        console.log(msg)
+    webMessage = (event) => {
+
+        let msg = event.nativeEvent.data;
+        console.log('webMessage', msg);
+        if (msg === 'pay-success') {
+            const {order_number, price} = this.props.params.pay;
+            const {orderRefresh} = this.props.params;
+            router.pop();
+            if (orderRefresh) {
+                orderRefresh();
+            } else
+                router.replaceOrder(order_number, price)
+        }
+
     };
 
     _btnOnPressCallback = (id) => {

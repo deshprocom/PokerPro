@@ -10,7 +10,7 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {isEmptyObject, strNotNull} from '../../utils/ComonHelper';
 
-var testUrl = 'https://h5.deshpro.com/pay/fail';
+var testUrl = 'http://localhost:4200/pay/success';
 
 export default class PayModal extends Component {
 
@@ -28,6 +28,11 @@ export default class PayModal extends Component {
 
     getPayUrl = () => {
         return this.state.payUrl;
+    };
+
+
+    setRefresh = (orderRefresh) => {
+        this.orderRefresh = orderRefresh;
     };
 
     setPayUrl = (data) => {
@@ -123,7 +128,7 @@ export default class PayModal extends Component {
         return <TouchableOpacity
             onPress={() => {
                 this.toggle();
-                router.toWebViewPay(this.props, payUrl)
+                router.toWebViewPay(this.props, payUrl,this.orderRefresh)
             }}
             style={styles.btnPay}>
             <Text style={styles.txtPay}>{I18n.t('pay_confirm')}</Text>

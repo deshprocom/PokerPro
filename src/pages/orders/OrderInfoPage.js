@@ -4,7 +4,7 @@
 import React, {Component}from 'react';
 import {
     TouchableOpacity, View, TextInput, Alert,
-    StyleSheet, Image, Text, ScrollView, Linking
+    StyleSheet, Image, Text, ScrollView
 } from 'react-native';
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
@@ -33,18 +33,8 @@ class OrderInfoPage extends React.Component {
             this._pay();
         }
         this._refreshPage();
-        Linking.addEventListener('url', this._handleOpenURL);
-    }
 
-    componentWillUnmount() {
-        Linking.removeEventListener('url', this._handleOpenURL);
     }
-
-    _handleOpenURL = (event) => {
-        console.log('scheme URL:', event.url);
-        router.pop();
-        this._refreshPage();
-    };
 
     state = {
         user_id: ''
