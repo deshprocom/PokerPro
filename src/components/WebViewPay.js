@@ -102,8 +102,8 @@ export default class WebViewPay extends Component {
         if (msg === 'pay-success') {
             const {order_number, price} = this.props.params.pay;
             const {orderRefresh} = this.props.params;
-            router.pop();
             if (orderRefresh) {
+                router.pop();
                 orderRefresh();
             } else
                 router.replaceOrder(order_number, price)
