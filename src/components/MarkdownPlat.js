@@ -59,7 +59,7 @@ export default class MarkdownPlat extends Component {
                             fontSize:  FontSize.h15,
                             lineHeight: 25,
                             letterSpacing: 0.3,
-                            color: '#777777'
+                            color: '#444444'
                         },
                     }}
                     onLinkPress={url=>{
@@ -104,7 +104,7 @@ export default class MarkdownPlat extends Component {
                             paddingBottom: 40
                         },
                         text: {
-                            color: '#777777',
+                            color: '#444444',
                             fontSize:  FontSize.h15,
                             lineHeight: 25,
                             letterSpacing: 0.3
