@@ -77,6 +77,7 @@ export function newShare(title, location, icon, newsId) {
 }
 
 export function rankPlayerShare(title, location, icon, playerId) {
+    console.log(encodeURI(icon))
     UMShare.share(title, location, encodeURI(icon), "https://h5.deshpro.com/rankPlayer/" + playerId + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)

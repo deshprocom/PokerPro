@@ -124,7 +124,7 @@ export default class WebViewPage extends Component {
     _renderError() {
         return (
             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                <Text>Oooops~, 出错了, 重新刷新下吧～</Text>
+                <Text> 出错了, 重新刷新下吧～</Text>
             </View>
         );
     }

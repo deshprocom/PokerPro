@@ -84,6 +84,7 @@ export default class WebViewPay extends Component {
                         renderLoading={this._renderLoading}
                         renderError={this._renderError}
                         startInLoadingState={true}
+                        onMessage={this.webMessage}
                     />
                 </View>
 
@@ -91,6 +92,11 @@ export default class WebViewPay extends Component {
             </View>
         );
     }
+
+
+    webMessage = (msg) => {
+        console.log(msg)
+    };
 
     _btnOnPressCallback = (id) => {
         if (id === 1) {
@@ -121,7 +127,7 @@ export default class WebViewPay extends Component {
     _renderError() {
         return (
             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                <Text>Oooops~, 出错了, 重新刷新下吧～</Text>
+                <Text> 出错了, 重新刷新下吧～</Text>
             </View>
         );
     }
