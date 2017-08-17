@@ -1,9 +1,9 @@
 /**
  * Created by lorne on 2017/2/21.
  */
-import React, {Component,PropTypes}from 'react';
+import React, {Component, PropTypes}from 'react';
 import {
-    TouchableOpacity, View, TextInput,Alert,
+    TouchableOpacity, View, TextInput, Alert,
     StyleSheet, Image, Text, ScrollView, Platform
 } from 'react-native';
 import {connect} from 'react-redux';
@@ -11,13 +11,13 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import Button from 'react-native-smart-button';
 
-import ActionSheet from 'react-native-actionsheet';
+import ActionSheet from '../../components/sheet';
 import ImagePicker from 'react-native-image-crop-picker';
 
 import {POST_CERTIFICATION, GET_CERTIFICATION} from '../../actions/ActionTypes';
 import {
-    isEmptyObject,getDispatchAction,strNotNull,getCurrentDate
-    ,showToast,call
+    isEmptyObject, getDispatchAction, strNotNull, getCurrentDate
+    , showToast, call
 } from '../../utils/ComonHelper';
 import {Verified} from '../../configs/Status';
 import {fetchPostCertification, fetchPostPasswordImage} from '../../actions/AccountAction';
@@ -26,10 +26,7 @@ import {umengEvent} from '../../utils/UmengEvent';
 
 import {InputView} from "../../components";
 
-const CANCEL_INDEX = 0;
-const DESTRUCTIVE_INDEX = 2;
-const options = [I18n.t('cancel'), I18n.t('camera'), I18n.t('pictures')];
-const title = I18n.t('chose_image');
+
 const picker = {
     width: 500,
     height: 500,
@@ -39,15 +36,15 @@ const picker = {
 };
 class PassportView extends Component {
     static propTypes = {
-        router:PropTypes.object
+        router: PropTypes.object
     };
 
     state = {
         editable: true,
         realName: '',
-        passwordCard:'',
-        passImage:'',
-        imageName:'',
+        passwordCard: '',
+        passImage: '',
+        imageName: '',
         passport_id: ''
     }
 
@@ -63,7 +60,7 @@ class PassportView extends Component {
             router.pop();
         } else if (newProps.actionType === GET_CERTIFICATION &&
             newProps.hasData) {
-            if (!isEmptyObject(user_extra)&&user_extra.cert_type === 'passport_id') {
+            if (!isEmptyObject(user_extra) && user_extra.cert_type === 'passport_id') {
                 let editable = true;
                 if (user_extra.status === Verified.PASSED) {
                     editable = false;
@@ -119,22 +116,22 @@ class PassportView extends Component {
 
     _cardImageView = () => {
         let {passImage} = this.state;
-        if(isEmptyObject(passImage)){
-            return(
-                <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
+        if (isEmptyObject(passImage)) {
+            return (
+                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                     <Image
                         source={Images.name_id}
-                        style={{height:35,width:49}}/>
+                        style={{height: 35, width: 49}}/>
 
-                    <Text style={{fontSize:Fonts.size.h18,color:Colors._AAA,marginTop:31}}>
+                    <Text style={{fontSize: Fonts.size.h18, color: Colors._AAA, marginTop: 31}}>
                         {I18n.t('ple_upload_pass_id')}
                     </Text>
                 </View>
             )
-        }else{
+        } else {
             return (<Image
-                style={{height:150,width:250}}
-                source={{uri:passImage}}>
+                style={{height: 150, width: 250}}
+                source={{uri: passImage}}>
 
             </Image>)
         }
@@ -200,79 +197,89 @@ class PassportView extends Component {
     // }
 
     render() {
-        const {editable,realName,passwordCard}=this.state;
+        const {editable, realName, passwordCard} = this.state;
         router.log(this.state);
         return (<ScrollView
             testID="page_real_name"
             style={ApplicationStyles.bgContainer}>
 
             <View
-                style={{height:50,alignItems:'center',flexDirection:'row',marginTop:8,
-                backgroundColor:Colors.white}}>
-                <Text style={{marginLeft:18}}>{I18n.t('real_name')}:</Text>
+                style={{
+                    height: 50, alignItems: 'center', flexDirection: 'row', marginTop: 8,
+                    backgroundColor: Colors.white
+                }}>
+                <Text style={{marginLeft: 18}}>{I18n.t('real_name')}:</Text>
                 <InputView
                     editable={editable}
                     testID="input_real_name"
-                    stateText={text=>{
-                                this.setState({
-                                    realName:text
-                                })
-                            }}
+                    stateText={text => {
+                        this.setState({
+                            realName: text
+                        })
+                    }}
                     inputValue={realName}
-                    inputView={{height:50, borderBottomColor: Colors.white,
-                        borderBottomWidth: 1,flex:1}}
-                    inputText={{height:50,fontSize:15,marginLeft:15}}
+                    inputView={{
+                        height: 50, borderBottomColor: Colors.white,
+                        borderBottomWidth: 1, flex: 1
+                    }}
+                    inputText={{height: 50, fontSize: 15, marginLeft: 15}}
                     placeholder={I18n.t('ple_real_name')}/>
             </View>
             <View
-                style={{height:50,alignItems:'center',flexDirection:'row',marginTop:8,
-                backgroundColor:Colors.white}}>
-                <Text style={{marginLeft:18}}>{I18n.t('password_card')}</Text>
+                style={{
+                    height: 50, alignItems: 'center', flexDirection: 'row', marginTop: 8,
+                    backgroundColor: Colors.white
+                }}>
+                <Text style={{marginLeft: 18}}>{I18n.t('password_card')}</Text>
                 <InputView
                     editable={editable}
                     testID="input_real_name"
-                    stateText={text=>{
-                                this.setState({
-                                    passwordCard:text
-                                })
-                            }}
+                    stateText={text => {
+                        this.setState({
+                            passwordCard: text
+                        })
+                    }}
                     inputValue={passwordCard}
-                    inputView={{height:50,borderBottomColor:Colors.white,
-                        borderBottomWidth:1,flex:1}}
-                    inputText={{height:50,fontSize:15,marginLeft:15}}
+                    inputView={{
+                        height: 50, borderBottomColor: Colors.white,
+                        borderBottomWidth: 1, flex: 1
+                    }}
+                    inputText={{height: 50, fontSize: 15, marginLeft: 15}}
                     placeholder={I18n.t('ple_password_card')}/>
             </View>
             <TouchableOpacity
                 disabled={!editable}
                 activeOpacity={1}
                 onPress={this.showPickImage}
-                style={{height:198,width:Metrics.screenWidth-34,
-                alignSelf:'center',backgroundColor:Colors.txt_CCCCCC,
-                marginTop:14,alignItems:'center',justifyContent:'center'}}>
+                style={{
+                    height: 198, width: Metrics.screenWidth - 34,
+                    alignSelf: 'center', backgroundColor: Colors.txt_CCCCCC,
+                    marginTop: 14, alignItems: 'center', justifyContent: 'center'
+                }}>
                 {this._cardImageView()}
             </TouchableOpacity>
             <Text
-                style={{fontSize:Fonts.size.h12,marginTop:114,alignSelf:'center',color:Colors._AAA}}>
+                style={{fontSize: Fonts.size.h12, marginTop: 114, alignSelf: 'center', color: Colors._AAA}}>
                 {I18n.t('upload_issue')}
             </Text>
 
             {this._hasRealBtn()}
 
             {/*<Button activeOpacity={1}*/}
-                {/*onPress={this.submitBtn}*/}
-                {/*style={{height:49,width:Metrics.screenWidth-34,*/}
-                {/*alignSelf:'center',backgroundColor:'#161718',*/}
-                {/*marginTop:25,justifyContent:'center'}}*/}
-                {/*textStyle={{fontSize:Fonts.size.h17,color:Colors.txt_E0C}}>*/}
-                {/*{I18n.t('submit')}*/}
+            {/*onPress={this.submitBtn}*/}
+            {/*style={{height:49,width:Metrics.screenWidth-34,*/}
+            {/*alignSelf:'center',backgroundColor:'#161718',*/}
+            {/*marginTop:25,justifyContent:'center'}}*/}
+            {/*textStyle={{fontSize:Fonts.size.h17,color:Colors.txt_E0C}}>*/}
+            {/*{I18n.t('submit')}*/}
             {/*</Button>*/}
 
             <ActionSheet
                 ref={o => this.ActionSheet = o}
-                title={title}
-                options={options}
-                cancelButtonIndex={CANCEL_INDEX}
-                destructiveButtonIndex={DESTRUCTIVE_INDEX}
+                title={I18n.t('chose_image')}
+                options={[I18n.t('cancel'), I18n.t('camera'), I18n.t('pictures')]}
+                cancelButtonIndex={0}
+                destructiveButtonIndex={2}
                 onPress={this.handlePress}
             />
 
@@ -286,10 +293,12 @@ class PassportView extends Component {
                 testID="btn_submit"
                 activeOpacity={1}
                 onPress={this._btnSubmit}
-                style={{height:49,width:Metrics.screenWidth-34,
-            alignSelf:'center',backgroundColor:'#161718',
-            marginTop:25,justifyContent:'center',marginBottom:10}}
-                textStyle={{fontSize:Fonts.size.h17,color:Colors.txt_E0C}}>
+                style={{
+                    height: 49, width: Metrics.screenWidth - 34,
+                    alignSelf: 'center', backgroundColor: '#161718',
+                    marginTop: 25, justifyContent: 'center', marginBottom: 10
+                }}
+                textStyle={{fontSize: Fonts.size.h17, color: Colors.txt_E0C}}>
                 {I18n.t('submit')}
 
             </Button>)
@@ -298,10 +307,12 @@ class PassportView extends Component {
                 testID="btn_contact_customer_service"
                 activeOpacity={1}
                 onPress={this._btnService}
-                style={{height:49,width:Metrics.screenWidth-34,
-            alignSelf:'center',backgroundColor:Colors.white,
-            marginTop:25,justifyContent:'center',marginBottom:10}}
-                textStyle={{fontSize:Fonts.size.h17,color:Colors.txt_666}}>
+                style={{
+                    height: 49, width: Metrics.screenWidth - 34,
+                    alignSelf: 'center', backgroundColor: Colors.white,
+                    marginTop: 25, justifyContent: 'center', marginBottom: 10
+                }}
+                textStyle={{fontSize: Fonts.size.h17, color: Colors.txt_666}}>
                 {I18n.t('contact_customer_service')}
 
             </Button>)

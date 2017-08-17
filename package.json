@@ -14,7 +14,6 @@
     "react": "16.0.0-alpha.6",
     "react-addons-update": "^15.5.2",
     "react-native": "^0.43.4",
-    "react-native-actionsheet": "^2.1.0",
     "react-native-blur": "^2.0.0",
     "react-native-communications": "^2.2.1",
     "react-native-drawer": "^2.3.0",

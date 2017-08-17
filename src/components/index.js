@@ -24,7 +24,7 @@ import UltimateListView from './flatlist/ultimateListView';
 import SwipeListView from './swipelist/SwipeListView';
 import VideoPlayer from './VideoPlayer';
 import ActionSide from './ActionSide';
-import ActionSheet from 'react-native-actionsheet';
+import ActionSheet from './sheet';
 import Loading from './Loading';
 
 export {
