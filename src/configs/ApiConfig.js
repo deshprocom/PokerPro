@@ -69,7 +69,9 @@ export default {
     player_focus: player_focus,
     focus_list: focus_list,
     pay_order: pay_order,
-    order_complete: order_complete
+    order_complete: order_complete,
+    unpaid_order: unpaid_order,
+    feedbacks: 'feedbacks'
 
 }
 
@@ -83,6 +85,12 @@ function getUserId() {
 
 const page_size = 10;
 
+
+export function unpaid_order(body) {
+    const {race_id, ticket_id} = body;
+    return 'races/' + race_id + '/tickets/' + ticket_id + '/unpaid_order'
+
+}
 
 export function order_complete(body) {
     const {order_number} = body;

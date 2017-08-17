@@ -22,7 +22,7 @@ import {GET_CERTIFICATION, POST_BUY_TICKET, GET_RACE_NEW_ORDER, POST_CERTIFICATI
 import NameRealView from './NameRealView';
 import {fetchRacesInfo, fetchGetRecentRaces} from '../../actions/RacesAction';
 import StorageKey from '../../configs/StorageKey';
-import {getBuyRaceTicket, postOrderTicket, postPayOrder} from '../../services/OrderDao';
+import {getBuyRaceTicket, postOrderTicket, postPayOrder, getUnpaidOrder} from '../../services/OrderDao';
 import {umengEvent} from '../../utils/UmengEvent';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import PayModal from './PayModal';
@@ -67,6 +67,22 @@ class BuyTicketPage extends Component {
 
         InteractionManager.runAfterInteractions(() => {
             this.refreshPage();
+
+            const {race_id, ticket_id} = this.props.params;
+            const body = {
+                race_id: race_id,
+                ticket_id: ticket_id
+            };
+
+            getUnpaidOrder(body, data => {
+
+                if (strNotNull(data.order_number))
+                    this.setState({
+                        order_number: data.order_number
+                    })
+            }, err => {
+
+            })
         })
 
     }

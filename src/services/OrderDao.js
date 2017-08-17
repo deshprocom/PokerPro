@@ -7,8 +7,16 @@ import StorageKey from '../configs/StorageKey';
 import {showToast} from '../utils/ComonHelper';
 
 
+export function getUnpaidOrder(body, resolve, reject) {
+    helper.get(Api.unpaid_order(body), ret => {
+        resolve(ret.data)
+    }, err => {
+        showToast(err);
+        reject(err)
+    })
+}
 
-export function postOrderComplete(body, resolve){
+export function postOrderComplete(body, resolve) {
     helper.post(Api.order_complete(body), {}, (ret) => {
         resolve(ret.data)
     }, err => {
