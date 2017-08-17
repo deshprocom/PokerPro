@@ -138,12 +138,11 @@ export default class RankList extends Component {
     onFetch = (page = 1, startFetch, abortFetch) => {
         try {
 
-            console.log(page);
+            console.log(page)
             if (page === 1) {
                 this.refresh(startFetch, abortFetch);
                 this.listView.scrollTo({x: 0, y: 0, animated: true})
             } else {
-                console.log('loadmore')
                 this.loadMore(startFetch, abortFetch);
             }
         } catch (err) {
@@ -190,6 +189,9 @@ export default class RankList extends Component {
         };
 
         getMainRank(body, data => {
+            this.setState({
+                page: body.page_index + 1
+            });
             startFetch(data, 10)
         }, err => {
             abortFetch();
