@@ -1,10 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {View, Text, StyleSheet, ScrollView, TouchableOpacity, Image} from 'react-native';
-import Button from 'react-native-smart-button';
 import I18n from 'react-native-i18n';
-import {RANK_CHECK_TYPE} from '../../actions/ActionTypes';
-import {connect} from 'react-redux';
-import {getRankPlayer} from '../../actions/RankAction';
 
 import {Metrics, Colors, Images} from '../../Themes';
 
