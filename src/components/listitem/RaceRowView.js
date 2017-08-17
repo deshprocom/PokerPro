@@ -59,7 +59,7 @@ export default class RaceRowView extends Component {
         const {
             logo, name, begin_date, end_date, status,
             location, prize, ticket_status, ticket_sellable,
-            min_price
+            min_price, describable
         } = this.props.rowData;
         return (<View
             style={this.props.isMoreRace ? styles.backMore : [styles.viewItem,
@@ -103,7 +103,7 @@ export default class RaceRowView extends Component {
             </View>
 
 
-            {this._ticketStatus(ticket_status, ticket_sellable)}
+            {this._ticketStatus(ticket_status, ticket_sellable, describable)}
 
             <View style={styles.raceStatus}>
                 <Image
@@ -131,7 +131,7 @@ export default class RaceRowView extends Component {
     };
 
 
-    _ticketStatus = (ticket_status, ticket_sellable) => {
+    _ticketStatus = (ticket_status, ticket_sellable, describable) => {
         if (ticket_sellable && (ticket_status === SellStatus.selling
             || ticket_status === 'sold_out'))
             return (    <TouchableOpacity
@@ -142,7 +142,12 @@ export default class RaceRowView extends Component {
                 <Text style={[styles.txtTicket,
                     this._colorTicketTxt(ticket_status)]}
                 >{this._txtTicketStatus(ticket_status)}</Text>
-            </TouchableOpacity>)
+            </TouchableOpacity>);
+        else if (!describable) {
+            return (<View style={styles.btnStatus}>
+                <Text style={[styles.txtTicket, {marginLeft: 5, marginRight: 5}]}>{I18n.t('race_no_desc')}</Text>
+            </View>)
+        }
     };
 
     _txtTicketStatus = (status) => {
@@ -378,7 +383,7 @@ const styles = StyleSheet.create({
     },
     btnStatus: {
         height: 32,
-        width: 52,
+        minWidth: 52,
         borderRadius: 3,
         borderWidth: 1,
         borderColor: '#cccccc',
@@ -426,6 +431,6 @@ const styles = StyleSheet.create({
     },
     viewLine1: {
         height: 0.5
-    }
+    },
 
 })
