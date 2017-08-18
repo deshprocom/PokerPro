@@ -11,7 +11,6 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import NavigationBar from '../../components/NavigationBar';
 import md5 from "react-native-md5";
 import {checkLoginMail, strNotNull, showToast, userData, setUserData} from '../../utils/ComonHelper';
-import Toast from 'react-native-root-toast';
 import {fetchPostLogin}from '../../actions/AccountAction';
 import {connect} from 'react-redux';
 import {fetchGetProfile} from '../../actions/PersonAction';
@@ -70,10 +69,8 @@ class LoginFirstPage extends React.Component {
                 this.props._fetchPostLogin(body);
             }
         } else {
-            if (!!this._toast_box) {
-                Toast.hide(this._toast_box);
-            }
-            this._toast_box = showToast(`${I18n.t('fillWhole')}`);
+
+            showToast(I18n.t('fillWhole'));
         }
 
 
