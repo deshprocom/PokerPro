@@ -123,9 +123,10 @@ export function strRow(str) {
     }
 }
 
+var pattern = / /;
 export function nameRow(name) {
     if (strValid(name)) {
-        return name.replace(' ', '\n');
+        return name.replace(pattern, ' ').replace(' ', '\n');
     }
 }
 
