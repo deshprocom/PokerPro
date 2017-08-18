@@ -36,7 +36,7 @@
     "react-native-smart-splash-screen": "^2.3.3",
     "react-native-storage": "^0.1.4",
     "react-native-tabular-grid": "^1.1.0",
-    "react-native-umshare": "git+https://github.com/dongodngtang/react-native-umshare.git",
+    "react-native-umshare": "^1.1.4",
     "react-native-video": "^1.0.0",
     "react-redux": "^5.0.4",
     "react-timer-mixin": "^0.13.3",

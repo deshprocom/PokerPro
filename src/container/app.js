@@ -41,6 +41,7 @@ export default class App extends Component {
             delay: 500,
         });
 
+
         // 第二个参数决定在分享界面的排序1_、2_、3_为前缀
         UMShare.initShare(Platform.OS === 'ios' ? UMENG_IOS : UMENG_ANDROID,
             {
