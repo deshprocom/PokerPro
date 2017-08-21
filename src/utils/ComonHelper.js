@@ -14,6 +14,7 @@ import Communications from 'react-native-communications';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
 import ImageMark from '../components/simple/ImageMark';
 import UMShare from 'react-native-umshare';
+import *as wechat from 'react-native-wechat'
 
 export const YYYY_MM_DD = 'YYYY.MM.DD';
 export const DATA_SS = 'YYYY-MM-DD hh:mm:ss';
@@ -30,6 +31,7 @@ export function strToDate(date) {
         return new Date();
     }
 }
+
 
 const shareIcon = 'https://www.deshpro.com/pokerpro.png';
 export const DayHeadings = [I18n.t('calendar_7'),
@@ -53,6 +55,25 @@ let Lang = 'zh';
 export function setLang(lang) {
     Lang = lang;
     // console.log('分享页语言'+Lang);
+}
+
+
+export function payWx(data) {
+    const body = {
+        partnerId: data.partnerid,  // 商家向财付通申请的商家id
+        prepayId: data.prepayid,   // 预支付订单
+        nonceStr: data.nonce_str,   // 随机串，防重发
+        timeStamp: data.timestamp,  // 时间戳，防重发
+        package: data.package,    // 商家根据财付通文档填写的数据和签名
+        sign: data.sign
+    };
+
+    console.log('wxpay', body)
+    wechat.pay(body).then(ret => {
+        console.log(ret)
+    }).catch(err => {
+        console.log(err)
+    })
 }
 
 

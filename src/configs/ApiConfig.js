@@ -71,7 +71,8 @@ export default {
     pay_order: pay_order,
     order_complete: order_complete,
     unpaid_order: unpaid_order,
-    feedbacks: 'feedbacks'
+    feedbacks: 'feedbacks',
+    wx_pay: wx_pay
 
 }
 
@@ -85,6 +86,11 @@ function getUserId() {
 
 const page_size = 10;
 
+
+export function wx_pay(body) {
+    const {order_number} = body;
+    return 'users/' + getUserId() + '/orders/' + order_number + '/wx_pay';
+}
 
 export function unpaid_order(body) {
     const {race_id, ticket_id} = body;

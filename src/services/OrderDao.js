@@ -6,6 +6,14 @@ import Api from '../configs/ApiConfig';
 import StorageKey from '../configs/StorageKey';
 import {showToast} from '../utils/ComonHelper';
 
+export function postWxPay(body, resolve, reject) {
+    helper.post(Api.wx_pay(body), {}, (ret) => {
+        resolve(ret.data)
+    }, err => {
+        showToast(err);
+        reject(err)
+    })
+}
 
 export function getUnpaidOrder(body, resolve, reject) {
     helper.get(Api.unpaid_order(body), ret => {

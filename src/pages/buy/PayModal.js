@@ -8,7 +8,8 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {isEmptyObject, strNotNull} from '../../utils/ComonHelper';
+import {isEmptyObject, strNotNull,payWx} from '../../utils/ComonHelper';
+import {postWxPay} from '../../services/OrderDao'
 
 var testUrl = 'http://localhost:4200/pay/success';
 
@@ -128,8 +129,16 @@ export default class PayModal extends Component {
         return <TouchableOpacity
             onPress={() => {
                 this.toggle();
-                router.toWebViewPay(this.props, payUrl,this.orderRefresh)
-            }}
+                // router.toWebViewPay(this.props, payUrl,this.orderRefresh)
+                const {order_number} = payUrl;
+                const body = {order_number: order_number}
+                postWxPay(body, data => {
+
+                    payWx(data)
+                })
+
+            }
+            }
             style={styles.btnPay}>
             <Text style={styles.txtPay}>{I18n.t('pay_confirm')}</Text>
         </TouchableOpacity>
