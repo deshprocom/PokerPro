@@ -70,9 +70,9 @@ export function payWx(data) {
 
     console.log('wxpay', body)
     wechat.pay(body).then(ret => {
-        console.log(ret)
+        alert('wxpay_sucess')
     }).catch(err => {
-        console.log(err)
+        alert(err)
     })
 }
 

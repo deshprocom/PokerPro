@@ -84,6 +84,10 @@ class NewsListView extends Component {
         </View>)
     }
 
+    toggleFullscreen = () => {
+        this.player.presentFullscreenPlayer();
+    }
+
     _showVideo = () => {
 
         const {modalVisible, video_link} = this.state;
@@ -105,6 +109,7 @@ class NewsListView extends Component {
                     ref={ref => this.player = ref}
                     closeFull={true}
                     paused={!modalVisible}
+                    toggleFullscreen={this.toggleFullscreen}
                     source={{uri: video_link.trim()}}
                 />
             </View>

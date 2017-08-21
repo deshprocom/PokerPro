@@ -42,7 +42,11 @@ export default class App extends Component {
             delay: 500,
         });
 
-        wechat.registerApp(WX_ID);
+        wechat.registerApp(WX_ID).then(ret => {
+            console.log('registerApp',ret)
+        }, err => {
+            console.log(err)
+        });
         // 第二个参数决定在分享界面的排序1_、2_、3_为前缀
         UMShare.initShare(Platform.OS === 'ios' ? UMENG_IOS : UMENG_ANDROID,
             {
