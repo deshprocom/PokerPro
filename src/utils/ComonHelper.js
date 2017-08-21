@@ -58,8 +58,8 @@ export function setLang(lang) {
 
 export function loginWX(resolve, reject) {
     UMShare.loginWX().then(data => {
-        console.log('WXLogin',data);
-        alert(data);
+        console.log('WXLogin', data);
+        alert(JSON.stringify(data));
         resolve(data)
     }).catch(err => {
         console.log(err)
