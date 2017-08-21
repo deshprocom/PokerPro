@@ -10,7 +10,7 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import NavigationBar from '../../components/NavigationBar';
 import md5 from "react-native-md5";
-import {checkLoginMail, strNotNull, showToast, userData, setUserData} from '../../utils/ComonHelper';
+import {checkLoginMail, strNotNull, showToast, userData, setUserData,loginWX} from '../../utils/ComonHelper';
 import {fetchPostLogin}from '../../actions/AccountAction';
 import {connect} from 'react-redux';
 import {fetchGetProfile} from '../../actions/PersonAction';
@@ -190,6 +190,14 @@ class LoginFirstPage extends React.Component {
 
                     <View style={{flex: 1}}/>
 
+                    <TouchableOpacity
+                        style={{marginBottom: 20, padding: 5}}
+                        testID="btn_switch_code_login"
+                        onPress={() => {
+                            loginWX()
+                        }}>
+                        <Text style={styles.text_other_sign}>微信登录</Text>
+                    </TouchableOpacity>
                     <TouchableOpacity
                         style={{marginBottom: 48, padding: 5}}
                         testID="btn_switch_code_login"

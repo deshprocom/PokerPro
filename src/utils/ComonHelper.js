@@ -55,6 +55,17 @@ export function setLang(lang) {
     // console.log('分享页语言'+Lang);
 }
 
+
+export function loginWX(resolve, reject) {
+    UMShare.loginWX().then(data => {
+        console.log('WXLogin',data);
+        alert(data);
+        resolve(data)
+    }).catch(err => {
+        console.log(err)
+    })
+}
+
 export const loadApp = 'https://h5.deshpro.com/race/181/zh/loadAPP';
 
 export function uShareRace(title, location, icon, raceId) {
