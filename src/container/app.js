@@ -18,6 +18,7 @@ import {
 } from '../configs/Constants';
 import Orientation from 'react-native-orientation';
 import UMShare from 'react-native-umshare';
+import *as wechat from 'react-native-wechat'
 console.disableYellowBox = true;
 
 const store = configureStore();
@@ -41,7 +42,7 @@ export default class App extends Component {
             delay: 500,
         });
 
-
+        wechat.registerApp(WX_ID);
         // 第二个参数决定在分享界面的排序1_、2_、3_为前缀
         UMShare.initShare(Platform.OS === 'ios' ? UMENG_IOS : UMENG_ANDROID,
             {

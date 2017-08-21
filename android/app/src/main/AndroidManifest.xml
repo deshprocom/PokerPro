@@ -75,6 +75,14 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
     <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    />
+
+    <activity
             android:name="com.umeng.socialize.editorpage.ShareActivity"
             android:theme="@style/Theme.UMDefault"
             android:excludeFromRecents="true"/>
