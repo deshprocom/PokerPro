@@ -10,7 +10,7 @@ export function postWxPay(body, resolve, reject) {
     helper.post(Api.wx_pay(body), {}, (ret) => {
         resolve(ret.data)
     }, err => {
-        showToast(err);
+
         reject(err)
     })
 }
@@ -36,7 +36,7 @@ export function postPayOrder(body, resolve) {
     helper.post(Api.pay_order(body), {}, (ret) => {
         resolve(ret.data)
     }, err => {
-        showToast(err)
+
     })
 }
 

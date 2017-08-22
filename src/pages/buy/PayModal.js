@@ -19,10 +19,13 @@ export default class PayModal extends Component {
     state = {
         visible: false,
         payUrl: {},
-        payWay: 1
+        payWay: 1,
+        wxPay: {},
+        pay_url: ''
     };
 
     toggle = () => {
+
         this.setState({
             visible: !this.state.visible
         })
@@ -39,9 +42,32 @@ export default class PayModal extends Component {
 
     setPayUrl = (data) => {
         console.log('payUrl', data);
+
+        this._getPayData(data);
         this.setState({
             payUrl: data
         })
+    };
+
+    _getPayData = (payUrl) => {
+        const {order_number, price} = payUrl;
+        const body = {
+            order_number: order_number
+        };
+        postWxPay(body, data => {
+            this.setState({
+                wxPay: data
+            })
+        }, err => {
+
+        });
+
+        postPayOrder(body, data => {
+            this.setState({
+                pay_url: data.pay_url
+            });
+        })
+
     };
 
 
@@ -170,32 +196,26 @@ export default class PayModal extends Component {
 
 
     _wxPay = () => {
-        const {payUrl} = this.state;
+        const {payUrl, wxPay} = this.state;
         const {order_number, price} = payUrl;
-        const body = {order_number: order_number};
-        postWxPay(body, data => {
-            payWx(data, () => {
+
+        if (!isEmptyObject(wxPay))
+            payWx(wxPay, () => {
                 if (this.orderRefresh)
                     this.orderRefresh();
                 else
                     router.replaceOrder(order_number, price)
             })
-        }, err => {
-
-        })
     };
 
     _webPay = () => {
-        const {payUrl} = this.state;
-        const {order_number, price} = payUrl;
-        const body = {
-            order_number: order_number
-        };
+        const {payUrl, pay_url} = this.state;
 
-        postPayOrder(body, data => {
-            payUrl['pay_url'] = data.pay_url;
+        if (strNotNull(payUrl)) {
+            payUrl['pay_url'] = pay_url;
             router.toWebViewPay(this.props, payUrl, this.orderRefresh)
-        })
+        }
+
 
     };
 
