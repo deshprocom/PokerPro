@@ -405,16 +405,18 @@ class OrderInfoPage extends React.Component {
         const body = {
             order_number: order_id
         };
+        if (this.payModal) {
 
-        postPayOrder(body, data => {
-            if (this.payModal) {
-                data['order_number'] = order_id;
-                data['price'] = price;
-                this.payModal.setPayUrl(data);
-                this.payModal.setRefresh(this._refreshPage);
-                this.payModal.toggle();
-            }
-        })
+            const data = {
+                order_number:order_id,
+                price:price
+            };
+
+            this.payModal.setPayUrl(data);
+            this.payModal.setRefresh(this._refreshPage);
+            this.payModal.toggle();
+        }
+
     };
 
     _user_real_call_btn = () => {

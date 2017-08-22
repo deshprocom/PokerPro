@@ -10,7 +10,7 @@ import {
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar, InputView, ImageLoad, SecurityText, Loading} from '../../components';
+import {NavigationBar, InputView, ImageLoad, SecurityText} from '../../components';
 import {fetchRaceNewOrder, fetchBuyTicket} from '../../actions/TicketOrderAction'
 import {
     isEmptyObject, showToast, checkMail, moneyFormat,
@@ -174,17 +174,16 @@ class BuyTicketPage extends Component {
             order_number: order_number
         });
         const {tickets} = this.state;
-        const body = {
-            order_number: order_number
-        };
-        postPayOrder(body, data => {
-            if (this.spinner)
-                this.spinner.close();
-            data['order_number'] = order_number;
-            data['price'] = tickets.price;
+
+        if(this.payModal){
+            const data =  {
+                order_number:order_number,
+                price:tickets.price
+            };
             this.payModal.setPayUrl(data);
             this.payModal.toggle();
-        });
+        }
+
 
 
     };
@@ -225,13 +224,10 @@ class BuyTicketPage extends Component {
                     this._postOrderOk(order_number);
 
                 } else {
-                    if (this.spinner)
-                        this.spinner.open();
+
                     postOrderTicket(param, body, data => {
                         this._postOrderOk(data.order_number);
                     }, err => {
-                        if (this.spinner)
-                            this.spinner.close();
                         showToast(err)
                     });
                 }
@@ -253,13 +249,10 @@ class BuyTicketPage extends Component {
                 } else if (strNotNull(order_number)) {
                     this._postOrderOk(order_number);
                 } else {
-                    if (this.spinner)
-                        this.spinner.open();
+
                     postOrderTicket(param, body, data => {
                         this._postOrderOk(data.order_number);
                     }, err => {
-                        if (this.spinner)
-                            this.spinner.close();
                         showToast(err)
                     });
                 }
@@ -586,7 +579,6 @@ class BuyTicketPage extends Component {
 
                 </View>
 
-                <Loading ref={ref => this.spinner = ref}/>
                 <PayModal
                     toOrder={true}
                     ref={ref => this.payModal = ref}/>
