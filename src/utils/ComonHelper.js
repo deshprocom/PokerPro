@@ -58,7 +58,7 @@ export function setLang(lang) {
 }
 
 
-export function payWx(data) {
+export function payWx(data, callback) {
     const body = {
         partnerId: data.partnerid,  // 商家向财付通申请的商家id
         prepayId: data.prepayid,   // 预支付订单
@@ -68,11 +68,11 @@ export function payWx(data) {
         sign: data.sign
     };
 
-    console.log('wxpay', body)
+    console.log('wxpay', body);
     wechat.pay(body).then(ret => {
-        alert('wxpay_sucess')
+        callback()
     }).catch(err => {
-        alert(err)
+
     })
 }
 
@@ -598,7 +598,7 @@ export function getDispatchAction() {
 
 //正在开发提示
 export function developing() {
-    Alert.alert(`${I18n.t('alert_doing')}`, `${I18n.t('alert_help')}`,[{
+    Alert.alert(`${I18n.t('alert_doing')}`, `${I18n.t('alert_help')}`, [{
         text: `${I18n.t('alert_sure')}`, onPress: () => {
         }
     }])

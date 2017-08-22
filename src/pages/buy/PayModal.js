@@ -60,7 +60,7 @@ export default class PayModal extends Component {
                     {this.orderView()}
                     {this.cardView()}
                     {this.wxView()}
-                    <View style={{height: 40}}/>
+                    <View style={{height: 80}}/>
                 </ScrollView>
 
                 {this.payView()}
@@ -171,12 +171,18 @@ export default class PayModal extends Component {
 
     _wxPay = () => {
         const {payUrl} = this.state;
-        const {order_number} = payUrl;
+        const {order_number, price} = payUrl;
         const body = {order_number: order_number}
         postWxPay(body, data => {
-            payWx(data)
+            payWx(data, () => {
+                if (this.orderRefresh)
+                    this.orderRefresh();
+                else
+                    router.replaceOrder(order_number, price)
+            })
         })
     };
+
 
     payView = () => {
         const {payUrl, payWay} = this.state;
