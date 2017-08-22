@@ -216,7 +216,6 @@ export default class PayModal extends Component {
             router.toWebViewPay(this.props, payUrl, this.orderRefresh)
         }
 
-
     };
 
 
