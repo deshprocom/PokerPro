@@ -5,7 +5,17 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 import StorageKey from '../configs/StorageKey';
 import JpushHelp from './JpushHelper';
-import {isEmptyObject} from '../utils/ComonHelper';
+import {isEmptyObject, showToast} from '../utils/ComonHelper';
+
+
+export function postSuggest(body, resolve, reject) {
+    helper.post(Api.feedbacks, body, data => {
+        resolve(data)
+    }, err => {
+        reject(err)
+        showToast(err)
+    })
+}
 
 export function postLoginCount() {
     helper.post(Api.login_count(), {}, ret => {

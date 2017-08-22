@@ -598,7 +598,7 @@ export function getDispatchAction() {
 
 //正在开发提示
 export function developing() {
-    Alert.alert(`${I18n.t('alert_doing')}`, `${I18n.t('alert_help')}`, [{
+    Alert.alert(`${I18n.t('alert_doing')}`, `${I18n.t('alert_help')}`,[{
         text: `${I18n.t('alert_sure')}`, onPress: () => {
         }
     }])
