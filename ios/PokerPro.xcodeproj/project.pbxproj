@@ -47,11 +47,11 @@
 		480FDC3C1EFD131700546599 /* UMSocialNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 480FDC371EFD131700546599 /* UMSocialNetwork.framework */; };
 		480FDC3D1EFD131700546599 /* UShareUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 480FDC381EFD131700546599 /* UShareUI.framework */; };
 		480FDC3F1EFD16BD00546599 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 480FDC3E1EFD16BD00546599 /* ImageIO.framework */; };
-		480FDC411EFD16D300546599 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 480FDC401EFD16D300546599 /* libsqlite3.tbd */; };
 		480FDC431EFD16F800546599 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 480FDC421EFD16F800546599 /* libc++.tbd */; };
 		4829A10D1F4ABB1B003F2458 /* libRCTWeChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4829A0FE1F4ABAFD003F2458 /* libRCTWeChat.a */; };
 		48358DFC1ED2C9B100997A6D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 48358DFA1ED2C9B100997A6D /* LaunchScreen.xib */; };
 		485E1F791F03B481005615DE /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 485E1F781F03B481005615DE /* splash.png */; };
+		48AA2DD31F4BC2CD00A6EEFC /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 48AA2DD21F4BC2CD00A6EEFC /* libsqlite3.0.tbd */; };
 		48B6307A1ED53E0400B956A5 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48B630791ED53E0400B956A5 /* RSKImageCropper.framework */; };
 		48B6307B1ED53E0400B956A5 /* RSKImageCropper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48B630791ED53E0400B956A5 /* RSKImageCropper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		48B6307D1ED53E0E00B956A5 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48B6307C1ED53E0E00B956A5 /* QBImagePicker.framework */; };
@@ -432,6 +432,7 @@
 		48358DFA1ED2C9B100997A6D /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		48358EB81ED2D97600997A6D /* PokerPro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = PokerPro.entitlements; path = PokerPro/PokerPro.entitlements; sourceTree = "<group>"; };
 		485E1F781F03B481005615DE /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash.png; path = ../../../../android/app/src/main/res/drawable/splash.png; sourceTree = "<group>"; };
+		48AA2DD21F4BC2CD00A6EEFC /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		48B630791ED53E0400B956A5 /* RSKImageCropper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48B6307C1ED53E0E00B956A5 /* QBImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C9D3F913DBB405D860C62E0 /* RCTSplashScreen.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTSplashScreen.xcodeproj; path = "../node_modules/react-native-smart-splash-screen/ios/RCTSplashScreen/RCTSplashScreen.xcodeproj"; sourceTree = "<group>"; };
@@ -478,9 +479,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48AA2DD31F4BC2CD00A6EEFC /* libsqlite3.0.tbd in Frameworks */,
 				4829A10D1F4ABB1B003F2458 /* libRCTWeChat.a in Frameworks */,
 				480FDC431EFD16F800546599 /* libc++.tbd in Frameworks */,
-				480FDC411EFD16D300546599 /* libsqlite3.tbd in Frameworks */,
 				480FDC3F1EFD16BD00546599 /* ImageIO.framework in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -877,6 +878,7 @@
 		9966DE741C5E48F5ABB6858B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				48AA2DD21F4BC2CD00A6EEFC /* libsqlite3.0.tbd */,
 				480FDC421EFD16F800546599 /* libc++.tbd */,
 				480FDC401EFD16D300546599 /* libsqlite3.tbd */,
 				480FDC3E1EFD16BD00546599 /* ImageIO.framework */,

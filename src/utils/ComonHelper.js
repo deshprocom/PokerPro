@@ -62,7 +62,7 @@ export function payWx(data) {
     const body = {
         partnerId: data.partnerid,  // 商家向财付通申请的商家id
         prepayId: data.prepayid,   // 预支付订单
-        nonceStr: data.nonce_str,   // 随机串，防重发
+        nonceStr: data.noncestr,   // 随机串，防重发
         timeStamp: data.timestamp,  // 时间戳，防重发
         package: data.package,    // 商家根据财付通文档填写的数据和签名
         sign: data.sign
