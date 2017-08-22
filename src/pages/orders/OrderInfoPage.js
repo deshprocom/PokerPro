@@ -411,6 +411,7 @@ class OrderInfoPage extends React.Component {
                 data['order_number'] = order_id;
                 data['price'] = price;
                 this.payModal.setPayUrl(data);
+                this.payModal.setRefresh(this._refreshPage);
                 this.payModal.toggle();
             }
         })
@@ -524,7 +525,7 @@ class OrderInfoPage extends React.Component {
                     {this._orderView(order_info)}
 
                     {/*购票须知*/}
-                    <View style={{ paddingLeft: 17, marginTop: 10}}>
+                    <View style={{paddingLeft: 17, marginTop: 10}}>
                         <View style={{height: 40, alignItems: 'center', flexDirection: 'row'}}>
                             <Text style={{
                                 fontSize: Fonts.size.h16,

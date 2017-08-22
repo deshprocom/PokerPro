@@ -172,7 +172,7 @@ export default class PayModal extends Component {
     _wxPay = () => {
         const {payUrl} = this.state;
         const {order_number, price} = payUrl;
-        const body = {order_number: order_number}
+        const body = {order_number: order_number};
         postWxPay(body, data => {
             payWx(data, () => {
                 if (this.orderRefresh)
@@ -180,6 +180,8 @@ export default class PayModal extends Component {
                 else
                     router.replaceOrder(order_number, price)
             })
+        }, err => {
+
         })
     };
 
