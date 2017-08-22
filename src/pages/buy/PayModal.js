@@ -9,7 +9,7 @@ import {
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {isEmptyObject, strNotNull, payWx} from '../../utils/ComonHelper';
-import {postWxPay} from '../../services/OrderDao'
+import {postWxPay, postPayOrder} from '../../services/OrderDao'
 
 var testUrl = 'http://localhost:4200/pay/success';
 
@@ -185,14 +185,28 @@ export default class PayModal extends Component {
         })
     };
 
+    _webPay = () => {
+        const {payUrl} = this.state;
+        const {order_number, price} = payUrl;
+        const body = {
+            order_number: order_number
+        };
+
+        postPayOrder(body, data => {
+            payUrl['pay_url'] = data.pay_url;
+            router.toWebViewPay(this.props, payUrl, this.orderRefresh)
+        })
+
+    };
+
 
     payView = () => {
-        const {payUrl, payWay} = this.state;
+        const {payWay} = this.state;
         return <TouchableOpacity
             onPress={() => {
                 this.toggle();
                 if (payWay === 0) {
-                    router.toWebViewPay(this.props, payUrl, this.orderRefresh)
+                    this._webPay();
                 } else if (payWay === 1) {
                     this._wxPay();
                 }
