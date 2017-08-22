@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {isEmptyObject, strNotNull,payWx} from '../../utils/ComonHelper';
+import {isEmptyObject, strNotNull, payWx} from '../../utils/ComonHelper';
 import {postWxPay} from '../../services/OrderDao'
 
 var testUrl = 'http://localhost:4200/pay/success';
@@ -18,7 +18,8 @@ export default class PayModal extends Component {
 
     state = {
         visible: false,
-        payUrl: {}
+        payUrl: {},
+        payWay: 1
     };
 
     toggle = () => {
@@ -55,10 +56,14 @@ export default class PayModal extends Component {
             <View style={styles.page2}>
                 {this.topView()}
                 <View style={{height: 1}}/>
-                {this.orderView()}
-                {this.cardView()}
-                {this.payView()}
+                <ScrollView>
+                    {this.orderView()}
+                    {this.cardView()}
+                    {this.wxView()}
+                    <View style={{height: 40}}/>
+                </ScrollView>
 
+                {this.payView()}
             </View>
 
         </Modal>)
@@ -103,7 +108,13 @@ export default class PayModal extends Component {
     };
 
     cardView = () => {
-        return <View style={styles.page4}>
+        return <TouchableOpacity
+            onPress={() => {
+                this.setState({
+                    payWay: 0
+                })
+            }}
+            style={styles.page4}>
 
             <Image style={styles.img4}
                    source={Images.pay_card}/>
@@ -114,28 +125,70 @@ export default class PayModal extends Component {
             </View>
 
             <View
+                onPress={() => {
+                    this.setState({
+                        payWay: 0
+                    })
+                }}
                 style={styles.btnClose}>
                 <Image
-                    source={Images.pay_selected}
+                    source={this.state.payWay === 0 ? Images.pay_selected : Images.pay_select}
                     style={styles.img5}/>
 
             </View>
 
-        </View>;
+        </TouchableOpacity>;
+    };
+
+    wxView = () => {
+        return <TouchableOpacity
+            onPress={() => {
+                this.setState({
+                    payWay: 1
+                })
+            }}
+            style={styles.page5}>
+
+            <Image style={styles.img4}
+                   source={Images.pay_card}/>
+
+            <View>
+                <Text style={styles.txt3}>{I18n.t('pay_weixin')}  </Text>
+                <Text style={styles.txt31}>{I18n.t('pay_tine')}</Text>
+            </View>
+
+            <View
+                style={styles.btnClose}>
+                <Image
+                    source={this.state.payWay === 1 ? Images.pay_selected : Images.pay_select}
+                    style={styles.img5}/>
+
+            </View>
+
+        </TouchableOpacity>;
+    };
+
+
+    _wxPay = () => {
+        const {payUrl} = this.state;
+        const {order_number} = payUrl;
+        const body = {order_number: order_number}
+        postWxPay(body, data => {
+            payWx(data)
+        })
     };
 
     payView = () => {
-        const {payUrl} = this.state;
+        const {payUrl, payWay} = this.state;
         return <TouchableOpacity
             onPress={() => {
                 this.toggle();
-                // router.toWebViewPay(this.props, payUrl,this.orderRefresh)
-                const {order_number} = payUrl;
-                const body = {order_number: order_number}
-                postWxPay(body, data => {
+                if (payWay === 0) {
+                    router.toWebViewPay(this.props, payUrl, this.orderRefresh)
+                } else if (payWay === 1) {
+                    this._wxPay();
+                }
 
-                    payWx(data)
-                })
 
             }
             }
@@ -207,6 +260,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: Colors.white,
         marginTop: 14
+    },
+    page5: {
+        height: 74,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: Colors.white,
+        marginTop: 1
     },
     img4: {
         height: 22,

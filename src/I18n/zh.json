@@ -351,5 +351,6 @@
   "suggest": "意见反馈",
   "suggest_input": "请输入您宝贵的问题与建议",
   "suggest_contact": "您的联系方式（手机或邮箱)",
-  "suggest_ok":"感谢您的反馈"
+  "suggest_ok":"感谢您的反馈",
+  "pay_weixin":"微信支付"
 }
