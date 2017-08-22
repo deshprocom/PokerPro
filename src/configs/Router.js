@@ -54,6 +54,7 @@ import PokerRacePage from '../pages/rank/info/PokerRacePage';
 import SearchPoker from '../pages/rank/SearchPoker';
 import WebViewPay from '../components/WebViewPay';
 import Protocol from '../pages/setting/ProtocolPage';
+import Suggest from '../pages/setting/Suggest';
 
 
 const customFloatFromRight = Navigator.SceneConfigs.FadeAndroid;
@@ -85,6 +86,14 @@ export default class Router {
         this.navigator.popToTop();
     }
 
+
+    toSuggest(props) {
+        this.push(props, {
+            page: Suggest,
+            name: 'Suggest',
+            sceneConfig: customFloatFromRight,
+        })
+    }
 
     toProtocol(props, _protocol) {
         this.push(props, {

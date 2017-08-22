@@ -347,5 +347,8 @@
   "sold_out": "售完",
   "protocol1":"扑客APP服务使用协议",
   "agree":"同意",
-  "race_no_desc":"暂无详情"
+  "race_no_desc":"暂无详情",
+  "suggest":"意见反馈",
+  "suggest_input":"请输入您宝贵的问题与建议",
+  "suggest_contact":"您的联系方式（手机或邮箱"
 }

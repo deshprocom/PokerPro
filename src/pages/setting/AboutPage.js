@@ -6,7 +6,6 @@ import {
     TouchableOpacity, View, TextInput, Alert,
     StyleSheet, Image, Text, ScrollView, Platform
 } from 'react-native';
-import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, SetItemView, SecurityText} from '../../components';
