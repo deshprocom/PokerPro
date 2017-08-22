@@ -98,7 +98,7 @@ export default class RaceRowView extends Component {
 
                 </View>
 
-                {this._priceView(min_price)}
+                {this._priceView(min_price, ticket_sellable)}
 
             </View>
 
@@ -118,8 +118,8 @@ export default class RaceRowView extends Component {
         </View>)
     };
 
-    _priceView = (prize) => {
-        if (strNotNull(prize))
+    _priceView = (prize, ticket_sellable) => {
+        if (ticket_sellable && strNotNull(prize))
             return <View style={[styles.viewClock, {marginTop: 3}]}>
                 <Text style={[styles.lbPrice, {fontSize: FontSize.h13}]}>{I18n.t('prize')}</Text>
                 <Text

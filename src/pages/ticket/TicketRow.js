@@ -57,18 +57,19 @@ export const itemListView = (item, index) => {
                         {this.prizeView(min_price)}
 
                     </View>
-                    <TouchableOpacity
+                    {ticket_sellable ? <TouchableOpacity
                         activeOpacity={1}
                         onPress={() => this._buyTicket(item)}
                         style={sellStyle(ticket_status)}>
                         <Text style={sellTxt(ticket_status)}>{this._txtTicketStatus(ticket_status)}</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> : null}
                 </View>
             </Image>
 
         </TouchableOpacity>
     )
 };
+
 
 _buyTicket = (rowData) => {
     if (strNotNull(login_user.user_id)) {
