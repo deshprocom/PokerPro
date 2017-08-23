@@ -314,7 +314,6 @@ class SearchRacesPage extends Component {
                 selects.push(x.id);
         });
         this.selectHosts = selects;
-        router.log('selectHosts', this.selectHosts)
         this._queryRaceList();
 
     };

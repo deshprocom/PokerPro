@@ -268,6 +268,7 @@ export function search_by_date(body) {
 
 export function search_races(body) {
 
+    console.log('search_race',body);
     const {seq_id, operator, host_id, date} = body;
     if (!isEmptyObject(login_user) && strNotNull(login_user.user_id)) {
 
