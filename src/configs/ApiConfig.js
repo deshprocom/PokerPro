@@ -267,34 +267,25 @@ export function search_by_date(body) {
 
 
 export function search_races(body) {
+
     const {seq_id, operator, host_id, date} = body;
     if (!isEmptyObject(login_user) && strNotNull(login_user.user_id)) {
-        if (strNotNull(operator) && strNotNull(seq_id)) {
-            return '/u/' + login_user.user_id + '/races?page_size='
-                + page_size + '&seq_id=' + seq_id + '&operator=' + operator;
-        } else if (strNotNull(host_id) || strNotNull(date)) {
-            return '/u/' + login_user.user_id + '/races?page_size='
-                + page_size + '&host_id=' + host_id + '&date=' + date;
-        } else {
-            return '/u/' + login_user.user_id + '/races?page_size='
-                + page_size;
-        }
+
+        return '/u/' + login_user.user_id + '/races?page_size='
+            + page_size + '&seq_id=' + paramCheck(seq_id) + '&operator=' + paramCheck(operator)
+            + '&host_id=' + paramCheck(host_id) + '&date=' + paramCheck(date);
 
     } else {
-        if (strNotNull(operator) && strNotNull(seq_id)) {
-            return '/u/0/races?page_size='
-                + page_size + '&seq_id=' + seq_id + '&operator=' + operator;
-        } else if (strNotNull(host_id) || strNotNull(date)) {
-            return '/u/0/races?page_size='
-                + page_size + '&host_id=' + host_id + '&date=' + date;
-        } else {
-            return '/u/0/races?page_size='
-                + page_size;
-        }
+        return '/u/0/races?page_size='
+            + page_size + '&seq_id=' + paramCheck(seq_id) + '&operator=' + paramCheck(operator)
+            + '&host_id=' + paramCheck(host_id) + '&date=' + paramCheck(date);
 
     }
 
+}
 
+function paramCheck(param) {
+    return strNotNull(param) ? param : '';
 }
 
 
