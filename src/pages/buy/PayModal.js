@@ -84,8 +84,9 @@ export default class PayModal extends Component {
                 <View style={{height: 1}}/>
                 <ScrollView>
                     {this.orderView()}
-                    {this.cardView()}
                     {this.wxView()}
+                    {this.cardView()}
+
                     <View style={{height: 80}}/>
                 </ScrollView>
 
@@ -135,6 +136,7 @@ export default class PayModal extends Component {
 
     cardView = () => {
         return <TouchableOpacity
+            disabled={!strNotNull(this.state.pay_url)}
             onPress={() => {
                 this.setState({
                     payWay: 0
@@ -150,24 +152,23 @@ export default class PayModal extends Component {
                 <Text style={styles.txt31}>{I18n.t('pay_tine')}</Text>
             </View>
 
-            <View
-                onPress={() => {
-                    this.setState({
-                        payWay: 0
-                    })
-                }}
+            {strNotNull(this.state.pay_url) ? <View
                 style={styles.btnClose}>
                 <Image
                     source={this.state.payWay === 0 ? Images.pay_selected : Images.pay_select}
                     style={styles.img5}/>
 
-            </View>
+            </View> : null}
 
+            {strNotNull(this.state.pay_url) ? null : <View style={styles.support}>
+                <Text style={styles.txt_support}>{I18n.t('un_support')}</Text>
+            </View>}
         </TouchableOpacity>;
     };
 
     wxView = () => {
         return <TouchableOpacity
+            disabled={isEmptyObject(this.state.wxPay)}
             onPress={() => {
                 this.setState({
                     payWay: 1
@@ -176,20 +177,26 @@ export default class PayModal extends Component {
             style={styles.page5}>
 
             <Image style={styles.img4}
-                   source={Images.pay_card}/>
+                   source={require('../../../source/buy/weixin.png')}/>
 
             <View>
                 <Text style={styles.txt3}>{I18n.t('pay_weixin')}  </Text>
-                <Text style={styles.txt31}>{I18n.t('pay_tine')}</Text>
+                <Text style={styles.txt31}>{I18n.t('pay_weixin_support')}</Text>
             </View>
 
-            <View
+            {isEmptyObject(this.state.wxPay) ? null : <View
                 style={styles.btnClose}>
                 <Image
                     source={this.state.payWay === 1 ? Images.pay_selected : Images.pay_select}
                     style={styles.img5}/>
 
-            </View>
+            </View>}
+
+
+            {isEmptyObject(this.state.wxPay) ? <View style={styles.support}>
+                <Text style={styles.txt_support}>{I18n.t('un_support')}</Text>
+            </View> : null}
+
 
         </TouchableOpacity>;
     };
@@ -300,18 +307,18 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: Colors.white,
-        marginTop: 14
+        marginTop: 1
     },
     page5: {
         height: 74,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: Colors.white,
-        marginTop: 1
+        marginTop: 14
     },
     img4: {
-        height: 22,
-        width: 33,
+        height: 23,
+        width: 29,
         marginLeft: 17,
         marginRight: 22
     },
@@ -331,6 +338,19 @@ const styles = StyleSheet.create({
     img5: {
         height: 25,
         width: 25
+    },
+    txt_support: {
+        fontSize: 11,
+        color: Colors.white,
+        margin: 3
+    },
+    support: {
+        position: 'absolute',
+        top: 18,
+        left: 170,
+        backgroundColor: Colors._DF1,
+        opacity: 0.4,
+        borderRadius: 2
     }
 
 });
