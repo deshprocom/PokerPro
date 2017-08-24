@@ -23,7 +23,7 @@ class RegisterPage extends React.Component {
         mobile: '',
         vcode: '',
         getCodeDisable: false,
-        checkAgree: false,
+        checkAgree: true,
         canNextDisable: true,
         phoneClear: false
     }
@@ -237,7 +237,9 @@ class RegisterPage extends React.Component {
                     <View style={{alignItems: 'flex-end', flexDirection: 'row', alignSelf: 'center'}}>
                         <Image style={{height: 12, width: 12, marginRight: 8}}
                                source={checkAgree ? Images.sign_choice_no : Images.sign_choice}/>
-                        <Text style={{color: Colors._AAA, fontSize: 12}}>
+                        <Text
+                            textDecorationLine="underline"
+                            style={{color: Colors._333, fontSize: 12}}>
                             {I18n.t('protocol')}</Text>
                     </View>
                 </TouchableOpacity>

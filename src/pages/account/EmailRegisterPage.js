@@ -23,7 +23,7 @@ class EmailRegisterPage extends React.Component {
     state = {
         email: '',
         canNextDisable: true,
-        checkAgree: false,
+        checkAgree: true,
         password: ''
     }
     _toHome = (loginUser) => {
@@ -156,7 +156,9 @@ class EmailRegisterPage extends React.Component {
                     <View style={{alignSelf: 'center', flexDirection: 'row', alignItems: 'flex-end'}}>
                         <Image style={{height: 12, width: 12, marginRight: 8}}
                                source={checkAgree ? Images.sign_choice_no : Images.sign_choice}/>
-                        <Text style={{color: Colors._AAA, fontSize: 12}}>
+                        <Text
+                            textDecorationLine="underline"
+                            style={{color: Colors._333, fontSize: 12}}>
                             {I18n.t('protocol')}</Text>
                     </View>
                 </TouchableOpacity>
