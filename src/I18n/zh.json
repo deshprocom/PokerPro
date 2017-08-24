@@ -49,7 +49,7 @@
   "ple_new_pwd": "请输入新密码",
   "forget_ple_email": "请输入电子邮箱",
   "forge_ple_mobile": "使用手机找回密码",
-  "password_format": "密码由6-20位英文字母+数字或符号组成",
+  "password_format": "密码由6-20位英文字母+数字组合，如：dzpk123",
   "follow": "关注",
   "ticket_price": "合计:",
   "customer_service": "客服",
