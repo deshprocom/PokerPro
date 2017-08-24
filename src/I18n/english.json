@@ -49,7 +49,7 @@
   "ple_new_pwd": "New password",
   "forget_ple_email": "Email address",
   "forge_ple_mobile": "Find password via phone",
-  "password_format": "6-20 English letters, numbers, or symbols",
+  "password_format": "6-20 English letters + numbers, or symbols",
   "follow": "Follow",
   "ticket_price": "Price:",
   "customer_service": "Customer Service",

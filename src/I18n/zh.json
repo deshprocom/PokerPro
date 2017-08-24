@@ -49,7 +49,7 @@
   "ple_new_pwd": "请输入新密码",
   "forget_ple_email": "请输入电子邮箱",
   "forge_ple_mobile": "使用手机找回密码",
-  "password_format": "密码由6-20位英文字母、数字或符号组成",
+  "password_format": "密码由6-20位英文字母+数字或符号组成",
   "follow": "关注",
   "ticket_price": "合计:",
   "customer_service": "客服",
@@ -351,8 +351,8 @@
   "suggest": "意见反馈",
   "suggest_input": "请输入您宝贵的问题与建议",
   "suggest_contact": "您的联系方式（手机或邮箱)",
-  "suggest_ok":"感谢您的反馈",
-  "pay_weixin":"微信支付",
-  "un_support":"暂不支持",
-  "pay_weixin_support":"推荐微信用户适用"
+  "suggest_ok": "感谢您的反馈",
+  "pay_weixin": "微信支付",
+  "un_support": "暂不支持",
+  "pay_weixin_support": "推荐微信用户适用"
 }
