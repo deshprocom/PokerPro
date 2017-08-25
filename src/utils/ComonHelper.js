@@ -375,7 +375,7 @@ export function getLoginUser() {
 }
 /*缓存登陆用户*/
 export function putLoginUser(ret) {
-    setLoginUser(ret)
+    setLoginUser(ret);
 }
 /*是否登陆*/
 export function isLoginUser() {
