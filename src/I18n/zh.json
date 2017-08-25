@@ -4,7 +4,7 @@
   "phone_email": "邮箱或手机号",
   "password": "密码",
   "sign_in": "登录",
-  "problem_for_sign_in": "忘记密码",
+  "problem_for_sign_in": "忘记密码？",
   "sign_in_whit_phone": "手机验证登录",
   "get_vcode": "获取验证码",
   "sign_with_pass": "帐户密码登陆",
