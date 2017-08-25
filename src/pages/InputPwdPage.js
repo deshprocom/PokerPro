@@ -125,7 +125,7 @@ class InputPwdPage extends React.Component {
                         router={this.props.router}
                         title={I18n.t('input_pwd')}
                         leftBtnIcon={Images.sign_return}
-                        leftImageStyle={{height:14,width:14,marginLeft:20,marginRight:20}}
+                        leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                         leftBtnPress={()=>this.props.router.pop()}/>
                 </View>
 

@@ -8,8 +8,12 @@ import JpushHelp from './JpushHelper';
 import {isEmptyObject, showToast} from '../utils/ComonHelper';
 
 export function postWxAuth(body, resolve, reject) {
-    helper.post(Api.weixin_auth, body, data => {
-        resolve(data)
+    helper.post(Api.weixin_auth, body, ret => {
+        let {type, info} = ret.data;
+        if (type === 'login') {
+            setLoginData(info)
+        }
+        resolve(ret.data)
     }, err => {
         reject(err)
         showToast(err)
@@ -17,12 +21,23 @@ export function postWxAuth(body, resolve, reject) {
 }
 
 export function postWxBind(body, resolve, reject) {
-    helper.post(Api.weixin_bind, body, data => {
-        resolve(data)
+    helper.post(Api.weixin_bind, body, ret => {
+        setLoginData(ret.data);
+        resolve(ret.data)
     }, err => {
-        reject(err)
+        reject(err);
         showToast(err)
     })
+}
+
+function setLoginData(login) {
+    const {access_token} = login;
+    setLoginUser(login);
+    helper.setAccessToken(access_token);
+    storage.save({
+        key: StorageKey.LoginUser,
+        rawData: login
+    });
 }
 
 export function postSuggest(body, resolve, reject) {

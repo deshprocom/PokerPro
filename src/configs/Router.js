@@ -56,6 +56,7 @@ import WebViewPay from '../components/WebViewPay';
 import Protocol from '../pages/setting/ProtocolPage';
 import Suggest from '../pages/setting/Suggest';
 import WxRegister from '../pages/account/WxRegister';
+import InputPwd from '../pages/account/InputPwd';
 
 
 const customFloatFromRight = Navigator.SceneConfigs.FadeAndroid;
@@ -88,11 +89,25 @@ export default class Router {
     }
 
 
-    toWxRegister(props) {
+    toInputPwd(props, wx) {
+        this.push(props, {
+            page: InputPwd,
+            name: 'InputPwd',
+            sceneConfig: customFloatFromRight,
+            params: {
+                wx: wx
+            }
+        })
+    }
+
+    toWxRegister(props, wxAuth) {
         this.push(props, {
             page: WxRegister,
             name: 'WxRegister',
             sceneConfig: customFloatFromRight,
+            params: {
+                access_token: wxAuth
+            }
         })
     }
 

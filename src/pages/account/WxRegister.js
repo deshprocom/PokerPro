@@ -13,7 +13,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {fetchPostVerifyCode, fetchPostVCode}from '../../actions/AccountAction';
 import {checkPhone, strNotNull, showToast, checkMail} from '../../utils/ComonHelper';
 import {BtnLong, BtnSoild, InputView, CountDownBtn} from '../../components';
-import {postVCode} from '../../services/AccountDao';
+import {postVCode, postVerifyCode} from '../../services/AccountDao';
 
 class RegisterPage extends React.Component {
 
@@ -59,7 +59,7 @@ class RegisterPage extends React.Component {
                         endText='再次获取验证码'
                         count={60}
                         pressAction={() => {
-                            this.countDownButton.startCountDown()
+                            this._postVcode()
                         }}
                         changeWithCount={(count) => count + 's'}
                         id='register'
@@ -70,29 +70,50 @@ class RegisterPage extends React.Component {
                 </View>
             </View>
         )
-    }
+    };
+
+    _postVcode = () => {
+        if (checkPhone(this.state.mobile)) {
+            const body = {
+                option_type: 'bind_wx_account',
+                vcode_type: 'mobile',
+                mobile: this.state.mobile
+            };
+
+            postVCode(body, data => {
+                if (this.countDownButton)
+                    this.countDownButton.startCountDown()
+            }, err => {
+            })
+        }
+
+    };
 
     _next = () => {
-        const {checkAgree, mobile, vcode} = this.state;
-        if (checkAgree) {
-            if (mobile.length > 1 && vcode.length > 1) {
-                if (checkPhone(mobile)) {
-                    let body = {
-                        option_type: 'register',
-                        vcode_type: 'mobile',
-                        account: mobile,
-                        vcode: vcode
-                    };
+        const {mobile, vcode} = this.state;
 
-                    this.props.fetchVerifyCode(body);
-                }
+        if (mobile.length > 1 && vcode.length > 1) {
+            const body = {
+                option_type: 'bind_wx_account',
+                vcode_type: 'mobile',
+                account: mobile,
+                vcode: vcode
+            };
+            postVerifyCode(body, data => {
+                const wx = {
+                    access_token:this.props.params.access_token,
+                    type: "mobile",
+                    account: mobile,
+                    code:vcode
+                };
+                router.toInputPwd(this.props,wx)
+            }, err => {
 
-            }
-            else
-                showToast(`${I18n.t('fillWhole')}`);
+            })
         }
         else
-            showToast(I18n.t('need_agree'));
+            showToast(`${I18n.t('fillWhole')}`);
+
     };
 
     render() {

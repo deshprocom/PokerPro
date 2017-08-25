@@ -35,19 +35,24 @@ class LoginFirstPage extends React.Component {
                 newProps.actionType === POST_EMAIL_LOGIN) && newProps.hasData) {
                 console.log('LoginFirstPage', newProps.loginUser)
                 const {user_id} = newProps.loginUser.data;
-                const recentRaces = {
-                    user_id: user_id,
-                    number: 8
-                };
-                this.props._getRecentRaces(recentRaces);
-                this.props._getProfile(user_id);
-                this.props.closeDrawer();
-                router.pop();
+                this._success(user_id);
                 return false;
 
             }
         return true;
     }
+
+
+    _success = (user_id) => {
+        const recentRaces = {
+            user_id: user_id,
+            number: 8
+        };
+        this.props._getRecentRaces(recentRaces);
+        this.props._getProfile(user_id);
+        this.props.closeDrawer();
+        router.pop();
+    };
 
     doLogin = () => {
         const {username, password} = this.state;
@@ -207,19 +212,25 @@ class LoginFirstPage extends React.Component {
         }}>
             <TouchableOpacity
                 onPress={() => {
-                    router.toWxRegister();
-                    // loginWX(data => {
-                    //     const body = {
-                    //         code: data.code
-                    //     };
-                    //     postWxAuth(body, ret => {
-                    //         console.log(ret)
-                    //     }, err => {
-                    //
-                    //     })
-                    // }, err => {
-                    //
-                    // })
+
+                    loginWX(data => {
+                        const body = {
+                            code: data.code
+                        };
+                        postWxAuth(body, ret => {
+                            const {type} = ret;
+                            if (type === 'register')
+                                router.toWxRegister(this.props, ret.access_token);
+                            else if (type === 'login') {
+                                const {user_id} = ret;
+                                this._success(user_id);
+                            }
+                        }, err => {
+
+                        })
+                    }, err => {
+
+                    })
                 }}
                 style={styles.rowView}>
                 <Image style={{height: 18, width: 22}}
