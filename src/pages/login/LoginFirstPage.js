@@ -17,6 +17,7 @@ import {fetchGetProfile} from '../../actions/PersonAction';
 import {fetchGetRecentRaces} from '../../actions/RacesAction';
 import {POST_PHONE_LOGIN, POST_EMAIL_LOGIN} from '../../actions/ActionTypes'
 import {closeDrawer} from '../../reducers/DrawerRedux';
+import {postWxAuth} from '../../services/AccountDao';
 
 class LoginFirstPage extends React.Component {
 
@@ -95,15 +96,16 @@ class LoginFirstPage extends React.Component {
                     leftBtnPress={() => router.pop()}
                     rightBtnPress={() => router.toRegisterPage()}/>
 
-                <Image style={{
-                    width: 91, height: 91,
-                    marginTop: 49, alignSelf: 'center'
-                }}
-                       source={Images.sign_logo_poker}/>
+                <View style={styles.viewAvatar}>
+                    <Image style={{
+                        width: 72, height: 72
+                    }}
+                           source={Images.home_avatar}/>
+                </View>
 
 
                 <View
-                    style={{flex: 1, marginTop: 60}}>
+                    style={{flex: 1, marginTop: 50}}>
                     <View style={styles.view_input}>
 
                         <View style={{
@@ -205,7 +207,18 @@ class LoginFirstPage extends React.Component {
         }}>
             <TouchableOpacity
                 onPress={() => {
-                    loginWX()
+                    loginWX(data => {
+                        const body = {
+                            code: data.code
+                        };
+                        postWxAuth(body, ret => {
+                            console.log(ret)
+                        }, err => {
+
+                        })
+                    }, err => {
+
+                    })
                 }}
                 style={styles.rowView}>
                 <Image style={{height: 18, width: 22}}
@@ -275,7 +288,17 @@ const styles = StyleSheet.create({
     },
     txtMsg: {
         fontSize: 14, color: Colors._AAA, marginLeft: 10
-    }
+    },
+    viewAvatar: {
+        height: 82,
+        width: 82,
+        backgroundColor: '#eeeeee',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 41,
+        alignSelf: 'center',
+        marginTop: 30
+    },
 
 });
 

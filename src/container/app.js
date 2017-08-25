@@ -49,7 +49,7 @@ export default class App extends Component {
             {
                 "1_weixin": {
                     appKey: WX_ID,
-                    appSecret: WX_Secret,
+                    appSecret: '',
                     redirectURL: WX_URL,
                 },
                 "2_qq": {

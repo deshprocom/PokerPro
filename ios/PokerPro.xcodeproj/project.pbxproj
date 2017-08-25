@@ -1631,7 +1631,7 @@
 					"-lc++",
 					"-lz",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.deshpro.PokerPro;
+				PRODUCT_BUNDLE_IDENTIFIER = com.deshpro.poker;
 				PRODUCT_NAME = PokerPro;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1667,7 +1667,7 @@
 					"-lc++",
 					"-lz",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.deshpro.PokerPro;
+				PRODUCT_BUNDLE_IDENTIFIER = com.deshpro.poker;
 				PRODUCT_NAME = PokerPro;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

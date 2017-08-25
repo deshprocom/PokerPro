@@ -6,7 +6,7 @@ import {strNotNull, isEmptyObject} from '../utils/ComonHelper';
 
 export default {
     //内部测试
-    dev: 'http://192.168.2.232:8800/v10/',
+    dev: 'http://deshpro.vicp.io/v10/',
     dev_ci_at: 'http://192.168.2.231:8801/v10/',
 
     //test分支用来发布版本  test_ci_at用来跑自动化测试
@@ -72,7 +72,10 @@ export default {
     order_complete: order_complete,
     unpaid_order: unpaid_order,
     feedbacks: 'feedbacks',
-    wx_pay: wx_pay
+    wx_pay: wx_pay,
+    weixin_auth:'weixin/auth',
+    weixin_bind:'weixin/bind',
+
 
 }
 

@@ -7,6 +7,23 @@ import StorageKey from '../configs/StorageKey';
 import JpushHelp from './JpushHelper';
 import {isEmptyObject, showToast} from '../utils/ComonHelper';
 
+export function postWxAuth(body, resolve, reject) {
+    helper.post(Api.weixin_auth, body, data => {
+        resolve(data)
+    }, err => {
+        reject(err)
+        showToast(err)
+    })
+}
+
+export function postWxBind(body, resolve, reject) {
+    helper.post(Api.weixin_bind, body, data => {
+        resolve(data)
+    }, err => {
+        reject(err)
+        showToast(err)
+    })
+}
 
 export function postSuggest(body, resolve, reject) {
     helper.post(Api.feedbacks, body, data => {

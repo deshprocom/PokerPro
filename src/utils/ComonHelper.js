@@ -78,13 +78,15 @@ export function payWx(data, callback) {
 
 
 export function loginWX(resolve, reject) {
-    UMShare.loginWX().then(data => {
-        console.log('WXLogin', data);
-        alert(JSON.stringify(data));
-        resolve(data)
-    }).catch(err => {
-        console.log(err)
+
+    wechat.sendAuthRequest('snsapi_userinfo', 'pokerpro')
+        .then(data => {
+            console.log('loginWX', data);
+            resolve(data)
+        }).catch(err => {
+        reject(err)
     })
+
 }
 
 export const loadApp = 'https://h5.deshpro.com/race/181/zh/loadAPP';
