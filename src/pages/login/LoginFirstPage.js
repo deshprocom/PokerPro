@@ -207,7 +207,7 @@ class LoginFirstPage extends React.Component {
                 onPress={() => {
                     loginWX()
                 }}
-                style={{flexDirection: 'row', alignItems: 'center'}}>
+                style={styles.rowView}>
                 <Image style={{height: 18, width: 22}}
                        source={require('../../../source/buy/weixin.png')}/>
                 <Text style={styles.txtMsg}>微信登陆</Text>
@@ -215,7 +215,7 @@ class LoginFirstPage extends React.Component {
 
             <TouchableOpacity
                 onPress={() => router.toLoginCodePage()}
-                style={{flexDirection: 'row', alignItems: 'center'}}>
+                style={styles.rowView}>
                 <Image style={{height: 15, width: 20}}
                        source={require('../../../source/login/login_msg.png')}/>
                 <Text style={styles.txtMsg}>短信登陆</Text>
@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
         height: 9
     },
     rowView: {
-        flexDirection: 'row', alignItems: 'center'
+        flexDirection: 'row', alignItems: 'center', height: 50
     },
     txtMsg: {
         fontSize: 14, color: Colors._AAA, marginLeft: 10
