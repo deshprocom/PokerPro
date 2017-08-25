@@ -26,6 +26,7 @@ import VideoPlayer from './VideoPlayer';
 import ActionSide from './ActionSide';
 import ActionSheet from './sheet';
 import Loading from './Loading';
+import CountDownBtn from './CountDownBtn';
 
 export {
     BtnLong, BtnSoild, NavigationBar,
@@ -47,5 +48,6 @@ export {
     VideoPlayer,
     ActionSide,
     ActionSheet,
-    Loading
+    Loading,
+    CountDownBtn
 }

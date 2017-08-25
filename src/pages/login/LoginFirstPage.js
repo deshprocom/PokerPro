@@ -207,18 +207,19 @@ class LoginFirstPage extends React.Component {
         }}>
             <TouchableOpacity
                 onPress={() => {
-                    loginWX(data => {
-                        const body = {
-                            code: data.code
-                        };
-                        postWxAuth(body, ret => {
-                            console.log(ret)
-                        }, err => {
-
-                        })
-                    }, err => {
-
-                    })
+                    router.toWxRegister();
+                    // loginWX(data => {
+                    //     const body = {
+                    //         code: data.code
+                    //     };
+                    //     postWxAuth(body, ret => {
+                    //         console.log(ret)
+                    //     }, err => {
+                    //
+                    //     })
+                    // }, err => {
+                    //
+                    // })
                 }}
                 style={styles.rowView}>
                 <Image style={{height: 18, width: 22}}

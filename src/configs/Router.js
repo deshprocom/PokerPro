@@ -55,6 +55,7 @@ import SearchPoker from '../pages/rank/SearchPoker';
 import WebViewPay from '../components/WebViewPay';
 import Protocol from '../pages/setting/ProtocolPage';
 import Suggest from '../pages/setting/Suggest';
+import WxRegister from '../pages/account/WxRegister';
 
 
 const customFloatFromRight = Navigator.SceneConfigs.FadeAndroid;
@@ -86,6 +87,14 @@ export default class Router {
         this.navigator.popToTop();
     }
 
+
+    toWxRegister(props) {
+        this.push(props, {
+            page: WxRegister,
+            name: 'WxRegister',
+            sceneConfig: customFloatFromRight,
+        })
+    }
 
     toSuggest(props) {
         this.push(props, {
