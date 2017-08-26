@@ -218,9 +218,9 @@ class LoginFirstPage extends React.Component {
                             code: data.code
                         };
                         postWxAuth(body, ret => {
-                            const {type} = ret;
+                            const {type,info} = ret;
                             if (type === 'register')
-                                router.toWxRegister(this.props, ret.access_token);
+                                router.toWxRegister(this.props, info.access_token);
                             else if (type === 'login') {
                                 const {user_id} = ret;
                                 this._success(user_id);

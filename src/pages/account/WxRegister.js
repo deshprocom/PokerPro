@@ -13,7 +13,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {fetchPostVerifyCode, fetchPostVCode}from '../../actions/AccountAction';
 import {checkPhone, strNotNull, showToast, checkMail} from '../../utils/ComonHelper';
 import {BtnLong, BtnSoild, InputView, CountDownBtn} from '../../components';
-import {postVCode, postVerifyCode} from '../../services/AccountDao';
+import {postVCode, postVerifyCode, postWxBind} from '../../services/AccountDao';
 
 class RegisterPage extends React.Component {
 
@@ -75,7 +75,7 @@ class RegisterPage extends React.Component {
     _postVcode = () => {
         if (checkPhone(this.state.mobile)) {
             const body = {
-                option_type: 'bind_wx_account',
+                option_type: 'bind_account',
                 vcode_type: 'mobile',
                 mobile: this.state.mobile
             };
@@ -84,6 +84,7 @@ class RegisterPage extends React.Component {
                 if (this.countDownButton)
                     this.countDownButton.startCountDown()
             }, err => {
+                showToast(err)
             })
         }
 
@@ -94,19 +95,25 @@ class RegisterPage extends React.Component {
 
         if (mobile.length > 1 && vcode.length > 1) {
             const body = {
-                option_type: 'bind_wx_account',
+                option_type: 'bind_account',
                 vcode_type: 'mobile',
                 account: mobile,
                 vcode: vcode
             };
             postVerifyCode(body, data => {
                 const wx = {
-                    access_token:this.props.params.access_token,
+                    access_token: this.props.params.access_token,
                     type: "mobile",
                     account: mobile,
-                    code:vcode
+                    code: vcode
                 };
-                router.toInputPwd(this.props,wx)
+
+                postWxBind(wx, data => {
+                    router.toInputPwd(this.props, wx)
+                }, err => {
+
+                });
+
             }, err => {
 
             })
@@ -119,6 +126,7 @@ class RegisterPage extends React.Component {
     render() {
         const {canNextDisable} = this.state;
 
+        console.log('access_token', this.props.params.access_token)
         return (
             <View
                 testID="page_phone_register"
