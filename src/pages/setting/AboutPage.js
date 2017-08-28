@@ -31,7 +31,7 @@ export default class AboutPage extends Component {
             </TouchableOpacity>
 
 
-            <Text style={styles.txtCode}>V3.2</Text>
+            <Text style={styles.txtCode}>V2.1</Text>
 
             <View style={styles.viewFlex}/>
 
