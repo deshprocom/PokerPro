@@ -110,9 +110,7 @@ export function postVCode(body, resolve, reject) {
 export function postRegister(body, resolve, reject) {
 
     helper.post(Api.register, body, (ret) => {
-        let {access_token} = ret.data;
-        setLoginUser(ret.data);
-        helper.setAccessToken(access_token);
+        setLoginData(ret.data);
 
         resolve(ret.data);
     }, reject);
@@ -121,9 +119,7 @@ export function postRegister(body, resolve, reject) {
 /*登陆*/
 export function postLogin(body, resolve, reject) {
     helper.post(Api.login, body, (ret) => {
-        let {access_token, user_id} = ret.data;
-        setLoginUser(ret.data);
-        helper.setAccessToken(access_token);
+        setLoginData(ret.data);
 
         resolve(ret);
     }, reject);
