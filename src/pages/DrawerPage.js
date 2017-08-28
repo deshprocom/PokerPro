@@ -10,13 +10,19 @@ import HomePage from './HomePage';
 import {fetchGetCertification} from '../actions/AccountAction';
 import {closeDrawer}from '../reducers/DrawerRedux';
 import {setDispatchAction} from '../utils/ComonHelper';
-import {GET_CERTIFICATION} from '../actions/ActionTypes';
+import {GET_CERTIFICATION,GET_RECENT_RACES,GET_PROFILE} from '../actions/ActionTypes';
+import {fetchGetProfile} from '../actions/PersonAction';
+import {fetchGetRecentRaces} from '../actions/RacesAction';
+
 
 class DrawerPage extends React.Component {
 
 
     componentDidMount() {
-        setDispatchAction(GET_CERTIFICATION, this.props._getRealName)
+        setDispatchAction(GET_CERTIFICATION, this.props._getRealName);
+        setDispatchAction(GET_RECENT_RACES,this.props._getRecentRaces);
+        setDispatchAction(GET_PROFILE,this.props._getProfile)
+
     }
 
 
@@ -72,7 +78,9 @@ const drawerStyles = {
 
 const bindAction = dispatch => ({
     closeDrawer: () => dispatch(closeDrawer()),
-    _getRealName: () => dispatch(fetchGetCertification())
+    _getRealName: () => dispatch(fetchGetCertification()),
+    _getProfile: (user_id) => dispatch(fetchGetProfile(user_id)),
+    _getRecentRaces: (body) => dispatch(fetchGetRecentRaces(body))
 });
 
 const mapStateToProps = state => ({

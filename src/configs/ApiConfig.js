@@ -73,8 +73,9 @@ export default {
     unpaid_order: unpaid_order,
     feedbacks: 'feedbacks',
     wx_pay: wx_pay,
-    weixin_auth:'weixin/auth',
-    weixin_bind:'weixin/bind',
+    weixin_auth: 'weixin/auth',
+    weixin_bind: 'weixin/bind',
+    account_exist: account_exist
 
 
 }
@@ -89,6 +90,11 @@ function getUserId() {
 
 const page_size = 10;
 
+
+export function account_exist(body) {
+    const {account} = body;
+    return 'account/' + account + '/verify'
+}
 
 export function wx_pay(body) {
     const {order_number} = body;
@@ -271,7 +277,7 @@ export function search_by_date(body) {
 
 export function search_races(body) {
 
-    console.log('search_race',body);
+    console.log('search_race', body);
     const {seq_id, operator, host_id, date} = body;
     if (!isEmptyObject(login_user) && strNotNull(login_user.user_id)) {
 

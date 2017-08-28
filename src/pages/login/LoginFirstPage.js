@@ -222,7 +222,7 @@ class LoginFirstPage extends React.Component {
                             if (type === 'register')
                                 router.toWxRegister(this.props, info.access_token);
                             else if (type === 'login') {
-                                const {user_id} = ret;
+                                const {user_id} = info;
                                 this._success(user_id);
                             }
                         }, err => {

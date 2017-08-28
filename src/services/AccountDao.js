@@ -7,6 +7,17 @@ import StorageKey from '../configs/StorageKey';
 import JpushHelp from './JpushHelper';
 import {isEmptyObject, showToast} from '../utils/ComonHelper';
 
+
+export function getAccountExit(body, resolve, reject) {
+    helper.get(Api.account_exist(body), (ret) => {
+        resolve(ret.data);
+    }, err => {
+        showToast(err);
+        reject(err);
+    });
+}
+
+
 export function postWxAuth(body, resolve, reject) {
     helper.post(Api.weixin_auth, body, ret => {
         let {type, info} = ret.data;
@@ -15,7 +26,7 @@ export function postWxAuth(body, resolve, reject) {
         }
         resolve(ret.data)
     }, err => {
-        reject(err)
+        reject(err);
         showToast(err)
     })
 }

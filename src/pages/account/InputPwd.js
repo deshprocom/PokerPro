@@ -8,8 +8,9 @@ import {Colors, Fonts, Images, Metrics, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
 import md5 from "react-native-md5";
 import {NavigationBar} from '../../components';
-import {pwdVaild} from '../../utils/ComonHelper';
+import {pwdVaild, getDispatchAction} from '../../utils/ComonHelper';
 import {postWxBind} from '../../services/AccountDao';
+import {GET_RECENT_RACES, GET_PROFILE} from '../../actions/ActionTypes';
 
 export default class InputPwd extends PureComponent {
 
@@ -120,7 +121,16 @@ export default class InputPwd extends PureComponent {
 
         wx['password'] = pwd;
         postWxBind(wx, data => {
+            console.log('wx', data);
+            const {user_id} = data;
+            const recentRaces = {
+                user_id: user_id,
+                number: 8
+            };
 
+            getDispatchAction()[GET_RECENT_RACES](recentRaces);
+            getDispatchAction()[GET_PROFILE](user_id);
+            router.popToTop();
         }, err => {
         })
     }

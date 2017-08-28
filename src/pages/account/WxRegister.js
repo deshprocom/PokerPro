@@ -6,16 +6,16 @@ import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text, KeyboardAvoidingView
 } from 'react-native';
-import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 import NavigationBar from '../../components/NavigationBar';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {fetchPostVerifyCode, fetchPostVCode}from '../../actions/AccountAction';
-import {checkPhone, strNotNull, showToast, checkMail} from '../../utils/ComonHelper';
+import {checkPhone, strNotNull, showToast, checkMail, getDispatchAction} from '../../utils/ComonHelper';
 import {BtnLong, BtnSoild, InputView, CountDownBtn} from '../../components';
-import {postVCode, postVerifyCode, postWxBind} from '../../services/AccountDao';
+import {postVCode, postVerifyCode, postWxBind, getAccountExit} from '../../services/AccountDao';
+import {GET_RECENT_RACES, GET_PROFILE} from '../../actions/ActionTypes';
 
-class RegisterPage extends React.Component {
+export default class WxRegister extends React.Component {
 
 
     state = {
@@ -100,23 +100,57 @@ class RegisterPage extends React.Component {
                 account: mobile,
                 vcode: vcode
             };
-            postVerifyCode(body, data => {
-                const wx = {
-                    access_token: this.props.params.access_token,
-                    type: "mobile",
-                    account: mobile,
-                    code: vcode
-                };
+            const account = {
+                account: mobile
+            };
+            getAccountExit(account, data => {
+                const {exist} = data;
+                if (exist === 0)
+                    postVerifyCode(body, data => {
+                        const wx = {
+                            access_token: this.props.params.access_token,
+                            type: "mobile",
+                            account: mobile,
+                            code: vcode
+                        };
+                        router.toInputPwd(this.props, wx)
 
-                postWxBind(wx, data => {
-                    router.toInputPwd(this.props, wx)
-                }, err => {
+                    }, err => {
 
-                });
+                    });
+                else if (exist === 1)
+                    postVerifyCode(body, data => {
+                        const wx = {
+                            access_token: this.props.params.access_token,
+                            type: "mobile",
+                            account: mobile,
+                            code: vcode
+                        };
+
+                        postWxBind(wx, data => {
+                            console.log('wx', data);
+                            const {user_id} = data;
+                            const recentRaces = {
+                                user_id: user_id,
+                                number: 8
+                            };
+
+                            getDispatchAction()[GET_RECENT_RACES](recentRaces);
+                            getDispatchAction()[GET_PROFILE](user_id);
+                            router.popToTop();
+
+                        }, err => {
+
+                        });
+
+                    }, err => {
+
+                    });
 
             }, err => {
 
-            })
+            });
+
         }
         else
             showToast(`${I18n.t('fillWhole')}`);
@@ -217,22 +251,5 @@ const styles = StyleSheet.create({
         color: Colors._999,
     },
 
-})
-
-function bindAction(dispatch) {
-    return {
-        fetchVerifyCode: (body) => dispatch(fetchPostVerifyCode(body)),
-        fetchVCode: (body) => dispatch(fetchPostVCode(body))
-    };
-}
-
-
-const mapStateToProps = state => ({
-    loading: state.AccountState.loading,
-    error: state.AccountState.error,
-    hasData: state.AccountState.hasData,
-    actionType: state.AccountState.actionType
-
 });
 
-export default connect(mapStateToProps, bindAction)(RegisterPage);
