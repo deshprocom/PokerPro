@@ -75,7 +75,7 @@ class RegisterPage extends React.Component {
     _postVcode = () => {
         if (checkPhone(this.state.mobile)) {
             const body = {
-                option_type: 'bind_account',
+                option_type: 'bind_wx_account',
                 vcode_type: 'mobile',
                 mobile: this.state.mobile
             };
@@ -95,7 +95,7 @@ class RegisterPage extends React.Component {
 
         if (mobile.length > 1 && vcode.length > 1) {
             const body = {
-                option_type: 'bind_account',
+                option_type: 'bind_wx_account',
                 vcode_type: 'mobile',
                 account: mobile,
                 vcode: vcode
