@@ -376,6 +376,10 @@ export function getLoginUser() {
 /*缓存登陆用户*/
 export function putLoginUser(ret) {
     setLoginUser(ret);
+    storage.save({
+        key: StorageKey.UserAvatar,
+        rawData: ret.avatar
+    });
 }
 /*是否登陆*/
 export function isLoginUser() {
@@ -415,12 +419,11 @@ export function setUserData(data) {
     })
 }
 
-export var userData = '';
+export var userData = {};
 
 export function getUserData() {
     storage.load({key: StorageKey.UserData})
         .then((ret) => {
-            console.log(ret)
             userData = ret
         })
 }

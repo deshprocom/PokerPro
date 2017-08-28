@@ -18,6 +18,7 @@ import {fetchGetRecentRaces} from '../../actions/RacesAction';
 import {POST_PHONE_LOGIN, POST_EMAIL_LOGIN} from '../../actions/ActionTypes'
 import {closeDrawer} from '../../reducers/DrawerRedux';
 import {postWxAuth} from '../../services/AccountDao';
+import StorageKey from '../../configs/StorageKey'
 
 class LoginFirstPage extends React.Component {
 
@@ -25,7 +26,8 @@ class LoginFirstPage extends React.Component {
     state = {
         username: userData,
         password: '',
-        pwdEye: true
+        pwdEye: true,
+        avatar: ''
     };
 
     shouldComponentUpdate(newProps) {
@@ -40,6 +42,17 @@ class LoginFirstPage extends React.Component {
 
             }
         return true;
+    }
+
+    componentDidMount() {
+        storage.load({
+            key: StorageKey.UserAvatar
+        }).then(avatar => {
+            console.log(avatar)
+            this.setState({
+                avatar: avatar
+            })
+        })
     }
 
 
@@ -83,7 +96,7 @@ class LoginFirstPage extends React.Component {
     };
 
     render() {
-        const {pwdEye} = this.state;
+        const {pwdEye, avatar} = this.state;
 
         return (
             <View
@@ -103,9 +116,10 @@ class LoginFirstPage extends React.Component {
 
                 <View style={styles.viewAvatar}>
                     <Image style={{
-                        width: 72, height: 72
+                        width: 72, height: 72,
+                        borderRadius: 36
                     }}
-                           source={Images.home_avatar}/>
+                           source={strNotNull(avatar) ? {uri: avatar} : Images.home_avatar}/>
                 </View>
 
 
@@ -218,7 +232,7 @@ class LoginFirstPage extends React.Component {
                             code: data.code
                         };
                         postWxAuth(body, ret => {
-                            const {type,info} = ret;
+                            const {type, info} = ret;
                             if (type === 'register')
                                 router.toWxRegister(this.props, info.access_token);
                             else if (type === 'login') {

@@ -45,10 +45,7 @@ function setLoginData(login) {
     const {access_token} = login;
     setLoginUser(login);
     helper.setAccessToken(access_token);
-    storage.save({
-        key: StorageKey.LoginUser,
-        rawData: login
-    });
+
 }
 
 export function postSuggest(body, resolve, reject) {
@@ -116,10 +113,7 @@ export function postRegister(body, resolve, reject) {
         let {access_token} = ret.data;
         setLoginUser(ret.data);
         helper.setAccessToken(access_token);
-        storage.save({
-            key: StorageKey.LoginUser,
-            rawData: ret.data
-        });
+
         resolve(ret.data);
     }, reject);
 }
@@ -130,10 +124,7 @@ export function postLogin(body, resolve, reject) {
         let {access_token, user_id} = ret.data;
         setLoginUser(ret.data);
         helper.setAccessToken(access_token);
-        storage.save({
-            key: StorageKey.LoginUser,
-            rawData: ret.data
-        });
+
         resolve(ret);
     }, reject);
 }
@@ -144,6 +135,11 @@ global.login_user = {};
 export function setLoginUser(ret) {
     LoginUser = ret;
     global.login_user = ret;
+
+    storage.save({
+        key: StorageKey.LoginUser,
+        rawData: ret
+    });
 
     if (!isEmptyObject(ret)) {
         JpushHelp.getRegistrationID((id) => {
