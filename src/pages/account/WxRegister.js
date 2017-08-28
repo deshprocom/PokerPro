@@ -116,7 +116,7 @@ export default class WxRegister extends React.Component {
                         router.toInputPwd(this.props, wx)
 
                     }, err => {
-
+                        showToast(err)
                     });
                 else if (exist === 1)
                     postVerifyCode(body, data => {
@@ -144,7 +144,7 @@ export default class WxRegister extends React.Component {
                         });
 
                     }, err => {
-
+                        showToast(err)
                     });
 
             }, err => {
@@ -160,7 +160,6 @@ export default class WxRegister extends React.Component {
     render() {
         const {canNextDisable} = this.state;
 
-        console.log('access_token', this.props.params.access_token)
         return (
             <View
                 testID="page_phone_register"
