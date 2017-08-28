@@ -188,7 +188,7 @@ export default class WxRegister extends React.Component {
                 <BtnSoild
                     testID="btn_next"
                     onPress={this._next}
-                    name={I18n.t('next')}
+                    name={I18n.t('bang')}
                     style={{
                         marginTop: 19,
                         backgroundColor: canNextDisable ? Colors._AAA : Colors.bg_09
