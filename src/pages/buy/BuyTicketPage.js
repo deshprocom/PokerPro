@@ -504,7 +504,7 @@ class BuyTicketPage extends Component {
                     {/*票务类型*/}
                     {this.sendTypeView()}
 
-                    {/*电子邮件*/}
+
 
                     {/*收货地址*/}
 

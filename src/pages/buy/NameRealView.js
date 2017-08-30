@@ -21,7 +21,6 @@ export default class NameRealView extends Component {
 
     _certification = () => {
         const {user_extra} = this.props;
-
         umengEvent("ticket_buy_true_name");
         if (isEmptyObject(user_extra)) {
             this.props.router.toCertificationPage()
@@ -65,10 +64,8 @@ export default class NameRealView extends Component {
     }
 
     editIdCard = (user_extra) => {
+        this.props.router.toCertificationPage()
 
-        if (user_extra.status === Verified.FAILED || user_extra.status === Verified.INIT) {
-            this.props.router.toCertificationPage()
-        }
     };
 
     nameView = () => {
