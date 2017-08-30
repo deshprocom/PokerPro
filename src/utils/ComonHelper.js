@@ -411,15 +411,15 @@ export function idCardStatus(status) {
     }
 }
 
-export function setUserData(data) {
-    userData = data;
+export function setUserData(username) {
+    userData = username;
     storage.save({
         key: StorageKey.UserData,
-        rawData: data
+        rawData: username
     })
 }
 
-export var userData = {};
+export var userData = '';
 
 export function getUserData() {
     storage.load({key: StorageKey.UserData})
