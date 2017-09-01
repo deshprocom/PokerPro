@@ -64,7 +64,7 @@ class LoginFirstPage extends React.Component {
         this.props._getRecentRaces(recentRaces);
         this.props._getProfile(user_id);
         this.props.closeDrawer();
-        router.pop();
+        router.popToTop();
     };
 
     doLogin = () => {
@@ -72,6 +72,7 @@ class LoginFirstPage extends React.Component {
         if (strNotNull(username) && strNotNull(password)) {
             setUserData(username);
             if (checkLoginMail(username)) {
+
                 let body = {
                     type: 'email',
                     email: username,
