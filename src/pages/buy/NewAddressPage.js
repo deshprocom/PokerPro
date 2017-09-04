@@ -136,7 +136,7 @@ export default class NewAddress extends Component {
                             isDefault: !this.state.isDefault
                         })
                     }}
-                    style={styles.imgSwitch}>
+                    style={styles.btnSwitch}>
                     <Image style={styles.imgSwitch}
                            source={this.state.isDefault ? Images.handle : Images.handle2}/>
                 </TouchableOpacity>
@@ -267,12 +267,16 @@ const styles = StyleSheet.create({
         marginLeft: 17,
         marginTop: 21
     },
-    imgSwitch: {
+     btnSwitch: {
         height: 32,
         width: 53,
         position: 'absolute',
         top: 9,
         right: 19
+    },
+    imgSwitch: {
+        height: 32,
+        width: 53,
     },
     imgRight: {
         height: 20,

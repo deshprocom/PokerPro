@@ -143,18 +143,18 @@ export default class ChinaRegionWheelPicker extends BaseComponent {
         <View style={[styles.pickerContainer, isIos ? {} : { marginTop: windowHeight - 80 - this.props.androidPickerHeight }]}>
           <View style={styles.navWrap}>
             <TouchableOpacity
-              style={[styles.navBtn, { borderColor: navBtnColor }]}
+              style={styles.navBtn}
               activeOpacity={0.85}
               onPress={this._handleCancel}
             >
-              <Text style={[styles.text, { color: navBtnColor }]}>{I18n.t('cancel')}</Text>
+              <Text style={styles.text}>{I18n.t('cancel')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={[styles.navBtn, { backgroundColor: navBtnColor, borderColor: navBtnColor }]}
+              style={styles.navBtn}
               activeOpacity={0.85}
               onPress={this._handleSubmit}
             >
-              <Text style={[styles.text, { color: 'white' }]}>{I18n.t('alert_sure')}</Text>
+              <Text style={styles.text}>{I18n.t('alert_sure')}</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.pickerWrap}>
@@ -282,8 +282,7 @@ const styles = StyleSheet.create({
   navBtn: {
     paddingVertical: 5,
     paddingHorizontal: 20,
-    borderWidth: 1,
-    borderRadius: 4
+
   },
   text: {
     fontSize: 18,

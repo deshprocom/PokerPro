@@ -116,7 +116,9 @@ const styles = {
     tableRowCell: {
         padding: 5,
     },
-    text: {},
+    text: {
+        color:'#161817'
+    },
     u: {
         color: '#4990E2',
         textDecorationLine: 'underline'
