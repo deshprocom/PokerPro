@@ -14,6 +14,7 @@ import {fetchAddress} from '../../actions/OrderAction';
 import {strNotNull, showToast, checkPhone, isEmptyObject} from '../../utils/ComonHelper';
 import {postAddress} from '../../services/OrderDao';
 import Region from '../../components/region-picker/region'
+import ChinaRegionWheelPicker from '../../components/area-picker';
 
 export default class NewAddress extends Component {
 
@@ -143,15 +144,17 @@ export default class NewAddress extends Component {
 
             </View>
 
-            <Region
-                visible={this.state.regionVisible} //true展示，false不展示
-                selectedProvince={'110000'} //初始化省，不传默认也是北京
-                selectedCity={'110100'} //初始化市，不传默认也是北京
-                selectedArea={'110101'} //初始化区，不传默认为东城区
+            <ChinaRegionWheelPicker
+                transparent
+                animationType={'fade'}
+                isVisible={this.state.regionVisible} //true展示，false不展示
+                selectedProvince={'广东'}
+                selectedCity={'深圳'}
+                selectedArea={'福田区'}
                 onSubmit={(params) => {
 
-                    const {provinceName, cityName, areaName} = params;
-                    this.receiverAdr1 = provinceName + ' ' + cityName + ' ' + areaName;
+                    const {province, city, area} = params;
+                    this.receiverAdr1 = province + ' ' + city + ' ' + area;
                     this.setState({
                         regionVisible: false,
                         regionTxt: this.receiverAdr1

@@ -59,7 +59,9 @@ export default class PayModal extends Component {
                 wxPay: data
             })
         }, err => {
-
+            this.setState({
+                wxPay: {}
+            })
         });
 
         postPayOrder(body, data => {
