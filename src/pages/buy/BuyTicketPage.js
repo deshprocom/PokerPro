@@ -22,7 +22,7 @@ import {GET_CERTIFICATION, POST_BUY_TICKET, GET_RACE_NEW_ORDER, POST_CERTIFICATI
 import NameRealView from './NameRealView';
 import {fetchRacesInfo, fetchGetRecentRaces} from '../../actions/RacesAction';
 import StorageKey from '../../configs/StorageKey';
-import {getBuyRaceTicket, postOrderTicket, postPayOrder, getUnpaidOrder} from '../../services/OrderDao';
+import {getBuyRaceTicket, postOrderTicket, getUnpaidOrder} from '../../services/OrderDao';
 import {umengEvent} from '../../utils/UmengEvent';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import PayModal from './PayModal';

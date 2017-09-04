@@ -32,11 +32,11 @@ export function postOrderComplete(body, resolve) {
     })
 }
 
-export function postPayOrder(body, resolve) {
+export function postPayOrder(body, resolve, reject) {
     helper.post(Api.pay_order(body), {}, (ret) => {
         resolve(ret.data)
     }, err => {
-
+        reject(err)
     })
 }
 

@@ -20,8 +20,8 @@ export default class PayModal extends Component {
         visible: false,
         payUrl: {},
         payWay: 1,
-        wxPay: {},
-        pay_url: ''
+        wxPay: {partnerId: ''},
+        pay_url: 'pay-success'
     };
 
     toggle = () => {
@@ -56,17 +56,23 @@ export default class PayModal extends Component {
         };
         postWxPay(body, data => {
             this.setState({
-                wxPay: data
+                wxPay: data,
+                payWay: 1,
             })
         }, err => {
             this.setState({
-                wxPay: {}
+                wxPay: {},
+                payWay: 0
             })
         });
 
         postPayOrder(body, data => {
             this.setState({
                 pay_url: data.pay_url
+            });
+        }, err => {
+            this.setState({
+                pay_url: ''
             });
         })
 
