@@ -41,7 +41,7 @@ class IDCardView extends Component {
 
         editable: true,
         imageName: '',
-        choice_id: 'chinese_id',
+        choice_id: 'passport_id',
         chinese: {},
         passport: {},
 
@@ -74,7 +74,7 @@ class IDCardView extends Component {
                 this.setState({
                     passport: user_extra,
                     editable: editable,
-                    choice_id:'passport_id'
+                    choice_id: 'passport_id'
                 })
             }
         }
@@ -199,7 +199,7 @@ class IDCardView extends Component {
             testID="page_real_name"
             style={ApplicationStyles.bgContainer}>
 
-            {editable ? <View>
+            {false ? <View>
 
                 <Text style={{
                     paddingLeft: 15,

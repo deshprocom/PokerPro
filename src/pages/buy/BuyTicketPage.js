@@ -424,7 +424,7 @@ class BuyTicketPage extends Component {
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
-                <ScrollView
+                <KeyboardAwareScrollView
                     style={{marginBottom: 62}}>
                     {/*赛事简介*/}
                     <View style={{height: 7}}/>
@@ -526,7 +526,7 @@ class BuyTicketPage extends Component {
                     </View>
 
 
-                </ScrollView>
+                </KeyboardAwareScrollView>
                 <View
                     style={{
                         height: 62,
