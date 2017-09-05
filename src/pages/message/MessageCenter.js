@@ -1,16 +1,17 @@
 /**
  * Created by lorne on 2017/9/5.
  */
-import React, {PropTypes, PureComponent}from 'react';
+import React, {PropTypes, Component}from 'react';
 import {
     StyleSheet, Image, Platform, ActivityIndicator,
-    Dimensions, View, Text, FlatList, TouchableOpacity,
+    Dimensions, View, Text, ScrollView, TouchableOpacity,
     InteractionManager
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {NavigationBar} from '../../components';
-import {convertDate} from '../../utils/ComonHelper';
+import {convertDate, utcDate} from '../../utils/ComonHelper';
+import {getActivities, getNotifications} from '../../services/AccountDao';
 
 const icons = [
     require('../../../source/message/ic_order.png'),
@@ -24,11 +25,38 @@ const titles = [
     'Poker Pro官方客服'
 ];
 
-export default class MessageCenter extends PureComponent {
+export default class MessageCenter extends Component {
 
     state = {
-        items: [1, 2, 3]
+        activity: {},
+        notice: {}
     };
+
+    componentDidMount() {
+
+
+        getActivities(data => {
+            const {activities} = data;
+            if (activities.length <= 0)
+                return;
+
+            this.setState({
+                activity: activities[0]
+            })
+        }, err => {
+
+        });
+
+        getNotifications(data => {
+            const {notifications} = data;
+            if (notifications.length <= 0)
+                return;
+            this.setState({notice: notifications[0]})
+
+        }, err => {
+
+        })
+    }
 
     render() {
         return (<View style={ApplicationStyles.bgContainer}>
@@ -40,29 +68,76 @@ export default class MessageCenter extends PureComponent {
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}/>
 
-            <FlatList
-                data={this.state.items}
-                renderItem={this._renderItem}
-                keyExtractor={(item, index) => index}/>
+            <ScrollView>
+                {this._notice()}
+                {this._activity()}
+
+            </ScrollView>
+
 
         </View>)
     }
 
 
-    _renderItem = ({item, index}) => {
-        const {title, activity_time} = item;
+    _notice = () => {
+
+        const {title, created_at} = this.state.notice;
         return (
-            <View style={{backgroundColor: 'white'}}>
-                {index === 0 ? null : <View style={styles.msgLine}/>}
+            <TouchableOpacity
+                onPress={() => {
+                    router.toMessagePage()
+                }}
+                style={{backgroundColor: 'white'}}>
                 <View style={styles.flatItem}>
                     <Image style={styles.msgIcon}
-                           source={icons[index]}/>
+                           source={icons[0]}/>
+                    <View style={styles.msgRed}/>
                     <View>
-                        <Text style={styles.msgTitle}>{titles[index]}</Text>
+                        <Text style={styles.msgTitle}>{titles[0]}</Text>
+                        <Text style={styles.msgDesc}>{title}</Text>
+                    </View>
+
+                    <Text style={styles.msgTime}>{utcDate(created_at, 'YYYY/MM/DD')}</Text>
+
+                </View>
+            </TouchableOpacity>)
+    };
+
+    _activity = () => {
+        const {title, activity_time} = this.state.activity;
+        return (
+            <View style={{backgroundColor: 'white'}}>
+                <View style={styles.msgLine}/>
+                <View style={styles.flatItem}>
+                    <Image style={styles.msgIcon}
+                           source={icons[1]}/>
+                    <View style={styles.msgRed}/>
+                    <View>
+                        <Text style={styles.msgTitle}>{titles[1]}</Text>
                         <Text style={styles.msgDesc}>{title}</Text>
                     </View>
 
                     <Text style={styles.msgTime}>{convertDate(activity_time, 'YYYY/MM/DD')}</Text>
+
+                </View>
+            </View>)
+    };
+
+    _poker = () => {
+
+        return (
+            <View style={{backgroundColor: 'white'}}>
+                <View style={styles.msgLine}/>
+                <View style={styles.flatItem}>
+                    <Image style={styles.msgIcon}
+                           source={icons[2]}/>
+                    <View style={styles.msgRed}/>
+                    <View>
+                        <Text style={styles.msgTitle}>{titles[2]}</Text>
+                        <Text style={styles.msgDesc}>深圳德尚</Text>
+                    </View>
+
+                    <Text style={styles.msgTime}>{convertDate('2017-09-04T00:00:00.000+08:00', 'YYYY/MM/DD')}</Text>
 
                 </View>
             </View>)
@@ -95,11 +170,23 @@ const styles = StyleSheet.create({
     },
     msgTime: {
         fontSize: 12,
-        color: Colors._AAA
+        color: Colors._AAA,
+        position: 'absolute',
+        top: 30,
+        right: 10
     },
     msgLine: {
         height: 1,
         backgroundColor: Colors._ECE,
         marginLeft: 18,
+    },
+    msgRed: {
+        height: 10,
+        width: 10,
+        backgroundColor: 'white',
+        borderRadius: 5,
+        position: 'absolute',
+        top: 25,
+        left: 67
     }
 });

@@ -75,7 +75,10 @@ export default {
     wx_pay: wx_pay,
     weixin_auth: 'weixin/auth',
     weixin_bind: 'weixin/bind',
-    account_exist: account_exist
+    account_exist: account_exist,
+    activities: 'activities',
+    activityInfo: activityInfo,
+    activityPush:'activities/pushed'
 
 
 }
@@ -90,6 +93,11 @@ function getUserId() {
 
 const page_size = 10;
 
+
+export function activityInfo(body) {
+    const {id} = body;
+    return 'activities/' + id;
+}
 
 export function account_exist(body) {
     const {account} = body;

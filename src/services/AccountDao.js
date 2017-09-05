@@ -7,6 +7,23 @@ import StorageKey from '../configs/StorageKey';
 import JpushHelp from './JpushHelper';
 import {isEmptyObject, showToast} from '../utils/ComonHelper';
 
+export function getActivityPush(resolve, reject) {
+    helper.get(Api.activityPush, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+export function getActivityInfo(body, resolve, reject) {
+    helper.get(Api.activityInfo(body), ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+export function getActivities(resolve, reject) {
+    helper.get(Api.activities, ret => {
+        resolve(ret.data)
+    }, reject)
+}
 
 export function getAccountExit(body, resolve, reject) {
     helper.get(Api.account_exist(body), (ret) => {
