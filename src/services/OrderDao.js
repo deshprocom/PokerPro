@@ -15,6 +15,16 @@ export function postWxPay(body, resolve, reject) {
     })
 }
 
+
+export function postInvite(body, resolve, reject) {
+    helper.post(Api.verify_invite_code(), body, (ret) => {
+        resolve(ret.data)
+    }, err => {
+        reject(err);
+        showToast(err)
+    })
+}
+
 export function getUnpaidOrder(body, resolve, reject) {
     helper.get(Api.unpaid_order(body), ret => {
         resolve(ret.data)

@@ -200,11 +200,11 @@ class BuyTicketPage extends Component {
     _btnBuyTicket = () => {
 
         umengEvent('ticket_buy_contain');
-        let {isEntity, email, isNameReal, shipping_address, order_number} = this.state;
+        let {isEntity, email, isNameReal, shipping_address, order_number, inviteCode} = this.state;
         if (isNameReal) {
             if (isEntity === ENTITY) {
                 if (isEmptyObject(shipping_address)) {
-                    showToast(`${I18n.t('add_adr')}`)
+                    showToast(`${I18n.t('add_adr')}`);
                     return;
                 }
                 const {race_id, ticket_id} = this.props.params;
@@ -216,7 +216,8 @@ class BuyTicketPage extends Component {
                     ticket_type: 'entity_ticket',
                     mobile: shipping_address.mobile,
                     consignee: shipping_address.consignee,
-                    address: shipping_address.address + shipping_address.address_detail
+                    address: shipping_address.address + shipping_address.address_detail,
+                    invite_code: inviteCode
                 };
                 if (this.payModal && !isEmptyObject(this.payModal.getPayUrl())) {
                     this.payModal.toggle()
@@ -242,7 +243,8 @@ class BuyTicketPage extends Component {
                 };
                 let body = {
                     ticket_type: 'e_ticket',
-                    email: email
+                    email: email,
+                    invite_code: inviteCode
                 };
                 if (this.payModal && !isEmptyObject(this.payModal.getPayUrl())) {
                     this.payModal.toggle()

@@ -78,7 +78,8 @@ export default {
     account_exist: account_exist,
     activities: 'activities',
     activityInfo: activityInfo,
-    activityPush:'activities/pushed'
+    activityPush:'activities/pushed',
+    verify_invite_code:verify_invite_code
 
 
 }
@@ -93,6 +94,11 @@ function getUserId() {
 
 const page_size = 10;
 
+
+
+export function verify_invite_code() {
+    return '/users/'+getUserId()+'/verify_invite_code'
+}
 
 export function activityInfo(body) {
     const {id} = body;
