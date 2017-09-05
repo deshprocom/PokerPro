@@ -592,11 +592,13 @@ class BuyTicketPage extends Component {
             flexDirection: 'row', alignItems: 'center',
             backgroundColor: 'white', marginTop: 5, marginBottom: 10
         }}>
-            <Text style={{marginLeft: 18, fontSize: 14,
-                color: Colors._333,marginRight:5}}>推荐码：</Text>
+            <Text style={{
+                marginLeft: 18, fontSize: 14,
+                color: Colors._333, marginRight: 5
+            }}>{I18n.t('buy_invite')}</Text>
             <TextInput
-                style={{height: 50, flex: 1,fontSize:14}}
-                placeholder="请输入四位推荐码 （选填）"
+                style={{height: 50, flex: 1, fontSize: 14}}
+                placeholder={I18n.t('buy_invite_placeholder')}
                 onChangeText={(inviteCode) => this.setState({inviteCode})}
             />
         </View>)

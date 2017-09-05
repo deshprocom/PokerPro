@@ -355,5 +355,7 @@
   "pay_weixin": "微信支付",
   "un_support": "暂不支持",
   "pay_weixin_support": "推荐微信用户适用",
+  "buy_invite":"推荐码：",
+  "buy_invite_placeholder":"请输入四位推荐码 （选填）"
 
 }
