@@ -127,7 +127,6 @@ class HomePage extends Component {
     };
 
 
-
     _onScroll = (event) => {
         let offsetY = event.nativeEvent.contentOffset.y;
         if (offsetY <= 232 - Metrics.navBarHeight) {
@@ -181,7 +180,7 @@ class HomePage extends Component {
                 badge: false
             });
             JpushHelp.iosSetBadge(0);
-            router.toMessagePage()
+            router.toMessageCenter()
         }
 
     };
@@ -366,7 +365,6 @@ class HomePage extends Component {
             </View>
         )
     }
-
 
 
     _btnHeader = () => {

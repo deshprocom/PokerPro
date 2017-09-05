@@ -57,6 +57,7 @@ import Protocol from '../pages/setting/ProtocolPage';
 import Suggest from '../pages/setting/Suggest';
 import WxRegister from '../pages/account/WxRegister';
 import InputPwd from '../pages/account/InputPwd';
+import MessageCenter from '../pages/message/MessageCenter';
 
 
 const customFloatFromRight = Navigator.SceneConfigs.FadeAndroid;
@@ -87,6 +88,15 @@ export default class Router {
     popToTop() {
         this.navigator.popToTop();
     }
+
+    toMessageCenter(props) {
+        this.push(props, {
+            page: MessageCenter,
+            name: 'MessageCenter',
+            sceneConfig: customFloatFromRight
+        })
+    }
+
 
 
     toInputPwd(props, wx) {
