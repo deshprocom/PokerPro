@@ -177,6 +177,8 @@ class OrderInfoPage extends React.Component {
 
 
                 </View>
+
+                {this._invite()}
                 {/*地址 邮箱*/}
                 <View style={{backgroundColor: Colors.white, paddingLeft: 17, marginTop: 5}}>
                     <View>
@@ -421,8 +423,7 @@ class OrderInfoPage extends React.Component {
 
     _pay = () => {
         const {order_id, price} = this.props.params;
-        const {orderDetail} = this.props;
-        const {order_info} = orderDetail;
+
         if (this.payModal) {
 
             const data = {
@@ -439,6 +440,15 @@ class OrderInfoPage extends React.Component {
 
 
     _invite = () => {
+        const {orderDetail} = this.props;
+        const {invite_code} = orderDetail.order_info;
+        if (strNotNull(invite_code)) {
+            return (<View style={styles.inviteView}>
+                <Text style={styles.inviteLabel}>{I18n.t('buy_invite')}</Text>
+                <Text style={styles.inviteCode}>{invite_code}</Text>
+
+            </View>)
+        }
 
     };
 
@@ -609,5 +619,19 @@ const styles = StyleSheet.create({
         fontSize: 14, color: Colors.white,
         margin: 10
     },
+    inviteView: {
+        height: 50,
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 5
+    },
+    inviteLabel: {
+        fontSize: 14,
+        color: Colors.txt_666,
+        marginRight: 18,
+        marginLeft: 18
+    },
+    inviteCode: {fontSize: 15, color: Colors._888}
 
 });

@@ -36,7 +36,7 @@ export default class NameRealView extends Component {
             testID={isEmptyObject(user_extra) ? 'btn_certification' :
                 'btn_edit_id'}
             activeOpacity={1}
-            style={{backgroundColor: Colors.white, marginTop: 5}}>
+            style={{backgroundColor: Colors.white, marginTop: 8}}>
 
             <View style={{height: 61, flex: 1, marginLeft: 18}}>
 

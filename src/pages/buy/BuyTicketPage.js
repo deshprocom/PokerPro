@@ -435,7 +435,6 @@ class BuyTicketPage extends Component {
                 <KeyboardAwareScrollView
                     style={{marginBottom: 62}}>
                     {/*赛事简介*/}
-                    <View style={{height: 7}}/>
 
                     {this.itemListView(tickets)}
 
@@ -598,11 +597,11 @@ class BuyTicketPage extends Component {
     _inviteCode = () => {
         return (<View style={{
             flexDirection: 'row', alignItems: 'center',
-            backgroundColor: 'white', marginTop: 5, marginBottom: 10
+            backgroundColor: 'white', marginTop: 8
         }}>
             <Text style={{
                 marginLeft: 18, fontSize: 14,
-                color: Colors._333, marginRight: 5
+                color: Colors._333, marginRight: 8
             }}>{I18n.t('buy_invite')}</Text>
             <TextInput
                 style={{height: 50, flex: 1, fontSize: 14}}
@@ -617,7 +616,7 @@ class BuyTicketPage extends Component {
         if (isEmptyObject(tickets))
             return;
         const {original_price, price} = tickets;
-        return (<View style={{backgroundColor: 'white', marginTop: 3}}>
+        return (<View style={{backgroundColor: 'white', marginTop:8}}>
             <View style={{height: 35}}>
                 <Text style={{
                     fontSize: 15, color: Colors._333, fontWeight: 'bold',
@@ -655,7 +654,7 @@ class BuyTicketPage extends Component {
         return (  <View
             style={{
                 height: 44, alignItems: 'center', flexDirection: 'row',
-                marginTop: 10, backgroundColor: Colors.white
+                marginTop: 8, backgroundColor: Colors.white
             }}>
 
             <Text style={{fontSize: 15, color: Colors.txt_666, marginLeft: 18}}>{I18n.t('email')}:</Text>
@@ -696,7 +695,7 @@ class BuyTicketPage extends Component {
                 onPress={() => {
                     router.toAdrListPage(this.props, this._selectAdr, {});
                 }}
-                style={{height: 89, flex: 1, marginTop: 10, backgroundColor: Colors.white}}>
+                style={{height: 89, flex: 1, marginTop: 8, backgroundColor: Colors.white}}>
                 <View style={{height: 44, alignItems: 'center', flexDirection: 'row'}}>
 
                     <Text style={{
@@ -822,8 +821,7 @@ const styles = StyleSheet.create({
     viewAdr: {
         height: 128,
         backgroundColor: 'white',
-        marginTop: 10,
-        marginBottom: 6
+        marginTop: 8
     },
     viewAdrInfo: {
         alignItems: 'center', flexDirection: 'row',
