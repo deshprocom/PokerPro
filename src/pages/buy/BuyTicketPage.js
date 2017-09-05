@@ -5,7 +5,7 @@ import React, {Component}from 'react';
 import {
     TouchableOpacity, View, Alert,
     StyleSheet, Image, Text, ScrollView, Platform,
-    InteractionManager
+    InteractionManager, TextInput
 } from 'react-native';
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
@@ -43,7 +43,8 @@ class BuyTicketPage extends Component {
         race: {},
         tickets: {},
         shipping_address: {},
-        order_number: ''
+        order_number: '',
+        inviteCode: ''
     };
 
     componentWillReceiveProps(newProps) {
@@ -175,15 +176,14 @@ class BuyTicketPage extends Component {
         });
         const {tickets} = this.state;
 
-        if(this.payModal){
-            const data =  {
-                order_number:order_number,
-                price:tickets.price
+        if (this.payModal) {
+            const data = {
+                order_number: order_number,
+                price: tickets.price
             };
             this.payModal.setPayUrl(data);
             this.payModal.toggle();
         }
-
 
 
     };
@@ -424,7 +424,7 @@ class BuyTicketPage extends Component {
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
-                <KeyboardAwareScrollView
+                <ScrollView
                     style={{marginBottom: 62}}>
                     {/*赛事简介*/}
                     <View style={{height: 7}}/>
@@ -505,13 +505,13 @@ class BuyTicketPage extends Component {
                     {this.sendTypeView()}
 
 
-
                     {/*收货地址*/}
 
                     {isEntity === ENTITY ? this._addrView() : this._emailViwe(email)}
 
                     <NameRealView user_extra={user_extra}
                                   router={router}/>
+                    {this._inviteCode()}
 
                     {this._priceView()}
 
@@ -526,7 +526,7 @@ class BuyTicketPage extends Component {
                     </View>
 
 
-                </KeyboardAwareScrollView>
+                </ScrollView>
                 <View
                     style={{
                         height: 62,
@@ -585,6 +585,22 @@ class BuyTicketPage extends Component {
             </View>
         )
     }
+
+
+    _inviteCode = () => {
+        return (<View style={{
+            flexDirection: 'row', alignItems: 'center',
+            backgroundColor: 'white', marginTop: 5, marginBottom: 10
+        }}>
+            <Text style={{marginLeft: 18, fontSize: 14,
+                color: Colors._333,marginRight:5}}>推荐码：</Text>
+            <TextInput
+                style={{height: 50, flex: 1,fontSize:14}}
+                placeholder="请输入四位推荐码 （选填）"
+                onChangeText={(inviteCode) => this.setState({inviteCode})}
+            />
+        </View>)
+    };
 
     _priceView = () => {
         const {tickets} = this.state;
