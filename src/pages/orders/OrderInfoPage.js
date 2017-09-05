@@ -66,7 +66,7 @@ class OrderInfoPage extends React.Component {
 
     _refreshPage = () => {
 
-        const {user_id} = getLoginUser();
+        const {user_id} = login_user;
         if (strNotNull(user_id)) {
             this.setState({
                 user_id: user_id
@@ -389,7 +389,7 @@ class OrderInfoPage extends React.Component {
             </TouchableOpacity>
 
             <TouchableOpacity
-                onPress={this._pay}
+                onPress={this._payOrder}
                 activeOpacity={1}
                 testID="btn_order_pay"
                 style={styles.btnPay}>
@@ -400,16 +400,16 @@ class OrderInfoPage extends React.Component {
         </View>)
     };
 
-    _pay = () => {
-        const {order_id, price} = this.props.params;
-        const body = {
-            order_number: order_id
-        };
+
+    _payOrder = () => {
+        const {order_id} = this.props.params;
+        const {orderDetail} = this.props;
+        const {order_info} = orderDetail;
         if (this.payModal) {
 
             const data = {
-                order_number:order_id,
-                price:price
+                order_number: order_id,
+                price: order_info.price
             };
 
             this.payModal.setPayUrl(data);
@@ -419,34 +419,28 @@ class OrderInfoPage extends React.Component {
 
     };
 
-    _user_real_call_btn = () => {
-        if (user_extra.status === Verified.FAILED)
-            return (<TouchableOpacity
-                testID="btn_user_real"
-                onPress={this._goUserReal}
-                activeOpacity={1}
-                style={{
-                    width: 130, height: 62, alignItems: 'center', justifyContent: 'center',
-                    backgroundColor: Colors.bg_09
-                }}>
-                <Text style={{fontSize: 18, color: Colors.txt_E0C}}>{I18n.t('edit_real_name')}</Text>
-            </TouchableOpacity>)
-        else
-            return (<TouchableOpacity
-                testID="btn_call"
-                onPress={this._hotLine}
-                activeOpacity={1}
-                style={{
-                    width: 130, height: 62, alignItems: 'center', justifyContent: 'center',
-                    backgroundColor: Colors.bg_09
-                }}>
-                <Text style={{fontSize: 18, color: Colors.txt_E0C}}>{I18n.t('service_pay')}</Text>
-            </TouchableOpacity>)
-    }
+    _pay = () => {
+        const {order_id, price} = this.props.params;
+        const {orderDetail} = this.props;
+        const {order_info} = orderDetail;
+        if (this.payModal) {
 
-    _goUserReal = () => {
-        this.props.router.toCertificationPage();
-    }
+            const data = {
+                order_number: order_id,
+                price: price
+            };
+
+            this.payModal.setPayUrl(data);
+            this.payModal.setRefresh(this._refreshPage);
+            this.payModal.toggle();
+        }
+
+    };
+
+
+    _invite = () => {
+
+    };
 
 
     scrollStyle = (order_info) => {
@@ -455,7 +449,7 @@ class OrderInfoPage extends React.Component {
             return {marginBottom: 62}
         else
             return {}
-    }
+    };
 
     _serviceBtn = (order_info) => {
         if (!isEmptyObject(order_info) &&

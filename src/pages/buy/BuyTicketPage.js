@@ -66,6 +66,13 @@ class BuyTicketPage extends Component {
     componentDidMount() {
         umengEvent('ticket_buy_info');
 
+        storage.load({
+            key: StorageKey.BuyEmail
+        }).then(email => {
+            this.setState({email: email})
+
+        });
+
         InteractionManager.runAfterInteractions(() => {
             this.refreshPage();
 
@@ -115,7 +122,6 @@ class BuyTicketPage extends Component {
                 ordered: ordered,
                 race: race,
                 shipping_address: isEmptyObject(shipping_address) ? {} : shipping_address,
-                email: recent_email,
                 isEntity: type
             })
         }, err => {

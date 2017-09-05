@@ -13,7 +13,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {UltimateListView, NavigationBar, ImageLoad, ActionSide} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
-import {getSelectRaceTicket} from '../../services/OrderDao';
+import {getSelectRaceTicket, getUnpaidOrder} from '../../services/OrderDao';
 import {subRaces} from '../../services/RacesDao';
 import {isEmptyObject, convertDate, strNotNull, ticketStatusConvert} from '../../utils/ComonHelper';
 import {umengEvent} from '../../utils/UmengEvent';
@@ -421,13 +421,29 @@ export default class ChoiseTicketPage extends Component {
         umengEvent('ticket_contain');
         const {selectRace, selectSub, selectRaceData, ticket} = this.state;
         const {id} = ticket;
+        let raceId = '';
         if (selectRace === RACE_MAIN && id) {
             const {race_id} = selectRaceData.race;
-            router.toBuyTicketPage(this.props, race_id, id)
+            raceId = race_id;
         } else if (selectRace === RACE_SIDE && id) {
             const {race_id} = selectSub.race;
-            router.toBuyTicketPage(this.props, race_id, id)
+            raceId = race_id;
         }
+
+        const body = {
+            race_id: raceId,
+            ticket_id: id
+        };
+
+        getUnpaidOrder(body, data => {
+            if (strNotNull(data.order_number))
+                router.toOrderInfoPage(this.props, data.order_number)
+            else
+                router.toBuyTicketPage(this.props, raceId, id)
+
+        }, err => {
+            router.toBuyTicketPage(this.props, raceId, id)
+        })
 
 
     };

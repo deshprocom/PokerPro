@@ -11,8 +11,8 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {ImageLoad, MarkdownPlat} from '../../components';
-import {getBuyRaceTicket} from '../../services/OrderDao';
-import {isEmptyObject} from '../../utils/ComonHelper';
+import {getBuyRaceTicket, getUnpaidOrder} from '../../services/OrderDao';
+import {isEmptyObject,strNotNull} from '../../utils/ComonHelper';
 
 export default class TicketInfoPage extends Component {
 
@@ -79,14 +79,34 @@ export default class TicketInfoPage extends Component {
 
     };
 
+
+    _buy = () => {
+
+        const {race_id, ticket_id} = this.props.params;
+
+        const body = {
+            race_id: race_id,
+            ticket_id: ticket_id
+        };
+
+        getUnpaidOrder(body, data => {
+            if (strNotNull(data.order_number))
+                router.toOrderInfoPage(this.props, data.order_number)
+            else
+                router.toBuyTicketPage(this.props, race_id, ticket_id)
+
+        }, err => {
+            router.toBuyTicketPage(this.props, race_id, ticket_id)
+        });
+
+
+    };
+
     _viewGoBuy = () => {
 
         if (this._showBuy())
             return ( <TouchableOpacity
-                onPress={() => {
-                    const {race_id, ticket_id} = this.props.params;
-                    router.toBuyTicketPage(this.props, race_id, ticket_id)
-                }}
+                onPress={this._buy}
                 style={styles.btnBuy}>
                 <Text style={styles.txtGoBuy}>{I18n.t('goBuy')}</Text>
 
