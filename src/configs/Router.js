@@ -58,6 +58,7 @@ import Suggest from '../pages/setting/Suggest';
 import WxRegister from '../pages/account/WxRegister';
 import InputPwd from '../pages/account/InputPwd';
 import MessageCenter from '../pages/message/MessageCenter';
+import ActivityCenter from '../pages/message/ActivityCenter';
 
 
 const customFloatFromRight = Navigator.SceneConfigs.FadeAndroid;
@@ -89,6 +90,18 @@ export default class Router {
         this.navigator.popToTop();
     }
 
+    toActivityCenter(props, activities) {
+        this.push(props, {
+            page: ActivityCenter,
+            name: 'ActivityCenter',
+            sceneConfig: customFloatFromRight,
+            params: {
+                activities: activities
+            }
+        })
+    }
+
+
     toMessageCenter(props) {
         this.push(props, {
             page: MessageCenter,
@@ -96,7 +109,6 @@ export default class Router {
             sceneConfig: customFloatFromRight
         })
     }
-
 
 
     toInputPwd(props, wx) {

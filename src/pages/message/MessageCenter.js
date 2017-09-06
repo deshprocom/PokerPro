@@ -29,7 +29,8 @@ export default class MessageCenter extends Component {
 
     state = {
         activity: {},
-        notice: {}
+        notice: {},
+        activities: []
     };
 
     componentDidMount() {
@@ -41,7 +42,8 @@ export default class MessageCenter extends Component {
                 return;
 
             this.setState({
-                activity: activities[0]
+                activity: activities[0],
+                activities: activities
             })
         }, err => {
 
@@ -71,8 +73,8 @@ export default class MessageCenter extends Component {
                 leftBtnPress={() => router.pop()}/>
 
             <ScrollView>
-                {this.readerItem(icons[0], titles[0], notice.title, notice.created_at)}
-                {this.readerItem(icons[1], titles[1], activity.title, notice.activity_time)}
+                {this.readerItem(0, notice.title, notice.created_at)}
+                {this.readerItem(1, activity.title, activity.activity_time)}
 
             </ScrollView>
 
@@ -81,21 +83,26 @@ export default class MessageCenter extends Component {
     }
 
 
-    readerItem = (icon, title, desc, time) => {
+    readerItem = (index, desc, time) => {
 
 
         return (
             <TouchableOpacity
                 onPress={() => {
-                    router.toMessagePage()
+                    if (index === 0)
+                        router.toMessagePage();
+                    else if (index === 1)
+                        router.toActivityCenter(this.props, this.state.activities)
+
                 }}
                 style={{backgroundColor: 'white'}}>
+                {index !== 0 ? <View style={styles.msgLine}/> : null}
                 <View style={styles.flatItem}>
                     <Image style={styles.msgIcon}
-                           source={icon}/>
+                           source={icons[index]}/>
                     <View style={styles.msgRed}/>
                     <View>
-                        <Text style={styles.msgTitle}>{title}</Text>
+                        <Text style={styles.msgTitle}>{titles[index]}</Text>
                         <Text style={styles.msgDesc}>{desc}</Text>
                     </View>
 
@@ -104,8 +111,6 @@ export default class MessageCenter extends Component {
                 </View>
             </TouchableOpacity>)
     };
-
-
 
 
 }
