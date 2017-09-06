@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/9/5.
  */
-import React, {PropTypes, Component}from 'react';
+import React, {PropTypes, Component} from 'react';
 import {
     StyleSheet, Image, Platform, ActivityIndicator,
     Dimensions, View, Text, ScrollView, TouchableOpacity,
@@ -59,6 +59,8 @@ export default class MessageCenter extends Component {
     }
 
     render() {
+
+        const {activity, notice} = this.state;
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors.bg_09}}
@@ -69,8 +71,8 @@ export default class MessageCenter extends Component {
                 leftBtnPress={() => router.pop()}/>
 
             <ScrollView>
-                {this._notice()}
-                {this._activity()}
+                {this.readerItem(icons[0], titles[0], notice.title, notice.created_at)}
+                {this.readerItem(icons[1], titles[1], activity.title, notice.activity_time)}
 
             </ScrollView>
 
@@ -79,9 +81,9 @@ export default class MessageCenter extends Component {
     }
 
 
-    _notice = () => {
+    readerItem = (icon, title, desc, time) => {
 
-        const {title, created_at} = this.state.notice;
+
         return (
             <TouchableOpacity
                 onPress={() => {
@@ -90,58 +92,22 @@ export default class MessageCenter extends Component {
                 style={{backgroundColor: 'white'}}>
                 <View style={styles.flatItem}>
                     <Image style={styles.msgIcon}
-                           source={icons[0]}/>
+                           source={icon}/>
                     <View style={styles.msgRed}/>
                     <View>
-                        <Text style={styles.msgTitle}>{titles[0]}</Text>
-                        <Text style={styles.msgDesc}>{title}</Text>
+                        <Text style={styles.msgTitle}>{title}</Text>
+                        <Text style={styles.msgDesc}>{desc}</Text>
                     </View>
 
-                    <Text style={styles.msgTime}>{utcDate(created_at, 'YYYY/MM/DD')}</Text>
+                    <Text style={styles.msgTime}>{utcDate(time, 'YYYY/MM/DD')}</Text>
 
                 </View>
             </TouchableOpacity>)
     };
 
-    _activity = () => {
-        const {title, activity_time} = this.state.activity;
-        return (
-            <View style={{backgroundColor: 'white'}}>
-                <View style={styles.msgLine}/>
-                <View style={styles.flatItem}>
-                    <Image style={styles.msgIcon}
-                           source={icons[1]}/>
-                    <View style={styles.msgRed}/>
-                    <View>
-                        <Text style={styles.msgTitle}>{titles[1]}</Text>
-                        <Text style={styles.msgDesc}>{title}</Text>
-                    </View>
 
-                    <Text style={styles.msgTime}>{convertDate(activity_time, 'YYYY/MM/DD')}</Text>
 
-                </View>
-            </View>)
-    };
 
-    _poker = () => {
-
-        return (
-            <View style={{backgroundColor: 'white'}}>
-                <View style={styles.msgLine}/>
-                <View style={styles.flatItem}>
-                    <Image style={styles.msgIcon}
-                           source={icons[2]}/>
-                    <View style={styles.msgRed}/>
-                    <View>
-                        <Text style={styles.msgTitle}>{titles[2]}</Text>
-                        <Text style={styles.msgDesc}>深圳德尚</Text>
-                    </View>
-
-                    <Text style={styles.msgTime}>{convertDate('2017-09-04T00:00:00.000+08:00', 'YYYY/MM/DD')}</Text>
-
-                </View>
-            </View>)
-    }
 }
 
 const styles = StyleSheet.create({
