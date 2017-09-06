@@ -16,6 +16,14 @@ import {GET_NOTIFICATIONS, DEL_NOTIFICATIONS} from '../../actions/ActionTypes';
 import {fetchNotifications, fetchDelNotice} from '../../actions/AccountAction';
 import {isEmptyObject, utcDate,YYYY_MM_DD} from '../../utils/ComonHelper';
 
+const icons = [
+    require('../../../source/message/ic_send.png'),
+    require('../../../source/message/ic_success.png'),
+    require('../../../source/message/ic_cancel.png'),
+    require('../../../source/message/cer_fail.png'),
+    require('../../../source/message/cer_success.png')
+];
+
 class MessagePage extends Component {
 
     constructor(props) {
@@ -83,6 +91,37 @@ class MessagePage extends Component {
         }
 
     }
+
+
+    readerItem = (index, desc, time) => {
+
+
+        return (
+            <TouchableOpacity
+                onPress={() => {
+                    if (index === 0)
+                        router.toMessagePage();
+                    else if (index === 1)
+                        router.toActivityCenter(this.props, this.state.activities)
+
+                }}
+                style={{backgroundColor: 'white'}}>
+                {index !== 0 ? <View style={styles.msgLine}/> : null}
+                <View style={styles.flatItem}>
+                    <Image style={styles.msgIcon}
+                           source={icons[index]}/>
+                    <View style={styles.msgRed}/>
+                    <View>
+                        <Text style={styles.msgTitle}>{titles[index]}</Text>
+                        <Text style={styles.msgDesc}>{desc}</Text>
+                    </View>
+
+                    <Text style={styles.msgTime}>{utcDate(time, 'YYYY/MM/DD')}</Text>
+
+                </View>
+            </TouchableOpacity>)
+    };
+
 
     hiddenRow = (data, secId, rowId, rowMap) => {
 
@@ -233,6 +272,50 @@ connect(mapStateToProps, bindAction)
 
 const
     styles = StyleSheet.create({
+        flatItem: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingTop: 24,
+            paddingBottom: 22
+        },
+        msgIcon: {
+            height: 54,
+            width: 54,
+            borderRadius: 27,
+            backgroundColor: Colors._ECE,
+            marginLeft: 18,
+            marginRight: 22
+        },
+        msgTitle: {
+            fontSize: 16,
+            color: Colors._161
+        },
+        msgDesc: {
+            fontSize: 14,
+            color: Colors._888,
+            marginTop: 10
+        },
+        msgTime: {
+            fontSize: 12,
+            color: Colors._AAA,
+            position: 'absolute',
+            top: 30,
+            right: 10
+        },
+        msgLine: {
+            height: 1,
+            backgroundColor: Colors._ECE,
+            marginLeft: 18,
+        },
+        msgRed: {
+            height: 10,
+            width: 10,
+            backgroundColor: 'white',
+            borderRadius: 5,
+            position: 'absolute',
+            top: 25,
+            left: 67
+        },
         itemTitle: {
             flexDirection: 'row',
             alignItems: 'center',
