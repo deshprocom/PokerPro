@@ -10,6 +10,7 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {NavigationBar, UltimateListView} from '../../components';
+import {getDateDiff} from '../../utils/ComonHelper';
 import moment from 'moment';
 
 export default class ActivityCenter extends Component {
@@ -47,7 +48,7 @@ export default class ActivityCenter extends Component {
                 <View style={styles.typeTimeBar}>
                     <Text style={styles.desc}>活动／#WPT</Text>
                     <View style={{flex: 1}}/>
-                    <Text style={styles.time}>{moment.unix(item.activity_time).startOf('hour').fromNow()}</Text>
+                    <Text style={styles.time}>{getDateDiff(item.activity_time)}</Text>
                 </View>
 
 
