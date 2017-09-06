@@ -10,8 +10,8 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {NavigationBar, UltimateListView} from '../../components';
-import {getDateDiff} from '../../utils/ComonHelper';
-import moment from 'moment';
+import {getDateDiff, strNotNull} from '../../utils/ComonHelper';
+
 
 export default class ActivityCenter extends Component {
 
@@ -37,7 +37,13 @@ export default class ActivityCenter extends Component {
     }
 
     _renderItem = ({item}) => {
-        return (<View style={styles.listItem}>
+        return (<TouchableOpacity
+            onPress={() => {
+                if (strNotNull(item.link))
+                    router.toWebViewPage(this.props, item.link)
+            }}
+            activeOpacity={0.5}
+            style={styles.listItem}>
             <Image style={styles.banner}
                    source={{uri: item.banner}}
             />
@@ -56,7 +62,7 @@ export default class ActivityCenter extends Component {
 
             </View>
 
-        </View>)
+        </TouchableOpacity>)
     }
 }
 
