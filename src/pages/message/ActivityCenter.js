@@ -44,9 +44,12 @@ export default class ActivityCenter extends Component {
                 <Text
                     numberOfLines={2}
                     style={styles.title}>{item.title}</Text>
-                <Text style={styles.desc}>活动／#WPT</Text>
+                <View style={styles.typeTimeBar}>
+                    <Text style={styles.desc}>活动／#WPT</Text>
+                    <View style={{flex: 1}}/>
+                    <Text style={styles.time}>{moment.unix(item.activity_time).startOf('hour').fromNow()}</Text>
+                </View>
 
-                <Text style={styles.time}>{moment.unix(item.activity_time).startOf('hour').fromNow()}</Text>
 
                 <View style={styles.line}/>
 
@@ -82,7 +85,7 @@ const styles = StyleSheet.create({
     desc: {
         fontSize: 12,
         color: Colors._AAA,
-        marginTop: 5
+
     },
     line: {
         height: 1,
@@ -92,10 +95,11 @@ const styles = StyleSheet.create({
     time: {
         fontSize: 12,
         color: Colors._AAA,
-        position: 'absolute',
-        right: 18,
-        top: 35
-
+    },
+    typeTimeBar: {
+        marginTop: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
     }
 
 });
