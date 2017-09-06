@@ -4,7 +4,7 @@ import {
     Dimensions, View, Text, ScrollView, TouchableOpacity,
     InteractionManager
 } from 'react-native';
-import Colors from "../../styles/Colors";
+import {strNotNull} from '../../utils/ComonHelper';
 
 var imgClose = require('../../../source/message/msg_close.png');
 
@@ -36,9 +36,17 @@ export default class ActivityModel extends Component {
             transparent
             visible={visible}>
             <View style={styles.body}>
-                <Image style={styles.banner}
-                       source={{uri: activity.pushed_img}}/>
+                <TouchableOpacity
+                    activeOpacity={0.5}
+                    onPress={() => {
+                        if (strNotNull(activity.link))
+                            router.toWebViewPage(this.props, activity.link)
+                    }}
+                >
 
+                    <Image style={styles.banner}
+                           source={{uri: activity.pushed_img}}/>
+                </TouchableOpacity>
                 <TouchableOpacity
                     onPress={this.toggle}
                     style={styles.btnClose}>

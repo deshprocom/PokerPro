@@ -11,6 +11,7 @@ export default {
     UserData:'UserData',
     FontNum:'FontNum',
     FontSizeNum: 'FontSizeNum',
-    UserAvatar:'UserAvatar'
+    UserAvatar:'UserAvatar',
+    Activity:"Activity"
 
 }

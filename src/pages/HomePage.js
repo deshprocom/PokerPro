@@ -56,13 +56,40 @@ class HomePage extends Component {
     componentDidMount() {
         JpushHelp.addPushListener(this.receiveCb, this.openCb);
         this._refreshPage();
-        getActivityPush(data => {
-            this.activityModel.setData(data.activity)
-        }, err => {
-            this.activityModel.setData({})
+        this._getPushActivity();
+    }
+
+    _getPushActivity = () => {
+        storage.load({key: StorageKey.Activity})
+            .then(ret => {
+                getActivityPush(data => {
+                    const {activity} = data;
+                    if (ret.id === activity.id && ret.updated_time === activity.updated_time)
+                        return;
+                    if (this.activityModel)
+                        this.activityModel.setData(data.activity)
+                    storage.save({
+                        key: StorageKey.Activity,
+                        rawData: data.activity
+                    })
+                }, err => {
+
+                })
+
+            }).catch(err => {
+            getActivityPush(data => {
+                if (this.activityModel)
+                    this.activityModel.setData(data.activity)
+                storage.save({
+                    key: StorageKey.Activity,
+                    rawData: data.activity
+                })
+            }, err => {
+
+            })
         })
 
-    }
+    };
 
     componentWillUnmount() {
         JpushHelp.removePushListener();
@@ -85,7 +112,7 @@ class HomePage extends Component {
         getBaseURL();
         storage.load({key: StorageKey.LoginUser})
             .then(ret => {
-                router.log(ret);
+
                 let {access_token, user_id} = ret;
                 putLoginUser(ret);
                 setAccessToken(access_token);
