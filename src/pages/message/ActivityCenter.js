@@ -46,7 +46,7 @@ export default class ActivityCenter extends Component {
                     numberOfLines={2}
                     style={styles.title}>{item.title}</Text>
                 <View style={styles.typeTimeBar}>
-                    <Text style={styles.desc}>活动／#WPT</Text>
+                    <Text style={styles.desc}>{item.tag}</Text>
                     <View style={{flex: 1}}/>
                     <Text style={styles.time}>{getDateDiff(item.activity_time)}</Text>
                 </View>

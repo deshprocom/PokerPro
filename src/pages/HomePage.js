@@ -23,7 +23,8 @@ import {isEmptyObject, strNotNull, putLoginUser, getUserData} from '../utils/Com
 import {NavigationBar, ParallaxScrollView} from '../components';
 import JpushHelp from '../services/JpushHelper';
 import {umengEvent} from '../utils/UmengEvent';
-import {postLoginCount} from '../services/AccountDao';
+import {postLoginCount, getActivityPush} from '../services/AccountDao';
+import ActivityModel from './message/ActivityModel';
 
 var maxDown = 0;
 
@@ -40,7 +41,7 @@ class HomePage extends Component {
             user_id: '',
             languageChange: false,
             opacity: 0,
-            badge: false
+            badge: false,
 
         };
         getUserData();
@@ -55,6 +56,11 @@ class HomePage extends Component {
     componentDidMount() {
         JpushHelp.addPushListener(this.receiveCb, this.openCb);
         this._refreshPage();
+        getActivityPush(data => {
+            this.activityModel.setData(data.activity)
+        }, err => {
+            this.activityModel.setData({})
+        })
 
     }
 
@@ -271,7 +277,7 @@ class HomePage extends Component {
                                 <Text style={styles.txtSign}>{profile.signature ? profile.signature :
                                     I18n.t('ple_sign')}</Text>
                             </View>
-                        </View >
+                        </View>
 
 
                     </View>}
@@ -361,7 +367,8 @@ class HomePage extends Component {
 
                 </ParallaxScrollView>
 
-
+                <ActivityModel
+                    ref={ref => this.activityModel = ref}/>
             </View>
         )
     }
