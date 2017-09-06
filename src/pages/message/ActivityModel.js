@@ -39,6 +39,7 @@ export default class ActivityModel extends Component {
                 <TouchableOpacity
                     activeOpacity={0.5}
                     onPress={() => {
+                        this.toggle();
                         if (strNotNull(activity.link))
                             router.toWebViewPage(this.props, activity.link)
                     }}
