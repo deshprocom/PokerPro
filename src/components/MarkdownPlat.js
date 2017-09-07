@@ -129,7 +129,10 @@ const markdownStyles = {
         color: 'orange',
     },
     text: {
-        color: '#555555',
+        color: '#444444',
+        fontSize:  FontSize.h15,
+        lineHeight: 25,
+        letterSpacing: 0.3
     },
 };
 
