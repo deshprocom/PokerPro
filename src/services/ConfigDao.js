@@ -11,7 +11,6 @@ export function init(resolve) {
         .then(ret => {
 
             switchLang(ret);
-
             resolve();
         }).catch(err => {
 

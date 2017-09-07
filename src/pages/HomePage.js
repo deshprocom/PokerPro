@@ -23,7 +23,7 @@ import {isEmptyObject, strNotNull, putLoginUser, getUserData} from '../utils/Com
 import {NavigationBar, ParallaxScrollView} from '../components';
 import JpushHelp from '../services/JpushHelper';
 import {umengEvent} from '../utils/UmengEvent';
-import {postLoginCount, getActivityPush} from '../services/AccountDao';
+import {postLoginCount, getActivityPush, getUpdate} from '../services/AccountDao';
 import ActivityModel from './message/ActivityModel';
 
 var maxDown = 0;
@@ -44,11 +44,12 @@ class HomePage extends Component {
             badge: false,
 
         };
+        getBaseURL();
         getUserData();
         init(() => {
             this.setState({
                 languageChange: true
-            })
+            });
         });
 
     }
@@ -57,7 +58,17 @@ class HomePage extends Component {
         JpushHelp.addPushListener(this.receiveCb, this.openCb);
         this._refreshPage();
         this._getPushActivity();
+        setTimeout(this._getUpdate, 100)
+
     }
+
+    _getUpdate = () => {
+        getUpdate(data => {
+            console.log('update', data)
+        }, err => {
+
+        })
+    };
 
     _getPushActivity = () => {
         storage.load({key: StorageKey.Activity})
@@ -109,7 +120,7 @@ class HomePage extends Component {
     };
 
     _refreshPage() {
-        getBaseURL();
+
         storage.load({key: StorageKey.LoginUser})
             .then(ret => {
 
