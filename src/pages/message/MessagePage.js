@@ -12,7 +12,7 @@ import I18n from 'react-native-i18n';
 import {NavigationBar, ImageLoad, SwipeListView} from '../../components';
 import {isEmptyObject, utcDate, showToast} from '../../utils/ComonHelper';
 import {OrderStatus, Verified} from '../../configs/Status';
-import {delNotification} from '../../services/AccountDao';
+import {delNotification,postMsgRead} from '../../services/AccountDao';
 
 const icons = [
     require('../../../source/message/ic_send.png'),
@@ -75,12 +75,17 @@ export default class MessagePage extends Component {
 
 
     readerItem = (item, secId, rowId) => {
-        const {notify_type, color_type, title, content, created_at, order_number, image, id, order_status} = item;
+        const {notify_type, color_type, title, content, created_at, order_number, id, read, order_status} = item;
 
         return (
             <TouchableOpacity
                 activeOpacity={1}
                 onPress={() => {
+                    postMsgRead({id:id},data=>{
+
+                    },err=>{
+
+                    });
                     if (notify_type === ORDER) {
                         router.toOrderInfoPage(this.props, order_number)
                     } else {
@@ -93,7 +98,7 @@ export default class MessagePage extends Component {
                 <View style={styles.flatItem}>
                     <Image style={styles.msgIcon}
                            source={this.getIcon(notify_type, order_status, color_type)}/>
-                    <View style={styles.msgRed}/>
+                    {read ? null : <View style={styles.msgRed}/>}
                     <View>
                         <Text style={styles.msgTitle}>{title}</Text>
                         <Text style={styles.msgDesc}>{this.getDesc(notify_type, order_number, content)}</Text>
@@ -218,7 +223,7 @@ const
         msgRed: {
             height: 10,
             width: 10,
-            backgroundColor: 'white',
+            backgroundColor: '#D0011B',
             borderRadius: 5,
             position: 'absolute',
             top: 25,

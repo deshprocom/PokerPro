@@ -78,8 +78,9 @@ export default {
     account_exist: account_exist,
     activities: 'activities',
     activityInfo: activityInfo,
-    activityPush:'activities/pushed',
-    verify_invite_code:verify_invite_code
+    activityPush: 'activities/pushed',
+    verify_invite_code: verify_invite_code,
+    msg_read: msg_read
 
 
 }
@@ -95,9 +96,14 @@ function getUserId() {
 const page_size = 10;
 
 
+export function msg_read(body) {
+    const {id} = body;
+    return 'users/' + getUserId() + '/notifications/' + id + '/read';
+}
+
 
 export function verify_invite_code() {
-    return '/users/'+getUserId()+'/verify_invite_code'
+    return 'users/' + getUserId() + '/verify_invite_code'
 }
 
 export function activityInfo(body) {
@@ -148,6 +154,7 @@ export function adrDelete(address_id) {
 export function setAdrDefault(address_id) {
     return 'account/users/' + getUserId() + '/address/' + address_id + '/default';
 }
+
 export function addAddress() {
     return 'account/users/' + getUserId() + '/address';
 }
@@ -227,6 +234,7 @@ export function news_list(body) {
 
     return 'news/types/' + type_id + '?page_size=' + page_size + '&next_id=' + next_id;
 }
+
 export function players_list(body) {
     const {page_index, region, page_size, begin_year, end_year, keyword} = body;
     if (strNotNull(keyword))
@@ -235,6 +243,7 @@ export function players_list(body) {
         return 'players?page_index=' + page_index + '&page_size=' + page_size
             + '&region=' + region + '&begin_year=' + begin_year + '&end_year=' + end_year;
 }
+
 export function player_info(body) {
     const {player_id} = body;
     return 'players/' + player_id;

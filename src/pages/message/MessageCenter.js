@@ -77,8 +77,8 @@ export default class MessageCenter extends Component {
                 leftBtnPress={() => router.pop()}/>
 
             <ScrollView>
-                {this.readerItem(0, notice.title, notice.created_at)}
-                {this.readerItem(1, activity.title, activity.activity_time)}
+                {this.readerItem(0, notice.title, notice.created_at, notice.read)}
+                {this.readerItem(1, activity.title, activity.activity_time, true)}
 
             </ScrollView>
 
@@ -87,7 +87,7 @@ export default class MessageCenter extends Component {
     }
 
 
-    readerItem = (index, desc, time) => {
+    readerItem = (index, desc, time, read) => {
 
 
         return (
@@ -104,7 +104,7 @@ export default class MessageCenter extends Component {
                 <View style={styles.flatItem}>
                     <Image style={styles.msgIcon}
                            source={icons[index]}/>
-                    <View style={styles.msgRed}/>
+                    {read ? null : <View style={styles.msgRed}/>}
                     <View>
                         <Text style={styles.msgTitle}>{titles[index]}</Text>
                         <Text style={styles.msgDesc}>{desc}</Text>
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     msgRed: {
         height: 10,
         width: 10,
-        backgroundColor: 'white',
+        backgroundColor: '#D0011B',
         borderRadius: 5,
         position: 'absolute',
         top: 25,

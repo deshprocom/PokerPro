@@ -1,4 +1,4 @@
-package com.deshpro.pokerpro;
+package com.pokerpro;
 
 import android.app.Application;
 

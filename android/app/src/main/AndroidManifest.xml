@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.deshpro.pokerpro"
+          package="com.pokerpro"
           android:versionCode="2.1"
           android:versionName="3.0">
 

@@ -7,6 +7,16 @@ import StorageKey from '../configs/StorageKey';
 import JpushHelp from './JpushHelper';
 import {isEmptyObject, showToast} from '../utils/ComonHelper';
 
+
+export function postMsgRead(body, resolve, reject) {
+    helper.get(Api.msg_read(body), ret => {
+        resolve(ret.data)
+    }, err => {
+        reject(err);
+        showToast(err)
+    })
+}
+
 export function getActivityPush(resolve, reject) {
     helper.get(Api.activityPush, ret => {
         resolve(ret.data)

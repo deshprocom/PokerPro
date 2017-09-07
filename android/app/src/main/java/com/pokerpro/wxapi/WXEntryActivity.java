@@ -1,4 +1,4 @@
-package com.deshpro.pokerpro.wxapi;
+package com.pokerpro.wxapi;
 
 import com.umeng.weixin.callback.WXCallbackActivity;
 import com.theweflex.react.WeChatModule;
