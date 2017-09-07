@@ -9,7 +9,7 @@ import {isEmptyObject, showToast} from '../utils/ComonHelper';
 
 
 export function postMsgRead(body, resolve, reject) {
-    helper.get(Api.msg_read(body), ret => {
+    helper.post(Api.msg_read(body), {}, ret => {
         resolve(ret.data)
     }, err => {
         reject(err);
@@ -101,6 +101,7 @@ export function getNotifications(resolve, reject) {
         resolve(ret.data);
     }, reject);
 }
+
 export function postChangePermission(body, resolve, reject) {
     helper.post(Api.change_permission(), body, (ret) => {
         resolve(ret.data);
@@ -155,6 +156,7 @@ export function postLogin(body, resolve, reject) {
 export var LoginUser = {};
 
 global.login_user = {};
+
 export function setLoginUser(ret) {
     LoginUser = ret;
     global.login_user = ret;
@@ -203,6 +205,7 @@ export function putProfile(user_id, body, resolve, reject) {
         resolve(ret.data);
     }, reject);
 }
+
 /*获取个人资料*/
 export function getProfile(user_id, resolve, reject) {
     helper.get(Api.account_profile(user_id), (ret) => {
@@ -226,6 +229,7 @@ export function postAvatar(body, resolve, reject) {
 export function postVerifyCode(body, resolve, reject) {
     helper.post(Api.account_verify, body, resolve, reject);
 }
+
 /*找回密码*/
 export function postResetPwdCode(body, resolve, reject) {
     helper.post(Api.account_reset_password, body, resolve, reject);
@@ -239,6 +243,7 @@ export function postChangePwd(body, resolve, reject) {
 export function postCertification(user_uuid, body, resolve, reject) {
     helper.post(Api.certification(user_uuid), body, resolve, reject);
 }
+
 /*获取实名认证*/
 export function getCertification(user_uuid, resolve, reject) {
     helper.get(Api.certification(user_uuid), resolve, reject);

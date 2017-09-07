@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import {strNotNull, FontSize, showToast} from '../utils/ComonHelper';
 import createMarkdownRenderer from 'rn-markdown';
+import FitImage from './simple/ImageMark';
 
 const Markdown = createMarkdownRenderer({gfm: false});
 Markdown.renderer.link = props => {
@@ -28,9 +29,8 @@ Markdown.renderer.image = props => {
     return (
         <TouchableOpacity onPress={() => Alert.alert('check out this hot href', href)}>
             <View>
-                <Image
-                    source={{uri: href}}
-                    style={{height: 400, width: 300}}/>
+                <FitImage
+                    src={href}/>
             </View>
         </TouchableOpacity>
     )
@@ -98,7 +98,7 @@ export const markRules = {
 
 const markdownStyles = {
     container: {
-        padding: 10
+        padding: 20
     },
     heading1: {
         fontSize: 24,

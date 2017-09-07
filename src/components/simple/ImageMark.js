@@ -59,31 +59,16 @@ export default class ImageMark extends Component {
         const {width, height, originWidth, originHeight} = this.state;
 
         const {src} = this.props;
-        if (Platform.OS === 'ios')
-            return (
-                <Image
-                    resizeMode={'cover'}
-                    source={{uri: src}}
-                    style={{width, height,
-                    marginTop:10,backgroundColor:Colors._EEE}}
-                >
-                    <TouchableOpacity
-                        style={{flex:1}}
-                        onPress={()=>this.imageClick(src)}/>
-                </Image>
-            );
-        else
-            return (
-                <Text
-                    onPress={()=>this.imageClick(src)}
-                    style={{marginTop:10,flexDirection:'column'}}>
-                    <Image
-                        resizeMode={'cover'}
-                        source={{uri: src}}
-                        style={{width:pixel(height),
-                 height:pixel(width)}}/>
+        return (
+            <Image
+                resizeMode={'cover'}
+                source={{uri: src}}
+                style={{
+                    width, height,
+                    marginTop: 10, backgroundColor: Colors._EEE
+                }}
+            />
 
-                    <Text> </Text>
-                </Text>)
+        );
     }
 }
