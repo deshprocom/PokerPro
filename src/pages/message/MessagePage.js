@@ -10,9 +10,9 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {NavigationBar, ImageLoad, SwipeListView} from '../../components';
-import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
-import {isEmptyObject, utcDate, YYYY_MM_DD} from '../../utils/ComonHelper';
+import {isEmptyObject, utcDate, showToast} from '../../utils/ComonHelper';
 import {OrderStatus, Verified} from '../../configs/Status';
+import {delNotification} from '../../services/AccountDao';
 
 const icons = [
     require('../../../source/message/ic_send.png'),
@@ -32,6 +32,7 @@ export default class MessagePage extends Component {
 
         this._dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
+            dataList: [],
             dataSource: this._dataSource.cloneWithRows([]),
 
         };
@@ -42,6 +43,7 @@ export default class MessagePage extends Component {
     componentDidMount() {
         const {notifications} = this.props.params;
         this.setState({
+            dataList: notifications,
             dataSource: this._dataSource.cloneWithRows(notifications)
         })
     }
@@ -139,7 +141,6 @@ export default class MessagePage extends Component {
 
 
     hiddenRow = (data, secId, rowId, rowMap) => {
-
         return (
 
             <View style={styles.rowHidden}>
@@ -166,11 +167,12 @@ export default class MessagePage extends Component {
     };
 
     _delNotice = (data, secId, rowId, rowMap) => {
-
-
-        this.props.delNotice({id: data.id}, () => {
+        delNotification({id: data.id}, ret => {
             this.deleteRow(secId, rowId, rowMap)
+        }, err => {
+            showToast(err)
         })
+
     };
 
 }
