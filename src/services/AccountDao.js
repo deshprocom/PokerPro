@@ -8,6 +8,20 @@ import JpushHelp from './JpushHelper';
 import {isEmptyObject, showToast} from '../utils/ComonHelper';
 
 
+export function getMsgUnRead(resolve, reject) {
+    helper.get(Api.unread_remind(), ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+
+export function getUpdate(resolve, reject) {
+    helper.get(Api.app_versions, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+
 export function postMsgRead(body, resolve, reject) {
     helper.post(Api.msg_read(body), {}, ret => {
         resolve(ret.data)

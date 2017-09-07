@@ -80,9 +80,9 @@ export default {
     activityInfo: activityInfo,
     activityPush: 'activities/pushed',
     verify_invite_code: verify_invite_code,
-    msg_read: msg_read
-
-
+    msg_read: msg_read,
+    unread_remind:unread_remind,
+    app_versions:'app_versions'
 }
 
 
@@ -94,6 +94,11 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+
+export function unread_remind() {
+    return 'users/'+getUserId()+'/notifications/unread_remind';
+}
 
 
 export function msg_read(body) {

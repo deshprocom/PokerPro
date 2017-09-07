@@ -10,8 +10,8 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {NavigationBar} from '../../components';
-import {convertDate, utcDate} from '../../utils/ComonHelper';
-import {getActivities, getNotifications} from '../../services/AccountDao';
+import {isEmptyObject, utcDate} from '../../utils/ComonHelper';
+import {getActivities, getMsgUnRead} from '../../services/AccountDao';
 
 const icons = [
     require('../../../source/message/ic_order.png'),
@@ -31,7 +31,7 @@ export default class MessageCenter extends Component {
         activity: {},
         notice: {},
         activities: [],
-        notifications: []
+        msgUnRead: 0
     };
 
     componentDidMount() {
@@ -50,13 +50,13 @@ export default class MessageCenter extends Component {
 
         });
 
-        getNotifications(data => {
-            const {notifications} = data;
-            if (notifications.length <= 0)
+        getMsgUnRead(data => {
+            const {recent_notification, unread_count} = data;
+            if (isEmptyObject(recent_notification))
                 return;
             this.setState({
-                notice: notifications[0],
-                notifications: notifications
+                notice: recent_notification,
+                msgUnRead: unread_count
             })
 
         }, err => {
@@ -66,7 +66,7 @@ export default class MessageCenter extends Component {
 
     render() {
 
-        const {activity, notice} = this.state;
+        const {activity, notice, msgUnRead} = this.state;
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors.bg_09}}
@@ -77,8 +77,8 @@ export default class MessageCenter extends Component {
                 leftBtnPress={() => router.pop()}/>
 
             <ScrollView>
-                {this.readerItem(0, notice.title, notice.created_at, notice.read)}
-                {this.readerItem(1, activity.title, activity.activity_time, true)}
+                {this.readerItem(0, notice.title, notice.created_at, msgUnRead)}
+                {this.readerItem(1, activity.title, activity.activity_time, 0)}
 
             </ScrollView>
 
@@ -87,14 +87,14 @@ export default class MessageCenter extends Component {
     }
 
 
-    readerItem = (index, desc, time, read) => {
+    readerItem = (index, desc, time, msgUnRead) => {
 
 
         return (
             <TouchableOpacity
                 onPress={() => {
                     if (index === 0)
-                        router.toMessagePage(this.props, this.state.notifications);
+                        router.toMessagePage();
                     else if (index === 1)
                         router.toActivityCenter(this.props, this.state.activities)
 
@@ -104,7 +104,7 @@ export default class MessageCenter extends Component {
                 <View style={styles.flatItem}>
                     <Image style={styles.msgIcon}
                            source={icons[index]}/>
-                    {read ? null : <View style={styles.msgRed}/>}
+                    {msgUnRead <= 0 ? null : <View style={styles.msgRed}/>}
                     <View>
                         <Text style={styles.msgTitle}>{titles[index]}</Text>
                         <Text style={styles.msgDesc}>{desc}</Text>
