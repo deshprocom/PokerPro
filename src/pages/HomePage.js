@@ -19,7 +19,7 @@ import {init} from '../services/ConfigDao';
 import {fetchGetRecentRaces, _getProfileOk} from '../actions/RacesAction';
 import ListViewForRaces from '../components/listitem/ListViewForRaces';
 import {LoadErrorView, LoadingView, NoDataView} from '../components/load'
-import {isEmptyObject, strNotNull, putLoginUser, getUserData} from '../utils/ComonHelper';
+import {isEmptyObject, strNotNull, putLoginUser, getUserData,updateApp} from '../utils/ComonHelper';
 import {NavigationBar, ParallaxScrollView} from '../components';
 import JpushHelp from '../services/JpushHelper';
 import {umengEvent} from '../utils/UmengEvent';
@@ -64,7 +64,7 @@ class HomePage extends Component {
 
     _getUpdate = () => {
         getUpdate(data => {
-            console.log('update', data)
+            updateApp(data);
         }, err => {
 
         })

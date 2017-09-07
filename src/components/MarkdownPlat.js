@@ -89,30 +89,7 @@ export default class MarkdownPlat extends Component {
     }
 }
 
-//markdown 解析规则扩展
-export const markRules = {
-    image: {
-        react: (node, output, state) => (
-            <ImageMark
-                key={state.key}
-                src={node.target}
-            />
-        ),
-    },
-    link: {
-        react: (node, output, state) => {
-            state.withinText = true
-            const openUrl = (url) => {
-                Linking.openURL(url).catch(error => console.warn('An error occurred: ', error))
-            }
-            return createElement(Text, {
-                style: node.target.match(/@/) ? styles.mailTo : styles.link,
-                key: state.key,
-                onPress: () => openUrl(node.target)
-            }, output(node.content, state))
-        }
-    },
-};
+
 
 const markdownStyles = {
     container: {

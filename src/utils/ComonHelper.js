@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/1/12.
  */
-import {PixelRatio, Alert, Share} from 'react-native';
+import {PixelRatio, Alert, Share, Platform, Linking} from 'react-native';
 import React, {PropTypes} from 'react';
 import Toast from 'react-native-root-toast';
 import md5 from "react-native-md5";
@@ -12,9 +12,9 @@ import StorageKey from '../configs/StorageKey';
 import {Verified, SellStatus} from '../configs/Status';
 import Communications from 'react-native-communications';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
-import ImageMark from '../components/simple/ImageMark';
 import UMShare from 'react-native-umshare';
 import *as wechat from 'react-native-wechat'
+import * as Constants from '../configs/Constants';
 
 export const YYYY_MM_DD = 'YYYY.MM.DD';
 export const DATA_SS = 'YYYY-MM-DD hh:mm:ss';
@@ -26,6 +26,51 @@ export const MM_DD = 'MM-DD';
 const HOST = 'https://h5.deshpro.com/';
 export const loadApp = HOST + 'race/181/zh/loadAPP';
 
+
+export function updateApp(data) {
+    const {android_platform, ios_platform} = data;
+    if (Platform.OS === 'ios') {
+        if (ios_platform.version !== Constants.UpdateVersion) {
+            updateAlet(ios_platform)
+        } else {
+            if (android_platform.version !== Constants.UpdateVersion) {
+                updateAlet(android_platform)
+            }
+        }
+    }
+
+
+}
+
+
+function updateAlet(data) {
+    const upgrade = data.force_upgrade ? [{
+        text: '前往更新',
+        onPress: () => {
+            if (Platform.OS === 'ios') {
+                Linking.oepnURL(Constants.IOSLOAD)
+            } else {
+                Linking.oepnURL(Constants.ANDROIDLOAD)
+            }
+        }
+    }] : [{
+        text: '残忍拒绝',
+        onPress: () => {
+
+        }
+    },
+        {
+            text: '前往更新',
+            onPress: () => {
+                if (Platform.OS === 'ios') {
+                    Linking.oepnURL(Constants.IOSLOAD)
+                } else {
+                    Linking.oepnURL(Constants.ANDROIDLOAD)
+                }
+            }
+        }];
+    Alert.alert('发现新版本' + data.version, '支持微信登录，最新活动惊喜不断，抢先体验！', upgrade)
+}
 
 export function strToDate(date) {
     let t = Date.parse(date);
@@ -130,7 +175,6 @@ export function loginWX(resolve, reject) {
     })
 
 }
-
 
 
 export function uShareRace(title, location, icon, raceId) {
