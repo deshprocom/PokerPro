@@ -23,6 +23,10 @@ export const YYYY年MM月 = 'YYYY年MM月';
 export const YYYYMMDD = 'YYYYMMDD';
 export const MM_DD = 'MM-DD';
 
+const HOST = 'https://h5.deshpro.com/';
+export const loadApp = HOST + 'race/181/zh/loadAPP';
+
+
 export function strToDate(date) {
     let t = Date.parse(date);
     if (!isNaN(t)) {
@@ -43,6 +47,7 @@ export const DayHeadings = [I18n.t('calendar_7'),
     I18n.t('calendar_6')];
 export const MonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May',
     'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
 /*判断是否为Null*/
 export function strNotNull(str) {
     if (str == undefined || str == null || str.length == 0)
@@ -52,12 +57,13 @@ export function strNotNull(str) {
 }
 
 let Lang = 'zh';
+
 export function setLang(lang) {
     Lang = lang;
     // console.log('分享页语言'+Lang);
 }
 
-export function getDateDiff(dateTimeStamp){
+export function getDateDiff(dateTimeStamp) {
 
     var minute = 1000 * 60;
     var hour = minute * 60;
@@ -66,29 +72,31 @@ export function getDateDiff(dateTimeStamp){
     var month = day * 30;
     var now = new Date().getTime();
 
-    var diffValue = now - dateTimeStamp*1000;
-    if(diffValue < 0){return;}
-    var monthC =diffValue/month;
-    var weekC =diffValue/(7*day);
-    var dayC =diffValue/day;
-    var hourC =diffValue/hour;
-    var minC =diffValue/minute;
-    if(monthC>=1){
-        result="" + parseInt(monthC) + "月前";
+    var diffValue = now - dateTimeStamp * 1000;
+    if (diffValue < 0) {
+        return;
     }
-    else if(weekC>=1){
-        result="" + parseInt(weekC) + "周前";
+    var monthC = diffValue / month;
+    var weekC = diffValue / (7 * day);
+    var dayC = diffValue / day;
+    var hourC = diffValue / hour;
+    var minC = diffValue / minute;
+    if (monthC >= 1) {
+        result = "" + parseInt(monthC) + "月前";
     }
-    else if(dayC>=1){
-        result=""+ parseInt(dayC) +"天前";
+    else if (weekC >= 1) {
+        result = "" + parseInt(weekC) + "周前";
     }
-    else if(hourC>=1){
-        result=""+ parseInt(hourC) +"小时前";
+    else if (dayC >= 1) {
+        result = "" + parseInt(dayC) + "天前";
     }
-    else if(minC>=1){
-        result=""+ parseInt(minC) +"分钟前";
-    }else
-        result="刚刚";
+    else if (hourC >= 1) {
+        result = "" + parseInt(hourC) + "小时前";
+    }
+    else if (minC >= 1) {
+        result = "" + parseInt(minC) + "分钟前";
+    } else
+        result = "刚刚";
     return result;
 }
 
@@ -123,11 +131,11 @@ export function loginWX(resolve, reject) {
 
 }
 
-export const loadApp = 'https://h5.deshpro.com/race/181/zh/loadAPP';
+
 
 export function uShareRace(title, location, icon, raceId) {
 
-    UMShare.share(title, location, encodeURI(icon), "https://h5.deshpro.com/race/" + raceId + "/" + Lang)
+    UMShare.share(title, location, getShareIcon(icon), HOST + "race/" + raceId + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
@@ -136,7 +144,7 @@ export function uShareRace(title, location, icon, raceId) {
 }
 
 export function newShare(title, location, icon, newsId) {
-    UMShare.share(title, location, encodeURI(icon), "https://h5.deshpro.com/news/" + newsId + "/" + Lang)
+    UMShare.share(title, location, getShareIcon(icon), HOST + "news/" + newsId + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
@@ -145,8 +153,8 @@ export function newShare(title, location, icon, newsId) {
 }
 
 export function rankPlayerShare(title, location, icon, playerId) {
-    console.log(encodeURI(icon))
-    UMShare.share(title, location, encodeURI(icon), "https://h5.deshpro.com/rankPlayer/" + playerId + "/" + Lang)
+
+    UMShare.share(title, location, getShareIcon(icon), HOST + "rankPlayer/" + playerId + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
@@ -155,12 +163,16 @@ export function rankPlayerShare(title, location, icon, playerId) {
 }
 
 export function rankGameShare(title, location, icon, gameId) {
-    UMShare.share(title, location, encodeURI(icon), "https://h5.deshpro.com/rankGame/" + gameId + "/" + Lang)
+    UMShare.share(title, location, getShareIcon(icon), HOST + "rankGame/" + gameId + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
             showToast(error)
         })
+}
+
+function getShareIcon(icon) {
+    return strNotNull(icon) ? encodeURI(icon) : shareIcon
 }
 
 export function strNull__(str) {
@@ -192,6 +204,7 @@ export function strRow(str) {
 }
 
 var pattern = / /;
+
 export function nameRow(name) {
     if (strValid(name)) {
         return name.replace(pattern, ' ').replace(' ', '\n');
@@ -247,6 +260,7 @@ export function moneyFormat(num) {
     }
     return result;
 }
+
 /*对象是否为空对象*/
 export function isEmptyObject(e) {
     var t;
@@ -268,6 +282,7 @@ export function showToast(msg) {
 
 
 var myreg = /^1(3|4|5|7|8)\d{9}$/;
+
 export function checkPhone(phone) {
     if (phone != null && phone != undefined) {
         if (!myreg.test(phone.trim())) {
@@ -279,6 +294,7 @@ export function checkPhone(phone) {
 }
 
 var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
 export function checkMail(mail) {
 
     if (strNotNull(mail) && filter.test(mail.trim())) return true;
@@ -299,6 +315,7 @@ export function checkLoginMail(mail) {
  1, 长度必须6 - 20位
  2, 必须是 数字+字母 或 数字 + 特殊字符 或 字母+特殊字符 或 数字 + 字母 + 特殊字符的组合*/
 var PWD_VALID_FORMAT_REGEX = /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/;
+
 export function pwdVaild(password) {
     if (PWD_VALID_FORMAT_REGEX.test(password))
         return true;
@@ -312,6 +329,7 @@ export function pwdVaild(password) {
 export function md5Pwd(password) {
     return md5.hex_md5(password);
 }
+
 /*赛事状态*/
 export function raceStatusConvert(status) {
     switch (status) {
@@ -403,10 +421,12 @@ export function ticketType(type) {
 export function legalValue(value) {
     return value ? value : '';
 }
+
 /*获取登陆用户*/
 export function getLoginUser() {
     return LoginUser;
 }
+
 /*缓存登陆用户*/
 export function putLoginUser(ret) {
     setLoginUser(ret);
@@ -415,6 +435,7 @@ export function putLoginUser(ret) {
         rawData: ret.avatar
     });
 }
+
 /*是否登陆*/
 export function isLoginUser() {
     if (!isEmptyObject(LoginUser) && strNotNull(LoginUser.user_id))
@@ -552,6 +573,7 @@ export function getCurrentMonth() {
 export function getCurrentDate() {
     return moment();
 }
+
 /*数组去重*/
 export function arrayUnique(arr) {
 
@@ -626,6 +648,7 @@ export function pixel(layout) {
 
 
 var Actions = {};
+
 /*Action 方法*/
 export function setDispatchAction(key, func) {
     Actions[key] = func;
