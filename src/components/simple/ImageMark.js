@@ -42,21 +42,10 @@ export default class ImageMark extends Component {
     }
 
 
-    imageClick = (source) => {
-
-        if (strNotNull(source)) {
-            let index = 0;
-
-            let images = [{url: source}];
-
-            router.toImageGalleryPage(this.props, images, index)
-        }
-
-    };
 
 
     render() {
-        const {width, height, originWidth, originHeight} = this.state;
+        const {width, height} = this.state;
 
         const {src} = this.props;
         return (

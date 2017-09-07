@@ -10,12 +10,28 @@ import {strNotNull, FontSize, showToast} from '../utils/ComonHelper';
 import createMarkdownRenderer from 'rn-markdown';
 import FitImage from './simple/ImageMark';
 
+
+const imageClick = (source) => {
+
+    if (strNotNull(source)) {
+        let index = 0;
+
+        let images = [{url: source}];
+
+        router.toImageGalleryPage(this.props, images, index)
+    }
+
+};
+
+
 const Markdown = createMarkdownRenderer({gfm: false});
 Markdown.renderer.link = props => {
-    const {markdown} = props
-    const {href} = markdown
+    const {markdown} = props;
+    const {href} = markdown;
     return (
-        <TouchableOpacity onPress={() => Alert.alert('check out this hot href', href)}>
+        <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => router.toWebViewPage(props, href)}>
             <View>
                 {props.children}
             </View>
@@ -24,10 +40,12 @@ Markdown.renderer.link = props => {
 };
 
 Markdown.renderer.image = props => {
-    const {markdown} = props
-    const {href} = markdown
+    const {markdown} = props;
+    const {href} = markdown;
     return (
-        <TouchableOpacity onPress={() => Alert.alert('check out this hot href', href)}>
+        <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => imageClick(href)}>
             <View>
                 <FitImage
                     src={href}/>
@@ -105,7 +123,7 @@ const markdownStyles = {
         color: 'purple',
     },
     link: {
-        color: 'pink',
+        color: 'blue',
     },
     mail_to: {
         color: 'orange',
