@@ -42,6 +42,8 @@ export default class ActivityModel extends Component {
                         this.toggle();
                         if (strNotNull(activity.link))
                             router.toWebViewPage(this.props, activity.link)
+                        else
+                            router.toActivityInfo(this.props,activity);
                     }}
                 >
 

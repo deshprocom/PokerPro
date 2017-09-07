@@ -41,6 +41,8 @@ export default class ActivityCenter extends Component {
             onPress={() => {
                 if (strNotNull(item.link))
                     router.toWebViewPage(this.props, item.link)
+                else
+                    router.toActivityInfo(this.props, item);
             }}
             activeOpacity={0.5}
             style={styles.listItem}>

@@ -59,6 +59,7 @@ import WxRegister from '../pages/account/WxRegister';
 import InputPwd from '../pages/account/InputPwd';
 import MessageCenter from '../pages/message/MessageCenter';
 import ActivityCenter from '../pages/message/ActivityCenter';
+import ActivityInfo from '../pages/message/ActivityInfo';
 
 
 const customFloatFromRight = Navigator.SceneConfigs.FadeAndroid;
@@ -88,6 +89,17 @@ export default class Router {
 
     popToTop() {
         this.navigator.popToTop();
+    }
+
+    toActivityInfo(props, activity) {
+        this.push(props, {
+            page: ActivityInfo,
+            name: 'ActivityInfo',
+            sceneConfig: customFloatFromRight,
+            params: {
+                activity: activity
+            }
+        })
     }
 
     toActivityCenter(props, activities) {
