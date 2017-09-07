@@ -305,11 +305,14 @@ export default class Router {
         })
     }
 
-    toMessagePage(props) {
+    toMessagePage(props, notifications) {
         this.push(props, {
             page: MessagePage,
             name: 'MessagePage',
             sceneConfig: customFloatFromRight,
+            params: {
+                notifications: notifications
+            }
 
         })
     }

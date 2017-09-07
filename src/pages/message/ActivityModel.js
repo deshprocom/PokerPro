@@ -72,8 +72,7 @@ const styles = StyleSheet.create({
     banner: {
         width: 286,
         height: 384,
-        borderRadius: 5,
-        backgroundColor: 'green'
+        borderRadius: 5
     },
     close: {
         width: 30,

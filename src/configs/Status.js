@@ -17,6 +17,7 @@ export class OrderStatus {
     static unshipped = 'unshipped';
     static completed = 'completed';
     static canceled = 'canceled';
+    static delivered = 'delivered';
 }
 
 //售票状态

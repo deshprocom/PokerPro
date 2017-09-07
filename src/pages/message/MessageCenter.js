@@ -30,7 +30,8 @@ export default class MessageCenter extends Component {
     state = {
         activity: {},
         notice: {},
-        activities: []
+        activities: [],
+        notifications: []
     };
 
     componentDidMount() {
@@ -53,7 +54,10 @@ export default class MessageCenter extends Component {
             const {notifications} = data;
             if (notifications.length <= 0)
                 return;
-            this.setState({notice: notifications[0]})
+            this.setState({
+                notice: notifications[0],
+                notifications: notifications
+            })
 
         }, err => {
 
@@ -90,7 +94,7 @@ export default class MessageCenter extends Component {
             <TouchableOpacity
                 onPress={() => {
                     if (index === 0)
-                        router.toMessagePage();
+                        router.toMessagePage(this.props, this.state.notifications);
                     else if (index === 1)
                         router.toActivityCenter(this.props, this.state.activities)
 
