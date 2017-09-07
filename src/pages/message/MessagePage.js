@@ -12,7 +12,7 @@ import I18n from 'react-native-i18n';
 import {NavigationBar, ImageLoad, SwipeListView} from '../../components';
 import {isEmptyObject, utcDate, showToast} from '../../utils/ComonHelper';
 import {OrderStatus, Verified} from '../../configs/Status';
-import {delNotification,postMsgRead} from '../../services/AccountDao';
+import {delNotification, postMsgRead, getNotifications} from '../../services/AccountDao';
 
 const icons = [
     require('../../../source/message/ic_send.png'),
@@ -41,12 +41,24 @@ export default class MessagePage extends Component {
     }
 
     componentDidMount() {
-        const {notifications} = this.props.params;
-        this.setState({
-            dataList: notifications,
-            dataSource: this._dataSource.cloneWithRows(notifications)
-        })
+        InteractionManager.runAfterInteractions(() => {
+            this.refresh();
+        });
+
+
     }
+
+    refresh = () => {
+        getNotifications(data => {
+            const {notifications} = data;
+            this.setState({
+                dataList: notifications,
+                dataSource: this._dataSource.cloneWithRows(notifications)
+            })
+        }, err => {
+
+        })
+    };
 
     render() {
         const {dataSource} = this.state;
@@ -81,16 +93,18 @@ export default class MessagePage extends Component {
             <TouchableOpacity
                 activeOpacity={1}
                 onPress={() => {
-                    postMsgRead({id:id},data=>{
-
-                    },err=>{
-
-                    });
                     if (notify_type === ORDER) {
                         router.toOrderInfoPage(this.props, order_number)
                     } else {
                         router.toCertificationPage()
                     }
+                    postMsgRead({id: id}, data => {
+                        this.refresh();
+
+                    }, err => {
+
+                    });
+
 
                 }}
                 style={{backgroundColor: 'white'}}>
