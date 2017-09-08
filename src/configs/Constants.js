@@ -25,7 +25,7 @@ export const China = 'zh';
 export const English = 'en';
 
 export const UpdateVersion = 'v10';
-export const IOSLOAD = 'https://itunes.apple.com/cn/app/pokerpro/id1248197';
+export const IOSLOAD = 'https://itunes.apple.com/cn/app/pokerpro/id1248197817?mt=8';
 export const ANDROIDLOAD = 'http://sj.qq.com/myapp/detail.htm?apkName=com.deshpro.pokerpro';
 
 
