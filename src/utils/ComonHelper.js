@@ -48,9 +48,9 @@ function updateAlet(data) {
         text: '前往更新',
         onPress: () => {
             if (Platform.OS === 'ios') {
-                Linking.oepnURL(Constants.IOSLOAD)
+                Linking.openURL(Constants.IOSLOAD)
             } else {
-                Linking.oepnURL(Constants.ANDROIDLOAD)
+                Linking.openURL(Constants.ANDROIDLOAD)
             }
         }
     }] : [{
@@ -63,13 +63,13 @@ function updateAlet(data) {
             text: '前往更新',
             onPress: () => {
                 if (Platform.OS === 'ios') {
-                    Linking.oepnURL(Constants.IOSLOAD)
+                    Linking.openURL(Constants.IOSLOAD)
                 } else {
-                    Linking.oepnURL(Constants.ANDROIDLOAD)
+                    Linking.openURL(Constants.ANDROIDLOAD)
                 }
             }
         }];
-    Alert.alert('发现新版本' + data.version, '支持微信登录，最新活动惊喜不断，抢先体验！', upgrade)
+    Alert.alert(data.title, data.content, upgrade)
 }
 
 export function strToDate(date) {
