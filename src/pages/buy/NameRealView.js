@@ -104,8 +104,8 @@ export default class NameRealView extends Component {
                         <SecurityText
                             securityOptions={{
                                 isSecurity: true,
-                                startIndex: 4,
-                                endIndex: 8,
+                                startIndex: 3,
+                                endIndex: 12,
                             }}
                             style={{fontSize: Fonts.size.h15, color: Colors.txt_666}}>
                             {user_extra.cert_no}</SecurityText>
