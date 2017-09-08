@@ -20,8 +20,8 @@ const icons = [
 ];
 
 const titles = [
-    '订单通知',
-    '活动公告',
+    I18n.t('order_notice'),
+    I18n.t('ads_activity'),
     'Poker Pro官方客服'
 ];
 
@@ -77,8 +77,8 @@ export default class MessageCenter extends Component {
                 leftBtnPress={() => router.pop()}/>
 
             <ScrollView>
-                {this.readerItem(0, notice.title, notice.created_at, msgUnRead)}
-                {this.readerItem(1, activity.title, activity.activity_time, 0)}
+                {this.readerItem(0,I18n.t('order_notice'), notice.title, notice.created_at, msgUnRead)}
+                {this.readerItem(1,I18n.t('ads_activity'), activity.title, activity.activity_time, 0)}
 
             </ScrollView>
 
@@ -87,7 +87,7 @@ export default class MessageCenter extends Component {
     }
 
 
-    readerItem = (index, desc, time, msgUnRead) => {
+    readerItem = (index,title, desc, time, msgUnRead) => {
 
 
         return (
@@ -106,7 +106,7 @@ export default class MessageCenter extends Component {
                            source={icons[index]}/>
                     {msgUnRead <= 0 ? null : <View style={styles.msgRed}/>}
                     <View>
-                        <Text style={styles.msgTitle}>{titles[index]}</Text>
+                        <Text style={styles.msgTitle}>{title}</Text>
                         <Text style={styles.msgDesc}>{desc}</Text>
                     </View>
 

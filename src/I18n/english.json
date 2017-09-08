@@ -354,8 +354,18 @@
   "pay_weixin": "WeChat Pay",
   "un_support": "Unavailable",
   "pay_weixin_support": "Share in WeChat",
-  "buy_invite": "推荐码：",
-  "buy_invite_placeholder": "请输入四位推荐码 （选填）",
-  "msg_center": "消息中心"
+  "buy_invite": "recommendation code:",
+  "buy_invite_placeholder": "Please enter the four recommended code (optional)",
+  "msg_center": "Message Center",
+  "update_cancel": "cruel refusal",
+  "update_download": "Go to update",
+  "time_month": "month ago",
+  "time_week": "week ago",
+  "time_day": "days ago",
+  "time_hour": "hours ago",
+  "time_min": "minutes ago",
+  "time_moment": "just",
+  "order_notice": "order notification",
+  "ads_activity": "activity announcement"
 }
 

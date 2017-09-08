@@ -46,7 +46,7 @@ export function updateApp(data) {
 function updateAlet(data) {
 
     const upgrade = data.force_upgrade ? [{
-        text: '前往更新',
+        text: I18n.t('update_download'),
         onPress: () => {
             if (Platform.OS === 'ios') {
                 Linking.openURL(Constants.IOSLOAD)
@@ -55,13 +55,13 @@ function updateAlet(data) {
             }
         }
     }] : [{
-        text: '残忍拒绝',
+        text: I18n.t('update_cancel'),
         onPress: () => {
 
         }
     },
         {
-            text: '前往更新',
+            text: I18n.t('update_download'),
             onPress: () => {
                 if (Platform.OS === 'ios') {
                     Linking.openURL(Constants.IOSLOAD)
@@ -128,21 +128,21 @@ export function getDateDiff(dateTimeStamp) {
     var hourC = diffValue / hour;
     var minC = diffValue / minute;
     if (monthC >= 1) {
-        result = "" + parseInt(monthC) + "月前";
+        result = "" + parseInt(monthC) + I18n.t('time_month');
     }
     else if (weekC >= 1) {
-        result = "" + parseInt(weekC) + "周前";
+        result = "" + parseInt(weekC) + I18n.t('time_week');
     }
     else if (dayC >= 1) {
-        result = "" + parseInt(dayC) + "天前";
+        result = "" + parseInt(dayC) + I18n.t('time_day');
     }
     else if (hourC >= 1) {
-        result = "" + parseInt(hourC) + "小时前";
+        result = "" + parseInt(hourC) + I18n.t('time_hour');
     }
     else if (minC >= 1) {
-        result = "" + parseInt(minC) + "分钟前";
+        result = "" + parseInt(minC) + I18n.t('time_min');
     } else
-        result = "刚刚";
+        result = I18n.t('time_moment');
     return result;
 }
 
