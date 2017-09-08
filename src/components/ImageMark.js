@@ -3,8 +3,8 @@
  */
 import React, {PropTypes, Component} from 'react';
 import {Image, TouchableOpacity, Platform, Text} from 'react-native';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {pixel, strNotNull} from '../../utils/ComonHelper'
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes/index';
+import {pixel, strNotNull} from '../utils/ComonHelper'
 
 export default class ImageMark extends Component {
     static propTypes = {

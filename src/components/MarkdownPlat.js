@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {strNotNull, FontSize, showToast} from '../utils/ComonHelper';
 import createMarkdownRenderer from 'rn-markdown';
-import FitImage from './simple/ImageMark';
+import FitImage from './ImageMark';
 
 
 const imageClick = (source) => {
