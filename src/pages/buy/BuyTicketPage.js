@@ -639,7 +639,7 @@ class BuyTicketPage extends Component {
 
             </View>
 
-            <View style={styles.viewPrice}>
+            <View style={styles.viewPrice1}>
                 <Text style={styles.txtPrice1}>{I18n.t('order_pay')}</Text>
 
                 <Text
@@ -837,7 +837,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
-    viewPrice: {flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 42},
+    viewPrice: {flexDirection: 'row', justifyContent: 'space-between',marginTop:16,
+    marginBottom:14},
+    viewPrice1: {flexDirection: 'row', justifyContent: 'space-between',
+        marginBottom:16},
     txtPrice1: {color: Colors._333, fontSize: 14, marginLeft: 18}
 
 
