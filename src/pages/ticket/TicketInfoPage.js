@@ -12,7 +12,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {ImageLoad, MarkdownPlat} from '../../components';
 import {getBuyRaceTicket, getUnpaidOrder} from '../../services/OrderDao';
-import {isEmptyObject,strNotNull} from '../../utils/ComonHelper';
+import {isEmptyObject, strNotNull} from '../../utils/ComonHelper';
 
 export default class TicketInfoPage extends Component {
 
@@ -223,9 +223,10 @@ const styles = StyleSheet.create({
     },
     txtName: {
         color: '#444444',
-        fontSize: 16,
-        marginTop: 12,
-        marginBottom: 16
+        fontSize: 17,
+        marginTop: 16,
+        marginBottom: 12,
+        fontWeight: 'bold'
     },
     margin: {
         paddingRight: 17,
@@ -238,11 +239,11 @@ const styles = StyleSheet.create({
     },
     viewSell: {
         flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 18,
+        alignItems: 'flex-end',
+        marginBottom: 16,
     },
     lbPrice: {
-        fontSize: 20,
+        fontSize: 12,
         color: Colors._161,
 
     },
