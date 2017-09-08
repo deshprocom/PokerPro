@@ -78,7 +78,27 @@ export default class MarkdownPlat extends Component {
         try {
             if (strNotNull(markdownStr))
                 return (
-                    <Markdown contentContainerStyle={styles.container} markdownStyles={markdownStyles}>
+                    <Markdown contentContainerStyle={styles.container} markdownStyles={{
+                        container: {
+                            padding: 20
+                        },
+                        heading1: {
+                            fontSize: 24,
+                            color: 'purple',
+                        },
+                        link: {
+                            color: 'blue',
+                        },
+                        mail_to: {
+                            color: 'orange',
+                        },
+                        text: {
+                            color: '#444444',
+                            fontSize:  FontSize.h15,
+                            lineHeight: 25,
+                            letterSpacing: 0.3
+                        },
+                    }}>
                         {markdownStr}
                     </Markdown>
                 )

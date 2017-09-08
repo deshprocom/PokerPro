@@ -130,7 +130,6 @@ const styles = StyleSheet.create({
         height: 54,
         width: 54,
         borderRadius: 27,
-        backgroundColor: Colors._ECE,
         marginLeft: 18,
         marginRight: 22
     },
