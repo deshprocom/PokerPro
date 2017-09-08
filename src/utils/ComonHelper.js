@@ -70,7 +70,8 @@ function updateAlet(data) {
                 }
             }
         }];
-    Alert.alert(data.title, data.content, upgrade, {cancelable: false})
+    Alert.alert(strNotNull(data.title) ? data.title : 'Alert',
+        strNotNull(data.content) ? data.content : 'content', upgrade, {cancelable: false})
 }
 
 export function strToDate(date) {
