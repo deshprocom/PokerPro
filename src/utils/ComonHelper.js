@@ -32,10 +32,10 @@ export function updateApp(data) {
     if (Platform.OS === 'ios') {
         if (ios_platform.version !== Constants.UpdateVersion) {
             updateAlet(ios_platform)
-        } else {
-            if (android_platform.version !== Constants.UpdateVersion) {
-                updateAlet(android_platform)
-            }
+        }
+    } else {
+        if (android_platform.version !== Constants.UpdateVersion) {
+            updateAlet(android_platform)
         }
     }
 
@@ -44,6 +44,7 @@ export function updateApp(data) {
 
 
 function updateAlet(data) {
+
     const upgrade = data.force_upgrade ? [{
         text: '前往更新',
         onPress: () => {
