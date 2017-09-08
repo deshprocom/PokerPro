@@ -70,7 +70,7 @@ function updateAlet(data) {
                 }
             }
         }];
-    Alert.alert(data.title, data.content, upgrade)
+    Alert.alert(data.title, data.content, upgrade, {cancelable: false})
 }
 
 export function strToDate(date) {
@@ -177,6 +177,16 @@ export function loginWX(resolve, reject) {
 
 }
 
+
+export function uShareActivity(title, desc, icon, id) {
+
+    UMShare.share(title, desc, getShareIcon(icon), HOST + "activities/" + id + "/" + Lang)
+        .then(() => {
+            showToast(`${I18n.t('show_success')}`)
+        }, (error) => {
+            showToast(error)
+        })
+}
 
 export function uShareRace(title, location, icon, raceId) {
 
