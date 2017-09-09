@@ -104,15 +104,13 @@ class NewsListView extends Component {
                     })
                 }}
                 style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.5)'}}/>
-            <View style={{height: 220, width: Metrics.screenWidth}}>
-                <VideoPlayer
-                    ref={ref => this.player = ref}
-                    closeFull={true}
-                    paused={!modalVisible}
-                    toggleFullscreen={this.toggleFullscreen}
-                    source={{uri: video_link.trim()}}
-                />
-            </View>
+            <VideoPlayer
+                ref={ref => this.player = ref}
+                closeFull={true}
+                paused={!modalVisible}
+                toggleFullscreen={this.toggleFullscreen}
+                source={{uri: video_link.trim()}}
+            />
             <TouchableOpacity
                 activeOpacity={1}
                 onPress={() => {
