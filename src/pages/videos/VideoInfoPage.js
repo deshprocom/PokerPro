@@ -36,7 +36,7 @@ export default class VideoInfoPage extends Component {
         return (<View
             testID="page_news_info"
             style={styles.page}>
-
+            <StatusBar hidden={true} />
 
             <View
                 style={styles.video}>
