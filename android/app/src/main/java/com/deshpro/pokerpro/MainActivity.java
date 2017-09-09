@@ -1,4 +1,4 @@
-package com.pokerpro;
+package com.deshpro.pokerpro;
 
 import com.facebook.react.ReactActivity;
 import android.os.Bundle;
