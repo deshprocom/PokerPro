@@ -18,9 +18,10 @@ export function listRenderRow(rowData, sectionID, rowID, isSearch) {
             </View>}
 
             <View style={styles.list_row}>
-                <Image defaultSource={Images.home_avatar}
-                       source={strNotNull(avatar) ? {uri: avatar} : Images.home_avatar}
-                       style={{width: 50, height: 50, marginLeft: 12, marginRight: 15, borderRadius: 25}}/>
+                <Image
+                    defaultSource={Images.home_avatar}
+                    source={strNotNull(avatar) ? {uri: avatar} : Images.home_avatar}
+                    style={{width: 50, height: 50, marginLeft: 12, marginRight: 15, borderRadius: 25}}/>
 
             </View>
             <View style={{flex: 1, alignItems: 'flex-start', justifyContent: 'center', height: 69}}>
@@ -138,12 +139,11 @@ export default class RankList extends Component {
     onFetch = (page = 1, startFetch, abortFetch) => {
         try {
 
-            console.log(page);
+            console.log(page)
             if (page === 1) {
                 this.refresh(startFetch, abortFetch);
                 this.listView.scrollTo({x: 0, y: 0, animated: true})
             } else {
-                console.log('loadmore')
                 this.loadMore(startFetch, abortFetch);
             }
         } catch (err) {
@@ -190,6 +190,9 @@ export default class RankList extends Component {
         };
 
         getMainRank(body, data => {
+            this.setState({
+                page: body.page_index + 1
+            });
             startFetch(data, 10)
         }, err => {
             abortFetch();

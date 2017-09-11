@@ -10,6 +10,8 @@ export default {
     BuyEmail:'BuyEmail',
     UserData:'UserData',
     FontNum:'FontNum',
-    FontSizeNum: 'FontSizeNum'
+    FontSizeNum: 'FontSizeNum',
+    UserAvatar:'UserAvatar',
+    Activity:"Activity"
 
 }

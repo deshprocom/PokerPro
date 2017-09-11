@@ -38,7 +38,7 @@ export const itemListView = (item, index) => {
                     <View style={styles.itemInfo}>
                         <Text
                             numberOfLines={2}
-                            style={[styles.itemTitle, {fontSize: FontSize.h17}]}>{name}</Text>
+                            style={[styles.itemTitle]}>{name}</Text>
 
                         <View style={styles.viewLocation}>
                             <Image source={Images.home_adr}
@@ -50,19 +50,19 @@ export const itemListView = (item, index) => {
                         <View style={styles.view_time}>
                             <Image source={Images.home_clock}
                                    style={{width: 10, height: 10}}/>
-                            <Text style={[styles.itemTime, {fontSize: FontSize.h14}]}>
+                            <Text style={[styles.itemTime]}>
                                 {convertDate(begin_date, 'YYYY.MM.DD') + '-' + convertDate(end_date, 'YYYY.MM.DD')}</Text>
                         </View>
 
                         {this.prizeView(min_price)}
 
                     </View>
-                    <TouchableOpacity
+                    {ticket_sellable ? <TouchableOpacity
                         activeOpacity={1}
                         onPress={() => this._buyTicket(item)}
                         style={sellStyle(ticket_status)}>
                         <Text style={sellTxt(ticket_status)}>{this._txtTicketStatus(ticket_status)}</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> : null}
                 </View>
             </Image>
 
@@ -70,12 +70,13 @@ export const itemListView = (item, index) => {
     )
 };
 
+
 _buyTicket = (rowData) => {
     if (strNotNull(login_user.user_id)) {
         router.toChoiseTicketPage(this.props, rowData.race_id);
     }
     else
-       router.toLoginFirstPage();
+        router.toLoginFirstPage();
 };
 
 
@@ -96,9 +97,9 @@ _txtTicketStatus = (status) => {
 prizeView = (prize) => {
     if (strNotNull(prize))
         return <View style={styles.price_view}>
-            <Text style={{color: '#454545', fontSize: FontSize.h13}}>{I18n.t('prize')}</Text>
+            <Text style={{color: '#454545', fontSize: 13}}>{I18n.t('prize')}</Text>
             <Text numberOfLines={1}
-                  style={[styles.itemPrice, {fontSize: FontSize.h13}]}> {prize}</Text>
+                  style={[styles.itemPrice]}> ¥{prize}</Text>
         </View>
 };
 
@@ -152,16 +153,18 @@ const styles = StyleSheet.create({
         width: 200,
         color: '#161718',
         alignSelf: 'flex-start',
-        marginRight: 70
+        marginRight: 70,
+        fontSize: 17
     },
     itemTime: {
         color: '#999999',
         alignItems: 'center',
-        marginLeft: 5
+        marginLeft: 5,
+        fontSize: 14
     },
     itemAddr: {
         color: '#999999',
-        fontSize: FontSize.h14,
+        fontSize: 14,
         marginLeft: 5,
         width: 180,
 
@@ -169,7 +172,7 @@ const styles = StyleSheet.create({
     itemPrice: {
         color: Colors._DF1,
         fontSize: 13,
-        width: 120
+        width: 120,
     },
     itemInfo: {
         marginLeft: 12,

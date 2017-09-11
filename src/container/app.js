@@ -18,6 +18,8 @@ import {
 } from '../configs/Constants';
 import Orientation from 'react-native-orientation';
 import UMShare from 'react-native-umshare';
+import * as WeChat from 'react-native-wechat';
+
 console.disableYellowBox = true;
 
 const store = configureStore();
@@ -41,12 +43,13 @@ export default class App extends Component {
             delay: 500,
         });
 
+
         // 第二个参数决定在分享界面的排序1_、2_、3_为前缀
         UMShare.initShare(Platform.OS === 'ios' ? UMENG_IOS : UMENG_ANDROID,
             {
                 "1_weixin": {
                     appKey: WX_ID,
-                    appSecret: WX_Secret,
+                    appSecret: '',
                     redirectURL: WX_URL,
                 },
                 "2_qq": {
@@ -64,6 +67,11 @@ export default class App extends Component {
 
         MobclickAgent.startWithAppkey(Platform.OS === 'ios' ? UMENG_IOS : UMENG_ANDROID);
 
+        WeChat.registerApp(WX_ID).then(ret => {
+            console.log('registerApp',ret)
+        }, err => {
+            console.log(err)
+        });
 
         MobclickAgent.onEvent("startApp");
     }

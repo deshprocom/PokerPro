@@ -7,17 +7,18 @@ import {
     StyleSheet, Image, Text, KeyboardAvoidingView
 } from 'react-native';
 import I18n from 'react-native-i18n';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
+import {Colors, Fonts, Images, Metrics} from '../../Themes';
 import NavigationBar from '../../components/NavigationBar';
 import md5 from "react-native-md5";
-import {checkLoginMail, strNotNull, showToast, userData, setUserData} from '../../utils/ComonHelper';
-import Toast from 'react-native-root-toast';
+import {checkLoginMail, strNotNull, showToast, userData, setUserData, loginWX} from '../../utils/ComonHelper';
 import {fetchPostLogin}from '../../actions/AccountAction';
 import {connect} from 'react-redux';
 import {fetchGetProfile} from '../../actions/PersonAction';
 import {fetchGetRecentRaces} from '../../actions/RacesAction';
 import {POST_PHONE_LOGIN, POST_EMAIL_LOGIN} from '../../actions/ActionTypes'
 import {closeDrawer} from '../../reducers/DrawerRedux';
+import {postWxAuth} from '../../services/AccountDao';
+import StorageKey from '../../configs/StorageKey'
 
 class LoginFirstPage extends React.Component {
 
@@ -25,7 +26,8 @@ class LoginFirstPage extends React.Component {
     state = {
         username: userData,
         password: '',
-        pwdEye: true
+        pwdEye: true,
+        avatar: ''
     };
 
     shouldComponentUpdate(newProps) {
@@ -35,25 +37,42 @@ class LoginFirstPage extends React.Component {
                 newProps.actionType === POST_EMAIL_LOGIN) && newProps.hasData) {
                 console.log('LoginFirstPage', newProps.loginUser)
                 const {user_id} = newProps.loginUser.data;
-                const recentRaces = {
-                    user_id: user_id,
-                    number: 8
-                };
-                this.props._getRecentRaces(recentRaces);
-                this.props._getProfile(user_id);
-                this.props.closeDrawer();
-                router.pop();
+                this._success(user_id);
                 return false;
 
             }
         return true;
     }
 
+    componentDidMount() {
+        storage.load({
+            key: StorageKey.UserAvatar
+        }).then(avatar => {
+            console.log(avatar)
+            this.setState({
+                avatar: avatar
+            })
+        })
+    }
+
+
+    _success = (user_id) => {
+        const recentRaces = {
+            user_id: user_id,
+            number: 8
+        };
+        this.props._getRecentRaces(recentRaces);
+        this.props._getProfile(user_id);
+        this.props.closeDrawer();
+        router.popToTop();
+    };
+
     doLogin = () => {
         const {username, password} = this.state;
         if (strNotNull(username) && strNotNull(password)) {
             setUserData(username);
             if (checkLoginMail(username)) {
+
                 let body = {
                     type: 'email',
                     email: username,
@@ -70,54 +89,55 @@ class LoginFirstPage extends React.Component {
                 this.props._fetchPostLogin(body);
             }
         } else {
-            if (!!this._toast_box) {
-                Toast.hide(this._toast_box);
-            }
-            this._toast_box = showToast(`${I18n.t('fillWhole')}`);
+
+            showToast(I18n.t('fillWhole'));
         }
 
 
     };
 
     render() {
-        const {pwdEye} = this.state;
+        const {pwdEye, avatar} = this.state;
 
         return (
-            <Image
+            <View
                 testID="page_login_account"
-                style={{flex: 1, width: Metrics.screenWidth}}
-                source={Images.sign_bg}>
+                style={{flex: 1, backgroundColor: 'white'}}>
                 <NavigationBar
-                    router={this.props.router}
-                    leftBtnIcon={Images.sign_close}
-                    leftImageStyle={{height: 18, width: 18, marginLeft: 20, marginRight: 20}}
+                    barStyle="dark-content"
+                    leftBtnIcon={require('../../../source/login/login_x.png')}
+                    leftImageStyle={{height: 14, width: 14, marginLeft: 20, marginRight: 20}}
                     rightBtnText={I18n.t('register')}
                     btnTextStyle={{
-                        color: Colors.txt_E0C,
+                        color: Colors._161,
                         fontSize: 16, marginRight: 20
                     }}
                     leftBtnPress={() => router.pop()}
                     rightBtnPress={() => router.toRegisterPage()}/>
 
-                <Image style={{
-                    width: 91, height: 91,
-                    marginTop: 49, alignSelf: 'center'
-                }}
-                       source={Images.sign_logo_poker}/>
+                <View style={styles.viewAvatar}>
+                    <Image style={{
+                        width: 72, height: 72,
+                        borderRadius: 36
+                    }}
+                           source={strNotNull(avatar) ? {uri: avatar} : Images.home_avatar}/>
+                </View>
 
 
                 <View
-                    style={{flex: 1, marginTop: 60}}>
+                    style={{flex: 1, marginTop: 50}}>
                     <View style={styles.view_input}>
-                        <Image style={{width: 13, height: 16}}
-                               source={Images.sign_number}/>
+
                         <View style={{
-                            borderBottomColor: "#444444", borderBottomWidth: 0.5,
-                            flex: 1, height: 40, alignItems: 'center', marginLeft: 15, flexDirection: 'row'
+                            borderBottomColor: Colors._CCC, borderBottomWidth: 0.5,
+                            flex: 1, height: 40, alignItems: 'center', flexDirection: 'row'
                         }}>
+                            <Image style={{width: 13, height: 16, marginRight: 17}}
+                                   source={Images.sign_number}/>
+
                             <TextInput style={styles.text_input}
                                        numberOfLines={1}
-                                       placeholderTextColor={Colors.txt_666}
+                                       placeholderTextColor={Colors._CCC}
                                        underlineColorAndroid='transparent'
                                        onChangeText={text => {
                                            this.setState({
@@ -131,14 +151,15 @@ class LoginFirstPage extends React.Component {
                     </View>
 
                     <View style={styles.view_input}>
-                        <Image style={{width: 12, height: 15}} source={Images.sign_password}/>
+
                         <View style={{
-                            borderBottomColor: "#444444", borderBottomWidth: 0.5,
-                            flex: 1, height: 40, alignItems: 'center', marginLeft: 15, flexDirection: 'row'
+                            borderBottomColor: Colors._CCC, borderBottomWidth: 0.5,
+                            flex: 1, height: 40, alignItems: 'center', flexDirection: 'row'
                         }}>
+                            <Image style={{width: 13, height: 16, marginRight: 17}} source={Images.sign_password}/>
                             <TextInput style={styles.text_input}
                                        numberOfLines={1}
-                                       placeholderTextColor={Colors.txt_666}
+                                       placeholderTextColor={Colors._CCC}
                                        onChangeText={text => {
                                            this.setState({
                                                password: text
@@ -174,14 +195,12 @@ class LoginFirstPage extends React.Component {
                         <Text style={styles.btn_text_sign}>{I18n.t('sign_in')}</Text>
 
                     </TouchableOpacity>
-                    {/*遇到问题*/}
+
                     <TouchableOpacity
                         style={{
-                            borderBottomWidth: 0.5,
-                            borderBottomColor: Colors._AAA,
                             alignSelf: 'flex-end',
-                            marginTop: 36,
-                            marginRight: 66
+                            marginTop: 20,
+                            marginRight: 10
                         }}
                         transparent
                         testID="btn_problem"
@@ -193,17 +212,57 @@ class LoginFirstPage extends React.Component {
 
                     <View style={{flex: 1}}/>
 
-                    <TouchableOpacity
-                        style={{marginBottom: 48, padding: 5}}
-                        testID="btn_switch_code_login"
-                        onPress={() => this.props.router.toLoginCodePage()}>
-                        <Text style={styles.text_other_sign}>
-                            {I18n.t('sign_in_whit_phone')}</Text>
-                    </TouchableOpacity>
+                    {this.wxLogin()}
                 </View>
 
 
-            </Image>)
+            </View>)
+    }
+
+
+    wxLogin = () => {
+        return (<View style={{
+            marginBottom: 50, flexDirection: 'row',
+            alignItems: 'center', justifyContent: 'space-around'
+        }}>
+            <TouchableOpacity
+                onPress={() => {
+
+                    loginWX(data => {
+                        const body = {
+                            code: data.code
+                        };
+                        postWxAuth(body, ret => {
+                            const {type, info} = ret;
+                            if (type === 'register')
+                                router.toWxRegister(this.props, info.access_token);
+                            else if (type === 'login') {
+                                const {user_id} = info;
+                                this._success(user_id);
+                            }
+                        }, err => {
+
+                        })
+                    }, err => {
+
+                    })
+                }}
+                style={styles.rowView}>
+                <Image style={{height: 18, width: 22}}
+                       source={require('../../../source/buy/weixin.png')}/>
+                <Text style={styles.txtMsg}>微信登陆</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                onPress={() => router.toLoginCodePage()}
+                style={styles.rowView}>
+                <Image style={{height: 15, width: 20}}
+                       source={require('../../../source/login/login_msg.png')}/>
+                <Text style={styles.txtMsg}>短信登陆</Text>
+            </TouchableOpacity>
+        </View>)
+
+
     }
 }
 
@@ -219,27 +278,27 @@ const styles = StyleSheet.create({
     },
     btn_text_sign: {
         alignSelf: 'center',
-        color: Colors._222,
-        fontSize: 19
+        color: Colors._F4E,
+        fontSize: 17
     },
     btn_sign_in: {
         alignSelf: 'center',
-        backgroundColor: '#E0BB75',
-        height: 45,
-        width: 245,
+        backgroundColor: Colors._161,
+        height: 50,
         justifyContent: 'center',
-        borderRadius: 5
+        borderRadius: 2,
+        width: "90%"
     },
 
     text_input: {
-        color: Colors.white,
+        color: Colors._161,
         flex: 1,
         fontSize: 14,
         marginLeft: 2
     },
     view_input: {
-        marginLeft: 66,
-        marginRight: 66,
+        marginLeft: 28,
+        marginRight: 28,
         flexDirection: 'row',
         alignItems: 'center',
     },
@@ -250,7 +309,23 @@ const styles = StyleSheet.create({
     close_eye: {
         width: 18,
         height: 9
-    }
+    },
+    rowView: {
+        flexDirection: 'row', alignItems: 'center', height: 50
+    },
+    txtMsg: {
+        fontSize: 14, color: Colors._AAA, marginLeft: 10
+    },
+    viewAvatar: {
+        height: 82,
+        width: 82,
+        backgroundColor: '#eeeeee',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 41,
+        alignSelf: 'center',
+        marginTop: 30
+    },
 
 });
 

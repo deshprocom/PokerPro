@@ -10,17 +10,22 @@ import HomePage from './HomePage';
 import {fetchGetCertification} from '../actions/AccountAction';
 import {closeDrawer}from '../reducers/DrawerRedux';
 import {setDispatchAction} from '../utils/ComonHelper';
-import {GET_CERTIFICATION} from '../actions/ActionTypes';
+import {GET_CERTIFICATION,GET_RECENT_RACES,GET_PROFILE} from '../actions/ActionTypes';
+import {fetchGetProfile} from '../actions/PersonAction';
+import {fetchGetRecentRaces} from '../actions/RacesAction';
+
 
 class DrawerPage extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
 
     componentDidMount() {
-        setDispatchAction(GET_CERTIFICATION, this.props._getRealName)
+        setDispatchAction(GET_CERTIFICATION, this.props._getRealName);
+        setDispatchAction(GET_RECENT_RACES,this.props._getRecentRaces);
+        setDispatchAction(GET_PROFILE,this.props._getProfile)
+
     }
+
+
 
     componentDidUpdate() {
         if (this.props.drawerState === 'opened') {
@@ -45,11 +50,13 @@ class DrawerPage extends React.Component {
     render() {
         return (
             <Drawer
-                ref={(ref)=>{this._drawer = ref;}}
+                ref={(ref) => {
+                    this._drawer = ref;
+                }}
                 type="static"
                 onClose={() => this.closeDrawer()}
                 content={<SidePage
-                router={this.props.router}/>}
+                    router={this.props.router}/>}
                 tapToClose
                 openDrawerOffset={100}
                 styles={drawerStyles}
@@ -71,7 +78,9 @@ const drawerStyles = {
 
 const bindAction = dispatch => ({
     closeDrawer: () => dispatch(closeDrawer()),
-    _getRealName: () => dispatch(fetchGetCertification())
+    _getRealName: () => dispatch(fetchGetCertification()),
+    _getProfile: (user_id) => dispatch(fetchGetProfile(user_id)),
+    _getRecentRaces: (body) => dispatch(fetchGetRecentRaces(body))
 });
 
 const mapStateToProps = state => ({

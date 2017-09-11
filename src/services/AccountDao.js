@@ -5,9 +5,103 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 import StorageKey from '../configs/StorageKey';
 import JpushHelp from './JpushHelper';
+import {isEmptyObject, showToast} from '../utils/ComonHelper';
+
+
+export function getMsgUnRead(resolve, reject) {
+    helper.get(Api.unread_remind(), ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+
+export function getUpdate(resolve, reject) {
+    helper.get(Api.app_versions, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+
+export function postMsgRead(body, resolve, reject) {
+    helper.post(Api.msg_read(body), {}, ret => {
+        resolve(ret.data)
+    }, err => {
+        reject(err);
+        showToast(err)
+    })
+}
+
+export function getActivityPush(resolve, reject) {
+    helper.get(Api.activityPush, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+export function getActivityInfo(body, resolve, reject) {
+    helper.get(Api.activityInfo(body), ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+export function getActivities(resolve, reject) {
+    helper.get(Api.activities, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+export function getAccountExit(body, resolve, reject) {
+    helper.get(Api.account_exist(body), (ret) => {
+        resolve(ret.data);
+    }, err => {
+        showToast(err);
+        reject(err);
+    });
+}
+
+
+export function postWxAuth(body, resolve, reject) {
+    helper.post(Api.weixin_auth, body, ret => {
+        let {type, info} = ret.data;
+        if (type === 'login') {
+            setLoginData(info)
+        }
+        resolve(ret.data)
+    }, err => {
+        reject(err);
+        showToast(err)
+    })
+}
+
+export function postWxBind(body, resolve, reject) {
+    helper.post(Api.weixin_bind, body, ret => {
+        setLoginData(ret.data);
+        resolve(ret.data)
+    }, err => {
+        reject(err);
+        showToast(err)
+    })
+}
+
+function setLoginData(login) {
+    const {access_token} = login;
+    setLoginUser(login);
+    helper.setAccessToken(access_token);
+
+}
+
+export function postSuggest(body, resolve, reject) {
+    helper.post(Api.feedbacks, body, data => {
+        resolve(data)
+    }, err => {
+        reject(err)
+        showToast(err)
+    })
+}
 
 export function postLoginCount() {
-    helper.post(Api.login_count(),{},ret=>{},err=>{})
+    helper.post(Api.login_count(), {}, ret => {
+    }, err => {
+    })
 }
 
 export function delNotification(body, resolve, reject) {
@@ -21,6 +115,7 @@ export function getNotifications(resolve, reject) {
         resolve(ret.data);
     }, reject);
 }
+
 export function postChangePermission(body, resolve, reject) {
     helper.post(Api.change_permission(), body, (ret) => {
         resolve(ret.data);
@@ -57,13 +152,8 @@ export function postVCode(body, resolve, reject) {
 export function postRegister(body, resolve, reject) {
 
     helper.post(Api.register, body, (ret) => {
-        let {access_token} = ret.data;
-        setLoginUser(ret.data);
-        helper.setAccessToken(access_token);
-        storage.save({
-            key: StorageKey.LoginUser,
-            rawData: ret.data
-        });
+        setLoginData(ret.data);
+
         resolve(ret.data);
     }, reject);
 }
@@ -71,13 +161,8 @@ export function postRegister(body, resolve, reject) {
 /*登陆*/
 export function postLogin(body, resolve, reject) {
     helper.post(Api.login, body, (ret) => {
-        let {access_token, user_id} = ret.data;
-        setLoginUser(ret.data);
-        helper.setAccessToken(access_token);
-        storage.save({
-            key: StorageKey.LoginUser,
-            rawData: ret.data
-        });
+        setLoginData(ret.data);
+
         resolve(ret);
     }, reject);
 }
@@ -85,20 +170,30 @@ export function postLogin(body, resolve, reject) {
 export var LoginUser = {};
 
 global.login_user = {};
+
 export function setLoginUser(ret) {
     LoginUser = ret;
     global.login_user = ret;
 
-    JpushHelp.getRegistrationID((id) => {
-        router.log('JpushId: ' + id)
+    storage.save({
+        key: StorageKey.LoginUser,
+        rawData: ret
     });
-    let alias = helper.getApiType() + '_' + ret.user_id;
-    console.log(alias)
-    JpushHelp.setAlias(alias, () => {
-        router.log(alias + ' set jpush alias success')
-    }, () => {
-        router.log(alias + ' set jpush alias fail')
-    })
+
+    if (!isEmptyObject(ret)) {
+        JpushHelp.getRegistrationID((id) => {
+            router.log('JpushId: ' + id)
+        });
+        let type = helper.getApiType() === 'production' ? 'pro' : helper.getApiType();
+        let alias = type + '_' + ret.user_id;
+        console.log(alias)
+        JpushHelp.setAlias(alias, () => {
+            router.log(alias + ' set jpush alias success')
+        }, () => {
+            router.log(alias + ' set jpush alias fail')
+        })
+    }
+
 }
 
 export function removeToken() {
@@ -124,6 +219,7 @@ export function putProfile(user_id, body, resolve, reject) {
         resolve(ret.data);
     }, reject);
 }
+
 /*获取个人资料*/
 export function getProfile(user_id, resolve, reject) {
     helper.get(Api.account_profile(user_id), (ret) => {
@@ -147,6 +243,7 @@ export function postAvatar(body, resolve, reject) {
 export function postVerifyCode(body, resolve, reject) {
     helper.post(Api.account_verify, body, resolve, reject);
 }
+
 /*找回密码*/
 export function postResetPwdCode(body, resolve, reject) {
     helper.post(Api.account_reset_password, body, resolve, reject);
@@ -160,6 +257,7 @@ export function postChangePwd(body, resolve, reject) {
 export function postCertification(user_uuid, body, resolve, reject) {
     helper.post(Api.certification(user_uuid), body, resolve, reject);
 }
+
 /*获取实名认证*/
 export function getCertification(user_uuid, resolve, reject) {
     helper.get(Api.certification(user_uuid), resolve, reject);

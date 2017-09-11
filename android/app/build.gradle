@@ -122,6 +122,13 @@ android {
                       }
         }
 
+         debug {
+                   storeFile file(MYAPP_RELEASE_STORE_FILE)
+                   storePassword MYAPP_RELEASE_STORE_PASSWORD
+                   keyAlias MYAPP_RELEASE_KEY_ALIAS
+                   keyPassword MYAPP_RELEASE_KEY_PASSWORD
+                }
+
 
     }
 
@@ -149,6 +156,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-wechat')
     compile project(':react-native-umshare')
     compile project(':react-native-network-info')
     compile project(':react-native-orientation')

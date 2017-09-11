@@ -1,32 +1,40 @@
 /**
  * Created by lorne on 2017/5/23.
  */
-import React, {PropTypes, Component}from 'react';
+import React, {PropTypes, Component} from 'react';
 import {
     StyleSheet, Image, Platform, ActivityIndicator,
     Dimensions, View, Text, ListView, TouchableOpacity,
     InteractionManager
 } from 'react-native';
-import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {NavigationBar, ImageLoad, SwipeListView} from '../../components';
-import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
-import {GET_NOTIFICATIONS, DEL_NOTIFICATIONS} from '../../actions/ActionTypes';
-import {fetchNotifications, fetchDelNotice} from '../../actions/AccountAction';
-import {isEmptyObject, utcDate,YYYY_MM_DD} from '../../utils/ComonHelper';
+import {isEmptyObject, utcDate, showToast} from '../../utils/ComonHelper';
+import {OrderStatus, Verified} from '../../configs/Status';
+import {delNotification, postMsgRead, getNotifications} from '../../services/AccountDao';
 
-class MessagePage extends Component {
+const icons = [
+    require('../../../source/message/ic_send.png'),
+    require('../../../source/message/ic_success.png'),
+    require('../../../source/message/ic_cancel.png'),
+    require('../../../source/message/cer_fail.png'),
+    require('../../../source/message/cer_success.png'),
+    require('../../../source/message/ic_poker.png')
+];
+const ORDER = 'order';
+const CERTIFICATION = "certification";
+
+export default class MessagePage extends Component {
 
     constructor(props) {
         super(props);
 
-        let dataList = [];
         this._dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
-            dataList: dataList,
-            dataSource: this._dataSource.cloneWithRows(dataList),
-            fetchState: false
+            dataList: [],
+            dataSource: this._dataSource.cloneWithRows([]),
+
         };
 
 
@@ -34,33 +42,42 @@ class MessagePage extends Component {
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            this._onRefresh();
+            this.refresh();
         });
 
 
     }
 
+    refresh = () => {
+        getNotifications(data => {
+            const {notifications} = data;
+            this.setState({
+                dataList: notifications,
+                dataSource: this._dataSource.cloneWithRows(notifications)
+            })
+        }, err => {
+
+        })
+    };
+
     render() {
-        const {dataList, dataSource, fetchState} = this.state;
+        const {dataSource} = this.state;
         return (<View
             testID="page_message"
             style={ApplicationStyles.bgContainer}>
             <NavigationBar
-                toolbarStyle={{backgroundColor:Colors.bg_09}}
+                toolbarStyle={{backgroundColor: Colors.bg_09}}
                 router={router}
                 title={I18n.t('messages')}
                 leftBtnIcon={Images.sign_return}
-                leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
-                leftBtnPress={()=>router.pop()}/>
-            {isEmptyObject(dataList) && !fetchState ? <NoDataView/> : null}
-            {isEmptyObject(dataList) && fetchState ? <LoadErrorView
-                    onPress={this._onRefresh}/> : null}
+                leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                leftBtnPress={() => router.pop()}/>
 
             <SwipeListView
                 enableEmptySections={true}
                 dataSource={dataSource}
                 renderHiddenRow={this.hiddenRow}
-                renderRow={this._itemListView}
+                renderRow={this.readerItem}
                 disableRightSwipe={true}
                 rightOpenValue={-75}
             />
@@ -68,30 +85,87 @@ class MessagePage extends Component {
         </View>)
     }
 
-    componentWillReceiveProps(newProps) {
-        const {actionType, notices, loading, hasData, error} = newProps;
-        if (actionType === GET_NOTIFICATIONS
-            && loading !== this.props.loading
-            && hasData) {
 
-            const {notifications} = notices;
-            this.setState({
-                dataList: notifications,
-                dataSource: this._dataSource.cloneWithRows(notifications),
-                fetchState: error
-            })
+    readerItem = (item, secId, rowId) => {
+        const {notify_type, color_type, title, content, created_at, order_number, id, read, order_status} = item;
+
+        return (
+            <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => {
+                    if (notify_type === ORDER) {
+                        router.toOrderInfoPage(this.props, order_number)
+                    } else {
+                        router.toCertificationPage()
+                    }
+                    postMsgRead({id: id}, data => {
+                        this.refresh();
+
+                    }, err => {
+
+                    });
+
+
+                }}
+                style={{backgroundColor: 'white'}}>
+                {rowId !== 0 ? <View style={styles.msgLine}/> : null}
+                <View style={styles.flatItem}>
+                    <Image style={styles.msgIcon}
+                           source={this.getIcon(notify_type, order_status, color_type)}/>
+                    {read ? null : <View style={styles.msgRed}/>}
+                    <View>
+                        <Text style={styles.msgTitle}>{title}</Text>
+                        <Text style={styles.msgDesc}>{this.getDesc(notify_type, order_number, content)}</Text>
+                    </View>
+
+                    <Text style={styles.msgTime}>{utcDate(created_at, 'YYYY/MM/DD')}</Text>
+
+                </View>
+            </TouchableOpacity>)
+    };
+
+    getDesc = (type, orderNum, content) => {
+        if (type === ORDER) {
+            return '订单编号:' + orderNum;
+        } else {
+            return content;
         }
+    };
 
-    }
+    getIcon = (type, status, color_type) => {
+        if (type === ORDER) {
+            switch (status) {
+                case OrderStatus.delivered:
+                    return icons[0];
+                case OrderStatus.paid:
+                    return icons[1];
+                case OrderStatus.canceled:
+                    return icons[2];
+
+                default:
+                    return icons[5];
+            }
+        } else if (type === CERTIFICATION) {
+            switch (color_type) {
+                case 'failure':
+                    return icons[3];
+                case "success":
+                    return icons[4];
+
+                default:
+                    return icons[5];
+            }
+        }
+    };
+
 
     hiddenRow = (data, secId, rowId, rowMap) => {
-
         return (
 
             <View style={styles.rowHidden}>
                 <View></View>
                 <TouchableOpacity
-                    onPress={()=>this._delNotice(data,secId, rowId, rowMap)}
+                    onPress={() => this._delNotice(data, secId, rowId, rowMap)}
                     style={styles.rightSwipe}>
                     <Text style={styles.txtSwipe}>{I18n.t('buy_del')}</Text>
                 </TouchableOpacity>
@@ -100,21 +174,6 @@ class MessagePage extends Component {
         )
     };
 
-
-    _onRefresh = () => {
-        this.props.getNotices()
-    };
-
-    _titleColor = (color_type) => {
-        switch (color_type) {
-            case 'success':
-                return styles.txtGreen;
-            case 'failure':
-                return styles.txtRed;
-            default:
-                return styles.txtBlack;
-        }
-    };
 
     deleteRow = (secId, rowId, rowMap) => {
         rowMap[`${secId}${rowId}`].closeRow();
@@ -127,112 +186,62 @@ class MessagePage extends Component {
     };
 
     _delNotice = (data, secId, rowId, rowMap) => {
-
-
-        this.props.delNotice({id: data.id}, () => {
+        delNotification({id: data.id}, ret => {
             this.deleteRow(secId, rowId, rowMap)
+        }, err => {
+            showToast(err)
         })
+
     };
 
-    _itemListView = (item) => {
-
-        const {notify_type, color_type, title, content, created_at, order_number, image, id} = item;
-        if (notify_type === 'order') {
-            return ( <View
-                    testID={'item_order_'+id}>
-                    <View style={{height:10}}/>
-                    <View style={styles.listItem}>
-                        <View style={styles.itemTitle}>
-                            <Text
-                                testID={'txt_title_'+id}
-                                style={[styles.txtPay,this._titleColor(color_type)]}>{title}</Text>
-                            <View style={{flex:1}}/>
-                            <Text
-                                testID={'txt_notice_time_1'+id}
-                                style={styles.txtTime}>{utcDate(created_at, YYYY_MM_DD)}</Text>
-                        </View>
-
-                        <View style={styles.itemView}>
-                            <ImageLoad
-                                source={{uri:image}}
-                                style={styles.imgRace}/>
-                            <View style={styles.itemContent}>
-                                <Text
-                                    testID={'txt_content_'+id}
-                                    style={styles.txtContent}>{content}</Text>
-                                <View style={{flex:1}}/>
-
-                                <Text
-                                    testID={'txt_order_num_'+id}
-                                    style={styles.txtNum}>{I18n.t('order_num')}:{order_number}</Text>
-
-                            </View>
-
-                        </View>
-
-                        <View style={{height:15}}/>
-
-                    </View>
-                </View>
-            )
-        } else if (notify_type === 'certification') {
-            return ( <View
-                testID={"item_certification_"+id}>
-                <View style={{height:10}}/>
-                <View style={styles.listItem}>
-                    <View style={styles.itemTitle}>
-                        <Text
-                            testID={'txt_title_'+id}
-                            style={[styles.txtPay,this._titleColor(color_type)]}>{title}</Text>
-                        <View style={{flex:1}}/>
-                        <Text
-                            testID={'txt_notice_time_1'+id}
-                            style={styles.txtTime}>{utcDate(created_at, YYYY_MM_DD)}</Text>
-                    </View>
-
-                    <Text
-                        testID={'txt_content_'+id}
-                        style={styles.txtNotice}>{content}</Text>
-
-                    <Text style={styles.txtSource}>{I18n.t('message_from')}</Text>
-
-                </View>
-            </View>)
-        }
-    }
-
 }
-
-const
-    bindAction = dispatch => ({
-        getNotices: () => dispatch(fetchNotifications()),
-        delNotice: (body, success) => dispatch(fetchDelNotice(body, success))
-    })
-    ;
-
-const
-    mapStateToProps = state => ({
-        loading: state.AccountState.loading,
-        error: state.AccountState.error,
-        hasData: state.AccountState.hasData,
-        actionType: state.AccountState.actionType,
-        notices: state.AccountState.notices
-
-    });
-
-export
-default
-
-connect(mapStateToProps, bindAction)
-
-(
-    MessagePage
-)
-;
 
 
 const
     styles = StyleSheet.create({
+        flatItem: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingTop: 24,
+            paddingBottom: 22
+        },
+        msgIcon: {
+            height: 54,
+            width: 54,
+            borderRadius: 27,
+            marginLeft: 18,
+            marginRight: 22
+        },
+        msgTitle: {
+            fontSize: 16,
+            color: Colors._161
+        },
+        msgDesc: {
+            fontSize: 14,
+            color: Colors._888,
+            marginTop: 10
+        },
+        msgTime: {
+            fontSize: 12,
+            color: Colors._AAA,
+            position: 'absolute',
+            top: 30,
+            right: 10
+        },
+        msgLine: {
+            height: 1,
+            backgroundColor: Colors._ECE,
+            marginLeft: 18,
+        },
+        msgRed: {
+            height: 10,
+            width: 10,
+            backgroundColor: '#D0011B',
+            borderRadius: 5,
+            position: 'absolute',
+            top: 25,
+            left: 67
+        },
         itemTitle: {
             flexDirection: 'row',
             alignItems: 'center',
@@ -300,7 +309,7 @@ const
             flex: 1,
             flexDirection: 'row',
             justifyContent: 'space-between',
-            marginTop: 10
+
         },
         txtSwipe: {
             fontSize: 20,
@@ -310,7 +319,7 @@ const
             width: 75,
             alignItems: 'center',
             justifyContent: 'center',
-            height: 140
+            height: 100
         }
 
 

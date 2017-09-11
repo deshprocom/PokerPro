@@ -57,6 +57,7 @@ function setDpIp() {
 }
 
 export function getBaseURL() {
+
     setDpIp();
     storage.load({key: StorageKey.ApiSever})
         .then((ret) => {

@@ -3,7 +3,7 @@
  */
 import React, {Component, PropTypes}from 'react';
 import {
-    TouchableOpacity, View, TextInput, ListView,
+    TouchableOpacity, View, TextInput, FlatList,
     StyleSheet, Image, Text, ScrollView, Platform
 } from 'react-native';
 import {connect} from 'react-redux';
@@ -17,6 +17,8 @@ import Calendar from '../../components/calendar/Calendar';
 import {SEARCH_RANGE_LIST} from '../../actions/ActionTypes';
 import {fetchRangeList} from '../../actions/RacesAction';
 import I18n from 'react-native-i18n';
+import {searchRaces} from '../../services/RacesDao';
+import RaceRowView from '../../components/listitem/RaceRowView';
 
 const Y_M_D = 'YYYY-MM-DD';
 
@@ -26,7 +28,7 @@ class CalendarModal extends Component {
     static props = {
         btnOpen: PropTypes.func,
         selected: PropTypes.func
-    }
+    };
 
     componentDidMount() {
         this.props.selected(getCurrentDate().format(Y_M_D));
@@ -34,7 +36,8 @@ class CalendarModal extends Component {
     }
 
     state = {
-        eventDates: []
+        eventDates: [],
+        datas: []
     };
 
     render() {
@@ -42,8 +45,10 @@ class CalendarModal extends Component {
             <View
                 testID="page_calendar"
                 style={styles.container}>
+
+
                 <Calendar
-                    ref={ref=>this.calendar = ref}
+                    ref={ref => this.calendar = ref}
                     eventDates={this.state.eventDates}
                     scrollEnabled
                     showControls
@@ -57,8 +62,8 @@ class CalendarModal extends Component {
                         I18n.t('calendar_6')]}
                     monthNames={MonthNames}
                     titleFormat={YYYY年MM月}
-                    onDateSelect={(date) =>{
-                        this.props.selected(convertDate(date,Y_M_D));
+                    onDateSelect={(date) => {
+                        this._search(convertDate(date, Y_M_D));
 
                     }}
                     onSwipeNext={this.onMonChanged}    // Callback for forward swipe event
@@ -66,13 +71,38 @@ class CalendarModal extends Component {
                     onTouchNext={this.onMonChanged}    // Callback for next touch event
                     onTouchPrev={this.onMonChanged}    // Callback for prev touch event
                 />
-                <TouchableOpacity
-                    activeOpacity={1}
-                    onPress={()=>this.props.btnOpen()}
-                    style={styles.btnBottom}/>
+
+                <View style={{height: 5}}/>
+
+
+                <FlatList
+                    data={this.state.datas}
+                    renderItem={({item, index}) => <RaceRowView
+                        isMoreRace={true}
+                        rowID={index}
+                        router={router}
+                        rowData={item}/>}/>
+
+
             </View>
         )
     }
+
+
+    _search = (selectDate) => {
+        const body = {
+            date: selectDate
+        };
+
+        searchRaces(body, data => {
+            this.setState({
+                datas: data.items
+            })
+        }, err => {
+
+        })
+
+    };
 
     componentWillReceiveProps(newProps) {
         const {hasData, rangeList, loading, actionType} = newProps;
@@ -122,13 +152,11 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         top: Metrics.navBarHeight,
-        flex: 1
-    },
-    btnBottom: {
-        flex: 1,
         backgroundColor: 'rgba(0,0,0,0.2)',
-        height: 300
-    }
+        flex: 1,
+        bottom: 0
+    },
+
 
 });
 

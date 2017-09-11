@@ -123,6 +123,10 @@ class SettingPage extends Component {
 
                 <SetItemView name={I18n.t('about')}
                              onPress={() => router.toAboutPage()}/>
+                <View
+                    style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>
+                <SetItemView name={I18n.t('suggest')}
+                             onPress={() => router.toSuggest()}/>
             </View>
 
 

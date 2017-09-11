@@ -502,7 +502,8 @@ const styles = StyleSheet.create({
     item1: {
         flexDirection: 'row',
         marginTop: 9,
-        alignItems: 'center'
+        alignItems: 'center',
+        maxWidth: '90%'
     },
     point: {
         height: 6,

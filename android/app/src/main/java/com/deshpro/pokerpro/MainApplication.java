@@ -3,6 +3,7 @@ package com.deshpro.pokerpro;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.theweflex.react.WeChatPackage;
 import com.zzy.umshare.UMShareModulePackage;
 import com.github.yamill.orientation.OrientationPackage;
 import com.brentvatne.react.ReactVideoPackage;
@@ -26,8 +27,8 @@ import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
 
-    private boolean SHUTDOWN_TOAST = false;
-    private boolean SHUTDOWN_LOG = false;
+    private boolean SHUTDOWN_TOAST = true;
+    private boolean SHUTDOWN_LOG = true;
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
     public boolean getUseDeveloperSupport() {
@@ -38,6 +39,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new WeChatPackage(),
             new UMShareModulePackage(),
             new OrientationPackage(),
             new ReactVideoPackage(),

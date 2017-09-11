@@ -4,7 +4,7 @@
 import React, {Component}from 'react';
 import {
     TouchableOpacity, View, TextInput, Alert,
-    StyleSheet, Image, Text, ScrollView, Platform
+    StyleSheet, Image, Text, ScrollView
 } from 'react-native';
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
@@ -22,11 +22,18 @@ import {
 import Button from 'react-native-smart-button';
 import {fetchGetRecentRaces, fetchRacesInfo} from '../../actions/RacesAction';
 import {Verified} from '../../configs/Status';
+import PayModal from '../buy/PayModal';
+import {postOrderCancel, postPayOrder, postOrderComplete} from '../../services/OrderDao';
 
 class OrderInfoPage extends React.Component {
 
     componentDidMount() {
+        const {isPay} = this.props.params;
+        if (isPay) {
+            this._pay();
+        }
         this._refreshPage();
+
     }
 
     state = {
@@ -59,8 +66,7 @@ class OrderInfoPage extends React.Component {
 
     _refreshPage = () => {
 
-        console.log('orderE', getLoginUser())
-        const {user_id} = getLoginUser();
+        const {user_id} = login_user;
         if (strNotNull(user_id)) {
             this.setState({
                 user_id: user_id
@@ -72,7 +78,7 @@ class OrderInfoPage extends React.Component {
             this.props._getOrderDetail(body);
         }
 
-    }
+    };
 
     _orderCancel = () => {
 
@@ -86,7 +92,7 @@ class OrderInfoPage extends React.Component {
                 onPress: () => this._cancelOrder()
             }]);
 
-    }
+    };
 
     _cancelOrder = () => {
         const body = {
@@ -121,7 +127,7 @@ class OrderInfoPage extends React.Component {
                         Communications.phonecall(I18n.t('hot_phone'), false)
                     }
                     }])
-    }
+    };
 
 
     _orderView = (order_info) => {
@@ -163,7 +169,7 @@ class OrderInfoPage extends React.Component {
                                 }}>{I18n.t('order_status')}:</Text>
                                 <Text
                                     testID="txt_order_status"
-                                    style={{fontSize: 15, color: Colors._888}}>{orderStatus(order_info.status)}</Text>
+                                    style={{fontSize: 15, color: Colors._DF1}}>{orderStatus(order_info.status)}</Text>
                             </View>
                         </View>
 
@@ -171,6 +177,8 @@ class OrderInfoPage extends React.Component {
 
 
                 </View>
+
+                {this._invite()}
                 {/*地址 邮箱*/}
                 <View style={{backgroundColor: Colors.white, paddingLeft: 17, marginTop: 5}}>
                     <View>
@@ -198,7 +206,7 @@ class OrderInfoPage extends React.Component {
                             <Text
                                 testID="txt_original_price"
                                 style={{
-                                    fontSize: 14, color: Colors._333, marginRight: 18,
+                                    fontSize: 14, color: Colors._AAA, marginRight: 18,
                                     textDecorationLine: 'line-through'
                                 }}>{order_info.original_price}</Text>
                         </View>
@@ -257,7 +265,8 @@ class OrderInfoPage extends React.Component {
     _bottomBar = (order_info) => {
 
         if (!isEmptyObject(order_info) &&
-            order_info.status === 'unpaid')
+            (order_info.status === 'unpaid'
+            || order_info.status === 'delivered'))
             return ( <View
                 activeOpacity={1}
                 testID="btn_buy"
@@ -269,62 +278,179 @@ class OrderInfoPage extends React.Component {
                     position: 'absolute', bottom: 0, left: 0, right: 0,
                 }}>
 
-
-                <View style={{flexDirection: 'row', marginLeft: 19, alignItems: 'flex-end'}}>
-                    <Text style={{fontSize: 14, color: Colors.txt_666}}>{I18n.t('order_total')}: </Text>
-
-                    <Text
-                        testID="txt_total_price"
-                        style={{fontSize: 18, color: '#DF1D0F'}}>
-                        {isEmptyObject(order_info) ? '' : order_info.price}</Text>
-                </View>
-
-                <TouchableOpacity
-                    onPress={this._orderCancel}
-                    activeOpacity={1}
-                    testID="btn_order_cancel"
-                    style={{flex: 1, alignItems: 'flex-end'}}>
-                    <View
-                        style={{
-                            borderColor: Colors._AAA, borderWidth: 1, borderRadius: 5,
-                            height: 32, width: 68, alignItems: 'center', justifyContent: 'center', marginRight: 15
-                        }}>
-                        <Text style={{fontSize: 12, color: Colors.txt_666}}>{I18n.t('order_cancel')}</Text>
-                    </View>
-                </TouchableOpacity>
-                {this._user_real_call_btn()}
+                {this.btnBottom(order_info)}
 
             </View>)
-    }
+    };
 
-    _user_real_call_btn = () => {
-        if (user_extra.status === Verified.FAILED)
-            return (<TouchableOpacity
-                testID="btn_user_real"
-                onPress={this._goUserReal}
-                activeOpacity={1}
-                style={{
-                    width: 130, height: 62, alignItems: 'center', justifyContent: 'center',
-                    backgroundColor: Colors.bg_09
-                }}>
-                <Text style={{fontSize: 18, color: Colors.txt_E0C}}>{I18n.t('edit_real_name')}</Text>
-            </TouchableOpacity>)
-        else
-            return (<TouchableOpacity
-                testID="btn_call"
+
+    btnBottom = (order_info) => {
+        switch (order_info.status) {
+            case 'unpaid':
+                return this._unPaid(order_info);
+            case 'delivered':
+                return this._paidView(order_info);
+        }
+    };
+
+    _logistics = () => {
+
+        const {order_info} = this.props.orderDetail;
+        if (!isEmptyObject(order_info)) {
+            const {ticket_type, email, courier, tracking_no} = order_info;
+
+            if (ticket_type === 'e_ticket') {
+                let mail = I18n.t('order_logistics_email') + '\n' + email;
+                Alert.alert(I18n.t('order_logistics'), mail,
+                    [
+                        {
+                            text: I18n.t('I_known'), onPress: () => {
+
+                        }
+                        }])
+            } else {
+                let courierInfo = courier + '\n' + I18n.t('tracking_no') + ': ' + tracking_no;
+                Alert.alert(I18n.t('order_logistics'), courierInfo,
+                    [
+                        {
+                            text: I18n.t('I_known'), onPress: () => {
+
+                        }
+                        }])
+            }
+
+        }
+
+    };
+
+    _orderCom = () => {
+        const {order_info} = this.props.orderDetail;
+
+        const body = {
+            order_number: order_info.order_id
+        };
+        postOrderComplete(body, data => {
+            this._refreshPage();
+        })
+    };
+
+    _paidView = (order_info) => {
+        return (<View style={styles.row}>
+
+            <View style={{flex: 1}}/>
+
+            <TouchableOpacity
                 onPress={this._hotLine}
                 activeOpacity={1}
-                style={{
-                    width: 130, height: 62, alignItems: 'center', justifyContent: 'center',
-                    backgroundColor: Colors.bg_09
-                }}>
-                <Text style={{fontSize: 18, color: Colors.txt_E0C}}>{I18n.t('service_pay')}</Text>
-            </TouchableOpacity>)
-    }
+                testID="btn_order_cancel"
+                style={[styles.btnCancel, {marginRight: 15}]}>
 
-    _goUserReal = () => {
-        this.props.router.toCertificationPage();
-    }
+                <Text style={styles.txtCancel}>{I18n.t('contact_customer_service')}</Text>
+
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                onPress={this._logistics}
+                style={styles.btnCancel}>
+
+                <Text style={styles.txtCancel}>{I18n.t('order_logistics')}</Text>
+
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                onPress={this._orderCom}
+                style={styles.btnGet}>
+
+                <Text style={styles.txtGet}>{I18n.t('order_receipt')}</Text>
+
+            </TouchableOpacity>
+
+        </View>)
+    };
+
+    _unPaid = (order_info) => {
+        return (<View style={styles.row}>
+            <View style={{flexDirection: 'row', marginLeft: 19, alignItems: 'flex-end'}}>
+                <Text style={{fontSize: 14, color: Colors.txt_666, marginRight: 5}}>{I18n.t('order_total')}: </Text>
+
+                <Text
+                    testID="txt_total_price"
+                    style={{fontSize: 18, color: Colors._DF1}}>
+                    ¥{isEmptyObject(order_info) ? '' : order_info.price}</Text>
+            </View>
+            <View style={{flex: 1}}/>
+
+            <TouchableOpacity
+                onPress={this._orderCancel}
+                activeOpacity={1}
+                testID="btn_order_cancel"
+                style={styles.btnCancel}>
+
+                <Text style={styles.txtCancel}>{I18n.t('order_cancel')}</Text>
+
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                onPress={this._payOrder}
+                activeOpacity={1}
+                testID="btn_order_pay"
+                style={styles.btnPay}>
+
+                <Text style={styles.txtPay}>{I18n.t('pay')}</Text>
+
+            </TouchableOpacity>
+        </View>)
+    };
+
+
+    _payOrder = () => {
+        const {order_id} = this.props.params;
+        const {orderDetail} = this.props;
+        const {order_info} = orderDetail;
+        if (this.payModal) {
+
+            const data = {
+                order_number: order_id,
+                price: order_info.price
+            };
+
+            this.payModal.setPayUrl(data);
+            this.payModal.setRefresh(this._refreshPage);
+            this.payModal.toggle();
+        }
+
+    };
+
+    _pay = () => {
+        const {order_id, price} = this.props.params;
+
+        if (this.payModal) {
+
+            const data = {
+                order_number: order_id,
+                price: price
+            };
+
+            this.payModal.setPayUrl(data);
+            this.payModal.setRefresh(this._refreshPage);
+            this.payModal.toggle();
+        }
+
+    };
+
+
+    _invite = () => {
+        const {orderDetail} = this.props;
+        const {invite_code} = orderDetail.order_info;
+        if (strNotNull(invite_code)) {
+            return (<View style={styles.inviteView}>
+                <Text style={styles.inviteLabel}>{I18n.t('buy_invite')}</Text>
+                <Text style={styles.inviteCode}>{invite_code}</Text>
+
+            </View>)
+        }
+
+    };
 
 
     scrollStyle = (order_info) => {
@@ -333,7 +459,7 @@ class OrderInfoPage extends React.Component {
             return {marginBottom: 62}
         else
             return {}
-    }
+    };
 
     _serviceBtn = (order_info) => {
         if (!isEmptyObject(order_info) &&
@@ -373,7 +499,7 @@ class OrderInfoPage extends React.Component {
                     marginLeft: 17
                 }]}>{I18n.t('order_reason')}:{user_extra.memo}</Text>
             </View>)
-    }
+    };
 
 
     render() {
@@ -405,7 +531,7 @@ class OrderInfoPage extends React.Component {
                     {this._orderView(order_info)}
 
                     {/*购票须知*/}
-                    <View style={{backgroundColor: Colors.white, paddingLeft: 17, marginTop: 10}}>
+                    <View style={{paddingLeft: 17, marginTop: 10}}>
                         <View style={{height: 40, alignItems: 'center', flexDirection: 'row'}}>
                             <Text style={{
                                 fontSize: Fonts.size.h16,
@@ -428,7 +554,8 @@ class OrderInfoPage extends React.Component {
 
                 {/*底部导航栏*/}
                 {this._bottomBar(order_info)}
-
+                <PayModal
+                    ref={ref => this.payModal = ref}/>
             </View>)
     }
 }
@@ -460,5 +587,51 @@ const styles = StyleSheet.create({
     txtAdr: {
         fontSize: 15,
         color: Colors._888
-    }
+    },
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    btnCancel: {
+        borderColor: Colors._666, borderWidth: 1, borderRadius: 3,
+        alignItems: 'center', justifyContent: 'center', marginRight: 30,
+        minWidth: 80
+    },
+    txtCancel: {
+        fontSize: 14, color: Colors._666,
+        margin: 10
+    },
+    btnGet: {
+        borderColor: Colors._DF1, borderWidth: 1, borderRadius: 3,
+        alignItems: 'center', justifyContent: 'center', marginRight: 17,
+        minWidth: 80
+    },
+    txtGet: {
+        fontSize: 14, color: Colors._DF1,
+        margin: 10
+    },
+    btnPay: {
+        borderRadius: 3, backgroundColor: Colors._DF1,
+        alignItems: 'center', justifyContent: 'center', marginRight: 15,
+        minWidth: 80
+    },
+    txtPay: {
+        fontSize: 14, color: Colors.white,
+        margin: 10
+    },
+    inviteView: {
+        height: 50,
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 5
+    },
+    inviteLabel: {
+        fontSize: 14,
+        color: Colors.txt_666,
+        marginRight: 18,
+        marginLeft: 18
+    },
+    inviteCode: {fontSize: 15, color: Colors._888}
+
 });

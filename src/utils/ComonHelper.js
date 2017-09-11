@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/1/12.
  */
-import {PixelRatio, Alert, Share} from 'react-native';
+import {PixelRatio, Alert, Share, Platform, Linking} from 'react-native';
 import React, {PropTypes} from 'react';
 import Toast from 'react-native-root-toast';
 import md5 from "react-native-md5";
@@ -12,8 +12,9 @@ import StorageKey from '../configs/StorageKey';
 import {Verified, SellStatus} from '../configs/Status';
 import Communications from 'react-native-communications';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
-import ImageMark from '../components/simple/ImageMark';
 import UMShare from 'react-native-umshare';
+import *as wechat from 'react-native-wechat'
+import * as Constants from '../configs/Constants';
 
 export const YYYY_MM_DD = 'YYYY.MM.DD';
 export const DATA_SS = 'YYYY-MM-DD hh:mm:ss';
@@ -21,6 +22,57 @@ export const YYYY_MM = 'YYYY-MM';
 export const YYYY年MM月 = 'YYYY年MM月';
 export const YYYYMMDD = 'YYYYMMDD';
 export const MM_DD = 'MM-DD';
+
+const HOST = 'https://h5.deshpro.com/';
+export const loadApp = HOST + 'race/181/zh/loadAPP';
+
+
+export function updateApp(data) {
+    const {android_platform, ios_platform} = data;
+    if (Platform.OS === 'ios') {
+        if (ios_platform.version !== Constants.UpdateVersion) {
+            updateAlet(ios_platform)
+        }
+    } else {
+        if (android_platform.version !== Constants.UpdateVersion) {
+            updateAlet(android_platform)
+        }
+    }
+
+
+}
+
+
+function updateAlet(data) {
+
+    const upgrade = data.force_upgrade ? [{
+        text: I18n.t('update_download'),
+        onPress: () => {
+            if (Platform.OS === 'ios') {
+                Linking.openURL(Constants.IOSLOAD)
+            } else {
+                Linking.openURL(Constants.ANDROIDLOAD)
+            }
+        }
+    }] : [{
+        text: I18n.t('update_cancel'),
+        onPress: () => {
+
+        }
+    },
+        {
+            text: I18n.t('update_download'),
+            onPress: () => {
+                if (Platform.OS === 'ios') {
+                    Linking.openURL(Constants.IOSLOAD)
+                } else {
+                    Linking.openURL(Constants.ANDROIDLOAD)
+                }
+            }
+        }];
+    Alert.alert(strNotNull(data.title) ? data.title : 'Alert',
+        strNotNull(data.content) ? data.content : 'content', upgrade, {cancelable: false})
+}
 
 export function strToDate(date) {
     let t = Date.parse(date);
@@ -30,6 +82,7 @@ export function strToDate(date) {
         return new Date();
     }
 }
+
 
 const shareIcon = 'https://www.deshpro.com/pokerpro.png';
 export const DayHeadings = [I18n.t('calendar_7'),
@@ -41,6 +94,7 @@ export const DayHeadings = [I18n.t('calendar_7'),
     I18n.t('calendar_6')];
 export const MonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May',
     'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
 /*判断是否为Null*/
 export function strNotNull(str) {
     if (str == undefined || str == null || str.length == 0)
@@ -50,15 +104,94 @@ export function strNotNull(str) {
 }
 
 let Lang = 'zh';
+
 export function setLang(lang) {
     Lang = lang;
     // console.log('分享页语言'+Lang);
 }
 
-export const loadApp = 'https://h5.deshpro.com/race/181/zh/loadAPP';
+export function getDateDiff(dateTimeStamp) {
+
+    var minute = 1000 * 60;
+    var hour = minute * 60;
+    var day = hour * 24;
+    var halfamonth = day * 15;
+    var month = day * 30;
+    var now = new Date().getTime();
+
+    var diffValue = now - dateTimeStamp * 1000;
+    if (diffValue < 0) {
+        return;
+    }
+    var monthC = diffValue / month;
+    var weekC = diffValue / (7 * day);
+    var dayC = diffValue / day;
+    var hourC = diffValue / hour;
+    var minC = diffValue / minute;
+    if (monthC >= 1) {
+        result = "" + parseInt(monthC) + I18n.t('time_month');
+    }
+    else if (weekC >= 1) {
+        result = "" + parseInt(weekC) + I18n.t('time_week');
+    }
+    else if (dayC >= 1) {
+        result = "" + parseInt(dayC) + I18n.t('time_day');
+    }
+    else if (hourC >= 1) {
+        result = "" + parseInt(hourC) + I18n.t('time_hour');
+    }
+    else if (minC >= 1) {
+        result = "" + parseInt(minC) + I18n.t('time_min');
+    } else
+        result = I18n.t('time_moment');
+    return result;
+}
+
+export function payWx(data, callback) {
+    const body = {
+        partnerId: data.partnerid,  // 商家向财付通申请的商家id
+        prepayId: data.prepayid,   // 预支付订单
+        nonceStr: data.noncestr,   // 随机串，防重发
+        timeStamp: data.timestamp,  // 时间戳，防重发
+        package: data.package,    // 商家根据财付通文档填写的数据和签名
+        sign: data.sign
+    };
+
+    console.log('wxpay', body);
+    wechat.pay(body).then(ret => {
+        callback()
+    }).catch(err => {
+
+    })
+}
+
+
+export function loginWX(resolve, reject) {
+
+    wechat.sendAuthRequest('snsapi_userinfo', 'pokerpro')
+        .then(data => {
+            console.log('loginWX', data);
+            resolve(data)
+        }).catch(err => {
+        reject(err)
+    })
+
+}
+
+
+export function uShareActivity(title, desc, icon, id) {
+
+    UMShare.share(title, desc, getShareIcon(icon), HOST + "activities/" + id + "/" + Lang)
+        .then(() => {
+            showToast(`${I18n.t('show_success')}`)
+        }, (error) => {
+            showToast(error)
+        })
+}
 
 export function uShareRace(title, location, icon, raceId) {
-    UMShare.share(title, location, icon, "https://h5.deshpro.com/race/" + raceId + "/" + Lang)
+
+    UMShare.share(title, location, getShareIcon(icon), HOST + "race/" + raceId + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
@@ -67,7 +200,7 @@ export function uShareRace(title, location, icon, raceId) {
 }
 
 export function newShare(title, location, icon, newsId) {
-    UMShare.share(title, location, icon, "https://h5.deshpro.com/news/" + newsId + "/" + Lang)
+    UMShare.share(title, location, getShareIcon(icon), HOST + "news/" + newsId + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
@@ -76,7 +209,8 @@ export function newShare(title, location, icon, newsId) {
 }
 
 export function rankPlayerShare(title, location, icon, playerId) {
-    UMShare.share(title, location, icon, "https://h5.deshpro.com/rankPlayer/" + playerId + "/" + Lang)
+
+    UMShare.share(title, location, getShareIcon(icon), HOST + "rankPlayer/" + playerId + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
@@ -85,12 +219,16 @@ export function rankPlayerShare(title, location, icon, playerId) {
 }
 
 export function rankGameShare(title, location, icon, gameId) {
-    UMShare.share(title, location, icon, "https://h5.deshpro.com/rankGame/" + gameId + "/" + Lang)
+    UMShare.share(title, location, getShareIcon(icon), HOST + "rankGame/" + gameId + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
             showToast(error)
         })
+}
+
+function getShareIcon(icon) {
+    return strNotNull(icon) ? encodeURI(icon) : shareIcon
 }
 
 export function strNull__(str) {
@@ -121,9 +259,11 @@ export function strRow(str) {
     }
 }
 
+var pattern = / /;
+
 export function nameRow(name) {
     if (strValid(name)) {
-        return name.replace(' ', '\n');
+        return name.replace(pattern, ' ').replace(' ', '\n');
     }
 }
 
@@ -176,6 +316,7 @@ export function moneyFormat(num) {
     }
     return result;
 }
+
 /*对象是否为空对象*/
 export function isEmptyObject(e) {
     var t;
@@ -197,6 +338,7 @@ export function showToast(msg) {
 
 
 var myreg = /^1(3|4|5|7|8)\d{9}$/;
+
 export function checkPhone(phone) {
     if (phone != null && phone != undefined) {
         if (!myreg.test(phone.trim())) {
@@ -208,6 +350,7 @@ export function checkPhone(phone) {
 }
 
 var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
 export function checkMail(mail) {
 
     if (strNotNull(mail) && filter.test(mail.trim())) return true;
@@ -228,6 +371,7 @@ export function checkLoginMail(mail) {
  1, 长度必须6 - 20位
  2, 必须是 数字+字母 或 数字 + 特殊字符 或 字母+特殊字符 或 数字 + 字母 + 特殊字符的组合*/
 var PWD_VALID_FORMAT_REGEX = /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/;
+
 export function pwdVaild(password) {
     if (PWD_VALID_FORMAT_REGEX.test(password))
         return true;
@@ -241,6 +385,7 @@ export function pwdVaild(password) {
 export function md5Pwd(password) {
     return md5.hex_md5(password);
 }
+
 /*赛事状态*/
 export function raceStatusConvert(status) {
     switch (status) {
@@ -315,6 +460,8 @@ export function orderStatus(status) {
             return I18n.t('completed');
         case 'canceled':
             return I18n.t('canceled');
+        case 'delivered':
+            return I18n.t('delivered');
     }
 }
 
@@ -330,14 +477,21 @@ export function ticketType(type) {
 export function legalValue(value) {
     return value ? value : '';
 }
+
 /*获取登陆用户*/
 export function getLoginUser() {
     return LoginUser;
 }
+
 /*缓存登陆用户*/
 export function putLoginUser(ret) {
-    setLoginUser(ret)
+    setLoginUser(ret);
+    storage.save({
+        key: StorageKey.UserAvatar,
+        rawData: ret.avatar
+    });
 }
+
 /*是否登陆*/
 export function isLoginUser() {
     if (!isEmptyObject(LoginUser) && strNotNull(LoginUser.user_id))
@@ -368,11 +522,11 @@ export function idCardStatus(status) {
     }
 }
 
-export function setUserData(data) {
-    userData = data;
+export function setUserData(username) {
+    userData = username;
     storage.save({
         key: StorageKey.UserData,
-        rawData: data
+        rawData: username
     })
 }
 
@@ -381,7 +535,6 @@ export var userData = '';
 export function getUserData() {
     storage.load({key: StorageKey.UserData})
         .then((ret) => {
-            console.log(ret)
             userData = ret
         })
 }
@@ -476,6 +629,7 @@ export function getCurrentMonth() {
 export function getCurrentDate() {
     return moment();
 }
+
 /*数组去重*/
 export function arrayUnique(arr) {
 
@@ -550,6 +704,7 @@ export function pixel(layout) {
 
 
 var Actions = {};
+
 /*Action 方法*/
 export function setDispatchAction(key, func) {
     Actions[key] = func;

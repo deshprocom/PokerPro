@@ -6,7 +6,7 @@ import {strNotNull, isEmptyObject} from '../utils/ComonHelper';
 
 export default {
     //内部测试
-    dev: 'http://192.168.2.232:8800/v10/',
+    dev: 'http://deshpro.vicp.io/v10/',
     dev_ci_at: 'http://192.168.2.231:8801/v10/',
 
     //test分支用来发布版本  test_ci_at用来跑自动化测试
@@ -67,8 +67,22 @@ export default {
     players_list: players_list,
     poker_ranks: poker_ranks,
     player_focus: player_focus,
-    focus_list: focus_list
-
+    focus_list: focus_list,
+    pay_order: pay_order,
+    order_complete: order_complete,
+    unpaid_order: unpaid_order,
+    feedbacks: 'feedbacks',
+    wx_pay: wx_pay,
+    weixin_auth: 'weixin/auth',
+    weixin_bind: 'weixin/bind',
+    account_exist: account_exist,
+    activities: 'activities',
+    activityInfo: activityInfo,
+    activityPush: 'activities/pushed',
+    verify_invite_code: verify_invite_code,
+    msg_read: msg_read,
+    unread_remind:unread_remind,
+    app_versions:'app_versions'
 }
 
 
@@ -81,6 +95,52 @@ function getUserId() {
 
 const page_size = 10;
 
+
+export function unread_remind() {
+    return 'users/'+getUserId()+'/notifications/unread_remind';
+}
+
+
+export function msg_read(body) {
+    const {id} = body;
+    return 'users/' + getUserId() + '/notifications/' + id + '/read';
+}
+
+
+export function verify_invite_code() {
+    return 'users/' + getUserId() + '/verify_invite_code'
+}
+
+export function activityInfo(body) {
+    const {id} = body;
+    return 'activities/' + id;
+}
+
+export function account_exist(body) {
+    const {account} = body;
+    return 'account/' + account + '/verify'
+}
+
+export function wx_pay(body) {
+    const {order_number} = body;
+    return 'users/' + getUserId() + '/orders/' + order_number + '/wx_pay';
+}
+
+export function unpaid_order(body) {
+    const {race_id, ticket_id} = body;
+    return 'races/' + race_id + '/tickets/' + ticket_id + '/unpaid_order'
+
+}
+
+export function order_complete(body) {
+    const {order_number} = body;
+    return 'users/' + getUserId() + '/orders/' + order_number + '/complete';
+}
+
+export function pay_order(body) {
+    const {order_number} = body;
+    return 'users/' + getUserId() + '/orders/' + order_number + '/pay';
+}
 
 export function player_focus(body) {
     const {player_id} = body;
@@ -99,6 +159,7 @@ export function adrDelete(address_id) {
 export function setAdrDefault(address_id) {
     return 'account/users/' + getUserId() + '/address/' + address_id + '/default';
 }
+
 export function addAddress() {
     return 'account/users/' + getUserId() + '/address';
 }
@@ -178,6 +239,7 @@ export function news_list(body) {
 
     return 'news/types/' + type_id + '?page_size=' + page_size + '&next_id=' + next_id;
 }
+
 export function players_list(body) {
     const {page_index, region, page_size, begin_year, end_year, keyword} = body;
     if (strNotNull(keyword))
@@ -186,6 +248,7 @@ export function players_list(body) {
         return 'players?page_index=' + page_index + '&page_size=' + page_size
             + '&region=' + region + '&begin_year=' + begin_year + '&end_year=' + end_year;
 }
+
 export function player_info(body) {
     const {player_id} = body;
     return 'players/' + player_id;
@@ -241,34 +304,26 @@ export function search_by_date(body) {
 
 
 export function search_races(body) {
+
+    console.log('search_race', body);
     const {seq_id, operator, host_id, date} = body;
     if (!isEmptyObject(login_user) && strNotNull(login_user.user_id)) {
-        if (strNotNull(operator) && strNotNull(seq_id)) {
-            return '/u/' + login_user.user_id + '/races?page_size='
-                + page_size + '&seq_id=' + seq_id + '&operator=' + operator;
-        } else if (strNotNull(host_id) || strNotNull(date)) {
-            return '/u/' + login_user.user_id + '/races?page_size='
-                + page_size + '&host_id=' + host_id + '&date=' + date;
-        } else {
-            return '/u/' + login_user.user_id + '/races?page_size='
-                + page_size;
-        }
+
+        return '/u/' + login_user.user_id + '/races?page_size='
+            + page_size + '&seq_id=' + paramCheck(seq_id) + '&operator=' + paramCheck(operator)
+            + '&host_id=' + paramCheck(host_id) + '&date=' + paramCheck(date);
 
     } else {
-        if (strNotNull(operator) && strNotNull(seq_id)) {
-            return '/u/0/races?page_size='
-                + page_size + '&seq_id=' + seq_id + '&operator=' + operator;
-        } else if (strNotNull(host_id) || strNotNull(date)) {
-            return '/u/0/races?page_size='
-                + page_size + '&host_id=' + host_id + '&date=' + date;
-        } else {
-            return '/u/0/races?page_size='
-                + page_size;
-        }
+        return '/u/0/races?page_size='
+            + page_size + '&seq_id=' + paramCheck(seq_id) + '&operator=' + paramCheck(operator)
+            + '&host_id=' + paramCheck(host_id) + '&date=' + paramCheck(date);
 
     }
 
+}
 
+function paramCheck(param) {
+    return strNotNull(param) ? param : '';
 }
 
 
@@ -325,7 +380,7 @@ function users_orderDetail(body) {
 
 function users_orderCancel(body) {
     const {user_id, order_id} = body;
-    return 'users/' + user_id + '/orders/' + order_id + '/cancel';
+    return 'users/' + getUserId() + '/orders/' + order_id + '/cancel';
 }
 
 

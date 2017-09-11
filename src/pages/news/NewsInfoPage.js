@@ -82,7 +82,9 @@ const styles = StyleSheet.create({
     txtTitle: {
         fontSize: 17,
         color: Colors.txt_444,
-        marginTop: 9
+        marginTop: 14,
+        fontWeight: 'bold',
+        lineHeight: 22
     },
     txtTime: {
         fontSize: 12,
@@ -102,7 +104,7 @@ const styles = StyleSheet.create({
     sourceView: {
         marginTop: 5,
         flexDirection: 'row',
-        marginBottom: 9
+        marginBottom: 12
     },
     page: {
         flex: 1,

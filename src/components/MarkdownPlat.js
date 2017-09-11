@@ -1,15 +1,58 @@
 /**
  * Created by lorne on 2017/4/25.
  */
-import React, {PropTypes, Component,createElement}from 'react';
+import React, {PropTypes, Component, createElement} from 'react';
 import {
     TouchableOpacity, View, ScrollView,
-    StyleSheet, Text, Platform
+    StyleSheet, Text, Platform, Alert, Image
 } from 'react-native';
-import Markdown from './simple';
-import {MarkdownView} from './markview';
-import ImageMark from './simple/ImageMark';
-import {strNotNull,FontSize} from '../utils/ComonHelper';
+import {strNotNull, FontSize, showToast} from '../utils/ComonHelper';
+import createMarkdownRenderer from 'rn-markdown';
+import FitImage from './ImageMark';
+
+
+const imageClick = (source) => {
+
+    if (strNotNull(source)) {
+        let index = 0;
+
+        let images = [{url: source}];
+
+        router.toImageGalleryPage(this.props, images, index)
+    }
+
+};
+
+
+const Markdown = createMarkdownRenderer({gfm: false});
+Markdown.renderer.link = props => {
+    const {markdown} = props;
+    const {href} = markdown;
+    return (
+        <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => router.toWebViewPage(props, href)}>
+            <View>
+                {props.children}
+            </View>
+        </TouchableOpacity>
+    )
+};
+
+Markdown.renderer.image = props => {
+    const {markdown} = props;
+    const {href} = markdown;
+    return (
+        <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => imageClick(href)}>
+            <View>
+                <FitImage
+                    src={href}/>
+            </View>
+        </TouchableOpacity>
+    )
+};
 
 export default class MarkdownPlat extends Component {
 
@@ -32,156 +75,69 @@ export default class MarkdownPlat extends Component {
 
     _markdownView = () => {
         const {markdownStr} = this.props;
-        if (strNotNull(markdownStr))
-            if (Platform.OS === 'ios') {
-
-                return (<MarkdownView
-                    styles={{
+        try {
+            if (strNotNull(markdownStr))
+                return (
+                    <Markdown contentContainerStyle={styles.container} markdownStyles={{
+                        container: {
+                            padding: 20
+                        },
                         heading1: {
-                            color: '#555555',
-                            fontSize: FontSize.h19,
-                        },
-                        heading2: {
-                            color: '#555555',
-                            fontSize: FontSize.h17,
-                        },
-                        heading3: {
-                            color: '#555555',
-                            fontSize: FontSize.h16,
-                        },
-                        heading4: {
-                            color: '#555555',
-                            fontSize:  FontSize.h15,
-                        },
-                        paragraph: {
-                            marginTop: 10,
-                            marginBottom: 10,
-                            fontSize:  FontSize.h15,
-                            lineHeight: 25,
-                            letterSpacing: 0.3,
-                            color: '#777777'
-                        },
-                    }}
-                    onLinkPress={url=>{
-
-                        router.toWebViewPage(this.props,url);
-                    }}>
-                    {markdownStr}
-                </MarkdownView>)
-
-            } else {
-
-                return ( <Markdown
-                    rules={{
-                        image: {
-                            react: (node, output, state) => (
-                                <ImageMark
-                                    key={state.key}
-                                    src={ node.target }
-                                />
-                            ),
+                            fontSize: 24,
+                            color: 'purple',
                         },
                         link: {
-                            react: (node, output, state) => {
-                                state.withinText = true
-                                const openUrl = (url) => {
-                                    router.toWebViewPage(this.props,url);
-                                };
-                                return createElement(Text, {
-                                    style: {
-                                        color: '#4990E2',
-                                        textDecorationLine: 'underline',
-                                    },
-                                    key: state.key,
-                                    onPress: () => openUrl(node.target)
-                                }, output(node.content, state))
-                            }
+                            color: 'blue',
                         },
-                    }}
-                    styles={{
-                        view: {
-                            padding: 20,
-                            paddingBottom: 40
+                        mail_to: {
+                            color: 'orange',
                         },
                         text: {
-                            color: '#777777',
+                            color: '#444444',
                             fontSize:  FontSize.h15,
                             lineHeight: 25,
                             letterSpacing: 0.3
                         },
-                        heading1: {
-                            color: '#555555',
-                            fontSize: FontSize.h19,
-                        },
-                        heading2: {
-                            color: '#555555',
-                            fontSize: FontSize.h17,
-                        },
-                        heading3: {
-                            color: '#555555',
-                            fontSize: FontSize.h16,
-                        },
-                        heading4: {
-                            color: '#555555',
-                            fontSize:  FontSize.h15,
-                        },
                     }}>
-                    {markdownStr}
-                </Markdown>)
-            }
+                        {markdownStr}
+                    </Markdown>
+                )
+        } catch (e) {
+            showToast(e)
+        }
+
     }
 }
 
-//markdown 解析规则扩展
-export const markRules = {
-    image: {
-        react: (node, output, state) => (
-            <ImageMark
-                key={state.key}
-                src={ node.target }
-            />
-        ),
-    },
-    link: {
-        react: (node, output, state) => {
-            state.withinText = true
-            const openUrl = (url) => {
-                Linking.openURL(url).catch(error => console.warn('An error occurred: ', error))
-            }
-            return createElement(Text, {
-                style: node.target.match(/@/) ? styles.mailTo : styles.link,
-                key: state.key,
-                onPress: () => openUrl(node.target)
-            }, output(node.content, state))
-        }
-    },
-};
-//markdown 样式
-export const markStyles = {
-    view: {
-        padding: 20,
-        paddingBottom: 40
-    },
-    text: {
-        color: '#777777',
-        fontSize: 15,
-        lineHeight: 20,
-        letterSpacing: 0.3
+
+
+const markdownStyles = {
+    container: {
+        padding: 20
     },
     heading1: {
-        color: '#555555',
-        fontSize: 19,
+        fontSize: 24,
+        color: 'purple',
     },
-    heading2: {
-        color: '#555555',
-        fontSize: 17,
+    link: {
+        color: 'blue',
     },
-    heading3: {
-        color: '#555555',
-        fontSize: 16,
+    mail_to: {
+        color: 'orange',
     },
-    heading4: {
-        color: '#555555',
-        fontSize: 15,
+    text: {
+        color: '#444444',
+        fontSize:  FontSize.h15,
+        lineHeight: 25,
+        letterSpacing: 0.3
     },
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
+    }
+});

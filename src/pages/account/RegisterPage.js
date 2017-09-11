@@ -231,15 +231,15 @@ class RegisterPage extends React.Component {
                 <View style={{flex: 1}}/>
                 <TouchableOpacity
                     onPress={() => {
-                        this.setState({
-                            checkAgree: !checkAgree
-                        })
+                        router.toProtocol(this.props, this._protocol)
                     }}
                     style={{marginBottom: 49}}>
-                    <View style={{alignSelf: 'center', flexDirection: 'row'}}>
+                    <View style={{alignItems: 'flex-end', flexDirection: 'row', alignSelf: 'center'}}>
                         <Image style={{height: 12, width: 12, marginRight: 8}}
                                source={checkAgree ? Images.sign_choice_no : Images.sign_choice}/>
-                        <Text style={{color: Colors._AAA, fontSize: 12}}>
+                        <Text
+                            textDecorationLine="underline"
+                            style={{color: Colors._333, fontSize: 12}}>
                             {I18n.t('protocol')}</Text>
                     </View>
                 </TouchableOpacity>
@@ -247,7 +247,12 @@ class RegisterPage extends React.Component {
             </View>
 
         )
+    }
 
+    _protocol = () => {
+        this.setState({
+            checkAgree: true
+        })
     }
 }
 

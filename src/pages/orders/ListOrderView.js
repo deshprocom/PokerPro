@@ -17,11 +17,10 @@ import {GET_ORDER_LIST, POST_ORDER_CANCEL} from '../../actions/ActionTypes';
 import {fetchOrderList} from '../../actions/OrderAction';
 import {LoginUser} from '../../services/AccountDao';
 import PullToRefreshListView from 'react-native-smart-pull-to-refresh-listview';
-import RaceInfoView from '../buy/RaceInfoView';
+import ItemOrderView from './ItemOrderView';
 import {_renderFooter, _renderHeader} from '../../components/LoadingView';
 import {GET_CERTIFICATION} from '../../actions/ActionTypes';
 import {Verified} from '../../configs/Status';
-
 
 class ListOrderView extends Component {
 
@@ -93,7 +92,6 @@ class ListOrderView extends Component {
             this.props._getOrderList(body);
         }
 
-
     }
 
     _onLoadMore = () => {
@@ -110,16 +108,16 @@ class ListOrderView extends Component {
         });
 
         this._loadList('0')
-    }
+    };
 
     _beginRefresh = () => {
         this._pullToRefreshListView.beginRefresh();
-    }
+    };
 
-    _lookOrderDetail = (order_id) => {
+    _lookOrderDetail = (order_id, price) => {
         if (user_extra.status !== Verified.PASSED)
             getDispatchAction()[GET_CERTIFICATION]();
-        this.props.router.toOrderInfoPage(this.props, order_id,
+        router.toOrderInfoPage(this.props, order_id, price,
             this._beginRefresh)
     };
 
@@ -128,28 +126,18 @@ class ListOrderView extends Component {
 
         const {order_info, race_info, ticket} = rowData;
         return (<TouchableOpacity
-            onPress={()=>this._lookOrderDetail(order_info.order_id)}
+            onPress={() => this._lookOrderDetail(order_info.order_id, order_info.price)}
             activeOpacity={1}
-            testID={'btn_orders_'+rowID}
-            style={{marginBottom:5}}>
+            testID={'btn_orders_' + rowID}
+            style={{marginBottom: 5}}>
 
-            {rowID == 0 ? <View style={{height:8}}/> : null}
-            <View style={{height:49,flex:1,flexDirection:'row',
-            justifyContent:'space-between',alignItems:'center',
-            backgroundColor:Colors.white,paddingLeft:17,paddingRight:17}}>
-                <Text style={{fontSize:15,color:Colors.txt_666}}>
-                    {I18n.t('order_num')}:{order_info.order_id}</Text>
-                <Text style={{fontSize:15,color:Colors.txt_666}}>
-                    {orderStatus(order_info.status)}</Text>
-            </View>
-            <View style={{height:1}}/>
+            <View style={{height: 6}}/>
             {/*赛事简介*/}
-            <RaceInfoView
+            <ItemOrderView
+                refresh={this._beginRefresh}
                 ticket={ticket}
                 orderInfo={order_info}
-                disabled={true}
-                raceInfo={race_info}
-                router={this.props.router}/>
+                raceInfo={race_info}/>
 
 
         </TouchableOpacity>)
@@ -168,12 +156,14 @@ class ListOrderView extends Component {
                 renderRow={this._renderRow}
                 onLoadMore={this._onLoadMore}
                 onRefresh={this._onRefresh}
-                renderHeader={(viewState)=>_renderHeader(viewState,headerStyle)}
-                renderFooter={(viewState)=>_renderFooter(viewState,headerStyle)}
+                renderHeader={(viewState) => _renderHeader(viewState, headerStyle)}
+                renderFooter={(viewState) => _renderFooter(viewState, headerStyle)}
                 enableEmptySections={true}
                 ref={ (component) => this._pullToRefreshListView = component }
                 viewType={PullToRefreshListView.constants.viewType.listView}
             />
+
+
         </View>)
     }
 

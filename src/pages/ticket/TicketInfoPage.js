@@ -10,8 +10,9 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {UltimateListView, NavigationBar, ImageLoad, MarkdownPlat} from '../../components';
-import {getBuyRaceTicket} from '../../services/OrderDao';
+import {ImageLoad, MarkdownPlat} from '../../components';
+import {getBuyRaceTicket, getUnpaidOrder} from '../../services/OrderDao';
+import {isEmptyObject, strNotNull} from '../../utils/ComonHelper';
 
 export default class TicketInfoPage extends Component {
 
@@ -53,22 +54,63 @@ export default class TicketInfoPage extends Component {
             {this._topBar()}
 
             {this._content()}
-            { this.props.params.isBuy ? null : this._viewGoBuy() }
+            {this._viewGoBuy() }
 
         </View>)
 
     }
 
-    _viewGoBuy = () => {
-        return ( <TouchableOpacity
-            onPress={() => {
-                const {race_id, ticket_id} = this.props.params;
-                router.toBuyTicketPage(this.props, race_id, ticket_id)
-            }}
-            style={styles.btnBuy}>
-            <Text style={styles.txtGoBuy}>{I18n.t('goBuy')}</Text>
+    _ticketNum = (ticket_info) => {
+        if (!isEmptyObject(ticket_info)) {
+            const {e_ticket_number, e_ticket_sold_number, entity_ticket_number, entity_ticket_sold_number} = ticket_info;
+            return e_ticket_number + entity_ticket_number - e_ticket_sold_number - entity_ticket_sold_number;
+        }
 
-        </TouchableOpacity>)
+    };
+
+
+    _showBuy = () => {
+        const {tickets} = this.state;
+        if (!isEmptyObject(tickets)) {
+            let num = this._ticketNum(tickets.ticket_info);
+            return !this.props.params.isBuy && num > 0;
+        } else
+            return false;
+
+    };
+
+
+    _buy = () => {
+
+        const {race_id, ticket_id} = this.props.params;
+
+        const body = {
+            race_id: race_id,
+            ticket_id: ticket_id
+        };
+
+        getUnpaidOrder(body, data => {
+            if (strNotNull(data.order_number))
+                router.toOrderInfoPage(this.props, data.order_number)
+            else
+                router.toBuyTicketPage(this.props, race_id, ticket_id)
+
+        }, err => {
+            router.toBuyTicketPage(this.props, race_id, ticket_id)
+        });
+
+
+    };
+
+    _viewGoBuy = () => {
+
+        if (this._showBuy())
+            return ( <TouchableOpacity
+                onPress={this._buy}
+                style={styles.btnBuy}>
+                <Text style={styles.txtGoBuy}>{I18n.t('goBuy')}</Text>
+
+            </TouchableOpacity>)
     };
 
     _content = () => {
@@ -76,7 +118,7 @@ export default class TicketInfoPage extends Component {
         const {description, title, price, banner} = tickets;
         const {name, logo} = race;
         return (  <ScrollView
-            style={this.props.params.isBuy ? {} : {marginBottom: 70}}
+            style={this._showBuy() ? {marginBottom: 70} : {}}
             iosalwaysBounceVertical={false}
             scrollEventThrottle={16}
             onScroll={this._onScroll}
@@ -97,7 +139,7 @@ export default class TicketInfoPage extends Component {
 
                 <View style={styles.viewSell}>
                     <Text style={styles.lbPrice}>{I18n.t('price')}: </Text>
-                    <Text style={styles.txtPrice}>{price}</Text>
+                    <Text style={styles.txtPrice}>¥{price}</Text>
 
                 </View>
 
@@ -181,9 +223,10 @@ const styles = StyleSheet.create({
     },
     txtName: {
         color: '#444444',
-        fontSize: 16,
-        marginTop: 12,
-        marginBottom: 16
+        fontSize: 17,
+        marginTop: 16,
+        marginBottom: 12,
+        fontWeight: 'bold'
     },
     margin: {
         paddingRight: 17,
@@ -196,11 +239,11 @@ const styles = StyleSheet.create({
     },
     viewSell: {
         flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 18,
+        alignItems: 'flex-end',
+        marginBottom: 16,
     },
     lbPrice: {
-        fontSize: 20,
+        fontSize: 12,
         color: Colors._161,
 
     },

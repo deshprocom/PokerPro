@@ -3,9 +3,9 @@
  */
 import React, {Component}from 'react';
 import {
-    TouchableOpacity, View, TextInput, Alert,
+    TouchableOpacity, View, Alert,
     StyleSheet, Image, Text, ScrollView, Platform,
-    InteractionManager
+    InteractionManager, TextInput
 } from 'react-native';
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
@@ -22,7 +22,7 @@ import {GET_CERTIFICATION, POST_BUY_TICKET, GET_RACE_NEW_ORDER, POST_CERTIFICATI
 import NameRealView from './NameRealView';
 import {fetchRacesInfo, fetchGetRecentRaces} from '../../actions/RacesAction';
 import StorageKey from '../../configs/StorageKey';
-import {getBuyRaceTicket, postOrderTicket} from '../../services/OrderDao';
+import {getBuyRaceTicket, postOrderTicket, getUnpaidOrder} from '../../services/OrderDao';
 import {umengEvent} from '../../utils/UmengEvent';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import PayModal from './PayModal';
@@ -42,7 +42,9 @@ class BuyTicketPage extends Component {
         ordered: false,
         race: {},
         tickets: {},
-        shipping_address: {}
+        shipping_address: {},
+        order_number: '',
+        inviteCode: ''
     };
 
     componentWillReceiveProps(newProps) {
@@ -63,10 +65,33 @@ class BuyTicketPage extends Component {
 
     componentDidMount() {
         umengEvent('ticket_buy_info');
+
+        storage.load({
+            key: StorageKey.BuyEmail
+        }).then(email => {
+            this.setState({email: email})
+
+        });
+
         InteractionManager.runAfterInteractions(() => {
             this.refreshPage();
-        })
 
+            const {race_id, ticket_id} = this.props.params;
+            const body = {
+                race_id: race_id,
+                ticket_id: ticket_id
+            };
+
+            getUnpaidOrder(body, data => {
+
+                if (strNotNull(data.order_number))
+                    this.setState({
+                        order_number: data.order_number
+                    })
+            }, err => {
+
+            })
+        })
 
     }
 
@@ -97,7 +122,6 @@ class BuyTicketPage extends Component {
                 ordered: ordered,
                 race: race,
                 shipping_address: isEmptyObject(shipping_address) ? {} : shipping_address,
-                email: recent_email,
                 isEntity: type
             })
         }, err => {
@@ -109,19 +133,6 @@ class BuyTicketPage extends Component {
 
     };
 
-    eTicketNum = (ticket_info) => {
-        if (isEmptyObject(ticket_info))
-            return;
-        const {isEntity} = this.state;
-        const {
-            e_ticket_number, e_ticket_sold_number,
-            entity_ticket_number, entity_ticket_sold_number
-        } = ticket_info;
-        if (isEntity == ENTITY)
-            return entity_ticket_number - entity_ticket_sold_number;
-        else
-            return e_ticket_number - e_ticket_sold_number;
-    };
 
     btnBuyKnow = () => {
         umengEvent('ticket_buy_know');
@@ -164,27 +175,23 @@ class BuyTicketPage extends Component {
     };
 
 
-    _postOrderOk = () => {
-        Alert.alert(`${I18n.t('buy_success')}`, `${I18n.t('keep_phone')}`);
+    _postOrderOk = (order_number) => {
+        // Alert.alert(`${I18n.t('buy_success')}`, `${I18n.t('keep_phone')}`);
+        this.setState({
+            order_number: order_number
+        });
+        const {tickets} = this.state;
 
-
-        const {user_id} = getLoginUser();
-        if (strNotNull(user_id)) {
-            const body = {
-                user_id: user_id,
-                race_id: this.props.params.race_id
+        if (this.payModal) {
+            const data = {
+                order_number: order_number,
+                price: tickets.price
             };
-            this.props._getRacesInfo(body);
-
-            const recentRaces = {
-                user_id: user_id,
-                number: 5
-            };
-            this.props._getRecentRaces(recentRaces);
-            this.refreshPage();
-
-            router.toOrderListPage();
+            this.payModal.setPayUrl(data);
+            this.payModal.toggle();
         }
+
+
     };
 
     _saveBuyEmail = () => {
@@ -197,13 +204,13 @@ class BuyTicketPage extends Component {
     };
 
     _btnBuyTicket = () => {
-        // this.payModal.toggle();
+
         umengEvent('ticket_buy_contain');
-        let {isEntity, email, isNameReal, shipping_address} = this.state;
+        let {isEntity, email, isNameReal, shipping_address, order_number, inviteCode} = this.state;
         if (isNameReal) {
             if (isEntity === ENTITY) {
                 if (isEmptyObject(shipping_address)) {
-                    showToast(`${I18n.t('add_adr')}`)
+                    showToast(`${I18n.t('add_adr')}`);
                     return;
                 }
                 const {race_id, ticket_id} = this.props.params;
@@ -215,13 +222,22 @@ class BuyTicketPage extends Component {
                     ticket_type: 'entity_ticket',
                     mobile: shipping_address.mobile,
                     consignee: shipping_address.consignee,
-                    address: shipping_address.address + shipping_address.address_detail
+                    address: shipping_address.address + shipping_address.address_detail,
+                    invite_code: inviteCode
                 };
-                postOrderTicket(param, body, data => {
-                    this._postOrderOk();
-                }, err => {
-                    showToast(err)
-                });
+                if (this.payModal && !isEmptyObject(this.payModal.getPayUrl())) {
+                    this.payModal.toggle()
+                } else if (strNotNull(order_number)) {
+                    this._postOrderOk(order_number);
+
+                } else {
+
+                    postOrderTicket(param, body, data => {
+                        this._postOrderOk(data.order_number);
+                    }, err => {
+                        showToast(err)
+                    });
+                }
 
 
             } else if (checkMail(email)) {
@@ -233,25 +249,31 @@ class BuyTicketPage extends Component {
                 };
                 let body = {
                     ticket_type: 'e_ticket',
-                    email: email
+                    email: email,
+                    invite_code: inviteCode
                 };
-                postOrderTicket(param, body, data => {
-                    this._postOrderOk();
-                }, err => {
-                    showToast(err)
-                });
+                if (this.payModal && !isEmptyObject(this.payModal.getPayUrl())) {
+                    this.payModal.toggle()
+                } else if (strNotNull(order_number)) {
+                    this._postOrderOk(order_number);
+                } else {
+
+                    postOrderTicket(param, body, data => {
+                        this._postOrderOk(data.order_number);
+                    }, err => {
+                        showToast(err)
+                    });
+                }
+
             }
 
-        } else {
-            showToast(`${I18n.t('ple_ren_zhen')}`)
+        }
+        else {
+            showToast(I18n.t('ple_ren_zhen'))
         }
 
     };
 
-    ticketPrice = (race) => {
-        if (!isEmptyObject(race))
-            return race.ticket_price;
-    };
 
     _location = () => {
 
@@ -297,7 +319,7 @@ class BuyTicketPage extends Component {
                 <Text style={styles.txtLabel}>{I18n.t('location')} {this._location()}</Text>
 
                 <View style={styles.viewInfo}>
-                    <Text style={styles.txtPrice}>{price}</Text>
+                    <Text style={styles.txtPrice}>¥{price}</Text>
 
                     <View style={{flex: 1}}/>
 
@@ -396,7 +418,7 @@ class BuyTicketPage extends Component {
 
     render() {
         const {user_extra} = this.props;
-        const {race, tickets, ordered, isEntity, knowRed, email} = this.state;
+        const {race, tickets, ordered, isEntity, knowRed, email, order} = this.state;
         const {ticket_info, price} = tickets;
 
         return (
@@ -413,7 +435,6 @@ class BuyTicketPage extends Component {
                 <KeyboardAwareScrollView
                     style={{marginBottom: 62}}>
                     {/*赛事简介*/}
-                    <View style={{height: 7}}/>
 
                     {this.itemListView(tickets)}
 
@@ -490,7 +511,6 @@ class BuyTicketPage extends Component {
                     {/*票务类型*/}
                     {this.sendTypeView()}
 
-                    {/*电子邮件*/}
 
                     {/*收货地址*/}
 
@@ -498,6 +518,7 @@ class BuyTicketPage extends Component {
 
                     <NameRealView user_extra={user_extra}
                                   router={router}/>
+                    {this._inviteCode()}
 
                     {this._priceView()}
 
@@ -534,7 +555,7 @@ class BuyTicketPage extends Component {
 
                         <Text style={{fontSize: 18, color: Colors._DF1}}
                               testID="txt_ticket_price">
-                            {price}
+                            ¥{price}
                         </Text>
                     </View>
                     <View style={{height: 41, width: 1, backgroundColor: Colors.txt_DDD}}/>
@@ -565,17 +586,37 @@ class BuyTicketPage extends Component {
 
                 </View>
 
-                <PayModal ref={ref => this.payModal = ref}/>
+                <PayModal
+                    toOrder={true}
+                    ref={ref => this.payModal = ref}/>
             </View>
         )
     }
+
+
+    _inviteCode = () => {
+        return (<View style={{
+            flexDirection: 'row', alignItems: 'center',
+            backgroundColor: 'white', marginTop: 8
+        }}>
+            <Text style={{
+                marginLeft: 18, fontSize: 14,
+                color: Colors._333, marginRight: 8
+            }}>{I18n.t('buy_invite')}</Text>
+            <TextInput
+                style={{height: 50, flex: 1, fontSize: 14}}
+                placeholder={I18n.t('buy_invite_placeholder')}
+                onChangeText={(inviteCode) => this.setState({inviteCode})}
+            />
+        </View>)
+    };
 
     _priceView = () => {
         const {tickets} = this.state;
         if (isEmptyObject(tickets))
             return;
         const {original_price, price} = tickets;
-        return (<View style={{backgroundColor: 'white', marginTop: 3}}>
+        return (<View style={{backgroundColor: 'white', marginTop:8}}>
             <View style={{height: 35}}>
                 <Text style={{
                     fontSize: 15, color: Colors._333, fontWeight: 'bold',
@@ -598,7 +639,7 @@ class BuyTicketPage extends Component {
 
             </View>
 
-            <View style={styles.viewPrice}>
+            <View style={styles.viewPrice1}>
                 <Text style={styles.txtPrice1}>{I18n.t('order_pay')}</Text>
 
                 <Text
@@ -613,7 +654,7 @@ class BuyTicketPage extends Component {
         return (  <View
             style={{
                 height: 44, alignItems: 'center', flexDirection: 'row',
-                marginTop: 10, backgroundColor: Colors.white
+                marginTop: 8, backgroundColor: Colors.white
             }}>
 
             <Text style={{fontSize: 15, color: Colors.txt_666, marginLeft: 18}}>{I18n.t('email')}:</Text>
@@ -654,7 +695,7 @@ class BuyTicketPage extends Component {
                 onPress={() => {
                     router.toAdrListPage(this.props, this._selectAdr, {});
                 }}
-                style={{height: 89, flex: 1, marginTop: 10, backgroundColor: Colors.white}}>
+                style={{height: 89, flex: 1, marginTop: 8, backgroundColor: Colors.white}}>
                 <View style={{height: 44, alignItems: 'center', flexDirection: 'row'}}>
 
                     <Text style={{
@@ -780,8 +821,7 @@ const styles = StyleSheet.create({
     viewAdr: {
         height: 128,
         backgroundColor: 'white',
-        marginTop: 10,
-        marginBottom: 6
+        marginTop: 8
     },
     viewAdrInfo: {
         alignItems: 'center', flexDirection: 'row',
@@ -797,7 +837,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
-    viewPrice: {flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 42},
+    viewPrice: {flexDirection: 'row', justifyContent: 'space-between',marginTop:16,
+    marginBottom:14},
+    viewPrice1: {flexDirection: 'row', justifyContent: 'space-between',
+        marginBottom:16},
     txtPrice1: {color: Colors._333, fontSize: 14, marginLeft: 18}
 
 

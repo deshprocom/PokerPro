@@ -13,7 +13,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {UltimateListView, NavigationBar, ImageLoad, ActionSide} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
-import {getSelectRaceTicket} from '../../services/OrderDao';
+import {getSelectRaceTicket, getUnpaidOrder} from '../../services/OrderDao';
 import {subRaces} from '../../services/RacesDao';
 import {isEmptyObject, convertDate, strNotNull, ticketStatusConvert} from '../../utils/ComonHelper';
 import {umengEvent} from '../../utils/UmengEvent';
@@ -166,7 +166,7 @@ export default class ChoiseTicketPage extends Component {
                     style={this._selectedBg(selectRace === RACE_MAIN)}>
                     <Text style={this._selectTxt(selectRace === RACE_MAIN)}>{I18n.t('mainRace')}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
+                {this.btnSideDisabled() ? <TouchableOpacity
                     activeOpacity={1}
                     disabled={!this.btnSideDisabled()}
                     onPress={() => {
@@ -178,7 +178,8 @@ export default class ChoiseTicketPage extends Component {
                     <Text style={this.btnSideDisabled() ?
                         this._selectTxt(selectRace === RACE_SIDE) :
                         styles.txtDisabled}>{I18n.t('sideRace')}</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> : null}
+
             </View>
 
         </View>)
@@ -307,7 +308,7 @@ export default class ChoiseTicketPage extends Component {
                 <Text style={styles.txtLabel}>{I18n.t('location')}: {this._location()}</Text>
 
                 <View style={styles.viewInfo}>
-                    <Text style={styles.txtPrice}>{price}</Text>
+                    <Text style={styles.txtPrice}>¥{price}</Text>
                     <View style={styles.viewNum}>
                         <Text style={styles.lbNum}> ({I18n.t('surplus')}</Text>
                         <Text style={styles.txtNum}>{this._ticketNum(ticket_info)}</Text>
@@ -364,7 +365,8 @@ export default class ChoiseTicketPage extends Component {
 
     _btnOkStyle = () => {
         const {ticket} = this.state;
-        return ticket.status === "selling" ?
+        let num = this._ticketNum(ticket.ticket_info);
+        return ticket.status === "selling" && num > 0 ?
             styles.viewBtnOk : [styles.viewBtnOk, styles.btnDisable]
 
 
@@ -372,14 +374,15 @@ export default class ChoiseTicketPage extends Component {
 
     _btnOkDisabled = () => {
         const {ticket} = this.state;
-        return !(ticket.status === "selling");
+        let num = this._ticketNum(ticket.ticket_info);
+        return !(ticket.status === "selling" && num > 0 );
     };
 
     bottomBar = () => {
 
         return (<View style={styles.viewBottom}>
             <Text style={styles.txtMoney}>{I18n.t('price')}: </Text>
-            <Text style={styles.txtMoneyNum}>{this._prize()}</Text>
+            <Text style={styles.txtMoneyNum}> ¥{this._prize()}</Text>
             <View style={{flex: 1}}/>
             <TouchableOpacity
                 onPress={this._toBuy}
@@ -418,13 +421,29 @@ export default class ChoiseTicketPage extends Component {
         umengEvent('ticket_contain');
         const {selectRace, selectSub, selectRaceData, ticket} = this.state;
         const {id} = ticket;
+        let raceId = '';
         if (selectRace === RACE_MAIN && id) {
             const {race_id} = selectRaceData.race;
-            router.toBuyTicketPage(this.props, race_id, id)
+            raceId = race_id;
         } else if (selectRace === RACE_SIDE && id) {
             const {race_id} = selectSub.race;
-            router.toBuyTicketPage(this.props, race_id, id)
+            raceId = race_id;
         }
+
+        const body = {
+            race_id: raceId,
+            ticket_id: id
+        };
+
+        getUnpaidOrder(body, data => {
+            if (strNotNull(data.order_number))
+                router.toOrderInfoPage(this.props, data.order_number)
+            else
+                router.toBuyTicketPage(this.props, raceId, id)
+
+        }, err => {
+            router.toBuyTicketPage(this.props, raceId, id)
+        })
 
 
     };

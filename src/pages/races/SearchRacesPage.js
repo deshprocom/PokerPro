@@ -146,7 +146,10 @@ class SearchRacesPage extends Component {
         if (last_id != 0) {
             let body = {
                 seq_id: last_id,
-                operator: Forward
+                operator: Forward,
+                host_id: this.selectHosts,
+                date: ''
+
             };
             this.operator = Forward;
 
@@ -161,7 +164,9 @@ class SearchRacesPage extends Component {
         if (first_id != 0) {
             let body = {
                 seq_id: first_id,
-                operator: Backward
+                operator: Backward,
+                host_id: this.selectHosts,
+                date: ''
             };
             this.operator = Backward;
             this.props._getRaceList(body);
@@ -309,7 +314,6 @@ class SearchRacesPage extends Component {
                 selects.push(x.id);
         });
         this.selectHosts = selects;
-        router.log('selectHosts', this.selectHosts)
         this._queryRaceList();
 
     };
@@ -387,19 +391,19 @@ class SearchRacesPage extends Component {
         });
         if (this.calendarModal) {
 
-            if (strNotNull(this.calendar)) {
-
-                this._queryRaceList();
-            }
+            // if (strNotNull(this.calendar)) {
+            //
+            //     this._queryRaceList();
+            // }
         }
 
 
-    }
+    };
 
     _queryRaceList = () => {
         const body = {
-            date: this.calendar,
-            host_id: this.selectHosts
+            host_id: this.selectHosts,
+            date: ''
         };
         this.operator = '';
         this.props._getRaceList(body);

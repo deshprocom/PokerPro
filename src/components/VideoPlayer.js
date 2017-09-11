@@ -241,7 +241,7 @@ export default class VideoPlayer extends Component {
         const time = new Date().getTime();
         const delta = time - state.lastScreenPress;
 
-        if (delta < 300) {
+        if (delta < 300 && !this.props.closeFull) {
             this.methods.toggleFullscreen();
         }
 

@@ -19,11 +19,12 @@ import {init} from '../services/ConfigDao';
 import {fetchGetRecentRaces, _getProfileOk} from '../actions/RacesAction';
 import ListViewForRaces from '../components/listitem/ListViewForRaces';
 import {LoadErrorView, LoadingView, NoDataView} from '../components/load'
-import {isEmptyObject, strNotNull, putLoginUser, getUserData} from '../utils/ComonHelper';
+import {isEmptyObject, strNotNull, putLoginUser, getUserData,updateApp} from '../utils/ComonHelper';
 import {NavigationBar, ParallaxScrollView} from '../components';
 import JpushHelp from '../services/JpushHelper';
 import {umengEvent} from '../utils/UmengEvent';
-import {postLoginCount} from '../services/AccountDao';
+import {postLoginCount, getActivityPush, getUpdate} from '../services/AccountDao';
+import ActivityModel from './message/ActivityModel';
 
 var maxDown = 0;
 
@@ -40,14 +41,15 @@ class HomePage extends Component {
             user_id: '',
             languageChange: false,
             opacity: 0,
-            badge: false
+            badge: false,
 
         };
+        getBaseURL();
         getUserData();
         init(() => {
             this.setState({
                 languageChange: true
-            })
+            });
         });
 
     }
@@ -55,8 +57,50 @@ class HomePage extends Component {
     componentDidMount() {
         JpushHelp.addPushListener(this.receiveCb, this.openCb);
         this._refreshPage();
+        this._getPushActivity();
+        setTimeout(this._getUpdate, 100)
 
     }
+
+    _getUpdate = () => {
+        getUpdate(data => {
+            updateApp(data);
+        }, err => {
+
+        })
+    };
+
+    _getPushActivity = () => {
+        storage.load({key: StorageKey.Activity})
+            .then(ret => {
+                getActivityPush(data => {
+                    const {activity} = data;
+                    if (ret.id === activity.id && ret.updated_time === activity.updated_time)
+                        return;
+                    if (this.activityModel)
+                        this.activityModel.setData(data.activity)
+                    storage.save({
+                        key: StorageKey.Activity,
+                        rawData: data.activity
+                    })
+                }, err => {
+
+                })
+
+            }).catch(err => {
+            getActivityPush(data => {
+                if (this.activityModel)
+                    this.activityModel.setData(data.activity)
+                storage.save({
+                    key: StorageKey.Activity,
+                    rawData: data.activity
+                })
+            }, err => {
+
+            })
+        })
+
+    };
 
     componentWillUnmount() {
         JpushHelp.removePushListener();
@@ -76,10 +120,10 @@ class HomePage extends Component {
     };
 
     _refreshPage() {
-        getBaseURL();
+
         storage.load({key: StorageKey.LoginUser})
             .then(ret => {
-                router.log(ret);
+
                 let {access_token, user_id} = ret;
                 putLoginUser(ret);
                 setAccessToken(access_token);
@@ -125,7 +169,6 @@ class HomePage extends Component {
             pageStyle={{backgroundColor: 'white'}}
             onPress={() => this._refreshPage()}/>)
     };
-
 
 
     _onScroll = (event) => {
@@ -181,7 +224,7 @@ class HomePage extends Component {
                 badge: false
             });
             JpushHelp.iosSetBadge(0);
-            router.toMessagePage()
+            router.toMessageCenter()
         }
 
     };
@@ -272,7 +315,7 @@ class HomePage extends Component {
                                 <Text style={styles.txtSign}>{profile.signature ? profile.signature :
                                     I18n.t('ple_sign')}</Text>
                             </View>
-                        </View >
+                        </View>
 
 
                     </View>}
@@ -362,11 +405,11 @@ class HomePage extends Component {
 
                 </ParallaxScrollView>
 
-
+                <ActivityModel
+                    ref={ref => this.activityModel = ref}/>
             </View>
         )
     }
-
 
 
     _btnHeader = () => {

@@ -21,7 +21,6 @@ export default class NameRealView extends Component {
 
     _certification = () => {
         const {user_extra} = this.props;
-
         umengEvent("ticket_buy_true_name");
         if (isEmptyObject(user_extra)) {
             this.props.router.toCertificationPage()
@@ -37,7 +36,7 @@ export default class NameRealView extends Component {
             testID={isEmptyObject(user_extra) ? 'btn_certification' :
                 'btn_edit_id'}
             activeOpacity={1}
-            style={{backgroundColor: Colors.white, marginTop: 5}}>
+            style={{backgroundColor: Colors.white, marginTop: 8}}>
 
             <View style={{height: 61, flex: 1, marginLeft: 18}}>
 
@@ -65,10 +64,8 @@ export default class NameRealView extends Component {
     }
 
     editIdCard = (user_extra) => {
+        this.props.router.toCertificationPage()
 
-        if (user_extra.status === Verified.FAILED || user_extra.status === Verified.INIT) {
-            this.props.router.toCertificationPage()
-        }
     };
 
     nameView = () => {
@@ -107,8 +104,8 @@ export default class NameRealView extends Component {
                         <SecurityText
                             securityOptions={{
                                 isSecurity: true,
-                                startIndex: 4,
-                                endIndex: 15,
+                                startIndex: 3,
+                                endIndex: 12,
                             }}
                             style={{fontSize: Fonts.size.h15, color: Colors.txt_666}}>
                             {user_extra.cert_no}</SecurityText>

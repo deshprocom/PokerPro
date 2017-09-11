@@ -19,13 +19,10 @@ import {
     getCurrentDate, getDispatchAction
 } from '../../utils/ComonHelper';
 import {Verified} from '../../configs/Status';
-import ActionSheet from 'react-native-actionsheet';
+import ActionSheet from '../../components/sheet';
 import {umengEvent} from '../../utils/UmengEvent';
 
-const CANCEL_INDEX = 0;
-const DESTRUCTIVE_INDEX = 2;
-const options = [I18n.t('cancel'), I18n.t('camera'), I18n.t('pictures')];
-const title = I18n.t('chose_image');
+
 const picker = {
     width: 500,
     height: 500,
@@ -44,7 +41,7 @@ class IDCardView extends Component {
 
         editable: true,
         imageName: '',
-        choice_id: 'chinese_id',
+        choice_id: 'passport_id',
         chinese: {},
         passport: {},
 
@@ -52,8 +49,6 @@ class IDCardView extends Component {
 
     componentDidMount() {
         getDispatchAction()[GET_CERTIFICATION]();
-
-
     }
 
     componentWillReceiveProps(newProps) {
@@ -78,7 +73,8 @@ class IDCardView extends Component {
             } else {
                 this.setState({
                     passport: user_extra,
-                    editable: editable
+                    editable: editable,
+                    choice_id: 'passport_id'
                 })
             }
         }
@@ -203,7 +199,7 @@ class IDCardView extends Component {
             testID="page_real_name"
             style={ApplicationStyles.bgContainer}>
 
-            {editable ? <View>
+            {false ? <View>
 
                 <Text style={{
                     paddingLeft: 15,
@@ -335,10 +331,10 @@ class IDCardView extends Component {
 
             <ActionSheet
                 ref={o => this.ActionSheet = o}
-                title={title}
-                options={options}
-                cancelButtonIndex={CANCEL_INDEX}
-                destructiveButtonIndex={DESTRUCTIVE_INDEX}
+                title={I18n.t('chose_image')}
+                options={[I18n.t('cancel'), I18n.t('camera'), I18n.t('pictures')]}
+                cancelButtonIndex={0}
+                destructiveButtonIndex={2}
                 onPress={this.handlePress}
             />
         </ScrollView>)
