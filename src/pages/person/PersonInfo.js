@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/1/6.
  */
-import React, {PropTypes}from 'react';
+import React, {PropTypes} from 'react';
 import {
     StyleSheet, Image, Platform, ActivityIndicator,
     Dimensions, View, TextInput, Text, TouchableOpacity,
@@ -14,7 +14,7 @@ import {Colors, Fonts, Images, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {isEmptyObject, getCurrentDate, strNotNull} from '../../utils/ComonHelper';
 import {Verified} from '../../configs/Status';
-import {ActionSheet} from '../../components';
+import {ActionSheet, DatePicker} from '../../components';
 
 
 export default class PersonInfo extends React.Component {
@@ -95,40 +95,7 @@ export default class PersonInfo extends React.Component {
     };
 
     _showDatePicker = () => {
-        this._showModal();
-        Picker.init({
-            pickerConfirmBtnText: I18n.t('confirm'),
-            pickerCancelBtnText: I18n.t('cancel'),
-            pickerTitleText: '',
-            pickerData: _createDateData(),
-            isLoop: true,
-            selectedValue: ['2016', '6', '6'],
-            pickerConfirmBtnColor: [224, 187, 117, 1],
-            pickerCancelBtnColor: [102, 102, 102, 1],
-            pickerTitleColor: [20, 20, 20, 1],
-            pickerToolBarBg: [255, 255, 255, 1],
-            pickerBg: [255, 255, 255, 1],
-            pickerToolBarFontSize: 17,
-            pickerFontSize: 21,
-            pickerFontColor: [34, 34, 34, 1],
-            onPickerConfirm: (pickedValue, pickedIndex) => {
-                this._hideModal();
-                const {profile: edit} = this.props;
-                edit.birthday = pickedValue.toString().replace(',', '-')
-                    .replace(',', '-').replace(',', '');
-                this.setState({
-                    profile: edit
-                });
-            },
-            onPickerCancel: (pickedValue, pickedIndex) => {
-                this._hideModal();
-                console.log('date', pickedValue, pickedIndex);
-            },
-            onPickerSelect: (pickedValue, pickedIndex) => {
-                console.log('date', pickedValue, pickedIndex);
-            }
-        });
-        Picker.show();
+        this.datePicker.setModalVisible(true)
     };
 
     selectPhotoTapped = () => {
@@ -285,6 +252,36 @@ export default class PersonInfo extends React.Component {
                     cancelButtonIndex={0}
                     destructiveButtonIndex={2}
                     onPress={this.handlePress}
+                />
+
+                <DatePicker
+                    ref={ref => this.datePicker = ref}
+                    style={{width: 200}}
+                    date={profile.birthday}
+                    mode="date"
+                    placeholder="select date"
+                    format="YYYY-MM-DD"
+                    confirmBtnText={I18n.t('confirm')}
+                    cancelBtnText={I18n.t('cancel')}
+                    customStyles={{
+                        dateIcon: {
+                            position: 'absolute',
+                            left: 0,
+                            top: 4,
+                            marginLeft: 0
+                        },
+                        dateInput: {
+                            marginLeft: 36
+                        }
+                        // ... You can check the source to find the other keys.
+                    }}
+                    onDateChange={(date) => {
+                        const {profile: edit} = this.props;
+                        edit.birthday = date;
+                        this.setState({
+                            profile: edit
+                        });
+                    }}
                 />
 
             </View>
