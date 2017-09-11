@@ -1,17 +1,17 @@
 /**
  * Created by lorne on 2017/1/21.
  */
-import React, {PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, TextInput,
-    StyleSheet, Image, Text, KeyboardAvoidingView
+    StyleSheet, Image, Text, Platform
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, Metrics} from '../../Themes';
 import NavigationBar from '../../components/NavigationBar';
 import md5 from "react-native-md5";
 import {checkLoginMail, strNotNull, showToast, userData, setUserData, loginWX} from '../../utils/ComonHelper';
-import {fetchPostLogin}from '../../actions/AccountAction';
+import {fetchPostLogin} from '../../actions/AccountAction';
 import {connect} from 'react-redux';
 import {fetchGetProfile} from '../../actions/PersonAction';
 import {fetchGetRecentRaces} from '../../actions/RacesAction';
@@ -20,7 +20,7 @@ import {closeDrawer} from '../../reducers/DrawerRedux';
 import {postWxAuth} from '../../services/AccountDao';
 import StorageKey from '../../configs/StorageKey'
 
-class LoginFirstPage extends React.Component {
+class LoginFirstPage extends Component {
 
 
     state = {
@@ -34,7 +34,7 @@ class LoginFirstPage extends React.Component {
 
         if (newProps.loading != this.props.loading)
             if ((newProps.actionType === POST_PHONE_LOGIN ||
-                newProps.actionType === POST_EMAIL_LOGIN) && newProps.hasData) {
+                    newProps.actionType === POST_EMAIL_LOGIN) && newProps.hasData) {
                 console.log('LoginFirstPage', newProps.loginUser)
                 const {user_id} = newProps.loginUser.data;
                 this._success(user_id);
@@ -229,9 +229,15 @@ class LoginFirstPage extends React.Component {
                 onPress={() => {
 
                     loginWX(data => {
-                        const body = {
-                            code: data.code
-                        };
+                        let body = {};
+                        if (Platform.OS === 'ios')
+                            body = {
+                                code: data.code
+                            };
+                        else
+                            body = {
+                                refresh_token: data.refresh_token
+                            };
                         postWxAuth(body, ret => {
                             const {type, info} = ret;
                             if (type === 'register')
@@ -337,6 +343,7 @@ function bindAction(dispatch) {
         closeDrawer: () => dispatch(closeDrawer()),
     };
 }
+
 const mapStateToProps = state => ({
     loading: state.AccountState.loading,
     loginUser: state.AccountState.loginUser,
