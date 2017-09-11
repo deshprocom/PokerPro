@@ -178,7 +178,6 @@ export function loginWX(resolve, reject) {
         });
     else
         UMShare.loginWX().then(data => {
-
             resolve(data)
         }).catch(err=>{
             reject(err)

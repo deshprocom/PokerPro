@@ -13,7 +13,6 @@ import {connect} from 'react-redux';
 import {fetchAddress} from '../../actions/OrderAction';
 import {strNotNull, showToast, checkPhone, isEmptyObject} from '../../utils/ComonHelper';
 import {postAddress} from '../../services/OrderDao';
-import Region from '../../components/region-picker/region'
 import ChinaRegionWheelPicker from '../../components/area-picker';
 
 export default class NewAddress extends Component {
