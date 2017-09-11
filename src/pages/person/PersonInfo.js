@@ -95,7 +95,7 @@ export default class PersonInfo extends React.Component {
     };
 
     _showDatePicker = () => {
-        this.datePicker.setModalVisible(true)
+        this.datePicker.onPressDate()
     };
 
     selectPhotoTapped = () => {
@@ -263,18 +263,6 @@ export default class PersonInfo extends React.Component {
                     format="YYYY-MM-DD"
                     confirmBtnText={I18n.t('confirm')}
                     cancelBtnText={I18n.t('cancel')}
-                    customStyles={{
-                        dateIcon: {
-                            position: 'absolute',
-                            left: 0,
-                            top: 4,
-                            marginLeft: 0
-                        },
-                        dateInput: {
-                            marginLeft: 36
-                        }
-                        // ... You can check the source to find the other keys.
-                    }}
                     onDateChange={(date) => {
                         const {profile: edit} = this.props;
                         edit.birthday = date;

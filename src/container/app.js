@@ -63,7 +63,7 @@ export default class App extends Component {
                     redirectURL: WB_URL,
                 },
             },
-            true);
+            false);
 
         MobclickAgent.startWithAppkey(Platform.OS === 'ios' ? UMENG_IOS : UMENG_ANDROID);
 
