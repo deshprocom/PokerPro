@@ -29,3 +29,6 @@ export const IOSLOAD = 'https://itunes.apple.com/cn/app/pokerpro/id1248197817?mt
 export const ANDROIDLOAD = 'http://sj.qq.com/myapp/detail.htm?apkName=com.deshpro.pokerpro';
 
 
+export const VERSION = '2.1';
+
+

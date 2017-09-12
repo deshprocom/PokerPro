@@ -103,7 +103,7 @@ export default class PersonInfo extends React.Component {
     };
 
     _update = (image) => {
-        console.log(image);
+
         const {postAvatar} = this.props;
         let formData = new FormData();
         let file = {
