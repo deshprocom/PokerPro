@@ -157,12 +157,20 @@ export function payWx(data, callback) {
         sign: data.sign
     };
 
-    console.log('wxpay', body);
+    router.log('wxpay', body);
     wechat.pay(body).then(ret => {
         callback()
     }).catch(err => {
 
     })
+}
+
+export function isWXAppInstalled(resolve) {
+    return wechat.isWXAppInstalled().then(data => {
+        resolve(data)
+    }).catch(err => {
+        resolve(false);
+    });
 }
 
 
@@ -179,7 +187,7 @@ export function loginWX(resolve, reject) {
     else
         UMShare.loginWX().then(data => {
             resolve(data)
-        }).catch(err=>{
+        }).catch(err => {
             reject(err)
         })
 

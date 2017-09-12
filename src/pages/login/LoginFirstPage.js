@@ -10,7 +10,10 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, Metrics} from '../../Themes';
 import NavigationBar from '../../components/NavigationBar';
 import md5 from "react-native-md5";
-import {checkLoginMail, strNotNull, showToast, userData, setUserData, loginWX} from '../../utils/ComonHelper';
+import {
+    checkLoginMail, strNotNull, showToast, userData,
+    setUserData, loginWX, isWXAppInstalled
+} from '../../utils/ComonHelper';
 import {fetchPostLogin} from '../../actions/AccountAction';
 import {connect} from 'react-redux';
 import {fetchGetProfile} from '../../actions/PersonAction';
@@ -27,7 +30,8 @@ class LoginFirstPage extends Component {
         username: userData,
         password: '',
         pwdEye: true,
-        avatar: ''
+        avatar: '',
+        isInstall: false
     };
 
     shouldComponentUpdate(newProps) {
@@ -48,11 +52,17 @@ class LoginFirstPage extends Component {
         storage.load({
             key: StorageKey.UserAvatar
         }).then(avatar => {
-            console.log(avatar)
             this.setState({
                 avatar: avatar
             })
+        });
+        isWXAppInstalled(isInstall => {
+            this.setState({
+                isInstall: isInstall
+            })
         })
+
+
     }
 
 
@@ -225,7 +235,7 @@ class LoginFirstPage extends Component {
             marginBottom: 50, flexDirection: 'row',
             alignItems: 'center', justifyContent: 'space-around'
         }}>
-            <TouchableOpacity
+            {this.state.isInstall ? <TouchableOpacity
                 onPress={() => {
 
                     loginWX(data => {
@@ -257,7 +267,8 @@ class LoginFirstPage extends Component {
                 <Image style={{height: 18, width: 22}}
                        source={require('../../../source/buy/weixin.png')}/>
                 <Text style={styles.txtMsg}>微信登陆</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> : null}
+
 
             <TouchableOpacity
                 onPress={() => router.toLoginCodePage()}

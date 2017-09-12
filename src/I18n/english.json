@@ -367,6 +367,8 @@
   "time_moment": "just",
   "order_notice": "order notification",
   "ads_activity": "activity announcement",
-  "ads_poker": "德扑精彩，尽在扑客"
+  "ads_poker": "PokerPro bring you all fun",
+  "wx_login":"WeChat",
+  "msg_login":"SMS"
 }
 
