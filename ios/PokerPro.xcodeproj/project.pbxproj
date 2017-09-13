@@ -56,6 +56,7 @@
 		48B6307B1ED53E0400B956A5 /* RSKImageCropper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48B630791ED53E0400B956A5 /* RSKImageCropper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		48B6307D1ED53E0E00B956A5 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48B6307C1ED53E0E00B956A5 /* QBImagePicker.framework */; };
 		48B6307E1ED53E0E00B956A5 /* QBImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48B6307C1ED53E0E00B956A5 /* QBImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48CB71771F68D5060079E438 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 48CB71791F68D5060079E438 /* InfoPlist.strings */; };
 		49369050B30544B898736799 /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5B691665E9D489B86A40DF4 /* libRNBlur.a */; };
 		4C7E94564F514643A32FB0D6 /* libRCTOrientation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B3DFB4A75043F5A7D8217C /* libRCTOrientation.a */; };
 		56C1DC682CB841879ED8D777 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 980BE5C75F974BEDB9D1518C /* SystemConfiguration.framework */; };
@@ -435,6 +436,8 @@
 		48AA2DD21F4BC2CD00A6EEFC /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		48B630791ED53E0400B956A5 /* RSKImageCropper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48B6307C1ED53E0E00B956A5 /* QBImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		48CB71781F68D5060079E438 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		48CB717B1F68D54D0079E438 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		4C9D3F913DBB405D860C62E0 /* RCTSplashScreen.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTSplashScreen.xcodeproj; path = "../node_modules/react-native-smart-splash-screen/ios/RCTSplashScreen/RCTSplashScreen.xcodeproj"; sourceTree = "<group>"; };
 		4E526D71EF3A4B4B98D6AA17 /* UIKit.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4FAE4E481EE5450EA99C9B00 /* libimageCropPicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libimageCropPicker.a; sourceTree = "<group>"; };
@@ -637,6 +640,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				48CB71791F68D5060079E438 /* InfoPlist.strings */,
 			);
 			name = PokerPro;
 			sourceTree = "<group>";
@@ -1015,6 +1019,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
@@ -1419,6 +1424,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				480FDC291EFD12F600546599 /* UMSocialSDKPromptResources.bundle in Resources */,
+				48CB71771F68D5060079E438 /* InfoPlist.strings in Resources */,
 				485E1F791F03B481005615DE /* splash.png in Resources */,
 				480FDC281EFD12F600546599 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
@@ -1525,6 +1531,18 @@
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		48CB71791F68D5060079E438 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				48CB71781F68D5060079E438 /* en */,
+				48CB717B1F68D54D0079E438 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
@@ -1815,6 +1833,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1856,6 +1875,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
