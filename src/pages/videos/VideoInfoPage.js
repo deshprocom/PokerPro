@@ -1,12 +1,7 @@
 /**
  * Created by lorne on 2017/5/26.
  */
-/**
- * Created by lorne on 2017/5/26.
- */
-/**
- * Created by lorne on 2017/4/21.
- */
+
 import React, {Component, PropTypes} from 'react';
 import {
     StyleSheet, Text, View, FlatList,
