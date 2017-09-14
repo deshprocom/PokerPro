@@ -49,7 +49,7 @@ export default class App extends Component {
             {
                 "1_weixin": {
                     appKey: WX_ID,
-                    appSecret: '',
+                    appSecret: Platform.OS === 'ios' ? '' : WX_Secret,
                     redirectURL: WX_URL,
                 },
                 "2_qq": {
@@ -63,12 +63,12 @@ export default class App extends Component {
                     redirectURL: WB_URL,
                 },
             },
-            true);
+            false);
 
         MobclickAgent.startWithAppkey(Platform.OS === 'ios' ? UMENG_IOS : UMENG_ANDROID);
 
         WeChat.registerApp(WX_ID).then(ret => {
-            console.log('registerApp',ret)
+            console.log('registerApp', ret)
         }, err => {
             console.log(err)
         });

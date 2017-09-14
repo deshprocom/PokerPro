@@ -157,7 +157,7 @@ export function payWx(data, callback) {
         sign: data.sign
     };
 
-    console.log('wxpay', body);
+    router.log('wxpay', body);
     wechat.pay(body).then(ret => {
         callback()
     }).catch(err => {
@@ -165,23 +165,41 @@ export function payWx(data, callback) {
     })
 }
 
-
-export function loginWX(resolve, reject) {
-
-    wechat.sendAuthRequest('snsapi_userinfo', 'pokerpro')
-        .then(data => {
-            console.log('loginWX', data);
-            resolve(data)
-        }).catch(err => {
-        reject(err)
-    })
-
+export function isWXAppInstalled(resolve) {
+    return wechat.isWXAppInstalled().then(data => {
+        resolve(data)
+    }).catch(err => {
+        resolve(false);
+    });
 }
 
 
+export function loginWX(resolve, reject) {
+
+    if (Platform.OS === 'ios')
+        wechat.sendAuthRequest('snsapi_userinfo', 'pokerpro')
+            .then(data => {
+
+                resolve(data)
+            }).catch(err => {
+            reject(err)
+        });
+    else
+        UMShare.loginWX().then(data => {
+            resolve(data)
+        }).catch(err => {
+            reject(err)
+        })
+
+}
+
+function shareTxt(msg) {
+    return strNotNull(msg) ? msg : I18n.t('ads_poker');
+}
+
 export function uShareActivity(title, desc, icon, id) {
 
-    UMShare.share(title, desc, getShareIcon(icon), HOST + "activities/" + id + "/" + Lang)
+    UMShare.share(title, shareTxt(desc), getShareIcon(icon), HOST + "activities/" + id + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {

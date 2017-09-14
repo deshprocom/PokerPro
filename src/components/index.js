@@ -27,6 +27,7 @@ import ActionSide from './ActionSide';
 import ActionSheet from './sheet';
 import Loading from './Loading';
 import CountDownBtn from './CountDownBtn';
+import DatePicker from './datepicker';
 
 export {
     BtnLong, BtnSoild, NavigationBar,
@@ -49,5 +50,6 @@ export {
     ActionSide,
     ActionSheet,
     Loading,
-    CountDownBtn
+    CountDownBtn,
+    DatePicker
 }

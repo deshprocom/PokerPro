@@ -366,6 +366,9 @@
   "time_min": "minutes ago",
   "time_moment": "just",
   "order_notice": "order notification",
-  "ads_activity": "activity announcement"
+  "ads_activity": "activity announcement",
+  "ads_poker": "PokerPro bring you all fun",
+  "wx_login":"WeChat",
+  "msg_login":"SMS"
 }
 

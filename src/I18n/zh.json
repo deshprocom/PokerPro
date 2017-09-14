@@ -367,6 +367,9 @@
   "time_min": "分钟前",
   "time_moment": "刚刚",
   "order_notice":"订单通知",
-  "ads_activity":"活动公告"
+  "ads_activity":"活动公告",
+  "ads_poker":"德扑精彩，尽在扑客",
+  "wx_login":"微信登陆",
+  "msg_login":"短信登陆"
 
 }
