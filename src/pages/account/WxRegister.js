@@ -108,7 +108,7 @@ export default class WxRegister extends React.Component {
                 if (exist === 0)
                     postVerifyCode(body, data => {
                         const wx = {
-                            access_token: this.props.params.access_token,
+                            access_token: this.props.navigation.state.params.access_token,
                             type: "mobile",
                             account: mobile,
                             code: vcode
@@ -121,7 +121,7 @@ export default class WxRegister extends React.Component {
                 else if (exist === 1)
                     postVerifyCode(body, data => {
                         const wx = {
-                            access_token: this.props.params.access_token,
+                            access_token: this.props.navigation.state.params.access_token,
                             type: "mobile",
                             account: mobile,
                             code: vcode

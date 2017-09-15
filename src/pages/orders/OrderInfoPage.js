@@ -28,7 +28,7 @@ import {postOrderCancel, postPayOrder, postOrderComplete} from '../../services/O
 class OrderInfoPage extends React.Component {
 
     componentDidMount() {
-        const {isPay} = this.props.params;
+        const {isPay} = this.props.navigation.state.params;
         if (isPay) {
             this._pay();
         }
@@ -73,7 +73,7 @@ class OrderInfoPage extends React.Component {
             });
             const body = {
                 user_id: user_id,
-                order_id: this.props.params.order_id
+                order_id: this.props.navigation.state.params.order_id
             };
             this.props._getOrderDetail(body);
         }
@@ -97,7 +97,7 @@ class OrderInfoPage extends React.Component {
     _cancelOrder = () => {
         const body = {
             user_id: this.state.user_id,
-            order_id: this.props.params.order_id
+            order_id: this.props.navigation.state.params.order_id
         };
         this.props._postOrderCancel(body)
     };
@@ -404,7 +404,7 @@ class OrderInfoPage extends React.Component {
 
 
     _payOrder = () => {
-        const {order_id} = this.props.params;
+        const {order_id} = this.props.navigation.state.params;
         const {orderDetail} = this.props;
         const {order_info} = orderDetail;
         if (this.payModal) {
@@ -422,7 +422,7 @@ class OrderInfoPage extends React.Component {
     };
 
     _pay = () => {
-        const {order_id, price} = this.props.params;
+        const {order_id, price} = this.props.navigation.state.params;
 
         if (this.payModal) {
 
@@ -480,8 +480,8 @@ class OrderInfoPage extends React.Component {
 
     _exitOrder = () => {
         router.pop();
-        if (this.props.params.onRefresh !== undefined)
-            this.props.params.onRefresh()
+        if (this.props.navigation.state.params.onRefresh !== undefined)
+            this.props.navigation.state.params.onRefresh()
     }
 
     _userRealFail = () => {

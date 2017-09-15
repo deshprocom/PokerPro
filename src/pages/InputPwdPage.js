@@ -73,14 +73,14 @@ class InputPwdPage extends React.Component {
     componentDidMount() {
 
         this.setState({
-            mobile: this.props.params.phone,
-            code: this.props.params.code,
-            email: this.props.params.email,
-            isRegisterOrForget: this.props.params.isRegisterOrForget,
-            isEmailOrMobile: this.props.params.isEmailOrMobile
+            mobile: this.props.navigation.state.params.phone,
+            code: this.props.navigation.state.params.code,
+            email: this.props.navigation.state.params.email,
+            isRegisterOrForget: this.props.navigation.state.params.isRegisterOrForget,
+            isEmailOrMobile: this.props.navigation.state.params.isEmailOrMobile
         });
 
-        console.log(this.props.params)
+        console.log(this.props.navigation.state.params)
     }
 
     _request_register = () => {

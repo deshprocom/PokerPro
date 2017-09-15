@@ -66,7 +66,7 @@ export default class WebViewPage extends Component {
     }
 
     render() {
-        const {url} = this.props.params;
+        const {url} = this.props.navigation.state.params;
         return (
             <View style={ApplicationStyles.bgContainer}>
                 {this.topBarView()}
@@ -103,9 +103,9 @@ export default class WebViewPage extends Component {
         } else if (id === 3) {
             this.webView.reload();
         } else if (id === 4) {
-            Linking.canOpenURL(this.props.params.url).then(supported => {
+            Linking.canOpenURL(this.props.navigation.state.params.url).then(supported => {
                 if (supported) {
-                    Linking.openURL(this.props.params.url);
+                    Linking.openURL(this.props.navigation.state.params.url);
                 }
             });
         }
@@ -155,9 +155,9 @@ export default class WebViewPage extends Component {
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={() => {
-                    Linking.canOpenURL(this.props.params.url).then(supported => {
+                    Linking.canOpenURL(this.props.navigation.state.params.url).then(supported => {
                         if (supported) {
-                            Linking.openURL(this.props.params.url);
+                            Linking.openURL(this.props.navigation.state.params.url);
                         }
                     });
                 }}
@@ -172,7 +172,7 @@ export default class WebViewPage extends Component {
     };
 
     topBarView = () => {
-        const {url} = this.props.params;
+        const {url} = this.props.navigation.state.params;
         return (
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors.bg_09}}

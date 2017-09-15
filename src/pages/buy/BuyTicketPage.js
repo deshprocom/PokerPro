@@ -76,7 +76,7 @@ class BuyTicketPage extends Component {
         InteractionManager.runAfterInteractions(() => {
             this.refreshPage();
 
-            const {race_id, ticket_id} = this.props.params;
+            const {race_id, ticket_id} = this.props.navigation.state.params;
             const body = {
                 race_id: race_id,
                 ticket_id: ticket_id
@@ -96,8 +96,8 @@ class BuyTicketPage extends Component {
     }
 
     refreshPage = () => {
-        // this.props._getRaceNewOrder(this.props.params.race_id);
-        const {race_id, ticket_id} = this.props.params;
+        // this.props._getRaceNewOrder(this.props.navigation.state.params.race_id);
+        const {race_id, ticket_id} = this.props.navigation.state.params;
 
         const body = {
             race_id: race_id,
@@ -213,7 +213,7 @@ class BuyTicketPage extends Component {
                     showToast(`${I18n.t('add_adr')}`);
                     return;
                 }
-                const {race_id, ticket_id} = this.props.params;
+                const {race_id, ticket_id} = this.props.navigation.state.params;
                 let param = {
                     race_id: race_id,
                     ticket_id: ticket_id
@@ -242,7 +242,7 @@ class BuyTicketPage extends Component {
 
             } else if (checkMail(email)) {
                 this._saveBuyEmail();
-                const {race_id, ticket_id} = this.props.params;
+                const {race_id, ticket_id} = this.props.navigation.state.params;
                 let param = {
                     race_id: race_id,
                     ticket_id: ticket_id
@@ -299,7 +299,7 @@ class BuyTicketPage extends Component {
         return (<TouchableOpacity
             activeOpacity={1}
             onPress={() => {
-                const {race_id, ticket_id} = this.props.params;
+                const {race_id, ticket_id} = this.props.navigation.state.params;
                 if (ticket_class === 'single_ticket')
                     router.toRacesInfoPage(this.props, race_id, false);
                 else

@@ -18,7 +18,7 @@ class PokerPersonPage extends Component {
 
     componentDidMount() {
 
-        const player = this.props.params.player;
+        const player = this.props.navigation.state.params.player;
         const body = {
             player_id: player.player_id
         };
@@ -77,7 +77,7 @@ class PokerPersonPage extends Component {
 
 
     getPlayerName = () => {
-        const player = this.props.params.player;
+        const player = this.props.navigation.state.params.player;
         if (!isEmptyObject(player))
             return player.name;
     }

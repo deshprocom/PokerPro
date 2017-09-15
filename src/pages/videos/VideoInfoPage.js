@@ -25,7 +25,7 @@ export default class VideoInfoPage extends Component {
 
     render() {
 
-        const {description, video_link} = this.props.params.info;
+        const {description, video_link} = this.props.navigation.state.params.info;
         const {videoFull} = this.state;
 
         return (<View
@@ -51,7 +51,7 @@ export default class VideoInfoPage extends Component {
     }
 
     renderContent = () => {
-        const {description} = this.props.params.info;
+        const {description} = this.props.navigation.state.params.info;
         return <ScrollView>
 
             <MarkdownPlat

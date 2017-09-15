@@ -42,7 +42,7 @@ export default class ChoiseTicketPage extends Component {
     }
 
     _fetchRaceTicket = () => {
-        const {race_id} = this.props.params;
+        const {race_id} = this.props.navigation.state.params;
         let body = {
             race_id: race_id,
             type: 'tradable'

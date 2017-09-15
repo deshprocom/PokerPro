@@ -21,7 +21,7 @@ export default class ProtocolPage extends Component {
                 title={I18n.t('protocol1')}
                 rightBtnText={I18n.t('agree')}
                 rightBtnPress={() => {
-                    this.props.params._protocol();
+                    this.props.navigation.state.params._protocol();
                     router.pop();
                 }}
                 leftBtnIcon={Images.sign_return}

@@ -26,7 +26,7 @@ export default class TicketInfoPage extends Component {
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            const {race_id, ticket_id} = this.props.params;
+            const {race_id, ticket_id} = this.props.navigation.state.params;
             router.log('ticket', race_id, ticket_id);
             const body = {
                 race_id: race_id,
@@ -73,7 +73,7 @@ export default class TicketInfoPage extends Component {
         const {tickets} = this.state;
         if (!isEmptyObject(tickets)) {
             let num = this._ticketNum(tickets.ticket_info);
-            return !this.props.params.isBuy && num > 0;
+            return !this.props.navigation.state.params.isBuy && num > 0;
         } else
             return false;
 
@@ -82,7 +82,7 @@ export default class TicketInfoPage extends Component {
 
     _buy = () => {
 
-        const {race_id, ticket_id} = this.props.params;
+        const {race_id, ticket_id} = this.props.navigation.state.params;
 
         const body = {
             race_id: race_id,

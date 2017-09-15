@@ -67,7 +67,7 @@ export default class WebViewPay extends Component {
 
     render() {
 
-        const {pay_url} = this.props.params.pay;
+        const {pay_url} = this.props.navigation.state.params.pay;
         console.log(pay_url)
         return (
             <View style={ApplicationStyles.bgContainer}>
@@ -100,8 +100,8 @@ export default class WebViewPay extends Component {
         let msg = event.nativeEvent.data;
         console.log('webMessage', msg);
         if (msg === 'pay-success') {
-            const {order_number, price} = this.props.params.pay;
-            const {orderRefresh} = this.props.params;
+            const {order_number, price} = this.props.navigation.state.params.pay;
+            const {orderRefresh} = this.props.navigation.state.params;
             if (orderRefresh) {
                 router.pop();
                 orderRefresh();
@@ -119,9 +119,9 @@ export default class WebViewPay extends Component {
         } else if (id === 3) {
             this.webView.reload();
         } else if (id === 4) {
-            Linking.canOpenURL(this.props.params.url).then(supported => {
+            Linking.canOpenURL(this.props.navigation.state.params.url).then(supported => {
                 if (supported) {
-                    Linking.openURL(this.props.params.url);
+                    Linking.openURL(this.props.navigation.state.params.url);
                 }
             });
         }
@@ -171,9 +171,9 @@ export default class WebViewPay extends Component {
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={() => {
-                    Linking.canOpenURL(this.props.params.url).then(supported => {
+                    Linking.canOpenURL(this.props.navigation.state.params.url).then(supported => {
                         if (supported) {
-                            Linking.openURL(this.props.params.url);
+                            Linking.openURL(this.props.navigation.state.params.url);
                         }
                     });
                 }}
