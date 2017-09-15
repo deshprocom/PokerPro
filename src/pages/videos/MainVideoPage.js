@@ -18,7 +18,7 @@ import {isEmptyObject, convertDate} from '../../utils/ComonHelper';
 import {connect} from 'react-redux';
 import {fetchVideoType} from '../../actions/NewsAction';
 import VideoListView from './VideoListView';
-import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
+import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
 import {NavigationBar} from '../../components';
 import {getVideoTypes} from '../../services/NewsDao';
 
@@ -101,13 +101,19 @@ export  default class MainVideoPage extends Component {
                 });
 
             }}
-            renderTabBar={() => <DefaultTabBar
+            renderTabBar={() => <ScrollableTabBar
+                tabStyle={{
+                    height: 49,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                }}
                 backgroundColor={Colors.white}
                 activeTextColor="#161718"
                 inactiveTextColor={Colors._AAA}
                 textStyle={{fontSize: 16}}
                 style={{borderColor: Colors._EEE}}
-                tabStyle={{paddingBottom: 0}}
                 underlineStyle={{backgroundColor: '#161718', height: 2}}
             />}
             ref={ref => this.newsPages = ref}>
