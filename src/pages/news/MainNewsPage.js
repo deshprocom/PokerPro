@@ -53,7 +53,6 @@ export default class MainNewsPage extends Component {
                 style={ApplicationStyles.bgContainer}>
                 {this._navSearchBar()}
 
-                {this._newsTypeView()}
 
                 {this._listView()}
             </View>
@@ -89,10 +88,18 @@ export default class MainNewsPage extends Component {
                 this.setState({
                     selectTypeId: item.id
                 });
-                this.typeList.scrollToIndex({viewPosition: 1, index: Number(i)});
-                this._pressItem(item);
+
+
             }}
-            renderTabBar={false}
+            renderTabBar={() => <DefaultTabBar
+                backgroundColor={Colors.white}
+                activeTextColor="#161718"
+                inactiveTextColor={Colors._AAA}
+                textStyle={{fontSize: 16}}
+                style={{borderColor: Colors._EEE}}
+                tabStyle={{paddingBottom: 0}}
+                underlineStyle={{backgroundColor: '#161718', height: 2}}
+                />}
             ref={ref => this.newsPages = ref}>
             {pages}
         </ScrollableTabView>)
