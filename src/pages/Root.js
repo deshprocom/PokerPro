@@ -3,12 +3,10 @@
  */
 import React, {Component} from 'react';
 import {Navigator, Platform, BackAndroid} from 'react-native'
-import Router from '../configs/Router';
-import DrawerPage from './DrawerPage';
-let initialRoute = {
-    name: 'DrawerPage',
-    page: DrawerPage,
-};
+
+import {Stacks} from '../configs/StackRouters';
+
+
 
 export default class Root extends Component {
 
@@ -25,23 +23,7 @@ export default class Root extends Component {
         }
     }
 
-    renderScene = ({page, name, id, index, props, params}, navigator) => {
-        this.router = this.router || new Router(navigator);
-        global.router = this.router;
 
-        if (page) {
-            return React.createElement(page, {
-                ...props,
-                ref: view => this[index] = view,
-                router: this.router,
-                name,
-                params,
-                route: {
-                    name, id, index
-                },
-            })
-        }
-    };
 
     onBackAndroid = () => {
         const nav = this.navigator;
@@ -55,10 +37,6 @@ export default class Root extends Component {
 
     render() {
 
-        return (<Navigator
-            ref={view => this.navigator=view}
-            initialRoute={initialRoute}
-            renderScene={this.renderScene}
-        />);
+        return (<Stacks/>);
     }
 }

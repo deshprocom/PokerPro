@@ -34,7 +34,7 @@ class RegisterPage extends React.Component {
             if (newProps.actionType === POST_VERIFY_CODE
                 && !newProps.loading && newProps.hasData) {
                 if (!useEmailRegister) {
-                    this.props.router.toInputPwdPage(this.props, mobile, vcode)
+                   router.toInputPwdPage(this.props, mobile, vcode)
                 }
             }
 
@@ -171,14 +171,13 @@ class RegisterPage extends React.Component {
                 style={{flex: 1, backgroundColor: Colors.bg_f5}}>
                 <TouchableOpacity
                     testID="btn_home_page"
-                    onPress={() => this.props.router.popToTop()}/>
+                    onPress={() => router.popToTop()}/>
                 <View style={{backgroundColor: Colors.bg_09}}>
                     <NavigationBar
-                        router={this.props.router}
                         title={I18n.t('register_with_phone')}
                         leftBtnIcon={Images.sign_return}
                         leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                        leftBtnPress={() => this.props.router.pop()}/>
+                        leftBtnPress={() => router.pop()}/>
                 </View>
 
                 {this._inputMobileCodeView()}
@@ -211,7 +210,7 @@ class RegisterPage extends React.Component {
                     }}
                     transparent
                     testID="btn_have_account"
-                    onPress={() => this.props.router.pop()}>
+                    onPress={() => router.pop()}>
 
                     <Text style={styles.text_problem}>{I18n.t('i_have_account')}</Text>
 
@@ -223,7 +222,7 @@ class RegisterPage extends React.Component {
                     testID="btn_switch_email_register"
                     onPress={() => {
                         this.countDownText.end();
-                        this.props.router.toEmailRegisterPage()
+                        router.toEmailRegisterPage()
                     }}
                     name={ I18n.t('email_register')}/>
 

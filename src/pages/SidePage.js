@@ -88,7 +88,7 @@ class SidePage extends React.Component {
     _toBusinessPage = () => {
         umengEvent('more_business');
         router.toBusinessPage()
-        // this.props.router.toChildRaceInfoPage();
+
     }
 
     render() {

@@ -35,11 +35,10 @@ export default class OrderListPage extends Component {
                       testID="page_order_list">
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors.bg_09}}
-                router={this.props.router}
                 title={I18n.t('order')}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                leftBtnPress={() => this.props.router.pop()}/>
+                leftBtnPress={() => router.pop()}/>
 
             <ScrollableTabView
                 renderTabBar={() => <DefaultTabBar
@@ -56,22 +55,22 @@ export default class OrderListPage extends Component {
                     status="all"
                     testViewID="page_all_order"
                     tabLabel={I18n.t('all')}
-                    router={this.props.router}/>
+                  />
                 <ListOrderView
                     status="unpaid"
                     testViewID="page_payment"
                     tabLabel={I18n.t('unpaid')}
-                    router={this.props.router}/>
+                    />
                 <ListOrderView
                     status="paid"
                     testViewID="page_ship"
                     tabLabel={I18n.t('order_receive')}
-                    router={this.props.router}/>
+                  />
                 <ListOrderView
                     status="completed"
                     testViewID="page_complete"
                     tabLabel={I18n.t('completed')}
-                    router={this.props.router}/>
+                   />
 
 
             </ScrollableTabView>

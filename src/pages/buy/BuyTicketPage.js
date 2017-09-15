@@ -143,7 +143,7 @@ class BuyTicketPage extends Component {
         this.setState({
             knowRed: false
         });
-        this.props.router.toBuyKnownPage();
+        router.toBuyKnownPage();
     };
 
     tagBuyKnow = () => {

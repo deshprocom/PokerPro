@@ -44,7 +44,7 @@ class InputPwdPage extends React.Component {
         this.props._getRecentRaces(recentRaces);
         this.props._getProfile(user_id);
 
-        this.props.router.popToTop();
+        router.popToTop();
     };
 
     shouldComponentUpdate(newProps) {
@@ -59,7 +59,7 @@ class InputPwdPage extends React.Component {
 
             } else if (newProps.actionType === POST_RESET_PASSWORD) {
                 if (!newProps.loading && newProps.hasData) {
-                    this.props.router.popToLogin();
+                    router.popToLogin();
                     return false;
                 }
             }
@@ -119,14 +119,13 @@ class InputPwdPage extends React.Component {
                 style={{flex:1,backgroundColor:Colors.bg_f5}}>
                 <TouchableOpacity
                     testID="btn_home_page"
-                    onPress={()=>this.props.router.popToTop()}/>
+                    onPress={()=>router.popToTop()}/>
                 <View style={{backgroundColor:Colors.bg_09}}>
                     <NavigationBar
-                        router={this.props.router}
                         title={I18n.t('input_pwd')}
                         leftBtnIcon={Images.sign_return}
                         leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                        leftBtnPress={()=>this.props.router.pop()}/>
+                        leftBtnPress={()=>router.pop()}/>
                 </View>
 
                 <View style={styles.input_view}>

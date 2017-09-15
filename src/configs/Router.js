@@ -1,7 +1,8 @@
 /**
  * Created by lorne on 2016/12/20.
  */
-import React, {Navigator} from 'react-native'
+import React, {Navigator} from 'react-native';
+import {NavigationActions} from 'react-navigation'
 
 //Pages
 import HomePage from '../pages/HomePage';
@@ -67,7 +68,8 @@ const customFloatFromRight = Navigator.SceneConfigs.FadeAndroid;
 
 export default class Router {
     constructor(navigator) {
-        this.navigator = navigator
+        this.navigator = navigator;
+        console.log('Navigation', navigator)
     }
 
 
@@ -77,18 +79,30 @@ export default class Router {
     }
 
     push(props, route) {
-        route.props = props
-        this.navigator.push(route)
+
+        const navigateAction = NavigationActions.navigate({
+            routeName: route.name,
+            params: route.params
+        });
+
+        this.navigator.dispatch(navigateAction)
     }
 
 
     pop() {
-        this.navigator.pop()
+        const backAction = NavigationActions.back({
+            key: ''
+        });
+        this.navigator.dispatch(backAction)
 
     }
 
     popToTop() {
         this.navigator.popToTop();
+        const backAction = NavigationActions.back({
+            key: 'DrawerPage'
+        });
+        this.navigator.dispatch(backAction)
     }
 
     toActivityInfo(props, activity) {

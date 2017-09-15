@@ -41,8 +41,7 @@ export default class CoverImage extends React.Component {
 
     imageClick = (source) => {
         const images = [{url: source.uri}];
-        if (this.props.router != undefined)
-            this.props.router.toImageGalleryPage(this.props, images)
+            router.toImageGalleryPage(this.props, images)
     }
 
     render() {

@@ -31,7 +31,7 @@ class ForgetPage extends React.Component {
         if (this.props.loading != newProps.loading)
             if (newProps.actionType === POST_VERIFY_CODE
                 && !newProps.loading && newProps.hasData && !isEmailFind) {
-                this.props.router.forgetPhoneToPwdPage(this.props,
+                router.forgetPhoneToPwdPage(this.props,
                     mobile, vcode);
             }
 
@@ -177,11 +177,10 @@ class ForgetPage extends React.Component {
             <View testID="page_problem" style={{flex:1,backgroundColor:Colors.bg_f5}}>
                 <View style={{backgroundColor:Colors.bg_09}}>
                     <NavigationBar
-                        router={this.props.router}
                         title={I18n.t('forget_mobile')}
                         leftBtnIcon={Images.sign_return}
                         leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
-                        leftBtnPress={()=>this.props.router.pop()}/>
+                        leftBtnPress={()=>router.pop()}/>
                 </View>
                 <View style={{flex:1}}>
 
@@ -205,7 +204,7 @@ class ForgetPage extends React.Component {
                         style={{marginTop:48}}
                         onPress={()=>{
                  this.countDownText.end();
-                 this.props.router.toForgetEmailPage();
+                 router.toForgetEmailPage();
 
                  }}
                         name={I18n.t('get_pwd_by_email')}/>

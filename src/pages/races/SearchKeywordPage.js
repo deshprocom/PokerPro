@@ -175,7 +175,6 @@ class SearchKeywordPage extends Component {
             <RaceRowView
                 isMoreRace={true}
                 rowID={rowID}
-                router={this.props.router}
                 rowData={rowData}/>
         )
     };

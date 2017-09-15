@@ -33,11 +33,10 @@ class ChildRaceInfoPage extends Component {
                     this.props.getSubInfo(this.props.params.race_ids)
                 }}
                 toolbarStyle={{backgroundColor: Colors.bg_09}}
-                router={this.props.router}
                 title={this.raceTitle()}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                leftBtnPress={() => this.props.router.pop()}/>
+                leftBtnPress={() =>router.pop()}/>
 
 
             <ScrollView style={{backgroundColor: 'white'}}>

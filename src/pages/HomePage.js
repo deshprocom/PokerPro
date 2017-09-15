@@ -154,7 +154,6 @@ class HomePage extends Component {
         if (listRaces != undefined && listRaces.length > 0) {
             return ( <ListViewForRaces
                 dataSource={listRaces}
-                router={this.props.router}
             />)
         } else {
             return (
@@ -206,7 +205,7 @@ class HomePage extends Component {
                 <TouchableOpacity
                     testID="btn_to_login"
                     onPress={() => {
-                        this.props.router.toLoginFirstPage()
+                        router.toLoginFirstPage()
                     }}>
                     <Text
                         style={styles.txtNick}>{I18n.t('log_register')}</Text>
@@ -387,7 +386,7 @@ class HomePage extends Component {
                             testID="btn_more_races"
                             onPress={() => {
                                 umengEvent('home_more');
-                                this.props.router.toSearchRacesPage()
+                                router.toSearchRacesPage()
                             }}>
                             <Image style={styles.imgMore}
                                    source={Images.more}/>
@@ -415,7 +414,7 @@ class HomePage extends Component {
     _btnHeader = () => {
         const {profile} = this.props;
         if (isEmptyObject(profile))
-            this.props.router.toLoginFirstPage();
+            router.toLoginFirstPage();
         else {
 
             if (strNotNull(profile.avatar)) {

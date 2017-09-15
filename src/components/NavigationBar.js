@@ -55,7 +55,7 @@ export default class NavigationBar extends Component {
                         <Text
                             numberOfLines={1}
                             style={this.props.titleStyle?this.props.titleStyle:styles.title}>{title}</Text>
-                        <TestRouter router={this.props.router}
+                        <TestRouter
                                     refreshPage={this.props.refreshPage}/>
                     </View>
                     <View style={[styles.fixedCell,{justifyContent:'flex-end'}]}>
