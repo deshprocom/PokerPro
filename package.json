@@ -13,7 +13,7 @@
     "jpush-react-native": "1.6.6",
     "react": "16.0.0-alpha.6",
     "react-addons-update": "^15.5.2",
-    "react-native": "^0.43.4",
+    "react-native": "^0.44.0",
     "react-native-blur": "^2.0.0",
     "react-native-communications": "^2.2.1",
     "react-native-drawer": "^2.3.0",
@@ -45,7 +45,7 @@
     "redux-actions": "^2.0.1",
     "redux-thunk": "^2.2.0",
     "rn-markdown": "^1.1.1",
-    "rn-umeng": "^1.0.6"
+    "rn-umeng": "git+https://github.com/dongodngtang/rn-umeng.git"
   },
   "devDependencies": {
     "babel-jest": "20.0.3",
