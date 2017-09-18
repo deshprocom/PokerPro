@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2016/12/20.
  */
-import React, {Navigator} from 'react-native';
+
 import {NavigationActions} from 'react-navigation'
 
 //Pages
@@ -63,7 +63,7 @@ import ActivityCenter from '../pages/message/ActivityCenter';
 import ActivityInfo from '../pages/message/ActivityInfo';
 
 
-const customFloatFromRight = Navigator.SceneConfigs.FadeAndroid;
+const customFloatFromRight ='';
 
 
 export default class Router {

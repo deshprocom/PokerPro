@@ -2,10 +2,9 @@
  * Created by lorne on 2016/12/20.
  */
 import React, {Component} from 'react';
-import {Navigator, Platform, BackAndroid} from 'react-native'
+import {Platform, BackAndroid} from 'react-native'
 
 import {Stacks} from '../configs/StackRouters';
-
 
 
 export default class Root extends Component {
@@ -22,7 +21,6 @@ export default class Root extends Component {
             BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
         }
     }
-
 
 
     onBackAndroid = () => {
