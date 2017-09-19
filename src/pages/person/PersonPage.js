@@ -62,7 +62,7 @@ class PersonPage extends React.Component {
 
     render() {
 
-        const {loading, error, hasData, profile, actionType, router} = this.props;
+        const {loading, error, hasData, profile, actionType} = this.props;
 
 
         return (

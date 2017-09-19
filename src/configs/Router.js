@@ -2,7 +2,7 @@
  * Created by lorne on 2016/12/20.
  */
 
-import {NavigationActions} from 'react-navigation'
+import {NavigationActions, StackNavigator, StateUtils} from 'react-navigation'
 
 //Pages
 import HomePage from '../pages/HomePage';
@@ -10,7 +10,7 @@ import InputPwdPage from '../pages/InputPwdPage';
 import DrawerPage from '../pages/DrawerPage';
 import PersonPage from '../pages/person/PersonPage';
 import SettingPage from '../pages/setting/SettingPage';
-import EventPage from '../pages/races/EventPage';
+
 import RegisterPage from '../pages/account/RegisterPage';
 import ForgetPage from '../pages/account/ForgetPage';
 import RacesInfoPage from '../pages/races/RacesInfoPage';
@@ -63,7 +63,345 @@ import ActivityCenter from '../pages/message/ActivityCenter';
 import ActivityInfo from '../pages/message/ActivityInfo';
 
 
-const customFloatFromRight ='';
+const MyApp = {
+    HomePage: {
+        screen: HomePage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    InputPwdPage: {
+        screen: InputPwdPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    DrawerPage: {
+        screen: DrawerPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    PersonPage: {
+        screen: PersonPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    SettingPage: {
+        screen: SettingPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    RegisterPage: {
+        screen: RegisterPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    ForgetPage: {
+        screen: ForgetPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    RacesInfoPage: {
+        screen: RacesInfoPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    LoginFirstPage: {
+        screen: LoginFirstPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    LoginCodePage: {
+        screen: LoginCodePage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    EmailRegisterPage: {
+        screen: EmailRegisterPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    ImageGallery: {
+        screen: ImageGallery,
+        navigationOptions: {
+            header: null
+        }
+    },
+    ForgetEmailPage: {
+        screen: ForgetEmailPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    BuyTicketPage: {
+        screen: BuyTicketPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    OrderInfoPage: {
+        screen: OrderInfoPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    BuyKnowPage: {
+        screen: BuyKnowPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    CertificationPage: {
+        screen: CertificationPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    OrderListPage: {
+        screen: OrderListPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    SecurityPage: {
+        screen: SecurityPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    ModifyPwdPage: {
+        screen: ModifyPwdPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    SearchRacesPage: {
+        screen: SearchRacesPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    BusinessPage: {
+        screen: BusinessPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    SearchKeywordPage: {
+        screen: SearchKeywordPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    ChildRaceInfoPage: {
+        screen: ChildRaceInfoPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    AboutPage: {
+        screen: AboutPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    PokerPersonPage: {
+        screen: PokerPersonPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    MainNewsPage: {
+        screen: MainNewsPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    NewsInfoPage: {
+        screen: NewsInfoPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    SearchNewsPage: {
+        screen: SearchNewsPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    TicketPage: {
+        screen: TicketPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    ApiSettingPage: {
+        screen: ApiSettingPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    BindingPhonePage: {
+        screen: BindingPhonePage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    ChangePhonePage: {
+        screen: ChangePhonePage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    MessagePage: {
+        screen: MessagePage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    MainVideoPage: {
+        screen: MainVideoPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    VideoInfoPage: {
+        screen: VideoInfoPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    TicketSearchPage: {
+        screen: TicketSearchPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    ChoiseTicketPage: {
+        screen: ChoiseTicketPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    TicketInfoPage: {
+        screen: TicketInfoPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    WebViewPage: {
+        screen: WebViewPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    NewAddressPage: {
+        screen: NewAddressPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    AdrListPage: {
+        screen: AdrListPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    DrawerRank: {
+        screen: DrawerRank,
+        navigationOptions: {
+            header: null
+        }
+    },
+    FocusPlayer: {
+        screen: FocusPlayer,
+        navigationOptions: {
+            header: null
+        }
+    },
+    PokerRankPage: {
+        screen: PokerRankPage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    PokerRacePage: {
+        screen: PokerRacePage,
+        navigationOptions: {
+            header: null
+        }
+    },
+    SearchPoker: {
+        screen: SearchPoker,
+        navigationOptions: {
+            header: null
+        }
+    },
+    WebViewPay: {
+        screen: WebViewPay,
+        navigationOptions: {
+            header: null
+        }
+    },
+    Protocol: {
+        screen: Protocol,
+        navigationOptions: {
+            header: null
+        }
+    },
+    Suggest: {
+        screen: Suggest,
+        navigationOptions: {
+            header: null
+        }
+    },
+    WxRegister: {
+        screen: WxRegister,
+        navigationOptions: {
+            header: null
+        }
+    },
+    InputPwd: {
+        screen: InputPwd,
+        navigationOptions: {
+            header: null
+        }
+    },
+    MessageCenter: {
+        screen: MessageCenter,
+        navigationOptions: {
+            header: null
+        }
+    },
+    ActivityCenter: {
+        screen: ActivityCenter,
+        navigationOptions: {
+            header: null
+        }
+    },
+    ActivityInfo: {
+        screen: ActivityInfo,
+        navigationOptions: {
+            header: null
+        }
+    },
+
+
+};
+export const Stacks = StackNavigator(MyApp, {
+    initialRouteName: 'DrawerPage'
+});
+
+const customFloatFromRight = '';
 
 
 export default class Router {
@@ -76,6 +414,16 @@ export default class Router {
     log(...msg) {
         if (__DEV__)
             console.log(...msg)
+    }
+
+    push(route) {
+
+        const navigateAction = NavigationActions.navigate({
+            routeName: route.name,
+            params: route.params
+        });
+
+        this.navigator.dispatch(navigateAction)
     }
 
     push(props, route) {
@@ -102,7 +450,7 @@ export default class Router {
         const resetAction = NavigationActions.reset({
             index: 0,
             key: null,
-            actions: [NavigationActions.navigate({routeName: 'DrawerPage'})]
+            actions: [NavigationActions.back({routeName: 'DrawerPage'})]
         });
         this.navigator.dispatch(resetAction)
 
@@ -427,18 +775,6 @@ export default class Router {
     }
 
 
-    toPokerPersonPage(props, player) {
-        this.push(props, {
-            page: PokerPersonPage,
-            name: 'PokerPersonPage',
-            sceneConfig: customFloatFromRight,
-            params: {
-                player: player
-            }
-        })
-    }
-
-
     toAboutPage(props) {
         this.push(props, {
             page: AboutPage,
@@ -587,16 +923,9 @@ export default class Router {
     }
 
     popToLoginFirstPage() {
-        let routes = this.navigator.getCurrentRoutes();
-        var isContainLogin = false;
-        for (var route of routes) {
-            if (route.name === 'LoginFirstPage') {
-                isContainLogin = true;
-            }
-        }
-        if (!isContainLogin) {
-            this.toLoginFirstPage()
-        }
+        this.push({
+            name: 'LoginFirstPage',
+        })
 
     }
 
@@ -690,18 +1019,6 @@ export default class Router {
         })
     }
 
-    toInputEmailPwdPage(props, email) {
-        this.push(props, {
-            page: InputPwdPage,
-            name: 'InputPwdPage',
-            sceneConfig: customFloatFromRight,
-            params: {
-                email: email,
-                isEmailOrMobile: 'email',
-                isRegisterOrForget: 'register'
-            }
-        })
-    }
 
     toInputPwdPage(props, phone, code) {
         this.push(props, {
@@ -714,23 +1031,6 @@ export default class Router {
                 isEmailOrMobile: 'mobile',
                 isRegisterOrForget: 'register'
             }
-        })
-    }
-
-
-    toDrawerPage() {
-        this.navigator.replace({
-            page: DrawerPage,
-            name: 'DrawerPage',
-            sceneConfig: customFloatFromRight
-        })
-    }
-
-    toEventPage(props) {
-        this.push(props, {
-            page: EventPage,
-            name: 'EventPage',
-            sceneConfig: customFloatFromRight
         })
     }
 
@@ -753,31 +1053,12 @@ export default class Router {
     }
 
     popToLogin() {
-        let routes = this.navigator.getCurrentRoutes();
-        for (var route of routes) {
-            if (route.name === 'LoginFirstPage') {
-                this.navigator.popToRoute(route)
-            }
-        }
-
+        this.popToTop();
     }
 
     popToDrawerRank() {
-        let routes = this.navigator.getCurrentRoutes();
-        for (var route of routes) {
-            if (route.name === 'DrawerRank' || route.name === 'RacesInfoPage') {
-                this.navigator.popToRoute(route)
-            }
-        }
+        this.popToTop();
 
-    }
-
-    resetToHome() {
-        this.navigator.resetTo({
-            name: 'HomePage',
-            page: HomePage,
-            sceneConfig: customFloatFromRight,
-        })
     }
 
 

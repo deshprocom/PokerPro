@@ -4,7 +4,7 @@
 import React, {Component} from 'react';
 import {Platform, BackAndroid} from 'react-native'
 
-import {Stacks} from '../configs/StackRouters';
+import {Stacks} from '../configs/Router';
 
 
 export default class Root extends Component {
