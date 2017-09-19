@@ -102,6 +102,7 @@ export default class PokerView extends Component {
                 <Text style={styles.focus}>{this.state.followed ? I18n.t('rank_focused') : I18n.t('rank_focus')}</Text>
             </TouchableOpacity>
 
+            <View style={{flex: 1}}/>
 
             <View style={styles.tabView}>
 
@@ -308,7 +309,7 @@ const styles = StyleSheet.create({
         height: 80,
         flexDirection: 'row',
         backgroundColor: 'transparent',
-        marginTop: 36
+
     }
 
 
