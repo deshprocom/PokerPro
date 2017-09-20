@@ -374,6 +374,9 @@
   "verified_list":"实名信息",
   "verified_add":"添加身份证",
   "verified_pass":"添加护照",
-  "verified_new":"新增实名信息"
+  "verified_new":"新增实名信息",
+  "verified_image_lb":"请上传您的身份证信息",
+  "verified_example":"示例",
+  "verified_desc":"照片中需要能看清姓名、护照号码等信息，确保审核顺利通过"
 
 }

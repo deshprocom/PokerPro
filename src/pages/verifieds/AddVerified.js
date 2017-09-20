@@ -1,14 +1,16 @@
 import React, {Component} from 'react';
-import {View, Text, TextInput, Image, StyleSheet} from 'react-native';
-import {NavigationBar} from '../../components';
+import {View, Text, TextInput, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {NavigationBar, ActionSheet, ImagePicker} from '../../components';
 import {Colors, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {listVerified} from '../../services/AccountDao';
+import {picker} from '../../utils/ComonHelper';
 
 export default class AddVerified extends Component {
     state = {
         name: '',
-        num: ''
+        num: '',
+        localImg: {}
     };
 
     render() {
@@ -22,9 +24,77 @@ export default class AddVerified extends Component {
             />
 
             {this.renderInput()}
-
+            {this.renderImage()}
+            {this.renderSubmit()}
+            <ActionSheet
+                ref={o => this.ActionSheet = o}
+                title={I18n.t('chose_image')}
+                options={[I18n.t('cancel'), I18n.t('camera'), I18n.t('pictures')]}
+                cancelButtonIndex={0}
+                destructiveButtonIndex={2}
+                onPress={this.handlePress}
+            />
         </View>)
     }
+
+    handlePress = (i) => {
+        switch (i) {
+            case 1:
+                ImagePicker.openCamera(picker).then(localImg => {
+                    this.setState({localImg})
+                }).catch(e => {
+                    alert(e.message ? e.message : e);
+                });
+                break;
+            case 2: {
+                ImagePicker.openPicker(picker).then(localImg => {
+                    this.setState({localImg})
+                }).catch(e => {
+                    alert(e.message ? e.message : e);
+                });
+            }
+        }
+    };
+
+    _submit = () => {
+        const {name, num, localImg} = this.state;
+        console.log(this.state)
+
+
+    };
+
+
+    renderSubmit = () => {
+        return <TouchableOpacity
+            onPress={this._submit}
+            style={styles.btnSubmit}>
+            <Text style={styles.txtSubmit}>{I18n.t('submit')}</Text>
+        </TouchableOpacity>
+    };
+
+    renderImage = () => {
+        return <View>
+            <Text style={styles.lbImage1}>{I18n.t('verified_image_lb')}</Text>
+            <TouchableOpacity
+                onPress={() => {
+                    this.ActionSheet.show();
+                }}
+                style={styles.btnSelectImg}>
+                <Image style={styles.img1}
+                       source={Images.verified_card}/>
+            </TouchableOpacity>
+
+            <Text style={styles.lbImage2}>{I18n.t('verified_example')}:</Text>
+
+            <Image style={styles.img2}
+                   source={Images.verified_exmple}/>
+
+
+            <Text style={styles.lbImage3}>*{I18n.t('verified_desc')}</Text>
+
+
+        </View>
+    };
 
     renderInput = () => {
 
@@ -32,6 +102,7 @@ export default class AddVerified extends Component {
             <View style={styles.rowAlign}>
                 <Text style={styles.lbName}>{I18n.t('real_name')}: </Text>
                 <TextInput style={styles.inName}
+                           underlineColorAndroid='transparent'
                            clearButtonMode='while-editing'
                            onChangeText={name => this.setState({name})}
                            maxLength={50}
@@ -44,6 +115,7 @@ export default class AddVerified extends Component {
             <View style={styles.rowAlign}>
                 <Text style={styles.lbName}>{I18n.t('ID_card')}</Text>
                 <TextInput style={styles.inName}
+                           underlineColorAndroid='transparent'
                            clearButtonMode='while-editing'
                            onChangeText={num => this.setState({num})}
                            maxLength={50}
@@ -66,5 +138,55 @@ const styles = StyleSheet.create({
     },
     rowAlign: {
         flexDirection: 'row', alignItems: 'center'
+    },
+    lbImage1: {
+        fontSize: 14,
+        color: Colors._AAA,
+        marginLeft: 17,
+        marginTop: 28,
+        marginBottom: 18
+    },
+    img1: {
+        height: 66,
+        width: 98,
+    },
+    btnSelectImg: {
+        alignSelf: 'center',
+        height: 128,
+        width: 206,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#BBBBBB'
+    },
+    lbImage2: {
+        fontSize: 14,
+        color: Colors._AAA,
+        marginLeft: 17,
+        marginTop: 10
+    },
+    img2: {
+        height: 128,
+        width: 206,
+        alignSelf: 'center'
+    },
+    lbImage3: {
+        fontSize: 11,
+        color: Colors._AAA,
+        marginLeft: 17,
+        marginTop: 25
+    },
+    txtSubmit: {
+        fontSize: 17,
+        color: Colors._F4E
+    },
+    btnSubmit: {
+        height: 44,
+        marginLeft: 17,
+        marginRight: 17,
+        backgroundColor: Colors._161,
+        borderRadius: 2,
+        marginTop: 30,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 });

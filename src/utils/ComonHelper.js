@@ -25,7 +25,15 @@ export const MM_DD = 'MM-DD';
 
 const HOST = 'https://h5.deshpro.com/';
 export const loadApp = HOST + 'race/181/zh/loadAPP';
-
+export const picker = {
+    width: 500,
+    height: 500,
+    cropping: true,
+    cropperCircleOverlay: true,
+    compressImageMaxWidth: 800,
+    compressImageMaxHeight: 800,
+    compressImageQuality: 0.5,
+};
 
 export function updateApp(data) {
     const {android_platform, ios_platform} = data;
