@@ -16,6 +16,11 @@ export default class VerifiedPage extends Component {
     };
 
     componentDidMount() {
+        this.refresh();
+    }
+
+
+    refresh = () => {
         listVerified(data => {
             const {chinese_ids, passport_ids} = data.items;
             this.setState({
@@ -25,7 +30,7 @@ export default class VerifiedPage extends Component {
         }, err => {
 
         })
-    }
+    };
 
     render() {
         const {chinese_ids, passports} = this.state;
@@ -106,6 +111,7 @@ export default class VerifiedPage extends Component {
     };
 
     _toAddVerified = () => {
-        router.toAddVerified(this.state.currentPage === 0 ?'chinese_id':'passport_id');
+        let cert_type = this.state.currentPage === 0 ? 'chinese_id' : 'passport_id';
+        router.toAddVerified(cert_type, this.refresh);
     }
 }

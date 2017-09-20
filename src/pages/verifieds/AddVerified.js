@@ -59,7 +59,7 @@ export default class AddVerified extends Component {
 
     _submit = () => {
         const {name, num, localImg, showImg} = this.state;
-        const {cert_type} = this.props.navigation.state.params;
+        const {cert_type, verified_refresh} = this.props.navigation.state.params;
         console.log(cert_type, this.state)
 
         if (strNotNull(name) && strNotNull(num)) {
@@ -74,7 +74,8 @@ export default class AddVerified extends Component {
             formData.append("cert_type", cert_type);
 
             addVerified(formData, data => {
-
+                verified_refresh();
+                router.pop();
             }, err => {
 
             })
