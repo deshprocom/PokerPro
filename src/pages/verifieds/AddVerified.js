@@ -4,13 +4,14 @@ import {NavigationBar, ActionSheet, ImagePicker} from '../../components';
 import {Colors, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {listVerified} from '../../services/AccountDao';
-import {picker} from '../../utils/ComonHelper';
+import {picker, strNotNull} from '../../utils/ComonHelper';
 
 export default class AddVerified extends Component {
     state = {
         name: '',
         num: '',
-        localImg: {}
+        localImg: {},
+        showImg: ''
     };
 
     render() {
@@ -41,14 +42,14 @@ export default class AddVerified extends Component {
         switch (i) {
             case 1:
                 ImagePicker.openCamera(picker).then(localImg => {
-                    this.setState({localImg})
+                    this.setState({localImg, showImg: localImg.path})
                 }).catch(e => {
                     alert(e.message ? e.message : e);
                 });
                 break;
             case 2: {
                 ImagePicker.openPicker(picker).then(localImg => {
-                    this.setState({localImg})
+                    this.setState({localImg, showImg: localImg.path})
                 }).catch(e => {
                     alert(e.message ? e.message : e);
                 });
@@ -80,8 +81,11 @@ export default class AddVerified extends Component {
                     this.ActionSheet.show();
                 }}
                 style={styles.btnSelectImg}>
-                <Image style={styles.img1}
-                       source={Images.verified_card}/>
+                {strNotNull(this.state.showImg) ? <Image style={styles.showImg}
+                                                         source={{uri: this.state.showImg}}/> :
+                    <Image style={styles.img1}
+                           source={Images.verified_card}/>}
+
             </TouchableOpacity>
 
             <Text style={styles.lbImage2}>{I18n.t('verified_example')}:</Text>
@@ -149,6 +153,10 @@ const styles = StyleSheet.create({
     img1: {
         height: 66,
         width: 98,
+    },
+    showImg: {
+        height: 128,
+        width: 206,
     },
     btnSelectImg: {
         alignSelf: 'center',
