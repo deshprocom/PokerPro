@@ -82,7 +82,11 @@ export default {
     verify_invite_code: verify_invite_code,
     msg_read: msg_read,
     unread_remind: unread_remind,
-    app_versions: 'app_versions'
+    app_versions: 'app_versions',
+    add_certification: add_certification,
+    del_certification: del_certification,
+    list_certification: list_certification
+
 }
 
 
@@ -95,6 +99,18 @@ function getUserId() {
 
 const page_size = 10;
 
+
+export function list_certification() {
+    return 'account/users/' + getUserId() + '/certification?version=v20'
+}
+
+export function del_certification() {
+    return 'account/users/' + getUserId() + '/certification/delete'
+}
+
+export function add_certification() {
+    return 'account/users/' + getUserId() + '/certification'
+}
 
 export function unread_remind() {
     return 'users/' + getUserId() + '/notifications/unread_remind';

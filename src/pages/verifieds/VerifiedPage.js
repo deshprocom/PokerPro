@@ -1,15 +1,35 @@
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
-import {NavigationBar, UltimateListView} from '../../components';
+import {View, Text, FlatList, Image, TouchableOpacity} from 'react-native';
+import {NavigationBar} from '../../components';
 import {Colors, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
-import UltimateList from '../../components/ultimate';
 import ItemVerified from './ItemVerified';
+import {listVerified} from '../../services/AccountDao';
 
 export default class VerifiedPage extends Component {
 
+    state = {
+        chinese_ids: [],
+        passports: [],
+        currentPage: 0
+    };
+
+    componentDidMount() {
+        listVerified(data => {
+            const {chinese_ids, passport_ids} = data.items;
+            this.setState({
+                chinese_ids: chinese_ids,
+                passports: passport_ids
+            })
+        }, err => {
+
+        })
+    }
+
     render() {
+        const {chinese_ids, passports} = this.state;
+
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 toolbarStyle={{backgroundColor: '#161718'}}
@@ -19,31 +39,43 @@ export default class VerifiedPage extends Component {
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}
             />
-            <ScrollableTabView>
-                <UltimateList
-                    tabLabel="身份证"
-                    refreshable={false}
+            <ScrollableTabView
+                onChangeTab={(page) => {
+                    this.setState({
+                        currentPage: page.i
+                    })
+                }}
+                renderTabBar={() => <ScrollableTabBar
+                    backgroundColor={Colors.white}
+                    activeTextColor="#161718"
+                    inactiveTextColor={Colors._AAA}
+                    textStyle={{fontSize: 17}}
+                    style={{borderColor: Colors._EEE}}
+                    underlineStyle={{backgroundColor: '#161718', height: 4}}
+                />}>
+                <FlatList
+                    tabLabel={I18n.t('identification')}
+                    data={chinese_ids}
                     keyExtractor={(item, index) => `${index}`}
-                    onFetch={this.onFetch}
-                    separator={this.renderSeparatorView}
-                    item={this.renderItem}
-                    allLoadedText=''/>
+                    ItemSeparatorComponent={this.renderSeparatorView}
+                    renderItem={this.renderItem}
+                />
 
-                <UltimateList
-                    tabLabel="护照"
-                    refreshable={false}
+                <FlatList
+                    tabLabel={I18n.t('passport')}
+                    data={passports}
                     keyExtractor={(item, index) => `${index}`}
-                    onFetch={this.onFetch}
-                    item={this.renderItem}/>
+                    ItemSeparatorComponent={this.renderSeparatorView}
+                    renderItem={this.renderItem}/>
 
             </ScrollableTabView>
+
+            {this.renderAdd()}
+
+
         </View>)
     }
 
-    onFetch = (page = 1, startFetch, abortFetch) => {
-        startFetch([], 10)
-
-    };
 
     renderSeparatorView = () => {
         return (<View style={{height: 1}}/>)
@@ -52,5 +84,23 @@ export default class VerifiedPage extends Component {
     renderItem = (item, index, separator) => {
 
         return (<ItemVerified/>)
+    };
+
+    renderAdd = () => {
+        return <TouchableOpacity
+            style={{
+                height: 44, position: 'absolute', backgroundColor: Colors._161,
+                bottom: 60, right: 17, left: 17, alignItems: 'center',
+                justifyContent: 'center', flexDirection: 'row'
+            }}>
+            <Image
+                style={{height: 20, width: 20}}
+                source={Images.verified_add}/>
+            <Text style={{
+                fontSize: 17, color: Colors._F4E,
+                marginLeft: 9
+            }}>{this.state.currentPage === 0 ? I18n.t('verified_add') : I18n.t('verified_pass')}</Text>
+
+        </TouchableOpacity>
     }
 }

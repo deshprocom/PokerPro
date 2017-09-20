@@ -371,6 +371,8 @@
   "ads_poker":"德扑精彩，尽在扑客",
   "wx_login":"微信登陆",
   "msg_login":"短信登陆",
-  "verified_list":"实名信息"
+  "verified_list":"实名信息",
+  "verified_add":"添加身份证",
+  "verified_pass":"添加护照"
 
 }
