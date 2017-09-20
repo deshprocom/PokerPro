@@ -61,9 +61,16 @@ import InputPwd from '../pages/account/InputPwd';
 import MessageCenter from '../pages/message/MessageCenter';
 import ActivityCenter from '../pages/message/ActivityCenter';
 import ActivityInfo from '../pages/message/ActivityInfo';
+import VerifiedPage from '../pages/verifieds/VerifiedPage';
 
 
 const MyApp = {
+    VerifiedPage: {
+        screen: VerifiedPage,
+        navigationOptions: {
+            header: null
+        }
+    },
     HomePage: {
         screen: HomePage,
         navigationOptions: {
@@ -416,7 +423,7 @@ export default class Router {
             console.log(...msg)
     }
 
-    push(route) {
+    stackPush(route) {
 
         const navigateAction = NavigationActions.navigate({
             routeName: route.name,
@@ -454,6 +461,13 @@ export default class Router {
         });
         this.navigator.dispatch(resetAction)
 
+    }
+
+
+    toVerifiedPage() {
+        this.stackPush({
+            name: 'VerifiedPage',
+        })
     }
 
     toActivityInfo(props, activity) {

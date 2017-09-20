@@ -305,7 +305,7 @@ export default class PersonInfo extends React.Component {
     }
 
     _toRealName = () => {
-        router.toCertificationPage();
+        router.toVerifiedPage();
     }
 
     _txtRealStatus = () => {

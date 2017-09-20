@@ -35,7 +35,6 @@ export default class NewsInfoPage extends Component {
             style={styles.page}>
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors.bg_09}}
-                router={router}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}

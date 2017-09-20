@@ -62,10 +62,6 @@ const images = {
     home_typeface: require('../../source/home/home_typeface@2x.png'),
     home_bg: require('../../source/home/home_bg_image@2x.png'),
     home_bg_races: require('../../source/home/home_bg_race.png'),
-    home_sort: require('../../source/home/home_sort.gif'),
-    home_ticket: require('../../source/home/home_tickit.gif'),
-    home_video: require('../../source/home/home_video.gif'),
-    home_new: require('../../source/home/home_new.gif'),
     home_unstart: require('../../source/home/home_races_unstart@2x.png'),
     home_no: require('../../source/home/home_no@3x.png'),
     home_fail: require('../../source/home/home_fail@3x.png'),
@@ -193,7 +189,14 @@ const images = {
     pay_selected:require('../../source/pay/pay_selected.png'),
     pay_close:require('../../source/pay/pay_close.png'),
     pay_card:require('../../source/pay/pay_card.png'),
-    pay_ticket:require('../../source/pay/pay_ticket.png')
+    pay_ticket:require('../../source/pay/pay_ticket.png'),
+    verified_add:require('../../source/verified/add.png'),
+    verified_avatar:require('../../source/verified/avatar.png'),
+    verified_card:require('../../source/verified/card.png'),
+    verified_edit:require('../../source/verified/edit.png'),
+    verified_select:require('../../source/verified/select.png'),
+    verified_selected:require('../../source/verified/selected.png'),
+    verified_exmple:require('../../source/verified/exmple.png')
 
 
 };
