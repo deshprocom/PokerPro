@@ -3,8 +3,8 @@ import {View, Text, TextInput, Image, StyleSheet, TouchableOpacity} from 'react-
 import {NavigationBar, ActionSheet, ImagePicker} from '../../components';
 import {Colors, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {listVerified} from '../../services/AccountDao';
-import {picker, strNotNull} from '../../utils/ComonHelper';
+import {addVerified} from '../../services/AccountDao';
+import {picker, strNotNull, showToast, isEmptyObject, getFileName} from '../../utils/ComonHelper';
 
 export default class AddVerified extends Component {
     state = {
@@ -58,8 +58,31 @@ export default class AddVerified extends Component {
     };
 
     _submit = () => {
-        const {name, num, localImg} = this.state;
-        console.log(this.state)
+        const {name, num, localImg, showImg} = this.state;
+        const {cert_type} = this.props.navigation.state.params;
+        console.log(cert_type, this.state)
+
+        if (strNotNull(name) && strNotNull(num)) {
+            let formData = new FormData();
+            if (!isEmptyObject(localImg)) {
+                let file = {uri: localImg.path, type: 'multipart/form-data', name: getFileName(localImg.path)};
+                formData.append("image", file);
+            }
+            formData.append("version", 'v20');
+            formData.append("real_name", name);
+            formData.append("cert_no", num);
+            formData.append("cert_type", cert_type);
+
+            addVerified(formData, data => {
+
+            }, err => {
+
+            })
+
+
+        } else {
+            showToast('姓名和证件号请填写完整！')
+        }
 
 
     };

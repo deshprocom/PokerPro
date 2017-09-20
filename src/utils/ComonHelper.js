@@ -31,9 +31,15 @@ export const picker = {
     cropping: true,
     cropperCircleOverlay: true,
     compressImageMaxWidth: 800,
-    compressImageMaxHeight: 800,
+    compressImageMaxHeight: 600,
     compressImageQuality: 0.5,
 };
+
+
+export function getFileName(o) {
+    var pos=o.lastIndexOf("/");
+    return o.substring(pos+1);
+}
 
 export function updateApp(data) {
     const {android_platform, ios_platform} = data;

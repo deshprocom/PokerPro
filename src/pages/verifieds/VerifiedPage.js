@@ -106,6 +106,6 @@ export default class VerifiedPage extends Component {
     };
 
     _toAddVerified = () => {
-        router.toAddVerified();
+        router.toAddVerified(this.state.currentPage === 0 ?'chinese_id':'passport_id');
     }
 }
