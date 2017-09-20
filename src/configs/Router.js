@@ -5,7 +5,7 @@
 import {NavigationActions} from 'react-navigation'
 
 //Pages
-import HomePage from '../pages/HomePage';
+
 import InputPwdPage from '../pages/InputPwdPage';
 import DrawerPage from '../pages/DrawerPage';
 import PersonPage from '../pages/person/PersonPage';
@@ -31,7 +31,6 @@ import BusinessPage from '../pages/setting/BusinessPage';
 import SearchKeywordPage from '../pages/races/SearchKeywordPage';
 import ChildRaceInfoPage from '../pages/races/ChildRaceInfoPage';
 import AboutPage from '../pages/setting/AboutPage';
-import PokerPersonPage from '../pages/person/PokerPersonPage';
 import MainNewsPage from '../pages/news/MainNewsPage';
 import NewsInfoPage from '../pages/news/NewsInfoPage';
 import SearchNewsPage from '../pages/news/SearchNewsPage';
@@ -61,9 +60,6 @@ import InputPwd from '../pages/account/InputPwd';
 import MessageCenter from '../pages/message/MessageCenter';
 import ActivityCenter from '../pages/message/ActivityCenter';
 import ActivityInfo from '../pages/message/ActivityInfo';
-import VerifiedPage from '../pages/verifieds/VerifiedPage';
-
-
 
 
 const customFloatFromRight = '';
@@ -121,6 +117,11 @@ export default class Router {
 
     }
 
+    toAddVerified() {
+        this.stackPush({
+            name: 'AddVerified',
+        })
+    }
 
     toVerifiedPage() {
         this.stackPush({

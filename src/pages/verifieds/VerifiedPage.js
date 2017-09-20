@@ -88,6 +88,7 @@ export default class VerifiedPage extends Component {
 
     renderAdd = () => {
         return <TouchableOpacity
+            onPress={this._toAddVerified}
             style={{
                 height: 44, position: 'absolute', backgroundColor: Colors._161,
                 bottom: 60, right: 17, left: 17, alignItems: 'center',
@@ -102,5 +103,9 @@ export default class VerifiedPage extends Component {
             }}>{this.state.currentPage === 0 ? I18n.t('verified_add') : I18n.t('verified_pass')}</Text>
 
         </TouchableOpacity>
+    };
+
+    _toAddVerified = () => {
+        router.toAddVerified();
     }
 }

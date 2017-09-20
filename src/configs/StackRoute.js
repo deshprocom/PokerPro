@@ -58,9 +58,16 @@ import MessageCenter from '../pages/message/MessageCenter';
 import ActivityCenter from '../pages/message/ActivityCenter';
 import ActivityInfo from '../pages/message/ActivityInfo';
 import VerifiedPage from '../pages/verifieds/VerifiedPage';
+import AddVerified from '../pages/verifieds/AddVerified';
 
 
 const MyApp = {
+    AddVerified: {
+        screen: AddVerified,
+        navigationOptions: {
+            header: null
+        }
+    },
     VerifiedPage: {
         screen: VerifiedPage,
         navigationOptions: {
