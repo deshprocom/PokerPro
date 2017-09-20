@@ -88,7 +88,8 @@ export default class VerifiedPage extends Component {
 
     renderItem = (item, index, separator) => {
 
-        return (<ItemVerified/>)
+        return (<ItemVerified
+            verified={item}/>)
     };
 
     renderAdd = () => {
