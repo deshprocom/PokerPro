@@ -13,6 +13,7 @@ export default class AddVerified extends Component {
         num: '',
         localImg: {},
         showImg: '',
+        editable: true
     };
 
 
@@ -25,10 +26,9 @@ export default class AddVerified extends Component {
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}
             />
-
             {this.renderInput()}
-            {this.renderImage()}
-            {this.renderSubmit()}
+            {this._verifiedPass()}
+
             <ActionSheet
                 ref={o => this.ActionSheet = o}
                 title={I18n.t('chose_image')}
@@ -40,12 +40,26 @@ export default class AddVerified extends Component {
         </View>)
     }
 
+    _verifiedPass = () => {
+        if (this.state.editable) {
+            return <View>
+
+                {this.renderImage()}
+                {this.renderSubmit()}
+            </View>
+        } else {
+            return <Image style={styles.passImg}
+                          source={{uri: this._certImage()}}/>
+        }
+    };
+
     componentDidMount() {
         const {verified} = this.props.navigation.state.params;
         if (!isEmptyObject(verified)) {
             this.setState({
                 name: verified.real_name,
-                num: verified.cert_no
+                num: verified.cert_no,
+                editable: verified.status !== Verified.PASSED
             })
         }
 
@@ -176,6 +190,7 @@ export default class AddVerified extends Component {
                            maxLength={50}
                            placeholderTextColor="#CCCCCC"
                            value={this.state.name}
+                           editable={this.state.editable}
                            placeholder={I18n.t('ple_real_name')}/>
 
 
@@ -190,6 +205,7 @@ export default class AddVerified extends Component {
                            maxLength={50}
                            placeholderTextColor="#CCCCCC"
                            value={this.state.num}
+                           editable={this.state.editable}
                            placeholder={I18n.t('ple_id_card')}/>
 
 
@@ -262,5 +278,11 @@ const styles = StyleSheet.create({
         marginTop: 30,
         alignItems: 'center',
         justifyContent: 'center'
-    }
+    },
+    passImg: {
+        height: 128,
+        width: 206,
+        alignSelf: 'center',
+        marginTop: 60
+    },
 });

@@ -15,6 +15,7 @@ export default class ItemVerified extends Component {
             onPress={() => {
                 this.verifiedEditOrLook(item)
             }}
+            activeOpacity={0.5}
             style={[styles.itemAlign, {backgroundColor: 'white'}]}>
             <Image style={styles.icSelect}
                    source={Images.verified_select}/>
@@ -48,10 +49,8 @@ export default class ItemVerified extends Component {
 
     verifiedEditOrLook = (item) => {
         const {refresh} = this.props;
-        if (item.status === Verified.PASSED)
-            return;
-        else
-            router.toAddVerified(item.cert_type, refresh, item)
+
+        router.toAddVerified(item.cert_type, refresh, item)
     };
 
 
