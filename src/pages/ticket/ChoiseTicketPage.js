@@ -415,32 +415,37 @@ export default class ChoiseTicketPage extends Component {
     };
 
     _toBuy = () => {
-        umengEvent('ticket_contain');
-        const {selectRace, selectSub, selectRaceData, ticket} = this.state;
-        const {id} = ticket;
-        let raceId = '';
-        if (selectRace === RACE_MAIN && id) {
-            const {race_id} = selectRaceData.race;
-            raceId = race_id;
-        } else if (selectRace === RACE_SIDE && id) {
-            const {race_id} = selectSub.race;
-            raceId = race_id;
-        }
 
-        const body = {
-            race_id: raceId,
-            ticket_id: id
-        };
+        if (isEmptyObject(login_user)) {
+            router.toLoginFirstPage()
+        } else {
+            umengEvent('ticket_contain');
+            const {selectRace, selectSub, selectRaceData, ticket} = this.state;
+            const {id} = ticket;
+            let raceId = '';
+            if (selectRace === RACE_MAIN && id) {
+                const {race_id} = selectRaceData.race;
+                raceId = race_id;
+            } else if (selectRace === RACE_SIDE && id) {
+                const {race_id} = selectSub.race;
+                raceId = race_id;
+            }
 
-        getUnpaidOrder(body, data => {
-            if (strNotNull(data.order_number))
-                router.toOrderInfoPage(this.props, data.order_number)
-            else
+            const body = {
+                race_id: raceId,
+                ticket_id: id
+            };
+
+            getUnpaidOrder(body, data => {
+                if (strNotNull(data.order_number))
+                    router.toOrderInfoPage(this.props, data.order_number)
+                else
+                    router.toBuyTicketPage(this.props, raceId, id)
+
+            }, err => {
                 router.toBuyTicketPage(this.props, raceId, id)
-
-        }, err => {
-            router.toBuyTicketPage(this.props, raceId, id)
-        })
+            })
+        }
 
 
     };

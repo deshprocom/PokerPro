@@ -54,7 +54,7 @@ export default class TicketInfoPage extends Component {
             {this._topBar()}
 
             {this._content()}
-            {this._viewGoBuy() }
+            {this._viewGoBuy()}
 
         </View>)
 
@@ -82,22 +82,26 @@ export default class TicketInfoPage extends Component {
 
     _buy = () => {
 
-        const {race_id, ticket_id} = this.props.navigation.state.params;
+        if (isEmptyObject(login_user)) {
+            router.toLoginFirstPage()
+        } else {
+            const {race_id, ticket_id} = this.props.navigation.state.params;
 
-        const body = {
-            race_id: race_id,
-            ticket_id: ticket_id
-        };
+            const body = {
+                race_id: race_id,
+                ticket_id: ticket_id
+            };
 
-        getUnpaidOrder(body, data => {
-            if (strNotNull(data.order_number))
-                router.toOrderInfoPage(this.props, data.order_number)
-            else
+            getUnpaidOrder(body, data => {
+                if (strNotNull(data.order_number))
+                    router.toOrderInfoPage(this.props, data.order_number)
+                else
+                    router.toBuyTicketPage(this.props, race_id, ticket_id)
+
+            }, err => {
                 router.toBuyTicketPage(this.props, race_id, ticket_id)
-
-        }, err => {
-            router.toBuyTicketPage(this.props, race_id, ticket_id)
-        });
+            });
+        }
 
 
     };
