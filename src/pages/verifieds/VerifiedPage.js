@@ -89,6 +89,7 @@ export default class VerifiedPage extends Component {
     renderItem = (item, index, separator) => {
 
         return (<ItemVerified
+            refresh={this.refresh}
             verified={item}/>)
     };
 

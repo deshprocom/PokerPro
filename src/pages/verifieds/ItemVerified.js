@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {SecurityText} from '../../components';
 import I18n from 'react-native-i18n';
@@ -8,10 +8,14 @@ import {idCardStatus, Verified} from '../../configs/Status'
 export default class ItemVerified extends Component {
 
     render() {
-        console.log(this.props)
+
         const {index, item} = this.props.verified;
         const {cert_no, real_name, status} = item;
-        return (<View style={[styles.itemAlign, {backgroundColor: 'white'}]}>
+        return (<TouchableOpacity
+            onPress={() => {
+                this.verifiedEditOrLook(item)
+            }}
+            style={[styles.itemAlign, {backgroundColor: 'white'}]}>
             <Image style={styles.icSelect}
                    source={Images.verified_select}/>
             <View style={styles.margin}>
@@ -37,10 +41,30 @@ export default class ItemVerified extends Component {
 
             <View style={{flex: 1}}/>
 
-            <Image style={styles.icEdit}
-                   source={Images.verified_edit}/>
-        </View>)
+            {this.renderEdit(status)}
+
+        </TouchableOpacity>)
     }
+
+    verifiedEditOrLook = (item) => {
+        const {refresh} = this.props;
+        if (item.status === Verified.PASSED)
+            return;
+        else
+            router.toAddVerified(item.cert_type, refresh, item)
+    };
+
+
+    renderEdit = (status) => {
+        if (status === Verified.PASSED)
+            return <Image
+                style={styles.icAvatar}
+                source={Images.verified_avatar}/>;
+        else
+            return <Image style={styles.icEdit}
+                          source={Images.verified_edit}/>
+    };
+
 
     statusStyle = (status) => {
         switch (status) {
@@ -115,7 +139,8 @@ const styles = StyleSheet.create({
     },
     icAvatar: {
         height: 37,
-        width: 37
+        width: 37,
+        marginRight: 28
     },
     margin: {
         marginTop: 14,

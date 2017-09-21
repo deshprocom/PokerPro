@@ -117,12 +117,13 @@ export default class Router {
 
     }
 
-    toAddVerified(cert_type, refresh) {
+    toAddVerified(cert_type, refresh, verified) {
         this.stackPush({
             name: 'AddVerified',
             params: {
                 cert_type: cert_type,
-                verified_refresh: refresh
+                verified_refresh: refresh,
+                verified: verified
             }
         })
     }

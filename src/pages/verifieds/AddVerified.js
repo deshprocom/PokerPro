@@ -5,20 +5,22 @@ import {Colors, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {addVerified} from '../../services/AccountDao';
 import {picker, strNotNull, showToast, isEmptyObject, getFileName} from '../../utils/ComonHelper';
+import {idCardStatus, Verified} from '../../configs/Status';
 
 export default class AddVerified extends Component {
     state = {
         name: '',
         num: '',
         localImg: {},
-        showImg: ''
+        showImg: '',
     };
+
 
     render() {
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 toolbarStyle={{backgroundColor: '#161718'}}
-                title={I18n.t('verified_new')}
+                title={this._title()}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}
@@ -37,6 +39,30 @@ export default class AddVerified extends Component {
             />
         </View>)
     }
+
+    _title = () => {
+        const {verified} = this.props.navigation.state.params;
+
+        return isEmptyObject(verified) ? I18n.t('verified_new') : idCardStatus(verified.status)
+    };
+
+    _realName = () => {
+        const {verified} = this.props.navigation.state.params;
+
+        return isEmptyObject(verified) ? '' : verified.real_name
+    };
+
+    _certNo = () => {
+        const {verified} = this.props.navigation.state.params;
+
+        return isEmptyObject(verified) ? '' : verified.cert_no
+    };
+
+    _certImage = () => {
+        const {verified} = this.props.navigation.state.params;
+
+        return isEmptyObject(verified) ? '' : verified.image;
+    };
 
     handlePress = (i) => {
         switch (i) {
@@ -105,10 +131,7 @@ export default class AddVerified extends Component {
                     this.ActionSheet.show();
                 }}
                 style={styles.btnSelectImg}>
-                {strNotNull(this.state.showImg) ? <Image style={styles.showImg}
-                                                         source={{uri: this.state.showImg}}/> :
-                    <Image style={styles.img1}
-                           source={Images.verified_card}/>}
+                {this.verifiedImage()}
 
             </TouchableOpacity>
 
@@ -124,6 +147,21 @@ export default class AddVerified extends Component {
         </View>
     };
 
+
+    verifiedImage = () => {
+        if (strNotNull(this.state.showImg)) {
+            return <Image style={styles.showImg}
+                          source={{uri: this.state.showImg}}/>
+        } else if (strNotNull(this._certImage())) {
+            return <Image style={styles.showImg}
+                          source={{uri: this._certImage()}}/>
+        } else
+            return <Image style={styles.img1}
+                          source={Images.verified_card}/>
+
+
+    };
+
     renderInput = () => {
 
         return <View style={{backgroundColor: 'white', marginTop: 8}}>
@@ -135,6 +173,7 @@ export default class AddVerified extends Component {
                            onChangeText={name => this.setState({name})}
                            maxLength={50}
                            placeholderTextColor="#CCCCCC"
+                           value={this._realName()}
                            placeholder={I18n.t('ple_real_name')}/>
 
 
@@ -148,6 +187,7 @@ export default class AddVerified extends Component {
                            onChangeText={num => this.setState({num})}
                            maxLength={50}
                            placeholderTextColor="#CCCCCC"
+                           value={this._certNo()}
                            placeholder={I18n.t('ple_id_card')}/>
 
 
