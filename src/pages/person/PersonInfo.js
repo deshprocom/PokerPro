@@ -276,7 +276,7 @@ export default class PersonInfo extends React.Component {
             <Text style={styles.text_label}>{I18n.t('real_name_manager')}</Text>
 
             <View style={styles.view_real}>
-                <Text style={this._colorRealStatus()}>{this._txtRealStatus()}</Text>
+                <Text style={styles.txt_real_init}>{this._txtRealStatus()}</Text>
                 <Image style={{height: 20, width: 11, marginLeft: 5}}
                        source={Images.set_more}/>
             </View>
@@ -327,21 +327,6 @@ export default class PersonInfo extends React.Component {
         }
     };
 
-    _colorRealStatus = () => {
-        if (!isEmptyObject(user_extra)) {
-            switch (user_extra.status) {
-                case Verified.FAILED:
-                    return styles.txt_real_fail;
-                // case Verified.PASSED:
-                //     return styles.txt_real_pass;
-                case Verified.PENDING:
-                    return styles.txt_real;
-            }
-        } else if (isEmptyObject(user_extra)) {
-            return styles.txt_real_init;
-        }
-    }
-
 }
 
 const picker = {
@@ -368,7 +353,7 @@ const styles = StyleSheet.create({
         alignItems: 'center', flexDirection: 'row', marginRight: 30, marginLeft: 20
     },
     txt_real_init: {
-        fontSize: 15, color: '#F34A4A', marginRight: 20
+        fontSize: 15, color: '#4990E2', marginRight: 20
     },
     txt_real: {
         fontSize: 15, color: '#34BA3C', marginRight: 20

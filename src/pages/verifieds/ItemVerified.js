@@ -13,23 +13,15 @@ export default class ItemVerified extends Component {
         const {index, item} = this.props.verified;
         const {cert_no, real_name, status, id, cert_type} = item;
         return (<TouchableOpacity
+            disabled={!this.props.selectable}
             onPress={() => {
-                this.verifiedEditOrLook(item)
+                this.props.setDefault(item)
             }}
             activeOpacity={0.5}
             style={[styles.itemAlign, {backgroundColor: 'white'}]}>
 
-            <TouchableOpacity
-                onPress={() => {
-                    this.props.setDefault({
-                        cert_type: cert_type,
-                        extra_id: id
-                    })
-                }}
-                style={[styles.itemAlign, {height: '100%'}]}>
-                <Image style={styles.icSelect}
-                       source={item.default ? Images.verified_selected : Images.verified_select}/>
-            </TouchableOpacity>
+            <Image style={styles.icSelect}
+                   source={item.default ? Images.verified_selected : Images.verified_select}/>
 
             <View style={styles.margin}>
                 <View style={styles.itemAlign}>
@@ -53,8 +45,13 @@ export default class ItemVerified extends Component {
 
 
             <View style={{flex: 1}}/>
-
-            {this.renderEdit(status)}
+            <TouchableOpacity
+                onPress={() => {
+                    this.verifiedEditOrLook(item)
+                }}
+                style={[styles.itemAlign, {height: '100%'}]}>
+            {this.renderEdit(item)}
+            </TouchableOpacity>
 
         </TouchableOpacity>)
     }
@@ -66,15 +63,17 @@ export default class ItemVerified extends Component {
     };
 
 
-    renderEdit = (status) => {
-        if (status === Verified.PASSED)
+    renderEdit = (item) => {
+        if (item.status === Verified.PASSED)
             return <Image
                 opacity={0.5}
                 style={styles.icAvatar}
                 source={Images.verified_avatar}/>;
         else
-            return <Image style={styles.icEdit}
-                          source={Images.verified_edit}/>
+            return (
+                <Image style={styles.icEdit}
+                       source={Images.verified_edit}/>)
+
     };
 
 

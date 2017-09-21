@@ -41,7 +41,9 @@ export default class VerifiedPage extends Component {
                 title={I18n.t('verified_list')}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                leftBtnPress={() => router.pop()}
+                leftBtnPress={() => {
+                    router.pop()
+                }}
             />
             <ScrollableTabView
                 onChangeTab={(page) => {
@@ -81,8 +83,14 @@ export default class VerifiedPage extends Component {
     }
 
     setDefault = (body) => {
-        defaultVerified(body, data => {
-            this.refresh();
+        const {backRefresh} = this.props.navigation.state.params;
+        if (backRefresh)
+            backRefresh(body);
+        defaultVerified({
+            cert_type: body.cert_type,
+            extra_id: body.id
+        }, data => {
+            router.pop();
         }, err => {
 
         })
@@ -94,8 +102,9 @@ export default class VerifiedPage extends Component {
     };
 
     renderItem = (item, index, separator) => {
-
+        const {backRefresh} = this.props.navigation.state.params;
         return (<ItemVerified
+            selectable={!!backRefresh}
             setDefault={this.setDefault}
             refresh={this.refresh}
             verified={item}/>)

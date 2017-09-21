@@ -11,16 +11,12 @@ import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, InputView, ImageLoad, SecurityText} from '../../components';
-import {fetchRaceNewOrder, fetchBuyTicket} from '../../actions/TicketOrderAction'
 import {
     isEmptyObject, showToast, checkMail, moneyFormat,
     convertDate, YYYY_MM_DD, getLoginUser, strNotNull
 } from '../../utils/ComonHelper';
 import Communications from 'react-native-communications';
-import {fetchGetCertification} from '../../actions/AccountAction';
-import {GET_CERTIFICATION, POST_BUY_TICKET, GET_RACE_NEW_ORDER, POST_CERTIFICATION} from '../../actions/ActionTypes';
 import NameRealView from './NameRealView';
-import {fetchRacesInfo, fetchGetRecentRaces} from '../../actions/RacesAction';
 import StorageKey from '../../configs/StorageKey';
 import {getBuyRaceTicket, postOrderTicket, getUnpaidOrder} from '../../services/OrderDao';
 import {umengEvent} from '../../utils/UmengEvent';
@@ -31,7 +27,7 @@ import PayModal from './PayModal';
 const E_TICKET = 'e_ticket',
     ENTITY = 'entity';
 
-class BuyTicketPage extends Component {
+export default class BuyTicketPage extends Component {
 
     state = {
         knowRed: false,
@@ -47,20 +43,7 @@ class BuyTicketPage extends Component {
         inviteCode: ''
     };
 
-    componentWillReceiveProps(newProps) {
 
-        if (newProps.hasData) {
-
-            if (newProps.actionType === GET_CERTIFICATION || POST_CERTIFICATION) {
-
-                this.setState({
-                    isNameReal: true
-                });
-
-            }
-
-        }
-    }
 
 
     componentDidMount() {
@@ -128,7 +111,7 @@ class BuyTicketPage extends Component {
             showToast(`${I18n.t('data_fail')}`)
         });
 
-        this.props._getCertification();
+
         this.tagBuyKnow();
 
     };
@@ -516,8 +499,7 @@ class BuyTicketPage extends Component {
 
                     {isEntity === ENTITY ? this._addrView() : this._emailViwe(email)}
 
-                    <NameRealView user_extra={user_extra}
-                                  router={router}/>
+                    <NameRealView/>
                     {this._inviteCode()}
 
                     {this._priceView()}
@@ -846,26 +828,5 @@ const styles = StyleSheet.create({
 
 });
 
-const headerStyle = {
-    height: 35, justifyContent: 'center',
-    alignItems: 'center', backgroundColor: Colors.bg_f5
-};
 
-const bindAction = dispatch => ({
-    _getRaceNewOrder: (body) => dispatch(fetchRaceNewOrder(body)),
-    _postBuyTicket: (race_id, body) => dispatch(fetchBuyTicket(race_id, body)),
-    _getCertification: () => dispatch(fetchGetCertification()),
-    _getRecentRaces: (body) => dispatch(fetchGetRecentRaces(body)),
-    _getRacesInfo: (body) => dispatch(fetchRacesInfo(body))
-});
 
-const mapStateToProps = state => ({
-    loading: state.TicketOrderState.loading,
-    error: state.TicketOrderState.error,
-    hasData: state.TicketOrderState.hasData,
-    actionType: state.TicketOrderState.actionType,
-    race_ticket_addr: state.TicketOrderState.race_ticket_addr,
-    user_extra: state.TicketOrderState.user_extra
-});
-
-export default connect(mapStateToProps, bindAction)(BuyTicketPage);

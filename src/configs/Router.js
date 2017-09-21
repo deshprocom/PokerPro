@@ -128,9 +128,12 @@ export default class Router {
         })
     }
 
-    toVerifiedPage() {
+    toVerifiedPage(backRefresh) {
         this.stackPush({
             name: 'VerifiedPage',
+            params: {
+                backRefresh: backRefresh
+            }
         })
     }
 

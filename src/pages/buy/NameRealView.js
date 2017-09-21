@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/2/21.
  */
-import React, {Component, PropTypes}from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text, ScrollView, Platform
@@ -14,27 +14,42 @@ import {Verified} from '../../configs/Status';
 import {umengEvent} from '../../utils/UmengEvent';
 
 export default class NameRealView extends Component {
-    static propTypes = {
-        router: PropTypes.object,
-        user_extra: PropTypes.object
+
+
+    state = {
+        verified: {}
     };
 
+
+    componentDidMount() {
+        this.refresh();
+    }
+
+    refresh = () => {
+        const {chinese_ids, passport_ids} = verifies;
+        let verified = {};
+        chinese_ids.forEach(function (x) {
+            if (x.default)
+                verified = x;
+        });
+
+
+        this.setState({verified})
+    };
+
+
     _certification = () => {
-        const {user_extra} = this.props;
-        umengEvent("ticket_buy_true_name");
-        if (isEmptyObject(user_extra)) {
-            router.toCertificationPage()
-        } else {
-            this.editIdCard(user_extra)
-        }
+        umengEvent('ticket_buy_true_name');
+        router.toVerifiedPage((verified) => {
+            this.setState({verified})
+        })
     };
 
     render() {
-        const {user_extra} = this.props;
+
+
         return (  <TouchableOpacity
             onPress={this._certification}
-            testID={isEmptyObject(user_extra) ? 'btn_certification' :
-                'btn_edit_id'}
             activeOpacity={1}
             style={{backgroundColor: Colors.white, marginTop: 8}}>
 
@@ -63,14 +78,10 @@ export default class NameRealView extends Component {
         </TouchableOpacity>)
     }
 
-    editIdCard = (user_extra) => {
-       router.toCertificationPage()
-
-    };
 
     nameView = () => {
-        const {user_extra} = this.props;
-        if (isEmptyObject(user_extra)) {
+        const {verified} = this.state;
+        if (isEmptyObject(verified)) {
             return ( <View
                 style={{
                     height: 39, alignItems: 'center', flexDirection: 'row',
@@ -93,7 +104,7 @@ export default class NameRealView extends Component {
                             <Text style={{fontSize: Fonts.size.h15, color: Colors.txt_666, marginRight: 9}}>
                                 {I18n.t('real_name')}:</Text>
                             <Text style={{fontSize: Fonts.size.h15, color: Colors.txt_666}}>
-                                {user_extra.real_name}</Text>
+                                {verified.real_name}</Text>
                         </View>
 
                     </View>
@@ -108,7 +119,7 @@ export default class NameRealView extends Component {
                                 endIndex: 12,
                             }}
                             style={{fontSize: Fonts.size.h15, color: Colors.txt_666}}>
-                            {user_extra.cert_no}</SecurityText>
+                            {verified.cert_no}</SecurityText>
                     </View>
                 </View>
 
@@ -121,15 +132,15 @@ export default class NameRealView extends Component {
     }
 
     _showStatus = () => {
-        const {user_extra} = this.props;
-        if (user_extra.status !== Verified.INIT) {
+        const {verified} = this.state;
+        if (verified.status !== Verified.INIT) {
             return (  <View style={{
                 borderRadius: 2, backgroundColor: '#cccccc',
                 height: 25, width: 55, justifyContent: 'center', alignItems: 'center',
                 marginRight: 20
             }}>
                 <Text style={[Fonts.H12, {color: Colors.white}]}>
-                    {idCardStatus(user_extra.status)}
+                    {idCardStatus(verified.status)}
                 </Text>
 
             </View>)
