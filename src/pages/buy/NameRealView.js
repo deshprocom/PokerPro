@@ -37,6 +37,9 @@ export default class NameRealView extends Component {
         this.setState({verified})
     };
 
+    getVerified = ()=>{
+        return this.state.verified;
+    };
 
     _certification = () => {
         umengEvent('ticket_buy_true_name');

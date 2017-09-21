@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/2/16.
  */
-import React, {Component}from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, Alert,
     StyleSheet, Image, Text, ScrollView, Platform,
@@ -33,7 +33,6 @@ export default class BuyTicketPage extends Component {
         knowRed: false,
         isEntity: 'e_ticket',
         email: '',
-        isNameReal: false,
         raceTicketData: {},
         ordered: false,
         race: {},
@@ -42,8 +41,6 @@ export default class BuyTicketPage extends Component {
         order_number: '',
         inviteCode: ''
     };
-
-
 
 
     componentDidMount() {
@@ -188,9 +185,11 @@ export default class BuyTicketPage extends Component {
 
     _btnBuyTicket = () => {
 
+        let verified = this.realName.getVerified();
+        console.log('RealName', verified);
         umengEvent('ticket_buy_contain');
-        let {isEntity, email, isNameReal, shipping_address, order_number, inviteCode} = this.state;
-        if (isNameReal) {
+        let {isEntity, email, shipping_address, order_number, inviteCode} = this.state;
+        if (!isEmptyObject(verified)) {
             if (isEntity === ENTITY) {
                 if (isEmptyObject(shipping_address)) {
                     showToast(`${I18n.t('add_adr')}`);
@@ -206,7 +205,8 @@ export default class BuyTicketPage extends Component {
                     mobile: shipping_address.mobile,
                     consignee: shipping_address.consignee,
                     address: shipping_address.address + shipping_address.address_detail,
-                    invite_code: inviteCode
+                    invite_code: inviteCode,
+                    cert_id: verified.id
                 };
                 if (this.payModal && !isEmptyObject(this.payModal.getPayUrl())) {
                     this.payModal.toggle()
@@ -499,7 +499,9 @@ export default class BuyTicketPage extends Component {
 
                     {isEntity === ENTITY ? this._addrView() : this._emailViwe(email)}
 
-                    <NameRealView/>
+                    <NameRealView
+                        ref={o => this.realName = o}
+                    />
                     {this._inviteCode()}
 
                     {this._priceView()}
@@ -598,7 +600,7 @@ export default class BuyTicketPage extends Component {
         if (isEmptyObject(tickets))
             return;
         const {original_price, price} = tickets;
-        return (<View style={{backgroundColor: 'white', marginTop:8}}>
+        return (<View style={{backgroundColor: 'white', marginTop: 8}}>
             <View style={{height: 35}}>
                 <Text style={{
                     fontSize: 15, color: Colors._333, fontWeight: 'bold',
@@ -819,10 +821,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
-    viewPrice: {flexDirection: 'row', justifyContent: 'space-between',marginTop:16,
-    marginBottom:14},
-    viewPrice1: {flexDirection: 'row', justifyContent: 'space-between',
-        marginBottom:16},
+    viewPrice: {
+        flexDirection: 'row', justifyContent: 'space-between', marginTop: 16,
+        marginBottom: 14
+    },
+    viewPrice1: {
+        flexDirection: 'row', justifyContent: 'space-between',
+        marginBottom: 16
+    },
     txtPrice1: {color: Colors._333, fontSize: 14, marginLeft: 18}
 
 
