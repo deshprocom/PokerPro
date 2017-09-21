@@ -25,23 +25,21 @@ export default class TicketInfoPage extends Component {
 
 
     componentDidMount() {
-        InteractionManager.runAfterInteractions(() => {
-            const {race_id, ticket_id} = this.props.navigation.state.params;
-            router.log('ticket', race_id, ticket_id);
-            const body = {
-                race_id: race_id,
-                ticket_id: ticket_id
-            };
-            getBuyRaceTicket(body, data => {
-                const {tickets, ordered, race} = data;
-                this.setState({
-                    tickets: tickets,
-                    ordered: ordered,
-                    race: race
-                })
-            }, err => {
-            });
-        })
+        const {race_id, ticket_id} = this.props.navigation.state.params;
+        router.log('ticket', race_id, ticket_id);
+        const body = {
+            race_id: race_id,
+            ticket_id: ticket_id
+        };
+        getBuyRaceTicket(body, data => {
+            const {tickets, ordered, race} = data;
+            this.setState({
+                tickets: tickets,
+                ordered: ordered,
+                race: race
+            })
+        }, err => {
+        });
 
     }
 
