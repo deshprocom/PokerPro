@@ -16,6 +16,15 @@ export function listVerified(resolve, reject) {
     })
 }
 
+export function defaultVerified(body, resolve, reject) {
+    helper.post(Api.cert_default(), body, ret => {
+        resolve(ret.data)
+    }, err => {
+        showToast(err);
+        reject(err)
+    })
+}
+
 export function delVerified(body, resolve, reject) {
     helper.post(Api.del_certification(), body, ret => {
         resolve(ret.data)

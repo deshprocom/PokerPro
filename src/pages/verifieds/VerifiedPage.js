@@ -5,7 +5,7 @@ import {Colors, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
 import ItemVerified from './ItemVerified';
-import {listVerified} from '../../services/AccountDao';
+import {listVerified, defaultVerified} from '../../services/AccountDao';
 
 export default class VerifiedPage extends Component {
 
@@ -39,7 +39,6 @@ export default class VerifiedPage extends Component {
             <NavigationBar
                 toolbarStyle={{backgroundColor: '#161718'}}
                 title={I18n.t('verified_list')}
-                rightBtnText={I18n.t('certain')}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}
@@ -81,6 +80,14 @@ export default class VerifiedPage extends Component {
         </View>)
     }
 
+    setDefault = (body) => {
+        defaultVerified(body, data => {
+            this.refresh();
+        }, err => {
+
+        })
+    };
+
 
     renderSeparatorView = () => {
         return (<View style={{height: 1}}/>)
@@ -89,6 +96,7 @@ export default class VerifiedPage extends Component {
     renderItem = (item, index, separator) => {
 
         return (<ItemVerified
+            setDefault={this.setDefault}
             refresh={this.refresh}
             verified={item}/>)
     };

@@ -85,8 +85,8 @@ export default {
     app_versions: 'app_versions',
     add_certification: add_certification,
     del_certification: del_certification,
-    list_certification: list_certification
-
+    list_certification: list_certification,
+    cert_default:cert_default
 }
 
 
@@ -98,6 +98,10 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+export function cert_default() {
+    return 'account/users/' + getUserId() + '/certification/default'
+}
 
 
 export function list_certification() {

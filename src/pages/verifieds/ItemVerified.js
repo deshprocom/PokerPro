@@ -3,22 +3,34 @@ import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {SecurityText} from '../../components';
 import I18n from 'react-native-i18n';
-import {idCardStatus, Verified} from '../../configs/Status'
+import {idCardStatus, Verified} from '../../configs/Status';
+import {defaultVerified} from '../../services/AccountDao';
 
 export default class ItemVerified extends Component {
 
     render() {
 
         const {index, item} = this.props.verified;
-        const {cert_no, real_name, status} = item;
+        const {cert_no, real_name, status, id, cert_type} = item;
         return (<TouchableOpacity
             onPress={() => {
                 this.verifiedEditOrLook(item)
             }}
             activeOpacity={0.5}
             style={[styles.itemAlign, {backgroundColor: 'white'}]}>
-            <Image style={styles.icSelect}
-                   source={Images.verified_select}/>
+
+            <TouchableOpacity
+                onPress={() => {
+                    this.props.setDefault({
+                        cert_type: cert_type,
+                        extra_id: id
+                    })
+                }}
+                style={[styles.itemAlign, {height: '100%'}]}>
+                <Image style={styles.icSelect}
+                       source={item.default ? Images.verified_selected : Images.verified_select}/>
+            </TouchableOpacity>
+
             <View style={styles.margin}>
                 <View style={styles.itemAlign}>
                     <Text style={styles.txtName}>{real_name}</Text>
