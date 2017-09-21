@@ -37,8 +37,8 @@ export const picker = {
 
 
 export function getFileName(o) {
-    var pos=o.lastIndexOf("/");
-    return o.substring(pos+1);
+    var pos = o.lastIndexOf("/");
+    return o.substring(pos + 1);
 }
 
 export function updateApp(data) {
@@ -209,6 +209,17 @@ export function loginWX(resolve, reject) {
 
 function shareTxt(msg) {
     return strNotNull(msg) ? msg : I18n.t('ads_poker');
+}
+
+
+export function uShareTicket(title, desc, icon, id,ticket_id) {
+
+    UMShare.share(title, shareTxt(desc), getShareIcon(icon), HOST + "races/" + id + '/tickets/' + ticket_id + "/" + Lang)
+        .then(() => {
+            showToast(`${I18n.t('show_success')}`)
+        }, (error) => {
+            showToast(error)
+        })
 }
 
 export function uShareActivity(title, desc, icon, id) {

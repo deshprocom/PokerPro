@@ -10,9 +10,9 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {ImageLoad, MarkdownPlat} from '../../components';
+import {MarkdownPlat} from '../../components';
 import {getBuyRaceTicket, getUnpaidOrder} from '../../services/OrderDao';
-import {isEmptyObject, strNotNull} from '../../utils/ComonHelper';
+import {isEmptyObject, strNotNull, uShareTicket} from '../../utils/ComonHelper';
 
 export default class TicketInfoPage extends Component {
 
@@ -128,7 +128,6 @@ export default class TicketInfoPage extends Component {
 
             <Image
                 resizeMode={'cover'}
-                defaultSource={Images.empty_image}
                 source={{uri: banner}}
                 style={styles.imgLogo}>
 
@@ -183,7 +182,23 @@ export default class TicketInfoPage extends Component {
             </View>
 
 
-            <View style={styles.topBtn}/>
+            <TouchableOpacity
+                testID="btn_bar_left"
+                onPress={() => {
+                    const {race, tickets} = this.state;
+                    if (!isEmptyObject(race) && !isEmptyObject(tickets)) {
+                        const {id, title, price, banner} = tickets;
+
+                        uShareTicket(title, I18n.t('price') + ":" + price, banner, race.race_id, id)
+                    }
+
+                }}
+                style={styles.topBtn}
+                activeOpacity={1}>
+                <Image style={styles.imgShare}
+                       source={Images.share}/>
+
+            </TouchableOpacity>
 
         </View>)
     };
@@ -222,6 +237,7 @@ const styles = StyleSheet.create({
     imgLogo: {
         height: 220,
         width: Metrics.screenWidth,
+        backgroundColor: Colors._ECE
     },
     txtName: {
         color: '#444444',
@@ -279,5 +295,10 @@ const styles = StyleSheet.create({
     viewLine: {
         height: 6,
         backgroundColor: Colors._ECE
+    },
+    imgShare: {
+        height: 22,
+        width: 23,
+        marginRight: 24.8
     }
 });
