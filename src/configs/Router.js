@@ -213,15 +213,18 @@ export default class Router {
 
 
     replaceOrder(order_id, price) {
-        this.navigator.replace({
-            page: OrderInfoPage,
-            name: 'OrderInfoPage',
-            sceneConfig: customFloatFromRight,
-            params: {
-                order_id: order_id,
-                price: price
-            }
-        })
+        router.pop();
+        setTimeout(() => {
+            this.stackPush({
+                name: 'OrderInfoPage',
+                params: {
+                    order_id: order_id,
+                    price: price
+                }
+            })
+        }, 100)
+
+
     }
 
 

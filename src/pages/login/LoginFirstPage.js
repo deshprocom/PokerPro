@@ -257,10 +257,10 @@ class LoginFirstPage extends Component {
                                 this._success(user_id);
                             }
                         }, err => {
-
+                            alert(err)
                         })
                     }, err => {
-
+                        alert(err)
                     })
                 }}
                 style={styles.rowView}>
