@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {View, Text, TextInput, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, TextInput, Image, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import {NavigationBar, ActionSheet, ImagePicker} from '../../components';
 import {Colors, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {addVerified} from '../../services/AccountDao';
+import {addVerified, delVerified} from '../../services/AccountDao';
 import {picker, strNotNull, showToast, isEmptyObject, getFileName} from '../../utils/ComonHelper';
 import {idCardStatus, Verified} from '../../configs/Status';
 
@@ -13,7 +13,8 @@ export default class AddVerified extends Component {
         num: '',
         localImg: {},
         showImg: '',
-        editable: true
+        editable: true,
+        option: {}
     };
 
 
@@ -25,6 +26,8 @@ export default class AddVerified extends Component {
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}
+                {...this.state.option}
+
             />
             {this.renderInput()}
             {this._verifiedPass()}
@@ -39,6 +42,27 @@ export default class AddVerified extends Component {
             />
         </View>)
     }
+
+    _delVerified = () => {
+        const {verified, verified_refresh} = this.props.navigation.state.params;
+
+        Alert.alert(`${I18n.t('verified_del')}`, `${I18n.t('verified_del_desc')}`, [{
+            text: `${I18n.t('cancel')}`, onPress: () => {
+            }
+        }, {
+            text: `${I18n.t('alert_sure')}`, onPress: () => {
+                if (!isEmptyObject(verified)) {
+                    delVerified({extra_id: verified.id}, data => {
+                        verified_refresh();
+                        router.pop();
+                    }, err => {
+
+                    })
+                }
+            }
+        }]);
+
+    };
 
     _verifiedPass = () => {
         if (this.state.editable) {
@@ -59,11 +83,16 @@ export default class AddVerified extends Component {
             this.setState({
                 name: verified.real_name,
                 num: verified.cert_no,
-                editable: verified.status !== Verified.PASSED
-            })
+                editable: verified.status !== Verified.PASSED,
+                option: {
+                    rightBtnText: I18n.t('buy_del'),
+                    rightBtnPress: this._delVerified
+                }
+            });
         }
 
     }
+
 
     _title = () => {
         const {verified} = this.props.navigation.state.params;
