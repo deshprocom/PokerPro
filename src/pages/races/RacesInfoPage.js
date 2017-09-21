@@ -47,12 +47,8 @@ class RacesInfoPage extends Component {
     }
 
     componentDidMount() {
-
-        InteractionManager.runAfterInteractions(() => {
-            this._fetchSideRace();
-            this._refreshPage();
-
-        });
+        this._fetchSideRace();
+        this._refreshPage();
 
     }
 

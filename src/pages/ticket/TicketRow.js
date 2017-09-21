@@ -72,11 +72,7 @@ export const itemListView = (item, index) => {
 
 
 _buyTicket = (rowData) => {
-    if (strNotNull(login_user.user_id)) {
-        router.toChoiseTicketPage(this.props, rowData.race_id);
-    }
-    else
-        router.toLoginFirstPage();
+    router.toChoiseTicketPage(this.props, rowData.race_id);
 };
 
 

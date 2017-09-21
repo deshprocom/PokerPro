@@ -35,10 +35,7 @@ export default class ChoiseTicketPage extends Component {
     };
 
     componentDidMount() {
-
-        InteractionManager.runAfterInteractions(() => {
-            this._fetchRaceTicket();
-        })
+        this._fetchRaceTicket();
     }
 
     _fetchRaceTicket = () => {
