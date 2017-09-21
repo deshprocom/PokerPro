@@ -220,22 +220,25 @@ export default class PersonInfo extends React.Component {
 
                 <View style={[styles.line, {height: 8}]}/>
 
-                {this._addrView()}
-                <View style={styles.line}/>
-                <TouchableOpacity
-                    testID="btn_real_name"
-                    onPress={this._toRealName}
-                    activeOpacity={1}
-                    style={styles.set_view}>
-                    <Text style={styles.text_label}>{I18n.t('real_name_manager')}</Text>
+                <View style={{backgroundColor: 'white'}}>
+                    {this._addrView()}
+                    <View style={[styles.line, {marginLeft: 18}]}/>
+                    <TouchableOpacity
+                        testID="btn_real_name"
+                        onPress={this._toRealName}
+                        activeOpacity={1}
+                        style={styles.set_view}>
+                        <Text style={styles.text_label}>{I18n.t('real_name_manager')}</Text>
 
-                    <View style={styles.view_real}>
-                        <Text style={this._colorRealStatus()}>{this._txtRealStatus()}</Text>
-                        <Image style={{height: 20, width: 11, marginLeft: 5}}
-                               source={Images.set_more}/>
-                    </View>
+                        <View style={styles.view_real}>
+                            <Text style={this._colorRealStatus()}>{this._txtRealStatus()}</Text>
+                            <Image style={{height: 20, width: 11, marginLeft: 5}}
+                                   source={Images.set_more}/>
+                        </View>
 
-                </TouchableOpacity>
+                    </TouchableOpacity>
+                </View>
+
 
                 <Modal
                     transparent={true}

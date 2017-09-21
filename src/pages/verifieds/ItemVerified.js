@@ -57,6 +57,7 @@ export default class ItemVerified extends Component {
     renderEdit = (status) => {
         if (status === Verified.PASSED)
             return <Image
+                opacity={0.5}
                 style={styles.icAvatar}
                 source={Images.verified_avatar}/>;
         else
