@@ -40,22 +40,21 @@ export default class AddVerified extends Component {
         </View>)
     }
 
+    componentDidMount() {
+        const {verified} = this.props.navigation.state.params;
+        if (!isEmptyObject(verified)) {
+            this.setState({
+                name: verified.real_name,
+                num: verified.cert_no
+            })
+        }
+
+    }
+
     _title = () => {
         const {verified} = this.props.navigation.state.params;
 
         return isEmptyObject(verified) ? I18n.t('verified_new') : idCardStatus(verified.status)
-    };
-
-    _realName = () => {
-        const {verified} = this.props.navigation.state.params;
-
-        return isEmptyObject(verified) ? '' : verified.real_name
-    };
-
-    _certNo = () => {
-        const {verified} = this.props.navigation.state.params;
-
-        return isEmptyObject(verified) ? '' : verified.cert_no
     };
 
     _certImage = () => {
@@ -85,7 +84,7 @@ export default class AddVerified extends Component {
 
     _submit = () => {
         const {name, num, localImg, showImg} = this.state;
-        const {cert_type, verified_refresh} = this.props.navigation.state.params;
+        const {cert_type, verified_refresh, verified} = this.props.navigation.state.params;
         console.log(cert_type, this.state)
 
         if (strNotNull(name) && strNotNull(num)) {
@@ -93,6 +92,9 @@ export default class AddVerified extends Component {
             if (!isEmptyObject(localImg)) {
                 let file = {uri: localImg.path, type: 'multipart/form-data', name: getFileName(localImg.path)};
                 formData.append("image", file);
+            }
+            if (!isEmptyObject(verified)) {
+                formData.append('extra_id', verified.id)
             }
             formData.append("version", 'v20');
             formData.append("real_name", name);
@@ -173,7 +175,7 @@ export default class AddVerified extends Component {
                            onChangeText={name => this.setState({name})}
                            maxLength={50}
                            placeholderTextColor="#CCCCCC"
-                           value={this._realName()}
+                           value={this.state.name}
                            placeholder={I18n.t('ple_real_name')}/>
 
 
@@ -187,7 +189,7 @@ export default class AddVerified extends Component {
                            onChangeText={num => this.setState({num})}
                            maxLength={50}
                            placeholderTextColor="#CCCCCC"
-                           value={this._certNo()}
+                           value={this.state.num}
                            placeholder={I18n.t('ple_id_card')}/>
 
 
