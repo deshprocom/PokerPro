@@ -9,7 +9,8 @@ import {isEmptyObject, showToast} from '../utils/ComonHelper';
 
 export function listVerified(resolve, reject) {
     helper.get(Api.list_certification(), ret => {
-        resolve(ret.data)
+        resolve(ret.data);
+        global.verifies = ret.data.items;
     }, err => {
         showToast(err);
         reject(err)

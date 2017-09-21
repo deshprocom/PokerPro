@@ -15,11 +15,11 @@ import {setAccessToken, getBaseURL} from '../services/RequestHelper';
 import {fetchGetProfile} from '../actions/PersonAction';
 import {FETCH_SUCCESS, GET_PROFILE, GET_RECENT_RACES} from '../actions/ActionTypes';
 import I18n from 'react-native-i18n';
-import {init} from '../services/ConfigDao';
+import {init, initLogin} from '../services/ConfigDao';
 import {fetchGetRecentRaces, _getProfileOk} from '../actions/RacesAction';
 import ListViewForRaces from '../components/listitem/ListViewForRaces';
 import {LoadErrorView, LoadingView, NoDataView} from '../components/load'
-import {isEmptyObject, strNotNull, putLoginUser, getUserData,updateApp} from '../utils/ComonHelper';
+import {isEmptyObject, strNotNull, putLoginUser, getUserData, updateApp} from '../utils/ComonHelper';
 import {NavigationBar, ParallaxScrollView} from '../components';
 import JpushHelp from '../services/JpushHelper';
 import {umengEvent} from '../utils/UmengEvent';
@@ -139,7 +139,7 @@ class HomePage extends Component {
                 };
                 this.props._getRecentRaces(recentRaces);
                 postLoginCount();
-
+                initLogin();
             }).catch(err => {
 
             const recentRaces = {

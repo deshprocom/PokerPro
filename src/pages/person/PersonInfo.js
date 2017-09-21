@@ -223,20 +223,7 @@ export default class PersonInfo extends React.Component {
                 <View style={{backgroundColor: 'white'}}>
                     {this._addrView()}
                     <View style={[styles.line, {marginLeft: 18}]}/>
-                    <TouchableOpacity
-                        testID="btn_real_name"
-                        onPress={this._toRealName}
-                        activeOpacity={1}
-                        style={styles.set_view}>
-                        <Text style={styles.text_label}>{I18n.t('real_name_manager')}</Text>
-
-                        <View style={styles.view_real}>
-                            <Text style={this._colorRealStatus()}>{this._txtRealStatus()}</Text>
-                            <Image style={{height: 20, width: 11, marginLeft: 5}}
-                                   source={Images.set_more}/>
-                        </View>
-
-                    </TouchableOpacity>
+                    {this.renderVerified()}
                 </View>
 
 
@@ -280,6 +267,23 @@ export default class PersonInfo extends React.Component {
         )
     }
 
+    renderVerified = () => {
+        return <TouchableOpacity
+            testID="btn_real_name"
+            onPress={this._toRealName}
+            activeOpacity={1}
+            style={styles.set_view}>
+            <Text style={styles.text_label}>{I18n.t('real_name_manager')}</Text>
+
+            <View style={styles.view_real}>
+                <Text style={this._colorRealStatus()}>{this._txtRealStatus()}</Text>
+                <Image style={{height: 20, width: 11, marginLeft: 5}}
+                       source={Images.set_more}/>
+            </View>
+
+        </TouchableOpacity>
+    };
+
     _addrView = () => {
         return ( <TouchableOpacity
             onPress={() => {
@@ -310,26 +314,18 @@ export default class PersonInfo extends React.Component {
                 });
             }
         }
-    }
+    };
 
     _toRealName = () => {
         router.toVerifiedPage();
-    }
+    };
 
     _txtRealStatus = () => {
-        if (!isEmptyObject(user_extra)) {
-            switch (user_extra.status) {
-                case Verified.FAILED:
-                    return I18n.t('real_fail');
-                // case Verified.PASSED:
-                //     return I18n.t('real_pass');
-                case Verified.PENDING:
-                    return I18n.t('pending')
-            }
-        } else if (isEmptyObject(user_extra)) {
+        const {chinese_ids, passport_ids} = verifies;
+        if (isEmptyObject(chinese_ids) && isEmptyObject(passport_ids)) {
             return I18n.t('init');
         }
-    }
+    };
 
     _colorRealStatus = () => {
         if (!isEmptyObject(user_extra)) {
