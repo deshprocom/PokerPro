@@ -29,8 +29,10 @@ export default class AddVerified extends Component {
                 {...this.state.option}
 
             />
+            {this.renderFail()}
             {this.renderInput()}
             {this._verifiedPass()}
+
 
             <ActionSheet
                 ref={o => this.ActionSheet = o}
@@ -42,6 +44,15 @@ export default class AddVerified extends Component {
             />
         </View>)
     }
+
+
+    renderFail = () => {
+        const {verified} = this.props.navigation.state.params;
+        if (verified.status === Verified.FAILED)
+            return <View style={styles.viewFail}>
+                <Text style={styles.txtFail}>{I18n.t('verified_mono')}:{verified.memo}</Text>
+            </View>
+    };
 
     _delVerified = () => {
         const {verified, verified_refresh} = this.props.navigation.state.params;
@@ -314,4 +325,18 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: 60
     },
+    viewFail: {
+        height: 30,
+        width: '100%',
+        backgroundColor: Colors._DF1,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    txtFail: {
+        color: 'white',
+        fontSize: 12,
+        fontWeight: 'bold',
+        marginLeft: 17
+    }
+
 });

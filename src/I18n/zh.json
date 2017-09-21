@@ -379,6 +379,7 @@
   "verified_example":"示例",
   "verified_desc":"照片中需要能看清姓名、护照号码等信息，确保审核顺利通过",
   "verified_del":"删除提示",
-  "verified_del_desc":"确认删除这条实名信息"
+  "verified_del_desc":"确认删除这条实名信息",
+  "verified_mono":"未通过原因"
 
 }
