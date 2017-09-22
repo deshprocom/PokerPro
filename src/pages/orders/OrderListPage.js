@@ -12,9 +12,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
 import ListOrderView from './ListOrderView';
-import {getDispatchAction} from '../../utils/ComonHelper';
-import {GET_CERTIFICATION} from '../../actions/ActionTypes'
-import {Verified} from '../../configs/Status';
+
 
 
 export default class OrderListPage extends Component {
@@ -22,12 +20,9 @@ export default class OrderListPage extends Component {
     state = {
         user_id: '',
         status: ''
-    }
+    };
 
-    componentDidMount() {
-        if (user_extra.status !== Verified.PASSED)
-            getDispatchAction()[GET_CERTIFICATION]();
-    }
+
 
 
     render() {

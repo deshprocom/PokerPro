@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/2/17.
  */
-import React, {Component}from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, TextInput, Alert,
     StyleSheet, Image, Text, ScrollView
@@ -17,7 +17,7 @@ import Communications from 'react-native-communications';
 import {
     ticketType, legalValue,
     DATA_SS, orderStatus, moneyFormat, isEmptyObject,
-    convertDate, getLoginUser, strNotNull
+    convertDate, strNotNull
 } from '../../utils/ComonHelper';
 import Button from 'react-native-smart-button';
 import {fetchGetRecentRaces, fetchRacesInfo} from '../../actions/RacesAction';
@@ -37,29 +37,39 @@ class OrderInfoPage extends React.Component {
     }
 
     state = {
-        user_id: ''
+        user_id: '',
+        verified: {}
     };
 
     componentWillReceiveProps(newProps) {
-        console.log(newProps.actionType, newProps.loading, newProps.hasData)
+
         if (newProps.actionType === POST_ORDER_CANCEL
             && this.props.loading !== newProps.loading
             && newProps.hasData) {
 
             this._refreshPage();
-            const recentRaces = {
-                user_id: this.state.user_id,
-                number: 5
-            };
-            this.props._getRecentRaces(recentRaces);
+
 
             const {orderDetail} = this.props;
             const {race_info} = orderDetail;
+
             const body = {
                 user_id: this.state.user_id,
                 race_id: race_info.race_id
             };
             this.props._getRacesInfo(body);
+        }
+
+
+        if (newProps.actionType === GET_ORDER_DETAIL
+            && this.props.loading !== newProps.loading
+            && newProps.hasData) {
+
+            const {user_extra} = newProps.orderDetail;
+
+            this.setState({verified: user_extra});
+
+
         }
 
     }
@@ -104,7 +114,7 @@ class OrderInfoPage extends React.Component {
 
     _hotLine = () => {
 
-        const {status} = user_extra;
+        const {status} = this.state.verified;
         if (status === Verified.PENDING) {
             Alert.alert(I18n.t('tint'), I18n.t('user_real_pending'),
                 [{
@@ -178,6 +188,7 @@ class OrderInfoPage extends React.Component {
 
                 </View>
 
+                {this.renderVerified()}
                 {this._invite()}
                 {/*地址 邮箱*/}
                 <View style={{backgroundColor: Colors.white, paddingLeft: 17, marginTop: 5}}>
@@ -224,6 +235,27 @@ class OrderInfoPage extends React.Component {
     };
 
 
+    renderVerified = () => {
+        if (isEmptyObject(this.state.verified))
+            return;
+        const {real_name, cert_no} = this.state.verified;
+        return (<View style={styles.certView}>
+            <Text style={styles.certLb}>{I18n.t('cert_ticket')}</Text>
+
+            <Text style={[styles.certName, {marginLeft: 23}]}>{real_name}</Text>
+            <SecurityText
+                style={[styles.certName, {marginLeft: 20}]}
+                securityOptions={{
+                    isSecurity: true,
+                    startIndex: 3,
+                    endIndex: 15,
+                }}>
+                {cert_no}
+            </SecurityText>
+        </View>)
+    };
+
+
     _viewTicketType = (order_info) => {
         const {consignee, address, mobile} = order_info;
         if (order_info.ticket_type === 'e_ticket')
@@ -266,7 +298,7 @@ class OrderInfoPage extends React.Component {
 
         if (!isEmptyObject(order_info) &&
             (order_info.status === 'unpaid'
-            || order_info.status === 'delivered'))
+                || order_info.status === 'delivered'))
             return ( <View
                 activeOpacity={1}
                 testID="btn_buy"
@@ -485,7 +517,8 @@ class OrderInfoPage extends React.Component {
     }
 
     _userRealFail = () => {
-        if (user_extra.status === Verified.FAILED)
+        const {verified} = this.state;
+        if (verified.status === Verified.FAILED)
             return (<View
                 style={{
                     width: Metrics.screenWidth,
@@ -497,7 +530,7 @@ class OrderInfoPage extends React.Component {
                 <Text style={[Fonts.H15, {
                     color: Colors.white,
                     marginLeft: 17
-                }]}>{I18n.t('order_reason')}:{user_extra.memo}</Text>
+                }]}>{I18n.t('order_reason')}:{verified.memo}</Text>
             </View>)
     };
 
@@ -505,6 +538,7 @@ class OrderInfoPage extends React.Component {
     render() {
         const {orderDetail} = this.props;
         const {race_info, order_info, ticket} = orderDetail;
+
 
         return (
             <View
@@ -522,11 +556,12 @@ class OrderInfoPage extends React.Component {
                     <View style={{height: 7}}/>
                     {/*赛事简介*/}
                     <RaceInfoView
+                        verified={this.state.verified}
                         ticket={ticket}
                         orderInfo={order_info}
                         disabled={false}
                         raceInfo={race_info}
-                       />
+                    />
                     {this._orderView(order_info)}
 
                     {/*购票须知*/}
@@ -576,10 +611,7 @@ const
         orderDetail: state.OrderState.orderDetail
     });
 
-export
-default
-
-connect(mapStateToProps, bindAction)(OrderInfoPage);
+export default connect(mapStateToProps, bindAction)(OrderInfoPage);
 
 
 const styles = StyleSheet.create({
@@ -631,6 +663,24 @@ const styles = StyleSheet.create({
         marginRight: 18,
         marginLeft: 18
     },
-    inviteCode: {fontSize: 15, color: Colors._888}
+    inviteCode: {fontSize: 15, color: Colors._888},
+    certView: {
+        height: 50,
+        width: '100%',
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 5
+    },
+    certLb: {
+        color: Colors._333,
+        fontSize: 15,
+        fontWeight: 'bold',
+        marginLeft: 17
+    },
+    certName: {
+        fontSize: 15,
+        color: Colors._888
+    }
 
 });
