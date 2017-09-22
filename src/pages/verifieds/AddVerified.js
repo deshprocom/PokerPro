@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, TextInput, Image, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import {View, Text, TextInput, Image, StyleSheet, TouchableOpacity, Alert, ScrollView} from 'react-native';
 import {NavigationBar, ActionSheet, ImagePicker} from '../../components';
 import {Colors, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
@@ -29,9 +29,12 @@ export default class AddVerified extends Component {
                 {...this.state.option}
 
             />
-            {this.renderFail()}
-            {this.renderInput()}
-            {this._verifiedPass()}
+
+            <ScrollView>
+                {this.renderFail()}
+                {this.renderInput()}
+                {this._verifiedPass()}
+            </ScrollView>
 
 
             <ActionSheet

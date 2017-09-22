@@ -2,7 +2,8 @@
  * Created by lorne on 2017/6/21.
  */
 
-import { NativeModules } from 'react-native';
+import {NativeModules, Platform} from 'react-native';
+
 const umengClient = NativeModules.Umeng;
 
 export function umengEvent(event) {
@@ -93,5 +94,8 @@ export function umengEvent(event) {
             break;
 
     }
-    umengClient.onEvent(strEvnet);
+    if (Platform.OS === 'ios')
+        umengClient.onEvent(strEvnet);
+    else
+        umengClient.onEvent(strEvnet, undefined, undefined);
 }
