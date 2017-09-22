@@ -26,9 +26,9 @@ export default class NameRealView extends Component {
     }
 
     refresh = () => {
-        if (isEmptyObject(verifies))
+        if (isEmptyObject(global.verifies))
             return;
-        const {chinese_ids, passport_ids} = verifies;
+        const {chinese_ids, passport_ids} = global.verifies;
 
         let verified = {};
         chinese_ids.forEach(function (x) {

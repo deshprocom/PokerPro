@@ -91,7 +91,7 @@ export default {
 
 
 function getUserId() {
-    if (!isEmptyObject(login_user) && strNotNull(login_user.user_id)) {
+    if (!isEmptyObject(global.login_user) && strNotNull(global.login_user.user_id)) {
         return login_user.user_id;
     }
     return '0';

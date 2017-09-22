@@ -66,7 +66,7 @@ class OrderInfoPage extends React.Component {
 
     _refreshPage = () => {
 
-        const {user_id} = login_user;
+        const {user_id} = global.login_user;
         if (strNotNull(user_id)) {
             this.setState({
                 user_id: user_id

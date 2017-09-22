@@ -321,7 +321,7 @@ export default class PersonInfo extends React.Component {
     };
 
     _txtRealStatus = () => {
-        const {chinese_ids, passport_ids} = verifies;
+        const {chinese_ids, passport_ids} = global.verifies;
         if (isEmptyObject(chinese_ids) && isEmptyObject(passport_ids)) {
             return I18n.t('init');
         }

@@ -15,3 +15,13 @@ baidu
 91market
 
 cucumber -p iphonesim -f html -o ./cucumber_result_5_4.html -verbose
+
+react-navigation目录下src/routers/StackRouter.js
+
+ if (backRouteIndex == 0) {
+                    return {
+                        ...state,
+                        routes: state.routes.slice(0, 1),
+                        index: 0,
+                    };
+                }

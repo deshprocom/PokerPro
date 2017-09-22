@@ -80,7 +80,7 @@ export default class TicketInfoPage extends Component {
 
     _buy = () => {
 
-        if (isEmptyObject(login_user)) {
+        if (isEmptyObject(global.login_user)) {
             router.toLoginFirstPage()
         } else {
             const {race_id, ticket_id} = this.props.navigation.state.params;

@@ -416,7 +416,7 @@ export default class ChoiseTicketPage extends Component {
 
     _toBuy = () => {
 
-        if (isEmptyObject(login_user)) {
+        if (isEmptyObject(global.login_user)) {
             router.toLoginFirstPage()
         } else {
             umengEvent('ticket_contain');

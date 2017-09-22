@@ -325,7 +325,7 @@ class RacesInfoPage extends Component {
     }
 
     _refreshPage = () => {
-        const {user_id} = login_user;
+        const {user_id} = global.login_user;
         if (strNotNull(user_id)) {
             const body = {
                 user_id: user_id,

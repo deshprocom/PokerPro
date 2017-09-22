@@ -108,10 +108,8 @@ export default class Router {
 
     popToTop() {
 
-        const resetAction = NavigationActions.reset({
-            index: 0,
-            key: null,
-            actions: [NavigationActions.back({routeName: 'DrawerPage'})]
+        const resetAction = NavigationActions.back({
+            key: this.navigator.state.key
         });
         this.navigator.dispatch(resetAction)
 
