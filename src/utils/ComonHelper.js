@@ -173,9 +173,10 @@ export function payWx(data, callback) {
 
     router.log('wxpay', body);
     wechat.pay(body).then(ret => {
-        callback()
+        alert(ret)
+        callback();
     }).catch(err => {
-
+        alert(err)
     })
 }
 
@@ -212,7 +213,7 @@ function shareTxt(msg) {
 }
 
 
-export function uShareTicket(title, desc, icon, id,ticket_id) {
+export function uShareTicket(title, desc, icon, id, ticket_id) {
 
     UMShare.share(title, shareTxt(desc), getShareIcon(icon), HOST + "races/" + id + '/tickets/' + ticket_id + "/" + Lang)
         .then(() => {

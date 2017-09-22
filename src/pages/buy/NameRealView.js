@@ -26,7 +26,10 @@ export default class NameRealView extends Component {
     }
 
     refresh = () => {
+        if (isEmptyObject(verifies))
+            return;
         const {chinese_ids, passport_ids} = verifies;
+
         let verified = {};
         chinese_ids.forEach(function (x) {
             if (x.default)
@@ -37,7 +40,7 @@ export default class NameRealView extends Component {
         this.setState({verified})
     };
 
-    getVerified = ()=>{
+    getVerified = () => {
         return this.state.verified;
     };
 

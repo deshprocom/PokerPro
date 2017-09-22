@@ -6,6 +6,7 @@ import I18n from 'react-native-i18n';
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
 import ItemVerified from './ItemVerified';
 import {listVerified, defaultVerified} from '../../services/AccountDao';
+import {isEmptyObject} from '../../utils/ComonHelper';
 
 export default class VerifiedPage extends Component {
 
@@ -22,6 +23,8 @@ export default class VerifiedPage extends Component {
 
     refresh = () => {
         listVerified(data => {
+            if (isEmptyObject(data.items))
+                return;
             const {chinese_ids, passport_ids} = data.items;
             this.setState({
                 chinese_ids: chinese_ids,
