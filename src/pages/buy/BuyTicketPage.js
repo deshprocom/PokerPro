@@ -208,6 +208,7 @@ export default class BuyTicketPage extends Component {
                     invite_code: inviteCode,
                     cert_id: verified.id
                 };
+
                 if (this.payModal && !isEmptyObject(this.payModal.getPayUrl())) {
                     this.payModal.toggle()
                 } else if (strNotNull(order_number)) {
@@ -233,7 +234,8 @@ export default class BuyTicketPage extends Component {
                 let body = {
                     ticket_type: 'e_ticket',
                     email: email,
-                    invite_code: inviteCode
+                    invite_code: inviteCode,
+                    cert_id: verified.id
                 };
                 if (this.payModal && !isEmptyObject(this.payModal.getPayUrl())) {
                     this.payModal.toggle()
