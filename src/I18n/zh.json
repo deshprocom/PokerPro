@@ -381,6 +381,8 @@
   "verified_del":"删除提示",
   "verified_del_desc":"确认删除这条实名信息",
   "verified_mono":"未通过原因",
-  "cert_ticket":"票务实名"
+  "cert_ticket":"票务实名",
+  "cert_chinese":"注：本场赛事需要身份证认证",
+  "cert_pass":"注：本场赛事需要护照认证"
 
 }

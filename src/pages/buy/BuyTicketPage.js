@@ -402,7 +402,7 @@ export default class BuyTicketPage extends Component {
 
 
     render() {
-        const {user_extra} = this.props;
+
         const {race, tickets, ordered, isEntity, knowRed, email, order} = this.state;
         const {ticket_info, price} = tickets;
 
@@ -502,6 +502,7 @@ export default class BuyTicketPage extends Component {
                     {isEntity === ENTITY ? this._addrView() : this._emailViwe(email)}
 
                     <NameRealView
+                        required_id_type={race.required_id_type}
                         ref={o => this.realName = o}
                     />
                     {this._inviteCode()}

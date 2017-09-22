@@ -29,15 +29,23 @@ export default class NameRealView extends Component {
         if (isEmptyObject(global.verifies))
             return;
         const {chinese_ids, passport_ids} = global.verifies;
-
         let verified = {};
-        chinese_ids.forEach(function (x) {
-            if (x.default)
-                verified = x;
-        });
+        if (this.props.required_id_type === 'passport_id') {
 
+            passport_ids.forEach(function (x) {
+                if (x.default)
+                    verified = x;
+            });
 
+        } else {
+
+            chinese_ids.forEach(function (x) {
+                if (x.default)
+                    verified = x;
+            });
+        }
         this.setState({verified})
+
     };
 
     getVerified = () => {
@@ -47,7 +55,13 @@ export default class NameRealView extends Component {
     _certification = () => {
         umengEvent('ticket_buy_true_name');
         router.toVerifiedPage((verified) => {
-            this.setState({verified})
+            if (this.props.required_id_type === verified.cert_type ||
+                this.props.required_id_type === 'any') {
+                this.setState({verified})
+            } else {
+                alert(this.props.required_id_type === 'passport_id' ? "本赛票需要护照认证信息" : "本赛票需要身份证认证信息")
+            }
+
         })
     };
 
@@ -93,7 +107,10 @@ export default class NameRealView extends Component {
                     height: 39, alignItems: 'center', flexDirection: 'row',
                     justifyContent: 'space-between', marginLeft: 18, marginRight: 18
                 }}>
-                <Text style={{fontSize: 12, color: Colors._AAA}}>{I18n.t('add_real_name')}</Text>
+                <Text style={{fontSize: 12, color: Colors._AAA}}>{this.props.required_id_type === 'passport_id' ?
+                    I18n.t('cert_pass') : I18n.t('cert_chinese')}</Text>
+                <View style={{flex: 1}}/>
+                <Text style={{fontSize: 15, color: '#3681F1', marginRight: 12}}>{I18n.t('init')}</Text>
                 <Image style={{width: 11, height: 20}}
                        source={Images.ticket_arrow}/>
             </View>)
