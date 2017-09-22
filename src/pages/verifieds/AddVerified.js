@@ -48,6 +48,8 @@ export default class AddVerified extends Component {
 
     renderFail = () => {
         const {verified} = this.props.navigation.state.params;
+        if (isEmptyObject(verified))
+            return;
         if (verified.status === Verified.FAILED)
             return <View style={styles.viewFail}>
                 <Text style={styles.txtFail}>{I18n.t('verified_mono')}:{verified.memo}</Text>

@@ -46,7 +46,7 @@
     "redux-actions": "^2.0.1",
     "redux-thunk": "^2.2.0",
     "rn-markdown": "^1.1.1",
-    "rn-umeng": "git+https://github.com/dongodngtang/rn-umeng.git"
+    "rn-umeng": "^1.0.6"
   },
   "devDependencies": {
     "babel-jest": "20.0.3",

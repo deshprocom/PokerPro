@@ -74,7 +74,6 @@ export default class App extends Component {
 
         MobclickAgent.startWithAppkey(Platform.OS === 'ios' ? UMENG_IOS : UMENG_ANDROID);
 
-        MobclickAgent.onEvent("startApp");
     }
 
 }

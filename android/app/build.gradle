@@ -156,12 +156,12 @@ android {
 }
 
 dependencies {
+    compile project(':rn-umeng')
     compile project(':react-native-wechat')
     compile project(':react-native-umshare')
     compile project(':react-native-network-info')
     compile project(':react-native-orientation')
     compile project(':react-native-video')
-    compile project(':rn-umeng')
     compile project(':react-native-smart-splash-screen')
     compile project(':react-native-smart-pull-to-refresh-listview')
     compile project(':react-native-picker')
