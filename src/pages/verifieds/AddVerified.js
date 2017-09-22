@@ -224,6 +224,7 @@ export default class AddVerified extends Component {
     };
 
     renderInput = () => {
+        const {cert_type} = this.props.navigation.state.params;
 
         return <View style={{backgroundColor: 'white', marginTop: 8}}>
             <View style={styles.rowAlign}>
@@ -242,7 +243,8 @@ export default class AddVerified extends Component {
             </View>
             <View style={{backgroundColor: Colors.bg_ec, height: 1}}/>
             <View style={styles.rowAlign}>
-                <Text style={styles.lbName}>{I18n.t('ID_card')}</Text>
+                <Text
+                    style={styles.lbName}>{cert_type === 'passport_id' ? I18n.t('password_card') : I18n.t('ID_card')}</Text>
                 <TextInput style={styles.inName}
                            underlineColorAndroid='transparent'
                            clearButtonMode='while-editing'
