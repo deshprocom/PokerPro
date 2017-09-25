@@ -6,7 +6,7 @@ import React, {Component} from 'react';
 import {Platform} from 'react-native';
 import {Provider} from 'react-redux';
 import configureStore from '../store/ConfigureStore';
-import PuKe from './index';
+import PuKe from '../pages/Root'
 import '../configs/StorageConfig';
 import '../I18n/I18n';
 import SplashScreen from 'react-native-smart-splash-screen';
