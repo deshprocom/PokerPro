@@ -358,11 +358,7 @@ class RacesInfoPage extends Component {
                 raceInfo={raceInfo}
                 onPress={() => {
                     umengEvent('race_buy_ticket');
-                    if (isLoginUser) {
-                        router.toChoiseTicketPage(this.props, this.props.params.race_id);
-                    }
-                    else
-                        router.toLoginFirstPage();
+                    router.toChoiseTicketPage(this.props, this.props.params.race_id);
 
                 }}/>)
     };
