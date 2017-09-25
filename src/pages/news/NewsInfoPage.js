@@ -18,7 +18,7 @@ export default class NewsInfoPage extends Component {
     state = {renderPlaceholderOnly: true};
 
     componentDidMount() {
-        router.log(this.props.params)
+        router.log(this.props.navigation.state.params)
         InteractionManager.runAfterInteractions(() => {
             this.setState({
                 renderPlaceholderOnly: false
@@ -28,14 +28,13 @@ export default class NewsInfoPage extends Component {
 
     render() {
 
-        const {date, description, source, title, id, image} = this.props.params.newsInfo;
+        const {date, description, source, title, id, image} = this.props.navigation.state.params.newsInfo;
 
         return (<View
             testID="page_news_info"
             style={styles.page}>
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors.bg_09}}
-                router={router}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}

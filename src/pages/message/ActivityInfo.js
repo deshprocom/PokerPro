@@ -18,7 +18,7 @@ export default class ActivityInfo extends Component {
     };
 
     componentDidMount() {
-        const {activity} = this.props.params;
+        const {activity} = this.props.navigation.state.params;
         getActivityInfo({id: activity.id}, data => {
             const {description} = data.activity;
             this.setState({
@@ -30,7 +30,7 @@ export default class ActivityInfo extends Component {
     }
 
     render() {
-        const {activity} = this.props.params;
+        const {activity} = this.props.navigation.state.params;
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 title={activity.title}

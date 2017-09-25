@@ -220,21 +220,12 @@ export default class PersonInfo extends React.Component {
 
                 <View style={[styles.line, {height: 8}]}/>
 
-                {this._addrView()}
-                <TouchableOpacity
-                    testID="btn_real_name"
-                    onPress={this._toRealName}
-                    activeOpacity={1}
-                    style={styles.set_view}>
-                    <Text style={styles.text_label}>{I18n.t('real_name_manager')}</Text>
+                <View style={{backgroundColor: 'white'}}>
+                    {this._addrView()}
+                    <View style={[styles.line, {marginLeft: 18}]}/>
+                    {this.renderVerified()}
+                </View>
 
-                    <View style={styles.view_real}>
-                        <Text style={this._colorRealStatus()}>{this._txtRealStatus()}</Text>
-                        <Image style={{height: 20, width: 11, marginLeft: 5}}
-                               source={Images.set_more}/>
-                    </View>
-
-                </TouchableOpacity>
 
                 <Modal
                     transparent={true}
@@ -276,12 +267,33 @@ export default class PersonInfo extends React.Component {
         )
     }
 
+    renderVerified = () => {
+        return <TouchableOpacity
+            testID="btn_real_name"
+            onPress={this._toRealName}
+            activeOpacity={1}
+            style={styles.set_view}>
+            <Text style={styles.text_label}>{I18n.t('real_name_manager')}</Text>
+
+            <View style={styles.view_real}>
+                <Text style={styles.txt_real_init}>{this._txtRealStatus()}</Text>
+                <Image style={{height: 20, width: 11, marginLeft: 5}}
+                       source={Images.set_more}/>
+            </View>
+
+        </TouchableOpacity>
+    };
+
     _addrView = () => {
-        return false ? ( <View style={styles.set_view}>
+        return ( <TouchableOpacity
+            onPress={() => {
+                router.toAdrListPage()
+            }}
+            style={styles.set_view}>
             <Text style={styles.text_label}>{I18n.t('addr_manager')}</Text>
             <Image style={{height: 20, width: 11}}
                    source={Images.set_more}/>
-        </View>) : null
+        </TouchableOpacity>)
     };
 
 
@@ -302,41 +314,18 @@ export default class PersonInfo extends React.Component {
                 });
             }
         }
-    }
+    };
 
     _toRealName = () => {
-        router.toCertificationPage();
-    }
+        router.toVerifiedPage();
+    };
 
     _txtRealStatus = () => {
-        if (!isEmptyObject(user_extra)) {
-            switch (user_extra.status) {
-                case Verified.FAILED:
-                    return I18n.t('real_fail');
-                // case Verified.PASSED:
-                //     return I18n.t('real_pass');
-                case Verified.PENDING:
-                    return I18n.t('pending')
-            }
-        } else if (isEmptyObject(user_extra)) {
+        const {chinese_ids, passport_ids} = global.verifies;
+        if (isEmptyObject(chinese_ids) && isEmptyObject(passport_ids)) {
             return I18n.t('init');
         }
-    }
-
-    _colorRealStatus = () => {
-        if (!isEmptyObject(user_extra)) {
-            switch (user_extra.status) {
-                case Verified.FAILED:
-                    return styles.txt_real_fail;
-                // case Verified.PASSED:
-                //     return styles.txt_real_pass;
-                case Verified.PENDING:
-                    return styles.txt_real;
-            }
-        } else if (isEmptyObject(user_extra)) {
-            return styles.txt_real_init;
-        }
-    }
+    };
 
 }
 
@@ -364,7 +353,7 @@ const styles = StyleSheet.create({
         alignItems: 'center', flexDirection: 'row', marginRight: 30, marginLeft: 20
     },
     txt_real_init: {
-        fontSize: 15, color: '#F34A4A', marginRight: 20
+        fontSize: 15, color: '#4990E2', marginRight: 20
     },
     txt_real: {
         fontSize: 15, color: '#34BA3C', marginRight: 20

@@ -322,8 +322,6 @@ class DatePicker extends Component {
             <TouchableComponent
                 style={{
                     position: 'absolute',
-                    height: 80,
-                    width: (Dimensions.get('window').width) - 30
                 }}
                 underlayColor={'transparent'}
                 onPress={this.onPressDate}

@@ -214,7 +214,7 @@ class LoginFirstPage extends Component {
                         }}
                         transparent
                         testID="btn_problem"
-                        onPress={() => this.props.router.toForgetPage()}>
+                        onPress={() => router.toForgetPage()}>
 
                         <Text style={styles.text_problem}>{I18n.t('problem_for_sign_in')}</Text>
 
@@ -257,10 +257,10 @@ class LoginFirstPage extends Component {
                                 this._success(user_id);
                             }
                         }, err => {
-
+                            alert(err)
                         })
                     }, err => {
-
+                        alert(err)
                     })
                 }}
                 style={styles.rowView}>

@@ -106,7 +106,7 @@ class SearchRacesPage extends Component {
             </View>
             <View style={styles.topRight}>
 
-                <TestRouter router={this.props.router}/>
+                <TestRouter/>
                 <TouchableOpacity
                     onPress={this._searchPage}
                     testID="btn_search"

@@ -1,12 +1,7 @@
 /**
  * Created by lorne on 2017/5/26.
  */
-/**
- * Created by lorne on 2017/5/26.
- */
-/**
- * Created by lorne on 2017/4/21.
- */
+
 import React, {Component, PropTypes} from 'react';
 import {
     StyleSheet, Text, View, FlatList,
@@ -30,7 +25,7 @@ export default class VideoInfoPage extends Component {
 
     render() {
 
-        const {description, video_link} = this.props.params.info;
+        const {description, video_link} = this.props.navigation.state.params.info;
         const {videoFull} = this.state;
 
         return (<View
@@ -56,7 +51,7 @@ export default class VideoInfoPage extends Component {
     }
 
     renderContent = () => {
-        const {description} = this.props.params.info;
+        const {description} = this.props.navigation.state.params.info;
         return <ScrollView>
 
             <MarkdownPlat

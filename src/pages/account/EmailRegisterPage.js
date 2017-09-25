@@ -35,7 +35,7 @@ class EmailRegisterPage extends React.Component {
         this.props._getRecentRaces(recentRaces);
         this.props._getProfile(user_id);
 
-        this.props.router.popToTop();
+        router.popToTop();
     };
 
     shouldComponentUpdate(newProps) {
@@ -64,14 +64,13 @@ class EmailRegisterPage extends React.Component {
                 style={{flex: 1, backgroundColor: Colors.bg_f5}}>
                 <TouchableOpacity
                     testID="btn_home_page"
-                    onPress={() => this.props.router.popToTop()}/>
+                    onPress={() => router.popToTop()}/>
                 <View style={{backgroundColor: Colors.bg_09}}>
                     <NavigationBar
-                        router={this.props.router}
                         title={I18n.t('title_email_register')}
                         leftBtnIcon={Images.sign_return}
                         leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                        leftBtnPress={() => this.props.router.pop()}/>
+                        leftBtnPress={() => router.pop()}/>
                 </View>
 
                 <InputView
@@ -132,7 +131,7 @@ class EmailRegisterPage extends React.Component {
                     }}
                     transparent
                     testID="btn_have_account"
-                    onPress={() => this.props.router.popToLogin()}>
+                    onPress={() => router.popToLogin()}>
 
                     <Text style={styles.text_problem}>{I18n.t('i_have_account')}</Text>
 
@@ -143,7 +142,7 @@ class EmailRegisterPage extends React.Component {
                     style={{marginTop: 35}}
                     testID="btn_switch_phone_register"
                     onPress={() => {
-                        this.props.router.pop();
+                       router.pop();
                     }}
                     name={I18n.t('phone_register')}/>
 

@@ -25,7 +25,21 @@ export const MM_DD = 'MM-DD';
 
 const HOST = 'https://h5.deshpro.com/';
 export const loadApp = HOST + 'race/181/zh/loadAPP';
+export const picker = {
+    width: 500,
+    height: 500,
+    cropping: true,
+    cropperCircleOverlay: true,
+    compressImageMaxWidth: 800,
+    compressImageMaxHeight: 600,
+    compressImageQuality: 0.5,
+};
 
+
+export function getFileName(o) {
+    var pos = o.lastIndexOf("/");
+    return o.substring(pos + 1);
+}
 
 export function updateApp(data) {
     const {android_platform, ios_platform} = data;
@@ -159,9 +173,10 @@ export function payWx(data, callback) {
 
     router.log('wxpay', body);
     wechat.pay(body).then(ret => {
-        callback()
+        alert(ret)
+        callback();
     }).catch(err => {
-
+        alert(err)
     })
 }
 
@@ -195,6 +210,17 @@ export function loginWX(resolve, reject) {
 
 function shareTxt(msg) {
     return strNotNull(msg) ? msg : I18n.t('ads_poker');
+}
+
+
+export function uShareTicket(title, desc, icon, id, ticket_id) {
+
+    UMShare.share(title, shareTxt(desc), getShareIcon(icon), HOST + "races/" + id + '/tickets/' + ticket_id + "/" + Lang)
+        .then(() => {
+            showToast(`${I18n.t('show_success')}`)
+        }, (error) => {
+            showToast(error)
+        })
 }
 
 export function uShareActivity(title, desc, icon, id) {

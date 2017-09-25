@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/7/7.
  */
-import React, {Component, PropTypes}from 'react';
+import React, {Component, PropTypes} from 'react';
 import {
     TouchableOpacity, View, TextInput, Alert,
     StyleSheet, Image, Text, ListView, Platform
@@ -35,7 +35,7 @@ export default class AdrListPage extends Component {
     _getAddressList = () => {
         getAddressList(data => {
             const {items} = data;
-            const {adrData} = this.props.params;
+            const {adrData} = this.props.navigation.state.params;
 
             let buyAdr = {};
             if (!isEmptyObject(adrData))
@@ -73,7 +73,8 @@ export default class AdrListPage extends Component {
                     marginLeft: 20, marginRight: 20
                 }}
                 leftBtnPress={() => {
-                    this.props.params.selectAdr(selectAdrData);
+                    if (this.props.navigation.state.params.selectAdr)
+                        this.props.navigation.state.params.selectAdr(selectAdrData);
                     router.pop()
                 }}/>
 
@@ -107,8 +108,11 @@ export default class AdrListPage extends Component {
         return (<TouchableOpacity
             activeOpacity={1}
             onPress={() => {
-                this.props.params.selectAdr(item);
-                router.pop();
+                if(this.props.navigation.state.params.selectAdr){
+                    this.props.navigation.state.params.selectAdr(item);
+                    router.pop();
+                }
+
             }}
             style={styles.itemView}>
             <View style={styles.rowView}>

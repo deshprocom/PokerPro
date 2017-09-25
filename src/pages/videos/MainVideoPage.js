@@ -18,7 +18,7 @@ import {isEmptyObject, convertDate} from '../../utils/ComonHelper';
 import {connect} from 'react-redux';
 import {fetchVideoType} from '../../actions/NewsAction';
 import VideoListView from './VideoListView';
-import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
+import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
 import {NavigationBar} from '../../components';
 import {getVideoTypes} from '../../services/NewsDao';
 
@@ -63,7 +63,7 @@ export  default class MainVideoPage extends Component {
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
-                {this._newsTypeView()}
+
 
                 {this._listView()}
             </View>
@@ -99,10 +99,23 @@ export  default class MainVideoPage extends Component {
                 this.setState({
                     selectTypeId: item.id
                 });
-                this.typeList.scrollToIndex({viewPosition: 1, index: Number(i)});
-                this._pressItem(item);
+
             }}
-            renderTabBar={false}
+            renderTabBar={() => <ScrollableTabBar
+                tabStyle={{
+                    height: 49,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                }}
+                backgroundColor={Colors.white}
+                activeTextColor="#161718"
+                inactiveTextColor={Colors._AAA}
+                textStyle={{fontSize: 16}}
+                style={{borderColor: Colors._EEE}}
+                underlineStyle={{backgroundColor: '#161718', height: 2}}
+            />}
             ref={ref => this.newsPages = ref}>
             {pages}
         </ScrollableTabView>)

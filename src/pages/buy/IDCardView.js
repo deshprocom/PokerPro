@@ -165,7 +165,7 @@ class IDCardView extends Component {
         }
 
 
-    }
+    };
 
     _cardImageView = (image) => {
 

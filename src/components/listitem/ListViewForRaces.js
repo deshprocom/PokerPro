@@ -33,7 +33,6 @@ export default class ListViewForRaces extends Component {
 
                 <RaceRowView
                     rowID={rowID}
-                    router={this.props.router}
                     rowData={rowData}/>
         )
     };

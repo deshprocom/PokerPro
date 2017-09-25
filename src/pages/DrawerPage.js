@@ -8,23 +8,29 @@ import {connect} from 'react-redux';
 import SidePage from './SidePage';
 import HomePage from './HomePage';
 import {fetchGetCertification} from '../actions/AccountAction';
-import {closeDrawer}from '../reducers/DrawerRedux';
+import {closeDrawer} from '../reducers/DrawerRedux';
 import {setDispatchAction} from '../utils/ComonHelper';
-import {GET_CERTIFICATION,GET_RECENT_RACES,GET_PROFILE} from '../actions/ActionTypes';
+import {GET_CERTIFICATION, GET_RECENT_RACES, GET_PROFILE} from '../actions/ActionTypes';
 import {fetchGetProfile} from '../actions/PersonAction';
 import {fetchGetRecentRaces} from '../actions/RacesAction';
+import Router from '../configs/Router';
 
 
 class DrawerPage extends React.Component {
 
+    componentWillMount(){
+
+        this.router = this.router || new Router(this.props.navigation);
+        global.router = this.router;
+    }
+
 
     componentDidMount() {
         setDispatchAction(GET_CERTIFICATION, this.props._getRealName);
-        setDispatchAction(GET_RECENT_RACES,this.props._getRecentRaces);
-        setDispatchAction(GET_PROFILE,this.props._getProfile)
+        setDispatchAction(GET_RECENT_RACES, this.props._getRecentRaces);
+        setDispatchAction(GET_PROFILE, this.props._getProfile);
 
     }
-
 
 
     componentDidUpdate() {
@@ -56,7 +62,7 @@ class DrawerPage extends React.Component {
                 type="static"
                 onClose={() => this.closeDrawer()}
                 content={<SidePage
-                    router={this.props.router}/>}
+                    router={this.router}/>}
                 tapToClose
                 openDrawerOffset={100}
                 styles={drawerStyles}
@@ -64,7 +70,7 @@ class DrawerPage extends React.Component {
 
 
             >
-                <HomePage router={this.props.router}/>
+                <HomePage router={this.router}/>
 
             </Drawer>
         )

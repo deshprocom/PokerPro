@@ -18,11 +18,10 @@ export default class BuyKnowPage extends Component {
                       style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors.bg_09}}
-                router={this.props.router}
                 title={I18n.t('buy_ticket')}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                leftBtnPress={() => this.props.router.pop()}/>
+                leftBtnPress={() => router.pop()}/>
             <ScrollView>
 
                 <View style={{flexDirection: 'row', alignItems: 'center', height: 66}}>

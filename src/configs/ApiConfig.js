@@ -10,7 +10,7 @@ export default {
     dev_ci_at: 'http://192.168.2.231:8801/v10/',
 
     //test分支用来发布版本  test_ci_at用来跑自动化测试
-    test: 'http://106.75.134.18:8800/v10/',
+    test: 'http://test.api.deshpro.com/v10/',
     test_ci_at: 'http://106.75.134.18:8801/v10/',
 
     //production 用来发布正式生产环境
@@ -82,12 +82,16 @@ export default {
     verify_invite_code: verify_invite_code,
     msg_read: msg_read,
     unread_remind: unread_remind,
-    app_versions: 'app_versions'
+    app_versions: 'app_versions',
+    add_certification: add_certification,
+    del_certification: del_certification,
+    list_certification: list_certification,
+    cert_default:cert_default
 }
 
 
 function getUserId() {
-    if (!isEmptyObject(login_user) && strNotNull(login_user.user_id)) {
+    if (!isEmptyObject(global.login_user) && strNotNull(global.login_user.user_id)) {
         return login_user.user_id;
     }
     return '0';
@@ -95,6 +99,22 @@ function getUserId() {
 
 const page_size = 10;
 
+export function cert_default() {
+    return 'account/users/' + getUserId() + '/certification/default'
+}
+
+
+export function list_certification() {
+    return 'account/users/' + getUserId() + '/certification?version=v20'
+}
+
+export function del_certification() {
+    return 'account/users/' + getUserId() + '/certification/delete'
+}
+
+export function add_certification() {
+    return 'account/users/' + getUserId() + '/certification'
+}
 
 export function unread_remind() {
     return 'users/' + getUserId() + '/notifications/unread_remind';

@@ -16,7 +16,6 @@ import {isEmptyObject, convertDate, strNotNull, uniqueArray, FontSize} from '../
 import {ImageLoad, PullListView, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {fetchNewsList} from '../../actions/NewsAction';
-import {_renderFooter, _renderHeader} from '../../components/LoadingView';
 const headerStyle = {height: 35, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.bg_f5};
 import {getNewsList} from '../../services/NewsDao';
 

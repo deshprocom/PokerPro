@@ -1,15 +1,16 @@
 /**
  * Created by lorne on 2016/12/20.
  */
-import React, {Navigator} from 'react-native'
+
+import {NavigationActions} from 'react-navigation'
 
 //Pages
-import HomePage from '../pages/HomePage';
+
 import InputPwdPage from '../pages/InputPwdPage';
 import DrawerPage from '../pages/DrawerPage';
 import PersonPage from '../pages/person/PersonPage';
 import SettingPage from '../pages/setting/SettingPage';
-import EventPage from '../pages/races/EventPage';
+
 import RegisterPage from '../pages/account/RegisterPage';
 import ForgetPage from '../pages/account/ForgetPage';
 import RacesInfoPage from '../pages/races/RacesInfoPage';
@@ -30,7 +31,6 @@ import BusinessPage from '../pages/setting/BusinessPage';
 import SearchKeywordPage from '../pages/races/SearchKeywordPage';
 import ChildRaceInfoPage from '../pages/races/ChildRaceInfoPage';
 import AboutPage from '../pages/setting/AboutPage';
-import PokerPersonPage from '../pages/person/PokerPersonPage';
 import MainNewsPage from '../pages/news/MainNewsPage';
 import NewsInfoPage from '../pages/news/NewsInfoPage';
 import SearchNewsPage from '../pages/news/SearchNewsPage';
@@ -62,12 +62,13 @@ import ActivityCenter from '../pages/message/ActivityCenter';
 import ActivityInfo from '../pages/message/ActivityInfo';
 
 
-const customFloatFromRight = Navigator.SceneConfigs.FadeAndroid;
+const customFloatFromRight = '';
 
 
 export default class Router {
     constructor(navigator) {
-        this.navigator = navigator
+        this.navigator = navigator;
+        console.log('Navigation', navigator)
     }
 
 
@@ -76,19 +77,62 @@ export default class Router {
             console.log(...msg)
     }
 
+    stackPush(route) {
+
+        const navigateAction = NavigationActions.navigate({
+            routeName: route.name,
+            params: route.params
+        });
+
+        this.navigator.dispatch(navigateAction)
+    }
+
     push(props, route) {
-        route.props = props
-        this.navigator.push(route)
+
+        const navigateAction = NavigationActions.navigate({
+            routeName: route.name,
+            params: route.params
+        });
+
+        this.navigator.dispatch(navigateAction)
     }
 
 
     pop() {
-        this.navigator.pop()
+        const backAction = NavigationActions.back({
+            key: ''
+        });
+        this.navigator.dispatch(backAction)
 
     }
 
     popToTop() {
-        this.navigator.popToTop();
+
+        const resetAction = NavigationActions.back({
+            key: this.navigator.state.key
+        });
+        this.navigator.dispatch(resetAction)
+
+    }
+
+    toAddVerified(cert_type, refresh, verified) {
+        this.stackPush({
+            name: 'AddVerified',
+            params: {
+                cert_type: cert_type,
+                verified_refresh: refresh,
+                verified: verified
+            }
+        })
+    }
+
+    toVerifiedPage(backRefresh) {
+        this.stackPush({
+            name: 'VerifiedPage',
+            params: {
+                backRefresh: backRefresh
+            }
+        })
     }
 
     toActivityInfo(props, activity) {
@@ -167,15 +211,18 @@ export default class Router {
 
 
     replaceOrder(order_id, price) {
-        this.navigator.replace({
-            page: OrderInfoPage,
-            name: 'OrderInfoPage',
-            sceneConfig: customFloatFromRight,
-            params: {
-                order_id: order_id,
-                price: price
-            }
-        })
+        router.pop();
+        setTimeout(() => {
+            this.stackPush({
+                name: 'OrderInfoPage',
+                params: {
+                    order_id: order_id,
+                    price: price
+                }
+            })
+        }, 100)
+
+
     }
 
 
@@ -410,18 +457,6 @@ export default class Router {
     }
 
 
-    toPokerPersonPage(props, player) {
-        this.push(props, {
-            page: PokerPersonPage,
-            name: 'PokerPersonPage',
-            sceneConfig: customFloatFromRight,
-            params: {
-                player: player
-            }
-        })
-    }
-
-
     toAboutPage(props) {
         this.push(props, {
             page: AboutPage,
@@ -570,16 +605,9 @@ export default class Router {
     }
 
     popToLoginFirstPage() {
-        let routes = this.navigator.getCurrentRoutes();
-        var isContainLogin = false;
-        for (var route of routes) {
-            if (route.name === 'LoginFirstPage') {
-                isContainLogin = true;
-            }
-        }
-        if (!isContainLogin) {
-            this.toLoginFirstPage()
-        }
+        this.push({
+            name: 'LoginFirstPage',
+        })
 
     }
 
@@ -673,18 +701,6 @@ export default class Router {
         })
     }
 
-    toInputEmailPwdPage(props, email) {
-        this.push(props, {
-            page: InputPwdPage,
-            name: 'InputPwdPage',
-            sceneConfig: customFloatFromRight,
-            params: {
-                email: email,
-                isEmailOrMobile: 'email',
-                isRegisterOrForget: 'register'
-            }
-        })
-    }
 
     toInputPwdPage(props, phone, code) {
         this.push(props, {
@@ -697,23 +713,6 @@ export default class Router {
                 isEmailOrMobile: 'mobile',
                 isRegisterOrForget: 'register'
             }
-        })
-    }
-
-
-    toDrawerPage() {
-        this.navigator.replace({
-            page: DrawerPage,
-            name: 'DrawerPage',
-            sceneConfig: customFloatFromRight
-        })
-    }
-
-    toEventPage(props) {
-        this.push(props, {
-            page: EventPage,
-            name: 'EventPage',
-            sceneConfig: customFloatFromRight
         })
     }
 
@@ -736,31 +735,12 @@ export default class Router {
     }
 
     popToLogin() {
-        let routes = this.navigator.getCurrentRoutes();
-        for (var route of routes) {
-            if (route.name === 'LoginFirstPage') {
-                this.navigator.popToRoute(route)
-            }
-        }
-
+        this.popToTop();
     }
 
     popToDrawerRank() {
-        let routes = this.navigator.getCurrentRoutes();
-        for (var route of routes) {
-            if (route.name === 'DrawerRank' || route.name === 'RacesInfoPage') {
-                this.navigator.popToRoute(route)
-            }
-        }
+        this.popToTop();
 
-    }
-
-    resetToHome() {
-        this.navigator.resetTo({
-            name: 'HomePage',
-            page: HomePage,
-            sceneConfig: customFloatFromRight,
-        })
     }
 
 

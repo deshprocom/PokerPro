@@ -74,20 +74,19 @@ class SettingPage extends Component {
             style={ApplicationStyles.bg_black}>
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors.bg_09}}
-                router={this.props.router}
                 title={I18n.t('setting')}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                leftBtnPress={() => this.props.router.pop()}/>
+                leftBtnPress={() => router.pop()}/>
             <SetItemView
                 testID="btn_account_security"
                 onPress={() => {
 
                     umengEvent('setting_security');
                     if (isLoginUser())
-                        this.props.router.toSecurityPage();
+                        router.toSecurityPage();
                     else
-                        this.props.router.toLoginFirstPage();
+                       router.toLoginFirstPage();
                 }}
                 name={I18n.t('account_security')}
                 styles={{marginTop: 5}}/>
@@ -235,7 +234,7 @@ class SettingPage extends Component {
                 this.props._getRecentRaces(recentRaces);
                 this.props._getProfileNull();
 
-                this.props.router.toLoginFirstPage()
+               router.toLoginFirstPage()
 
             }
             }

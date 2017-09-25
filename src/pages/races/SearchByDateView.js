@@ -145,7 +145,6 @@ class SearchByDateView extends Component {
         return (
             <RaceRowView
                 rowID={rowID}
-                router={this.props.router}
                 rowData={rowData}/>
         )
     };

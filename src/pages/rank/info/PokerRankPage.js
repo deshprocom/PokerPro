@@ -15,7 +15,7 @@ import RaceListView from './RaceListView';
 export default class PokerRankPage extends Component {
 
     render() {
-        const {player_id} = this.props.params;
+        const {player_id} = this.props.navigation.state.params;
         return (<View style={ApplicationStyles.bgContainer}>
             <PokerView
                 playerId={player_id}/>

@@ -3,13 +3,13 @@ package com.deshpro.pokerpro;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import in.esseak.react_native_umeng.UmengPackage;
 import com.theweflex.react.WeChatPackage;
 import com.zzy.umshare.UMShareModulePackage;
 import com.github.yamill.orientation.OrientationPackage;
 import com.brentvatne.react.ReactVideoPackage;
 
 import cn.jpush.reactnativejpush.JPushPackage;
-import in.esseak.react_native_umeng.UmengPackage;
 import com.reactnativecomponent.splashscreen.RCTSplashScreenPackage;
 import com.reactnativecomponent.swiperefreshlayout.RCTSwipeRefreshLayoutPackage;
 import com.beefe.picker.PickerViewPackage;
@@ -39,11 +39,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new UmengPackage(),
             new WeChatPackage(),
             new UMShareModulePackage(),
             new OrientationPackage(),
             new ReactVideoPackage(),
-            new UmengPackage(),
             new RCTSplashScreenPackage(),
             new RCTSwipeRefreshLayoutPackage(),
             new PickerViewPackage(),

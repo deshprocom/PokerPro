@@ -10,9 +10,9 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {ImageLoad, MarkdownPlat} from '../../components';
+import {MarkdownPlat} from '../../components';
 import {getBuyRaceTicket, getUnpaidOrder} from '../../services/OrderDao';
-import {isEmptyObject, strNotNull} from '../../utils/ComonHelper';
+import {isEmptyObject, strNotNull, uShareTicket} from '../../utils/ComonHelper';
 
 export default class TicketInfoPage extends Component {
 
@@ -25,23 +25,21 @@ export default class TicketInfoPage extends Component {
 
 
     componentDidMount() {
-        InteractionManager.runAfterInteractions(() => {
-            const {race_id, ticket_id} = this.props.params;
-            router.log('ticket', race_id, ticket_id);
-            const body = {
-                race_id: race_id,
-                ticket_id: ticket_id
-            };
-            getBuyRaceTicket(body, data => {
-                const {tickets, ordered, race} = data;
-                this.setState({
-                    tickets: tickets,
-                    ordered: ordered,
-                    race: race
-                })
-            }, err => {
-            });
-        })
+        const {race_id, ticket_id} = this.props.navigation.state.params;
+        router.log('ticket', race_id, ticket_id);
+        const body = {
+            race_id: race_id,
+            ticket_id: ticket_id
+        };
+        getBuyRaceTicket(body, data => {
+            const {tickets, ordered, race} = data;
+            this.setState({
+                tickets: tickets,
+                ordered: ordered,
+                race: race
+            })
+        }, err => {
+        });
 
     }
 
@@ -54,7 +52,7 @@ export default class TicketInfoPage extends Component {
             {this._topBar()}
 
             {this._content()}
-            {this._viewGoBuy() }
+            {this._viewGoBuy()}
 
         </View>)
 
@@ -73,7 +71,7 @@ export default class TicketInfoPage extends Component {
         const {tickets} = this.state;
         if (!isEmptyObject(tickets)) {
             let num = this._ticketNum(tickets.ticket_info);
-            return !this.props.params.isBuy && num > 0;
+            return !this.props.navigation.state.params.isBuy && num > 0;
         } else
             return false;
 
@@ -82,22 +80,26 @@ export default class TicketInfoPage extends Component {
 
     _buy = () => {
 
-        const {race_id, ticket_id} = this.props.params;
+        if (isEmptyObject(global.login_user)) {
+            router.toLoginFirstPage()
+        } else {
+            const {race_id, ticket_id} = this.props.navigation.state.params;
 
-        const body = {
-            race_id: race_id,
-            ticket_id: ticket_id
-        };
+            const body = {
+                race_id: race_id,
+                ticket_id: ticket_id
+            };
 
-        getUnpaidOrder(body, data => {
-            if (strNotNull(data.order_number))
-                router.toOrderInfoPage(this.props, data.order_number)
-            else
+            getUnpaidOrder(body, data => {
+                if (strNotNull(data.order_number))
+                    router.toOrderInfoPage(this.props, data.order_number)
+                else
+                    router.toBuyTicketPage(this.props, race_id, ticket_id)
+
+            }, err => {
                 router.toBuyTicketPage(this.props, race_id, ticket_id)
-
-        }, err => {
-            router.toBuyTicketPage(this.props, race_id, ticket_id)
-        });
+            });
+        }
 
 
     };
@@ -126,7 +128,6 @@ export default class TicketInfoPage extends Component {
 
             <Image
                 resizeMode={'cover'}
-                defaultSource={Images.empty_image}
                 source={{uri: banner}}
                 style={styles.imgLogo}>
 
@@ -181,7 +182,23 @@ export default class TicketInfoPage extends Component {
             </View>
 
 
-            <View style={styles.topBtn}/>
+            <TouchableOpacity
+                testID="btn_bar_left"
+                onPress={() => {
+                    const {race, tickets} = this.state;
+                    if (!isEmptyObject(race) && !isEmptyObject(tickets)) {
+                        const {id, title, price, banner} = tickets;
+
+                        uShareTicket(title, I18n.t('price') + ":" + price, banner, race.race_id, id)
+                    }
+
+                }}
+                style={styles.topBtn}
+                activeOpacity={1}>
+                <Image style={styles.imgShare}
+                       source={Images.share}/>
+
+            </TouchableOpacity>
 
         </View>)
     };
@@ -220,6 +237,7 @@ const styles = StyleSheet.create({
     imgLogo: {
         height: 220,
         width: Metrics.screenWidth,
+        backgroundColor: Colors._ECE
     },
     txtName: {
         color: '#444444',
@@ -277,5 +295,10 @@ const styles = StyleSheet.create({
     viewLine: {
         height: 6,
         backgroundColor: Colors._ECE
+    },
+    imgShare: {
+        height: 22,
+        width: 23,
+        marginRight: 24.8
     }
 });

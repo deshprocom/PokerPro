@@ -108,7 +108,7 @@ export default class WxRegister extends React.Component {
                 if (exist === 0)
                     postVerifyCode(body, data => {
                         const wx = {
-                            access_token: this.props.params.access_token,
+                            access_token: this.props.navigation.state.params.access_token,
                             type: "mobile",
                             account: mobile,
                             code: vcode
@@ -121,7 +121,7 @@ export default class WxRegister extends React.Component {
                 else if (exist === 1)
                     postVerifyCode(body, data => {
                         const wx = {
-                            access_token: this.props.params.access_token,
+                            access_token: this.props.navigation.state.params.access_token,
                             type: "mobile",
                             account: mobile,
                             code: vcode
@@ -166,14 +166,13 @@ export default class WxRegister extends React.Component {
                 style={{flex: 1, backgroundColor: Colors.bg_f5}}>
                 <TouchableOpacity
                     testID="btn_home_page"
-                    onPress={() => this.props.router.popToTop()}/>
+                    onPress={() => router.popToTop()}/>
                 <View style={{backgroundColor: Colors.bg_09}}>
                     <NavigationBar
-                        router={this.props.router}
                         title={I18n.t('phone')}
                         leftBtnIcon={Images.sign_return}
                         leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                        leftBtnPress={() => this.props.router.pop()}/>
+                        leftBtnPress={() => router.pop()}/>
                 </View>
 
                 {this._inputMobileCodeView()}

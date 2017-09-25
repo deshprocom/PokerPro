@@ -117,7 +117,6 @@ class LoginCodeView extends React.Component {
 
                 <View style={{backgroundColor: Colors.bg_09}}>
                     <NavigationBar
-                        router={this.props.router}
                         leftBtnIcon={Images.sign_close}
                         leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                         rightBtnText={I18n.t('register')}
@@ -125,8 +124,8 @@ class LoginCodeView extends React.Component {
                             color: Colors.txt_E0C,
                             fontSize: 16, marginRight: 20
                         }}
-                        leftBtnPress={() => this.props.router.pop()}
-                        rightBtnPress={() => this.props.router.toRegisterPage()}/>
+                        leftBtnPress={() => router.pop()}
+                        rightBtnPress={() => router.toRegisterPage()}/>
                 </View>
 
                 <View style={{flex: 1}}>
@@ -211,7 +210,7 @@ class LoginCodeView extends React.Component {
                         }}
                         transparent
                         testID="btn_problem"
-                        onPress={() => this.props.router.toForgetPage()}>
+                        onPress={() => router.toForgetPage()}>
 
                         <Text style={styles.text_problem}>{I18n.t('problem_for_sign_in')}</Text>
 
@@ -222,7 +221,7 @@ class LoginCodeView extends React.Component {
                 <TouchableOpacity
                     style={{marginBottom: 48, padding: 5}}
                     testID="btn_switch_login_account"
-                    onPress={() => this.props.router.pop()}>
+                    onPress={() => router.pop()}>
                     <Text style={styles.text_other_sign}>
                         {I18n.t('sign_with_pass')}</Text>
                 </TouchableOpacity>

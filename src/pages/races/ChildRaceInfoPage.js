@@ -21,7 +21,7 @@ class ChildRaceInfoPage extends Component {
 
     componentDidMount() {
 
-        this.props.getSubInfo(this.props.params.race_ids)
+        this.props.getSubInfo(this.props.navigation.state.params.race_ids)
     }
 
     render() {
@@ -30,14 +30,13 @@ class ChildRaceInfoPage extends Component {
             style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 refreshPage={() => {
-                    this.props.getSubInfo(this.props.params.race_ids)
+                    this.props.getSubInfo(this.props.navigation.state.params.race_ids)
                 }}
                 toolbarStyle={{backgroundColor: Colors.bg_09}}
-                router={this.props.router}
                 title={this.raceTitle()}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                leftBtnPress={() => this.props.router.pop()}/>
+                leftBtnPress={() =>router.pop()}/>
 
 
             <ScrollView style={{backgroundColor: 'white'}}>

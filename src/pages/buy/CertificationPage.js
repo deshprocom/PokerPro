@@ -22,11 +22,10 @@ export default class CertificationPage extends Component {
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
                     toolbarStyle={{backgroundColor:Colors.bg_09}}
-                    router={this.props.router}
                     title={I18n.t('certification')}
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
-                    leftBtnPress={()=>this.props.router.pop()}/>
+                    leftBtnPress={()=>router.pop()}/>
 
 
                 <IDCardView

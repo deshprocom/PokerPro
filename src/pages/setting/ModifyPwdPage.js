@@ -26,7 +26,7 @@ class ModifyPwdPage extends Component {
         const {loading, hasData, actionType,} = newProps;
         if (hasData && actionType === 'POST_CHANGE_PWD'
             && this.props.loading !== loading) {
-            this.props.router.popToTop();
+           router.popToTop();
         }
     }
 
@@ -36,11 +36,10 @@ class ModifyPwdPage extends Component {
                 style={ApplicationStyles.bg_black}>
                 <NavigationBar
                     toolbarStyle={{backgroundColor:Colors.bg_09}}
-                    router={this.props.router}
                     title={I18n.t('modify')}
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
-                    leftBtnPress={()=>this.props.router.pop()}/>
+                    leftBtnPress={()=>router.pop()}/>
 
                 <View style={{height:5}}/>
 

@@ -30,11 +30,10 @@ export default class SecurityPage extends Component {
         return (<View style={ApplicationStyles.bg_black}>
             <NavigationBar
                 toolbarStyle={{backgroundColor:Colors.bg_09}}
-                router={this.props.router}
                 title={I18n.t('account_security')}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
-                leftBtnPress={()=>this.props.router.pop()}/>
+                leftBtnPress={()=>router.pop()}/>
 
             <View style={{backgroundColor:Colors.setting}}>
 

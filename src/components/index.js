@@ -28,6 +28,7 @@ import ActionSheet from './sheet';
 import Loading from './Loading';
 import CountDownBtn from './CountDownBtn';
 import DatePicker from './datepicker';
+import ImagePicker from 'react-native-image-crop-picker';
 
 export {
     BtnLong, BtnSoild, NavigationBar,
@@ -51,5 +52,6 @@ export {
     ActionSheet,
     Loading,
     CountDownBtn,
-    DatePicker
+    DatePicker,
+    ImagePicker
 }

@@ -65,7 +65,6 @@ export default class App extends Component {
             },
             false);
 
-        MobclickAgent.startWithAppkey(Platform.OS === 'ios' ? UMENG_IOS : UMENG_ANDROID);
 
         WeChat.registerApp(WX_ID).then(ret => {
             console.log('registerApp', ret)
@@ -73,7 +72,8 @@ export default class App extends Component {
             console.log(err)
         });
 
-        MobclickAgent.onEvent("startApp");
+        MobclickAgent.startWithAppkey(Platform.OS === 'ios' ? UMENG_IOS : UMENG_ANDROID);
+
     }
 
 }

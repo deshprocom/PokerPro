@@ -11,9 +11,8 @@ import {Colors, Fonts, Images} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {fetchGetProfile, fetchPutProfile, fetchPostAvatar} from '../../actions/PersonAction'
 import PersonInfo from './PersonInfo';
-import {PUT_PROFILE, GET_CERTIFICATION} from '../../actions/ActionTypes'
 import {NavigationBar} from '../../components'
-import {getLoginUser, strNotNull, getDispatchAction} from '../../utils/ComonHelper';
+import {getLoginUser, strNotNull} from '../../utils/ComonHelper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 class PersonPage extends React.Component {
 
@@ -23,7 +22,7 @@ class PersonPage extends React.Component {
 
     componentDidMount() {
         this._loadProfile();
-        getDispatchAction()[GET_CERTIFICATION]();
+
     }
 
     _loadProfile() {
@@ -62,7 +61,7 @@ class PersonPage extends React.Component {
 
     render() {
 
-        const {loading, error, hasData, profile, actionType, router} = this.props;
+        const {loading, error, hasData, profile, actionType} = this.props;
 
 
         return (

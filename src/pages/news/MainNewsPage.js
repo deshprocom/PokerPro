@@ -15,7 +15,7 @@ import {isEmptyObject, convertDate} from '../../utils/ComonHelper';
 import {connect} from 'react-redux';
 import {fetchNewsTypes} from '../../actions/NewsAction';
 import NewsListView from './NewsListView';
-import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
+import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
 import {getNewsTypes} from '../../services/NewsDao';
 
 
@@ -53,7 +53,6 @@ export default class MainNewsPage extends Component {
                 style={ApplicationStyles.bgContainer}>
                 {this._navSearchBar()}
 
-                {this._newsTypeView()}
 
                 {this._listView()}
             </View>
@@ -89,10 +88,24 @@ export default class MainNewsPage extends Component {
                 this.setState({
                     selectTypeId: item.id
                 });
-                this.typeList.scrollToIndex({viewPosition: 1, index: Number(i)});
-                this._pressItem(item);
+
+
             }}
-            renderTabBar={false}
+            renderTabBar={() => <ScrollableTabBar
+                tabStyle={{
+                    height: 49,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                }}
+                backgroundColor={Colors.white}
+                activeTextColor="#161718"
+                inactiveTextColor={Colors._AAA}
+                textStyle={{fontSize: 17}}
+                style={{borderColor: Colors._EEE}}
+                underlineStyle={{backgroundColor: '#161718', height: 2}}
+            />}
             ref={ref => this.newsPages = ref}>
             {pages}
         </ScrollableTabView>)

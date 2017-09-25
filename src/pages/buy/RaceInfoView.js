@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/2/20.
  */
-import React, {Component, PropTypes}from 'react';
+import React, {Component}from 'react';
 import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text, ScrollView, Platform
@@ -13,14 +13,6 @@ import {Verified, OrderStatus} from '../../configs/Status';
 import {ImageLoad} from '../../components';
 
 export default class RaceInfoView extends Component {
-
-    static propTypes = {
-        raceInfo: PropTypes.object,
-        router: PropTypes.object,
-        disabled: PropTypes.bool,
-        orderInfo: PropTypes.object
-
-    };
 
 
     _ticket_price = (ticket) => {
@@ -122,15 +114,15 @@ export default class RaceInfoView extends Component {
     }
 
     _realNameStatus = () => {
-        const {orderInfo} = this.props;
+        const {orderInfo,verified} = this.props;
         if (!isEmptyObject(orderInfo) && orderInfo.status === OrderStatus.unpaid
-            && !isEmptyObject(user_extra)) {
-            if (user_extra.status === Verified.FAILED)
+            && !isEmptyObject(verified)) {
+            if (verified.status === Verified.FAILED)
                 return (<Image
                     testID="im_failed"
                     style={{height: 51, width: 58, position: 'absolute', top: 47, right: 17}}
                     source={language === 'zh' ? Images.user_real_failed : Images.en_real_failed}/>);
-            else if (user_extra.status === Verified.PENDING) {
+            else if (verified.status === Verified.PENDING) {
                 return (<Image
                     testID="im_pending"
                     style={{height: 51, width: 58, position: 'absolute', top: 47, right: 17}}

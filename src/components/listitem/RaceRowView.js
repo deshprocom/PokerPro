@@ -133,7 +133,7 @@ export default class RaceRowView extends Component {
 
     _ticketStatus = (ticket_status, ticket_sellable, describable) => {
         if (ticket_sellable && (ticket_status === SellStatus.selling
-            || ticket_status === 'sold_out'))
+                || ticket_status === 'sold_out'))
             return (    <TouchableOpacity
                 disabled={!ticket_status === SellStatus.selling}
                 activeOpacity={1}
@@ -252,7 +252,7 @@ export default class RaceRowView extends Component {
                         , alignItems: 'center'
                     }}
                            source={Images.home_gold}>
-                        <Text style={styles.txtBuy}>{I18n.t('home_buy')}</Text >
+                        <Text style={styles.txtBuy}>{I18n.t('home_buy')}</Text>
                     </Image>
                 </TouchableOpacity>)
 
@@ -260,11 +260,7 @@ export default class RaceRowView extends Component {
 
 
     _buyTicket = (rowData) => {
-        if (strNotNull(login_user.user_id)) {
-            router.toChoiseTicketPage(this.props, rowData.race_id);
-        }
-        else
-            router.toLoginFirstPage();
+        router.toChoiseTicketPage(this.props, rowData.race_id);
     };
 
     statusView = (status) => {

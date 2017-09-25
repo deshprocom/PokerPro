@@ -7,6 +7,42 @@ import StorageKey from '../configs/StorageKey';
 import JpushHelp from './JpushHelper';
 import {isEmptyObject, showToast} from '../utils/ComonHelper';
 
+export function listVerified(resolve, reject) {
+    helper.get(Api.list_certification(), ret => {
+        resolve(ret.data);
+        global.verifies = ret.data.items;
+    }, err => {
+        showToast(err);
+        reject(err)
+    })
+}
+
+export function defaultVerified(body, resolve, reject) {
+    helper.post(Api.cert_default(), body, ret => {
+        resolve(ret.data)
+    }, err => {
+        showToast(err);
+        reject(err)
+    })
+}
+
+export function delVerified(body, resolve, reject) {
+    helper.post(Api.del_certification(), body, ret => {
+        resolve(ret.data)
+    }, err => {
+        showToast(err);
+        reject(err)
+    })
+}
+
+export function addVerified(body, resolve, reject) {
+    helper.post(Api.add_certification(), body, ret => {
+        resolve(ret.data)
+    }, err => {
+        showToast(err);
+        reject(err)
+    })
+}
 
 export function getMsgUnRead(resolve, reject) {
     helper.get(Api.unread_remind(), ret => {

@@ -5,11 +5,11 @@ import StorageKey from '../configs/StorageKey';
 import {setLanguage} from '../I18n/I18n';
 import {getSize, setLang} from '../utils/ComonHelper';
 import {setDpLang} from '../services/RequestHelper';
+import {listVerified} from './AccountDao';
 
 export function init(resolve) {
     storage.load({key: StorageKey.Language})
         .then(ret => {
-
             switchLang(ret);
             resolve();
         }).catch(err => {
@@ -17,6 +17,11 @@ export function init(resolve) {
         switchLang(language);
     });
     getSize();
+}
+
+
+export function initLogin() {
+    listVerified(data=>{},err=>{})
 }
 
 function switchLang(lang) {

@@ -19,11 +19,10 @@ export default class BusinessPage extends Component {
             style={ApplicationStyles.bg_black}>
             <NavigationBar
                 toolbarStyle={{backgroundColor:Colors.bg_09}}
-                router={this.props.router}
                 title={I18n.t('business_cooperation')}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
-                leftBtnPress={()=>this.props.router.pop()}/>
+                leftBtnPress={()=>router.pop()}/>
             <View style={{backgroundColor:Colors.setting}}>
                 <SetItemView name={I18n.t('business_cooperation')}
                              testID="btn_business_email"

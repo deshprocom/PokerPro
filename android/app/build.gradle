@@ -58,7 +58,7 @@ import com.android.build.OutputFile
  *   inputExcludes: ["android/**", "ios/**"],
  *
  *   // override which node gets called and with what additional arguments
- *   nodeExecutableAndArgs: ["node"]
+ *   nodeExecutableAndArgs: ["node"],
  *
  *   // supply additional arguments to the packager
  *   extraPackagerArgs: []
@@ -91,7 +91,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 2
-        versionName "2.1"
+        versionName "2.4"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -156,12 +156,12 @@ android {
 }
 
 dependencies {
+    compile project(':rn-umeng')
     compile project(':react-native-wechat')
     compile project(':react-native-umshare')
     compile project(':react-native-network-info')
     compile project(':react-native-orientation')
     compile project(':react-native-video')
-    compile project(':rn-umeng')
     compile project(':react-native-smart-splash-screen')
     compile project(':react-native-smart-pull-to-refresh-listview')
     compile project(':react-native-picker')
