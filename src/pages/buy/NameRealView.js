@@ -128,6 +128,8 @@ export default class NameRealView extends Component {
                                 {I18n.t('real_name')}:</Text>
                             <Text style={{fontSize: Fonts.size.h15, color: Colors.txt_666}}>
                                 {verified.real_name}</Text>
+
+                            {this._showStatus()}
                         </View>
 
                     </View>
@@ -146,7 +148,6 @@ export default class NameRealView extends Component {
                     </View>
                 </View>
 
-                {this._showStatus()}
 
                 <Image style={{width: 11, height: 20}}
                        source={Images.ticket_arrow}/>
@@ -157,19 +158,46 @@ export default class NameRealView extends Component {
     _showStatus = () => {
         const {verified} = this.state;
         if (verified.status !== Verified.INIT) {
-            return (  <View style={{
-                borderRadius: 2, backgroundColor: '#cccccc',
-                height: 25, width: 55, justifyContent: 'center', alignItems: 'center',
-                marginRight: 20
-            }}>
-                <Text style={[Fonts.H12, {color: Colors.white}]}>
+            return (
+                <Text style={this.statusStyle(verified.status)}>
                     {idCardStatus(verified.status)}
-                </Text>
-
-            </View>)
+                </Text>)
         }
 
     }
 
+    statusStyle = (status) => {
+        switch (status) {
+            case Verified.PENDING:
+                return styles.pendingStatus;
+            case Verified.PASSED:
+                return [styles.pendingStatus, {
+                    borderColor: '#34BA3C',
+                    color: '#34BA3C'
+                }];
+            case Verified.FAILED:
+                return [styles.pendingStatus, {
+                    borderColor: '#F34A4A',
+                    color: '#F34A4A',
+                }];
+        }
+    }
 
 }
+
+
+const styles = StyleSheet.create({
+    pendingStatus: {
+        fontSize: 11,
+        paddingTop: 3,
+        paddingLeft: 2,
+        paddingRight: 2,
+        paddingBottom: 1,
+        borderWidth: 1,
+        borderColor: '#6DB0FF',
+        color: '#6DB0FF',
+        borderRadius: 2,
+        textAlign: 'center',
+        marginLeft: 13
+    },
+})
