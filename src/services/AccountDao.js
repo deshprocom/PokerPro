@@ -218,13 +218,17 @@ export function setLoginUser(ret) {
 
 
     if (!isEmptyObject(ret)) {
-        //获取实名信息
-        listVerified(data => {
-        }, err => {
-        });
 
-        //统计登陆用户
-        postLoginCount();
+        setTimeout(() => {
+            //获取实名信息
+            listVerified(data => {
+            }, err => {
+            });
+
+            //统计登陆用户
+            postLoginCount();
+        }, 100);
+
 
         //Jpush别名设置
         JpushHelp.getRegistrationID((id) => {

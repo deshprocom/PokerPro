@@ -482,7 +482,7 @@ export default class Router {
     }
 
     popToLoginFirstPage() {
-        this.push({
+        this.stackPush({
             name: 'LoginFirstPage',
         })
 
@@ -581,7 +581,6 @@ export default class Router {
 
     toPersonPage(props) {
         this.push(props, {
-
             name: 'PersonPage',
         })
     }
