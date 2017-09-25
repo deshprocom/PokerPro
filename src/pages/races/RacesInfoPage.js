@@ -42,11 +42,9 @@ class RacesInfoPage extends Component {
         blinds: []
     };
 
-    componentWillUnmount() {
-        this.props._getRacesInfo();
-    }
 
     componentDidMount() {
+        console.log('Actions', this.props)
         this._fetchSideRace();
         this._refreshPage();
 
@@ -77,7 +75,7 @@ class RacesInfoPage extends Component {
 
 
     render() {
-        console.log(this.props)
+
         const {raceInfo} = this.state;
         return (
             <View
@@ -116,7 +114,7 @@ class RacesInfoPage extends Component {
                                 uShareRace(raceInfo.name, raceInfo.location +
                                     '\n' + this.race_time(raceInfo),
                                     raceInfo.logo,
-                                    this.props.navigation.state.params.race_id)
+                                    this.props.params.race_id)
                             }}>
                             <Image style={styles.imgShare}
                                    source={Images.share}/>
@@ -275,7 +273,7 @@ class RacesInfoPage extends Component {
                     marginBottom: noBottomBar ? 0 : 50
                 }}>
                 <RaceSideView
-                    raceId={this.props.navigation.state.params.race_id}
+                    raceId={this.props.params.race_id}
                     subRaces={subRaces}/>
             </View>)
 
@@ -312,14 +310,14 @@ class RacesInfoPage extends Component {
 
     _fetchRaceRanks = () => {
         const body = {
-            race_id: this.props.navigation.state.params.race_id
+            race_id: this.props.params.race_id
         };
         this.props._getRaceRanks(body)
     };
 
     _fetchSideRace = () => {
         const body = {
-            race_id: this.props.navigation.state.params.race_id
+            race_id: this.props.params.race_id
         };
         this.props.fetchSubRaces(body);
     }
@@ -329,7 +327,7 @@ class RacesInfoPage extends Component {
         if (strNotNull(user_id)) {
             const body = {
                 user_id: user_id,
-                race_id: this.props.navigation.state.params.race_id
+                race_id: this.props.params.race_id
             };
             this.setState({
                 isLoginUser: true
@@ -339,7 +337,7 @@ class RacesInfoPage extends Component {
         } else {
             const body = {
                 user_id: 0,
-                race_id: this.props.navigation.state.params.race_id
+                race_id: this.props.params.race_id
             };
             this.setState({
                 isLoginUser: false
@@ -355,13 +353,13 @@ class RacesInfoPage extends Component {
 
         const {ticket_status, ticket_sellable} = raceInfo;
 
-        if (!this.props.navigation.state.params.fromBuy && sellable(ticket_status, ticket_sellable))
+        if (!this.props.params.fromBuy && sellable(ticket_status, ticket_sellable))
             return (    <RaceInfoBottomView
                 raceInfo={raceInfo}
                 onPress={() => {
                     umengEvent('race_buy_ticket');
                     if (isLoginUser) {
-                        router.toChoiseTicketPage(this.props, this.props.navigation.state.params.race_id);
+                        router.toChoiseTicketPage(this.props, this.props.params.race_id);
                     }
                     else
                         router.toLoginFirstPage();
@@ -406,7 +404,7 @@ class RacesInfoPage extends Component {
     _hasBottomBar = () => {
         const {raceInfo} = this.state;
         const {ticket_status, ticket_sellable} = raceInfo;
-        return this.props.navigation.state.params.fromBuy || !sellable(ticket_status, ticket_sellable);
+        return this.props.params.fromBuy || !sellable(ticket_status, ticket_sellable);
     }
 
     race_time = (raceInfo) => {

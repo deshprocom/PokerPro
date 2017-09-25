@@ -2,74 +2,13 @@
  * Created by lorne on 2016/12/20.
  */
 
-import {NavigationActions} from 'react-navigation'
-
-//Pages
-
-import InputPwdPage from '../pages/InputPwdPage';
-import DrawerPage from '../pages/DrawerPage';
-import PersonPage from '../pages/person/PersonPage';
-import SettingPage from '../pages/setting/SettingPage';
-
-import RegisterPage from '../pages/account/RegisterPage';
-import ForgetPage from '../pages/account/ForgetPage';
-import RacesInfoPage from '../pages/races/RacesInfoPage';
-import LoginFirstPage from '../pages/login/LoginFirstPage';
-import LoginCodePage from '../pages/login/LoginCodePage';
-import EmailRegisterPage from '../pages/account/EmailRegisterPage';
-import ImageGallery from '../components/ImageGallery';
-import ForgetEmailPage from '../pages/account/ForgetEmailPage';
-import BuyTicketPage from '../pages/buy/BuyTicketPage';
-import OrderInfoPage from '../pages/orders/OrderInfoPage';
-import BuyKnowPage from '../pages/buy/BuyKnownPage';
-import CertificationPage from '../pages/buy/CertificationPage';
-import OrderListPage from '../pages/orders/OrderListPage';
-import SecurityPage from '../pages/setting/SecurityPage';
-import ModifyPwdPage from '../pages/setting/ModifyPwdPage';
-import SearchRacesPage from '../pages/races/SearchRacesPage';
-import BusinessPage from '../pages/setting/BusinessPage';
-import SearchKeywordPage from '../pages/races/SearchKeywordPage';
-import ChildRaceInfoPage from '../pages/races/ChildRaceInfoPage';
-import AboutPage from '../pages/setting/AboutPage';
-import MainNewsPage from '../pages/news/MainNewsPage';
-import NewsInfoPage from '../pages/news/NewsInfoPage';
-import SearchNewsPage from '../pages/news/SearchNewsPage';
-import TicketPage from '../pages/ticket/TicketPage';
-import ApiSettingPage from '../pages/setting/ApiSettingPage';
-import BindingPhonePage from '../pages/setting/BindingPhonePage';
-import ChangePhonePage from '../pages/setting/ChangePhonePage';
-import MessagePage from '../pages/message/MessagePage';
-import MainVideoPage from '../pages/videos/MainVideoPage';
-import VideoInfoPage from '../pages/videos/VideoInfoPage';
-import TicketSearchPage from '../pages/ticket/TicketSearchPage';
-import ChoiseTicketPage from '../pages/ticket/ChoiseTicketPage';
-import TicketInfoPage from '../pages/ticket/TicketInfoPage';
-import WebViewPage from '../components/WebViewPage';
-import NewAddressPage from '../pages/buy/NewAddressPage';
-import AdrListPage from '../pages/buy/AdrListPage';
-import DrawerRank from '../pages/rank/DrawerRank';
-import FocusPlayer from '../pages/rank/FocusPlayer';
-import PokerRankPage from '../pages/rank/info/PokerRankPage';
-import PokerRacePage from '../pages/rank/info/PokerRacePage';
-import SearchPoker from '../pages/rank/SearchPoker';
-import WebViewPay from '../components/WebViewPay';
-import Protocol from '../pages/setting/ProtocolPage';
-import Suggest from '../pages/setting/Suggest';
-import WxRegister from '../pages/account/WxRegister';
-import InputPwd from '../pages/account/InputPwd';
-import MessageCenter from '../pages/message/MessageCenter';
-import ActivityCenter from '../pages/message/ActivityCenter';
-import ActivityInfo from '../pages/message/ActivityInfo';
+import {Actions} from 'react-native-router-flux';
 
 
 const customFloatFromRight = '';
 
 
 export default class Router {
-    constructor(navigator) {
-        this.navigator = navigator;
-        console.log('Navigation', navigator)
-    }
 
 
     log(...msg) {
@@ -78,40 +17,22 @@ export default class Router {
     }
 
     stackPush(route) {
-
-        const navigateAction = NavigationActions.navigate({
-            routeName: route.name,
-            params: route.params
-        });
-
-        this.navigator.dispatch(navigateAction)
+        Actions.push(route.name, {params: route.params})
     }
 
     push(props, route) {
+        this.stackPush(route)
 
-        const navigateAction = NavigationActions.navigate({
-            routeName: route.name,
-            params: route.params
-        });
-
-        this.navigator.dispatch(navigateAction)
     }
 
 
     pop() {
-        const backAction = NavigationActions.back({
-            key: ''
-        });
-        this.navigator.dispatch(backAction)
+        Actions.pop();
 
     }
 
     popToTop() {
-
-        const resetAction = NavigationActions.back({
-            key: this.navigator.state.key
-        });
-        this.navigator.dispatch(resetAction)
+        Actions.popTo('DrawerPage')
 
     }
 
@@ -137,7 +58,6 @@ export default class Router {
 
     toActivityInfo(props, activity) {
         this.push(props, {
-            page: ActivityInfo,
             name: 'ActivityInfo',
             sceneConfig: customFloatFromRight,
             params: {
@@ -148,7 +68,7 @@ export default class Router {
 
     toActivityCenter(props, activities) {
         this.push(props, {
-            page: ActivityCenter,
+
             name: 'ActivityCenter',
             sceneConfig: customFloatFromRight,
             params: {
@@ -160,7 +80,7 @@ export default class Router {
 
     toMessageCenter(props) {
         this.push(props, {
-            page: MessageCenter,
+
             name: 'MessageCenter',
             sceneConfig: customFloatFromRight
         })
@@ -169,7 +89,7 @@ export default class Router {
 
     toInputPwd(props, wx) {
         this.push(props, {
-            page: InputPwd,
+
             name: 'InputPwd',
             sceneConfig: customFloatFromRight,
             params: {
@@ -180,7 +100,7 @@ export default class Router {
 
     toWxRegister(props, wxAuth) {
         this.push(props, {
-            page: WxRegister,
+
             name: 'WxRegister',
             sceneConfig: customFloatFromRight,
             params: {
@@ -191,7 +111,7 @@ export default class Router {
 
     toSuggest(props) {
         this.push(props, {
-            page: Suggest,
+
             name: 'Suggest',
             sceneConfig: customFloatFromRight,
         })
@@ -199,7 +119,7 @@ export default class Router {
 
     toProtocol(props, _protocol) {
         this.push(props, {
-            page: Protocol,
+
             name: 'Protocol',
             sceneConfig: customFloatFromRight,
             params: {
@@ -211,16 +131,13 @@ export default class Router {
 
 
     replaceOrder(order_id, price) {
-        router.pop();
-        setTimeout(() => {
-            this.stackPush({
-                name: 'OrderInfoPage',
-                params: {
-                    order_id: order_id,
-                    price: price
-                }
-            })
-        }, 100)
+
+        Actions.replace('OrderInfoPage', {
+            params: {
+                order_id: order_id,
+                price: price
+            }
+        })
 
 
     }
@@ -228,7 +145,7 @@ export default class Router {
 
     toWebViewPay(props, pay, orderRefresh) {
         this.push(props, {
-            page: WebViewPay,
+
             name: 'WebViewPay',
             sceneConfig: customFloatFromRight,
             params: {
@@ -241,7 +158,7 @@ export default class Router {
 
     toSearchPoker(props) {
         this.push(props, {
-            page: SearchPoker,
+
             name: 'SearchPoker',
             sceneConfig: customFloatFromRight,
 
@@ -250,7 +167,7 @@ export default class Router {
 
     toPokerRacePage(props, race_id) {
         this.push(props, {
-            page: PokerRacePage,
+
             name: 'PokerRacePage',
             sceneConfig: customFloatFromRight,
             params: {
@@ -262,9 +179,7 @@ export default class Router {
 
     toPokerRankPage(props, player_id) {
         this.push(props, {
-            page: PokerRankPage,
             name: 'PokerRankPage',
-            sceneConfig: customFloatFromRight,
             params: {
                 player_id: player_id
             }
@@ -274,9 +189,7 @@ export default class Router {
 
     toAdrListPage(props, selectAdr, adrData) {
         this.push(props, {
-            page: AdrListPage,
             name: 'AdrListPage',
-            sceneConfig: customFloatFromRight,
             params: {
                 selectAdr: selectAdr,
                 adrData: adrData
@@ -287,9 +200,7 @@ export default class Router {
 
     toNewAddressPage(props, getList, address) {
         this.push(props, {
-            page: NewAddressPage,
             name: 'NewAddressPage',
-            sceneConfig: customFloatFromRight,
             params: {
                 getList: getList,
                 address: address
@@ -300,9 +211,7 @@ export default class Router {
 
     toWebViewPage(props, url) {
         this.push(props, {
-            page: WebViewPage,
             name: 'WebViewPage',
-            sceneConfig: customFloatFromRight,
             params: {
                 url: url
             }
@@ -313,9 +222,7 @@ export default class Router {
 
     toTicketInfoPage(props, race_id, ticket_id, isBuy) {
         this.push(props, {
-            page: TicketInfoPage,
             name: 'TicketInfoPage',
-            sceneConfig: customFloatFromRight,
             params: {
                 race_id: race_id,
                 ticket_id: ticket_id,
@@ -327,9 +234,7 @@ export default class Router {
 
     toChoiseTicketPage(props, race_id) {
         this.push(props, {
-            page: ChoiseTicketPage,
             name: 'ChoiseTicketPage',
-            sceneConfig: customFloatFromRight,
             params: {
                 race_id: race_id
             }
@@ -340,35 +245,27 @@ export default class Router {
 
     toTicketSearchPage(props) {
         this.push(props, {
-            page: TicketSearchPage,
             name: 'TicketSearchPage',
-            sceneConfig: customFloatFromRight,
-
         })
     }
 
     toVideoPage(props) {
         this.push(props, {
-            page: MainVideoPage,
             name: 'MainVideoPage',
-            sceneConfig: customFloatFromRight,
 
         })
     }
 
     toDrawerRank(props) {
         this.push(props, {
-            page: DrawerRank,
             name: 'DrawerRank',
-            sceneConfig: customFloatFromRight
+
         })
     }
 
     toMessagePage(props) {
         this.push(props, {
-            page: MessagePage,
             name: 'MessagePage',
-            sceneConfig: customFloatFromRight,
 
         })
     }
@@ -376,9 +273,7 @@ export default class Router {
 
     toChangePhonePage(props) {
         this.push(props, {
-            page: ChangePhonePage,
             name: 'ChangePhonePage',
-            sceneConfig: customFloatFromRight,
 
         })
     }
@@ -386,9 +281,7 @@ export default class Router {
 
     toBindingPhonePage(props) {
         this.push(props, {
-            page: BindingPhonePage,
             name: 'BindingPhonePage',
-            sceneConfig: customFloatFromRight,
 
         })
     }
@@ -396,18 +289,16 @@ export default class Router {
 
     toApiSettingPage(props) {
         this.push(props, {
-            page: ApiSettingPage,
             name: 'ApiSettingPage',
-            sceneConfig: customFloatFromRight,
 
         })
     }
 
     toTicketPage(props) {
         this.push(props, {
-            page: TicketPage,
+
             name: 'TicketPage',
-            sceneConfig: customFloatFromRight,
+
 
         })
     }
@@ -415,18 +306,17 @@ export default class Router {
 
     toSearchNewsPage(props) {
         this.push(props, {
-            page: SearchNewsPage,
+
             name: 'SearchNewsPage',
-            sceneConfig: customFloatFromRight,
+
 
         })
     }
 
     toVideoInfoPage(props, info) {
         this.push(props, {
-            page: VideoInfoPage,
+
             name: 'VideoInfoPage',
-            sceneConfig: customFloatFromRight,
             params: {
                 info: info
             }
@@ -436,9 +326,8 @@ export default class Router {
 
     toNewsInfoPage(props, newsInfo) {
         this.push(props, {
-            page: NewsInfoPage,
+
             name: 'NewsInfoPage',
-            sceneConfig: customFloatFromRight,
             params: {
                 newsInfo: newsInfo
             }
@@ -449,9 +338,8 @@ export default class Router {
 
     toMainNewsPage(props) {
         this.push(props, {
-            page: MainNewsPage,
+
             name: 'MainNewsPage',
-            sceneConfig: customFloatFromRight,
 
         })
     }
@@ -459,9 +347,8 @@ export default class Router {
 
     toAboutPage(props) {
         this.push(props, {
-            page: AboutPage,
+
             name: 'AboutPage',
-            sceneConfig: customFloatFromRight,
 
         })
     }
@@ -469,17 +356,16 @@ export default class Router {
 
     toSearchKeywordPage(props) {
         this.push(props, {
-            page: SearchKeywordPage,
+
             name: 'SearchKeywordPage',
-            sceneConfig: customFloatFromRight,
+
         })
     }
 
     toChildRaceInfoPage(props, race_ids) {
         this.push(props, {
-            page: ChildRaceInfoPage,
+
             name: 'ChildRaceInfoPage',
-            sceneConfig: customFloatFromRight,
             params: {
                 race_ids: race_ids
             }
@@ -488,68 +374,62 @@ export default class Router {
 
     toBusinessPage(props) {
         this.push(props, {
-            page: BusinessPage,
+
             name: 'BusinessPage',
-            sceneConfig: customFloatFromRight,
         })
     }
 
 
     toSearchRacesPage(props) {
         this.push(props, {
-            page: SearchRacesPage,
             name: 'SearchRacesPage',
-            sceneConfig: customFloatFromRight,
         })
     }
 
 
     toModifyPwdPage(props) {
         this.push(props, {
-            page: ModifyPwdPage,
             name: 'ModifyPwdPage',
-            sceneConfig: customFloatFromRight,
         })
     }
 
     toSecurityPage(props) {
         this.push(props, {
-            page: SecurityPage,
+
             name: 'SecurityPage',
-            sceneConfig: customFloatFromRight,
+
         })
     }
 
 
     toOrderListPage(props) {
         this.push(props, {
-            page: OrderListPage,
+
             name: 'OrderListPage',
-            sceneConfig: customFloatFromRight,
+
         })
     }
 
     toCertificationPage(props) {
         this.push(props, {
-            page: CertificationPage,
+
             name: 'CertificationPage',
-            sceneConfig: customFloatFromRight
+
         })
     }
 
     toBuyKnownPage(props) {
         this.push(props, {
-            page: BuyKnowPage,
-            name: 'BuyKnowPage',
-            sceneConfig: customFloatFromRight,
+
+            name: 'BuyKnowPage'
+
         })
     }
 
     toOrderInfo(props, order_id, price, isPay) {
         this.push(props, {
-            page: OrderInfoPage,
+
             name: 'OrderInfoPage',
-            sceneConfig: customFloatFromRight,
             params: {
                 order_id: order_id,
                 isPay: isPay,
@@ -561,9 +441,8 @@ export default class Router {
 
     toOrderInfoPage(props, order_id, price, onRefresh) {
         this.push(props, {
-            page: OrderInfoPage,
+
             name: 'OrderInfoPage',
-            sceneConfig: customFloatFromRight,
             params: {
                 order_id: order_id,
                 price: price,
@@ -574,9 +453,8 @@ export default class Router {
 
     toBuyTicketPage(props, race_id, ticket_id) {
         this.push(props, {
-            page: BuyTicketPage,
+
             name: 'BuyTicketPage',
-            sceneConfig: customFloatFromRight,
             params: {
                 race_id: race_id,
                 ticket_id: ticket_id
@@ -586,17 +464,15 @@ export default class Router {
 
     toForgetEmailPage(props) {
         this.push(props, {
-            page: ForgetEmailPage,
-            name: 'ForgetEmailPage',
-            sceneConfig: customFloatFromRight,
+
+            name: 'ForgetEmailPage'
         })
     }
 
     toImageGalleryPage(props, images, index) {
         this.push(props, {
-            page: ImageGallery,
+
             name: 'ImageGallery',
-            sceneConfig: customFloatFromRight,
             params: {
                 images: images,
                 index: index
@@ -613,33 +489,27 @@ export default class Router {
 
     toEmailRegisterPage(props) {
         this.push(props, {
-            page: EmailRegisterPage,
             name: 'EmailRegisterPage',
-            sceneConfig: customFloatFromRight,
         })
     }
 
     toLoginFirstPage(props) {
         this.push(props, {
-            page: LoginFirstPage,
+
             name: 'LoginFirstPage',
-            sceneConfig: customFloatFromRight,
         })
     }
 
     toLoginCodePage(props) {
         this.push(props, {
-            page: LoginCodePage,
             name: 'LoginCodePage',
-            sceneConfig: customFloatFromRight,
         })
     }
 
     toRacesInfoPage(props, race_id, fromBuy) {
         this.push(props, {
-            page: RacesInfoPage,
+
             name: 'RacesInfoPage',
-            sceneConfig: customFloatFromRight,
             params: {
                 race_id: race_id,
                 fromBuy: fromBuy
@@ -649,33 +519,27 @@ export default class Router {
 
     toFocusPlayer(props) {
         this.push(props, {
-            page: FocusPlayer,
             name: 'FocusPlayer',
-            sceneConfig: customFloatFromRight
         })
     }
 
     toForgetPage(props) {
         this.push(props, {
-            page: ForgetPage,
             name: 'ForgetPage',
-            sceneConfig: customFloatFromRight,
         })
     }
 
     toRegisterPage(props) {
         this.push(props, {
-            page: RegisterPage,
+
             name: 'RegisterPage',
-            sceneConfig: customFloatFromRight,
         })
     }
 
     forgetPhoneToPwdPage(props, phone, code) {
         this.push(props, {
-            page: InputPwdPage,
+
             name: 'InputPwdPage',
-            sceneConfig: customFloatFromRight,
             params: {
                 phone: phone,
                 isEmailOrMobile: 'mobile',
@@ -688,9 +552,7 @@ export default class Router {
 
     forgetEmailToPwdPage(props, email, code) {
         this.push(props, {
-            page: InputPwdPage,
             name: 'InputPwdPage',
-            sceneConfig: customFloatFromRight,
             params: {
                 email: email,
                 isEmailOrMobile: 'email',
@@ -704,9 +566,8 @@ export default class Router {
 
     toInputPwdPage(props, phone, code) {
         this.push(props, {
-            page: InputPwdPage,
+
             name: 'InputPwdPage',
-            sceneConfig: customFloatFromRight,
             params: {
                 phone: phone,
                 code: code,
@@ -719,27 +580,27 @@ export default class Router {
 
     toPersonPage(props) {
         this.push(props, {
-            page: PersonPage,
+
             name: 'PersonPage',
-            sceneConfig: customFloatFromRight
         })
     }
 
 
     toSettingPage(props) {
         this.push(props, {
-            page: SettingPage,
+
             name: 'SettingPage',
-            sceneConfig: customFloatFromRight,
+
         })
     }
 
     popToLogin() {
-        this.popToTop();
+        Actions.popTo('LoginFirstPage')
     }
 
     popToDrawerRank() {
-        this.popToTop();
+
+        Actions.popTo('DrawerRank')
 
     }
 

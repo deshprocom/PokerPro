@@ -50,7 +50,7 @@ export default class AddVerified extends Component {
 
 
     renderFail = () => {
-        const {verified} = this.props.navigation.state.params;
+        const {verified} = this.props.params;
         if (isEmptyObject(verified))
             return;
         if (verified.status === Verified.FAILED)
@@ -60,7 +60,7 @@ export default class AddVerified extends Component {
     };
 
     _delVerified = () => {
-        const {verified, verified_refresh} = this.props.navigation.state.params;
+        const {verified, verified_refresh} = this.props.params;
 
         Alert.alert(`${I18n.t('verified_del')}`, `${I18n.t('verified_del_desc')}`, [{
             text: `${I18n.t('cancel')}`, onPress: () => {
@@ -94,7 +94,7 @@ export default class AddVerified extends Component {
     };
 
     componentDidMount() {
-        const {verified} = this.props.navigation.state.params;
+        const {verified} = this.props.params;
         if (!isEmptyObject(verified)) {
             this.setState({
                 name: verified.real_name,
@@ -111,13 +111,13 @@ export default class AddVerified extends Component {
 
 
     _title = () => {
-        const {verified} = this.props.navigation.state.params;
+        const {verified} = this.props.params;
 
         return isEmptyObject(verified) ? I18n.t('verified_new') : idCardStatus(verified.status)
     };
 
     _certImage = () => {
-        const {verified} = this.props.navigation.state.params;
+        const {verified} = this.props.params;
 
         return isEmptyObject(verified) ? '' : verified.image;
     };
@@ -143,7 +143,7 @@ export default class AddVerified extends Component {
 
     _submit = () => {
         const {name, num, localImg, showImg} = this.state;
-        const {cert_type, verified_refresh, verified} = this.props.navigation.state.params;
+        const {cert_type, verified_refresh, verified} = this.props.params;
         console.log(cert_type, this.state)
 
         if (strNotNull(name) && strNotNull(num)) {
@@ -224,7 +224,7 @@ export default class AddVerified extends Component {
     };
 
     renderInput = () => {
-        const {cert_type} = this.props.navigation.state.params;
+        const {cert_type} = this.props.params;
 
         return <View style={{backgroundColor: 'white', marginTop: 8}}>
             <View style={styles.rowAlign}>

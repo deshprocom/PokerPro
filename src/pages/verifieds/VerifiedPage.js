@@ -86,7 +86,7 @@ export default class VerifiedPage extends Component {
     }
 
     setDefault = (body) => {
-        const {backRefresh} = this.props.navigation.state.params;
+        const {backRefresh} = this.props.params;
         if (backRefresh)
             backRefresh(body);
         defaultVerified({
@@ -105,7 +105,7 @@ export default class VerifiedPage extends Component {
     };
 
     renderItem = (item, index, separator) => {
-        const {backRefresh} = this.props.navigation.state.params;
+        const {backRefresh} = this.props.params;
         return (<ItemVerified
             selectable={!!backRefresh}
             setDefault={this.setDefault}

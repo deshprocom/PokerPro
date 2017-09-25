@@ -25,7 +25,7 @@ export default class TicketInfoPage extends Component {
 
 
     componentDidMount() {
-        const {race_id, ticket_id} = this.props.navigation.state.params;
+        const {race_id, ticket_id} = this.props.params;
         router.log('ticket', race_id, ticket_id);
         const body = {
             race_id: race_id,
@@ -71,7 +71,7 @@ export default class TicketInfoPage extends Component {
         const {tickets} = this.state;
         if (!isEmptyObject(tickets)) {
             let num = this._ticketNum(tickets.ticket_info);
-            return !this.props.navigation.state.params.isBuy && num > 0;
+            return !this.props.params.isBuy && num > 0;
         } else
             return false;
 
@@ -83,7 +83,7 @@ export default class TicketInfoPage extends Component {
         if (isEmptyObject(global.login_user)) {
             router.toLoginFirstPage()
         } else {
-            const {race_id, ticket_id} = this.props.navigation.state.params;
+            const {race_id, ticket_id} = this.props.params;
 
             const body = {
                 race_id: race_id,

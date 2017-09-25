@@ -25,7 +25,7 @@ export default class NewAddress extends Component {
     };
 
     componentDidMount() {
-        const {address} = this.props.navigation.state.params;
+        const {address} = this.props.params;
         this.setState({
             addressEdit: address,
             regionTxt: isEmptyObject(address) ? '' : address.address,
@@ -193,7 +193,7 @@ export default class NewAddress extends Component {
             postAddress(body, data => {
                 console.log(data);
                 showToast(I18n.t('buy_put_success'));
-                this.props.navigation.state.params.getList();
+                this.props.params.getList();
                 router.pop();
 
             }, err => {
