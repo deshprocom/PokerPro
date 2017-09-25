@@ -7,7 +7,6 @@ import InputPwdPage from '../pages/InputPwdPage';
 import DrawerPage from '../pages/DrawerPage';
 import PersonPage from '../pages/person/PersonPage';
 import SettingPage from '../pages/setting/SettingPage';
-
 import RegisterPage from '../pages/account/RegisterPage';
 import ForgetPage from '../pages/account/ForgetPage';
 import RacesInfoPage from '../pages/races/RacesInfoPage';
@@ -66,12 +65,10 @@ import AddVerified from '../pages/verifieds/AddVerified';
 export const Stacks =  Actions.create(
     <Scene key="root">
         <Scene key="DrawerPage" component={DrawerPage}  initial={true}  navBar={() => null}/>
-
         <Scene key="AddVerified" component={AddVerified}  navBar={() => null}/>
         <Scene key="VerifiedPage" component={VerifiedPage} navBar={() => null}/>
         <Scene key="HomePage" component={HomePage} navBar={() => null}/>
         <Scene key="InputPwdPage" component={InputPwdPage} navBar={() => null}/>
-
         <Scene key="PersonPage" component={PersonPage} navBar={() => null}/>
         <Scene key="SettingPage" component={SettingPage} navBar={() => null}/>
         <Scene key="RegisterPage" component={RegisterPage} navBar={() => null}/>
@@ -93,7 +90,6 @@ export const Stacks =  Actions.create(
         <Scene key="BusinessPage" component={BusinessPage} navBar={() => null}/>
         <Scene key="SearchKeywordPage" component={SearchKeywordPage} navBar={() => null}/>
         <Scene key="ChildRaceInfoPage" component={ChildRaceInfoPage} navBar={() => null}/>
-
         <Scene key="AboutPage" component={AboutPage} navBar={() => null}/>
         <Scene key="PokerPersonPage" component={PokerPersonPage} navBar={() => null}/>
         <Scene key="MainNewsPage" component={MainNewsPage} navBar={() => null}/>
@@ -121,7 +117,6 @@ export const Stacks =  Actions.create(
         <Scene key="Protocol" component={Protocol} navBar={() => null}/>
         <Scene key="Suggest" component={Suggest} navBar={() => null}/>
         <Scene key="WxRegister" component={WxRegister} navBar={() => null}/>
-
         <Scene key="InputPwd" component={InputPwd} navBar={() => null}/>
         <Scene key="MessageCenter" component={MessageCenter} navBar={() => null}/>
         <Scene key="ActivityCenter" component={ActivityCenter} navBar={() => null}/>

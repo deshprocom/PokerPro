@@ -154,7 +154,7 @@ export default class PokerView extends Component {
             <TouchableOpacity
                 onPress={
                     () => {
-                        router.popToDrawerRank();
+                        router.popToDrawerRank(this.props.navigation);
                     }
                 }
                 testID="btn_bar_close"
