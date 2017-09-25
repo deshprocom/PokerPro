@@ -14,7 +14,7 @@ import {postFocus, deleteFocus} from '../../../services/RankDao';
 
 import {
     strNotNull, moneyFormat, rankPlayerShare, nameRow,
-    strNull__
+    strNull__, isEmptyObject
 } from '../../../utils/ComonHelper';
 
 export default class PokerView extends Component {
@@ -47,7 +47,9 @@ export default class PokerView extends Component {
             player_id: playerId
         };
 
-        if (followed) {
+        if (isEmptyObject(global.login_user)) {
+            router.toLoginFirstPage()
+        } else if (followed) {
             deleteFocus(body, data => {
                 this.setState({
                     followed: !followed
