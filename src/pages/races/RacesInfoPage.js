@@ -42,9 +42,6 @@ class RacesInfoPage extends Component {
         blinds: []
     };
 
-    componentWillUnmount() {
-        this.props._getRacesInfo();
-    }
 
     componentDidMount() {
         console.log('Actions', this.props)
@@ -78,7 +75,7 @@ class RacesInfoPage extends Component {
 
 
     render() {
-        console.log(this.props)
+
         const {raceInfo} = this.state;
         return (
             <View

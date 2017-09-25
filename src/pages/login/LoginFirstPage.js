@@ -260,7 +260,7 @@ class LoginFirstPage extends Component {
                             alert(err)
                         })
                     }, err => {
-                        alert(err)
+
                     })
                 }}
                 style={styles.rowView}>

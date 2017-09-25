@@ -5,11 +5,10 @@
 import {Actions} from 'react-native-router-flux';
 
 
-export default class Router {
-    constructor(navigator) {
-        this.navigator = navigator;
+const customFloatFromRight = '';
 
-    }
+
+export default class Router {
 
 
     log(...msg) {
@@ -18,439 +17,529 @@ export default class Router {
     }
 
     stackPush(route) {
-
-        const navigateAction = NavigationActions.navigate({
-            routeName: route.name,
-            params: route.params
-        });
-
-        this.navigator.dispatch(navigateAction)
+        Actions.push(route.name, {params: route.params})
     }
 
     push(props, route) {
+        this.stackPush(route)
 
-        const navigateAction = NavigationActions.navigate({
-            routeName: route.name,
-            params: route.params
-        });
-
-        this.navigator.dispatch(navigateAction)
     }
 
 
     pop() {
-        Actions.pop()
+        Actions.pop();
+
     }
 
     popToTop() {
-        Actions.DrawerPage();
+        Actions.popTo('DrawerPage')
 
     }
 
     toAddVerified(cert_type, refresh, verified) {
-        const params = {
+        this.stackPush({
+            name: 'AddVerified',
             params: {
                 cert_type: cert_type,
                 verified_refresh: refresh,
                 verified: verified
             }
-        };
-        Actions.AddVerified(params);
-
+        })
     }
 
     toVerifiedPage(backRefresh) {
-        Actions.VerifiedPage({
+        this.stackPush({
+            name: 'VerifiedPage',
             params: {
                 backRefresh: backRefresh
             }
-        });
-
+        })
     }
 
     toActivityInfo(props, activity) {
-        Actions.ActivityInfo({
+        this.push(props, {
+            name: 'ActivityInfo',
+            sceneConfig: customFloatFromRight,
             params: {
                 activity: activity
             }
-        });
+        })
     }
 
     toActivityCenter(props, activities) {
-        Actions.ActivityCenter({
+        this.push(props, {
+
+            name: 'ActivityCenter',
+            sceneConfig: customFloatFromRight,
             params: {
                 activities: activities
             }
-        });
-
+        })
     }
 
 
     toMessageCenter(props) {
-        Actions.MessageCenter();
+        this.push(props, {
 
+            name: 'MessageCenter',
+            sceneConfig: customFloatFromRight
+        })
     }
 
 
     toInputPwd(props, wx) {
+        this.push(props, {
 
-        Actions.InputPwd({
+            name: 'InputPwd',
+            sceneConfig: customFloatFromRight,
             params: {
                 wx: wx
             }
-        });
-
+        })
     }
 
     toWxRegister(props, wxAuth) {
-        Actions.WxRegister({
+        this.push(props, {
+
+            name: 'WxRegister',
+            sceneConfig: customFloatFromRight,
             params: {
                 access_token: wxAuth
             }
-        });
-
+        })
     }
 
     toSuggest(props) {
-        Actions.Suggest();
+        this.push(props, {
 
+            name: 'Suggest',
+            sceneConfig: customFloatFromRight,
+        })
     }
 
     toProtocol(props, _protocol) {
-        Actions.Protocol({
+        this.push(props, {
+
+            name: 'Protocol',
+            sceneConfig: customFloatFromRight,
             params: {
                 _protocol: _protocol
             }
-        })
 
+        })
     }
 
 
     replaceOrder(order_id, price) {
 
-        router.pop();
-        setTimeout(() => {
-            Actions.OrderInfoPage({
-                params: {
-                    order_id: order_id,
-                    price: price
-                }
-            })
-
-        }, 100)
+        Actions.replace('OrderInfoPage', {
+            params: {
+                order_id: order_id,
+                price: price
+            }
+        })
 
 
     }
 
 
     toWebViewPay(props, pay, orderRefresh) {
-        Actions.WebViewPay({
+        this.push(props, {
+
+            name: 'WebViewPay',
+            sceneConfig: customFloatFromRight,
             params: {
                 pay: pay,
                 orderRefresh: orderRefresh
             }
-        });
-
+        })
     }
 
 
     toSearchPoker(props) {
-        Actions.SearchPoker();
+        this.push(props, {
 
+            name: 'SearchPoker',
+            sceneConfig: customFloatFromRight,
+
+        })
     }
 
     toPokerRacePage(props, race_id) {
-        Actions.PokerRacePage({
+        this.push(props, {
+
+            name: 'PokerRacePage',
+            sceneConfig: customFloatFromRight,
             params: {
                 race_id: race_id
             }
-        });
 
+        })
     }
 
     toPokerRankPage(props, player_id) {
-        Actions.PokerRankPage({
+        this.push(props, {
+            name: 'PokerRankPage',
             params: {
                 player_id: player_id
             }
-        });
+
+        })
     }
 
     toAdrListPage(props, selectAdr, adrData) {
-        Actions.AdrListPage({
+        this.push(props, {
+            name: 'AdrListPage',
             params: {
                 selectAdr: selectAdr,
                 adrData: adrData
             }
-        });
 
+        })
     }
 
     toNewAddressPage(props, getList, address) {
-        Actions.NewAddressPage({
+        this.push(props, {
+            name: 'NewAddressPage',
             params: {
                 getList: getList,
                 address: address
             }
-        });
 
+        })
     }
 
     toWebViewPage(props, url) {
-        Actions.WebViewPage({
+        this.push(props, {
+            name: 'WebViewPage',
             params: {
                 url: url
             }
-        });
+
+        })
     }
 
 
     toTicketInfoPage(props, race_id, ticket_id, isBuy) {
-        Actions.TicketInfoPage({
+        this.push(props, {
+            name: 'TicketInfoPage',
             params: {
                 race_id: race_id,
                 ticket_id: ticket_id,
                 isBuy: isBuy
             }
-        });
 
+        })
     }
 
     toChoiseTicketPage(props, race_id) {
-        Actions.ChoiseTicketPage({
+        this.push(props, {
+            name: 'ChoiseTicketPage',
             params: {
                 race_id: race_id
             }
-        });
+
+        })
     }
 
 
     toTicketSearchPage(props) {
-        Actions.TicketSearchPage()
-
+        this.push(props, {
+            name: 'TicketSearchPage',
+        })
     }
 
     toVideoPage(props) {
-        Actions.MainVideoPage()
+        this.push(props, {
+            name: 'MainVideoPage',
 
+        })
     }
 
     toDrawerRank(props) {
-        Actions.DrawerRank()
+        this.push(props, {
+            name: 'DrawerRank',
 
+        })
     }
 
     toMessagePage(props) {
-        Actions.MessagePage()
+        this.push(props, {
+            name: 'MessagePage',
 
+        })
     }
 
 
     toChangePhonePage(props) {
-        Actions.ChangePhonePage()
+        this.push(props, {
+            name: 'ChangePhonePage',
 
+        })
     }
 
 
     toBindingPhonePage(props) {
-        Actions.BindingPhonePage()
+        this.push(props, {
+            name: 'BindingPhonePage',
 
+        })
     }
 
 
     toApiSettingPage(props) {
-        Actions.ApiSettingPage()
+        this.push(props, {
+            name: 'ApiSettingPage',
 
+        })
     }
 
     toTicketPage(props) {
+        this.push(props, {
 
-        Actions.TicketPage()
+            name: 'TicketPage',
+
+
+        })
     }
 
 
     toSearchNewsPage(props) {
-        Actions.SearchNewsPage();
+        this.push(props, {
 
+            name: 'SearchNewsPage',
+
+
+        })
     }
 
     toVideoInfoPage(props, info) {
-        Actions.VideoInfoPage({
+        this.push(props, {
+
+            name: 'VideoInfoPage',
             params: {
                 info: info
             }
-        })
 
+        })
     }
 
     toNewsInfoPage(props, newsInfo) {
-        Actions.NewsInfoPage({
+        this.push(props, {
+
+            name: 'NewsInfoPage',
             params: {
                 newsInfo: newsInfo
             }
-        })
 
+        })
     }
 
 
     toMainNewsPage(props) {
-        Actions.MainNewsPage()
+        this.push(props, {
 
+            name: 'MainNewsPage',
+
+        })
     }
 
 
     toAboutPage(props) {
-        Actions.AboutPage()
+        this.push(props, {
 
+            name: 'AboutPage',
+
+        })
     }
 
 
     toSearchKeywordPage(props) {
-        Actions.SearchKeywordPage()
+        this.push(props, {
 
+            name: 'SearchKeywordPage',
+
+        })
     }
 
     toChildRaceInfoPage(props, race_ids) {
-        Actions.ChildRaceInfoPage({
+        this.push(props, {
+
+            name: 'ChildRaceInfoPage',
             params: {
                 race_ids: race_ids
             }
         })
-
     }
 
     toBusinessPage(props) {
+        this.push(props, {
 
-        Actions.BusinessPage()
+            name: 'BusinessPage',
+        })
     }
 
 
     toSearchRacesPage(props) {
-        Actions.SearchRacesPage()
-
+        this.push(props, {
+            name: 'SearchRacesPage',
+        })
     }
 
 
     toModifyPwdPage(props) {
-        Actions.ModifyPwdPage()
-
+        this.push(props, {
+            name: 'ModifyPwdPage',
+        })
     }
 
     toSecurityPage(props) {
-        Actions.SecurityPage()
+        this.push(props, {
 
+            name: 'SecurityPage',
+
+        })
     }
 
 
     toOrderListPage(props) {
-        Actions.OrderListPage()
+        this.push(props, {
 
+            name: 'OrderListPage',
+
+        })
     }
 
     toCertificationPage(props) {
-        Actions.CertificationPage()
+        this.push(props, {
 
+            name: 'CertificationPage',
+
+        })
     }
 
     toBuyKnownPage(props) {
-        Actions.BuyKnowPage();
+        this.push(props, {
 
+            name: 'BuyKnowPage'
+
+        })
     }
 
     toOrderInfo(props, order_id, price, isPay) {
-        Actions.OrderInfoPage({
+        this.push(props, {
+
+            name: 'OrderInfoPage',
             params: {
                 order_id: order_id,
                 isPay: isPay,
                 price: price
             }
-        });
 
+        })
     }
 
     toOrderInfoPage(props, order_id, price, onRefresh) {
-        Actions.OrderInfoPage({
+        this.push(props, {
+
+            name: 'OrderInfoPage',
             params: {
                 order_id: order_id,
                 price: price,
                 onRefresh: onRefresh
             }
-        });
-
+        })
     }
 
     toBuyTicketPage(props, race_id, ticket_id) {
-        Actions.BuyTicketPage({
+        this.push(props, {
+
+            name: 'BuyTicketPage',
             params: {
                 race_id: race_id,
                 ticket_id: ticket_id
             }
-        });
+        })
     }
 
     toForgetEmailPage(props) {
-        Actions.ForgetEmailPage()
+        this.push(props, {
 
+            name: 'ForgetEmailPage'
+        })
     }
 
     toImageGalleryPage(props, images, index) {
-        Actions.ImageGallery({
+        this.push(props, {
+
+            name: 'ImageGallery',
             params: {
                 images: images,
                 index: index
             }
         })
-
     }
 
     popToLoginFirstPage() {
-        Actions.LoginFirstPage()
-
+        this.push({
+            name: 'LoginFirstPage',
+        })
 
     }
 
     toEmailRegisterPage(props) {
-        Actions.EmailRegisterPage()
-
+        this.push(props, {
+            name: 'EmailRegisterPage',
+        })
     }
 
     toLoginFirstPage(props) {
-        Actions.LoginFirstPage()
+        this.push(props, {
 
+            name: 'LoginFirstPage',
+        })
     }
 
     toLoginCodePage(props) {
-        Actions.LoginCodePage()
-
+        this.push(props, {
+            name: 'LoginCodePage',
+        })
     }
 
     toRacesInfoPage(props, race_id, fromBuy) {
-        Actions.RacesInfoPage({
+        this.push(props, {
+
+            name: 'RacesInfoPage',
             params: {
                 race_id: race_id,
                 fromBuy: fromBuy
             }
         })
-
     }
 
     toFocusPlayer(props) {
-        Actions.FocusPlayer()
-
+        this.push(props, {
+            name: 'FocusPlayer',
+        })
     }
 
     toForgetPage(props) {
-        Actions.ForgetPage()
-
+        this.push(props, {
+            name: 'ForgetPage',
+        })
     }
 
     toRegisterPage(props) {
-        Actions.RegisterPage()
+        this.push(props, {
 
+            name: 'RegisterPage',
+        })
     }
 
     forgetPhoneToPwdPage(props, phone, code) {
-        Actions.InputPwdPage({
+        this.push(props, {
+
+            name: 'InputPwdPage',
             params: {
                 phone: phone,
                 isEmailOrMobile: 'mobile',
@@ -459,11 +548,11 @@ export default class Router {
 
             }
         })
-
     }
 
     forgetEmailToPwdPage(props, email, code) {
-        Actions.InputPwdPage({
+        this.push(props, {
+            name: 'InputPwdPage',
             params: {
                 email: email,
                 isEmailOrMobile: 'email',
@@ -472,40 +561,46 @@ export default class Router {
 
             }
         })
-
     }
 
 
     toInputPwdPage(props, phone, code) {
-        Actions.InputPwdPage({
+        this.push(props, {
+
+            name: 'InputPwdPage',
             params: {
                 phone: phone,
                 code: code,
                 isEmailOrMobile: 'mobile',
                 isRegisterOrForget: 'register'
             }
-        });
-
+        })
     }
 
 
     toPersonPage(props) {
-        Actions.PersonPage()
+        this.push(props, {
 
+            name: 'PersonPage',
+        })
     }
 
 
     toSettingPage(props) {
-        Actions.SettingPage()
+        this.push(props, {
 
+            name: 'SettingPage',
+
+        })
     }
 
     popToLogin() {
-        this.popToTop();
+        Actions.popTo('LoginFirstPage')
     }
 
     popToDrawerRank() {
-        this.popToTop();
+
+        Actions.popTo('DrawerRank')
 
     }
 

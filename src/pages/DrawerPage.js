@@ -20,7 +20,7 @@ class DrawerPage extends React.Component {
 
     componentWillMount(){
 
-        this.router = this.router || new Router(this.props.navigation);
+        this.router = this.router || new Router();
         global.router = this.router;
     }
 

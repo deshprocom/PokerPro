@@ -65,13 +65,13 @@ import AddVerified from '../pages/verifieds/AddVerified';
 
 export const Stacks =  Actions.create(
     <Scene key="root">
-        <Scene key="DrawerPage" component={DrawerPage} title="DrawerPage" initial={true}  navBar={() => null}/>
+        <Scene key="DrawerPage" component={DrawerPage}  initial={true}  navBar={() => null}/>
 
         <Scene key="AddVerified" component={AddVerified}  navBar={() => null}/>
         <Scene key="VerifiedPage" component={VerifiedPage} navBar={() => null}/>
         <Scene key="HomePage" component={HomePage} navBar={() => null}/>
         <Scene key="InputPwdPage" component={InputPwdPage} navBar={() => null}/>
-        <Scene key="DrawerPage" component={DrawerPage} navBar={() => null}/>
+
         <Scene key="PersonPage" component={PersonPage} navBar={() => null}/>
         <Scene key="SettingPage" component={SettingPage} navBar={() => null}/>
         <Scene key="RegisterPage" component={RegisterPage} navBar={() => null}/>
@@ -79,7 +79,6 @@ export const Stacks =  Actions.create(
         <Scene key="RacesInfoPage" component={RacesInfoPage} navBar={() => null}/>
         <Scene key="LoginFirstPage" component={LoginFirstPage} navBar={() => null}/>
         <Scene key="LoginCodePage" component={LoginCodePage} navBar={() => null}/>
-        <Scene key="LoginFirstPage" component={LoginFirstPage} navBar={() => null}/>
         <Scene key="EmailRegisterPage" component={EmailRegisterPage} navBar={() => null}/>
         <Scene key="ImageGallery" component={ImageGallery} navBar={() => null}/>
         <Scene key="ForgetEmailPage" component={ForgetEmailPage} navBar={() => null}/>

@@ -176,7 +176,7 @@ export function payWx(data, callback) {
         alert(ret)
         callback();
     }).catch(err => {
-        alert(err)
+
     })
 }
 
