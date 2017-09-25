@@ -550,7 +550,7 @@ export function clearLoginUser() {
         key: StorageKey.LoginUser
     });
     removeToken();
-    setLoginUser({})
+    setLoginUser({});
     global.user_extra = {};
 }
 

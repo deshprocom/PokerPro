@@ -216,13 +216,23 @@ export function setLoginUser(ret) {
         rawData: ret
     });
 
+
     if (!isEmptyObject(ret)) {
+        //获取实名信息
+        listVerified(data => {
+        }, err => {
+        });
+
+        //统计登陆用户
+        postLoginCount();
+
+        //Jpush别名设置
         JpushHelp.getRegistrationID((id) => {
             router.log('JpushId: ' + id)
         });
         let type = helper.getApiType() === 'production' ? 'pro' : helper.getApiType();
         let alias = type + '_' + ret.user_id;
-        console.log(alias)
+        console.log(alias);
         JpushHelp.setAlias(alias, () => {
             router.log(alias + ' set jpush alias success')
         }, () => {
