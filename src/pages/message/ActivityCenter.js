@@ -16,7 +16,7 @@ import {getDateDiff, strNotNull} from '../../utils/ComonHelper';
 export default class ActivityCenter extends Component {
 
     render() {
-        const {activities} = this.props.navigation.state.params;
+        const {activities} = this.props.params;
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors.bg_09}}

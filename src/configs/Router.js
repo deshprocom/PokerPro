@@ -2,73 +2,13 @@
  * Created by lorne on 2016/12/20.
  */
 
-import {NavigationActions} from 'react-navigation'
-
-//Pages
-
-import InputPwdPage from '../pages/InputPwdPage';
-import DrawerPage from '../pages/DrawerPage';
-import PersonPage from '../pages/person/PersonPage';
-import SettingPage from '../pages/setting/SettingPage';
-
-import RegisterPage from '../pages/account/RegisterPage';
-import ForgetPage from '../pages/account/ForgetPage';
-import RacesInfoPage from '../pages/races/RacesInfoPage';
-import LoginFirstPage from '../pages/login/LoginFirstPage';
-import LoginCodePage from '../pages/login/LoginCodePage';
-import EmailRegisterPage from '../pages/account/EmailRegisterPage';
-import ImageGallery from '../components/ImageGallery';
-import ForgetEmailPage from '../pages/account/ForgetEmailPage';
-import BuyTicketPage from '../pages/buy/BuyTicketPage';
-import OrderInfoPage from '../pages/orders/OrderInfoPage';
-import BuyKnowPage from '../pages/buy/BuyKnownPage';
-import CertificationPage from '../pages/buy/CertificationPage';
-import OrderListPage from '../pages/orders/OrderListPage';
-import SecurityPage from '../pages/setting/SecurityPage';
-import ModifyPwdPage from '../pages/setting/ModifyPwdPage';
-import SearchRacesPage from '../pages/races/SearchRacesPage';
-import BusinessPage from '../pages/setting/BusinessPage';
-import SearchKeywordPage from '../pages/races/SearchKeywordPage';
-import ChildRaceInfoPage from '../pages/races/ChildRaceInfoPage';
-import AboutPage from '../pages/setting/AboutPage';
-import MainNewsPage from '../pages/news/MainNewsPage';
-import NewsInfoPage from '../pages/news/NewsInfoPage';
-import SearchNewsPage from '../pages/news/SearchNewsPage';
-import TicketPage from '../pages/ticket/TicketPage';
-import ApiSettingPage from '../pages/setting/ApiSettingPage';
-import BindingPhonePage from '../pages/setting/BindingPhonePage';
-import ChangePhonePage from '../pages/setting/ChangePhonePage';
-import MessagePage from '../pages/message/MessagePage';
-import MainVideoPage from '../pages/videos/MainVideoPage';
-import VideoInfoPage from '../pages/videos/VideoInfoPage';
-import TicketSearchPage from '../pages/ticket/TicketSearchPage';
-import ChoiseTicketPage from '../pages/ticket/ChoiseTicketPage';
-import TicketInfoPage from '../pages/ticket/TicketInfoPage';
-import WebViewPage from '../components/WebViewPage';
-import NewAddressPage from '../pages/buy/NewAddressPage';
-import AdrListPage from '../pages/buy/AdrListPage';
-import DrawerRank from '../pages/rank/DrawerRank';
-import FocusPlayer from '../pages/rank/FocusPlayer';
-import PokerRankPage from '../pages/rank/info/PokerRankPage';
-import PokerRacePage from '../pages/rank/info/PokerRacePage';
-import SearchPoker from '../pages/rank/SearchPoker';
-import WebViewPay from '../components/WebViewPay';
-import Protocol from '../pages/setting/ProtocolPage';
-import Suggest from '../pages/setting/Suggest';
-import WxRegister from '../pages/account/WxRegister';
-import InputPwd from '../pages/account/InputPwd';
-import MessageCenter from '../pages/message/MessageCenter';
-import ActivityCenter from '../pages/message/ActivityCenter';
-import ActivityInfo from '../pages/message/ActivityInfo';
-
-
-const customFloatFromRight = '';
+import {Actions} from 'react-native-router-flux';
 
 
 export default class Router {
     constructor(navigator) {
         this.navigator = navigator;
-        console.log('Navigation', navigator)
+
     }
 
 
@@ -99,127 +39,104 @@ export default class Router {
 
 
     pop() {
-        const backAction = NavigationActions.back({
-            key: ''
-        });
-        this.navigator.dispatch(backAction)
-
+        Actions.pop()
     }
 
     popToTop() {
-
-        const resetAction = NavigationActions.back({
-            key: this.navigator.state.key
-        });
-        this.navigator.dispatch(resetAction)
+        Actions.DrawerPage();
 
     }
 
     toAddVerified(cert_type, refresh, verified) {
-        this.stackPush({
-            name: 'AddVerified',
+        const params = {
             params: {
                 cert_type: cert_type,
                 verified_refresh: refresh,
                 verified: verified
             }
-        })
+        };
+        Actions.AddVerified(params);
+
     }
 
     toVerifiedPage(backRefresh) {
-        this.stackPush({
-            name: 'VerifiedPage',
+        Actions.VerifiedPage({
             params: {
                 backRefresh: backRefresh
             }
-        })
+        });
+
     }
 
     toActivityInfo(props, activity) {
-        this.push(props, {
-            page: ActivityInfo,
-            name: 'ActivityInfo',
-            sceneConfig: customFloatFromRight,
+        Actions.ActivityInfo({
             params: {
                 activity: activity
             }
-        })
+        });
     }
 
     toActivityCenter(props, activities) {
-        this.push(props, {
-            page: ActivityCenter,
-            name: 'ActivityCenter',
-            sceneConfig: customFloatFromRight,
+        Actions.ActivityCenter({
             params: {
                 activities: activities
             }
-        })
+        });
+
     }
 
 
     toMessageCenter(props) {
-        this.push(props, {
-            page: MessageCenter,
-            name: 'MessageCenter',
-            sceneConfig: customFloatFromRight
-        })
+        Actions.MessageCenter();
+
     }
 
 
     toInputPwd(props, wx) {
-        this.push(props, {
-            page: InputPwd,
-            name: 'InputPwd',
-            sceneConfig: customFloatFromRight,
+
+        Actions.InputPwd({
             params: {
                 wx: wx
             }
-        })
+        });
+
     }
 
     toWxRegister(props, wxAuth) {
-        this.push(props, {
-            page: WxRegister,
-            name: 'WxRegister',
-            sceneConfig: customFloatFromRight,
+        Actions.WxRegister({
             params: {
                 access_token: wxAuth
             }
-        })
+        });
+
     }
 
     toSuggest(props) {
-        this.push(props, {
-            page: Suggest,
-            name: 'Suggest',
-            sceneConfig: customFloatFromRight,
-        })
+        Actions.Suggest();
+
     }
 
     toProtocol(props, _protocol) {
-        this.push(props, {
-            page: Protocol,
-            name: 'Protocol',
-            sceneConfig: customFloatFromRight,
+        Actions.Protocol({
             params: {
                 _protocol: _protocol
             }
-
         })
+
     }
 
 
     replaceOrder(order_id, price) {
+
         router.pop();
         setTimeout(() => {
-            this.stackPush({
-                name: 'OrderInfoPage',
+            Actions.OrderInfoPage({
                 params: {
                     order_id: order_id,
                     price: price
                 }
             })
+
         }, 100)
 
 
@@ -227,455 +144,313 @@ export default class Router {
 
 
     toWebViewPay(props, pay, orderRefresh) {
-        this.push(props, {
-            page: WebViewPay,
-            name: 'WebViewPay',
-            sceneConfig: customFloatFromRight,
+        Actions.WebViewPay({
             params: {
                 pay: pay,
                 orderRefresh: orderRefresh
             }
-        })
+        });
+
     }
 
 
     toSearchPoker(props) {
-        this.push(props, {
-            page: SearchPoker,
-            name: 'SearchPoker',
-            sceneConfig: customFloatFromRight,
+        Actions.SearchPoker();
 
-        })
     }
 
     toPokerRacePage(props, race_id) {
-        this.push(props, {
-            page: PokerRacePage,
-            name: 'PokerRacePage',
-            sceneConfig: customFloatFromRight,
+        Actions.PokerRacePage({
             params: {
                 race_id: race_id
             }
+        });
 
-        })
     }
 
     toPokerRankPage(props, player_id) {
-        this.push(props, {
-            page: PokerRankPage,
-            name: 'PokerRankPage',
-            sceneConfig: customFloatFromRight,
+        Actions.PokerRankPage({
             params: {
                 player_id: player_id
             }
-
-        })
+        });
     }
 
     toAdrListPage(props, selectAdr, adrData) {
-        this.push(props, {
-            page: AdrListPage,
-            name: 'AdrListPage',
-            sceneConfig: customFloatFromRight,
+        Actions.AdrListPage({
             params: {
                 selectAdr: selectAdr,
                 adrData: adrData
             }
+        });
 
-        })
     }
 
     toNewAddressPage(props, getList, address) {
-        this.push(props, {
-            page: NewAddressPage,
-            name: 'NewAddressPage',
-            sceneConfig: customFloatFromRight,
+        Actions.NewAddressPage({
             params: {
                 getList: getList,
                 address: address
             }
+        });
 
-        })
     }
 
     toWebViewPage(props, url) {
-        this.push(props, {
-            page: WebViewPage,
-            name: 'WebViewPage',
-            sceneConfig: customFloatFromRight,
+        Actions.WebViewPage({
             params: {
                 url: url
             }
-
-        })
+        });
     }
 
 
     toTicketInfoPage(props, race_id, ticket_id, isBuy) {
-        this.push(props, {
-            page: TicketInfoPage,
-            name: 'TicketInfoPage',
-            sceneConfig: customFloatFromRight,
+        Actions.TicketInfoPage({
             params: {
                 race_id: race_id,
                 ticket_id: ticket_id,
                 isBuy: isBuy
             }
+        });
 
-        })
     }
 
     toChoiseTicketPage(props, race_id) {
-        this.push(props, {
-            page: ChoiseTicketPage,
-            name: 'ChoiseTicketPage',
-            sceneConfig: customFloatFromRight,
+        Actions.ChoiseTicketPage({
             params: {
                 race_id: race_id
             }
-
-        })
+        });
     }
 
 
     toTicketSearchPage(props) {
-        this.push(props, {
-            page: TicketSearchPage,
-            name: 'TicketSearchPage',
-            sceneConfig: customFloatFromRight,
+        Actions.TicketSearchPage()
 
-        })
     }
 
     toVideoPage(props) {
-        this.push(props, {
-            page: MainVideoPage,
-            name: 'MainVideoPage',
-            sceneConfig: customFloatFromRight,
+        Actions.MainVideoPage()
 
-        })
     }
 
     toDrawerRank(props) {
-        this.push(props, {
-            page: DrawerRank,
-            name: 'DrawerRank',
-            sceneConfig: customFloatFromRight
-        })
+        Actions.DrawerRank()
+
     }
 
     toMessagePage(props) {
-        this.push(props, {
-            page: MessagePage,
-            name: 'MessagePage',
-            sceneConfig: customFloatFromRight,
+        Actions.MessagePage()
 
-        })
     }
 
 
     toChangePhonePage(props) {
-        this.push(props, {
-            page: ChangePhonePage,
-            name: 'ChangePhonePage',
-            sceneConfig: customFloatFromRight,
+        Actions.ChangePhonePage()
 
-        })
     }
 
 
     toBindingPhonePage(props) {
-        this.push(props, {
-            page: BindingPhonePage,
-            name: 'BindingPhonePage',
-            sceneConfig: customFloatFromRight,
+        Actions.BindingPhonePage()
 
-        })
     }
 
 
     toApiSettingPage(props) {
-        this.push(props, {
-            page: ApiSettingPage,
-            name: 'ApiSettingPage',
-            sceneConfig: customFloatFromRight,
+        Actions.ApiSettingPage()
 
-        })
     }
 
     toTicketPage(props) {
-        this.push(props, {
-            page: TicketPage,
-            name: 'TicketPage',
-            sceneConfig: customFloatFromRight,
 
-        })
+        Actions.TicketPage()
     }
 
 
     toSearchNewsPage(props) {
-        this.push(props, {
-            page: SearchNewsPage,
-            name: 'SearchNewsPage',
-            sceneConfig: customFloatFromRight,
+        Actions.SearchNewsPage();
 
-        })
     }
 
     toVideoInfoPage(props, info) {
-        this.push(props, {
-            page: VideoInfoPage,
-            name: 'VideoInfoPage',
-            sceneConfig: customFloatFromRight,
+        Actions.VideoInfoPage({
             params: {
                 info: info
             }
-
         })
+
     }
 
     toNewsInfoPage(props, newsInfo) {
-        this.push(props, {
-            page: NewsInfoPage,
-            name: 'NewsInfoPage',
-            sceneConfig: customFloatFromRight,
+        Actions.NewsInfoPage({
             params: {
                 newsInfo: newsInfo
             }
-
         })
+
     }
 
 
     toMainNewsPage(props) {
-        this.push(props, {
-            page: MainNewsPage,
-            name: 'MainNewsPage',
-            sceneConfig: customFloatFromRight,
+        Actions.MainNewsPage()
 
-        })
     }
 
 
     toAboutPage(props) {
-        this.push(props, {
-            page: AboutPage,
-            name: 'AboutPage',
-            sceneConfig: customFloatFromRight,
+        Actions.AboutPage()
 
-        })
     }
 
 
     toSearchKeywordPage(props) {
-        this.push(props, {
-            page: SearchKeywordPage,
-            name: 'SearchKeywordPage',
-            sceneConfig: customFloatFromRight,
-        })
+        Actions.SearchKeywordPage()
+
     }
 
     toChildRaceInfoPage(props, race_ids) {
-        this.push(props, {
-            page: ChildRaceInfoPage,
-            name: 'ChildRaceInfoPage',
-            sceneConfig: customFloatFromRight,
+        Actions.ChildRaceInfoPage({
             params: {
                 race_ids: race_ids
             }
         })
+
     }
 
     toBusinessPage(props) {
-        this.push(props, {
-            page: BusinessPage,
-            name: 'BusinessPage',
-            sceneConfig: customFloatFromRight,
-        })
+
+        Actions.BusinessPage()
     }
 
 
     toSearchRacesPage(props) {
-        this.push(props, {
-            page: SearchRacesPage,
-            name: 'SearchRacesPage',
-            sceneConfig: customFloatFromRight,
-        })
+        Actions.SearchRacesPage()
+
     }
 
 
     toModifyPwdPage(props) {
-        this.push(props, {
-            page: ModifyPwdPage,
-            name: 'ModifyPwdPage',
-            sceneConfig: customFloatFromRight,
-        })
+        Actions.ModifyPwdPage()
+
     }
 
     toSecurityPage(props) {
-        this.push(props, {
-            page: SecurityPage,
-            name: 'SecurityPage',
-            sceneConfig: customFloatFromRight,
-        })
+        Actions.SecurityPage()
+
     }
 
 
     toOrderListPage(props) {
-        this.push(props, {
-            page: OrderListPage,
-            name: 'OrderListPage',
-            sceneConfig: customFloatFromRight,
-        })
+        Actions.OrderListPage()
+
     }
 
     toCertificationPage(props) {
-        this.push(props, {
-            page: CertificationPage,
-            name: 'CertificationPage',
-            sceneConfig: customFloatFromRight
-        })
+        Actions.CertificationPage()
+
     }
 
     toBuyKnownPage(props) {
-        this.push(props, {
-            page: BuyKnowPage,
-            name: 'BuyKnowPage',
-            sceneConfig: customFloatFromRight,
-        })
+        Actions.BuyKnowPage();
+
     }
 
     toOrderInfo(props, order_id, price, isPay) {
-        this.push(props, {
-            page: OrderInfoPage,
-            name: 'OrderInfoPage',
-            sceneConfig: customFloatFromRight,
+        Actions.OrderInfoPage({
             params: {
                 order_id: order_id,
                 isPay: isPay,
                 price: price
             }
+        });
 
-        })
     }
 
     toOrderInfoPage(props, order_id, price, onRefresh) {
-        this.push(props, {
-            page: OrderInfoPage,
-            name: 'OrderInfoPage',
-            sceneConfig: customFloatFromRight,
+        Actions.OrderInfoPage({
             params: {
                 order_id: order_id,
                 price: price,
                 onRefresh: onRefresh
             }
-        })
+        });
+
     }
 
     toBuyTicketPage(props, race_id, ticket_id) {
-        this.push(props, {
-            page: BuyTicketPage,
-            name: 'BuyTicketPage',
-            sceneConfig: customFloatFromRight,
+        Actions.BuyTicketPage({
             params: {
                 race_id: race_id,
                 ticket_id: ticket_id
             }
-        })
+        });
     }
 
     toForgetEmailPage(props) {
-        this.push(props, {
-            page: ForgetEmailPage,
-            name: 'ForgetEmailPage',
-            sceneConfig: customFloatFromRight,
-        })
+        Actions.ForgetEmailPage()
+
     }
 
     toImageGalleryPage(props, images, index) {
-        this.push(props, {
-            page: ImageGallery,
-            name: 'ImageGallery',
-            sceneConfig: customFloatFromRight,
+        Actions.ImageGallery({
             params: {
                 images: images,
                 index: index
             }
         })
+
     }
 
     popToLoginFirstPage() {
-        this.push({
-            name: 'LoginFirstPage',
-        })
+        Actions.LoginFirstPage()
+
 
     }
 
     toEmailRegisterPage(props) {
-        this.push(props, {
-            page: EmailRegisterPage,
-            name: 'EmailRegisterPage',
-            sceneConfig: customFloatFromRight,
-        })
+        Actions.EmailRegisterPage()
+
     }
 
     toLoginFirstPage(props) {
-        this.push(props, {
-            page: LoginFirstPage,
-            name: 'LoginFirstPage',
-            sceneConfig: customFloatFromRight,
-        })
+        Actions.LoginFirstPage()
+
     }
 
     toLoginCodePage(props) {
-        this.push(props, {
-            page: LoginCodePage,
-            name: 'LoginCodePage',
-            sceneConfig: customFloatFromRight,
-        })
+        Actions.LoginCodePage()
+
     }
 
     toRacesInfoPage(props, race_id, fromBuy) {
-        this.push(props, {
-            page: RacesInfoPage,
-            name: 'RacesInfoPage',
-            sceneConfig: customFloatFromRight,
+        Actions.RacesInfoPage({
             params: {
                 race_id: race_id,
                 fromBuy: fromBuy
             }
         })
+
     }
 
     toFocusPlayer(props) {
-        this.push(props, {
-            page: FocusPlayer,
-            name: 'FocusPlayer',
-            sceneConfig: customFloatFromRight
-        })
+        Actions.FocusPlayer()
+
     }
 
     toForgetPage(props) {
-        this.push(props, {
-            page: ForgetPage,
-            name: 'ForgetPage',
-            sceneConfig: customFloatFromRight,
-        })
+        Actions.ForgetPage()
+
     }
 
     toRegisterPage(props) {
-        this.push(props, {
-            page: RegisterPage,
-            name: 'RegisterPage',
-            sceneConfig: customFloatFromRight,
-        })
+        Actions.RegisterPage()
+
     }
 
     forgetPhoneToPwdPage(props, phone, code) {
-        this.push(props, {
-            page: InputPwdPage,
-            name: 'InputPwdPage',
-            sceneConfig: customFloatFromRight,
+        Actions.InputPwdPage({
             params: {
                 phone: phone,
                 isEmailOrMobile: 'mobile',
@@ -684,13 +459,11 @@ export default class Router {
 
             }
         })
+
     }
 
     forgetEmailToPwdPage(props, email, code) {
-        this.push(props, {
-            page: InputPwdPage,
-            name: 'InputPwdPage',
-            sceneConfig: customFloatFromRight,
+        Actions.InputPwdPage({
             params: {
                 email: email,
                 isEmailOrMobile: 'email',
@@ -699,39 +472,32 @@ export default class Router {
 
             }
         })
+
     }
 
 
     toInputPwdPage(props, phone, code) {
-        this.push(props, {
-            page: InputPwdPage,
-            name: 'InputPwdPage',
-            sceneConfig: customFloatFromRight,
+        Actions.InputPwdPage({
             params: {
                 phone: phone,
                 code: code,
                 isEmailOrMobile: 'mobile',
                 isRegisterOrForget: 'register'
             }
-        })
+        });
+
     }
 
 
     toPersonPage(props) {
-        this.push(props, {
-            page: PersonPage,
-            name: 'PersonPage',
-            sceneConfig: customFloatFromRight
-        })
+        Actions.PersonPage()
+
     }
 
 
     toSettingPage(props) {
-        this.push(props, {
-            page: SettingPage,
-            name: 'SettingPage',
-            sceneConfig: customFloatFromRight,
-        })
+        Actions.SettingPage()
+
     }
 
     popToLogin() {

@@ -35,7 +35,7 @@ export default class AdrListPage extends Component {
     _getAddressList = () => {
         getAddressList(data => {
             const {items} = data;
-            const {adrData} = this.props.navigation.state.params;
+            const {adrData} = this.props.params;
 
             let buyAdr = {};
             if (!isEmptyObject(adrData))
@@ -73,8 +73,8 @@ export default class AdrListPage extends Component {
                     marginLeft: 20, marginRight: 20
                 }}
                 leftBtnPress={() => {
-                    if (this.props.navigation.state.params.selectAdr)
-                        this.props.navigation.state.params.selectAdr(selectAdrData);
+                    if (this.props.params.selectAdr)
+                        this.props.params.selectAdr(selectAdrData);
                     router.pop()
                 }}/>
 
@@ -108,8 +108,8 @@ export default class AdrListPage extends Component {
         return (<TouchableOpacity
             activeOpacity={1}
             onPress={() => {
-                if(this.props.navigation.state.params.selectAdr){
-                    this.props.navigation.state.params.selectAdr(item);
+                if(this.props.params.selectAdr){
+                    this.props.params.selectAdr(item);
                     router.pop();
                 }
 

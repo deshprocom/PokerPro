@@ -112,7 +112,7 @@ export default class InputPwd extends PureComponent {
 
     _request_register = () => {
         const {password} = this.state;
-        const {wx} = this.props.navigation.state.params;
+        const {wx} = this.props.params;
 
         if (!pwdVaild(password)) {
             return;

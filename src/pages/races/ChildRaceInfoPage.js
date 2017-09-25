@@ -21,7 +21,7 @@ class ChildRaceInfoPage extends Component {
 
     componentDidMount() {
 
-        this.props.getSubInfo(this.props.navigation.state.params.race_ids)
+        this.props.getSubInfo(this.props.params.race_ids)
     }
 
     render() {
@@ -30,7 +30,7 @@ class ChildRaceInfoPage extends Component {
             style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 refreshPage={() => {
-                    this.props.getSubInfo(this.props.navigation.state.params.race_ids)
+                    this.props.getSubInfo(this.props.params.race_ids)
                 }}
                 toolbarStyle={{backgroundColor: Colors.bg_09}}
                 title={this.raceTitle()}

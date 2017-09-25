@@ -13,7 +13,7 @@ export default class ImageGallery extends React.Component {
 
     render() {
 
-        const {images, index} = this.props.navigation.state.params;
+        const {images, index} = this.props.params;
         return (
             <ImageViewer
                 loadingRender={()=>{

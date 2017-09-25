@@ -56,7 +56,7 @@ export default class BuyTicketPage extends Component {
         InteractionManager.runAfterInteractions(() => {
             this.refreshPage();
 
-            const {race_id, ticket_id} = this.props.navigation.state.params;
+            const {race_id, ticket_id} = this.props.params;
             const body = {
                 race_id: race_id,
                 ticket_id: ticket_id
@@ -76,8 +76,8 @@ export default class BuyTicketPage extends Component {
     }
 
     refreshPage = () => {
-        // this.props._getRaceNewOrder(this.props.navigation.state.params.race_id);
-        const {race_id, ticket_id} = this.props.navigation.state.params;
+        // this.props._getRaceNewOrder(this.props.params.race_id);
+        const {race_id, ticket_id} = this.props.params;
 
         const body = {
             race_id: race_id,
@@ -195,7 +195,7 @@ export default class BuyTicketPage extends Component {
                     showToast(`${I18n.t('add_adr')}`);
                     return;
                 }
-                const {race_id, ticket_id} = this.props.navigation.state.params;
+                const {race_id, ticket_id} = this.props.params;
                 let param = {
                     race_id: race_id,
                     ticket_id: ticket_id
@@ -226,7 +226,7 @@ export default class BuyTicketPage extends Component {
 
             } else if (checkMail(email)) {
                 this._saveBuyEmail();
-                const {race_id, ticket_id} = this.props.navigation.state.params;
+                const {race_id, ticket_id} = this.props.params;
                 let param = {
                     race_id: race_id,
                     ticket_id: ticket_id
@@ -284,7 +284,7 @@ export default class BuyTicketPage extends Component {
         return (<TouchableOpacity
             activeOpacity={1}
             onPress={() => {
-                const {race_id, ticket_id} = this.props.navigation.state.params;
+                const {race_id, ticket_id} = this.props.params;
                 if (ticket_class === 'single_ticket')
                     router.toRacesInfoPage(this.props, race_id, false);
                 else

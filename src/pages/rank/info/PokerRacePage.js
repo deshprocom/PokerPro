@@ -22,7 +22,7 @@ export default class PokerRacePage extends Component {
     };
 
     componentDidMount() {
-        const {race_id} = this.props.navigation.state.params;
+        const {race_id} = this.props.params;
 
         const body = {
             race_id: race_id

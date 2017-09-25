@@ -1,4 +1,5 @@
-import { StackNavigator} from 'react-navigation'
+import {Actions,Scene} from 'react-native-router-flux';
+import React from 'react';
 
 //Pages
 import HomePage from '../pages/HomePage';
@@ -61,352 +62,71 @@ import VerifiedPage from '../pages/verifieds/VerifiedPage';
 import AddVerified from '../pages/verifieds/AddVerified';
 
 
-const MyApp = {
-    AddVerified: {
-        screen: AddVerified,
-        navigationOptions: {
-            header: null
-        }
-    },
-    VerifiedPage: {
-        screen: VerifiedPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    HomePage: {
-        screen: HomePage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    InputPwdPage: {
-        screen: InputPwdPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    DrawerPage: {
-        screen: DrawerPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    PersonPage: {
-        screen: PersonPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    SettingPage: {
-        screen: SettingPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    RegisterPage: {
-        screen: RegisterPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    ForgetPage: {
-        screen: ForgetPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    RacesInfoPage: {
-        screen: RacesInfoPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    LoginFirstPage: {
-        screen: LoginFirstPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    LoginCodePage: {
-        screen: LoginCodePage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    EmailRegisterPage: {
-        screen: EmailRegisterPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    ImageGallery: {
-        screen: ImageGallery,
-        navigationOptions: {
-            header: null
-        }
-    },
-    ForgetEmailPage: {
-        screen: ForgetEmailPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    BuyTicketPage: {
-        screen: BuyTicketPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    OrderInfoPage: {
-        screen: OrderInfoPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    BuyKnowPage: {
-        screen: BuyKnowPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    CertificationPage: {
-        screen: CertificationPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    OrderListPage: {
-        screen: OrderListPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    SecurityPage: {
-        screen: SecurityPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    ModifyPwdPage: {
-        screen: ModifyPwdPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    SearchRacesPage: {
-        screen: SearchRacesPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    BusinessPage: {
-        screen: BusinessPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    SearchKeywordPage: {
-        screen: SearchKeywordPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    ChildRaceInfoPage: {
-        screen: ChildRaceInfoPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    AboutPage: {
-        screen: AboutPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    PokerPersonPage: {
-        screen: PokerPersonPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    MainNewsPage: {
-        screen: MainNewsPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    NewsInfoPage: {
-        screen: NewsInfoPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    SearchNewsPage: {
-        screen: SearchNewsPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    TicketPage: {
-        screen: TicketPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    ApiSettingPage: {
-        screen: ApiSettingPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    BindingPhonePage: {
-        screen: BindingPhonePage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    ChangePhonePage: {
-        screen: ChangePhonePage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    MessagePage: {
-        screen: MessagePage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    MainVideoPage: {
-        screen: MainVideoPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    VideoInfoPage: {
-        screen: VideoInfoPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    TicketSearchPage: {
-        screen: TicketSearchPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    ChoiseTicketPage: {
-        screen: ChoiseTicketPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    TicketInfoPage: {
-        screen: TicketInfoPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    WebViewPage: {
-        screen: WebViewPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    NewAddressPage: {
-        screen: NewAddressPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    AdrListPage: {
-        screen: AdrListPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    DrawerRank: {
-        screen: DrawerRank,
-        navigationOptions: {
-            header: null
-        }
-    },
-    FocusPlayer: {
-        screen: FocusPlayer,
-        navigationOptions: {
-            header: null
-        }
-    },
-    PokerRankPage: {
-        screen: PokerRankPage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    PokerRacePage: {
-        screen: PokerRacePage,
-        navigationOptions: {
-            header: null
-        }
-    },
-    SearchPoker: {
-        screen: SearchPoker,
-        navigationOptions: {
-            header: null
-        }
-    },
-    WebViewPay: {
-        screen: WebViewPay,
-        navigationOptions: {
-            header: null
-        }
-    },
-    Protocol: {
-        screen: Protocol,
-        navigationOptions: {
-            header: null
-        }
-    },
-    Suggest: {
-        screen: Suggest,
-        navigationOptions: {
-            header: null
-        }
-    },
-    WxRegister: {
-        screen: WxRegister,
-        navigationOptions: {
-            header: null
-        }
-    },
-    InputPwd: {
-        screen: InputPwd,
-        navigationOptions: {
-            header: null
-        }
-    },
-    MessageCenter: {
-        screen: MessageCenter,
-        navigationOptions: {
-            header: null
-        }
-    },
-    ActivityCenter: {
-        screen: ActivityCenter,
-        navigationOptions: {
-            header: null
-        }
-    },
-    ActivityInfo: {
-        screen: ActivityInfo,
-        navigationOptions: {
-            header: null
-        }
-    },
 
+export const Stacks =  Actions.create(
+    <Scene key="root">
+        <Scene key="DrawerPage" component={DrawerPage} title="DrawerPage" initial={true}  navBar={() => null}/>
 
-};
-export const Stacks = StackNavigator(MyApp, {
-    initialRouteName: 'DrawerPage'
-});
+        <Scene key="AddVerified" component={AddVerified}  navBar={() => null}/>
+        <Scene key="VerifiedPage" component={VerifiedPage} navBar={() => null}/>
+        <Scene key="HomePage" component={HomePage} navBar={() => null}/>
+        <Scene key="InputPwdPage" component={InputPwdPage} navBar={() => null}/>
+        <Scene key="DrawerPage" component={DrawerPage} navBar={() => null}/>
+        <Scene key="PersonPage" component={PersonPage} navBar={() => null}/>
+        <Scene key="SettingPage" component={SettingPage} navBar={() => null}/>
+        <Scene key="RegisterPage" component={RegisterPage} navBar={() => null}/>
+        <Scene key="ForgetPage" component={ForgetPage} navBar={() => null}/>
+        <Scene key="RacesInfoPage" component={RacesInfoPage} navBar={() => null}/>
+        <Scene key="LoginFirstPage" component={LoginFirstPage} navBar={() => null}/>
+        <Scene key="LoginCodePage" component={LoginCodePage} navBar={() => null}/>
+        <Scene key="LoginFirstPage" component={LoginFirstPage} navBar={() => null}/>
+        <Scene key="EmailRegisterPage" component={EmailRegisterPage} navBar={() => null}/>
+        <Scene key="ImageGallery" component={ImageGallery} navBar={() => null}/>
+        <Scene key="ForgetEmailPage" component={ForgetEmailPage} navBar={() => null}/>
+        <Scene key="BuyTicketPage" component={BuyTicketPage} navBar={() => null}/>
+        <Scene key="OrderInfoPage" component={OrderInfoPage} navBar={() => null}/>
+        <Scene key="BuyKnowPage" component={BuyKnowPage} navBar={() => null}/>
+        <Scene key="CertificationPage" component={CertificationPage} navBar={() => null}/>
+        <Scene key="OrderListPage" component={OrderListPage} navBar={() => null}/>
+        <Scene key="SecurityPage" component={SecurityPage} navBar={() => null}/>
+        <Scene key="ModifyPwdPage" component={ModifyPwdPage} navBar={() => null}/>
+        <Scene key="SearchRacesPage" component={SearchRacesPage} navBar={() => null}/>
+        <Scene key="BusinessPage" component={BusinessPage} navBar={() => null}/>
+        <Scene key="SearchKeywordPage" component={SearchKeywordPage} navBar={() => null}/>
+        <Scene key="ChildRaceInfoPage" component={ChildRaceInfoPage} navBar={() => null}/>
+
+        <Scene key="AboutPage" component={AboutPage} navBar={() => null}/>
+        <Scene key="PokerPersonPage" component={PokerPersonPage} navBar={() => null}/>
+        <Scene key="MainNewsPage" component={MainNewsPage} navBar={() => null}/>
+        <Scene key="NewsInfoPage" component={NewsInfoPage} navBar={() => null}/>
+        <Scene key="SearchNewsPage" component={SearchNewsPage} navBar={() => null}/>
+        <Scene key="TicketPage" component={TicketPage} navBar={() => null}/>
+        <Scene key="ApiSettingPage" component={ApiSettingPage} navBar={() => null}/>
+        <Scene key="BindingPhonePage" component={BindingPhonePage} navBar={() => null}/>
+        <Scene key="ChangePhonePage" component={ChangePhonePage} navBar={() => null}/>
+        <Scene key="MessagePage" component={MessagePage} navBar={() => null}/>
+        <Scene key="MainVideoPage" component={MainVideoPage} navBar={() => null}/>
+        <Scene key="VideoInfoPage" component={VideoInfoPage} navBar={() => null}/>
+        <Scene key="TicketSearchPage" component={TicketSearchPage} navBar={() => null}/>
+        <Scene key="ChoiseTicketPage" component={ChoiseTicketPage} navBar={() => null}/>
+        <Scene key="TicketInfoPage" component={TicketInfoPage} navBar={() => null}/>
+        <Scene key="WebViewPage" component={WebViewPage} navBar={() => null}/>
+        <Scene key="NewAddressPage" component={NewAddressPage} navBar={() => null}/>
+        <Scene key="AdrListPage" component={AdrListPage} navBar={() => null}/>
+        <Scene key="DrawerRank" component={DrawerRank} navBar={() => null}/>
+        <Scene key="FocusPlayer" component={FocusPlayer} navBar={() => null}/>
+        <Scene key="PokerRankPage" component={PokerRankPage} navBar={() => null}/>
+        <Scene key="PokerRacePage" component={PokerRacePage} navBar={() => null}/>
+        <Scene key="SearchPoker" component={SearchPoker} navBar={() => null}/>
+        <Scene key="WebViewPay" component={WebViewPay} navBar={() => null}/>
+        <Scene key="Protocol" component={Protocol} navBar={() => null}/>
+        <Scene key="Suggest" component={Suggest} navBar={() => null}/>
+        <Scene key="WxRegister" component={WxRegister} navBar={() => null}/>
+
+        <Scene key="InputPwd" component={InputPwd} navBar={() => null}/>
+        <Scene key="MessageCenter" component={MessageCenter} navBar={() => null}/>
+        <Scene key="ActivityCenter" component={ActivityCenter} navBar={() => null}/>
+        <Scene key="ActivityInfo" component={ActivityInfo} navBar={() => null}/>
+
+    </Scene>
+);
