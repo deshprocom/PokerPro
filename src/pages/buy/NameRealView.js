@@ -30,6 +30,8 @@ export default class NameRealView extends Component {
             return;
         const {chinese_ids, passport_ids} = global.verifies;
         let verified = {};
+
+        console.log("RealName", this.props.required_id_type)
         if (this.props.required_id_type === 'passport_id') {
 
             passport_ids.forEach(function (x) {
