@@ -15,7 +15,6 @@ var testUrl = 'http://localhost:4200/pay/success';
 
 export default class PayModal extends Component {
 
-
     state = {
         visible: false,
         payUrl: {},
