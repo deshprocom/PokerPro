@@ -15,6 +15,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
 import UMShare from 'react-native-umshare';
 import *as wechat from 'react-native-wechat'
 import * as Constants from '../configs/Constants';
+import {getApiType} from '../services/RequestHelper';
 
 export const YYYY_MM_DD = 'YYYY.MM.DD';
 export const DATA_SS = 'YYYY-MM-DD hh:mm:ss';
@@ -24,6 +25,16 @@ export const YYYYMMDD = 'YYYYMMDD';
 export const MM_DD = 'MM-DD';
 
 const HOST = 'https://h5.deshpro.com/';
+const THOST = 'test.h5.deshpro.com';
+
+function shareHost() {
+    if (getApiType() === 'production')
+        return HOST;
+    else
+        return THOST;
+
+}
+
 export const loadApp = HOST + 'race/181/zh/loadAPP';
 export const picker = {
     width: 500,
@@ -214,7 +225,7 @@ function shareTxt(msg) {
 
 export function uShareTicket(title, desc, icon, id, ticket_id) {
 
-    UMShare.share(title, shareTxt(desc), getShareIcon(icon), HOST + "races/" + id + '/tickets/' + ticket_id + "/" + Lang)
+    UMShare.share(title, shareTxt(desc), getShareIcon(icon), shareHost() + "races/" + id + '/tickets/' + ticket_id + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
@@ -224,7 +235,7 @@ export function uShareTicket(title, desc, icon, id, ticket_id) {
 
 export function uShareActivity(title, desc, icon, id) {
 
-    UMShare.share(title, shareTxt(desc), getShareIcon(icon), HOST + "activities/" + id + "/" + Lang)
+    UMShare.share(title, shareTxt(desc), getShareIcon(icon), shareHost() + "activities/" + id + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
@@ -234,7 +245,8 @@ export function uShareActivity(title, desc, icon, id) {
 
 export function uShareRace(title, location, icon, raceId) {
 
-    UMShare.share(title, location, getShareIcon(icon), HOST + "race/" + raceId + "/" + Lang)
+    console.log(shareHost())
+    UMShare.share(title, location, getShareIcon(icon), shareHost() + "race/" + raceId + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
@@ -243,7 +255,7 @@ export function uShareRace(title, location, icon, raceId) {
 }
 
 export function newShare(title, location, icon, newsId) {
-    UMShare.share(title, location, getShareIcon(icon), HOST + "news/" + newsId + "/" + Lang)
+    UMShare.share(title, location, getShareIcon(icon), shareHost() + "news/" + newsId + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
@@ -253,7 +265,7 @@ export function newShare(title, location, icon, newsId) {
 
 export function rankPlayerShare(title, location, icon, playerId) {
 
-    UMShare.share(title, location, getShareIcon(icon), HOST + "rankPlayer/" + playerId + "/" + Lang)
+    UMShare.share(title, location, getShareIcon(icon), shareHost() + "rankPlayer/" + playerId + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
@@ -262,7 +274,7 @@ export function rankPlayerShare(title, location, icon, playerId) {
 }
 
 export function rankGameShare(title, location, icon, gameId) {
-    UMShare.share(title, location, getShareIcon(icon), HOST + "rankGame/" + gameId + "/" + Lang)
+    UMShare.share(title, location, getShareIcon(icon), shareHost() + "rankGame/" + gameId + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
@@ -271,7 +283,7 @@ export function rankGameShare(title, location, icon, gameId) {
 }
 
 export function uVideoShare(title, desc, icon, videoId) {
-    UMShare.share(title, shareTxt(desc), getShareIcon(icon), HOST + "videos/" + videoId + "/" + Lang)
+    UMShare.share(title, shareTxt(desc), getShareIcon(icon), shareHost() + "videos/" + videoId + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
