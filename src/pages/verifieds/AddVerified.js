@@ -324,7 +324,8 @@ const styles = StyleSheet.create({
         borderRadius: 2,
         marginTop: 30,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginBottom: 30
     },
     passImg: {
         height: 128,

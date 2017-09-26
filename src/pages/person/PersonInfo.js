@@ -305,7 +305,7 @@ export default class PersonInfo extends React.Component {
                 }).catch(e => {
                     // Alert.alert(e.message ? e.message : e);
                 });
-                break
+                break;
             case 2: {
                 ImagePicker.openPicker(picker).then(image => {
                     this._update(image)

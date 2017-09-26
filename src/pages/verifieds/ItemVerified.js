@@ -30,7 +30,8 @@ export default class ItemVerified extends Component {
                 </View>
 
                 <View style={[styles.itemAlign, {marginTop: 7}]}>
-                    <Text style={styles.txtName}>{I18n.t("ID_card")} </Text>
+                    <Text
+                        style={styles.txtName}>{cert_type === 'passport_id' ? I18n.t('password_card') : I18n.t("ID_card")} </Text>
                     <SecurityText
                         style={styles.txtName}
                         securityOptions={{
@@ -50,7 +51,7 @@ export default class ItemVerified extends Component {
                     this.verifiedEditOrLook(item)
                 }}
                 style={[styles.itemAlign, {height: '100%'}]}>
-            {this.renderEdit(item)}
+                {this.renderEdit(item)}
             </TouchableOpacity>
 
         </TouchableOpacity>)
