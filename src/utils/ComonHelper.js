@@ -245,7 +245,6 @@ export function uShareActivity(title, desc, icon, id) {
 
 export function uShareRace(title, location, icon, raceId) {
 
-    console.log(shareHost())
     UMShare.share(title, location, getShareIcon(icon), shareHost() + "race/" + raceId + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
