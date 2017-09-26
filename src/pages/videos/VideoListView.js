@@ -15,7 +15,7 @@ import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {GET_VIDEO_LIST} from '../../actions/ActionTypes';
-import {isEmptyObject, uniqueArray, FontSize, newsUnique} from '../../utils/ComonHelper';
+import {isEmptyObject, uniqueArray, FontSize,uVideoShare} from '../../utils/ComonHelper';
 import {ImageLoad, VideoPlayer, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {fetchVideoList} from '../../actions/NewsAction';
@@ -225,7 +225,7 @@ class NewsListView extends Component {
 
     _itemNewsView = (rowData, sectionID, rowID) => {
 
-        const {top, name, cover_link, video_duration, title_desc} = rowData;
+        const {top, name, cover_link, video_duration, title_desc,id} = rowData;
 
         return (<View
             style={styles.transparent}
@@ -234,19 +234,33 @@ class NewsListView extends Component {
             onPress={() => this._pressItem(rowData)}>
 
             {this._playView(rowData)}
-            <TouchableOpacity
-                activeOpacity={1}
-                onPress={() => this._pressItem(rowData)}
-                style={styles.viewDesc}>
-                <Text
-                    numberOfLines={2}
-                    style={[styles.listTopTxt, {fontSize: FontSize.h17}]}>{name}</Text>
-                <Text
-                    numberOfLines={1}
-                    style={[styles.txtTitle1, {fontSize: FontSize.h14}]}>{title_desc}</Text>
+            <View style={{flexDirection:'row',backgroundColor:'white'}}>
+                <TouchableOpacity
+                    style={{flex:6}}
+                    activeOpacity={1}
+                    onPress={() => this._pressItem(rowData)}>
+                    <Text
+                        numberOfLines={2}
+                        style={[styles.listTopTxt, {fontSize: FontSize.h17}]}>{name}</Text>
+                    <Text
+                        numberOfLines={1}
+                        style={[styles.txtTitle1, {fontSize: FontSize.h14}]}>{title_desc}</Text>
+                </TouchableOpacity>
 
-            </TouchableOpacity>
-            <View style={{height: 6}}/>
+                <TouchableOpacity
+                    onPress={() => {
+                        uVideoShare(name, title_desc, cover_link, id)
+                    }}
+                    style={{flex:1,alignItems:'center',justifyContent:'center'}}>
+
+                    <Image style={styles.imgShare}
+                           source={Images.share}/>
+
+                </TouchableOpacity>
+            </View>
+
+
+            {/*<View style={{height: 6}}/>*/}
 
 
         </View>)
@@ -279,7 +293,11 @@ export default connect(mapStateToProps, bindAction)(NewsListView);
 
 
 const styles = StyleSheet.create({
+    imgShare: {
+        height: 22,
+        width: 23,
 
+    },
     listTopImg: {
         height: 208,
         width: Metrics.screenWidth
