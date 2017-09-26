@@ -383,6 +383,9 @@
   "verified_mono":"未通过原因",
   "cert_ticket":"票务实名",
   "cert_chinese":"注：本场赛事需要身份证认证",
-  "cert_pass":"注：本场赛事需要护照认证"
+  "cert_pass":"注：本场赛事需要护照认证",
+  "cert_content":"姓名和证件号请填写完整!",
+  "cert_buy_pass":"本赛票需要护照认证信息",
+  "cert_buy_china":"本赛票需要身份证认证信息"
 
 }

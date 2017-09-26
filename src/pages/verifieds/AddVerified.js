@@ -169,7 +169,7 @@ export default class AddVerified extends Component {
 
 
         } else {
-            showToast('姓名和证件号请填写完整！')
+            showToast(I18n.t('cert_content'))
         }
 
 

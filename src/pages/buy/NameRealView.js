@@ -59,7 +59,7 @@ export default class NameRealView extends Component {
                 this.props.required_id_type === 'any') {
                 this.setState({verified})
             } else {
-                alert(this.props.required_id_type === 'passport_id' ? "本赛票需要护照认证信息" : "本赛票需要身份证认证信息")
+                alert(this.props.required_id_type === 'passport_id' ? I18n.t('cert_buy_pass') : I18n.t('cert_buy_china'))
             }
 
         })
