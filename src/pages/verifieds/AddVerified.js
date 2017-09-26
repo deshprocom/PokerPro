@@ -4,8 +4,18 @@ import {NavigationBar, ActionSheet, ImagePicker} from '../../components';
 import {Colors, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {addVerified, delVerified} from '../../services/AccountDao';
-import {picker, strNotNull, showToast, isEmptyObject, getFileName} from '../../utils/ComonHelper';
+import {strNotNull, showToast, isEmptyObject, getFileName} from '../../utils/ComonHelper';
 import {idCardStatus, Verified} from '../../configs/Status';
+
+export const picker = {
+    width: 500,
+    height: 500,
+    cropping: false,
+    cropperCircleOverlay: true,
+    compressImageMaxWidth: 800,
+    compressImageMaxHeight: 600,
+    compressImageQuality: 0.5,
+};
 
 export default class AddVerified extends Component {
     state = {
