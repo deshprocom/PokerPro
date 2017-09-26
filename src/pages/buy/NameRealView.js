@@ -101,6 +101,10 @@ export default class NameRealView extends Component {
     }
 
 
+    isPassport = () => {
+        return this.props.required_id_type === 'passport_id'
+    };
+
     nameView = () => {
         const {verified} = this.state;
         if (isEmptyObject(verified)) {
@@ -109,7 +113,7 @@ export default class NameRealView extends Component {
                     height: 39, alignItems: 'center', flexDirection: 'row',
                     justifyContent: 'space-between', marginLeft: 18, marginRight: 18
                 }}>
-                <Text style={{fontSize: 12, color: Colors._AAA}}>{this.props.required_id_type === 'passport_id' ?
+                <Text style={{fontSize: 12, color: Colors._AAA}}>{this.isPassport() ?
                     I18n.t('cert_pass') : I18n.t('cert_chinese')}</Text>
                 <View style={{flex: 1}}/>
                 <Text style={{fontSize: 15, color: '#3681F1', marginRight: 12}}>{I18n.t('init')}</Text>
@@ -138,7 +142,7 @@ export default class NameRealView extends Component {
 
                     <View style={{flexDirection: 'row', marginTop: 8}}>
                         <Text style={{fontSize: Fonts.size.h15, color: Colors.txt_666, marginRight: 9}}>
-                            {I18n.t('card_num')}:</Text>
+                            {this.isPassport() ? I18n.t('password_card') : I18n.t('ID_card')}</Text>
                         <SecurityText
                             securityOptions={{
                                 isSecurity: true,
