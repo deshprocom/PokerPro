@@ -271,6 +271,15 @@ export function rankGameShare(title, location, icon, gameId) {
         })
 }
 
+export function uVideoShare(title, desc, icon, videoId) {
+    UMShare.share(title, shareTxt(desc), getShareIcon(icon), HOST + "videos/" + videoId + "/" + Lang)
+        .then(() => {
+            showToast(`${I18n.t('show_success')}`)
+        }, (error) => {
+            showToast(error)
+        })
+}
+
 function getShareIcon(icon) {
     return strNotNull(icon) ? encodeURI(icon) : shareIcon
 }
