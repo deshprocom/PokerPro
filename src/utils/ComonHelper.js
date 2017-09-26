@@ -173,7 +173,6 @@ export function payWx(data, callback) {
 
     router.log('wxpay', body);
     wechat.pay(body).then(ret => {
-        alert(ret)
         callback();
     }).catch(err => {
 
