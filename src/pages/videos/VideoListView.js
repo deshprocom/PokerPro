@@ -15,12 +15,13 @@ import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {GET_VIDEO_LIST} from '../../actions/ActionTypes';
-import {isEmptyObject, uniqueArray, FontSize,uVideoShare} from '../../utils/ComonHelper';
+import {isEmptyObject, uniqueArray, FontSize, uVideoShare} from '../../utils/ComonHelper';
 import {ImageLoad, VideoPlayer, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {fetchVideoList} from '../../actions/NewsAction';
 import {getVideoList} from '../../services/NewsDao';
 import {_renderFooter, _renderHeader} from '../../components/LoadingView';
+
 const headerStyle = {height: 35, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.bg_f5};
 
 
@@ -103,7 +104,7 @@ class NewsListView extends Component {
                         modalVisible: false
                     })
                 }}
-                style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.5)'}}/>
+                style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.8)'}}/>
             <VideoPlayer
                 ref={ref => this.player = ref}
                 closeFull={true}
@@ -118,7 +119,7 @@ class NewsListView extends Component {
                         modalVisible: false
                     })
                 }}
-                style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.5)'}}/>
+                style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.8)'}}/>
         </Modal>)
     };
 
@@ -225,7 +226,7 @@ class NewsListView extends Component {
 
     _itemNewsView = (rowData, sectionID, rowID) => {
 
-        const {top, name, cover_link, video_duration, title_desc,id} = rowData;
+        const {top, name, cover_link, video_duration, title_desc, id} = rowData;
 
         return (<View
             style={styles.transparent}
@@ -234,9 +235,9 @@ class NewsListView extends Component {
             onPress={() => this._pressItem(rowData)}>
 
             {this._playView(rowData)}
-            <View style={{flexDirection:'row',backgroundColor:'white'}}>
+            <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
                 <TouchableOpacity
-                    style={{flex:6}}
+                    style={{flex: 6}}
                     activeOpacity={1}
                     onPress={() => this._pressItem(rowData)}>
                     <Text
@@ -251,7 +252,7 @@ class NewsListView extends Component {
                     onPress={() => {
                         uVideoShare(name, title_desc, cover_link, id)
                     }}
-                    style={{flex:1,alignItems:'center',justifyContent:'center'}}>
+                    style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
 
                     <Image style={styles.imgShare}
                            source={Images.share}/>
@@ -295,7 +296,7 @@ export default connect(mapStateToProps, bindAction)(NewsListView);
 const styles = StyleSheet.create({
     imgShare: {
         height: 22,
-        width: 23,
+        width: 23
 
     },
     listTopImg: {
