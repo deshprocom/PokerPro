@@ -303,6 +303,8 @@ const styles = StyleSheet.create({
     showImg: {
         height: 128,
         width: 206,
+        resizeMode:'contain'
+
     },
     btnSelectImg: {
         alignSelf: 'center',
