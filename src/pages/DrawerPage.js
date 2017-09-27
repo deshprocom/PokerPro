@@ -2,7 +2,7 @@
  * Created by lorne on 2017/1/3.
  */
 import React from 'react';
-import {StyleSheet, BackAndroid, Navigator} from 'react-native';
+import {StyleSheet, BackAndroid, ToastAndroid} from 'react-native';
 import Drawer from 'react-native-drawer'
 import {connect} from 'react-redux';
 import SidePage from './SidePage';
@@ -22,6 +22,7 @@ class DrawerPage extends React.Component {
 
         this.router = this.router || new Router();
         global.router = this.router;
+        BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
     }
 
 
@@ -32,6 +33,21 @@ class DrawerPage extends React.Component {
 
     }
 
+
+
+    componentWillUnmount() {
+        BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
+    }
+
+    onBackAndroid = () => {
+        if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+            //最近2秒内按过back键，可以退出应用。
+            return false;
+        }
+        this.lastBackPressed = Date.now();
+        ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT);
+        return true;
+    };
 
     componentDidUpdate() {
         if (this.props.drawerState === 'opened') {
