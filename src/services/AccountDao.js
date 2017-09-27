@@ -7,6 +7,23 @@ import StorageKey from '../configs/StorageKey';
 import JpushHelp from './JpushHelper';
 import {isEmptyObject, showToast} from '../utils/ComonHelper';
 
+
+export function getPreferential(body, resolve, reject) {
+    helper.get(Api.preferential(body), ret => {
+        resolve(ret.data);
+    }, err => {
+        reject(err)
+    })
+}
+
+export function getIsTestUser(resolve, reject) {
+    helper.get(Api.test_user, ret => {
+        resolve(ret.data);
+    }, err => {
+        reject(err)
+    })
+}
+
 export function listVerified(resolve, reject) {
     helper.get(Api.list_certification(), ret => {
         resolve(ret.data);
@@ -227,6 +244,12 @@ export function setLoginUser(ret) {
 
             //统计登陆用户
             postLoginCount();
+
+            //用户是否为特权用户
+            getIsTestUser(data => {
+                console.log('TEST', data)
+            }, err => {
+            })
         }, 100);
 
 

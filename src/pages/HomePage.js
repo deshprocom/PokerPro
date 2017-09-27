@@ -23,7 +23,7 @@ import {isEmptyObject, strNotNull, putLoginUser, getUserData, updateApp} from '.
 import {NavigationBar, ParallaxScrollView} from '../components';
 import JpushHelp from '../services/JpushHelper';
 import {umengEvent} from '../utils/UmengEvent';
-import { getActivityPush, getUpdate} from '../services/AccountDao';
+import {getActivityPush, getUpdate} from '../services/AccountDao';
 import ActivityModel from './message/ActivityModel';
 
 var maxDown = 0;
@@ -54,7 +54,9 @@ class HomePage extends Component {
     componentDidMount() {
         JpushHelp.addPushListener(this.receiveCb, this.openCb);
         this._refreshPage();
+        //首页活动
         this._getPushActivity();
+        //App更新
         setTimeout(this._getUpdate, 100)
 
     }

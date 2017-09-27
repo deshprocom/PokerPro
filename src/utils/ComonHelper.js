@@ -25,7 +25,7 @@ export const YYYYMMDD = 'YYYYMMDD';
 export const MM_DD = 'MM-DD';
 
 const HOST = 'https://h5.deshpro.com/';
-const THOST = 'test.h5.deshpro.com';
+const THOST = 'https://test.h5.deshpro.com/';
 
 function shareHost() {
     if (getApiType() === 'production')

@@ -86,7 +86,9 @@ export default {
     add_certification: add_certification,
     del_certification: del_certification,
     list_certification: list_certification,
-    cert_default:cert_default
+    cert_default: cert_default,
+    test_user: 'account/test_user',
+    preferential: preferential
 }
 
 
@@ -98,6 +100,11 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+export function preferential(body) {
+    const {race_id} = body;
+    return 'races/' + race_id + '/tickets/preferential'
+}
 
 export function cert_default() {
     return 'account/users/' + getUserId() + '/certification/default'
