@@ -245,11 +245,6 @@ export function setLoginUser(ret) {
             //统计登陆用户
             postLoginCount();
 
-            //用户是否为特权用户
-            getIsTestUser(data => {
-                console.log('TEST', data)
-            }, err => {
-            })
         }, 100);
 
 
