@@ -76,7 +76,7 @@ class RacesInfoPage extends Component {
 
     render() {
 
-        const {raceInfo} = this.state;
+
         return (
             <View
                 style={{
@@ -86,83 +86,7 @@ class RacesInfoPage extends Component {
                 testID="page_race_intro">
 
 
-                <Image style={styles.header}
-                       resizeMode="cover"
-                       source={Images.home_bg}
-                >
-
-                    <View style={styles.topBar}>
-                        <TouchableOpacity
-                            testID="btn_bar_left"
-                            style={styles.popBtn}
-                            onPress={() => router.pop()}>
-                            <Image style={styles.backImg}
-                                   source={Images.sign_return}/>
-                        </TouchableOpacity>
-                        <TestRouter refreshPage={this._refreshPage}/>
-
-                        <View style={styles.viewTitle}>
-                            <Text
-                                testID="txt_races_title"
-                                style={styles.txtTitle}
-                                numberOfLines={1}>{raceInfo.name}</Text>
-                        </View>
-                        <TouchableOpacity
-                            testID="btn_bar_right"
-                            style={styles.popBtn}
-                            onPress={() => {
-                                uShareRace(raceInfo.name, raceInfo.location +
-                                    '\n' + this.race_time(raceInfo),
-                                    raceInfo.logo,
-                                    this.props.params.race_id)
-                            }}>
-                            <Image style={styles.imgShare}
-                                   source={Images.share}/>
-                        </TouchableOpacity>
-
-
-                    </View>
-
-                    {isEmptyObject(raceInfo) ? null : <View style={styles.headerInfo}>
-                        <ImageLoad style={styles.logoImg}
-                                   source={{uri: raceInfo.logo}}/>
-                        <View style={styles.viewInfo}>
-                            <View style={styles.viewTime}>
-                                <Image style={styles.imgTime}
-                                       source={Images.home_clock}/>
-                                <Text
-                                    testID="txt_races_period"
-                                    style={styles.txtTime}>{this.race_time(raceInfo)}</Text>
-                            </View>
-                            <View style={styles.viewLocation}>
-                                <Image style={styles.imgLocation}
-                                       source={Images.home_adr}/>
-                                <Text
-                                    testID="txt_races_address"
-                                    style={styles.txtLocation}>{raceInfo.location}</Text>
-                            </View>
-
-
-                            <View style={styles.viewPrice}>
-                                <Text
-                                    testID="txt_races_status"
-                                    style={styles.txtStatus}>{raceStatusConvert(raceInfo.status)}</Text>
-
-                                {raceInfo.ticket_sellable ? <Text
-                                    testID="txt_races_ticket"
-                                    style={[styles.txtStatus, styles.txtStatus1]}> {ticketStatusConvert(raceInfo.ticket_status)}</Text> : null}
-
-                            </View>
-
-                        </View>
-
-                    </View>}
-
-                    <View style={styles.viewFlex}/>
-
-                    {this._tabBarView()}
-                </Image>
-
+                {this._renderNav()}
 
                 {this._viewPager()}
 
@@ -172,6 +96,87 @@ class RacesInfoPage extends Component {
             </View>
         )
     }
+
+
+    _renderNav = () => {
+        const {raceInfo} = this.state;
+        return <Image style={styles.header}
+                      resizeMode="cover"
+                      source={Images.home_bg}
+        >
+
+            <View style={styles.topBar}>
+                <TouchableOpacity
+                    testID="btn_bar_left"
+                    style={styles.popBtn}
+                    onPress={() => router.pop()}>
+                    <Image style={styles.backImg}
+                           source={Images.sign_return}/>
+                </TouchableOpacity>
+                <TestRouter refreshPage={this._refreshPage}/>
+
+                <View style={styles.viewTitle}>
+                    <Text
+                        testID="txt_races_title"
+                        style={styles.txtTitle}
+                        numberOfLines={1}>{raceInfo.name}</Text>
+                </View>
+                <TouchableOpacity
+                    testID="btn_bar_right"
+                    style={styles.popBtn}
+                    onPress={() => {
+                        uShareRace(raceInfo.name, raceInfo.location +
+                            '\n' + this.race_time(raceInfo),
+                            raceInfo.logo,
+                            this.props.params.race_id)
+                    }}>
+                    <Image style={styles.imgShare}
+                           source={Images.share}/>
+                </TouchableOpacity>
+
+
+            </View>
+
+            {isEmptyObject(raceInfo) ? null : <View style={styles.headerInfo}>
+                <ImageLoad style={styles.logoImg}
+                           source={{uri: raceInfo.logo}}/>
+                <View style={styles.viewInfo}>
+                    <View style={styles.viewTime}>
+                        <Image style={styles.imgTime}
+                               source={Images.home_clock}/>
+                        <Text
+                            testID="txt_races_period"
+                            style={styles.txtTime}>{this.race_time(raceInfo)}</Text>
+                    </View>
+                    <View style={styles.viewLocation}>
+                        <Image style={styles.imgLocation}
+                               source={Images.home_adr}/>
+                        <Text
+                            testID="txt_races_address"
+                            style={styles.txtLocation}>{raceInfo.location}</Text>
+                    </View>
+
+
+                    <View style={styles.viewPrice}>
+                        <Text
+                            testID="txt_races_status"
+                            style={styles.txtStatus}>{raceStatusConvert(raceInfo.status)}</Text>
+
+                        {raceInfo.ticket_sellable ? <Text
+                            testID="txt_races_ticket"
+                            style={[styles.txtStatus, styles.txtStatus1]}> {ticketStatusConvert(raceInfo.ticket_status)}</Text> : null}
+
+                    </View>
+
+                </View>
+
+            </View>}
+
+            <View style={styles.viewFlex}/>
+
+            {this._tabBarView()}
+        </Image>
+    };
 
 
     _tabBarView = () => {
