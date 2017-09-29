@@ -29,7 +29,7 @@ import MainRaceResultView from './MainRaceResultView';
 import {umengEvent} from '../../utils/UmengEvent';
 
 let {width, height} = Dimensions.get('window');
-let headHeight = 220;
+let headHeight = 220 - Metrics.navBarHeight;
 
 class RaceScene extends Component {
     state = {
@@ -182,7 +182,6 @@ class RaceScene extends Component {
 
                 </View>}
 
-                <View style={styles.viewFlex}/>
 
                 {this._tabBarView()}
             </Image>
@@ -323,15 +322,8 @@ class RaceScene extends Component {
                 </Animated.View>
             </View>)
 
-
         }
 
-        return (    <View style={styles.viewTab}>
-
-            {tabs}
-
-
-        </View>)
     };
 
     _selectPageIndex = (key) => {
@@ -432,20 +424,6 @@ class RaceScene extends Component {
                 marginTop: headHeight
             }}>
                 <ScrollableTabView
-                    onChangeTab={({i}) => {
-                        if (i == undefined || i < 0)
-                            return;
-
-
-                        let pageKey;
-                        if (!isEmptyObject(this.pages[i]))
-                            pageKey = this.pages[i].key;
-
-                        this.setState({
-                            selectPage: i,
-                            selectPageKey: pageKey
-                        })
-                    }}
                     ref={ref => this.viewpage = ref}>
 
                     {this.pages}
