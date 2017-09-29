@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import {
     TouchableOpacity, View, Animated, Dimensions,
     StyleSheet, Image, Text, ScrollView, Platform,
-    InteractionManager
+    findNodeHandle
 } from 'react-native';
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
@@ -27,13 +27,13 @@ import RaceSideView from './RaceSideView';
 import {MarkdownPlat, ImageLoad} from '../../components';
 import MainRaceResultView from './MainRaceResultView';
 import {umengEvent} from '../../utils/UmengEvent';
+import {BlurView} from 'react-native-blur';
 
 let {width, height} = Dimensions.get('window');
 let headHeight = 220 - Metrics.navBarHeight;
 
 class RaceScene extends Component {
     state = {
-        isLoginUser: false,
         raceInfo: {},
         noBottomBar: false,
         selectPage: 0,
@@ -43,7 +43,9 @@ class RaceScene extends Component {
         schedules: [],
         blinds: [],
         scrollY: new Animated.Value(0),
-        scrollY1: 0
+        scrollY1: 0,
+        bgY: 0,
+        bgScale: 1,
     };
 
 
@@ -51,11 +53,19 @@ class RaceScene extends Component {
         this._fetchSideRace();
         this._refreshPage();
 
+        const {scrollY} = this.state;
+
         this.setState({
-            scrollY1: this.state.scrollY.interpolate({
+            scrollY1: scrollY.interpolate({
                 inputRange: [0, headHeight, headHeight],
                 outputRange: [0, -headHeight, -headHeight]
-            })
+            }),
+            bgY: scrollY.interpolate({
+                inputRange: [-headHeight, 0, headHeight, headHeight],
+                outputRange: [headHeight / 2, 0, -headHeight / 3, -headHeight / 3]
+            }),
+            bgScale: scrollY.interpolate({inputRange: [-headHeight, 0, headHeight], outputRange: [2, 1, 1]}),
+
         })
     }
 
@@ -94,6 +104,7 @@ class RaceScene extends Component {
                 }}
                 testID="page_race_intro">
 
+                {this._renderBlur()}
 
                 {this._renderNav()}
 
@@ -107,84 +118,109 @@ class RaceScene extends Component {
     }
 
 
+    imageLoaded() {
+        this.setState({viewRef: findNodeHandle(this.refs.backgroundImage)})
+    }
+
+    _renderBlur = () => {
+        let props = Platform.OS === 'ios' ? {
+            blurType: "light",
+            blurAmount: 25
+        } : {
+            viewRef: this.state.viewRef,
+            downsampleFactor: 10,
+            overlayColor: 'rgba(255,255,255,0.1)'
+        };
+        const {raceInfo} = this.state;
+        return <Animated.Image source={{uri: raceInfo.logo}} ref={'backgroundImage'}
+                               onLoadEnd={this.imageLoaded.bind(this)}
+                               style={[
+                                   styles.bgBlur,
+                                   {
+                                       transform: [{translateY: this.state.bgY},
+                                           {scale: this.state.bgScale}]
+                                   }
+                               ]}>
+            <BlurView {...props} style={styles.blur}/>
+            {this._tabBarView()}
+        </Animated.Image>
+    };
+
+    _renderTopNav = () => {
+        return <View style={styles.topBar}>
+            <TouchableOpacity
+                testID="btn_bar_left"
+                style={styles.popBtn}
+                onPress={() => router.pop()}>
+                <Image style={styles.backImg}
+                       source={Images.sign_return}/>
+            </TouchableOpacity>
+            <TestRouter refreshPage={this._refreshPage}/>
+
+            <View style={styles.viewTitle}>
+                <Text
+                    testID="txt_races_title"
+                    style={styles.txtTitle}
+                    numberOfLines={1}>{raceInfo.name}</Text>
+            </View>
+            <TouchableOpacity
+                testID="btn_bar_right"
+                style={styles.popBtn}
+                onPress={() => {
+                    uShareRace(raceInfo.name, raceInfo.location +
+                        '\n' + this.race_time(raceInfo),
+                        raceInfo.logo,
+                        this.props.params.race_id)
+                }}>
+                <Image style={styles.imgShare}
+                       source={Images.share}/>
+            </TouchableOpacity>
+
+
+        </View>;
+    };
+
     _renderNav = () => {
+
         const {raceInfo} = this.state;
         return <View style={styles.head}>
-            <Image style={styles.header}
-                   resizeMode="cover"
-                   source={Images.home_bg}
-            >
 
-                <View style={styles.topBar}>
-                    <TouchableOpacity
-                        testID="btn_bar_left"
-                        style={styles.popBtn}
-                        onPress={() => router.pop()}>
-                        <Image style={styles.backImg}
-                               source={Images.sign_return}/>
-                    </TouchableOpacity>
-                    <TestRouter refreshPage={this._refreshPage}/>
-
-                    <View style={styles.viewTitle}>
+            {isEmptyObject(raceInfo) ? null : <View style={styles.headerInfo}>
+                <ImageLoad style={styles.logoImg}
+                           source={{uri: raceInfo.logo}}/>
+                <View style={styles.viewInfo}>
+                    <View style={styles.viewTime}>
+                        <Image style={styles.imgTime}
+                               source={Images.home_clock}/>
                         <Text
-                            testID="txt_races_title"
-                            style={styles.txtTitle}
-                            numberOfLines={1}>{raceInfo.name}</Text>
+                            testID="txt_races_period"
+                            style={styles.txtTime}>{this.race_time(raceInfo)}</Text>
                     </View>
-                    <TouchableOpacity
-                        testID="btn_bar_right"
-                        style={styles.popBtn}
-                        onPress={() => {
-                            uShareRace(raceInfo.name, raceInfo.location +
-                                '\n' + this.race_time(raceInfo),
-                                raceInfo.logo,
-                                this.props.params.race_id)
-                        }}>
-                        <Image style={styles.imgShare}
-                               source={Images.share}/>
-                    </TouchableOpacity>
+                    <View style={styles.viewLocation}>
+                        <Image style={styles.imgLocation}
+                               source={Images.home_adr}/>
+                        <Text
+                            testID="txt_races_address"
+                            style={styles.txtLocation}>{raceInfo.location}</Text>
+                    </View>
 
+
+                    <View style={styles.viewPrice}>
+                        <Text
+                            testID="txt_races_status"
+                            style={styles.txtStatus}>{raceStatusConvert(raceInfo.status)}</Text>
+
+                        {raceInfo.ticket_sellable ? <Text
+                            testID="txt_races_ticket"
+                            style={[styles.txtStatus, styles.txtStatus1]}> {ticketStatusConvert(raceInfo.ticket_status)}</Text> : null}
+
+                    </View>
 
                 </View>
 
-                {isEmptyObject(raceInfo) ? null : <View style={styles.headerInfo}>
-                    <ImageLoad style={styles.logoImg}
-                               source={{uri: raceInfo.logo}}/>
-                    <View style={styles.viewInfo}>
-                        <View style={styles.viewTime}>
-                            <Image style={styles.imgTime}
-                                   source={Images.home_clock}/>
-                            <Text
-                                testID="txt_races_period"
-                                style={styles.txtTime}>{this.race_time(raceInfo)}</Text>
-                        </View>
-                        <View style={styles.viewLocation}>
-                            <Image style={styles.imgLocation}
-                                   source={Images.home_adr}/>
-                            <Text
-                                testID="txt_races_address"
-                                style={styles.txtLocation}>{raceInfo.location}</Text>
-                        </View>
+            </View>}
 
 
-                        <View style={styles.viewPrice}>
-                            <Text
-                                testID="txt_races_status"
-                                style={styles.txtStatus}>{raceStatusConvert(raceInfo.status)}</Text>
-
-                            {raceInfo.ticket_sellable ? <Text
-                                testID="txt_races_ticket"
-                                style={[styles.txtStatus, styles.txtStatus1]}> {ticketStatusConvert(raceInfo.ticket_status)}</Text> : null}
-
-                        </View>
-
-                    </View>
-
-                </View>}
-
-
-                {this._tabBarView()}
-            </Image>
         </View>
     };
 
@@ -367,9 +403,7 @@ class RaceScene extends Component {
                 user_id: user_id,
                 race_id: this.props.params.race_id
             };
-            this.setState({
-                isLoginUser: true
-            });
+
 
             this.props._fetchRacesInfo(body);
         } else {
@@ -377,17 +411,13 @@ class RaceScene extends Component {
                 user_id: 0,
                 race_id: this.props.params.race_id
             };
-            this.setState({
-                isLoginUser: false
-            });
-
             this.props._fetchRacesInfo(body);
         }
 
     };
 
     _bottomBar = () => {
-        const {isLoginUser, raceInfo} = this.state;
+        const {raceInfo} = this.state;
 
         const {ticket_status, ticket_sellable} = raceInfo;
 
@@ -629,14 +659,27 @@ const styles = StyleSheet.create({
         top: 0,
         right: 0,
         bottom: 0,
+        paddingTop: Metrics.navBarHeight,
     },
     tabView: {
         position: "absolute",
         top: Metrics.navBarHeight,
         bottom: 0,
         left: 0,
-        right: 0
+        right: 0,
     },
-
+    bgBlur: {
+        width,
+        height: width,
+        resizeMode: "cover"
+    },
+    blur: {
+        position: "absolute",
+        left: 0,
+        right: 0,
+        top: 0,
+        width,
+        height: width,
+    },
 
 });
