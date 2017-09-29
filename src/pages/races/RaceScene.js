@@ -48,6 +48,7 @@ class RaceScene extends Component {
         bgY: 0,
         bgScale: 1,
         headOpacity: 1,
+        viewRef: 0,
     };
 
 
@@ -110,7 +111,7 @@ class RaceScene extends Component {
                 testID="page_race_intro">
 
                 {this._renderBlur()}
-
+                {this._tabBarView()}
                 {this._renderNav()}
 
                 {this._viewPager()}
@@ -136,7 +137,7 @@ class RaceScene extends Component {
         } : {
             viewRef: this.state.viewRef,
             downsampleFactor: 10,
-            overlayColor: 'rgba(255,255,255,0.1)'
+            overlayColor: 'rgba(255,255,255,.1)'
         };
         const {raceInfo} = this.state;
         return <Animated.Image source={{uri: raceInfo.logo}} ref={'backgroundImage'}
@@ -149,7 +150,7 @@ class RaceScene extends Component {
                                    }
                                ]}>
             <BlurView {...props} style={styles.blur}/>
-            {this._tabBarView()}
+
         </Animated.Image>
     };
 
@@ -442,6 +443,10 @@ class RaceScene extends Component {
                 translateY: this.state.scrollY1
             }]
         };
+
+        if (Platform.OS == "android") {
+            style.height = height + headHeight
+        }
 
         return <Animated.View style={[styles.tabView, style]}>
             <View style={{

@@ -95,7 +95,8 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
-
+        renderscriptTargetApi 20
+        renderscriptSupportModeEnabled true
         multiDexEnabled true
         manifestPlaceholders = [
                 JPUSH_APPKEY: "40fc518c7fb0759af5cba44a",   //在此替换你的APPKey
