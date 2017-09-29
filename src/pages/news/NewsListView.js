@@ -16,6 +16,7 @@ import {isEmptyObject, convertDate, strNotNull, uniqueArray, FontSize} from '../
 import {ImageLoad, PullListView, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {fetchNewsList} from '../../actions/NewsAction';
+
 const headerStyle = {height: 35, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.bg_f5};
 import {getNewsList} from '../../services/NewsDao';
 
@@ -29,16 +30,12 @@ class NewsListView extends Component {
 
     constructor(props) {
         super(props);
-        this._dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1.race_id !== r2.race_id
-        });
 
 
         this.state = {
             newsListData: [],
             newsListNextId: '0',
             topped: {},
-            componentDataSource: this._dataSource.cloneWithRows([]),
             error: false
         }
 
@@ -154,7 +151,7 @@ class NewsListView extends Component {
                 activeOpacity={1}
                 onPress={() => this._pressItem(rowData)}>
                 <Image
-                    source={ {uri: image}}
+                    source={{uri: image}}
                     style={styles.listTopImg}
                 >
 
@@ -186,6 +183,7 @@ class NewsListView extends Component {
 
 
                 </View>
+
 
                 <ImageLoad
                     style={styles.listImg}
@@ -271,11 +269,11 @@ const styles = StyleSheet.create({
         marginLeft: 17,
         marginTop: 13,
         marginBottom: 16,
-        marginRight:12
+        marginRight: 12,
+        flex: 1
     },
     listTitleTxt: {
         color: '#444444',
-        width: 216,
         alignSelf: 'flex-start',
         height: 44,
         fontWeight: 'bold'
