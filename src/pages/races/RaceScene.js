@@ -269,6 +269,7 @@ class RaceScene extends Component {
                     marginBottom: noBottomBar ? 0 : 50
                 }}>
                 <ScrollView
+                    showsVerticalScrollIndicator={false}
                     onScroll={Animated.event(
                         [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
                     )}
