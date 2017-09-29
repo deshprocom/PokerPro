@@ -46,6 +46,7 @@ class RaceScene extends Component {
         scrollY1: 0,
         bgY: 0,
         bgScale: 1,
+        headOpacity: 1,
     };
 
 
@@ -54,6 +55,8 @@ class RaceScene extends Component {
         this._refreshPage();
 
         const {scrollY} = this.state;
+
+        let activeHeight = 36;
 
         this.setState({
             scrollY1: scrollY.interpolate({
@@ -65,6 +68,7 @@ class RaceScene extends Component {
                 outputRange: [headHeight / 2, 0, -headHeight / 3, -headHeight / 3]
             }),
             bgScale: scrollY.interpolate({inputRange: [-headHeight, 0, headHeight], outputRange: [2, 1, 1]}),
+            headOpacity: scrollY.interpolate({inputRange: [0, activeHeight, headHeight], outputRange: [1, 1, 0]}),
 
         })
     }
@@ -185,7 +189,7 @@ class RaceScene extends Component {
         const {raceInfo} = this.state;
         return <View style={styles.head}>
 
-            {isEmptyObject(raceInfo) ? null : <View style={styles.headerInfo}>
+            <Animated.View style={[styles.headerInfo, {opacity: this.state.headOpacity}]}>
                 <ImageLoad style={styles.logoImg}
                            source={{uri: raceInfo.logo}}/>
                 <View style={styles.viewInfo}>
@@ -217,8 +221,7 @@ class RaceScene extends Component {
                     </View>
 
                 </View>
-
-            </View>}
+            </Animated.View>
 
 
         </View>
@@ -660,6 +663,7 @@ const styles = StyleSheet.create({
         right: 0,
         bottom: 0,
         paddingTop: Metrics.navBarHeight,
+        backgroundColor: "rgba(0,0,0,.3)"
     },
     tabView: {
         position: "absolute",
