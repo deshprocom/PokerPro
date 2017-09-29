@@ -131,8 +131,8 @@ class RaceScene extends Component {
 
     _renderBlur = () => {
         let props = Platform.OS === 'ios' ? {
-            blurType: "light",
-            blurAmount: 25
+            blurType: "dark",
+            blurAmount: 18
         } : {
             viewRef: this.state.viewRef,
             downsampleFactor: 10,
