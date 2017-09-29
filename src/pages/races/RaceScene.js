@@ -29,6 +29,7 @@ import MainRaceResultView from './MainRaceResultView';
 import {umengEvent} from '../../utils/UmengEvent';
 
 let {width, height} = Dimensions.get('window');
+let headHeight = 220;
 
 class RaceScene extends Component {
     state = {
@@ -49,12 +50,11 @@ class RaceScene extends Component {
     componentDidMount() {
         this._fetchSideRace();
         this._refreshPage();
-        let marginTop = 220;
 
         this.setState({
             scrollY1: this.state.scrollY.interpolate({
-                inputRange: [0, marginTop, marginTop],
-                outputRange: [0, -marginTop, -marginTop]
+                inputRange: [0, headHeight, headHeight],
+                outputRange: [0, -headHeight, -headHeight]
             })
         })
     }
@@ -200,7 +200,6 @@ class RaceScene extends Component {
         let tabs = [];
         this.pages = [];
 
-        let headHeight = 220;
         let scrollY = this.state.scrollY.interpolate({
             inputRange: [0, headHeight, headHeight],
             outputRange: [0, headHeight, headHeight + 1]
@@ -226,7 +225,6 @@ class RaceScene extends Component {
                 testID="page_race_info"
                 key={'page_race_info'}
                 style={{
-                    backgroundColor: Colors.white,
                     marginBottom: noBottomBar ? 0 : 50
                 }}>
                 <ScrollView
@@ -238,9 +236,9 @@ class RaceScene extends Component {
                 >
                     <Animated.View style={{
                         transform: [{translateY: scrollY}],
+                        paddingBottom: headHeight
                     }}>
                         <MarkdownPlat
-                            noScroll={true}
                             markdownStr={raceInfo.description}/>
                     </Animated.View>
                 </ScrollView>
@@ -276,12 +274,16 @@ class RaceScene extends Component {
                 style={{
                     backgroundColor: Colors.bg_f5,
                     marginBottom: noBottomBar ? 0 : 50,
-                    flex: 1
                 }}>
-                <MainRaceResultView
-                    blinds={blinds}
-                    schedules={schedules}
-                    raceRanks={raceRanks}/>
+                <Animated.View style={{
+                    transform: [{translateY: scrollY}],
+                    paddingBottom: headHeight
+                }}>
+                    <MainRaceResultView
+                        blinds={blinds}
+                        schedules={schedules}
+                        raceRanks={raceRanks}/>
+                </Animated.View>
             </ScrollView>)
         }
 
@@ -311,9 +313,14 @@ class RaceScene extends Component {
                     backgroundColor: Colors.bg_f5,
                     marginBottom: noBottomBar ? 0 : 50
                 }}>
-                <RaceSideView
-                    raceId={this.props.params.race_id}
-                    subRaces={subRaces}/>
+                <Animated.View style={{
+                    transform: [{translateY: scrollY}],
+                    paddingBottom: headHeight
+                }}>
+                    <RaceSideView
+                        raceId={this.props.params.race_id}
+                        subRaces={subRaces}/>
+                </Animated.View>
             </View>)
 
 
@@ -409,8 +416,8 @@ class RaceScene extends Component {
 
 
     _viewPager = () => {
-        let marginTop = 220;
-        let MAIN_HEIGHT = height;
+
+        let MAIN_HEIGHT = height - Metrics.navBarHeight;
         let style = {
             transform: [{
                 translateY: this.state.scrollY1
@@ -419,10 +426,10 @@ class RaceScene extends Component {
 
         return <Animated.View style={[styles.tabView, style]}>
             <View style={{
-                backgroundColor: "#f3f3f3",
+                backgroundColor: "white",
                 height: MAIN_HEIGHT,
                 width,
-                marginTop
+                marginTop: headHeight
             }}>
                 <ScrollableTabView
                     onChangeTab={({i}) => {

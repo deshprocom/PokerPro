@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/4/25.
  */
-import React, {PropTypes, Component, createElement} from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, ScrollView,
     StyleSheet, Text, Platform, Alert, Image
@@ -56,24 +56,8 @@ Markdown.renderer.image = props => {
 
 export default class MarkdownPlat extends Component {
 
-    static propTypes = {
-        markdownStr: PropTypes.string,
-        noScroll: PropTypes.bool
-    };
 
     render() {
-        if (this.props.noScroll)
-            return (<View>
-                {this._markdownView()}
-            </View>);
-        else
-            return (<ScrollView
-                testID="txt_markdown">
-                {this._markdownView()}
-            </ScrollView>)
-    }
-
-    _markdownView = () => {
         const {markdownStr} = this.props;
         try {
             if (strNotNull(markdownStr))
@@ -94,7 +78,7 @@ export default class MarkdownPlat extends Component {
                         },
                         text: {
                             color: '#444444',
-                            fontSize:  FontSize.h15,
+                            fontSize: FontSize.h15,
                             lineHeight: 25,
                             letterSpacing: 0.3
                         },
@@ -103,41 +87,19 @@ export default class MarkdownPlat extends Component {
                     </Markdown>
                 )
         } catch (e) {
-            showToast(e)
+            return <View/>
         }
-
     }
+
+
 }
 
 
-
-const markdownStyles = {
-    container: {
-        padding: 20
-    },
-    heading1: {
-        fontSize: 24,
-        color: 'purple',
-    },
-    link: {
-        color: 'blue',
-    },
-    mail_to: {
-        color: 'orange',
-    },
-    text: {
-        color: '#444444',
-        fontSize:  FontSize.h15,
-        lineHeight: 25,
-        letterSpacing: 0.3
-    },
-};
-
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#F5FCFF',
+        flex: 1
     }
 });
