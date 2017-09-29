@@ -22,7 +22,7 @@ import {
     strValid, uShareRace
 } from '../../utils/ComonHelper';
 import TestRouter from '../../components/TestRouter';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
+import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
 import RaceSideView from './RaceSideView';
 import {MarkdownPlat, ImageLoad} from '../../components';
 import MainRaceResultView from './MainRaceResultView';
@@ -30,7 +30,8 @@ import {umengEvent} from '../../utils/UmengEvent';
 import {BlurView} from 'react-native-blur';
 
 let {width, height} = Dimensions.get('window');
-let headHeight = 220 - Metrics.navBarHeight;
+//顶部内容高度
+let headHeight = 200 - Metrics.navBarHeight;
 
 class RaceScene extends Component {
     state = {
@@ -385,8 +386,6 @@ class RaceScene extends Component {
     }
 
 
-
-
     _fetchSideRace = () => {
         const body = {
             race_id: this.props.params.race_id
@@ -452,6 +451,14 @@ class RaceScene extends Component {
                 marginTop: headHeight
             }}>
                 <ScrollableTabView
+                    renderTabBar={() => <ScrollableTabBar
+                        backgroundColor={Colors.white}
+                        activeTextColor="#161718"
+                        inactiveTextColor={Colors._AAA}
+                        textStyle={{fontSize: 15}}
+                        style={{borderColor: Colors._EEE}}
+                        underlineStyle={{backgroundColor: '#161718', height: 2}}
+                    />}
                     ref={ref => this.viewpage = ref}>
 
                     {this.pages}
@@ -516,7 +523,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     header: {
-        height: 220,
+        height: 200,
         backgroundColor: 'transparent',
         width: Metrics.screenWidth
     },
@@ -662,7 +669,7 @@ const styles = StyleSheet.create({
         top: 0,
         right: 0,
         bottom: 0,
-        paddingTop: Metrics.navBarHeight,
+        paddingTop: Metrics.navBarHeight + 10,
         backgroundColor: "rgba(0,0,0,.3)"
     },
     tabView: {
