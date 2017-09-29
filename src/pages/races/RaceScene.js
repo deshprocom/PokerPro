@@ -116,6 +116,8 @@ class RaceScene extends Component {
 
                 {this._bottomBar()}
 
+                {this._renderTopNav()}
+
 
             </View>
         )
@@ -151,6 +153,7 @@ class RaceScene extends Component {
     };
 
     _renderTopNav = () => {
+        const {raceInfo} = this.state;
         return <View style={styles.topBar}>
             <TouchableOpacity
                 testID="btn_bar_left"
@@ -266,7 +269,6 @@ class RaceScene extends Component {
                     marginBottom: noBottomBar ? 0 : 50
                 }}>
                 <ScrollView
-                    showsVerticalScrollIndicator={false}
                     onScroll={Animated.event(
                         [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
                     )}
@@ -314,7 +316,6 @@ class RaceScene extends Component {
                     marginBottom: noBottomBar ? 0 : 50,
                 }}>
                 <Animated.View style={{
-                    transform: [{translateY: scrollY}],
                     paddingBottom: headHeight
                 }}>
                     <MainRaceResultView
@@ -343,23 +344,21 @@ class RaceScene extends Component {
 
             </TouchableOpacity>);
 
-            this.pages.push(<View
+            this.pages.push(<ScrollView
                 tabLabel={'边塞信息'}
                 testID="page_race_side"
                 key={'page_race_side'}
                 style={{
-                    backgroundColor: Colors.bg_f5,
                     marginBottom: noBottomBar ? 0 : 50
                 }}>
                 <Animated.View style={{
-                    transform: [{translateY: scrollY}],
                     paddingBottom: headHeight
                 }}>
                     <RaceSideView
                         raceId={this.props.params.race_id}
                         subRaces={subRaces}/>
                 </Animated.View>
-            </View>)
+            </ScrollView>)
 
         }
 
@@ -385,12 +384,7 @@ class RaceScene extends Component {
     }
 
 
-    _fetchRaceRanks = () => {
-        const body = {
-            race_id: this.props.params.race_id
-        };
-        this.props._getRaceRanks(body)
-    };
+
 
     _fetchSideRace = () => {
         const body = {
@@ -526,13 +520,18 @@ const styles = StyleSheet.create({
         width: Metrics.screenWidth
     },
     topBar: {
-        height: 40,
+        height: Metrics.navBarHeight,
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: Metrics.statusBarHeight
+        paddingTop: Metrics.statusBarHeight,
+        backgroundColor: 'transparent',
+        position: 'absolute',
+        top: 0,
+        width
+
     },
     popBtn: {
-        height: 40,
+        height: 44,
         width: 50,
         justifyContent: 'center'
     },
