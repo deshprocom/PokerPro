@@ -510,7 +510,7 @@ export default class Router {
     toRacesInfoPage(props, race_id, fromBuy) {
         this.push(props, {
 
-            name: 'RacesInfoPage',
+            name: 'RaceScene',
             params: {
                 race_id: race_id,
                 fromBuy: fromBuy

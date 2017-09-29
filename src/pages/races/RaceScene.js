@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import {
-    TouchableOpacity, View, Animated, Alert,
+    TouchableOpacity, View, Animated, Dimensions,
     StyleSheet, Image, Text, ScrollView, Platform,
     InteractionManager
 } from 'react-native';
@@ -28,6 +28,7 @@ import {MarkdownPlat, ImageLoad} from '../../components';
 import MainRaceResultView from './MainRaceResultView';
 import {umengEvent} from '../../utils/UmengEvent';
 
+let {width, height} = Dimensions.get('window');
 
 class RaceScene extends Component {
     state = {
@@ -41,14 +42,21 @@ class RaceScene extends Component {
         schedules: [],
         blinds: [],
         scrollY: new Animated.Value(0),
+        scrollY1: 0
     };
 
 
     componentDidMount() {
-        console.log('Actions', this.props)
         this._fetchSideRace();
         this._refreshPage();
+        let marginTop = 220;
 
+        this.setState({
+            scrollY1: this.state.scrollY.interpolate({
+                inputRange: [0, marginTop, marginTop],
+                outputRange: [0, -marginTop, -marginTop]
+            })
+        })
     }
 
     componentWillReceiveProps(newProps) {
@@ -196,7 +204,7 @@ class RaceScene extends Component {
         let scrollY = this.state.scrollY.interpolate({
             inputRange: [0, headHeight, headHeight],
             outputRange: [0, headHeight, headHeight + 1]
-        })
+        });
 
 
         tabs.push(<TouchableOpacity
@@ -214,6 +222,7 @@ class RaceScene extends Component {
 
         if (!isEmptyObject(raceInfo)) {
             this.pages.push(<View
+                tabLabel={'简介'}
                 testID="page_race_info"
                 key={'page_race_info'}
                 style={{
@@ -228,7 +237,7 @@ class RaceScene extends Component {
                     scrollEventThrottle={16}
                 >
                     <Animated.View style={{
-                        transform: [{translateY: scrollY}]
+                        transform: [{translateY: scrollY}],
                     }}>
                         <MarkdownPlat
                             noScroll={true}
@@ -261,11 +270,13 @@ class RaceScene extends Component {
             </TouchableOpacity>);
 
             this.pages.push(<ScrollView
+                tabLabel={'主赛信息'}
                 testID="page_race_result"
                 key={'page_race_result'}
                 style={{
                     backgroundColor: Colors.bg_f5,
-                    marginBottom: noBottomBar ? 0 : 50
+                    marginBottom: noBottomBar ? 0 : 50,
+                    flex: 1
                 }}>
                 <MainRaceResultView
                     blinds={blinds}
@@ -293,6 +304,7 @@ class RaceScene extends Component {
             </TouchableOpacity>);
 
             this.pages.push(<View
+                tabLabel={'边塞信息'}
                 testID="page_race_side"
                 key={'page_race_side'}
                 style={{
@@ -397,36 +409,43 @@ class RaceScene extends Component {
 
 
     _viewPager = () => {
+        let marginTop = 220;
+        let MAIN_HEIGHT = height;
         let style = {
             transform: [{
-                translateY: this.state.scrollY
+                translateY: this.state.scrollY1
             }]
         };
 
         return <Animated.View style={[styles.tabView, style]}>
-            <ScrollableTabView
-                onChangeTab={({i}) => {
-                    if (i == undefined || i < 0)
-                        return;
+            <View style={{
+                backgroundColor: "#f3f3f3",
+                height: MAIN_HEIGHT,
+                width,
+                marginTop
+            }}>
+                <ScrollableTabView
+                    onChangeTab={({i}) => {
+                        if (i == undefined || i < 0)
+                            return;
 
 
-                    let pageKey;
-                    if (!isEmptyObject(this.pages[i]))
-                        pageKey = this.pages[i].key;
+                        let pageKey;
+                        if (!isEmptyObject(this.pages[i]))
+                            pageKey = this.pages[i].key;
 
-                    this.setState({
-                        selectPage: i,
-                        selectPageKey: pageKey
-                    })
-                }}
-                renderTabBar={false}
-                style={styles.container}
-                ref={ref => this.viewpage = ref}>
+                        this.setState({
+                            selectPage: i,
+                            selectPageKey: pageKey
+                        })
+                    }}
+                    ref={ref => this.viewpage = ref}>
 
-                {this.pages}
+                    {this.pages}
 
 
-            </ScrollableTabView>
+                </ScrollableTabView>
+            </View>
         </Animated.View>
     };
 

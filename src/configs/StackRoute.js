@@ -1,4 +1,4 @@
-import {Actions,Scene} from 'react-native-router-flux';
+import {Actions, Scene} from 'react-native-router-flux';
 import React from 'react';
 
 //Pages
@@ -59,13 +59,14 @@ import ActivityCenter from '../pages/message/ActivityCenter';
 import ActivityInfo from '../pages/message/ActivityInfo';
 import VerifiedPage from '../pages/verifieds/VerifiedPage';
 import AddVerified from '../pages/verifieds/AddVerified';
+import RaceScene from '../pages/races/RaceScene';
 
 
-
-export const Stacks =  Actions.create(
+export const Stacks = Actions.create(
     <Scene key="root">
-        <Scene key="DrawerPage" component={DrawerPage}  initial={true}  navBar={() => null}/>
-        <Scene key="AddVerified" component={AddVerified}  navBar={() => null}/>
+        <Scene key="RaceScene" component={RaceScene} navBar={() => null}/>
+        <Scene key="DrawerPage" component={DrawerPage} initial={true} navBar={() => null}/>
+        <Scene key="AddVerified" component={AddVerified} navBar={() => null}/>
         <Scene key="VerifiedPage" component={VerifiedPage} navBar={() => null}/>
         <Scene key="HomePage" component={HomePage} navBar={() => null}/>
         <Scene key="InputPwdPage" component={InputPwdPage} navBar={() => null}/>
