@@ -49,6 +49,7 @@ class RaceScene extends Component {
         bgScale: 1,
         headOpacity: 1,
         viewRef: 0,
+        titleOpacity: 0
     };
 
 
@@ -71,6 +72,7 @@ class RaceScene extends Component {
             }),
             bgScale: scrollY.interpolate({inputRange: [-headHeight, 0, headHeight], outputRange: [2, 1, 1]}),
             headOpacity: scrollY.interpolate({inputRange: [0, activeHeight, headHeight], outputRange: [1, 1, 0]}),
+            titleOpacity: scrollY.interpolate({inputRange: [0, headHeight - 10, headHeight], outputRange: [0, 0, 1]}),
 
         })
     }
@@ -155,7 +157,7 @@ class RaceScene extends Component {
     };
 
     _renderTopNav = () => {
-        const {raceInfo} = this.state;
+        const {raceInfo, titleOpacity} = this.state;
         return <View style={styles.topBar}>
             <TouchableOpacity
                 testID="btn_bar_left"
@@ -166,12 +168,12 @@ class RaceScene extends Component {
             </TouchableOpacity>
             <TestRouter refreshPage={this._refreshPage}/>
 
-            <View style={styles.viewTitle}>
+            <Animated.View style={[styles.viewTitle, {opacity: titleOpacity}]}>
                 <Text
                     testID="txt_races_title"
-                    style={styles.txtTitle}
+                    style={[styles.txtTitle,{color:Colors._F4E}]}
                     numberOfLines={1}>{raceInfo.name}</Text>
-            </View>
+            </Animated.View>
             <TouchableOpacity
                 testID="btn_bar_right"
                 style={styles.popBtn}
@@ -198,6 +200,9 @@ class RaceScene extends Component {
                 <ImageLoad style={styles.logoImg}
                            source={{uri: raceInfo.logo}}/>
                 <View style={styles.viewInfo}>
+                    <Text
+                        style={[styles.txtTitle, {flex: 1}]}
+                        numberOfLines={1}>{raceInfo.name}</Text>
                     <View style={styles.viewTime}>
                         <Image style={styles.imgTime}
                                source={Images.home_clock}/>
@@ -270,7 +275,7 @@ class RaceScene extends Component {
                 style={{
                     marginBottom: noBottomBar ? 0 : 50
                 }}>
-                <ScrollView
+                <Animated.ScrollView
                     showsVerticalScrollIndicator={false}
                     onScroll={Animated.event(
                         [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
@@ -284,7 +289,7 @@ class RaceScene extends Component {
                         <MarkdownPlat
                             markdownStr={raceInfo.description}/>
                     </Animated.View>
-                </ScrollView>
+                </Animated.ScrollView>
 
             </View>)
         }
@@ -569,7 +574,8 @@ const styles = StyleSheet.create({
     },
     viewInfo: {
         marginLeft: 17,
-        marginTop: 4
+        height: 104,
+        flex: 1
     },
     imgTime: {
         height: 10,
