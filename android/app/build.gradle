@@ -90,12 +90,13 @@ android {
         applicationId "com.deshpro.pokerpro"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 2
-        versionName "2.4"
+        versionCode 3
+        versionName "2.5"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
-
+        renderscriptTargetApi 20
+        renderscriptSupportModeEnabled true
         multiDexEnabled true
         manifestPlaceholders = [
                 JPUSH_APPKEY: "40fc518c7fb0759af5cba44a",   //在此替换你的APPKey

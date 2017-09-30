@@ -501,10 +501,11 @@ export default class BuyTicketPage extends Component {
 
                     {isEntity === ENTITY ? this._addrView() : this._emailViwe(email)}
 
-                    <NameRealView
+                    {race.required_id_type ? <NameRealView
                         required_id_type={race.required_id_type}
                         ref={o => this.realName = o}
-                    />
+                    /> : null}
+
                     {this._inviteCode()}
 
                     {this._priceView()}

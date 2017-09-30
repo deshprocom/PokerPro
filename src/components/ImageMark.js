@@ -22,7 +22,7 @@ export default class ImageMark extends Component {
         super(props);
     }
 
-    componentDidMount() {
+    componentWillMount() {
 
         const {src} = this.props;
 

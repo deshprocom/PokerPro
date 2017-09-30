@@ -30,6 +30,8 @@ export default class NameRealView extends Component {
             return;
         const {chinese_ids, passport_ids} = global.verifies;
         let verified = {};
+
+        console.log("RealName", this.props.required_id_type)
         if (this.props.required_id_type === 'passport_id') {
 
             passport_ids.forEach(function (x) {
@@ -59,7 +61,7 @@ export default class NameRealView extends Component {
                 this.props.required_id_type === 'any') {
                 this.setState({verified})
             } else {
-                alert(this.props.required_id_type === 'passport_id' ? "本赛票需要护照认证信息" : "本赛票需要身份证认证信息")
+                alert(this.props.required_id_type === 'passport_id' ? I18n.t('cert_buy_pass') : I18n.t('cert_buy_china'))
             }
 
         })
@@ -99,6 +101,10 @@ export default class NameRealView extends Component {
     }
 
 
+    isPassport = () => {
+        return this.props.required_id_type === 'passport_id'
+    };
+
     nameView = () => {
         const {verified} = this.state;
         if (isEmptyObject(verified)) {
@@ -107,7 +113,7 @@ export default class NameRealView extends Component {
                     height: 39, alignItems: 'center', flexDirection: 'row',
                     justifyContent: 'space-between', marginLeft: 18, marginRight: 18
                 }}>
-                <Text style={{fontSize: 12, color: Colors._AAA}}>{this.props.required_id_type === 'passport_id' ?
+                <Text style={{fontSize: 12, color: Colors._AAA}}>{this.isPassport() ?
                     I18n.t('cert_pass') : I18n.t('cert_chinese')}</Text>
                 <View style={{flex: 1}}/>
                 <Text style={{fontSize: 15, color: '#3681F1', marginRight: 12}}>{I18n.t('init')}</Text>
@@ -128,13 +134,15 @@ export default class NameRealView extends Component {
                                 {I18n.t('real_name')}:</Text>
                             <Text style={{fontSize: Fonts.size.h15, color: Colors.txt_666}}>
                                 {verified.real_name}</Text>
+
+                            {this._showStatus()}
                         </View>
 
                     </View>
 
                     <View style={{flexDirection: 'row', marginTop: 8}}>
                         <Text style={{fontSize: Fonts.size.h15, color: Colors.txt_666, marginRight: 9}}>
-                            {I18n.t('card_num')}:</Text>
+                            {this.isPassport() ? I18n.t('password_card') : I18n.t('ID_card')}</Text>
                         <SecurityText
                             securityOptions={{
                                 isSecurity: true,
@@ -146,7 +154,6 @@ export default class NameRealView extends Component {
                     </View>
                 </View>
 
-                {this._showStatus()}
 
                 <Image style={{width: 11, height: 20}}
                        source={Images.ticket_arrow}/>
@@ -157,19 +164,46 @@ export default class NameRealView extends Component {
     _showStatus = () => {
         const {verified} = this.state;
         if (verified.status !== Verified.INIT) {
-            return (  <View style={{
-                borderRadius: 2, backgroundColor: '#cccccc',
-                height: 25, width: 55, justifyContent: 'center', alignItems: 'center',
-                marginRight: 20
-            }}>
-                <Text style={[Fonts.H12, {color: Colors.white}]}>
+            return (
+                <Text style={this.statusStyle(verified.status)}>
                     {idCardStatus(verified.status)}
-                </Text>
-
-            </View>)
+                </Text>)
         }
 
     }
 
+    statusStyle = (status) => {
+        switch (status) {
+            case Verified.PENDING:
+                return styles.pendingStatus;
+            case Verified.PASSED:
+                return [styles.pendingStatus, {
+                    borderColor: '#34BA3C',
+                    color: '#34BA3C'
+                }];
+            case Verified.FAILED:
+                return [styles.pendingStatus, {
+                    borderColor: '#F34A4A',
+                    color: '#F34A4A',
+                }];
+        }
+    }
 
 }
+
+
+const styles = StyleSheet.create({
+    pendingStatus: {
+        fontSize: 11,
+        paddingTop: 3,
+        paddingLeft: 2,
+        paddingRight: 2,
+        paddingBottom: 1,
+        borderWidth: 1,
+        borderColor: '#6DB0FF',
+        color: '#6DB0FF',
+        borderRadius: 2,
+        textAlign: 'center',
+        marginLeft: 13
+    },
+})

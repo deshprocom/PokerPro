@@ -3,6 +3,7 @@
  */
 
 import {Actions} from 'react-native-router-flux';
+import {NavigationActions} from 'react-navigation';
 
 
 const customFloatFromRight = '';
@@ -481,7 +482,7 @@ export default class Router {
     }
 
     popToLoginFirstPage() {
-        this.push({
+        this.stackPush({
             name: 'LoginFirstPage',
         })
 
@@ -509,7 +510,7 @@ export default class Router {
     toRacesInfoPage(props, race_id, fromBuy) {
         this.push(props, {
 
-            name: 'RacesInfoPage',
+            name: 'RaceScene',
             params: {
                 race_id: race_id,
                 fromBuy: fromBuy
@@ -580,7 +581,6 @@ export default class Router {
 
     toPersonPage(props) {
         this.push(props, {
-
             name: 'PersonPage',
         })
     }
@@ -598,9 +598,15 @@ export default class Router {
         Actions.popTo('LoginFirstPage')
     }
 
-    popToDrawerRank() {
+    popToDrawerRank(navigation) {
+        console.log(Actions._state.routes);
 
-        Actions.popTo('DrawerRank')
+        let route = Actions._state.routes[2];
+        const backTo = NavigationActions.back({
+            key: route.key
+        });
+
+        navigation.dispatch(backTo)
 
     }
 

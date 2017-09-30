@@ -4,8 +4,18 @@ import {NavigationBar, ActionSheet, ImagePicker} from '../../components';
 import {Colors, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {addVerified, delVerified} from '../../services/AccountDao';
-import {picker, strNotNull, showToast, isEmptyObject, getFileName} from '../../utils/ComonHelper';
+import {strNotNull, showToast, isEmptyObject, getFileName} from '../../utils/ComonHelper';
 import {idCardStatus, Verified} from '../../configs/Status';
+
+export const picker = {
+    width: 500,
+    height: 500,
+    cropping: false,
+    cropperCircleOverlay: true,
+    compressImageMaxWidth: 800,
+    compressImageMaxHeight: 600,
+    compressImageQuality: 0.5,
+};
 
 export default class AddVerified extends Component {
     state = {
@@ -144,7 +154,7 @@ export default class AddVerified extends Component {
     _submit = () => {
         const {name, num, localImg, showImg} = this.state;
         const {cert_type, verified_refresh, verified} = this.props.params;
-        console.log(cert_type, this.state)
+
 
         if (strNotNull(name) && strNotNull(num)) {
             let formData = new FormData();
@@ -169,7 +179,7 @@ export default class AddVerified extends Component {
 
 
         } else {
-            showToast('姓名和证件号请填写完整！')
+            showToast(I18n.t('cert_content'))
         }
 
 
@@ -184,9 +194,16 @@ export default class AddVerified extends Component {
         </TouchableOpacity>
     };
 
+    getCertType = () => {
+        const {cert_type, verified_refresh, verified} = this.props.params;
+        return cert_type ? cert_type === 'passport_id' : verified.cert_type === 'passport_id';
+    };
+
     renderImage = () => {
+
         return <View>
-            <Text style={styles.lbImage1}>{I18n.t('verified_image_lb')}</Text>
+            <Text
+                style={styles.lbImage1}>{this.getCertType() ? I18n.t('verified_image_lb_pass') : I18n.t('verified_image_lb')}</Text>
             <TouchableOpacity
                 onPress={() => {
                     this.ActionSheet.show();
@@ -244,7 +261,7 @@ export default class AddVerified extends Component {
             <View style={{backgroundColor: Colors.bg_ec, height: 1}}/>
             <View style={styles.rowAlign}>
                 <Text
-                    style={styles.lbName}>{cert_type === 'passport_id' ? I18n.t('password_card') : I18n.t('ID_card')}</Text>
+                    style={styles.lbName}>{this.getCertType() ? I18n.t('password_card') : I18n.t('ID_card')}</Text>
                 <TextInput style={styles.inName}
                            underlineColorAndroid='transparent'
                            clearButtonMode='while-editing'
@@ -286,6 +303,8 @@ const styles = StyleSheet.create({
     showImg: {
         height: 128,
         width: 206,
+        resizeMode:'contain'
+
     },
     btnSelectImg: {
         alignSelf: 'center',
@@ -324,7 +343,8 @@ const styles = StyleSheet.create({
         borderRadius: 2,
         marginTop: 30,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginBottom: 30
     },
     passImg: {
         height: 128,

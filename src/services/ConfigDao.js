@@ -21,7 +21,8 @@ export function init(resolve) {
 
 
 export function initLogin() {
-    listVerified(data=>{},err=>{})
+    listVerified(data=>{
+    },err=>{})
 }
 
 function switchLang(lang) {

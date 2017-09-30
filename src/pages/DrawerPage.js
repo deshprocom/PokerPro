@@ -2,7 +2,7 @@
  * Created by lorne on 2017/1/3.
  */
 import React from 'react';
-import {StyleSheet, BackAndroid, Navigator} from 'react-native';
+import {StyleSheet} from 'react-native';
 import Drawer from 'react-native-drawer'
 import {connect} from 'react-redux';
 import SidePage from './SidePage';
@@ -22,8 +22,8 @@ class DrawerPage extends React.Component {
 
         this.router = this.router || new Router();
         global.router = this.router;
-    }
 
+    }
 
     componentDidMount() {
         setDispatchAction(GET_CERTIFICATION, this.props._getRealName);

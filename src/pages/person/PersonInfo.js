@@ -305,7 +305,7 @@ export default class PersonInfo extends React.Component {
                 }).catch(e => {
                     // Alert.alert(e.message ? e.message : e);
                 });
-                break
+                break;
             case 2: {
                 ImagePicker.openPicker(picker).then(image => {
                     this._update(image)
@@ -321,6 +321,11 @@ export default class PersonInfo extends React.Component {
     };
 
     _txtRealStatus = () => {
+
+        if (isEmptyObject(global.verifies)) {
+            return I18n.t('init');
+        }
+
         const {chinese_ids, passport_ids} = global.verifies;
         if (isEmptyObject(chinese_ids) && isEmptyObject(passport_ids)) {
             return I18n.t('init');

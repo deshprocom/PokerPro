@@ -24,11 +24,11 @@ export const WB_URL = 'https://sns.whalecloud.com/sina2/callback';
 export const China = 'zh';
 export const English = 'en';
 
-export const UpdateVersion = 'v10';
+export const UpdateVersion = 'v25';
 export const IOSLOAD = 'https://itunes.apple.com/cn/app/pokerpro/id1248197817?mt=8';
 export const ANDROIDLOAD = 'http://sj.qq.com/myapp/detail.htm?apkName=com.deshpro.pokerpro';
 
 
-export const VERSION = '2.4';
+export const VERSION = '2.5';
 
 

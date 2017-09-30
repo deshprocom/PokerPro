@@ -108,7 +108,6 @@ export default class RaceInfoView extends Component {
 
             </View>}
 
-            {this._realNameStatus()}
 
         </TouchableOpacity>)
     }

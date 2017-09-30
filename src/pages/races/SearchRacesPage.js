@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/3/3.
  */
-import React, {Component}from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, TextInput, InteractionManager,
     StyleSheet, Image, Text, ListView, Platform
@@ -77,7 +77,7 @@ class SearchRacesPage extends Component {
         return (
             <PullListView
                 key="list"
-                ref={ (component) => this._pullToRefreshListView = component }
+                ref={(component) => this._pullToRefreshListView = component}
                 viewType={PullListView.constants.viewType.listView}
                 dataSource={this.state.componentDataSource}
                 renderSectionHeader={this._renderSectionHeader}
@@ -186,7 +186,7 @@ class SearchRacesPage extends Component {
                 height: 44, backgroundColor: Colors.bg_ec,
                 alignItems: 'center', justifyContent: 'center'
             }}>
-                <Text style={{color: '#4b515a', fontSize: 17}}>{sectionID}</Text>
+                <Text style={{color: '#4b515a', fontSize: 17, marginTop: 10}}>{sectionID}</Text>
             </View>
         )
     }

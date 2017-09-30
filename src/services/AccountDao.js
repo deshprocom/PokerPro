@@ -7,6 +7,23 @@ import StorageKey from '../configs/StorageKey';
 import JpushHelp from './JpushHelper';
 import {isEmptyObject, showToast} from '../utils/ComonHelper';
 
+
+export function getPreferential(body, resolve, reject) {
+    helper.get(Api.preferential(body), ret => {
+        resolve(ret.data);
+    }, err => {
+        reject(err)
+    })
+}
+
+export function getIsTestUser(resolve, reject) {
+    helper.get(Api.test_user, ret => {
+        resolve(ret.data);
+    }, err => {
+        reject(err)
+    })
+}
+
 export function listVerified(resolve, reject) {
     helper.get(Api.list_certification(), ret => {
         resolve(ret.data);
@@ -216,13 +233,28 @@ export function setLoginUser(ret) {
         rawData: ret
     });
 
+
     if (!isEmptyObject(ret)) {
+
+        setTimeout(() => {
+            //获取实名信息
+            listVerified(data => {
+            }, err => {
+            });
+
+            //统计登陆用户
+            postLoginCount();
+
+        }, 100);
+
+
+        //Jpush别名设置
         JpushHelp.getRegistrationID((id) => {
             router.log('JpushId: ' + id)
         });
         let type = helper.getApiType() === 'production' ? 'pro' : helper.getApiType();
         let alias = type + '_' + ret.user_id;
-        console.log(alias)
+        console.log(alias);
         JpushHelp.setAlias(alias, () => {
             router.log(alias + ' set jpush alias success')
         }, () => {

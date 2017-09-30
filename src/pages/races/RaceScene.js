@@ -3,9 +3,9 @@
  */
 import React, {Component} from 'react';
 import {
-    TouchableOpacity, View, TextInput, Alert,
+    TouchableOpacity, View, Animated, Dimensions,
     StyleSheet, Image, Text, ScrollView, Platform,
-    InteractionManager
+    findNodeHandle
 } from 'react-native';
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
@@ -22,16 +22,19 @@ import {
     strValid, uShareRace
 } from '../../utils/ComonHelper';
 import TestRouter from '../../components/TestRouter';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
+import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
 import RaceSideView from './RaceSideView';
 import {MarkdownPlat, ImageLoad} from '../../components';
 import MainRaceResultView from './MainRaceResultView';
 import {umengEvent} from '../../utils/UmengEvent';
+import {BlurView} from 'react-native-blur';
 
+let {width, height} = Dimensions.get('window');
+//顶部内容高度
+let headHeight = 200 - Metrics.navBarHeight;
 
-class RacesInfoPage extends Component {
+class RaceScene extends Component {
     state = {
-        isLoginUser: false,
         raceInfo: {},
         noBottomBar: false,
         selectPage: 0,
@@ -39,15 +42,39 @@ class RacesInfoPage extends Component {
         raceRanks: [],
         selectPageKey: 'page_race_info',
         schedules: [],
-        blinds: []
+        blinds: [],
+        scrollY: new Animated.Value(0),
+        scrollY1: 0,
+        bgY: 0,
+        bgScale: 1,
+        headOpacity: 1,
+        viewRef: 0,
+        titleOpacity: 0
     };
 
 
     componentDidMount() {
-        console.log('Actions', this.props)
         this._fetchSideRace();
         this._refreshPage();
 
+        const {scrollY} = this.state;
+
+        let activeHeight = 36;
+
+        this.setState({
+            scrollY1: scrollY.interpolate({
+                inputRange: [0, headHeight, headHeight],
+                outputRange: [0, -headHeight, -headHeight]
+            }),
+            bgY: scrollY.interpolate({
+                inputRange: [-headHeight, 0, headHeight, headHeight],
+                outputRange: [headHeight / 2, 0, -headHeight / 3, -headHeight / 3]
+            }),
+            bgScale: scrollY.interpolate({inputRange: [-headHeight, 0, headHeight], outputRange: [2, 1, 1]}),
+            headOpacity: scrollY.interpolate({inputRange: [0, activeHeight, headHeight], outputRange: [1, 1, 0]}),
+            titleOpacity: scrollY.interpolate({inputRange: [0, headHeight - 10, headHeight], outputRange: [0, 0, 1]}),
+
+        })
     }
 
     componentWillReceiveProps(newProps) {
@@ -85,12 +112,15 @@ class RacesInfoPage extends Component {
                 }}
                 testID="page_race_intro">
 
-
+                {this._renderBlur()}
+                {this._tabBarView()}
                 {this._renderNav()}
 
                 {this._viewPager()}
 
                 {this._bottomBar()}
+
+                {this._renderTopNav()}
 
 
             </View>
@@ -98,49 +128,81 @@ class RacesInfoPage extends Component {
     }
 
 
-    _renderNav = () => {
+    imageLoaded() {
+        this.setState({viewRef: findNodeHandle(this.refs.backgroundImage)})
+    }
+
+    _renderBlur = () => {
+        let props = Platform.OS === 'ios' ? {
+            blurType: "dark",
+            blurAmount: 18
+        } : {
+            viewRef: this.state.viewRef,
+            downsampleFactor: 10,
+            overlayColor: 'rgba(255,255,255,.1)'
+        };
         const {raceInfo} = this.state;
-        return <Image style={styles.header}
-                      resizeMode="cover"
-                      source={Images.home_bg}
-        >
+        return <Animated.Image source={{uri: raceInfo.logo}} ref={'backgroundImage'}
+                               onLoadEnd={this.imageLoaded.bind(this)}
+                               style={[
+                                   styles.bgBlur,
+                                   {
+                                       transform: [{translateY: this.state.bgY},
+                                           {scale: this.state.bgScale}]
+                                   }
+                               ]}>
+            <BlurView {...props} style={styles.blur}/>
 
-            <View style={styles.topBar}>
-                <TouchableOpacity
-                    testID="btn_bar_left"
-                    style={styles.popBtn}
-                    onPress={() => router.pop()}>
-                    <Image style={styles.backImg}
-                           source={Images.sign_return}/>
-                </TouchableOpacity>
-                <TestRouter refreshPage={this._refreshPage}/>
+        </Animated.Image>
+    };
 
-                <View style={styles.viewTitle}>
-                    <Text
-                        testID="txt_races_title"
-                        style={styles.txtTitle}
-                        numberOfLines={1}>{raceInfo.name}</Text>
-                </View>
-                <TouchableOpacity
-                    testID="btn_bar_right"
-                    style={styles.popBtn}
-                    onPress={() => {
-                        uShareRace(raceInfo.name, raceInfo.location +
-                            '\n' + this.race_time(raceInfo),
-                            raceInfo.logo,
-                            this.props.params.race_id)
-                    }}>
-                    <Image style={styles.imgShare}
-                           source={Images.share}/>
-                </TouchableOpacity>
+    _renderTopNav = () => {
+        const {raceInfo, titleOpacity} = this.state;
+        return <View style={styles.topBar}>
+            <TouchableOpacity
+                testID="btn_bar_left"
+                style={styles.popBtn}
+                onPress={() => router.pop()}>
+                <Image style={styles.backImg}
+                       source={Images.sign_return}/>
+            </TouchableOpacity>
+            <TestRouter refreshPage={this._refreshPage}/>
+
+            <Animated.View style={[styles.viewTitle, {opacity: titleOpacity}]}>
+                <Text
+                    testID="txt_races_title"
+                    style={[styles.txtTitle,{color:Colors._F4E}]}
+                    numberOfLines={1}>{raceInfo.name}</Text>
+            </Animated.View>
+            <TouchableOpacity
+                testID="btn_bar_right"
+                style={styles.popBtn}
+                onPress={() => {
+                    uShareRace(raceInfo.name, raceInfo.location +
+                        '\n' + this.race_time(raceInfo),
+                        raceInfo.logo,
+                        this.props.params.race_id)
+                }}>
+                <Image style={styles.imgShare}
+                       source={Images.share}/>
+            </TouchableOpacity>
 
 
-            </View>
+        </View>;
+    };
 
-            {isEmptyObject(raceInfo) ? null : <View style={styles.headerInfo}>
+    _renderNav = () => {
+
+        const {raceInfo} = this.state;
+        return <View style={styles.head}>
+
+            <Animated.View style={[styles.headerInfo, {opacity: this.state.headOpacity}]}>
                 <ImageLoad style={styles.logoImg}
                            source={{uri: raceInfo.logo}}/>
                 <View style={styles.viewInfo}>
+                    <Text
+                        style={[styles.txtTitle, {flex: 1}]}
+                        numberOfLines={1}>{raceInfo.name}</Text>
                     <View style={styles.viewTime}>
                         <Image style={styles.imgTime}
                                source={Images.home_clock}/>
@@ -169,13 +231,10 @@ class RacesInfoPage extends Component {
                     </View>
 
                 </View>
+            </Animated.View>
 
-            </View>}
 
-            <View style={styles.viewFlex}/>
-
-            {this._tabBarView()}
-        </Image>
+        </View>
     };
 
 
@@ -188,6 +247,11 @@ class RacesInfoPage extends Component {
         let noBottomBar = this._hasBottomBar();
         let tabs = [];
         this.pages = [];
+
+        let scrollY = this.state.scrollY.interpolate({
+            inputRange: [0, headHeight, headHeight],
+            outputRange: [0, headHeight, headHeight + 1]
+        });
 
 
         tabs.push(<TouchableOpacity
@@ -205,14 +269,27 @@ class RacesInfoPage extends Component {
 
         if (!isEmptyObject(raceInfo)) {
             this.pages.push(<View
+                tabLabel={'简介'}
                 testID="page_race_info"
                 key={'page_race_info'}
                 style={{
-                    backgroundColor: Colors.white,
                     marginBottom: noBottomBar ? 0 : 50
                 }}>
-                <MarkdownPlat
-                    markdownStr={raceInfo.description}/>
+                <Animated.ScrollView
+                    showsVerticalScrollIndicator={false}
+                    onScroll={Animated.event(
+                        [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
+                    )}
+                    scrollEventThrottle={16}
+                >
+                    <Animated.View style={{
+                        transform: [{translateY: scrollY}],
+                        paddingBottom: headHeight
+                    }}>
+                        <MarkdownPlat
+                            markdownStr={raceInfo.description}/>
+                    </Animated.View>
+                </Animated.ScrollView>
 
             </View>)
         }
@@ -239,16 +316,21 @@ class RacesInfoPage extends Component {
             </TouchableOpacity>);
 
             this.pages.push(<ScrollView
+                tabLabel={'主赛信息'}
                 testID="page_race_result"
                 key={'page_race_result'}
                 style={{
                     backgroundColor: Colors.bg_f5,
-                    marginBottom: noBottomBar ? 0 : 50
+                    marginBottom: noBottomBar ? 0 : 50,
                 }}>
-                <MainRaceResultView
-                    blinds={blinds}
-                    schedules={schedules}
-                    raceRanks={raceRanks}/>
+                <Animated.View style={{
+                    paddingBottom: headHeight
+                }}>
+                    <MainRaceResultView
+                        blinds={blinds}
+                        schedules={schedules}
+                        raceRanks={raceRanks}/>
+                </Animated.View>
             </ScrollView>)
         }
 
@@ -270,27 +352,24 @@ class RacesInfoPage extends Component {
 
             </TouchableOpacity>);
 
-            this.pages.push(<View
+            this.pages.push(<ScrollView
+                tabLabel={'边塞信息'}
                 testID="page_race_side"
                 key={'page_race_side'}
                 style={{
-                    backgroundColor: Colors.bg_f5,
                     marginBottom: noBottomBar ? 0 : 50
                 }}>
-                <RaceSideView
-                    raceId={this.props.params.race_id}
-                    subRaces={subRaces}/>
-            </View>)
-
+                <Animated.View style={{
+                    paddingBottom: headHeight
+                }}>
+                    <RaceSideView
+                        raceId={this.props.params.race_id}
+                        subRaces={subRaces}/>
+                </Animated.View>
+            </ScrollView>)
 
         }
 
-        return (    <View style={styles.viewTab}>
-
-            {tabs}
-
-
-        </View>)
     };
 
     _selectPageIndex = (key) => {
@@ -313,13 +392,6 @@ class RacesInfoPage extends Component {
     }
 
 
-    _fetchRaceRanks = () => {
-        const body = {
-            race_id: this.props.params.race_id
-        };
-        this.props._getRaceRanks(body)
-    };
-
     _fetchSideRace = () => {
         const body = {
             race_id: this.props.params.race_id
@@ -334,9 +406,7 @@ class RacesInfoPage extends Component {
                 user_id: user_id,
                 race_id: this.props.params.race_id
             };
-            this.setState({
-                isLoginUser: true
-            });
+
 
             this.props._fetchRacesInfo(body);
         } else {
@@ -344,17 +414,13 @@ class RacesInfoPage extends Component {
                 user_id: 0,
                 race_id: this.props.params.race_id
             };
-            this.setState({
-                isLoginUser: false
-            });
-
             this.props._fetchRacesInfo(body);
         }
 
     };
 
     _bottomBar = () => {
-        const {isLoginUser, raceInfo} = this.state;
+        const {raceInfo} = this.state;
 
         const {ticket_status, ticket_sellable} = raceInfo;
 
@@ -376,29 +442,41 @@ class RacesInfoPage extends Component {
 
     _viewPager = () => {
 
-        return ( <ScrollableTabView
-            onChangeTab={({i}) => {
-                if (i == undefined || i < 0)
-                    return;
+        let MAIN_HEIGHT = height - Metrics.navBarHeight;
+        let style = {
+            transform: [{
+                translateY: this.state.scrollY1
+            }]
+        };
+
+        if (Platform.OS == "android") {
+            style.height = height + headHeight
+        }
+
+        return <Animated.View style={[styles.tabView, style]}>
+            <View style={{
+                backgroundColor: "white",
+                height: MAIN_HEIGHT,
+                width,
+                marginTop: headHeight
+            }}>
+                <ScrollableTabView
+                    renderTabBar={() => <ScrollableTabBar
+                        backgroundColor={Colors.white}
+                        activeTextColor="#161718"
+                        inactiveTextColor={Colors._AAA}
+                        textStyle={{fontSize: 15}}
+                        style={{borderColor: Colors._EEE}}
+                        underlineStyle={{backgroundColor: '#161718', height: 2}}
+                    />}
+                    ref={ref => this.viewpage = ref}>
+
+                    {this.pages}
 
 
-                let pageKey;
-                if (!isEmptyObject(this.pages[i]))
-                    pageKey = this.pages[i].key;
-
-                this.setState({
-                    selectPage: i,
-                    selectPageKey: pageKey
-                })
-            }}
-            renderTabBar={false}
-            style={styles.container}
-            ref={ref => this.viewpage = ref}>
-
-            {this.pages}
-
-
-        </ScrollableTabView>)
+                </ScrollableTabView>
+            </View>
+        </Animated.View>
     };
 
 
@@ -436,7 +514,7 @@ const mapStateToProps = state => ({
     raceRanks: state.RaceState.raceRanks
 });
 
-export default connect(mapStateToProps, bindAction)(RacesInfoPage);
+export default connect(mapStateToProps, bindAction)(RaceScene);
 
 
 const styles = StyleSheet.create({
@@ -455,18 +533,23 @@ const styles = StyleSheet.create({
         flex: 1
     },
     header: {
-        height: 220,
+        height: 200,
         backgroundColor: 'transparent',
         width: Metrics.screenWidth
     },
     topBar: {
-        height: 40,
+        height: Metrics.navBarHeight,
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: Metrics.statusBarHeight
+        paddingTop: Metrics.statusBarHeight,
+        backgroundColor: 'transparent',
+        position: 'absolute',
+        top: 0,
+        width
+
     },
     popBtn: {
-        height: 40,
+        height: 44,
         width: 50,
         justifyContent: 'center'
     },
@@ -491,7 +574,8 @@ const styles = StyleSheet.create({
     },
     viewInfo: {
         marginLeft: 17,
-        marginTop: 4
+        height: 104,
+        flex: 1
     },
     imgTime: {
         height: 10,
@@ -589,7 +673,35 @@ const styles = StyleSheet.create({
         height: 22,
         width: 23,
         marginRight: 24.8
-    }
-
+    },
+    head: {
+        position: "absolute",
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        paddingTop: Metrics.navBarHeight + 10,
+        backgroundColor: "rgba(0,0,0,.3)"
+    },
+    tabView: {
+        position: "absolute",
+        top: Metrics.navBarHeight,
+        bottom: 0,
+        left: 0,
+        right: 0,
+    },
+    bgBlur: {
+        width,
+        height: width,
+        resizeMode: "cover"
+    },
+    blur: {
+        position: "absolute",
+        left: 0,
+        right: 0,
+        top: 0,
+        width,
+        height: width,
+    },
 
 });

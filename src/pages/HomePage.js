@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2016/12/27.
  */
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet, Text, View, ListView,
     TouchableOpacity, Image, StatusBar,
@@ -15,7 +15,7 @@ import {setAccessToken, getBaseURL} from '../services/RequestHelper';
 import {fetchGetProfile} from '../actions/PersonAction';
 import {FETCH_SUCCESS, GET_PROFILE, GET_RECENT_RACES} from '../actions/ActionTypes';
 import I18n from 'react-native-i18n';
-import {init, initLogin} from '../services/ConfigDao';
+import {init} from '../services/ConfigDao';
 import {fetchGetRecentRaces, _getProfileOk} from '../actions/RacesAction';
 import ListViewForRaces from '../components/listitem/ListViewForRaces';
 import {LoadErrorView, LoadingView, NoDataView} from '../components/load'
@@ -23,16 +23,13 @@ import {isEmptyObject, strNotNull, putLoginUser, getUserData, updateApp} from '.
 import {NavigationBar, ParallaxScrollView} from '../components';
 import JpushHelp from '../services/JpushHelper';
 import {umengEvent} from '../utils/UmengEvent';
-import {postLoginCount, getActivityPush, getUpdate} from '../services/AccountDao';
+import {getActivityPush, getUpdate} from '../services/AccountDao';
 import ActivityModel from './message/ActivityModel';
 
 var maxDown = 0;
 
 class HomePage extends Component {
 
-    static propTypes = {
-        router: PropTypes.object
-    }
 
     constructor(props) {
 
@@ -57,7 +54,9 @@ class HomePage extends Component {
     componentDidMount() {
         JpushHelp.addPushListener(this.receiveCb, this.openCb);
         this._refreshPage();
+        //首页活动
         this._getPushActivity();
+        //App更新
         setTimeout(this._getUpdate, 100)
 
     }
@@ -138,8 +137,8 @@ class HomePage extends Component {
                     number: 8
                 };
                 this.props._getRecentRaces(recentRaces);
-                postLoginCount();
-                initLogin();
+
+
             }).catch(err => {
 
             const recentRaces = {

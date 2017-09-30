@@ -1,3 +1,8 @@
+2017年9月25日-2017年9月30日 IOS & Android
+1、完成迭代内容
+2、赛事详情UI更新
+3、修复资讯UI适配
+
 2017年9月18日-2017年9月22日 IOS & Android
 1、修复android 闪退bug
 2、升级React Native
