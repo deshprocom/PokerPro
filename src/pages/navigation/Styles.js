@@ -6,8 +6,7 @@ var deviceWidth = Dimensions.get('window').width;
 export const styles = StyleSheet.create({
     scrollImg:{
         flex: 1,
-        height: 200,
-        backgroundColor:'red'
+        height: 200
     },
     ticket: {
         alignItems: 'center',

@@ -8,6 +8,7 @@ import {
     from 'react-native';
 import {Images} from '../../Themes';
 import Races from './Races';
+import MainBanner from './MainBanner';
 import {styles} from './Styles';
 
 const onButtonPress=()=>{
@@ -78,7 +79,7 @@ export default class RaceInfoPage extends Component {
         return (
             <ScrollView>
                 <View style={styles.scrollImg}>
-
+                    <MainBanner/>
                 </View>
                 {/*<View*/}
                     {/*style={{height:100,flexDirection:'row',flexWrap:'nowrap',justifyContent:'space-around',alignItems:'center'}}>*/}

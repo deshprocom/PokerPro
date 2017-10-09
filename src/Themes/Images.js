@@ -201,7 +201,9 @@ const images = {
     icon_spot: require('../../source/navigation/icon_spot.png'),
     pukes: require('../../source/navigation/pukes.png'),
     raceBegin: require('../../source/navigation/raceBegin.png'),
-    is: require('../../source/navigation/is>.png')
+    is: require('../../source/navigation/is>.png'),
+    location: require('../../source/navigation/location.png'),
+    time: require('../../source/navigation/time.png')
 
 
 };

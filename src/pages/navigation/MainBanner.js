@@ -21,6 +21,7 @@ export default class MainBanner extends Component {
         return (
             <View style={{height: 200}}>
                 <Swiper
+                    autoplayTimeout={3}
                     autoplay>
                     {this.state.items.map((item, key) => {
                         return <View
