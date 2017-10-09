@@ -271,15 +271,14 @@ const styles = StyleSheet.create({
     },
     btnBuy: {
         height: 49,
-        width: 344,
         position: 'absolute',
         bottom: 22,
-        right: 17,
-        left: 17,
         backgroundColor: '#161718',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 3
+        borderRadius: 3,
+        alignSelf: 'center',
+        width: '90%'
     },
     txtGoBuy: {
         color: '#D2C476',
