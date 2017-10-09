@@ -15,6 +15,7 @@ import {fetchGetProfile} from '../actions/PersonAction';
 import {fetchGetRecentRaces} from '../actions/RacesAction';
 import Router from '../configs/Router';
 
+import RaceInfoPage from '../pages/navigation/RaceInfoPage';
 
 class DrawerPage extends React.Component {
 
@@ -71,8 +72,8 @@ class DrawerPage extends React.Component {
 
             >
                 <HomePage router={this.router}/>
-
             </Drawer>
+
         )
     }
 }

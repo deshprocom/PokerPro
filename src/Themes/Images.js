@@ -196,7 +196,12 @@ const images = {
     verified_edit:require('../../source/verified/edit.png'),
     verified_select:require('../../source/verified/select.png'),
     verified_selected:require('../../source/verified/selected.png'),
-    verified_exmple:require('../../source/verified/exmple.png')
+    verified_exmple:require('../../source/verified/exmple.png'),
+
+    icon_spot: require('../../source/navigation/icon_spot.png'),
+    pukes: require('../../source/navigation/pukes.png'),
+    raceBegin: require('../../source/navigation/raceBegin.png'),
+    is: require('../../source/navigation/is>.png')
 
 
 };
