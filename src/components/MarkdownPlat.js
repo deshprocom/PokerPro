@@ -85,7 +85,9 @@ export default class MarkdownPlat extends Component {
                     }}>
                         {markdownStr}
                     </Markdown>
-                )
+                );
+            else
+                return <View/>
         } catch (e) {
             return <View/>
         }
