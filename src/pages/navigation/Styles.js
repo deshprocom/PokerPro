@@ -63,15 +63,14 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     moreTwos: {
-        marginTop: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
-        flexWrap: 'nowrap'
+        marginTop: 16,
+        marginLeft:17
     },
     moreTwo: {
-        width: 89,
+        width:101,
+        marginRight:10,
         flexDirection: 'column',
-        alignItems: 'center'
+
     },
     information: {
         flexDirection: 'column',

@@ -8,6 +8,7 @@ import {
     from 'react-native';
 import {Images} from '../../Themes';
 import Races from './Races';
+import Coming from './Coming';
 import MainBanner from './MainBanner';
 import {styles} from './Styles';
 
@@ -111,35 +112,7 @@ export default class RaceInfoPage extends Component {
                     </View>
                 </View>
                 <Races/>
-                <View>
-                    <View style={[styles.more,{marginLeft:20}]}>
-                        <ActivityIndicator/>
-                        <Text style={styles.raceText}>即将到来</Text>
-                        <TouchableOpacity style={{marginLeft:150}}
-                                          onPress={onButtonPress}>
-                            <Text style={[styles.raceText]}>更多 ></Text>
-                        </TouchableOpacity>
-
-                    </View>
-                    <View style={styles.moreTwos}>
-                        <View style={styles.moreTwo}>
-                            <Image source={Images.icon_spot}/>
-                            <Text style={[styles.raceText,{marginTop:10}]}>如果你无法简洁的表达你...</Text>
-                        </View>
-                        <View style={styles.moreTwo}>
-                            <Image source={Images.icon_spot}/>
-                            <Text style={[styles.raceText,{marginTop:10}]}>如果你无法简洁的表达你...</Text>
-                        </View>
-                        <View style={styles.moreTwo}>
-                            <Image source={Images.icon_spot}/>
-                            <Text style={[styles.raceText,{marginTop:10}]}>如果你无法简洁的表达你...</Text>
-                        </View>
-                        <View style={styles.moreTwo}>
-                            <Image source={Images.icon_spot}/>
-                            <Text style={[styles.raceText,{marginTop:10}]}>如果你无法简洁的表达你...</Text>
-                        </View>
-                    </View>
-                </View>
+                <Coming/>
 
                 <View>
                     <View style={[styles.more,{marginLeft:20,marginTop:20}]}>
