@@ -171,7 +171,7 @@ class RaceScene extends Component {
             <Animated.View style={[styles.viewTitle, {opacity: titleOpacity}]}>
                 <Text
                     testID="txt_races_title"
-                    style={[styles.txtTitle,{color:Colors._F4E}]}
+                    style={[styles.txtTitle, {color: Colors._F4E}]}
                     numberOfLines={1}>{raceInfo.name}</Text>
             </Animated.View>
             <TouchableOpacity
@@ -269,7 +269,7 @@ class RaceScene extends Component {
 
         if (!isEmptyObject(raceInfo)) {
             this.pages.push(<View
-                tabLabel={'简介'}
+                tabLabel={I18n.t('RaceIntro')}
                 testID="page_race_info"
                 key={'page_race_info'}
                 style={{
@@ -316,7 +316,7 @@ class RaceScene extends Component {
             </TouchableOpacity>);
 
             this.pages.push(<ScrollView
-                tabLabel={'主赛信息'}
+                tabLabel={I18n.t('MainInformation')}
                 testID="page_race_result"
                 key={'page_race_result'}
                 style={{
@@ -353,7 +353,7 @@ class RaceScene extends Component {
             </TouchableOpacity>);
 
             this.pages.push(<ScrollView
-                tabLabel={'边塞信息'}
+                tabLabel={I18n.t('SideInformation')}
                 testID="page_race_side"
                 key={'page_race_side'}
                 style={{
