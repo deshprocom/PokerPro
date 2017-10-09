@@ -36,6 +36,7 @@
     "react-native-smart-splash-screen": "^2.3.3",
     "react-native-storage": "^0.1.4",
     "react-native-swipeout": "^2.2.2",
+    "react-native-swiper": "^1.5.13",
     "react-native-tabular-grid": "^1.1.0",
     "react-native-umshare": "git+https://github.com/dongodngtang/react-native-umshare.git",
     "react-native-video": "git+https://github.com/react-native-community/react-native-video#master",
