@@ -12,7 +12,8 @@ import {styles} from './Styles';
 export default class Coming extends Component {
 
 
-    _renderItem = ({item}) => {
+    _renderItem = ({item,index}) => {
+        console.log()
         return (
             <View style={styles.moreTwos}>
                 <View style={styles.moreTwo}>

@@ -14,24 +14,36 @@ export default class Races extends Component {
 
     _renderItem = ({item}) => {
         return (
-            <View style={{width:317,height:160,backgroundColor:'red',marginLeft:20,flexDirection:'row'}}>
-                <View style={{width:117,height:160,backgroundColor:'yellow'}}/>
-                <View style={{marginLeft:20,marginRight:36}}>
-                    <Text>2017扑克王杯 - 澳门站澳门展</Text>
-                    <View style={{flexDirection:'row'}}>
-                        <Image style={{width:10,height:12}} source={Images.location}/>
-                        <Text>澳门威尼斯人</Text>
+            <Image style={styles.oval} source={Images.oval}>
+                <View style={{width:115,height:155,backgroundColor:'yellow',marginLeft:3}}/>
+
+                <View style={{marginLeft:20,marginTop:14}}>
+                    <Text
+                        numberOfLines={2}
+                        style={{maxWidth:160}}>2017扑克王杯 - 澳门站澳门展</Text>
+                    <View style={{flexDirection:'row',alignItems:'center',marginTop:19}}>
+                        <Image style={{width:10,height:12,marginRight:7}} source={Images.location}/>
+                        <Text style={styles.ovalText}>澳门威尼斯人</Text>
                     </View>
-                    <View style={{flexDirection:'row'}}>
-                        <Image style={{width:11,height:11}} source={Images.time}/>
-                        <Text>2017</Text>
+                    <View style={{flexDirection:'row',alignItems:'center',marginTop:9}}>
+                        <Image style={{width:11,height:11,marginRight:7}} source={Images.time}/>
+                        <Text style={styles.ovalText}>2017</Text>
                     </View>
-                    <View style={{flexDirection:'row'}}>
-                        <Text>￥20，000</Text>
-                        <Text>购票</Text>
+                    <View style={{flexDirection:'row',alignItems:'center',marginTop:25}}>
+                        <Text style={styles.ovalPrice}>￥20，000</Text>
                     </View>
+                    <TouchableOpacity style={{position:'absolute',top:107,
+                    left:90,right:16,bottom:16}}>
+                        <Image
+                            style={styles.button}
+                            source={Images.button}
+                        >
+                            <Text style={{backgroundColor:'transparent',color:'#ffffff',fontSize:14,fontWeight:'bold',marginBottom:5}}>购票</Text>
+                        </Image>
+
+                    </TouchableOpacity>
                 </View>
-            </View>
+            </Image>
         )
     };
 
