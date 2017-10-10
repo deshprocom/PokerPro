@@ -387,5 +387,8 @@
   "cert_content": "姓名和证件号请填写完整!",
   "cert_buy_pass": "本赛票需要护照认证信息",
   "cert_buy_china": "本赛票需要身份证认证信息",
-  "verified_image_lb_pass": "请上传您的护照信息"
+  "verified_image_lb_pass": "请上传您的护照信息",
+  "SERVER_ERROR":"网络异常",
+  "TIMEOUT_ERROR":"访问超时，请稍后重试",
+  "NETWORK_ERROR":"网络异常，请检查网络访问是否授权"
 }

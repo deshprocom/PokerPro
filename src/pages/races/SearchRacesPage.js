@@ -203,10 +203,9 @@ class SearchRacesPage extends Component {
     };
 
     componentDidMount() {
-        InteractionManager.runAfterInteractions(() => {
-            this._onRefresh();
-            this.props._getRaceHost();
-        });
+
+        this._onRefresh();
+        this.props._getRaceHost();
 
     }
 

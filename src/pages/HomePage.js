@@ -11,7 +11,6 @@ import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
 import {openDrawer} from '../reducers/DrawerRedux';
 import StorageKey from '../configs/StorageKey';
-import {setAccessToken, getBaseURL} from '../services/RequestHelper';
 import {fetchGetProfile} from '../actions/PersonAction';
 import {FETCH_SUCCESS, GET_PROFILE, GET_RECENT_RACES} from '../actions/ActionTypes';
 import I18n from 'react-native-i18n';
@@ -41,7 +40,6 @@ class HomePage extends Component {
             badge: false,
 
         };
-        getBaseURL();
         getUserData();
         init(() => {
             this.setState({
@@ -123,9 +121,7 @@ class HomePage extends Component {
         storage.load({key: StorageKey.LoginUser})
             .then(ret => {
 
-                let {access_token, user_id} = ret;
-                putLoginUser(ret);
-                setAccessToken(access_token);
+                let { user_id} = ret;
 
                 this.setState({
                     user_id: user_id

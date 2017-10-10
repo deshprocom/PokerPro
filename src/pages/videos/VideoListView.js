@@ -85,9 +85,7 @@ class NewsListView extends Component {
         </View>)
     }
 
-    toggleFullscreen = () => {
-        this.player.presentFullscreenPlayer();
-    }
+
 
     _showVideo = () => {
 
@@ -106,10 +104,7 @@ class NewsListView extends Component {
                 }}
                 style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.8)'}}/>
             <VideoPlayer
-                ref={ref => this.player = ref}
                 closeFull={true}
-                paused={!modalVisible}
-                toggleFullscreen={this.toggleFullscreen}
                 source={{uri: video_link.trim()}}
             />
             <TouchableOpacity

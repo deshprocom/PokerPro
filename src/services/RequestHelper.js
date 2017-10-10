@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2016/12/23.
  */
-import {create} from 'apisauce';
+import {create, SERVER_ERROR, TIMEOUT_ERROR, NETWORK_ERROR} from 'apisauce';
 import Api from '../configs/ApiConfig';
 import {clearLoginUser} from '../utils/ComonHelper';
 import StorageKey from '../configs/StorageKey';
@@ -185,6 +185,7 @@ export function get(url, resolve, reject) {
     });
 }
 
+
 /*token过期*/
 function netError(response, reject) {
     if (response.status === 804 ||
@@ -196,8 +197,12 @@ function netError(response, reject) {
 
     if (response.status === 809)
         reject(I18n.t('net_809'));
-    else
-        reject(response.problem);
+    else if (response.problem === SERVER_ERROR)
+        reject(I18n.t('SERVER_ERROR'));
+    else if (response.problem === TIMEOUT_ERROR)
+        reject(I18n.t('TIMEOUT_ERROR'));
+    else if (response.problem === NETWORK_ERROR)
+        reject(I18n.t('NETWORK_ERROR'));
 }
 
 

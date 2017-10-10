@@ -36,9 +36,7 @@ export default class VideoInfoPage extends Component {
             <View
                 style={styles.video}>
                 <VideoPlayer
-                    ref={ref => this.player = ref}
                     showBack={true}
-                    toggleFullscreen={this.toggleFullscreen}
                     source={{uri: video_link.trim()}}
                 />
             </View>
@@ -61,9 +59,7 @@ export default class VideoInfoPage extends Component {
         </ScrollView>
     };
 
-    toggleFullscreen = () => {
-        this.player.presentFullscreenPlayer();
-    }
+
 
 
 }

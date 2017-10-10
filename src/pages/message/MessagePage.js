@@ -41,11 +41,7 @@ export default class MessagePage extends Component {
     }
 
     componentDidMount() {
-        InteractionManager.runAfterInteractions(() => {
-            this.refresh();
-        });
-
-
+        this.refresh();
     }
 
     refresh = () => {
