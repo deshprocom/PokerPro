@@ -2,6 +2,7 @@ import {
     StyleSheet,Dimensions
 }
     from 'react-native';
+import {Images} from '../../Themes';
 var deviceWidth = Dimensions.get('window').width;
 export const styles = StyleSheet.create({
     scrollImg:{
@@ -73,17 +74,22 @@ export const styles = StyleSheet.create({
 
     },
     information: {
-        flexDirection: 'column',
-
+        height:103,
+        marginLeft:20,
+        marginRight:16,
+        flexDirection:'row',
+        alignItems:'center'
     },
     informationTwo: {
-        height: 65,
-        flexDirection: 'row',
-        alignItems: 'center'
+        width:194,
+        flexDirection:'column'
     },
     informationImg: {
         marginLeft: 100,
 
+    },
+    informationText:{
+        color:'#AAAAAA',fontSize:12
     },
     page: {
         width: deviceWidth,
@@ -103,6 +109,18 @@ export const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '500',
         color: 'white',
-        marginBottom: 10,
+        marginBottom: 10
+    },
+    button:{
+        width:68,
+        height:28,
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    oval:{
+        width:317,
+        height:160,
+        marginLeft:20,
+        flexDirection:'row'
     }
 });

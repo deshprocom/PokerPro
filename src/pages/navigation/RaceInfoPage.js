@@ -9,6 +9,7 @@ import {
 import {Images} from '../../Themes';
 import Races from './Races';
 import Coming from './Coming';
+import Information from './Information';
 import MainBanner from './MainBanner';
 import {styles} from './Styles';
 
@@ -113,34 +114,8 @@ export default class RaceInfoPage extends Component {
                 </View>
                 <Races/>
                 <Coming/>
+                <Information/>
 
-                <View>
-                    <View style={[styles.more,{marginLeft:20,marginTop:20}]}>
-                        <ActivityIndicator/>
-                        <Text style={styles.raceText}>热门资讯</Text>
-                        <TouchableOpacity style={{marginLeft:150}}
-                                          onPress={onButtonPress}>
-                            <Text style={[styles.raceText]}>更多 ></Text>
-                        </TouchableOpacity>
-
-                    </View>
-                    <View style={styles.information}>
-                        <View style={styles.informationTwo}>
-                            <Text style={[styles.raceText,{marginTop:10}]}>如果你无法简洁的表达你...</Text>
-                            <Image style={styles.informationImg} source={Images.icon_spot}/>
-                        </View>
-                        <View style={styles.informationTwo}>
-                            <Text style={[styles.raceText,{marginTop:10}]}>如果你无法简洁的表达你...</Text>
-                            <Image style={styles.informationImg} source={Images.icon_spot}/>
-                        </View>
-                    </View>
-                </View>
-                <View
-                    style={{height:0.5,backgroundColor:'#000000',marginTop:10,marginBottom:20,width:359,marginLeft:5}}></View>
-
-                <View style={{marginTop:5,marginLeft:20,marginRight:20}}>
-                    <Text numberOfLines={3} >如果你无法简洁的表达你的想法，那只说明你还不够了解它。{'\n'}-- 阿尔伯特·爱因斯坦</Text>
-                </View>
             </ScrollView>
         );
     }
