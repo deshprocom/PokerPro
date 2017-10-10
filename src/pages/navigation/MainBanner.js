@@ -2,19 +2,32 @@ import React, {Component} from 'react';
 import {
     AppRegistry,
     StyleSheet,
-    Text,
+    Text, Image,
     View
 } from 'react-native';
 
 import Swiper from 'react-native-swiper';
+import {getMainBanners} from '../../services/NewsDao';
 
 
 export default class MainBanner extends Component {
 
 
     state = {
-        items: ['red', 'green', 'yellow', 'pink']
+        items: []
     };
+
+    componentDidMount() {
+        getMainBanners(data => {
+
+
+            this.setState({
+                items: data.banners
+            });
+            console.log('items', this.state.items)
+        }, err => {
+        })
+    }
 
     render() {
 
@@ -24,11 +37,7 @@ export default class MainBanner extends Component {
                     autoplayTimeout={3}
                     autoplay>
                     {this.state.items.map((item, key) => {
-                        return <View
-                            key={key}
-                            style={{backgroundColor: item, flex: 1}}>
-
-                        </View>
+                        return <Image key={key} style={{height:200,width:'100%'}} source={{uri:item.image}}/>
                     })}
 
                 </Swiper>

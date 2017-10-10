@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Scene,Stack,Tabs} from 'react-native-router-flux';
 import RaceInfoPage from './RaceInfoPage';
 import TabIcon from './TabIcon';
+import DrawerPage from '../DrawerPage'
 
 
 export const Navigation=()=>{
@@ -26,11 +27,8 @@ export const Navigation=()=>{
             >
                 <Scene
                     key="tab1_1"
-                    component={RaceInfoPage}
-                    title="Tab #1_1"
-                    onRight={() => alert('Right button')}
-                    rightTitle="Right"
-
+                    component={DrawerPage}
+                    hideNavBar
                 />
             </Stack>
             <Stack key="tab_2">
