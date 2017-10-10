@@ -14,19 +14,19 @@ export default class Races extends Component {
 
     _renderItem = ({item}) => {
         return (
-            <View style={{width:317,height:160,backgroundColor:'red'}}>
+            <View style={{width:317,height:160,backgroundColor:'red',marginLeft:20,flexDirection:'row'}}>
                 <View style={{width:117,height:160,backgroundColor:'yellow'}}/>
-                <View>
+                <View style={{marginLeft:20,marginRight:36}}>
                     <Text>2017扑克王杯 - 澳门站澳门展</Text>
-                    <View>
-                        <Image source={Images.location}/>
+                    <View style={{flexDirection:'row'}}>
+                        <Image style={{width:10,height:12}} source={Images.location}/>
                         <Text>澳门威尼斯人</Text>
                     </View>
-                    <View>
-                        <Image source={Images.time}/>
+                    <View style={{flexDirection:'row'}}>
+                        <Image style={{width:11,height:11}} source={Images.time}/>
                         <Text>2017</Text>
                     </View>
-                    <View>
+                    <View style={{flexDirection:'row'}}>
                         <Text>￥20，000</Text>
                         <Text>购票</Text>
                     </View>
@@ -41,7 +41,7 @@ export default class Races extends Component {
 
         return (
             <View style={{height:246,backgroundColor:'#fff',marginTop:10}}>
-                <View style={{height:30,flexDirection:'row',alignItems:'center',marginTop:14}}>
+                <View style={{height:20,flexDirection:'row',alignItems:'center',marginTop:14}}>
                     <View style={[styles.races]}>
                         <Text style={styles.raceText1}>火热开赛</Text>
                         <Image style={{width:13,height:17,marginLeft:6}} source={Images.raceBegin}/>
