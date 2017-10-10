@@ -200,10 +200,8 @@ export default class UltimateListView extends Component {
     }
 
     componentDidMount() {
-        InteractionManager.runAfterInteractions(() => {
-            this.mounted = true;
-            this.props.onFetch(this.getPage(), this.postRefresh, this.endFetch);
-        })
+        this.mounted = true;
+        this.props.onFetch(this.getPage(), this.postRefresh, this.endFetch);
 
     }
 

@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import {Scene,Stack,Tabs} from 'react-native-router-flux';
+import {Scene, Stack, Tabs} from 'react-native-router-flux';
 import RaceInfoPage from './RaceInfoPage';
 import TabIcon from './TabIcon';
+import DrawerPage from '../DrawerPage';
 
 
-export const Navigation=()=>{
+export const Navigation = () => {
 
 
     return (
@@ -21,26 +22,23 @@ export const Navigation=()=>{
                 inactiveBackgroundColor="#FFF"
                 activeBackgroundColor="#DDD"
                 icon={TabIcon}
-                navigationBarStyle={{ backgroundColor: 'green' }}
-                titleStyle={{ color: 'white', alignSelf: 'center' }}
+                navigationBarStyle={{backgroundColor: 'green'}}
+                titleStyle={{color: 'white', alignSelf: 'center'}}
             >
                 <Scene
                     key="tab1_1"
-                    component={RaceInfoPage}
-                    title="Tab #1_1"
-                    onRight={() => alert('Right button')}
-                    rightTitle="Right"
-
+                    component={DrawerPage}
+                    hideNavBar
                 />
             </Stack>
             <Stack key="tab_2">
-                <Scene key="tab_2_1" component={RaceInfoPage} title="Tab #2" hideNavBar icon={TabIcon} />
+                <Scene key="tab_2_1" component={RaceInfoPage} title="Tab #2" hideNavBar icon={TabIcon}/>
             </Stack>
             <Stack key="tab_3">
-                <Scene key="tab_3_1" component={RaceInfoPage} title="Tab #3" icon={TabIcon} />
+                <Scene key="tab_3_1" component={RaceInfoPage} title="Tab #3" icon={TabIcon}/>
             </Stack>
             <Stack key="tab_4">
-                <Scene key="tab_4_1" component={RaceInfoPage} title="Tab #4" icon={TabIcon} />
+                <Scene key="tab_4_1" component={RaceInfoPage} title="Tab #4" icon={TabIcon}/>
             </Stack>
         </Tabs>
     );
