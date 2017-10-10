@@ -1,4 +1,4 @@
-import {Actions, Scene} from 'react-native-router-flux';
+import {Actions, Scene,Stack,Tabs} from 'react-native-router-flux';
 import React from 'react';
 
 //Pages
@@ -60,12 +60,15 @@ import ActivityInfo from '../pages/message/ActivityInfo';
 import VerifiedPage from '../pages/verifieds/VerifiedPage';
 import AddVerified from '../pages/verifieds/AddVerified';
 import RaceScene from '../pages/races/RaceScene';
+import TabIcon from '../pages/navigation/TabIcon';
+import RaceInfoPage from '../pages/navigation/RaceInfoPage';
+import {Navigation} from '../pages/navigation/Navigation';
 
 
 export const Stacks = Actions.create(
     <Scene key="root">
         <Scene key="RaceScene" component={RaceScene} navBar={() => null}/>
-        <Scene key="DrawerPage" component={DrawerPage} initial={true} navBar={() => null}/>
+        <Scene key="DrawerPage" component={DrawerPage} navBar={() => null}/>
         <Scene key="AddVerified" component={AddVerified} navBar={() => null}/>
         <Scene key="VerifiedPage" component={VerifiedPage} navBar={() => null}/>
         <Scene key="HomePage" component={HomePage} navBar={() => null}/>
@@ -123,5 +126,37 @@ export const Stacks = Actions.create(
         <Scene key="ActivityCenter" component={ActivityCenter} navBar={() => null}/>
         <Scene key="ActivityInfo" component={ActivityInfo} navBar={() => null}/>
 
+        <Scene hideNavBar initial={true} >
+                <Tabs
+                    key="tabbar"
+                    showLabel={false}
+                >
+                        <Stack
+                            key="tab_1"
+                            title="Tab #1"
+                            hideNavBar
+                            tabBarLabel="TAB #1"
+                            icon={TabIcon}
+                        >
+                                <Scene
+                                    key="tab1_1"
+                                    component={RaceInfoPage}
+                                    title="Tab #1_1"
+                                    onRight={() => alert('Right button')}
+                                    rightTitle="Right"
+
+                                />
+                        </Stack>
+                        <Stack key="tab_2">
+                                <Scene key="tab_2_1" component={RaceInfoPage} title="Tab #2" hideNavBar icon={TabIcon} />
+                        </Stack>
+                        <Stack key="tab_3">
+                                <Scene key="tab_3_1" component={RaceInfoPage} title="Tab #3" icon={TabIcon} />
+                        </Stack>
+                        <Stack key="tab_4">
+                                <Scene key="tab_4_1" component={RaceInfoPage} title="Tab #4" icon={TabIcon} />
+                        </Stack>
+                </Tabs>
+        </Scene>
     </Scene>
 );
