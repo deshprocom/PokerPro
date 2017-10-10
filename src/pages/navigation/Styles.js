@@ -116,11 +116,21 @@ export const styles = StyleSheet.create({
         height:28,
         alignItems:'center',
         justifyContent:'center'
+
     },
     oval:{
         width:317,
         height:160,
         marginLeft:20,
         flexDirection:'row'
+    },
+    ovalText:{
+        fontSize: 12,
+        color:'#888888'
+
+    },
+    ovalPrice:{
+        fontSize: 15,
+        color:'#DF1D0F'
     }
 });

@@ -23,22 +23,22 @@ export default class Races extends Component {
                         style={{maxWidth:160}}>2017扑克王杯 - 澳门站澳门展</Text>
                     <View style={{flexDirection:'row',alignItems:'center',marginTop:19}}>
                         <Image style={{width:10,height:12,marginRight:7}} source={Images.location}/>
-                        <Text>澳门威尼斯人</Text>
+                        <Text style={styles.ovalText}>澳门威尼斯人</Text>
                     </View>
                     <View style={{flexDirection:'row',alignItems:'center',marginTop:9}}>
                         <Image style={{width:11,height:11,marginRight:7}} source={Images.time}/>
-                        <Text>2017</Text>
+                        <Text style={styles.ovalText}>2017</Text>
                     </View>
                     <View style={{flexDirection:'row',alignItems:'center',marginTop:25}}>
-                        <Text>￥20，000</Text>
+                        <Text style={styles.ovalPrice}>￥20，000</Text>
                     </View>
-                    <TouchableOpacity style={{position:'absolute',top:110,
+                    <TouchableOpacity style={{position:'absolute',top:107,
                     left:90,right:16,bottom:16}}>
                         <Image
                             style={styles.button}
                             source={Images.button}
                         >
-                            <Text style={{backgroundColor:'transparent',color:'#ffffff'}}>购票</Text>
+                            <Text style={{backgroundColor:'transparent',color:'#ffffff',fontSize:14,fontWeight:'bold',marginBottom:5}}>购票</Text>
                         </Image>
 
                     </TouchableOpacity>

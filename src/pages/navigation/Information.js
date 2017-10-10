@@ -56,7 +56,7 @@ export default class Information extends Component {
                 </View>
                 <View style={{width:342,height:2,marginLeft:17,backgroundColor:'#ECECEE',marginTop:13}}/>
                 <View style={{marginLeft:20,marginRight:23,marginTop:21}}>
-                   <Text>2017年4月在北京德扑俱乐部举行APL比赛2017年4月在北京德扑俱乐部举行APL比赛</Text>
+                   <Text style={{fontSize:15,fontFamily:'PingFangSC-Regular',color:'#333333'}}>2017年4月在北京德扑俱乐部举行APL比赛2017年4月在北京德扑俱乐部举行APL比赛</Text>
                     <View style={{width:342,height:207,marginTop:11,backgroundColor:'red'}}/>
                 </View>
                 <View style={{width:342,height:2,marginLeft:17,backgroundColor:'#ECECEE',marginTop:13}}/>

@@ -11,8 +11,8 @@ export const Navigation=()=>{
         <Tabs
             key="tabbar"
             showLabel={false}
-            activeBackgroundColor="white"
-            inactiveBackgroundColor="rgba(255, 0, 0, 0.5)"
+            activeBackgroundColor="rgba(0, 250, 0, 0.7)"
+            inactiveBackgroundColor="rgba(250, 250, 250, 0.5)"
         >
             <Stack
                 key="tab_1"

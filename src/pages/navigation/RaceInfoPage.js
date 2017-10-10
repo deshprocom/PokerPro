@@ -62,13 +62,13 @@ export default class RaceInfoPage extends Component {
 
     showText =() => {
         setInterval(() => {
-            if(i === texts.length-1){
-                i=0;
-            }
-            i++;
+            i=i+1;
             this.setState({
                 text:texts[i-1]
             });
+            if(i === texts.length){
+                i=1;
+            }
         },4000);
     };
 

@@ -2,8 +2,9 @@ import React, {
   PropTypes,
 } from 'react';
 import {
-  Text,
+  Text,Image
 } from 'react-native';
+import {Images} from '../../Themes';
 
 const propTypes = {
   selected: PropTypes.bool,
@@ -11,10 +12,7 @@ const propTypes = {
 };
 
 const TabIcon = (props) => {
-  return <Text
-    style={{color: props.focused ? 'red' : 'black'}}
-  >{props.title}
-  </Text>
+  return <Image source={Images.icon_spot}/>
 };
 
 TabIcon.propTypes = propTypes;
