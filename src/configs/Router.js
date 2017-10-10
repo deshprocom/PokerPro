@@ -29,11 +29,12 @@ export default class Router {
 
     pop() {
         Actions.pop();
+        console.log(Actions.currentScene)
 
     }
 
     popToTop() {
-        Actions.popTo('DrawerPage')
+        Actions.popTo('tab1_1')
 
     }
 
