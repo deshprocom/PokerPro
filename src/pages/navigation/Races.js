@@ -21,7 +21,6 @@ export default class Races extends Component {
         let end = convertDate(raceInfo.end_date, YYYY_MM_DD);
         return begin + '-' + end;
     };
-
     _renderItem = ({item}) => {
         return (
             <Image style={styles.oval} source={Images.oval}>
