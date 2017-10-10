@@ -8,9 +8,19 @@ import {
     from 'react-native';
 import {Images} from '../../Themes';
 import {styles} from './Styles';
+import {
+    isEmptyObject, YYYY_MM_DD, convertDate,
+} from '../../utils/ComonHelper';
 
 export default class Races extends Component {
 
+    races_time = (raceInfo) => {
+        if (isEmptyObject(raceInfo))
+            return;
+        let begin = convertDate(raceInfo.begin_date, YYYY_MM_DD);
+        let end = convertDate(raceInfo.end_date, YYYY_MM_DD);
+        return begin + '-' + end;
+    };
 
     _renderItem = ({item}) => {
         return (
