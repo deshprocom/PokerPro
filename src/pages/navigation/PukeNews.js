@@ -11,10 +11,10 @@ import {getPukeNews} from '../../services/NewsDao';
 const onButtonPress = () => {
 
 };
-var i=0;
+var i = 0;
 export default class PukeNews extends Component {
     state = {
-        text:''
+        text: ''
     };
 
     constructor() {
@@ -34,10 +34,9 @@ export default class PukeNews extends Component {
         })
 
 
-
     };
 
-    animate=() =>{
+    animate = () => {
         this.animatedValue.setValue(0)
         Animated.timing(
             this.animatedValue,
@@ -54,7 +53,6 @@ export default class PukeNews extends Component {
 
             if (this.texts.length > 0) {
                 i = i + 1;
-                console.log('setInterval: ',i)
                 this.setState({
                     text: this.texts[i - 1].title
                 });
@@ -80,7 +78,9 @@ export default class PukeNews extends Component {
                     <View style={{width:1,height:16,backgroundColor:'#E5E5E5',marginLeft:15}}/>
 
                     <Animated.View style={{opacity}}>
-                        <Text style={[styles.pukeText2,{marginLeft:15}]}
+                        <Text
+                            numberOfLines={2}
+                            style={[styles.pukeText2,{marginLeft:15}]}
                         >{this.state.text}</Text>
                     </Animated.View>
                 </View>

@@ -32,7 +32,10 @@ export const styles = StyleSheet.create({
     },
     pukeText2:{
         width:247,
-        fontSize:13
+        fontSize:13,
+        fontFamily:'PingFangSC-Regular',
+        color:'#666666'
+
     },
     races: {
         flexDirection: 'row',
