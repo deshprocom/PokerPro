@@ -4,6 +4,17 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
+export function getPukeNews(resolve, reject) {
+    helper.get(Api.headlines,ret=>{
+        resolve(ret.data)
+    },reject)
+}
+
+export function getMainBanners(resolve, reject) {
+    helper.get(Api.banners,ret=>{
+        resolve(ret.data)
+    },reject)
+}
 
 export function getVideoSearch(body, resolve, reject) {
     helper.get(Api.searchVideo(body), (ret) => {

@@ -88,7 +88,9 @@ export default {
     list_certification: list_certification,
     cert_default: cert_default,
     test_user: 'account/test_user',
-    preferential: preferential
+    preferential: preferential,
+    banners:'banners',
+    headlines:'headlines'
 }
 
 

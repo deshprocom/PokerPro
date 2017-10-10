@@ -198,12 +198,13 @@ const images = {
     verified_selected:require('../../source/verified/selected.png'),
     verified_exmple:require('../../source/verified/exmple.png'),
 
-    icon_spot: require('../../source/navigation/icon_spot.png'),
     pukes: require('../../source/navigation/pukes.png'),
     raceBegin: require('../../source/navigation/raceBegin.png'),
     is: require('../../source/navigation/is>.png'),
     location: require('../../source/navigation/location.png'),
-    time: require('../../source/navigation/time.png')
+    time: require('../../source/navigation/time.png'),
+    button: require('../../source/navigation/button.png'),
+    oval: require('../../source/navigation/oval.png')
 
 
 };
