@@ -12,6 +12,7 @@ import {
     isEmptyObject, YYYY_MM_DD, convertDate,
 } from '../../utils/ComonHelper';
 import I18n from 'react-native-i18n';
+import {umengEvent} from '../../utils/UmengEvent';
 
 export default class Coming extends Component {
     races_time = (raceInfo) => {
@@ -44,10 +45,13 @@ export default class Coming extends Component {
                     <View style={[styles.races]}>
                         <Text style={styles.raceText1}>{I18n.t('home_recent_races')}</Text>
                     </View>
-                    <View style={[styles.racesTwo,{marginLeft:245}]}>
+                    <TouchableOpacity style={[styles.racesTwo,{marginLeft:245}]} onPress={() => {
+                                   umengEvent('home_more');
+                                router.toSearchRacesPage()
+                                }}>
                         <Text style={[styles.raceText]}>{I18n.t('more')}</Text>
                         <Image style={{width:8,height:12,marginLeft:6}} source={Images.is}/>
-                    </View>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={{flexDirection:'row'}}>
