@@ -6,11 +6,11 @@ import {
 } from 'react-native';
 
 
-export const  TabIcon = (title,image) => {
+export const  TabIcon = (title,image,textStyle,bgStyle) => {
   return (
   <View style={{flexDirection:'column',alignItems:'center'}}>
-    <Text>{title}</Text>
-    <Image source={image}/>
+    <Image style={bgStyle} source={image}/>
+    <Text style={[textStyle,{fonSize:10}]}>{title}</Text>
   </View>
   )
 };

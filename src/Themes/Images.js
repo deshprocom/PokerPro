@@ -204,9 +204,15 @@ const images = {
     location: require('../../source/navigation/location.png'),
     time: require('../../source/navigation/time.png'),
     button: require('../../source/navigation/button.png'),
-    oval: require('../../source/navigation/oval.png')
-
-
+    oval: require('../../source/navigation/oval.png'),
+    home: require('../../source/navigation/home.png'),
+    home2: require('../../source/navigation/home2.png'),
+    information: require('../../source/navigation/information.png'),
+    information2: require('../../source/navigation/information2.png'),
+    mine: require('../../source/navigation/mine.png'),
+    mine2: require('../../source/navigation/mine2.png'),
+    rank: require('../../source/navigation/rank.png'),
+    rank2: require('../../source/navigation/rank2.png')
 };
 
 export default images

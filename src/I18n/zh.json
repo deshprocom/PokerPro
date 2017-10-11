@@ -1,8 +1,4 @@
 {
-  "home":"首页",
-  "hot_races":"火热开赛",
-  "hot_infos":"热门资讯",
-  "more":"更多",
   "app_name": "扑客",
   "register": "注册",
   "phone_email": "邮箱或手机号",
@@ -394,5 +390,10 @@
   "verified_image_lb_pass": "请上传您的护照信息",
   "SERVER_ERROR":"网络异常",
   "TIMEOUT_ERROR":"访问超时，请稍后重试",
-  "NETWORK_ERROR":"网络异常，请检查网络访问是否授权"
+  "NETWORK_ERROR":"网络异常，请检查网络访问是否授权",
+  "home":"首页",
+  "hot_races":"火热开赛",
+  "hot_infos":"热门资讯",
+  "more":"更多",
+  "mine":"我的"
 }
