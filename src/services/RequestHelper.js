@@ -59,7 +59,11 @@ function setDpIp() {
 export function getBaseURL() {
 
     setDpIp();
-    storage.load({key: StorageKey.ApiSever})
+    storage.load({
+        key: StorageKey.ApiSever,
+        autoSync: true,
+        syncInBackground: false
+    })
         .then((ret) => {
             client.setBaseURL(ret)
         }).catch(err => {
