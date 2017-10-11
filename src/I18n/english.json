@@ -385,6 +385,11 @@
   "cert_pass": "注：本场赛事需要护照认证",
   "cert_content": "姓名和证件号请填写完整!",
   "cert_buy_pass": "本赛票需要护照认证信息",
-  "cert_buy_china": "本赛票需要身份证认证信息"
+  "cert_buy_china": "本赛票需要身份证认证信息",
+  "home":"首页",
+  "hot_races":"火热开赛",
+  "hot_infos":"热门资讯",
+  "more":"更多",
+  "mine":"我的"
 }
 

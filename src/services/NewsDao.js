@@ -4,6 +4,13 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
+/* 获取首页热门资讯*/
+export function getHotInfos(resolve, reject) {
+    helper.get(Api.hot_infos, ret=> {
+        resolve(ret.data)
+    }, reject)
+}
+
 export function getPukeNews(resolve, reject) {
     helper.get(Api.headlines,ret=>{
         resolve(ret.data)

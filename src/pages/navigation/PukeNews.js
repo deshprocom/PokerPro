@@ -68,8 +68,8 @@ export default class PukeNews extends Component {
 
     render() {
         const opacity = this.animatedValue.interpolate({
-            inputRange: [0, 0.5, 1],
-            outputRange: [0, 5, 0]
+            inputRange: [0, 1,2],
+            outputRange: [0, 5,0]
         });
         return (
             <View style={styles.pukes}>
