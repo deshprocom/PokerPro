@@ -10,14 +10,13 @@ export const Navigation=()=>{
 
     return (
         <Tabs
-            key="tabbar"
+            key="Navigation"
             showLabel={false}
             activeBackgroundColor="rgba(0, 250, 0, 0.7)"
             inactiveBackgroundColor="rgba(250, 250, 250, 0.5)"
         >
             <Stack
                 key="tab_1"
-                title="Tab #1"
                 tabBarLabel="TAB #1"
                 inactiveBackgroundColor="#FFF"
                 activeBackgroundColor="#DDD"
@@ -32,13 +31,13 @@ export const Navigation=()=>{
                 />
             </Stack>
             <Stack key="tab_2">
-                <Scene key="tab_2_1" component={RaceInfoPage} title="Tab #2" hideNavBar icon={TabIcon} />
+                <Scene key="tab_2_1" component={RaceInfoPage}  hideNavBar icon={TabIcon} />
             </Stack>
             <Stack key="tab_3">
-                <Scene key="tab_3_1" component={RaceInfoPage} title="Tab #3" icon={TabIcon} />
+                <Scene key="tab_3_1" component={RaceInfoPage} icon={TabIcon} />
             </Stack>
             <Stack key="tab_4">
-                <Scene key="tab_4_1" component={RaceInfoPage} title="Tab #4" icon={TabIcon} />
+                <Scene key="tab_4_1" component={RaceInfoPage}  icon={TabIcon} />
             </Stack>
         </Tabs>
     );
