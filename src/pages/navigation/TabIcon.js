@@ -2,19 +2,16 @@ import React, {
   PropTypes,
 } from 'react';
 import {
-  Text,Image
+  Text,Image,View
 } from 'react-native';
-import {Images} from '../../Themes';
 
-const propTypes = {
-  selected: PropTypes.bool,
-  title: PropTypes.string,
+
+export const  TabIcon = (title,image) => {
+  return (
+  <View style={{flexDirection:'column',alignItems:'center'}}>
+    <Text>{title}</Text>
+    <Image source={image}/>
+  </View>
+  )
 };
 
-const TabIcon = (props) => {
-  return <Image source={Images.icon_spot}/>
-};
-
-TabIcon.propTypes = propTypes;
-
-export default TabIcon;

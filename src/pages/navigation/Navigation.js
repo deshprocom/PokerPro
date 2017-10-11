@@ -1,15 +1,17 @@
 import React, {Component} from 'react';
 import {Scene,Stack,Tabs} from 'react-native-router-flux';
 import RaceInfoPage from './RaceInfoPage';
-import TabIcon from './TabIcon';
+import {TabIcon} from './TabIcon';
 import DrawerPage from '../DrawerPage'
-
+import I18n from 'react-native-i18n';
+import {Images} from '../../Themes';
 
 export const Navigation=()=>{
 
 
     return (
         <Tabs
+            lazy
             key="Navigation"
             showLabel={false}
             activeBackgroundColor="rgba(0, 250, 0, 0.7)"
@@ -20,7 +22,7 @@ export const Navigation=()=>{
                 tabBarLabel="TAB #1"
                 inactiveBackgroundColor="#FFF"
                 activeBackgroundColor="#DDD"
-                icon={TabIcon}
+                icon={()=>TabIcon(I18n.t('home'),Images.icon_spot)}
                 navigationBarStyle={{ backgroundColor: 'green' }}
                 titleStyle={{ color: 'white', alignSelf: 'center' }}
             >
@@ -31,13 +33,13 @@ export const Navigation=()=>{
                 />
             </Stack>
             <Stack key="tab_2">
-                <Scene key="tab_2_1" component={RaceInfoPage}  hideNavBar icon={TabIcon} />
+                <Scene key="tab_2_1" component={RaceInfoPage}  hideNavBar icon={()=>TabIcon(I18n.t('home'),Images.icon_spot)} />
             </Stack>
             <Stack key="tab_3">
-                <Scene key="tab_3_1" component={RaceInfoPage} icon={TabIcon} />
+                <Scene key="tab_3_1" component={RaceInfoPage} icon={()=>TabIcon(I18n.t('home'),Images.icon_spot)} />
             </Stack>
             <Stack key="tab_4">
-                <Scene key="tab_4_1" component={RaceInfoPage}  icon={TabIcon} />
+                <Scene key="tab_4_1" component={RaceInfoPage}  icon={()=>TabIcon(I18n.t('home'),Images.icon_spot)} />
             </Stack>
         </Tabs>
     );

@@ -41,11 +41,10 @@ export default class RaceInfoPage extends Component {
 
         });
         getHotInfos(data => {
-            alert("1")
-            console.log('hotInfos', data)
             this.setState({
-                hotInfos: data.hot_infos
+                hotInfos:data.hot_infos
             })
+
         }, err => {
         })
 

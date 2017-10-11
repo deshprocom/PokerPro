@@ -8,6 +8,7 @@ import {
 
 import Swiper from 'react-native-swiper';
 import {getMainBanners} from '../../services/NewsDao';
+import I18n from 'react-native-i18n';
 
 
 export default class MainBanner extends Component {

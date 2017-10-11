@@ -11,6 +11,8 @@ import {styles} from './Styles';
 import {
     isEmptyObject, YYYY_MM_DD, convertDate,
 } from '../../utils/ComonHelper';
+import {VideoPlayer} from '../../components';
+import I18n from 'react-native-i18n';
 
 export default class Information extends Component {
 
@@ -22,7 +24,7 @@ export default class Information extends Component {
         return begin + '-' + end;
     };
     _renderItem = ({item}) => {
-        if(item.source_type==='info'){
+        if(item.source_type =='info'){
             return (
                 <View style={styles.information}>
                     <View style={styles.informationTwo}>
@@ -38,11 +40,16 @@ export default class Information extends Component {
                     </View>
                 </View>
             )
-        }else if(item.source_type==='video'){
+        }else if(item.source_type =='video'){
             return (
                 <View style={{marginLeft:20,marginRight:23,marginTop:21}}>
                     <Text style={{fontSize:15,fontFamily:'PingFangSC-Regular',color:'#333333'}}>{item.video.name}</Text>
-                    <View style={{width:342,height:207,marginTop:11,backgroundColor:'red'}}/>
+                    <View style={{width:342,height:207,marginTop:11}}>
+                        <VideoPlayer style={{width:342,height:207}}
+                            showBack={true}
+                            source={{uri: item.video.cover_link.trim()}}
+                        />
+                    </View>
                 </View>
 
             )
@@ -51,15 +58,15 @@ export default class Information extends Component {
     };
 
     render() {
-        console.log("hotinfo",this.props.hotInfos)
+        console.log('hotInfos', this.props.hotInfos)
         return (
             <View style={{backgroundColor:'#fff',marginTop:8}}>
                 <View style={{height:20,flexDirection:'row',alignItems:'center',marginTop:14}}>
                     <View style={[styles.races]}>
-                        <Text style={styles.raceText1}>热门资讯</Text>
+                        <Text style={styles.raceText1}>{I18n.t('hot_infos')}</Text>
                     </View>
                     <View style={[styles.racesTwo,{marginLeft:245}]}>
-                        <Text style={[styles.raceText]}>更多</Text>
+                        <Text style={[styles.raceText]}>{I18n.t('more')}</Text>
                         <Image style={{width:8,height:12,marginLeft:6}} source={Images.is}/>
                     </View>
                 </View>

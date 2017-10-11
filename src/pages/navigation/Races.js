@@ -11,6 +11,7 @@ import {styles} from './Styles';
 import {
     isEmptyObject, YYYY_MM_DD, convertDate,
 } from '../../utils/ComonHelper';
+import I18n from 'react-native-i18n';
 
 export default class Races extends Component {
 
@@ -51,7 +52,7 @@ export default class Races extends Component {
                             source={Images.button}
                         >
                             <Text
-                                style={{backgroundColor:'transparent',color:'#ffffff',fontSize:14,fontWeight:'bold',marginBottom:5}}>购票</Text>
+                                style={{backgroundColor:'transparent',color:'#ffffff',fontSize:14,fontWeight:'bold',marginBottom:5}}>{I18n.t('home_buy')}</Text>
                         </Image>
 
                     </TouchableOpacity>
@@ -62,28 +63,26 @@ export default class Races extends Component {
 
     render() {
 
-        console.log('RACES', this.props.listRace)
-
-
         return (
             <View style={{height:246,backgroundColor:'#fff',marginTop:10}}>
                 <View style={{height:20,flexDirection:'row',alignItems:'center',marginTop:14}}>
                     <View style={[styles.races]}>
-                        <Text style={styles.raceText1}>火热开赛</Text>
+                        <Text style={styles.raceText1}>{I18n.t('hot_races')}</Text>
                         <Image style={{width:13,height:17,marginLeft:6}} source={Images.raceBegin}/>
                     </View>
                     <View style={styles.racesTwo}>
-                        <Text style={[styles.raceText]}>更多</Text>
+                        <Text style={[styles.raceText]}>{I18n.t('more')}</Text>
                         <Image style={{width:8,height:12,marginLeft:6}} source={Images.is}/>
                     </View>
                 </View>
                 <View style={{marginTop:30,flexDirection:'row'}}>
-                    <FlatList
-                        horizontal
-                        data={this.props.listRace}
-                        renderItem={this._renderItem}
-                        keyExtractor={(item,index)=>index}
-                    />
+                    { this.props.listRace.length > 0 ? <FlatList
+                            horizontal
+                            data={this.props.listRace}
+                            renderItem={this._renderItem}
+                            keyExtractor={(item,index)=>index}
+                        /> : null}
+
 
                 </View>
             </View>
