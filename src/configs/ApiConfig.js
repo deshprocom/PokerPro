@@ -89,8 +89,9 @@ export default {
     cert_default: cert_default,
     test_user: 'account/test_user',
     preferential: preferential,
-    banners:'banners',
-    headlines:'headlines'
+    banners: 'banners',
+    headlines: 'headlines',
+    hot_infos:'hot_infos'
 }
 
 
@@ -365,9 +366,9 @@ function postChangePwd() {
 }
 
 function recent_races(body) {
-    const {user_id, number} = body;
-    if (strNotNull(user_id) && strNotNull(number)) {
-        return 'u/' + user_id + '/recent_races?numbers=' + number;
+    const {number} = body;
+    if (strNotNull(number)) {
+        return 'u/' + getUserId() + '/recent_races?numbers=' + number;
     } else {
         return 'u/0/recent_races';
     }
@@ -411,5 +412,6 @@ function users_orderCancel(body) {
     const {user_id, order_id} = body;
     return 'users/' + getUserId() + '/orders/' + order_id + '/cancel';
 }
+
 
 

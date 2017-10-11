@@ -22,24 +22,27 @@ export default class Races extends Component {
         return begin + '-' + end;
     };
     _renderItem = ({item}) => {
+
         return (
             <Image style={styles.oval} source={Images.oval}>
-                <View style={{width:115,height:155,backgroundColor:'yellow',marginLeft:3}}/>
+                <View style={{width:115,height:155,marginLeft:5}}>
+                    <Image style={{width:115,height:155}} source={{uri: item.big_logo}}/>
+                </View>
 
                 <View style={{marginLeft:20,marginTop:14}}>
                     <Text
                         numberOfLines={2}
-                        style={{maxWidth:160}}>2017扑克王杯 - 澳门站澳门展</Text>
+                        style={{maxWidth:160}}>{item.name}</Text>
                     <View style={{flexDirection:'row',alignItems:'center',marginTop:19}}>
                         <Image style={{width:10,height:12,marginRight:7}} source={Images.location}/>
-                        <Text style={styles.ovalText}>澳门威尼斯人</Text>
+                        <Text style={styles.ovalText}>{item.location}</Text>
                     </View>
                     <View style={{flexDirection:'row',alignItems:'center',marginTop:9}}>
                         <Image style={{width:11,height:11,marginRight:7}} source={Images.time}/>
-                        <Text style={styles.ovalText}>2017</Text>
+                        <Text style={styles.ovalText}>{this.races_time(item)}</Text>
                     </View>
                     <View style={{flexDirection:'row',alignItems:'center',marginTop:25}}>
-                        <Text style={styles.ovalPrice}>￥20，000</Text>
+                        <Text style={styles.ovalPrice}>￥{item.min_price}</Text>
                     </View>
                     <TouchableOpacity style={{position:'absolute',top:107,
                     left:90,right:16,bottom:16}}>
@@ -47,7 +50,8 @@ export default class Races extends Component {
                             style={styles.button}
                             source={Images.button}
                         >
-                            <Text style={{backgroundColor:'transparent',color:'#ffffff',fontSize:14,fontWeight:'bold',marginBottom:5}}>购票</Text>
+                            <Text
+                                style={{backgroundColor:'transparent',color:'#ffffff',fontSize:14,fontWeight:'bold',marginBottom:5}}>购票</Text>
                         </Image>
 
                     </TouchableOpacity>
@@ -58,7 +62,8 @@ export default class Races extends Component {
 
     render() {
 
-        this.items = [1, 2, 3, 4];
+        console.log('RACES', this.props.listRace)
+
 
         return (
             <View style={{height:246,backgroundColor:'#fff',marginTop:10}}>
@@ -75,7 +80,7 @@ export default class Races extends Component {
                 <View style={{marginTop:30,flexDirection:'row'}}>
                     <FlatList
                         horizontal
-                        data={this.items}
+                        data={this.props.listRace}
                         renderItem={this._renderItem}
                         keyExtractor={(item,index)=>index}
                     />
