@@ -29,7 +29,7 @@ export default class Root extends Component {
         getUserData();
         getBaseURL();
         //App更新
-        setTimeout(this._getUpdate, 100)
+
         storage.load({key: StorageKey.LoginUser})
             .then(ret => {
                 let {access_token} = ret;
@@ -42,7 +42,9 @@ export default class Root extends Component {
                 number: 10
             };
             this.props._getRecentRaces(recentRaces)
-        })
+        });
+
+        setTimeout(this._getUpdate, 300);
     }
 
     _getUpdate = () => {
