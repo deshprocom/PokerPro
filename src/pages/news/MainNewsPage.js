@@ -51,7 +51,6 @@ export default class MainNewsPage extends Component {
             <View
                 testID="page_news_main"
                 style={ApplicationStyles.bgContainer}>
-                {this._navSearchBar()}
 
 
                 {this._listView()}
@@ -74,41 +73,25 @@ export default class MainNewsPage extends Component {
             );
         });
 
-
-        return (  <ScrollableTabView
-            onChangeTab={({i}) => {
-                router.log('tab', i);
-                if (i == undefined || i < 0 || i > pages.length)
-                    return;
-                let item = typeListData[i];
-
-                if (isEmptyObject(item))
-                    return;
-
-                this.setState({
-                    selectTypeId: item.id
-                });
-
-
-            }}
-            renderTabBar={() => <ScrollableTabBar
-                tabStyle={{
-                    height: 49,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    paddingLeft: 10,
-                    paddingRight: 10,
-                }}
-                backgroundColor={Colors.white}
-                activeTextColor="#161718"
-                inactiveTextColor={Colors._AAA}
-                textStyle={{fontSize: 17}}
-                style={{borderColor: Colors._EEE}}
-                underlineStyle={{backgroundColor: '#161718', height: 2}}
-            />}
-            ref={ref => this.newsPages = ref}>
-            {pages}
-        </ScrollableTabView>)
+        if (pages.length > 0)
+            return (  <ScrollableTabView
+                renderTabBar={() => <ScrollableTabBar
+                    tabStyle={{
+                        height: 49,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                    }}
+                    backgroundColor={Colors.white}
+                    activeTextColor="#161718"
+                    inactiveTextColor={Colors._AAA}
+                    textStyle={{fontSize: 17}}
+                    style={{borderColor: Colors._EEE}}
+                    underlineStyle={{backgroundColor: '#161718', height: 2}}
+                />}>
+                {pages}
+            </ScrollableTabView>)
 
     };
 
@@ -142,75 +125,6 @@ export default class MainNewsPage extends Component {
             </View>
         </View>)
     };
-
-    _newsTypeView = () => {
-
-        return ( <View style={styles.newsTypeView}>
-            <FlatList
-                ref={ref => this.typeList = ref}
-                legacyImplementation={false}
-                showsHorizontalScrollIndicator={false}
-                data={this.state.typeListData}
-                renderItem={this._itemView}
-                horizontal={true}
-                keyExtractor={item => item.id}
-                style={{marginLeft: 10}}
-            />
-        </View> )
-    };
-
-
-    _itemView = ({item}) => {
-
-        return (
-            <TouchableOpacity
-                testID={"btn_news_type_" + item.id}
-                onPress={() => {
-                    this._pressItem(item);
-
-                    this.setState({
-                        selectTypeId: item.id
-                    });
-                    this.newsPages.goToPage(this._page(item))
-                }}
-                style={styles.itemView}>
-                {item.select ? <View style={{flex: 1}}/> : null}
-                <Text
-                    numberOfLines={1}
-                    style={item.select ?
-                        styles.itemTxtSelect : styles.itemTxt}>{item.name}</Text>
-                {item.select ? <View style={styles.triangle}/> : null}
-
-            </TouchableOpacity>
-        )
-    };
-
-    _page = (item) => {
-        const {typeListData} = this.state;
-        for (let i = 0; i < typeListData.length; i++) {
-            if (item.id === typeListData[i].id)
-                return i;
-        }
-    };
-
-
-    _pressItem = (item) => {
-
-        this.setState((state) => {
-            const newData = [...state.typeListData];
-            newData.map(function (element) {
-
-                if (item.id === element.id) {
-                    element.select = true
-                } else {
-                    element.select = false
-                }
-                return element;
-            });
-
-            return {typeListData: newData}
-        })
-    }
 
 
 }
