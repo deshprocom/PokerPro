@@ -10,6 +10,7 @@ import {putLoginUser, getUserData, updateApp} from '../utils/ComonHelper';
 import {init} from '../services/ConfigDao';
 import {getActivityPush, getUpdate} from '../services/AccountDao';
 import JpushHelp from '../services/JpushHelper';
+import Routers from '../configs/Router';
 
 export default class Root extends Component {
 
@@ -20,6 +21,9 @@ export default class Root extends Component {
 
     constructor(props) {
         super(props);
+        this.router = this.router || new Routers();
+        global.router = this.router;
+
         JpushHelp.addPushListener(this.receiveCb, this.openCb);
         init(() => {
             this.setState({

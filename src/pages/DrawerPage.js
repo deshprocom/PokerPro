@@ -13,17 +13,10 @@ import {setDispatchAction} from '../utils/ComonHelper';
 import {GET_CERTIFICATION, GET_RECENT_RACES, GET_PROFILE} from '../actions/ActionTypes';
 import {fetchGetProfile} from '../actions/PersonAction';
 import {fetchGetRecentRaces} from '../actions/RacesAction';
-import Router from '../configs/Router';
 
 
 class DrawerPage extends React.Component {
 
-    componentWillMount(){
-
-        this.router = this.router || new Router();
-        global.router = this.router;
-
-    }
 
     componentDidMount() {
         setDispatchAction(GET_CERTIFICATION, this.props._getRealName);
