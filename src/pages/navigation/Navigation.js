@@ -11,6 +11,7 @@ export const Navigation=()=>{
 
     return (
         <Tabs
+            lazy
             key="Navigation"
             showLabel={false}
             activeBackgroundColor="rgba(0, 250, 0, 0.7)"
@@ -32,7 +33,8 @@ export const Navigation=()=>{
                 />
             </Stack>
             <Stack key="tab_2">
-                <Scene key="tab_2_1" component={RaceInfoPage}  hideNavBar icon={TabIcon} />
+                <Scene
+                    key="tab_2_1" component={RaceInfoPage}  hideNavBar icon={TabIcon} />
             </Stack>
             <Stack key="tab_3">
                 <Scene key="tab_3_1" component={VideoNewsTab} icon={TabIcon}
