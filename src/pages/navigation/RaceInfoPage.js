@@ -12,16 +12,22 @@ import Coming from './Coming';
 import Information from './Information';
 import MainBanner from './MainBanner';
 import {styles} from './Styles';
-import {getRecentRaces,getRaceTickets} from '../../services/RacesDao';
+import {getRecentRaces, getRaceTickets} from '../../services/RacesDao';
 import {getHotInfos} from '../../services/NewsDao';
-
+import Router from '../../configs/Router';
 
 export default class RaceInfoPage extends Component {
     state = {
         listRace: [],
         raceTickets: [],
-        hotInfos:[]
+        hotInfos: []
     };
+
+    componentWillMount() {
+        this.router = this.router || new Router();
+        global.router = this.router;
+
+    }
 
     componentDidMount() {
         getRecentRaces({number: 10}, data => {
@@ -42,7 +48,7 @@ export default class RaceInfoPage extends Component {
         });
         getHotInfos(data => {
             this.setState({
-                hotInfos:data.hot_infos
+                hotInfos: data.hot_infos
             })
 
         }, err => {
@@ -51,7 +57,7 @@ export default class RaceInfoPage extends Component {
     }
 
     render() {
-        const {listRace,raceTickets,hotInfos} = this.state;
+        const {listRace, raceTickets, hotInfos} = this.state;
 
         return (
             <ScrollView>
