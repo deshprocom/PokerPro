@@ -38,7 +38,7 @@ export default class MainBanner extends Component {
                     autoplayTimeout={3}
                     autoplay>
                     {this.state.items.map((item, key) => {
-                        return <Image key={key} style={{height:200,width:'100%'}} source={{uri:item.image}}/>
+                        return <Image  key={key} style={{height:200,width:'100%'}} source={{uri:item.image}}/>
                     })}
 
                 </Swiper>
