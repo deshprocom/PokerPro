@@ -11,18 +11,21 @@ export const Navigation=()=>{
 
     return (
         <Tabs
+            style={{height:50}}
             lazy
             key="Navigation"
             showLabel={false}
+            activeBackgroundColor="rgba(0, 0, 0, 1)"
+            activeTintColor="rgba(255, 0, 0, 1)"
             inactiveBackgroundColor="rgba(0, 0, 0, 1)"
         >
             <Stack
                 key="tab_1"
                 tabBarLabel="TAB #1"
                 inactiveBackgroundColor="#FFF"
-                activeBackgroundColor="#DDD"
+
                 icon={()=>TabIcon(I18n.t('home'),Images.home,{
-                    color:'#AAAAAA',fonSize:10
+                    color:'#AAAAAA'
                 },{
                     height:24,
                     width:24
