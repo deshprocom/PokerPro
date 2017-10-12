@@ -54,7 +54,7 @@ export const Navigation=()=>{
                        component={DrawerRank}
                        hideNavBar
                        icon={({ focused })=>focused?TabIcon(I18n.t('home_sort'),Images.rank2,styles.textStyle2,styles.bgRankStyle2):
-                       TabIcon(I18n.t('home_info'),Images.rank,styles.textStyle,styles.bgRankStyle2)}
+                       TabIcon(I18n.t('home_sort'),Images.rank,styles.textStyle,styles.bgRankStyle2)}
                 />
             </Stack>
             <Stack key="tab_4">

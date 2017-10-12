@@ -66,16 +66,8 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
-    moreTwos: {
-        marginTop: 16,
-        marginLeft:17
-    },
-    moreTwo: {
-        width:101,
-        marginRight:10,
-        flexDirection: 'column',
 
-    },
+
     information: {
         height:103,
         marginLeft:20,

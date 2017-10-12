@@ -7,7 +7,6 @@ import {
 }
     from 'react-native';
 import {Images} from '../../Themes';
-import {styles} from './Styles';
 import {
     isEmptyObject, YYYY_MM_DD, convertDate,
 } from '../../utils/ComonHelper';
@@ -30,10 +29,10 @@ export default class Coming extends Component {
                 activeOpacity={1}
                 style={styles.moreTwos}>
                 <View style={styles.moreTwo}>
-                    <Image style={{width:101,height:143,borderRadius:3}} source={{uri: item.big_logo}}/>
-                    <Text style={{fontSize:12,marginTop:8,color:'#333333'}}>{item.name}</Text>
-                    <Text style={{fontSize:12,marginTop:9,color:'#888888'}}>{this.races_time(item)}</Text>
-                    <Text style={{fontSize:12,marginTop:6,color:'#888888'}}>{item.location}</Text>
+                    <Image style={styles.moreTwoImg} source={{uri: item.big_logo}}/>
+                    <Text style={[styles.moreTwoText,{color:'#333333'}]}>{item.name}</Text>
+                    <Text style={[styles.moreTwoText,{color:'#888888'}]}>{this.races_time(item)}</Text>
+                    <Text style={[styles.moreTwoText,{color:'#888888'}]}>{item.location}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -43,8 +42,8 @@ export default class Coming extends Component {
 
         return (
 
-            <View style={{backgroundColor:'#fff',marginTop:8}}>
-                <View style={{height:20,flexDirection:'row',alignItems:'center',marginTop:14}}>
+            <View style={styles.coming}>
+                <View style={styles.comingInner}>
                     <View style={[styles.races]}>
                         <Text style={styles.raceText1}>{I18n.t('home_recent_races')}</Text>
                     </View>
@@ -71,3 +70,51 @@ export default class Coming extends Component {
         );
     }
 }
+const styles = StyleSheet.create({
+    moreTwoImg:{
+        width:101,height:143,borderRadius:3
+    },
+    moreTwoText:{
+        fontSize:12,marginTop:8
+    },
+    coming:{
+        backgroundColor:'#fff',marginTop:8
+    },
+    comingInner:{
+        height:20,flexDirection:'row',alignItems:'center',marginTop:14
+    },
+    races: {
+        flexDirection: 'row',
+        marginLeft: 20,
+        alignItems: 'center'
+    },
+    raceText1: {
+        fontSize: 14,
+        color: '#333333',
+        fontFamily:'PingFangSC-Regular',
+        fontWeight:'bold'
+    },
+    raceText: {
+        fontSize: 14,
+        color: '#333333'
+    },
+    racesTwo: {
+        flexDirection: 'row',
+        marginLeft: 224,
+        alignItems:'center'
+    },
+    racesTwoRight: {
+        flexDirection: 'column',
+        marginLeft: 20,
+        alignItems: 'center'
+    },
+    moreTwos: {
+        marginTop: 16,
+        marginLeft:17
+    },
+    moreTwo: {
+        width:101,
+        marginRight:10,
+
+    },
+})
