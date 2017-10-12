@@ -3,16 +3,18 @@ import {
     AppRegistry,
     StyleSheet,
     Text, Image, Dimensions, ListView, Animated, Easing,
-    View
+    View,TouchableOpacity
 } from 'react-native';
 import {styles} from './Styles';
 import {Images} from '../../Themes';
 import {getPukeNews} from '../../services/NewsDao';
+import {BannerStatus} from '../../configs/Status';
 
 var i = 0;
 export default class PukeNews extends Component {
     state = {
-        text: ''
+        text: '',
+        selected:{}
     };
 
     constructor(props) {
@@ -24,7 +26,7 @@ export default class PukeNews extends Component {
     componentDidMount() {
         setTimeout(() => {
             getPukeNews(data => {
-
+                console.log('headlines', data)
                 this.texts = data.headlines;
                 this.showText();
                 this.animate();
@@ -53,7 +55,8 @@ export default class PukeNews extends Component {
             if (this.texts.length > 0) {
                 i = i + 1;
                 this.setState({
-                    text: this.texts[i - 1].title
+                    text: this.texts[i - 1].title,
+                    selected:this.texts[i - 1]
                 });
 
                 if (i === this.texts.length) {
@@ -75,15 +78,40 @@ export default class PukeNews extends Component {
                 <View style={styles.puke}>
                     <Image style={styles.pukeText} source={Images.pukes}/>
                     <View style={{width: 1, height: 16, backgroundColor: '#E5E5E5', marginLeft: 15}}/>
+                    <TouchableOpacity
+                        onPress={this._clickBanner}
+                        activeOpacity={1}
+                    >
+                        <Animated.View style={{opacity}}>
+                            <Text
+                                numberOfLines={2}
+                                style={[styles.pukeText2, {marginLeft: 15}]}
+                            >{this.state.text}</Text>
+                        </Animated.View>
+                    </TouchableOpacity>
 
-                    <Animated.View style={{opacity}}>
-                        <Text
-                            numberOfLines={2}
-                            style={[styles.pukeText2, {marginLeft: 15}]}
-                        >{this.state.text}</Text>
-                    </Animated.View>
                 </View>
             </View>
         )
+    }
+
+    _clickBanner = () => {
+        const {selected} = this.state;
+        switch (selected.source_type) {
+            case BannerStatus.INFO:
+                global.router.toNewsInfo(selected.source_id);
+                break;
+            case BannerStatus.RACE:
+                global.router.toRacesInfoPage(this.props, selected.source_id, false);
+                break;
+
+            case BannerStatus.VIDEO:
+                global.router.toVideoInfo(selected.source_id);
+                break;
+            case BannerStatus.LINK:
+                global.router.toWebViewPage(this.props, selected.link);
+                break;
+
+        }
     }
 }

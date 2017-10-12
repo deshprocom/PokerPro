@@ -13,10 +13,8 @@ import {BannerStatus} from '../../configs/Status';
 export default class MainBanner extends Component {
 
     render() {
-        console.log('Banner', this.props.banners)
         return (
             <View
-
                 style={{height: 200}}>
                 <Swiper
                     autoplayTimeout={3}
