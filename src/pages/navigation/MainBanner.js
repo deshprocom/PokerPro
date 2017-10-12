@@ -13,25 +13,28 @@ import {BannerStatus} from '../../configs/Status';
 export default class MainBanner extends Component {
 
     render() {
-        return (
-            <View
-                style={{height: 200}}>
-                <Swiper
-                    autoplayTimeout={3}
-                    autoplay>
-                    {this.props.banners.map((item, key) => {
-                        return <TouchableOpacity
-                            key={'banner' + key}
-                            onPress={() => this._clickBanner(item)}
-                            activeOpacity={1}>
-                            <Image key={key} style={{height: 200, width: '100%'}} source={{uri: item.image}}/>
-                        </TouchableOpacity>
+        if (this.props.banners.length > 0)
+            return (
+                <View style={{height: 200}}>
+                    <Swiper
+                        autoplay>
+                        {this.props.banners.map((item, key) => {
+                            return <TouchableOpacity
+                                key={key}
+                                onPress={() => this._clickBanner(item)}
+                                activeOpacity={1}>
+                                <Image style={{height: 200, width: '100%'}} source={{uri: item.image}}/>
+                            </TouchableOpacity>
 
-                    })}
+                        })}
 
-                </Swiper>
-            </View>
-        )
+                    </Swiper>
+                </View>
+
+
+            );
+        else
+            return <View style={{height: 200}}/>
     }
 
     _clickBanner = (item) => {
