@@ -18,10 +18,11 @@ import {FETCHING, GET_RECENT_RACES} from '../../actions/ActionTypes';
 class Personal extends Component {
 
     shouldComponentUpdate(newProps) {
+
         if (newProps.actionType === GET_RECENT_RACES && newProps.fetching === FETCHING) {
             this.forceUpdate()
         }
-        return false
+        return true;
 
     }
 
