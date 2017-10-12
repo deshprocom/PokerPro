@@ -64,7 +64,7 @@ export default class FiltePage extends Component {
                 {this.scoreCheck()}
             </ScrollView>
 
-            <View style={{flexDirection: 'row', paddingLeft: 36, position: 'absolute', bottom: 36}}>
+            <View style={{flexDirection: 'row', paddingLeft: 36, position: 'absolute', bottom: 70}}>
                 <TouchableOpacity
                     onPress={() => this._cancelSelect()}
                     style={[{borderColor: Colors._161817, borderRadius: 2, borderWidth: 1}, styles.side_btn]}>

@@ -27,11 +27,11 @@ export default class MainRankPage extends Component {
 
     topHeader = () => {
         return (<View style={styles.header_bar}>
-            <TouchableOpacity onPress={() => router.pop()}
-                              style={styles.topBtn}>
-                <Image source={Images.sign_return}
-                       style={styles.back_image}/>
-            </TouchableOpacity>
+            <View onPress={() => router.pop()}
+                  style={styles.topBtn}>
+                {/* <Image source={Images.sign_return}
+                       style={styles.back_image}/>*/}
+            </View>
 
             <View style={styles.topBtn}></View>
 

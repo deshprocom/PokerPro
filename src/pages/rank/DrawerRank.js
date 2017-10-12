@@ -10,7 +10,7 @@ import TimerMixin from 'react-timer-mixin';
 
 class DrawerRank extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             drawerState: false
         }
