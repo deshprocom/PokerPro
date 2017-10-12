@@ -13,14 +13,15 @@ import Information from './Information';
 import MainBanner from './MainBanner';
 import {styles} from './Styles';
 import {getRecentRaces, getRaceTickets} from '../../services/RacesDao';
-import {getHotInfos} from '../../services/NewsDao';
+import {getHotInfos, getMainBanners, getPukeNews} from '../../services/NewsDao';
 import Router from '../../configs/Router';
 
 export default class RaceInfoPage extends Component {
     state = {
         listRace: [],
         raceTickets: [],
-        hotInfos: []
+        hotInfos: [],
+        banners: []
     };
 
     componentWillMount() {
@@ -30,6 +31,19 @@ export default class RaceInfoPage extends Component {
     }
 
     componentDidMount() {
+        setTimeout(this._getData, 300)
+    }
+
+    _getData = () => {
+        getMainBanners(data => {
+
+            this.setState({
+                banners: data.banners
+            });
+
+        }, err => {
+
+        });
         getRecentRaces({number: 10}, data => {
             console.log('listRace', data)
             this.setState({
@@ -53,17 +67,15 @@ export default class RaceInfoPage extends Component {
 
         }, err => {
         })
-
-    }
+    };
 
     render() {
-        const {listRace, raceTickets, hotInfos} = this.state;
+        const {listRace, raceTickets, hotInfos, banners} = this.state;
 
         return (
             <ScrollView>
-                <View style={styles.scrollImg}>
-                    <MainBanner/>
-                </View>
+                <MainBanner
+                    banners={banners}/>
                 <PukeNews/>
 
                 <Races
