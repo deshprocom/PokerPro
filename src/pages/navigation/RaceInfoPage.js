@@ -79,9 +79,9 @@ export default class RaceInfoPage extends Component {
                 <PukeNews/>
 
                 <Races
-                    listRace={raceTickets}/>
+                    raceTickets={raceTickets}/>
                 <Coming
-                    raceTickets={listRace}/>
+                    listRace={listRace}/>
                 <Information
                     hotInfos={hotInfos}/>
 

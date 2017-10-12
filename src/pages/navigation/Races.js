@@ -28,7 +28,7 @@ export default class Races extends Component {
         return (
             <Image style={styles.oval} source={Images.oval}>
                 <View style={{width: 115, height: 155, marginLeft: 5}}>
-                    <Image style={{width: 115, height: 155}} source={{uri: item.big_logo}}/>
+                    <Image style={{width: 115, height: 155,borderRadius:3}} source={{uri: item.big_logo}}/>
                 </View>
 
                 <View style={{marginLeft: 20, marginTop: 14}}>
@@ -73,7 +73,7 @@ export default class Races extends Component {
     render() {
 
         return (
-            <View style={{height: 246, backgroundColor: '#fff', marginTop: 10}}>
+            <View style={{backgroundColor: '#fff', marginTop: 10}}>
                 <View style={{height: 20, flexDirection: 'row', alignItems: 'center', marginTop: 14}}>
                     <View style={[styles.races]}>
                         <Text style={styles.raceText1}>{I18n.t('hot_races')}</Text>
@@ -88,15 +88,16 @@ export default class Races extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{marginTop: 30, flexDirection: 'row'}}>
-                    {this.props.listRace.length > 0 ? <FlatList
+                    {this.props.raceTickets.length > 0 ? <FlatList
                         horizontal
-                        data={this.props.listRace}
+                        data={this.props.raceTickets}
                         renderItem={this._renderItem}
                         keyExtractor={(item, index) => index}
                     /> : null}
 
 
                 </View>
+                <View style={{height:15}}/>
             </View>
         );
     }
