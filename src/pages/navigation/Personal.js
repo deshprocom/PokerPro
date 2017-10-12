@@ -6,7 +6,6 @@ import {
     View, Animated, findNodeHandle
 } from 'react-native';
 import {Images, Colors} from '../../Themes';
-import {styles} from './Styles';
 import {strNotNull, isEmptyObject, getLoginUser, getUserData} from '../../utils/ComonHelper';
 import {umengEvent} from '../../utils/UmengEvent';
 import I18n from 'react-native-i18n';
@@ -44,7 +43,7 @@ class Personal extends Component {
                             router.toLoginFirstPage()
                     }}>
                         <View style={styles.personalView2}>
-                            <Image style={{width: 18, height: 22}} source={Images.order}/>
+                            <Image style={styles.personalView2Img} source={Images.order}/>
                             <Text style={styles.personalText}>{I18n.t('order')}</Text>
                             <Image style={styles.personalImg} source={Images.is}/>
                         </View>
@@ -62,7 +61,7 @@ class Personal extends Component {
                         }
                     }}>
                         <View style={styles.personalView2}>
-                            <Image style={{width: 18, height: 22}} source={Images.speaker}/>
+                            <Image style={styles.personalView2Img} source={Images.speaker}/>
                             <Text style={styles.personalText}>{I18n.t('message')}</Text>
                             <Image style={styles.personalImg} source={Images.is}/>
                         </View>
@@ -113,11 +112,7 @@ class Personal extends Component {
     _username = () => {
         const {profile} = this.props;
         return profile.user_name ?
-            <Text style={{
-                fontSize: 12,
-                color: '#888888',
-                marginBottom: 12
-            }}>ID:{profile.user_name ? profile.user_name : ''}</Text> : null;
+            <Text style={styles.personID}>ID:{profile.user_name ? profile.user_name : ''}</Text> : null;
 
     };
 
@@ -138,20 +133,12 @@ class Personal extends Component {
         const {profile} = this.props;
         return (<Animated.Image
             ref={'backgroundImage'}
-            style={stylesL.blurImg}
+            style={styles.blurImg}
             source={this._avatar()}
             onLoadEnd={this.imageLoaded}
         >
-            <BlurView {...props} style={stylesL.blur}/>
-            <View style={{
-                width: 88,
-                height: 88,
-                borderRadius: 44,
-                marginTop: 30,
-                backgroundColor: 'rgba(0,0,0,0.23)',
-                alignItems: 'center',
-                justifyContent: 'center'
-            }}>
+            <BlurView {...props} style={styles.blur}/>
+            <View style={styles.personRadius}>
                 <TouchableOpacity
                     onPress={() => {
                         if (!isEmptyObject(login_user))
@@ -160,27 +147,13 @@ class Personal extends Component {
                             router.toLoginFirstPage()
 
                     }}
-                    style={{
-                        width: 77,
-                        height: 77,
-                        borderRadius: 39,
-                        backgroundColor: '#FFE9AD',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}>
+                    style={styles.personRadius2}>
                     <Image style={{width: 74, height: 74, borderRadius: 37}} source={this._avatar()}/>
                 </TouchableOpacity>
             </View>
             <Text
-                style={{
-                    fontSize: 17,
-                    color: '#888888',
-                    fontWeight: 'bold'
-                }}>{profile.nick_name ? profile.nick_name : ''}</Text>
-            <Text style={{
-                fontSize: 13,
-                color: '#888888'
-            }}>{this._signature()}</Text>
+                style={styles.personSignature2}>{profile.nick_name ? profile.nick_name : ''}</Text>
+            <Text style={styles.personSignature}>{this._signature()}</Text>
 
             {this._username()}
 
@@ -189,7 +162,7 @@ class Personal extends Component {
 
 }
 
-const stylesL = StyleSheet.create({
+const styles = StyleSheet.create({
     blurImg: {
         height: 260,
         width: '100%',
@@ -203,6 +176,75 @@ const stylesL = StyleSheet.create({
         left: 0,
         right: 0,
         top: 0,
+    },
+    personalView:{
+        flexDirection:'row',
+        backgroundColor:'#ffffff'
+    },
+    personalView2:{
+        flexDirection:'row',
+        alignItems:'center',
+        marginTop:13,
+        marginBottom:13,
+        marginLeft:20,
+        marginRight:17
+    },
+    personalView2Img:{
+        width: 18,
+        height: 22
+    },
+    personalText:{
+        fontFamily: 'PingFangSC-Regular',
+        fontSize: 16,
+        color: '#444444',
+        marginLeft:30
+    },
+    personalImg:{
+        width:8,
+        height:15,
+        marginLeft:250
+    },
+    personalImgBusiness:{
+        width:8,
+        height:15,
+        marginLeft:218
+    },
+    personRadius:{
+        width: 88,
+        height: 88,
+        borderRadius: 44,
+        marginTop: 30,
+        backgroundColor: 'rgba(0,0,0,0.23)',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    personRadius2:{
+        width: 77,
+        height: 77,
+        borderRadius: 39,
+        backgroundColor: '#FFE9AD',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    personID:{
+        fontSize: 12,
+        color: '#888888',
+        marginBottom: 12,
+        marginTop:8,
+        backgroundColor:'transparent'
+    },
+    personSignature:{
+        fontSize: 13,
+        color: '#888888',
+        marginTop:8,
+        backgroundColor:'transparent'
+    },
+    personSignature2:{
+        fontSize: 17,
+        color: '#888888',
+        fontWeight: 'bold',
+        marginTop:8,
+        backgroundColor:'transparent'
     }
 
 });

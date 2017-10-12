@@ -136,32 +136,6 @@ export const styles = StyleSheet.create({
         fontSize: 15,
         color:'#DF1D0F'
     },
-    personalText:{
-        fontFamily: 'PingFangSC-Regular',
-        fontSize: 16,
-        color: '#444444',
-        marginLeft:30
-    },
-    personalImg:{
-        width:8,
-        height:15,
-        marginLeft:250
-    },
-    personalImgBusiness:{
-        width:8,
-        height:15,
-        marginLeft:218
-    },
-    personalView:{
-        flexDirection:'row',
-        backgroundColor:'#ffffff'
-    },
-    personalView2:{
-        flexDirection:'row',
-        alignItems:'center',
-        marginTop:13,
-        marginBottom:13,
-        marginLeft:20,
-        marginRight:17
-    }
+
+
 });
