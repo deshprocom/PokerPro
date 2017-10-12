@@ -4,23 +4,38 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
+
+/*获取某个资讯详情*/
+export function getVideoDetail(body, resolve, reject) {
+    helper.get(Api.video_detail(body), ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+/*获取某个资讯详情*/
+export function getNewsDetail(body, resolve, reject) {
+    helper.get(Api.info_detail(body), ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
 /* 获取首页热门资讯*/
 export function getHotInfos(resolve, reject) {
-    helper.get(Api.hot_infos, ret=> {
+    helper.get(Api.hot_infos, ret => {
         resolve(ret.data)
     }, reject)
 }
 
 export function getPukeNews(resolve, reject) {
-    helper.get(Api.headlines,ret=>{
+    helper.get(Api.headlines, ret => {
         resolve(ret.data)
-    },reject)
+    }, reject)
 }
 
 export function getMainBanners(resolve, reject) {
-    helper.get(Api.banners,ret=>{
+    helper.get(Api.banners, ret => {
         resolve(ret.data)
-    },reject)
+    }, reject)
 }
 
 export function getVideoSearch(body, resolve, reject) {
@@ -63,8 +78,8 @@ export function getNewsSearch(body, resolve, reject) {
 }
 
 // 身份证上传
-export function postPasswordImage(body, resolve, reject){
-    helper.post(Api.upload_card_image,body,(ret) => {
+export function postPasswordImage(body, resolve, reject) {
+    helper.post(Api.upload_card_image, body, (ret) => {
         resolve(ret.data)
     }, reject)
 }

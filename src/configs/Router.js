@@ -326,6 +326,15 @@ export default class Router {
         })
     }
 
+    toNewsInfo(news_id) {
+        this.stackPush({
+            name: 'NewsInfoPage',
+            params: {
+                news_id: news_id
+            }
+        })
+    }
+
     toNewsInfoPage(props, newsInfo) {
         this.push(props, {
 

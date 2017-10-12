@@ -5,30 +5,40 @@ import React, {Component, PropTypes} from 'react';
 import {
     StyleSheet, Text, View, FlatList,
     TouchableOpacity, Image, StatusBar,
-    ScrollView, Animated, InteractionManager
+    ScrollView, Animated
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {isEmptyObject, convertDate, newShare} from '../../utils/ComonHelper';
-import {LoadingView} from '../../components/load'
+import {isEmptyObject, convertDate, newShare, strNotNull} from '../../utils/ComonHelper';
 import {NavigationBar, MarkdownPlat} from '../../components';
+import {getNewsDetail} from '../../services/NewsDao';
 
 
 export default class NewsInfoPage extends Component {
-    state = {renderPlaceholderOnly: true};
+    state = {
+        newsInfo: {}
+    };
 
     componentDidMount() {
-        router.log(this.props.params)
-        InteractionManager.runAfterInteractions(() => {
-            this.setState({
-                renderPlaceholderOnly: false
-            });
-        });
+        const {newsInfo, news_id} = this.props.params;
+        if (!isEmptyObject(newsInfo)) {
+            this.setState({newsInfo})
+        } else if (strNotNull(news_id)) {
+            getNewsDetail({info_id: news_id}, data => {
+                this.setState({
+                    newsInfo: data
+                })
+
+            }, err => {
+
+            })
+        }
+
     }
 
     render() {
 
-        const {date, description, source, title, id, image} = this.props.params.newsInfo;
+        const {date, description, source, title, id, image} = this.state.newsInfo;
 
         return (<View
             testID="page_news_info"
@@ -42,8 +52,7 @@ export default class NewsInfoPage extends Component {
                 rightImageStyle={{height: 22, width: 23, marginRight: 24.8}}
                 rightBtnPress={() => {
                     newShare(title, date + '\n' + source, image, id);
-                    {/*router.log(title,date+'\n'+source,image,id);*/
-                    }
+
                 }}/>
 
             <ScrollView>

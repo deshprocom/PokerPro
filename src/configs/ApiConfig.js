@@ -93,6 +93,7 @@ export default {
     headlines: 'headlines',
     hot_infos: 'hot_infos',
     info_detail: info_detail,
+    video_detail: video_detail,
 }
 
 
@@ -104,6 +105,11 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+export function video_detail(body) {
+    const {video_id} = body;
+    return 'news/videos/' + video_id;
+}
 
 export function info_detail(body) {
     const {info_id} = body;
