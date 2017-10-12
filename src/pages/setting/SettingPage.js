@@ -232,7 +232,8 @@ class SettingPage extends Component {
                     number: 8
                 };
                 this.props._getRecentRaces(recentRaces);
-                this.props._getProfileNull();
+
+                this.forceUpdate();
 
                router.toLoginFirstPage()
 
