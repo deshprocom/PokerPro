@@ -124,19 +124,19 @@ class Personal extends Component {
 
     renderPerson = () => {
         let props = Platform.OS === 'ios' ? {
-            blurType: "light",
-            blurAmount: 18
-        } : {
-            viewRef: this.state.viewRef,
-            downsampleFactor: 10,
-            overlayColor: 'rgba(255,255,255,.1)'
-        };
+                blurType: "light",
+                blurAmount: 18
+            } : {
+                viewRef: this.state.viewRef,
+                downsampleFactor: 10,
+                overlayColor: 'rgba(255,255,255,.1)'
+            };
 
         const {profile} = this.props;
         return (<Animated.Image
             ref={'backgroundImage'}
             style={styles.blurImg}
-            source={this._avatar()}
+            source={Images.home_bg}
             onLoadEnd={this.imageLoaded}
         >
             <BlurView {...props} style={styles.blur}/>
@@ -173,45 +173,44 @@ const styles = StyleSheet.create({
     },
     blur: {
         height: 260,
-        width: '100%',
         position: "absolute",
         left: 0,
         right: 0,
         top: 0,
     },
-    personalView:{
-        flexDirection:'row',
-        backgroundColor:'#ffffff'
+    personalView: {
+        flexDirection: 'row',
+        backgroundColor: '#ffffff'
     },
-    personalView2:{
-        flexDirection:'row',
-        alignItems:'center',
-        marginTop:13,
-        marginBottom:13,
-        marginLeft:20,
-        marginRight:17
+    personalView2: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 13,
+        marginBottom: 13,
+        marginLeft: 20,
+        marginRight: 17
     },
-    personalView2Img:{
+    personalView2Img: {
         width: 18,
         height: 22
     },
-    personalText:{
+    personalText: {
         fontFamily: 'PingFangSC-Regular',
         fontSize: 16,
         color: '#444444',
-        marginLeft:30
+        marginLeft: 30
     },
-    personalImg:{
-        width:8,
-        height:15,
-        marginLeft:250
+    personalImg: {
+        width: 8,
+        height: 15,
+        marginLeft: 250
     },
-    personalImgBusiness:{
-        width:8,
-        height:15,
-        marginLeft:218
+    personalImgBusiness: {
+        width: 8,
+        height: 15,
+        marginLeft: 218
     },
-    personRadius:{
+    personRadius: {
         width: 88,
         height: 88,
         borderRadius: 44,
@@ -220,7 +219,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    personRadius2:{
+    personRadius2: {
         width: 77,
         height: 77,
         borderRadius: 39,
@@ -228,31 +227,31 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    personID:{
+    personID: {
         fontSize: 12,
         color: '#eeeeee',
         marginBottom: 12,
-        marginTop:8,
-        backgroundColor:'transparent'
+        marginTop: 8,
+        backgroundColor: 'transparent'
     },
-    personSignature:{
+    personSignature: {
         fontSize: 13,
         color: '#eeeeee',
-        marginTop:8,
-        backgroundColor:'transparent'
+        marginTop: 8,
+        backgroundColor: 'transparent'
     },
-    personSignature2:{
+    personSignature2: {
         fontSize: 17,
         color: '#ffffff',
         fontWeight: 'bold',
-        marginTop:8,
-        backgroundColor:'transparent'
+        marginTop: 8,
+        backgroundColor: 'transparent'
     },
-    textLine:{
-        height:0.5,
-        width:67,
-        marginRight:308,
-        backgroundColor:'#ffffff'
+    textLine: {
+        height: 0.5,
+        width: 67,
+        marginRight: 308,
+        backgroundColor: '#ffffff'
     },
 
 
