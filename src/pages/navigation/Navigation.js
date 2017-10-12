@@ -36,13 +36,13 @@ export const Navigation=()=>{
                 titleStyle={{ color: 'white', alignSelf: 'center' }}
             >
                 <Scene
-                    key="tab1_1"
+                    key="tab_home"
                     component={RaceInfoPage}
                     hideNavBar
                 />
             </Stack>
             <Stack key="tab_2">
-                <Scene key="tab_2_1"
+                <Scene key="tab_news"
                        component={VideoNewsTab}
                        hideNavBar
                        icon={({ focused })=>focused?TabIcon(I18n.t('home_info'),Images.information2,styles.textStyle2,styles.bgInformationStyle):
@@ -50,7 +50,7 @@ export const Navigation=()=>{
                 />
             </Stack>
             <Stack key="tab_3">
-                <Scene key="tab_3_1"
+                <Scene key="tab_rank"
                        component={DrawerRank}
                        hideNavBar
                        icon={({ focused })=>focused?TabIcon(I18n.t('home_sort'),Images.rank2,styles.textStyle2,styles.bgRankStyle2):
@@ -58,7 +58,7 @@ export const Navigation=()=>{
                 />
             </Stack>
             <Stack key="tab_4">
-                <Scene key="tab_4_1"
+                <Scene key="tab_person"
                        component={Personal}
                        hideNavBar
                        icon={({ focused })=>focused?TabIcon(I18n.t('mine'),Images.mine2,styles.textStyle2,styles.bgHomeStyle):
