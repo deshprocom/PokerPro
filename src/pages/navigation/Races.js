@@ -88,6 +88,7 @@ export default class Races extends Component {
                         <Text style={styles.raceText1}>{I18n.t('hot_races')}</Text>
                         <Image style={{width: 13, height: 17, marginLeft: 6}} source={Images.raceBegin}/>
                     </View>
+                    <View style={{flex:1}}/>
                     <TouchableOpacity style={styles.racesTwo} onPress={() => {
                         umengEvent('home_ticket');
                         router.toTicketPage()

@@ -47,7 +47,8 @@ export default class Coming extends Component {
                     <View style={[styles.races]}>
                         <Text style={styles.raceText1}>{I18n.t('home_recent_races')}</Text>
                     </View>
-                    <TouchableOpacity style={[styles.racesTwo,{marginLeft:245}]} onPress={() => {
+                    <View style={{flex:1}}/>
+                    <TouchableOpacity style={[styles.racesTwo,{marginRight:14}]} onPress={() => {
                                    umengEvent('home_more');
                                 router.toSearchRacesPage()
                                 }}>
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
     },
     racesTwo: {
         flexDirection: 'row',
-        marginLeft: 224,
+        marginRight:14,
         alignItems:'center'
     },
     racesTwoRight: {
