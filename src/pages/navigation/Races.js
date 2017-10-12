@@ -12,6 +12,7 @@ import {
     isEmptyObject, YYYY_MM_DD, convertDate,
 } from '../../utils/ComonHelper';
 import I18n from 'react-native-i18n';
+import {umengEvent} from '../../utils/UmengEvent';
 
 export default class Races extends Component {
 
@@ -70,10 +71,13 @@ export default class Races extends Component {
                         <Text style={styles.raceText1}>{I18n.t('hot_races')}</Text>
                         <Image style={{width:13,height:17,marginLeft:6}} source={Images.raceBegin}/>
                     </View>
-                    <View style={styles.racesTwo}>
+                    <TouchableOpacity style={styles.racesTwo} onPress={() => {
+                                    umengEvent('home_ticket');
+                                    router.toTicketPage()
+                                }}>
                         <Text style={[styles.raceText]}>{I18n.t('more')}</Text>
                         <Image style={{width:8,height:12,marginLeft:6}} source={Images.is}/>
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={{marginTop:30,flexDirection:'row'}}>
                     { this.props.listRace.length > 0 ? <FlatList

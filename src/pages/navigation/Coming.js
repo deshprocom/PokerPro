@@ -23,11 +23,11 @@ export default class Coming extends Component {
         return begin + '-' + end;
     };
 
-    _renderItem = ({item,index}) => {
+    _renderItem = ({item, index}) => {
         return (
             <View style={styles.moreTwos}>
                 <View style={styles.moreTwo}>
-                    <Image style={{width:101,height:143}} source={{uri: item.big_logo}}/>
+                    <Image style={{width:101,height:143,borderRadius:3}} source={{uri: item.big_logo}}/>
                     <Text style={{fontSize:12,marginTop:8,color:'#333333'}}>{item.name}</Text>
                     <Text style={{fontSize:12,marginTop:9,color:'#888888'}}>{this.races_time(item)}</Text>
                     <Text style={{fontSize:12,marginTop:6,color:'#888888'}}>{item.location}</Text>

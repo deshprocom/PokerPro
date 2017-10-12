@@ -45,8 +45,8 @@ export default class Information extends Component {
                 <View style={{marginLeft:20,marginRight:23,marginTop:21}}>
                     <Text style={{fontSize:15,fontFamily:'PingFangSC-Regular',color:'#333333'}}>{item.video.name}</Text>
 
-                    <TouchableOpacity style={{width:342,height:207,marginTop:11,marginRight:23}} >
-                        <Image style={{width:342,height:207,alignItems:'center',justifyContent:'center'}} source={{uri: item.video.cover_link.trim()}}>
+                    <TouchableOpacity style={{height:207,marginTop:11}} >
+                        <Image style={{height:207,alignItems:'center',justifyContent:'center'}} source={{uri: item.video.cover_link.trim()}}>
                             <Image style={{width:70,height:70}} source={Images.begin}/>
                         </Image>
                     </TouchableOpacity>
