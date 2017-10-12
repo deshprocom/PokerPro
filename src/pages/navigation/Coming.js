@@ -60,7 +60,7 @@ export default class Coming extends Component {
                 <View style={{flexDirection:'row'}}>
                     <FlatList
                         horizontal
-                        data={this.props.raceTickets}
+                        data={this.props.listRace}
                         renderItem={this._renderItem}
                         keyExtractor={(item,index)=>index}
                     />

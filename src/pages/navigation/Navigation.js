@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Scene,Stack,Tabs} from 'react-native-router-flux';
 import RaceInfoPage from './RaceInfoPage';
+import Personal from './Personal';
 
 import {TabIcon} from './TabIcon';
 import DrawerPage from '../DrawerPage'
@@ -87,7 +88,7 @@ export const Navigation=()=>{
             </Stack>
             <Stack key="tab_4">
                 <Scene key="tab_4_1"
-                       component={RaceInfoPage}
+                       component={Personal}
                        hideNavBar
                        icon={()=>TabIcon(I18n.t('mine'),Images.mine,{
                     color:'#AAAAAA'

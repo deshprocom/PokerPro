@@ -213,7 +213,11 @@ const images = {
     mine2: require('../../source/navigation/mine2.png'),
     rank: require('../../source/navigation/rank.png'),
     rank2: require('../../source/navigation/rank2.png'),
-    begin: require('../../source/navigation/begin.png')
+    begin: require('../../source/navigation/begin.png'),
+    business: require('../../source/navigation/business.png'),
+    order: require('../../source/navigation/order.png'),
+    settings: require('../../source/navigation/settings.png'),
+    speaker: require('../../source/navigation/speaker.png')
 };
 
 export default images
