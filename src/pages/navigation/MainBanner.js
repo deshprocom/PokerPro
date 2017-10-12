@@ -23,7 +23,7 @@ export default class MainBanner extends Component {
                         return <TouchableOpacity
                             key={'banner' + key}
                             onPress={() => this._clickBanner(item)}
-                            activeOpacity={0.2}>
+                            activeOpacity={1}>
                             <Image key={key} style={{height: 200, width: '100%'}} source={{uri: item.image}}/>
                         </TouchableOpacity>
 
