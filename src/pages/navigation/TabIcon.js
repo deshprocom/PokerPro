@@ -5,7 +5,6 @@ import {
   Text,Image,View
 } from 'react-native';
 
-
 export const  TabIcon = (title,image,textStyle,bgStyle) => {
   return (
   <View style={{flexDirection:'column',alignItems:'center'}}>

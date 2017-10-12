@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 import {Scene,Stack,Tabs} from 'react-native-router-flux';
 import RaceInfoPage from './RaceInfoPage';
 import Personal from './Personal';
-
+import {
+    StyleSheet
+} from 'react-native';
 import {TabIcon} from './TabIcon';
-import DrawerPage from '../DrawerPage'
 import I18n from 'react-native-i18n';
 import {Images} from '../../Themes';
 import VideoNewsTab from './VideoNewsTab';
@@ -16,7 +17,7 @@ export const Navigation=()=>{
 
     return (
         <Tabs
-            style={{height:50}}
+            style={styles.tabs}
             lazy
             key="Navigation"
             showLabel={false}
@@ -29,18 +30,9 @@ export const Navigation=()=>{
                 tabBarLabel="TAB #1"
                 inactiveBackgroundColor="#FFF"
 
-                icon={()=>TabIcon(I18n.t('home'),Images.home,{
-                    color:'#AAAAAA'
-                },{
-                    height:24,
-                    width:24
-                })}
-                navigationBarStyle={()=>TabIcon(I18n.t('home'),Images.home2,{
-                    color:'#FFE9AD'
-                },{
-                    height:24,
-                    width:24
-                })}
+                icon={({ focused })=>focused?TabIcon(I18n.t('home'),Images.home2,styles.textStyle2,styles.bgHomeStyle):
+                TabIcon(I18n.t('home'),Images.home,styles.textStyle,styles.bgHomeStyle)}
+
                 titleStyle={{ color: 'white', alignSelf: 'center' }}
             >
                 <Scene
@@ -53,57 +45,53 @@ export const Navigation=()=>{
                 <Scene key="tab_2_1"
                        component={VideoNewsTab}
                        hideNavBar
-                       icon={()=>TabIcon(I18n.t('home_info'),Images.information,{
-                            color:'#AAAAAA'
-                        },{
-                           width:17,
-                            height:23
-                       })}
-
-                       navigationBarStyle={()=>TabIcon(I18n.t('home_info'),Images.information2,{
-                    color:'#FFE9AD'
-                },{
-                           width:17,
-                            height:23
-                       })}
+                       icon={({ focused })=>focused?TabIcon(I18n.t('home_info'),Images.information2,styles.textStyle2,styles.bgInformationStyle2):
+                       TabIcon(I18n.t('home_info'),Images.information,styles.textStyle,styles.bgInformationStyle)}
                 />
             </Stack>
             <Stack key="tab_3">
                 <Scene key="tab_3_1"
                        component={DrawerRank}
                        hideNavBar
-                       icon={()=>TabIcon(I18n.t('home_sort'),Images.rank,{
-                    color:'#AAAAAA'
-                },{
-                           width:25,
-                            height:25
-                       })}
-                       navigationBarStyle={()=>TabIcon(I18n.t('home_sort'),Images.rank2,{
-                    color:'#FFE9AD'
-                },{
-                           width:25,
-                            height:25
-                       })}
+                       icon={({ focused })=>focused?TabIcon(I18n.t('home_sort'),Images.rank2,styles.textStyle2,styles.bgRankStyle2):
+                       TabIcon(I18n.t('home_info'),Images.rank,styles.textStyle,styles.bgRankStyle2)}
                 />
             </Stack>
             <Stack key="tab_4">
                 <Scene key="tab_4_1"
                        component={Personal}
                        hideNavBar
-                       icon={()=>TabIcon(I18n.t('mine'),Images.mine,{
-                    color:'#AAAAAA'
-                },{
-                           height:24,
-                            width:24
-                       })}
-                       navigationBarStyle={()=>TabIcon(I18n.t('mine'),Images.mine2,{
-                    color:'#FFE9AD'
-                },{
-                           height:24,
-                            width:24
-                       })}
+                       icon={({ focused })=>focused?TabIcon(I18n.t('mine'),Images.mine2,styles.textStyle2,styles.bgHomeStyle):
+                       TabIcon(I18n.t('mine'),Images.mine,styles.textStyle,styles.bgHomeStyle)}
                 />
             </Stack>
         </Tabs>
     );
 }
+const styles = StyleSheet.create({
+    tabs:{
+        height:50
+    },
+    textStyle:{
+        color:'#AAAAAA'
+    },
+    textStyle2:{
+        color:'#FFE9AD'
+    },
+    bgHomeStyle:{
+        height:24,
+        width:24
+    },
+    bgInformationStyle2:{
+        width:17,
+        height:23
+    },
+    bgInformationStyle:{
+        width:17,
+        height:23
+    },
+    bgRankStyle2:{
+        height:25,
+        width:25
+    }
+})
