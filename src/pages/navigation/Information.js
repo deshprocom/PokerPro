@@ -74,12 +74,17 @@ export default class Information extends Component {
                     <View style={[styles.races]}>
                         <Text style={styles.raceText1}>{I18n.t('hot_infos')}</Text>
                     </View>
-                    <View style={[styles.racesTwo, {marginLeft: 245}]}>
+                    <View style={{flex: 1}}/>
+                    <TouchableOpacity
+                        onPress={() => {
+                            router.toTabNews()
+                        }}
+                        style={[styles.racesTwo, {marginRight: 14}]}>
                         <Text style={[styles.raceText]}>{I18n.t('more')}</Text>
                         <Image style={{width: 8, height: 12, marginLeft: 6}} source={Images.is}/>
-                    </View>
+                    </TouchableOpacity>
                 </View>
-                <View style={{width: 342, height: 2, marginLeft: 17, backgroundColor: '#ECECEE', marginTop: 13}}/>
+                <View style={{width: '100%', height: 2, marginLeft: 17, backgroundColor: '#ECECEE', marginTop: 13}}/>
                 <View style={{flexDirection: 'row'}}>
                     <FlatList
                         data={this.props.hotInfos}

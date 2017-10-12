@@ -34,8 +34,12 @@ export default class Router {
     }
 
     popToTop() {
-        Actions.popTo('tab1_1')
+        Actions.popTo('tab_home')
 
+    }
+
+    toTabNews() {
+        Actions.tab_2();
     }
 
     toAddVerified(cert_type, refresh, verified) {
