@@ -5,7 +5,7 @@ import {
     Text, Image,
     View, Animated, findNodeHandle
 } from 'react-native';
-import {Images, Colors} from '../../Themes';
+import {Images, Colors, Metrics} from '../../Themes';
 import {strNotNull, isEmptyObject, getLoginUser, getUserData} from '../../utils/ComonHelper';
 import {umengEvent} from '../../utils/UmengEvent';
 import I18n from 'react-native-i18n';
@@ -34,7 +34,7 @@ class Personal extends Component {
 
                 {this.renderPerson()}
 
-                <View style={{alignItems: 'center'}}>
+                <View>
                     <TouchableOpacity style={styles.personalView} onPress={() => {
                         umengEvent('more_order');
                         if (strNotNull(getLoginUser().user_id))
@@ -42,13 +42,20 @@ class Personal extends Component {
                         else
                             router.toLoginFirstPage()
                     }}>
+
                         <View style={styles.personalView2}>
                             <Image style={styles.personalView2Img} source={Images.order}/>
+
                             <Text style={styles.personalText}>{I18n.t('order')}</Text>
+                            <View style={{flex:1}}/>
                             <Image style={styles.personalImg} source={Images.is}/>
+
+
                         </View>
                     </TouchableOpacity>
+
                     <View style={styles.textLine}/>
+
                     <TouchableOpacity style={styles.personalView} onPress={() => {
                         umengEvent('home_notification');
                         if (isEmptyObject(login_user)) {
@@ -64,26 +71,34 @@ class Personal extends Component {
                         <View style={styles.personalView2}>
                             <Image style={styles.personalView2Img} source={Images.speaker}/>
                             <Text style={styles.personalText}>{I18n.t('message')}</Text>
+                            <View style={{flex:1}}/>
+
                             <Image style={styles.personalImg} source={Images.is}/>
                         </View>
                     </TouchableOpacity>
+
                     <View style={styles.textLine}/>
+
                     <TouchableOpacity style={styles.personalView} onPress={() => {
                         umengEvent('more_business');
                         router.toBusinessPage()
                     }}>
                         <View style={styles.personalView2}>
-                            <Image style={{width: 21, height: 20}} source={Images.business}/>
+                            <Image style={{width: 21, height: 20,marginLeft:20}} source={Images.business}/>
                             <Text style={styles.personalText}>{I18n.t('business_cooperation')}</Text>
-                            <Image style={styles.personalImgBusiness} source={Images.is}/>
+                            <View style={{flex:1}}/>
+
+                            <Image style={styles.personalImg} source={Images.is}/>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.personalView, {marginTop: 10}]} onPress={() => {
                         router.toSettingPage()
                     }}>
                         <View style={styles.personalView2}>
-                            <Image style={{width: 23, height: 23}} source={Images.settings}/>
+                            <Image style={{width: 23, height: 23,marginLeft:20}} source={Images.settings}/>
                             <Text style={styles.personalText}>{I18n.t('setting')}</Text>
+                            <View style={{flex:1}}/>
+
                             <Image style={styles.personalImg} source={Images.is}/>
                         </View>
                     </TouchableOpacity>
@@ -179,10 +194,10 @@ const styles = StyleSheet.create({
         top: 0,
     },
     personalView: {
-        flexDirection: 'row',
         backgroundColor: '#ffffff'
     },
     personalView2: {
+        width: Metrics.screenWidth,
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: 13,
@@ -190,26 +205,25 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginRight: 17
     },
+    personalViewBusiness: {
+        flexDirection: 'row',
+    },
     personalView2Img: {
         width: 18,
-        height: 22
+        height: 22,
+        marginLeft:20
     },
     personalText: {
-        fontFamily: 'PingFangSC-Regular',
         fontSize: 16,
         color: '#444444',
-        marginLeft: 30
+        marginLeft:30
     },
     personalImg: {
         width: 8,
         height: 15,
-        marginLeft: 250
+        marginRight:18
     },
-    personalImgBusiness: {
-        width: 8,
-        height: 15,
-        marginLeft: 218
-    },
+
     personRadius: {
         width: 88,
         height: 88,
@@ -248,10 +262,10 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent'
     },
     textLine: {
-        height: 0.5,
+        height: 1,
         width: 67,
-        marginRight: 308,
-        backgroundColor: '#ffffff'
+        backgroundColor:'#ffffff',
+
     },
 
 
