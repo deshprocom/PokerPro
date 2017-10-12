@@ -91,7 +91,8 @@ export default {
     preferential: preferential,
     banners: 'banners',
     headlines: 'headlines',
-    hot_infos:'hot_infos'
+    hot_infos: 'hot_infos',
+    info_detail: info_detail,
 }
 
 
@@ -103,6 +104,11 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+export function info_detail(body) {
+    const {info_id} = body;
+    return 'news/infos/' + info_id;
+}
 
 export function preferential(body) {
     const {race_id} = body;

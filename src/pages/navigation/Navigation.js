@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
 import {Scene,Stack,Tabs} from 'react-native-router-flux';
 import RaceInfoPage from './RaceInfoPage';
+
 import {TabIcon} from './TabIcon';
 import DrawerPage from '../DrawerPage'
 import I18n from 'react-native-i18n';
 import {Images} from '../../Themes';
+import VideoNewsTab from './VideoNewsTab';
+import DrawerRank from '../rank/DrawerRank';
+
 
 export const Navigation=()=>{
 
@@ -40,13 +44,13 @@ export const Navigation=()=>{
             >
                 <Scene
                     key="tab1_1"
-                    component={DrawerPage}
+                    component={RaceInfoPage}
                     hideNavBar
                 />
             </Stack>
             <Stack key="tab_2">
                 <Scene key="tab_2_1"
-                       component={RaceInfoPage}
+                       component={VideoNewsTab}
                        hideNavBar
                        icon={()=>TabIcon(I18n.t('home_info'),Images.information,{
                             color:'#AAAAAA'
@@ -65,7 +69,7 @@ export const Navigation=()=>{
             </Stack>
             <Stack key="tab_3">
                 <Scene key="tab_3_1"
-                       component={RaceInfoPage}
+                       component={DrawerRank}
                        hideNavBar
                        icon={()=>TabIcon(I18n.t('home_sort'),Images.rank,{
                     color:'#AAAAAA'

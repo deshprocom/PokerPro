@@ -22,7 +22,7 @@ import {isEmptyObject, strNotNull, putLoginUser, getUserData, updateApp} from '.
 import {NavigationBar, ParallaxScrollView} from '../components';
 import JpushHelp from '../services/JpushHelper';
 import {umengEvent} from '../utils/UmengEvent';
-import {getActivityPush, getUpdate} from '../services/AccountDao';
+import {getActivityPush} from '../services/AccountDao';
 import ActivityModel from './message/ActivityModel';
 
 var maxDown = 0;
@@ -54,18 +54,10 @@ class HomePage extends Component {
         this._refreshPage();
         //首页活动
         this._getPushActivity();
-        //App更新
-        setTimeout(this._getUpdate, 100)
+
 
     }
 
-    _getUpdate = () => {
-        getUpdate(data => {
-            updateApp(data);
-        }, err => {
-
-        })
-    };
 
     _getPushActivity = () => {
         storage.load({key: StorageKey.Activity})

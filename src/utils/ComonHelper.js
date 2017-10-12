@@ -54,6 +54,7 @@ export function getFileName(o) {
 
 export function updateApp(data) {
     const {android_platform, ios_platform} = data;
+    console.log(data)
     if (Platform.OS === 'ios') {
         if (ios_platform.version !== Constants.UpdateVersion) {
             updateAlet(ios_platform)

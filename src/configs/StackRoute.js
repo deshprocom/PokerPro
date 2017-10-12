@@ -1,4 +1,4 @@
-import {Actions, Scene,Stack,Tabs} from 'react-native-router-flux';
+import {Actions, Scene, Stack, Tabs} from 'react-native-router-flux';
 import React from 'react';
 
 //Pages
@@ -126,8 +126,10 @@ export const Stacks = Actions.create(
         <Scene key="ActivityCenter" component={ActivityCenter} navBar={() => null}/>
         <Scene key="ActivityInfo" component={ActivityInfo} navBar={() => null}/>
 
-        <Scene hideNavBar initial={true} >
+        <Scene hideNavBar initial={true}>
             {Navigation()}
         </Scene>
+
+
     </Scene>
 );

@@ -25,17 +25,19 @@ export default class VideoInfoPage extends Component {
 
     render() {
 
-        const {description, video_link} = this.props.params.info;
+        const {description, video_link, cover_link} = this.props.params.info;
         const {videoFull} = this.state;
 
         return (<View
             testID="page_news_info"
             style={styles.page}>
-            <StatusBar hidden={true} />
+            <StatusBar hidden={true}/>
 
             <View
                 style={styles.video}>
                 <VideoPlayer
+                    thumbnailsHeight={216}
+                    thumbnails={cover_link}
                     showBack={true}
                     source={{uri: video_link.trim()}}
                 />
@@ -58,8 +60,6 @@ export default class VideoInfoPage extends Component {
             />
         </ScrollView>
     };
-
-
 
 
 }

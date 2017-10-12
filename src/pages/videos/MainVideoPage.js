@@ -23,7 +23,7 @@ import {NavigationBar} from '../../components';
 import {getVideoTypes} from '../../services/NewsDao';
 
 
-export  default class MainVideoPage extends Component {
+export default class MainVideoPage extends Component {
 
     componentDidMount() {
         getVideoTypes({}, data => {
@@ -55,15 +55,6 @@ export  default class MainVideoPage extends Component {
             <View
                 testID="page_news_main"
                 style={ApplicationStyles.bgContainer}>
-                <NavigationBar
-                    toolbarStyle={{backgroundColor: Colors._161817}}
-                    router={router}
-                    title={I18n.t('home_video')}
-                    leftBtnIcon={Images.sign_return}
-                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                    leftBtnPress={() => router.pop()}/>
-
-
 
                 {this._listView()}
             </View>
@@ -85,108 +76,29 @@ export  default class MainVideoPage extends Component {
             );
         });
 
+        if (pages.length > 0)
+            return (  <ScrollableTabView
 
-        return (  <ScrollableTabView
-            onChangeTab={({i}) => {
-                router.log('tab', i);
-                if (i == undefined || i < 0 || i > pages.length)
-                    return;
-                let item = typeListData[i];
-
-                if (isEmptyObject(item))
-                    return;
-
-                this.setState({
-                    selectTypeId: item.id
-                });
-
-            }}
-            renderTabBar={() => <ScrollableTabBar
-                tabStyle={{
-                    height: 49,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    paddingLeft: 10,
-                    paddingRight: 10,
-                }}
-                backgroundColor={Colors.white}
-                activeTextColor="#161718"
-                inactiveTextColor={Colors._AAA}
-                textStyle={{fontSize: 16}}
-                style={{borderColor: Colors._EEE}}
-                underlineStyle={{backgroundColor: '#161718', height: 2}}
-            />}
-            ref={ref => this.newsPages = ref}>
-            {pages}
-        </ScrollableTabView>)
+                renderTabBar={() => <ScrollableTabBar
+                    tabStyle={{
+                        height: 49,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                    }}
+                    backgroundColor={Colors.white}
+                    activeTextColor="#161718"
+                    inactiveTextColor={Colors._AAA}
+                    textStyle={{fontSize: 16}}
+                    style={{borderColor: Colors._EEE}}
+                    underlineStyle={{backgroundColor: '#161718', height: 2}}
+                />}>
+                {pages}
+            </ScrollableTabView>)
 
     };
 
-
-    _newsTypeView = () => {
-
-        return ( <View style={styles.newsTypeView}>
-            <FlatList
-                ref={ref => this.typeList = ref}
-                legacyImplementation={false}
-                showsHorizontalScrollIndicator={false}
-                data={this.state.typeListData}
-                renderItem={this._itemView}
-                horizontal={true}
-                keyExtractor={item => item.id}
-                style={{marginLeft: 10}}
-            />
-        </View> )
-    };
-
-
-    _itemView = ({item}) => {
-
-        return (<TouchableOpacity
-            testID={"btn_news_type_" + item.id}
-            onPress={() => {
-                this._pressItem(item);
-
-                this.setState({
-                    selectTypeId: item.id
-                });
-                this.newsPages.goToPage(this._page(item))
-            }}
-            style={styles.itemView}>
-            {item.select ? <View style={{flex: 1}}/> : null}
-            <Text style={item.select ?
-                styles.itemTxtSelect : styles.itemTxt}>{item.name}</Text>
-            {item.select ? <View style={styles.triangle}/> : null}
-
-        </TouchableOpacity>)
-    }
-
-    _page = (item) => {
-        const {typeListData} = this.state;
-        for (var i = 0; i < typeListData.length; i++) {
-            if (item.id === typeListData[i].id)
-                return i;
-        }
-    }
-
-
-    _pressItem = (item) => {
-
-        this.setState((state) => {
-            const newData = [...state.typeListData];
-            newData.map(function (element) {
-
-                if (item.id === element.id) {
-                    element.select = true
-                } else {
-                    element.select = false
-                }
-                return element;
-            });
-
-            return {typeListData: newData}
-        })
-    }
 
 
 }

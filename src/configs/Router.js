@@ -602,7 +602,7 @@ export default class Router {
     popToDrawerRank(navigation) {
         console.log(Actions._state.routes);
 
-        let route = Actions._state.routes[2];
+        let route = Actions._state.routes[1];
         const backTo = NavigationActions.back({
             key: route.key
         });
