@@ -34,6 +34,7 @@ export default class Root extends Component {
 
         storage.load({key: StorageKey.LoginUser})
             .then(ret => {
+                console.log('User', ret)
                 let {access_token} = ret;
                 putLoginUser(ret);
                 setAccessToken(access_token);
