@@ -73,7 +73,6 @@ class LoginFirstPage extends Component {
         };
         this.props._getRecentRaces(recentRaces);
         this.props._getProfile(user_id);
-        this.props.closeDrawer();
         router.popToTop();
     };
 

@@ -13,6 +13,7 @@ const initialState = {
     actionType: '',
     profile: {},
     listRaces: {},
+    fetching: ''
 };
 
 export default function homeState(state = initialState, action) {
@@ -32,7 +33,8 @@ function handleRacesFetch(state, action) {
             loading: true,
             hasData: false,
             error: false,
-            actionType: action.type
+            actionType: action.type,
+            fetching: action.fetching
         }
     } else if (action.fetching === FETCH_SUCCESS) {
         if (action.type === GET_RECENT_RACES) {
@@ -42,7 +44,8 @@ function handleRacesFetch(state, action) {
                 hasData: true,
                 error: false,
                 actionType: action.type,
-                listRaces: action.listRaces
+                listRaces: action.listRaces,
+                fetching: action.fetching
             }
         }
 
@@ -51,7 +54,8 @@ function handleRacesFetch(state, action) {
             ...state,
             loading: false,
             error: true,
-            actionType: action.type
+            actionType: action.type,
+            fetching: action.fetching
         }
     }
 }
