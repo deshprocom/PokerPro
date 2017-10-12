@@ -45,7 +45,7 @@ export const Navigation=()=>{
                 <Scene key="tab_2_1"
                        component={VideoNewsTab}
                        hideNavBar
-                       icon={({ focused })=>focused?TabIcon(I18n.t('home_info'),Images.information2,styles.textStyle2,styles.bgInformationStyle2):
+                       icon={({ focused })=>focused?TabIcon(I18n.t('home_info'),Images.information2,styles.textStyle2,styles.bgInformationStyle):
                        TabIcon(I18n.t('home_info'),Images.information,styles.textStyle,styles.bgInformationStyle)}
                 />
             </Stack>
@@ -81,10 +81,6 @@ const styles = StyleSheet.create({
     bgHomeStyle:{
         height:24,
         width:24
-    },
-    bgInformationStyle2:{
-        width:17,
-        height:23
     },
     bgInformationStyle:{
         width:17,
