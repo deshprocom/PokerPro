@@ -30,7 +30,7 @@ export default class Coming extends Component {
                 style={styles.moreTwos}>
                 <View style={styles.moreTwo}>
                     <Image style={styles.moreTwoImg} source={{uri: item.big_logo}}/>
-                    <Text style={[styles.moreTwoText,{color:'#333333'}]}>{item.name}</Text>
+                    <Text numberOfLines={1} style={[styles.moreTwoText,{color:'#333333'}]}>{item.name}</Text>
                     <Text style={[styles.moreTwoText,{color:'#888888'}]}>{this.races_time(item)}</Text>
                     <Text style={[styles.moreTwoText,{color:'#888888'}]}>{item.location}</Text>
                 </View>
