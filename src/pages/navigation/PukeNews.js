@@ -84,7 +84,7 @@ export default class PukeNews extends Component {
                     >
                         <Animated.View style={{opacity}}>
                             <Text
-                                numberOfLines={2}
+                                numberOfLines={1}
                                 style={[styles.pukeText2, {marginLeft: 15}]}
                             >{this.state.text}</Text>
                         </Animated.View>
