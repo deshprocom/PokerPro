@@ -8,30 +8,29 @@ import {
 import {styles} from './Styles';
 import {Images} from '../../Themes';
 import {getPukeNews} from '../../services/NewsDao';
-const onButtonPress = () => {
 
-};
 var i = 0;
 export default class PukeNews extends Component {
     state = {
         text: ''
     };
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props);
         this.animatedValue = new Animated.Value(0)
 
     }
 
     componentDidMount() {
-        getPukeNews(data => {
+        setTimeout(() => {
+            getPukeNews(data => {
 
-            this.texts = data.headlines;
-            this.showText();
-            this.animate();
-            console.log('headlines', this.texts)
-        }, err => {
-        })
+                this.texts = data.headlines;
+                this.showText();
+                this.animate();
+            }, err => {
+            })
+        }, 300)
 
 
     };
@@ -68,19 +67,19 @@ export default class PukeNews extends Component {
 
     render() {
         const opacity = this.animatedValue.interpolate({
-            inputRange: [0, 1,2],
-            outputRange: [0, 5,0]
+            inputRange: [0, 1, 2],
+            outputRange: [0, 5, 0]
         });
         return (
             <View style={styles.pukes}>
                 <View style={styles.puke}>
                     <Image style={styles.pukeText} source={Images.pukes}/>
-                    <View style={{width:1,height:16,backgroundColor:'#E5E5E5',marginLeft:15}}/>
+                    <View style={{width: 1, height: 16, backgroundColor: '#E5E5E5', marginLeft: 15}}/>
 
                     <Animated.View style={{opacity}}>
                         <Text
                             numberOfLines={2}
-                            style={[styles.pukeText2,{marginLeft:15}]}
+                            style={[styles.pukeText2, {marginLeft: 15}]}
                         >{this.state.text}</Text>
                     </Animated.View>
                 </View>
