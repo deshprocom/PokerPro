@@ -48,7 +48,8 @@ class Personal extends Component {
                             <Image style={styles.personalImg} source={Images.is}/>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.personalView, {marginTop: 1}]} onPress={() => {
+                    <View style={styles.textLine}/>
+                    <TouchableOpacity style={styles.personalView} onPress={() => {
                         umengEvent('home_notification');
                         if (isEmptyObject(login_user)) {
                             router.toLoginFirstPage()
@@ -66,7 +67,8 @@ class Personal extends Component {
                             <Image style={styles.personalImg} source={Images.is}/>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.personalView, {marginTop: 1}]} onPress={() => {
+                    <View style={styles.textLine}/>
+                    <TouchableOpacity style={styles.personalView} onPress={() => {
                         umengEvent('more_business');
                         router.toBusinessPage()
                     }}>
@@ -228,24 +230,31 @@ const styles = StyleSheet.create({
     },
     personID:{
         fontSize: 12,
-        color: '#888888',
+        color: '#eeeeee',
         marginBottom: 12,
         marginTop:8,
         backgroundColor:'transparent'
     },
     personSignature:{
         fontSize: 13,
-        color: '#888888',
+        color: '#eeeeee',
         marginTop:8,
         backgroundColor:'transparent'
     },
     personSignature2:{
         fontSize: 17,
-        color: '#888888',
+        color: '#ffffff',
         fontWeight: 'bold',
         marginTop:8,
         backgroundColor:'transparent'
-    }
+    },
+    textLine:{
+        height:0.5,
+        width:67,
+        marginRight:308,
+        backgroundColor:'#ffffff'
+    },
+
 
 });
 
