@@ -260,7 +260,7 @@ export function race_tickets(body) {
     if (strNotNull(seq_id))
         url = url + '&seq_id=' + seq_id;
 
-    return 'race_tickets?&page_size=' + page_size + url;
+    return 'race_tickets?page_size=' + page_size + url;
 }
 
 export function news_search(body) {

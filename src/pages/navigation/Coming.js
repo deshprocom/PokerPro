@@ -19,7 +19,7 @@ export default class Coming extends Component {
         if (isEmptyObject(raceInfo))
             return;
         let begin = convertDate(raceInfo.begin_date, YYYY_MM_DD);
-        let end = convertDate(raceInfo.end_date, YYYY_MM_DD);
+        let end = convertDate(raceInfo.end_date, 'MM.DD');
         return begin + '-' + end;
     };
 
