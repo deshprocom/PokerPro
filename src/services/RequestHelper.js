@@ -56,7 +56,7 @@ function setDpIp() {
         });
 }
 
-export function getBaseURL() {
+export function getBaseURL(callback) {
 
     setDpIp();
     storage.load({
@@ -65,10 +65,12 @@ export function getBaseURL() {
         syncInBackground: false
     })
         .then((ret) => {
-            client.setBaseURL(ret)
+            client.setBaseURL(ret);
+            callback();
         }).catch(err => {
-        client.setBaseURL(Api.production)
-        setBaseURL(Api.production)
+        client.setBaseURL(Api.production);
+        setBaseURL(Api.production);
+        callback();
     });
 }
 

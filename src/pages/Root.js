@@ -27,7 +27,9 @@ export default class Root extends Component {
             });
         });
         getUserData();
-        getBaseURL();
+        getBaseURL(() => {
+            this._getUpdate()
+        });
         //App更新
 
         storage.load({key: StorageKey.LoginUser})
@@ -38,13 +40,8 @@ export default class Root extends Component {
 
             }).catch(err => {
 
-            const recentRaces = {
-                number: 10
-            };
-            this.props._getRecentRaces(recentRaces)
         });
 
-        setTimeout(this._getUpdate, 300);
     }
 
     _getUpdate = () => {
