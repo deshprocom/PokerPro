@@ -29,9 +29,9 @@ export default class Information extends Component {
                 <TouchableOpacity
                     onPress={() => router.toNewsInfoPage(this.props, item.info)}
                     style={styles.information}>
-                    <View style={{flex:1}}>
+                    <View style={{flex: 1}}>
                         <Text
-                            style={[styles.raceText, {marginTop: 10,marginRight:20}]}>{item.info.title}</Text>
+                            style={[styles.raceText, {marginTop: 10, marginRight: 20}]}>{item.info.title}</Text>
                         <View style={{flexDirection: 'row', marginTop: 14}}>
                             <Text style={styles.informationText}>#中扑网</Text>
                             <Text
@@ -45,7 +45,7 @@ export default class Information extends Component {
             )
         } else if (item.source_type == 'video') {
             return (
-                <View style={{marginLeft: 20, marginTop: 21,marginRight:17}}>
+                <View style={{marginLeft: 20, marginTop: 21, marginRight: 17}}>
                     <Text style={{
                         fontSize: 15,
                         fontFamily: 'PingFangSC-Regular',
@@ -75,11 +75,15 @@ export default class Information extends Component {
                     <View style={[styles.races]}>
                         <Text style={styles.raceText1}>{I18n.t('hot_infos')}</Text>
                     </View>
-                    <View style={{flex:1}}/>
-                    <View style={[styles.racesTwo, {marginRight:14}]}>
+                    <View style={{flex: 1}}/>
+                    <TouchableOpacity
+                        onPress={() => {
+                            router.toTabNews()
+                        }}
+                        style={[styles.racesTwo, {marginRight: 14}]}>
                         <Text style={[styles.raceText]}>{I18n.t('more')}</Text>
                         <Image style={{width: 8, height: 12, marginLeft: 6}} source={Images.is}/>
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={{width: "100%", height: 2, marginLeft: 17, backgroundColor: '#ECECEE', marginTop: 13}}/>
                 <View style={{flexDirection: 'row'}}>

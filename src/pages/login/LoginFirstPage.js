@@ -265,7 +265,7 @@ class LoginFirstPage extends Component {
                 style={styles.rowView}>
                 <Image style={{height: 18, width: 22}}
                        source={require('../../../source/buy/weixin.png')}/>
-                <Text style={styles.txtMsg}>微信登陆</Text>
+                <Text style={styles.txtMsg}>{I18n.t('wx_login')}</Text>
             </TouchableOpacity> : null}
 
 
@@ -274,7 +274,7 @@ class LoginFirstPage extends Component {
                 style={styles.rowView}>
                 <Image style={{height: 15, width: 20}}
                        source={require('../../../source/login/login_msg.png')}/>
-                <Text style={styles.txtMsg}>短信登陆</Text>
+                <Text style={styles.txtMsg}>{I18n.t('msg_login')}</Text>
             </TouchableOpacity>
         </View>)
 

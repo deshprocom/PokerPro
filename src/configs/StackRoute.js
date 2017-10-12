@@ -1,6 +1,8 @@
 import {Actions, Scene, Stack, Tabs} from 'react-native-router-flux';
 import React from 'react';
-
+import {
+    View, StatusBar
+} from 'react-native';
 //Pages
 import HomePage from '../pages/HomePage';
 import InputPwdPage from '../pages/InputPwdPage';
@@ -126,7 +128,11 @@ export const Stacks = Actions.create(
         <Scene key="ActivityCenter" component={ActivityCenter} navBar={() => null}/>
         <Scene key="ActivityInfo" component={ActivityInfo} navBar={() => null}/>
 
-        <Scene hideNavBar initial={true}>
+        <Scene initial={true} navBar={() => {
+            return <View>
+                <StatusBar barStyle={"light-content"}/>
+            </View>
+        }}>
             {Navigation()}
         </Scene>
 
