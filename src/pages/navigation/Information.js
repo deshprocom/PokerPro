@@ -29,22 +29,23 @@ export default class Information extends Component {
                 <TouchableOpacity
                     onPress={() => router.toNewsInfoPage(this.props, item.info)}
                     style={styles.information}>
-                    <View style={styles.informationTwo}>
-                        <Text style={[styles.raceText, {marginTop: 10}]}>{item.info.title}</Text>
+                    <View style={{flex:1}}>
+                        <Text
+                            style={[styles.raceText, {marginTop: 10,marginRight:20}]}>{item.info.title}</Text>
                         <View style={{flexDirection: 'row', marginTop: 14}}>
                             <Text style={styles.informationText}>#中扑网</Text>
-                            <Text style={[styles.informationText, {marginLeft: 15}]}>时间</Text>
+                            <Text
+                                style={[styles.informationText, {marginLeft: 15}]}>{convertDate(item.info.date, 'MM-DD')}</Text>
                         </View>
 
                     </View>
-                    <View style={{width: 123, height: 75, marginLeft: 15}}>
-                        <Image style={{width: 123, height: 75}} source={{uri: item.info.image_thumb}}/>
-                    </View>
+
+                    <Image style={{width: 123, height: 75}} source={{uri: item.info.image_thumb}}/>
                 </TouchableOpacity>
             )
         } else if (item.source_type == 'video') {
             return (
-                <View style={{marginLeft: 20, marginRight: 23, marginTop: 21}}>
+                <View style={{marginLeft: 20, marginTop: 21,marginRight:17}}>
                     <Text style={{
                         fontSize: 15,
                         fontFamily: 'PingFangSC-Regular',
@@ -74,12 +75,13 @@ export default class Information extends Component {
                     <View style={[styles.races]}>
                         <Text style={styles.raceText1}>{I18n.t('hot_infos')}</Text>
                     </View>
-                    <View style={[styles.racesTwo, {marginLeft: 245}]}>
+                    <View style={{flex:1}}/>
+                    <View style={[styles.racesTwo, {marginRight:14}]}>
                         <Text style={[styles.raceText]}>{I18n.t('more')}</Text>
                         <Image style={{width: 8, height: 12, marginLeft: 6}} source={Images.is}/>
                     </View>
                 </View>
-                <View style={{width: 342, height: 2, marginLeft: 17, backgroundColor: '#ECECEE', marginTop: 13}}/>
+                <View style={{width: "100%", height: 2, marginLeft: 17, backgroundColor: '#ECECEE', marginTop: 13}}/>
                 <View style={{flexDirection: 'row'}}>
                     <FlatList
                         data={this.props.hotInfos}

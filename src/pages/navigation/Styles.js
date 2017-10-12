@@ -24,7 +24,11 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         marginRight: 50
     },
-
+    racesTwo: {
+        flexDirection: 'row',
+        marginRight:14,
+        alignItems:'center'
+    },
     pukeText: {
         width:62,
         height:15
@@ -52,11 +56,6 @@ export const styles = StyleSheet.create({
         fontSize: 14,
         color: '#333333'
     },
-    racesTwo: {
-        flexDirection: 'row',
-        marginLeft: 224,
-        alignItems:'center'
-    },
     racesTwoRight: {
         flexDirection: 'column',
         marginLeft: 20,
@@ -71,13 +70,12 @@ export const styles = StyleSheet.create({
     information: {
         height:103,
         marginLeft:20,
-        marginRight:16,
+        marginRight:17,
         flexDirection:'row',
         alignItems:'center'
     },
     informationTwo: {
-        width:194,
-        flexDirection:'column'
+
     },
     informationImg: {
         marginLeft: 100,
