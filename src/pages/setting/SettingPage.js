@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/2/28.
  */
-import React, {Component}from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, TextInput, Alert,
     StyleSheet, Image, Text, ScrollView,
@@ -86,7 +86,7 @@ class SettingPage extends Component {
                     if (isLoginUser())
                         router.toSecurityPage();
                     else
-                       router.toLoginFirstPage();
+                        router.toLoginFirstPage();
                 }}
                 name={I18n.t('account_security')}
                 styles={{marginTop: 5}}/>
@@ -228,19 +228,15 @@ class SettingPage extends Component {
             {
                 text: I18n.t('certain'), onPress: () => {
                 clearLoginUser();
-                const recentRaces = {
-                    number: 8
-                };
-                this.props._getRecentRaces(recentRaces);
 
+                this.props._getProfileNull();
                 this.forceUpdate();
 
-               router.toLoginFirstPage()
+                router.toLoginFirstPage()
 
             }
             }
         ]);
-
 
     }
 }

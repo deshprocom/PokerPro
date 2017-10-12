@@ -45,6 +45,7 @@ class LoginCodeView extends React.Component {
                 };
 
                 this.props._getRecentRaces(recentRaces);
+                this.props._getProfile(user_id);
                 router.popToTop();
             }, err => {
                 showToast(err)

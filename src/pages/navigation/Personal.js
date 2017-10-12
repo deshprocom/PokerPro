@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {
-    AppRegistry, TouchableOpacity,
-    StyleSheet,
+    TouchableOpacity,
+    StyleSheet, Platform,
     Text, Image,
-    View
+    View, Animated, findNodeHandle
 } from 'react-native';
 import {Images, Colors} from '../../Themes';
 import {styles} from './Styles';
@@ -12,18 +12,20 @@ import {umengEvent} from '../../utils/UmengEvent';
 import I18n from 'react-native-i18n';
 import JpushHelp from '../../services/JpushHelper';
 import {connect} from 'react-redux';
-import {FETCHING, GET_RECENT_RACES} from '../../actions/ActionTypes';
-
+import {FETCHING, GET_PROFILE} from '../../actions/ActionTypes';
+import {BlurView} from 'react-native-blur';
+import {fetchGetProfile} from '../../actions/PersonAction';
 
 class Personal extends Component {
 
-    shouldComponentUpdate(newProps) {
+    state = {
+        viewRef: 0,
+    };
 
-        if (newProps.actionType === GET_RECENT_RACES && newProps.fetching === FETCHING) {
-            this.forceUpdate()
+    componentDidMount() {
+        if (!isEmptyObject(login_user)) {
+            this.props._getProfile(login_user.user_id);
         }
-        return true;
-
     }
 
     render() {
@@ -91,33 +93,62 @@ class Personal extends Component {
 
 
     _avatar = () => {
-        if (isEmptyObject(login_user))
+        const {profile} = this.props;
+        if (isEmptyObject(profile))
             return Images.home_avatar;
-        else if (strNotNull(login_user.avatar))
-            return {uri: login_user.avatar}
+        else if (strNotNull(profile.avatar))
+            return {uri: profile.avatar}
         else
             return Images.home_avatar;
     };
 
     _signature = () => {
-        if (login_user.signature && strNotNull(login_user.signature))
-            return login_user.signature;
+        const {profile} = this.props;
+        if (profile.signature && strNotNull(profile.signature))
+            return profile.signature;
         else
             return I18n.t('ple_sign')
+    };
+
+    _username = () => {
+        const {profile} = this.props;
+        return profile.user_name ?
+            <Text style={{
+                fontSize: 12,
+                color: '#888888',
+                marginBottom: 12
+            }}>ID:{profile.user_name ? profile.user_name : ''}</Text> : null;
 
     };
 
+    imageLoaded = () => {
+        this.setState({viewRef: findNodeHandle(this.refs.backgroundImage)})
+    };
+
     renderPerson = () => {
-        return (<View
-            style={{backgroundColor: 'red', alignItems: 'center', justifyContent: 'center', opacity: 0.7}}
+        let props = Platform.OS === 'ios' ? {
+            blurType: "light",
+            blurAmount: 18
+        } : {
+            viewRef: this.state.viewRef,
+            downsampleFactor: 10,
+            overlayColor: 'rgba(255,255,255,.1)'
+        };
+
+        const {profile} = this.props;
+        return (<Animated.Image
+            ref={'backgroundImage'}
+            style={stylesL.blurImg}
+            source={this._avatar()}
+            onLoadEnd={this.imageLoaded}
         >
+            <BlurView {...props} style={stylesL.blur}/>
             <View style={{
                 width: 88,
                 height: 88,
                 borderRadius: 44,
-                marginTop: 48,
-                backgroundColor: '#000000',
-                opacity: 0.3,
+                marginTop: 30,
+                backgroundColor: 'rgba(0,0,0,0.23)',
                 alignItems: 'center',
                 justifyContent: 'center'
             }}>
@@ -145,30 +176,47 @@ class Personal extends Component {
                     fontSize: 17,
                     color: '#888888',
                     fontWeight: 'bold'
-                }}>{login_user.nick_name ? login_user.nick_name : ''}</Text>
+                }}>{profile.nick_name ? profile.nick_name : ''}</Text>
             <Text style={{
                 fontSize: 13,
                 color: '#888888'
             }}>{this._signature()}</Text>
-            <Text style={{
-                fontSize: 12,
-                fontFamily: 'PingFangSC-Regular',
-                color: '#888888',
-                marginBottom: 12
-            }}>ID:{login_user.user_name ? login_user.user_name : ''}</Text>
-        </View>)
+
+            {this._username()}
+
+        </Animated.Image>)
     }
 
 }
 
-const bindAction = dispatch => ({});
+const stylesL = StyleSheet.create({
+    blurImg: {
+        height: 260,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    blur: {
+        height: 260,
+        width: '100%',
+        position: "absolute",
+        left: 0,
+        right: 0,
+        top: 0,
+    }
+
+});
+
+const bindAction = dispatch => ({
+    _getProfile: (user_id) => dispatch(fetchGetProfile(user_id)),
+});
 
 const mapStateToProps = state => ({
-    loading: state.HomeState.loading,
-    fetching: state.HomeState.fetching,
-    hasData: state.HomeState.hasData,
-    actionType: state.HomeState.actionType,
-    listRaces: state.HomeState.listRaces,
+    loading: state.PersonState.loading,
+    profile: state.PersonState.profile,
+    error: state.PersonState.error,
+    hasData: state.PersonState.hasData,
+    actionType: state.PersonState.actionType,
 
 });
 
