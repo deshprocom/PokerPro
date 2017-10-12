@@ -11,22 +11,38 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {isEmptyObject, convertDate} from '../../utils/ComonHelper';
+import {isEmptyObject, convertDate, strNotNull} from '../../utils/ComonHelper';
 import {LoadingView} from '../../components/load'
 import {NavigationBar, MarkdownPlat, VideoPlayer} from '../../components';
-import Orientation from 'react-native-orientation';
+import {getVideoDetail} from '../../services/NewsDao';
 
 
 export default class VideoInfoPage extends Component {
     state = {
-        videoFull: false,
-
+        videoInfo: {}
     };
+
+    componentDidMount() {
+        const {info, video_id} = this.props.params;
+        if (!isEmptyObject(info)) {
+            this.setState({videoInfo: info})
+        } else if (strNotNull(video_id)) {
+            getVideoDetail({video_id}, data => {
+                console.log(data)
+                this.setState({
+                    videoInfo: data
+                })
+
+            }, err => {
+
+            })
+        }
+
+    }
 
     render() {
 
-        const {description, video_link, cover_link} = this.props.params.info;
-        const {videoFull} = this.state;
+        const {video_link, cover_link} = this.state.videoInfo;
 
         return (<View
             testID="page_news_info"
@@ -35,12 +51,13 @@ export default class VideoInfoPage extends Component {
 
             <View
                 style={styles.video}>
-                <VideoPlayer
+                {isEmptyObject(this.state.videoInfo) ? null : <VideoPlayer
                     thumbnailsHeight={216}
                     thumbnails={cover_link}
                     showBack={true}
                     source={{uri: video_link.trim()}}
-                />
+                />}
+
             </View>
 
 
@@ -51,7 +68,7 @@ export default class VideoInfoPage extends Component {
     }
 
     renderContent = () => {
-        const {description} = this.props.params.info;
+        const {description} = this.state.videoInfo;
         return <ScrollView>
 
             <MarkdownPlat

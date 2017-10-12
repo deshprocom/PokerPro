@@ -82,6 +82,10 @@ export default class MarkdownPlat extends Component {
                             lineHeight: 25,
                             letterSpacing: 0.3
                         },
+                        heading5: {
+                            alignSelf: 'center',
+                            fontSize: FontSize.h15,
+                        }
                     }}>
                         {markdownStr}
                     </Markdown>

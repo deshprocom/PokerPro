@@ -2,6 +2,17 @@
  * Created by lorne on 2017/3/6.
  */
 import I18n from 'react-native-i18n';
+
+
+//首页Banner
+export class BannerStatus {
+    static INFO = 'info';
+    static RACE = 'race';
+    static VIDEO = 'video';
+    static LINK = 'link';
+}
+
+
 //实名状态
 export class Verified {
     static INIT = 'init';
