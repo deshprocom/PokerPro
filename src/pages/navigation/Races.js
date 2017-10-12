@@ -88,9 +88,9 @@ export default class Races extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{marginTop: 30, flexDirection: 'row'}}>
-                    {this.props.listRace.length > 0 ? <FlatList
+                    {this.props.raceTickets.length > 0 ? <FlatList
                         horizontal
-                        data={this.props.listRace}
+                        data={this.props.raceTickets}
                         renderItem={this._renderItem}
                         keyExtractor={(item, index) => index}
                     /> : null}
