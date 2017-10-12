@@ -15,24 +15,6 @@ import I18n from 'react-native-i18n';
 
 
 export default class Personal extends Component {
-    constructor(props) {
-
-        super(props);
-        this.state = {
-            user_id: '',
-            languageChange: false,
-            opacity: 0,
-            badge: false,
-
-        };
-        getUserData();
-        init(() => {
-            this.setState({
-                languageChange: true
-            });
-        });
-
-    }
 
     componentDidMount() {
         console.log(global.login_user)
@@ -44,15 +26,14 @@ export default class Personal extends Component {
             <View>
 
                 <TouchableOpacity style={{backgroundColor:'red',alignItems:'center',justifyContent:'center',opacity:0.7}} onPress={()=>{
-                    if (!isEmptyObject(mapStateToProps.profile) &&
-                    strNotNull(mapStateToProps.profile.nick_name)) {
+                    if (!isEmptyObject(login_user)){
                              router.toPersonPage()
                     }else{
                         router.toLoginFirstPage()
                     }
                            }
                         }>
-                    <View style={{width:88,height:88,borderRadius:44,marginTop:48,background: 'rgba(0,0,0,0.3)',alignItems:'center',justifyContent:'center'}}>
+                    <View style={{width:88,height:88,borderRadius:44,marginTop:48,backgroundColor:'#000000',opacity:0.3,alignItems:'center',justifyContent:'center'}}>
                         <View style={{width:77,height:77,borderRadius:39,backgroundColor:'#FFE9AD',alignItems:'center',justifyContent:'center'}}>
                             <Image style={{width:74,height:74,borderRadius:37}} source={Images.pukes}/>
                         </View>
@@ -119,10 +100,3 @@ export default class Personal extends Component {
     }
 
 }
-const mapStateToProps = state => ({
-    loading: state.HomeState.loading,
-    error: state.HomeState.error,
-    hasData: state.HomeState.hasData,
-    profile: state.PersonState.profile,
-    pageName: state.SideBarNavRedux.pageName
-});
