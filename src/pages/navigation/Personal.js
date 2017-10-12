@@ -35,7 +35,7 @@ class Personal extends Component {
                 {this.renderPerson()}
 
                 <View>
-                    <TouchableOpacity style={styles.personalView} onPress={() => {
+                    <TouchableOpacity style={stylesP.personalView} onPress={() => {
                         umengEvent('more_order');
                         if (strNotNull(getLoginUser().user_id))
                             router.toOrderListPage();
@@ -43,20 +43,20 @@ class Personal extends Component {
                             router.toLoginFirstPage()
                     }}>
 
-                        <View style={styles.personalView2}>
-                            <Image style={styles.personalView2Img} source={Images.order}/>
+                        <View style={stylesP.personalView2}>
+                            <Image style={stylesP.personalView2Img} source={Images.order}/>
 
-                            <Text style={styles.personalText}>{I18n.t('order')}</Text>
+                            <Text style={stylesP.personalText}>{I18n.t('order')}</Text>
                             <View style={{flex:1}}/>
-                            <Image style={styles.personalImg} source={Images.is}/>
+                            <Image style={stylesP.personalImg} source={Images.is}/>
 
 
                         </View>
                     </TouchableOpacity>
 
-                    <View style={styles.textLine}/>
+                    <View style={stylesP.textLine}/>
 
-                    <TouchableOpacity style={styles.personalView} onPress={() => {
+                    <TouchableOpacity style={stylesP.personalView} onPress={() => {
                         umengEvent('home_notification');
                         if (isEmptyObject(login_user)) {
                             router.toLoginFirstPage()
@@ -68,38 +68,38 @@ class Personal extends Component {
                             router.toMessageCenter()
                         }
                     }}>
-                        <View style={styles.personalView2}>
-                            <Image style={styles.personalView2Img} source={Images.speaker}/>
-                            <Text style={styles.personalText}>{I18n.t('message')}</Text>
+                        <View style={stylesP.personalView2}>
+                            <Image style={stylesP.personalView2Img} source={Images.speaker}/>
+                            <Text style={stylesP.personalText}>{I18n.t('message')}</Text>
                             <View style={{flex:1}}/>
 
-                            <Image style={styles.personalImg} source={Images.is}/>
+                            <Image style={stylesP.personalImg} source={Images.is}/>
                         </View>
                     </TouchableOpacity>
 
-                    <View style={styles.textLine}/>
+                    <View style={stylesP.textLine}/>
 
-                    <TouchableOpacity style={styles.personalView} onPress={() => {
+                    <TouchableOpacity style={stylesP.personalView} onPress={() => {
                         umengEvent('more_business');
                         router.toBusinessPage()
                     }}>
-                        <View style={styles.personalView2}>
+                        <View style={stylesP.personalView2}>
                             <Image style={{width: 21, height: 20,marginLeft:20}} source={Images.business}/>
-                            <Text style={styles.personalText}>{I18n.t('business_cooperation')}</Text>
+                            <Text style={stylesP.personalText}>{I18n.t('business_cooperation')}</Text>
                             <View style={{flex:1}}/>
 
-                            <Image style={styles.personalImg} source={Images.is}/>
+                            <Image style={stylesP.personalImg} source={Images.is}/>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.personalView, {marginTop: 10}]} onPress={() => {
+                    <TouchableOpacity style={[stylesP.personalView, {marginTop: 10}]} onPress={() => {
                         router.toSettingPage()
                     }}>
-                        <View style={styles.personalView2}>
+                        <View style={stylesP.personalView2}>
                             <Image style={{width: 23, height: 23,marginLeft:20}} source={Images.settings}/>
-                            <Text style={styles.personalText}>{I18n.t('setting')}</Text>
+                            <Text style={stylesP.personalText}>{I18n.t('setting')}</Text>
                             <View style={{flex:1}}/>
 
-                            <Image style={styles.personalImg} source={Images.is}/>
+                            <Image style={stylesP.personalImg} source={Images.is}/>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -129,7 +129,7 @@ class Personal extends Component {
     _username = () => {
         const {profile} = this.props;
         return profile.user_name ?
-            <Text style={styles.personID}>ID:{profile.user_name ? profile.user_name : ''}</Text> : null;
+            <Text style={stylesP.personID}>ID:{profile.user_name ? profile.user_name : ''}</Text> : null;
 
     };
 
@@ -150,12 +150,12 @@ class Personal extends Component {
         const {profile} = this.props;
         return (<Animated.Image
             ref={'backgroundImage'}
-            style={styles.blurImg}
+            style={stylesP.blurImg}
             source={Images.home_bg}
             onLoadEnd={this.imageLoaded}
         >
-            <BlurView {...props} style={styles.blur}/>
-            <View style={styles.personRadius}>
+            <BlurView {...props} style={stylesP.blur}/>
+            <View style={stylesP.personRadius}>
                 <TouchableOpacity
                     onPress={() => {
                         if (!isEmptyObject(login_user))
@@ -164,13 +164,13 @@ class Personal extends Component {
                             router.toLoginFirstPage()
 
                     }}
-                    style={styles.personRadius2}>
+                    style={stylesP.personRadius2}>
                     <Image style={{width: 74, height: 74, borderRadius: 37}} source={this._avatar()}/>
                 </TouchableOpacity>
             </View>
             <Text
-                style={styles.personSignature2}>{profile.nick_name ? profile.nick_name : ''}</Text>
-            <Text style={styles.personSignature}>{this._signature()}</Text>
+                style={stylesP.personSignature2}>{profile.nick_name ? profile.nick_name : ''}</Text>
+            <Text style={stylesP.personSignature}>{this._signature()}</Text>
 
             {this._username()}
 
@@ -179,7 +179,7 @@ class Personal extends Component {
 
 }
 
-const styles = StyleSheet.create({
+const stylesP = StyleSheet.create({
     blurImg: {
         height: 260,
         width: '100%',
@@ -202,8 +202,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 13,
         marginBottom: 13,
-        marginLeft: 20,
-        marginRight: 17
     },
     personalViewBusiness: {
         flexDirection: 'row',

@@ -70,13 +70,12 @@ export const styles = StyleSheet.create({
     information: {
         height:103,
         marginLeft:20,
-        marginRight:16,
+        marginRight:17,
         flexDirection:'row',
         alignItems:'center'
     },
     informationTwo: {
-        width:194,
-        flexDirection:'column'
+
     },
     informationImg: {
         marginLeft: 100,

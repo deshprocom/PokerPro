@@ -29,22 +29,23 @@ export default class Information extends Component {
                 <TouchableOpacity
                     onPress={() => router.toNewsInfoPage(this.props, item.info)}
                     style={styles.information}>
-                    <View style={styles.informationTwo}>
-                        <Text style={[styles.raceText, {marginTop: 10}]}>{item.info.title}</Text>
+                    <View style={{flex:1}}>
+                        <Text
+                            style={[styles.raceText, {marginTop: 10,marginRight:20}]}>{item.info.title}</Text>
                         <View style={{flexDirection: 'row', marginTop: 14}}>
                             <Text style={styles.informationText}>#中扑网</Text>
-                            <Text style={[styles.informationText, {marginLeft: 15}]}>时间</Text>
+                            <Text
+                                style={[styles.informationText, {marginLeft: 15}]}>{convertDate(item.info.date, 'MM-DD')}</Text>
                         </View>
 
                     </View>
-                    <View style={{width: 123, height: 75, marginLeft: 15}}>
-                        <Image style={{width: 123, height: 75}} source={{uri: item.info.image_thumb}}/>
-                    </View>
+
+                    <Image style={{width: 123, height: 75}} source={{uri: item.info.image_thumb}}/>
                 </TouchableOpacity>
             )
         } else if (item.source_type == 'video') {
             return (
-                <View style={{marginLeft: 20, marginRight: 23, marginTop: 21}}>
+                <View style={{marginLeft: 20, marginTop: 21,marginRight:17}}>
                     <Text style={{
                         fontSize: 15,
                         fontFamily: 'PingFangSC-Regular',
