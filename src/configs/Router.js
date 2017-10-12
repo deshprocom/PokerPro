@@ -315,6 +315,16 @@ export default class Router {
         })
     }
 
+    toVideoInfo(video_id) {
+        this.stackPush({
+            name: 'VideoInfoPage',
+            params: {
+                video_id: video_id
+            }
+
+        })
+    }
+
     toVideoInfoPage(props, info) {
         this.push(props, {
 

@@ -46,7 +46,8 @@ class NewsListView extends Component {
             componentDataSource: this._dataSource.cloneWithRows([]),
             error: false,
             modalVisible: false,
-            video_link: ''
+            video_link: '',
+            cover_link: ''
         }
 
 
@@ -86,10 +87,9 @@ class NewsListView extends Component {
     }
 
 
-
     _showVideo = () => {
 
-        const {modalVisible, video_link} = this.state;
+        const {modalVisible, video_link, cover_link} = this.state;
         return ( <Modal
             style={styles.container}
             transparent={true}
@@ -104,6 +104,7 @@ class NewsListView extends Component {
                 }}
                 style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.8)'}}/>
             <VideoPlayer
+                thumbnails={cover_link}
                 closeFull={true}
                 source={{uri: video_link.trim()}}
             />
@@ -199,7 +200,8 @@ class NewsListView extends Component {
                         onPress={() => {
                             this.setState({
                                 modalVisible: true,
-                                video_link: video_link
+                                video_link: video_link,
+                                cover_link: cover_link
                             })
                         }}
                         style={styles.btnPlay}>

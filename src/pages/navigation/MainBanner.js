@@ -23,6 +23,7 @@ export default class MainBanner extends Component {
                     autoplay>
                     {this.props.banners.map((item, key) => {
                         return <TouchableOpacity
+                            key={'banner' + key}
                             onPress={() => this._clickBanner(item)}
                             activeOpacity={0.2}>
                             <Image key={key} style={{height: 200, width: '100%'}} source={{uri: item.image}}/>
@@ -45,6 +46,7 @@ export default class MainBanner extends Component {
                 break;
 
             case BannerStatus.VIDEO:
+                global.router.toVideoInfo(item.source_id);
                 break;
             case BannerStatus.LINK:
                 global.router.toWebViewPage(this.props, item.link);
