@@ -27,33 +27,41 @@ export default class Races extends Component {
 
         return (
             <Image style={styles.oval} source={Images.oval}>
-                <View style={{width:115,height:155,marginLeft:5}}>
-                    <Image style={{width:115,height:155}} source={{uri: item.big_logo}}/>
+                <View style={{width: 115, height: 155, marginLeft: 5}}>
+                    <Image style={{width: 115, height: 155}} source={{uri: item.big_logo}}/>
                 </View>
 
-                <View style={{marginLeft:20,marginTop:14}}>
+                <View style={{marginLeft: 20, marginTop: 14}}>
                     <Text
                         numberOfLines={2}
-                        style={{maxWidth:160}}>{item.name}</Text>
-                    <View style={{flexDirection:'row',alignItems:'center',marginTop:19}}>
-                        <Image style={{width:10,height:12,marginRight:7}} source={Images.location}/>
+                        style={{maxWidth: 160}}>{item.name}</Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 19}}>
+                        <Image style={{width: 10, height: 12, marginRight: 7}} source={Images.location}/>
                         <Text style={styles.ovalText}>{item.location}</Text>
                     </View>
-                    <View style={{flexDirection:'row',alignItems:'center',marginTop:9}}>
-                        <Image style={{width:11,height:11,marginRight:7}} source={Images.time}/>
+                    <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 9}}>
+                        <Image style={{width: 11, height: 11, marginRight: 7}} source={Images.time}/>
                         <Text style={styles.ovalText}>{this.races_time(item)}</Text>
                     </View>
-                    <View style={{flexDirection:'row',alignItems:'center',marginTop:25}}>
+                    <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 25}}>
                         <Text style={styles.ovalPrice}>￥{item.min_price}</Text>
                     </View>
-                    <TouchableOpacity style={{position:'absolute',top:107,
-                    left:90,right:16,bottom:16}}>
+                    <TouchableOpacity style={{
+                        position: 'absolute', top: 107,
+                        left: 90, right: 16, bottom: 16
+                    }}>
                         <Image
                             style={styles.button}
                             source={Images.button}
                         >
                             <Text
-                                style={{backgroundColor:'transparent',color:'#ffffff',fontSize:14,fontWeight:'bold',marginBottom:5}}>{I18n.t('home_buy')}</Text>
+                                style={{
+                                    backgroundColor: 'transparent',
+                                    color: '#ffffff',
+                                    fontSize: 14,
+                                    fontWeight: 'bold',
+                                    marginBottom: 5
+                                }}>{I18n.t('home_buy')}</Text>
                         </Image>
 
                     </TouchableOpacity>
@@ -65,27 +73,27 @@ export default class Races extends Component {
     render() {
 
         return (
-            <View style={{height:246,backgroundColor:'#fff',marginTop:10}}>
-                <View style={{height:20,flexDirection:'row',alignItems:'center',marginTop:14}}>
+            <View style={{height: 246, backgroundColor: '#fff', marginTop: 10}}>
+                <View style={{height: 20, flexDirection: 'row', alignItems: 'center', marginTop: 14}}>
                     <View style={[styles.races]}>
                         <Text style={styles.raceText1}>{I18n.t('hot_races')}</Text>
-                        <Image style={{width:13,height:17,marginLeft:6}} source={Images.raceBegin}/>
+                        <Image style={{width: 13, height: 17, marginLeft: 6}} source={Images.raceBegin}/>
                     </View>
                     <TouchableOpacity style={styles.racesTwo} onPress={() => {
-                                    umengEvent('home_ticket');
-                                    router.toTicketPage()
-                                }}>
+                        umengEvent('home_ticket');
+                        router.toTicketPage()
+                    }}>
                         <Text style={[styles.raceText]}>{I18n.t('more')}</Text>
-                        <Image style={{width:8,height:12,marginLeft:6}} source={Images.is}/>
+                        <Image style={{width: 8, height: 12, marginLeft: 6}} source={Images.is}/>
                     </TouchableOpacity>
                 </View>
-                <View style={{marginTop:30,flexDirection:'row'}}>
-                    { this.props.listRace.length > 0 ? <FlatList
-                            horizontal
-                            data={this.props.listRace}
-                            renderItem={this._renderItem}
-                            keyExtractor={(item,index)=>index}
-                        /> : null}
+                <View style={{marginTop: 30, flexDirection: 'row'}}>
+                    {this.props.listRace.length > 0 ? <FlatList
+                        horizontal
+                        data={this.props.listRace}
+                        renderItem={this._renderItem}
+                        keyExtractor={(item, index) => index}
+                    /> : null}
 
 
                 </View>
