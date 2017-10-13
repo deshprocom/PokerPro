@@ -33,7 +33,7 @@ export default class Information extends Component {
                         <Text
                             style={[styles.raceText, {marginTop: 10, marginRight: 20}]}>{item.info.title}</Text>
                         <View style={{flexDirection: 'row', marginTop: 14}}>
-                            <Text style={styles.informationText}>#中扑网</Text>
+                            <Text style={styles.informationText}>{item.info.source}</Text>
                             <Text
                                 style={[styles.informationText, {marginLeft: 15}]}>{convertDate(item.info.date, 'MM-DD')}</Text>
                         </View>
