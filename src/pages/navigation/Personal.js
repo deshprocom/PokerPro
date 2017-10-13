@@ -144,7 +144,7 @@ class Personal extends Component {
             } : {
                 viewRef: this.state.viewRef,
                 downsampleFactor: 10,
-                overlayColor: 'rgba(255,255,255,.1)'
+                overlayColor: 'rgba(255,255,255,.4)'
             };
 
         const {profile} = this.props;

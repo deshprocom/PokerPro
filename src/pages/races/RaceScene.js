@@ -139,7 +139,7 @@ class RaceScene extends Component {
         } : {
             viewRef: this.state.viewRef,
             downsampleFactor: 10,
-            overlayColor: 'rgba(255,255,255,.1)'
+            overlayColor: 'rgba(255,255,255,.4)'
         };
         const {raceInfo} = this.state;
         return <Animated.Image source={{uri: raceInfo.logo}} ref={'backgroundImage'}
