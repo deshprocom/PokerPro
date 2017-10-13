@@ -59,6 +59,7 @@ export default class Coming extends Component {
 
                 <View style={{flexDirection:'row'}}>
                     <FlatList
+                        showsHorizontalScrollIndicator={false}
                         horizontal
                         data={this.props.listRace}
                         renderItem={this._renderItem}

@@ -3,7 +3,7 @@ import {
     View, Text, Button, Alert, DatePickIOS,
     Image, StyleSheet, ActivityIndicator,
     TouchableOpacity, ScrollView, Dimensions,
-    ListView, Animated, Easing, FlatList
+    ListView, Animated, Easing, FlatList,Platform
 }
     from 'react-native';
 import {Images} from '../../Themes';
@@ -33,43 +33,34 @@ export default class Races extends Component {
 
                 <Image style={styles.oval} source={Images.oval}>
                     <View style={{width: 115, height: 155, marginLeft: 5}}>
-                        <Image style={{width: 115, height: 155, borderRadius: 3}} source={{uri: item.big_logo}}/>
+                        <Image style={styleB.ovalImg} source={{uri: item.big_logo}}/>
                     </View>
 
                     <View style={{marginLeft: 20, marginTop: 14}}>
                         <Text
                             numberOfLines={2}
                             style={{maxWidth: 160}}>{item.name}</Text>
-                        <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 19}}>
+                        <View style={[styleB.ovalInner,{marginTop: 19}]}>
                             <Image style={{width: 10, height: 12, marginRight: 7}} source={Images.location}/>
                             <Text style={styles.ovalText}>{item.location}</Text>
                         </View>
-                        <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 9}}>
+                        <View style={[styleB.ovalInner,{marginTop: 9}]}>
                             <Image style={{width: 11, height: 11, marginRight: 7}} source={Images.time}/>
                             <Text style={styles.ovalText}>{this.races_time(item)}</Text>
                         </View>
-                        <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 25}}>
+                        <View style={[styleB.ovalInner,{marginTop: 25}]}>
                             <Text style={styles.ovalPrice}>￥{item.min_price}</Text>
                         </View>
                         <TouchableOpacity
                             onPress={() => router.toChoiseTicketPage(this.props, item.race_id)}
                             activeOpacity={1}
-                            style={{
-                                position: 'absolute', top: 107,
-                                left: 90, right: 16, bottom: 16
-                            }}>
+                            style={Platform.OS == 'ios' ? styleB.buyButtonPosition: styleB.buyButtonPosition2}>
                             <Image
                                 style={styles.button}
                                 source={Images.button}
                             >
                                 <Text
-                                    style={{
-                                        backgroundColor: 'transparent',
-                                        color: '#ffffff',
-                                        fontSize: 14,
-                                        fontWeight: 'bold',
-                                        marginBottom: 5
-                                    }}>{I18n.t('home_buy')}</Text>
+                                    style={styleB.buyText}>{I18n.t('home_buy')}</Text>
                             </Image>
 
                         </TouchableOpacity>
@@ -83,7 +74,7 @@ export default class Races extends Component {
 
         return (
             <View style={{backgroundColor: '#fff', marginTop: 10}}>
-                <View style={{height: 20, flexDirection: 'row', alignItems: 'center', marginTop: 14}}>
+                <View style={styleB.ovalRace}>
                     <View style={[styles.races]}>
                         <Text style={styles.raceText1}>{I18n.t('hot_races')}</Text>
                         <Image style={{width: 13, height: 17, marginLeft: 6}} source={Images.raceBegin}/>
@@ -99,6 +90,7 @@ export default class Races extends Component {
                 </View>
                 <View style={{marginTop: 30, flexDirection: 'row'}}>
                     {this.props.raceTickets.length > 0 ? <FlatList
+                        showsHorizontalScrollIndicator={false}
                         horizontal
                         data={this.props.raceTickets}
                         renderItem={this._renderItem}
@@ -112,3 +104,30 @@ export default class Races extends Component {
         );
     }
 }
+
+const styleB = StyleSheet.create({
+    ovalRace:{
+        height: 20, flexDirection: 'row', alignItems: 'center', marginTop: 14
+    },
+    buyButtonPosition:{
+        position: 'absolute', top: 107,
+        left: 80, right: 16, bottom: 18
+    },
+    buyButtonPosition2:{
+        position: 'absolute', top: 107,
+        left: 80
+    },
+    buyText:{
+        backgroundColor: 'transparent',
+        color: '#ffffff',
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginBottom: 5
+    },
+    ovalImg:{
+        width: 115, height: 155, borderRadius: 3,marginTop:2
+    },
+    ovalInner:{
+        flexDirection: 'row', alignItems: 'center'
+    }
+})

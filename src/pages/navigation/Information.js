@@ -88,6 +88,7 @@ export default class Information extends Component {
                 <View style={{width: "100%", height: 2, marginLeft: 17, backgroundColor: '#ECECEE', marginTop: 13}}/>
                 <View style={{flexDirection: 'row'}}>
                     <FlatList
+                        showsHorizontalScrollIndicator={false}
                         data={this.props.hotInfos}
                         renderItem={this._renderItem}
                         keyExtractor={(item, index) => index}

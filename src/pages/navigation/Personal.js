@@ -83,8 +83,8 @@ class Personal extends Component {
                         umengEvent('more_business');
                         router.toBusinessPage()
                     }}>
-                        <View style={stylesP.personalView2}>
-                            <Image style={{width: 21, height: 20,marginLeft:20}} source={Images.business}/>
+                        <View style={[stylesP.personalView2]}>
+                            <Image style={{width: 21, height: 22,marginLeft:20}} source={Images.business}/>
                             <Text style={stylesP.personalText}>{I18n.t('business_cooperation')}</Text>
                             <View style={{flex:1}}/>
 
