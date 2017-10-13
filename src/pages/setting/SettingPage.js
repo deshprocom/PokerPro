@@ -207,16 +207,15 @@ class SettingPage extends Component {
         ]);
     };
 
+    componentWillReceiveProps(nextProps) {
+        console.log('TABHOME', nextProps)
+    }
+
     _switch = (language) => {
         setLocalLanguage(language);
-        this.forceUpdate();
-        let recentRaces = {
-            number: 8
-        };
-        if (login_user.user_id)
-            recentRaces['user_id'] = login_user.user_id;
+        router.popToTopRefresh();
 
-        this.props._getRecentRaces(recentRaces);
+
     };
 
     _exitApp = () => {

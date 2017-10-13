@@ -80,6 +80,7 @@ export default class RaceInfoPage extends Component {
         }
     };
 
+
     render() {
         const {listRace, raceTickets, hotInfos, banners} = this.state;
 
