@@ -66,7 +66,9 @@ export default class Information extends Component {
         }
 
     };
-
+    _separator = () => {
+        return <View style={{height:1,backgroundColor:'#ECECEE'}}/>;
+    }
     render() {
         console.log('hotInfos', this.props.hotInfos)
         return (
@@ -85,19 +87,31 @@ export default class Information extends Component {
                         <Image style={{width: 8, height: 12, marginLeft: 6}} source={Images.is}/>
                     </TouchableOpacity>
                 </View>
-                <View style={{width: "100%", height: 2, marginLeft: 17, backgroundColor: '#ECECEE', marginTop: 13}}/>
+                <View style={styleI.informationLine}/>
                 <View style={{flexDirection: 'row'}}>
                     <FlatList
                         showsHorizontalScrollIndicator={false}
+                        ItemSeparatorComponent={this._separator}
                         data={this.props.hotInfos}
                         renderItem={this._renderItem}
                         keyExtractor={(item, index) => index}
                     />
 
                 </View>
-                <View style={{width: 342, height: 2, marginLeft: 17, backgroundColor: '#ECECEE', marginTop: 13}}/>
+                <View style={styleI.informationLine}/>
 
             </View>
         );
     }
 }
+
+const styleI = StyleSheet.create({
+    informationLine:{
+
+        height: 1,
+        marginLeft: 17,
+        marginRight:17,
+        backgroundColor: '#ECECEE',
+        marginTop: 13
+    }
+})

@@ -26,7 +26,7 @@ export default class Coming extends Component {
         return (
             <TouchableOpacity
                 onPress={() => global.router.toRacesInfoPage(this.props, item.race_id, false)}
-                activeOpacity={1}
+                activeOpacity={2}
                 style={styles.moreTwos}>
                 <View style={styles.moreTwo}>
                     <Image style={styles.moreTwoImg} source={{uri: item.big_logo}}/>
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     },
     moreTwo: {
         width:101,
-        marginRight:10,
+
 
     },
 })
