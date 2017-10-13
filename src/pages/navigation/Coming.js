@@ -30,7 +30,7 @@ export default class Coming extends Component {
                 style={styles.moreTwos}>
                 <View style={styles.moreTwo}>
                     <Image style={styles.moreTwoImg} source={{uri: item.big_logo}}/>
-                    <Text numberOfLines={1} style={[styles.moreTwoText,{color:'#333333'}]}>{item.name}</Text>
+                    <Text numberOfLines={2} style={[styles.moreTwoText,{color:'#333333'}]}>{item.name}</Text>
                     <Text style={[styles.moreTwoText,{color:'#888888'}]}>{this.races_time(item)}</Text>
                     <Text style={[styles.moreTwoText,{color:'#888888'}]}>{item.location}</Text>
                 </View>
@@ -57,8 +57,9 @@ export default class Coming extends Component {
                     </TouchableOpacity>
                 </View>
 
-                <View style={{flexDirection:'row'}}>
+                <View style={{flexDirection:'row',marginLeft:7}}>
                     <FlatList
+                        showsHorizontalScrollIndicator={false}
                         horizontal
                         data={this.props.listRace}
                         renderItem={this._renderItem}
@@ -111,11 +112,9 @@ const styles = StyleSheet.create({
     },
     moreTwos: {
         marginTop: 16,
-        marginLeft:17
+        marginLeft:10
     },
     moreTwo: {
         width:101,
-        marginRight:10,
-
     },
 })

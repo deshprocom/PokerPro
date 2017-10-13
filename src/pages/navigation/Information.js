@@ -33,7 +33,7 @@ export default class Information extends Component {
                         <Text
                             style={[styles.raceText, {marginTop: 10, marginRight: 20}]}>{item.info.title}</Text>
                         <View style={{flexDirection: 'row', marginTop: 14}}>
-                            <Text style={styles.informationText}>#中扑网</Text>
+                            <Text style={styles.informationText}>{item.info.source}</Text>
                             <Text
                                 style={[styles.informationText, {marginLeft: 15}]}>{convertDate(item.info.date, 'MM-DD')}</Text>
                         </View>
@@ -48,13 +48,12 @@ export default class Information extends Component {
                 <View style={{marginLeft: 20, marginTop: 21, marginRight: 17}}>
                     <Text style={{
                         fontSize: 15,
-                        fontFamily: 'PingFangSC-Regular',
                         color: '#333333'
                     }}>{item.video.name}</Text>
 
                     <TouchableOpacity
                         onPress={() => router.toVideoInfoPage(this.props, item.video)}
-                        style={{height: 207, marginTop: 11}}>
+                        style={{height: 207, marginTop: 11,marginBottom:10}}>
                         <Image style={{height: 207, alignItems: 'center', justifyContent: 'center'}}
                                source={{uri: item.video.cover_link.trim()}}>
                             <Image style={{width: 70, height: 70}} source={Images.begin}/>
@@ -66,7 +65,9 @@ export default class Information extends Component {
         }
 
     };
-
+    _separator = () => {
+        return <View style={{height:1,marginLeft:17,marginRight:17,backgroundColor:'#ECECEE'}}/>;
+    }
     render() {
         return (
             <View style={{backgroundColor: '#fff', marginTop: 8}}>
@@ -84,18 +85,31 @@ export default class Information extends Component {
                         <Image style={{width: 8, height: 12, marginLeft: 6}} source={Images.is}/>
                     </TouchableOpacity>
                 </View>
-                <View style={{width: "100%", height: 2, marginLeft: 17, backgroundColor: '#ECECEE', marginTop: 13}}/>
+                <View style={styleI.informationLine}/>
                 <View style={{flexDirection: 'row'}}>
                     <FlatList
+                        showsHorizontalScrollIndicator={false}
+                        ItemSeparatorComponent={this._separator}
                         data={this.props.hotInfos}
                         renderItem={this._renderItem}
                         keyExtractor={(item, index) => index}
                     />
 
                 </View>
-                <View style={{width: 342, height: 2, marginLeft: 17, backgroundColor: '#ECECEE', marginTop: 13}}/>
+                <View style={styleI.informationLine}/>
 
             </View>
         );
     }
 }
+
+const styleI = StyleSheet.create({
+    informationLine:{
+
+        height: 1,
+        marginLeft: 17,
+        marginRight:17,
+        backgroundColor: '#ECECEE',
+        marginTop: 13
+    }
+})

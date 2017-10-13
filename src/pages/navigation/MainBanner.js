@@ -17,7 +17,9 @@ export default class MainBanner extends Component {
             return (
                 <View style={{height: 200}}>
                     <Swiper
-                        autoplayTimeout={4}
+                        activeDotStyle={stylesM.activeDot}
+                        dotStyle={stylesM.dot}
+                        autoplayTimeout={3}
                         autoplay>
                         {this.props.banners.map((item, key) => {
                             return <TouchableOpacity
@@ -57,3 +59,27 @@ export default class MainBanner extends Component {
         }
     }
 }
+
+const stylesM = StyleSheet.create({
+    activeDot: {
+        backgroundColor: 'white',
+        width: 18,
+        height: 4,
+        borderRadius: 2,
+        marginLeft: 3,
+        marginRight: 3,
+        marginTop: 3,
+        marginBottom: 3
+    },
+    dot: {
+        backgroundColor: 'rgba(0,0,0,.2)',
+        width: 9,
+        height: 4,
+        borderRadius: 2,
+        marginLeft: 3,
+        marginRight: 3,
+        marginTop: 3,
+        marginBottom: 3
+    }
+
+});

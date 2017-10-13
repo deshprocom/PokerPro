@@ -29,54 +29,53 @@ export default class Headlines extends Component {
 
     _hotLine = () => {
         return <View style={{
-            flex: 1,height: 49,
+            flex: 1,height: 49,paddingRight:17
         }}>
             {this.props.headlines.length > 0 ? <Swiper
-                scrollEnabled={false}
-                autoplayTimeout={5}
-                renderPagination={() => null}
-                horizontal={false}
-                autoplay>
-                {this.props.headlines.map((item, key) => {
-                    return <TouchableOpacity
-                        style={{
+                    scrollEnabled={false}
+                    autoplayTimeout={5}
+                    renderPagination={() => null}
+                    horizontal={false}
+                    autoplay>
+                    {this.props.headlines.map((item, key) => {
+                        return <TouchableOpacity
+                            style={{
                             height: 49,
                             alignItems: 'center', justifyContent: 'center'
                         }}
-                        key={key}
-                        onPress={() => this._clickBanner(item)}
-                        activeOpacity={1}>
-                        <Text
-                            numberOfLines={1}
-                            style={{
+                            key={key}
+                            onPress={() => this._clickBanner(item)}
+                            activeOpacity={1}>
+                            <Text
+                                numberOfLines={1}
+                                style={{
                                 marginLeft: 15,
                                 fontSize: 13,
                                 color: '#666666'
                             }}
-                        >{item.title}</Text>
-                    </TouchableOpacity>
+                            >{item.title}</Text>
+                        </TouchableOpacity>
 
-                })}
+                    })}
 
-            </Swiper> : null}
+                </Swiper> : null}
         </View>
     }
 
-    _clickBanner = () => {
-        const {selected} = this.state;
-        switch (selected.source_type) {
+    _clickBanner = (item) => {
+        switch (item.source_type) {
             case BannerStatus.INFO:
-                global.router.toNewsInfo(selected.source_id);
+                global.router.toNewsInfo(item.source_id);
                 break;
             case BannerStatus.RACE:
-                global.router.toRacesInfoPage(this.props, selected.source_id, false);
+                global.router.toRacesInfoPage(this.props, item.source_id, false);
                 break;
 
             case BannerStatus.VIDEO:
-                global.router.toVideoInfo(selected.source_id);
+                global.router.toVideoInfo(item.source_id);
                 break;
             case BannerStatus.LINK:
-                global.router.toWebViewPage(this.props, selected.link);
+                global.router.toWebViewPage(this.props, item.link);
                 break;
 
         }

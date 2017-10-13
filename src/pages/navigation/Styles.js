@@ -42,7 +42,7 @@ export const styles = StyleSheet.create({
     },
     races: {
         flexDirection: 'row',
-        marginLeft: 20,
+        marginLeft: 18,
         alignItems: 'center'
     },
     raceText1: {
@@ -57,7 +57,7 @@ export const styles = StyleSheet.create({
     },
     racesTwoRight: {
         flexDirection: 'column',
-        marginLeft: 20,
+        marginLeft: 17,
         alignItems: 'center'
     },
     more: {
@@ -113,7 +113,7 @@ export const styles = StyleSheet.create({
     oval:{
         width:317,
         height:160,
-        marginLeft:20,
+        marginLeft:17,
         flexDirection:'row'
     },
     ovalText:{
