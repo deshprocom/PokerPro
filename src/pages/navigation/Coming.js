@@ -26,11 +26,11 @@ export default class Coming extends Component {
         return (
             <TouchableOpacity
                 onPress={() => global.router.toRacesInfoPage(this.props, item.race_id, false)}
-                activeOpacity={2}
+                activeOpacity={1}
                 style={styles.moreTwos}>
                 <View style={styles.moreTwo}>
                     <Image style={styles.moreTwoImg} source={{uri: item.big_logo}}/>
-                    <Text numberOfLines={1} style={[styles.moreTwoText,{color:'#333333'}]}>{item.name}</Text>
+                    <Text numberOfLines={2} style={[styles.moreTwoText,{color:'#333333'}]}>{item.name}</Text>
                     <Text style={[styles.moreTwoText,{color:'#888888'}]}>{this.races_time(item)}</Text>
                     <Text style={[styles.moreTwoText,{color:'#888888'}]}>{item.location}</Text>
                 </View>
@@ -112,11 +112,9 @@ const styles = StyleSheet.create({
     },
     moreTwos: {
         marginTop: 16,
-        marginLeft:17
+        marginLeft:10
     },
     moreTwo: {
         width:101,
-
-
     },
 })
