@@ -110,7 +110,7 @@ const styleB = StyleSheet.create({
         height: 20, flexDirection: 'row', alignItems: 'center', marginTop: 14
     },
     buyButtonPosition:{
-        position: 'absolute', top: 107,
+        position: 'absolute', top: 97,
         left: 80, right: 16, bottom: 18
     },
     buyButtonPosition2:{
