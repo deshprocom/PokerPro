@@ -17,6 +17,7 @@ export default class MainBanner extends Component {
             return (
                 <View style={{height: 200}}>
                     <Swiper
+                        autoplayTimeout={4}
                         autoplay>
                         {this.props.banners.map((item, key) => {
                             return <TouchableOpacity

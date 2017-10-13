@@ -38,6 +38,11 @@ export default class Router {
 
     }
 
+    popToTopRefresh() {
+        Actions.tab_4();
+
+    }
+
     toTabNews() {
         Actions.tab_2();
     }

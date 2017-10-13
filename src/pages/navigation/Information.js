@@ -69,7 +69,6 @@ export default class Information extends Component {
         return <View style={{height:1,marginLeft:17,marginRight:17,backgroundColor:'#ECECEE'}}/>;
     }
     render() {
-        console.log('hotInfos', this.props.hotInfos)
         return (
             <View style={{backgroundColor: '#fff', marginTop: 8}}>
                 <View style={{height: 20, flexDirection: 'row', alignItems: 'center', marginTop: 14}}>

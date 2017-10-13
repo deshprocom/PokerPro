@@ -21,8 +21,7 @@ export const styles = StyleSheet.create({
     puke: {
         flexDirection: 'row',
         marginLeft: 20,
-        alignItems: 'center',
-        marginRight: 50
+        alignItems: 'center'
     },
     racesTwo: {
         flexDirection: 'row',

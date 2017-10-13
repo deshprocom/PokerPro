@@ -397,7 +397,7 @@ class RaceScene extends Component {
             race_id: this.props.params.race_id
         };
         this.props.fetchSubRaces(body);
-    }
+    };
 
     _refreshPage = () => {
         const {user_id} = global.login_user;
