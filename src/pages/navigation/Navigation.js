@@ -31,7 +31,6 @@ export const Navigation = () => {
                 key="tab_1"
                 tabBarLabel="TAB #1"
                 inactiveBackgroundColor="#FFF"
-
                 icon={({focused}) => focused ? TabIcon(I18n.t('home'), Images.home2, styles.textStyle2, styles.bgHomeStyle) :
                     TabIcon(I18n.t('home'), Images.home, styles.textStyle, styles.bgHomeStyle)}
 
