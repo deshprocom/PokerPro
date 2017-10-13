@@ -48,13 +48,12 @@ export default class Information extends Component {
                 <View style={{marginLeft: 20, marginTop: 21, marginRight: 17}}>
                     <Text style={{
                         fontSize: 15,
-                        fontFamily: 'PingFangSC-Regular',
                         color: '#333333'
                     }}>{item.video.name}</Text>
 
                     <TouchableOpacity
                         onPress={() => router.toVideoInfoPage(this.props, item.video)}
-                        style={{height: 207, marginTop: 11}}>
+                        style={{height: 207, marginTop: 11,marginBottom:10}}>
                         <Image style={{height: 207, alignItems: 'center', justifyContent: 'center'}}
                                source={{uri: item.video.cover_link.trim()}}>
                             <Image style={{width: 70, height: 70}} source={Images.begin}/>
@@ -67,7 +66,7 @@ export default class Information extends Component {
 
     };
     _separator = () => {
-        return <View style={{height:1,backgroundColor:'#ECECEE'}}/>;
+        return <View style={{height:1,marginLeft:17,marginRight:17,backgroundColor:'#ECECEE'}}/>;
     }
     render() {
         console.log('hotInfos', this.props.hotInfos)

@@ -139,8 +139,8 @@ class Personal extends Component {
 
     renderPerson = () => {
         let props = Platform.OS === 'ios' ? {
-                blurType: "light",
-                blurAmount: 18
+                // blurType: "light",
+                // blurAmount: 18
             } : {
                 viewRef: this.state.viewRef,
                 downsampleFactor: 10,
