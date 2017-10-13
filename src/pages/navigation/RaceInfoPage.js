@@ -4,7 +4,7 @@ import {
 }
     from 'react-native';
 import Races from './Races';
-import PukeNews from './PukeNews';
+import Headlines from './Headlines';
 import Coming from './Coming';
 import Information from './Information';
 import MainBanner from './MainBanner';
@@ -21,7 +21,8 @@ export default class RaceInfoPage extends Component {
         raceTickets: [],
         hotInfos: [],
         banners: [],
-        opacity: 0
+        opacity: 0,
+        headlines: []
     };
 
     componentWillMount() {
@@ -44,6 +45,15 @@ export default class RaceInfoPage extends Component {
         }, err => {
 
         });
+
+        getPukeNews(data => {
+            console.log('headlines', data)
+            this.setState({
+                headlines: data.headlines
+            })
+        }, err => {
+        });
+
         getRecentRaces({number: 10}, data => {
             console.log('listRace', data)
             this.setState({
@@ -82,7 +92,7 @@ export default class RaceInfoPage extends Component {
 
 
     render() {
-        const {listRace, raceTickets, hotInfos, banners} = this.state;
+        const {listRace, raceTickets, hotInfos, banners, headlines} = this.state;
 
         return (
 
@@ -94,7 +104,8 @@ export default class RaceInfoPage extends Component {
                 >
                     <MainBanner
                         banners={banners}/>
-                    <PukeNews/>
+                    <Headlines
+                        headlines={headlines}/>
 
                     <Races
                         raceTickets={raceTickets}/>
