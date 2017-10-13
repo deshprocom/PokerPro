@@ -32,8 +32,8 @@ export const Navigation = () => {
                 tabBarLabel="TAB #1"
                 inactiveBackgroundColor="#FFF"
 
-                icon={({focused}) => focused ? TabIcon(I18n.t('home'), Images.home2, styles.textStyle2, styles.bgHomeStyle) :
-                    TabIcon(I18n.t('home'), Images.home, styles.textStyle, styles.bgHomeStyle)}
+                icon={({focused}) => focused ? TabIcon(I18n.t('home'), Images.home2, styles.textStyle2, styles.bgHomeStyle,false) :
+                    TabIcon(I18n.t('home'), Images.home, styles.textStyle, styles.bgHomeStyle,false)}
 
                 titleStyle={{color: 'white', alignSelf: 'center'}}
             >
@@ -47,24 +47,24 @@ export const Navigation = () => {
                 <Scene key="tab_news"
                        component={VideoNewsTab}
                        hideNavBar
-                       icon={({focused}) => focused ? TabIcon(I18n.t('home_info'), Images.information2, styles.textStyle2, styles.bgInformationStyle) :
-                           TabIcon(I18n.t('home_info'), Images.information, styles.textStyle, styles.bgInformationStyle)}
+                       icon={({focused}) => focused ? TabIcon(I18n.t('home_info'), Images.information2, styles.textStyle2, styles.bgInformationStyle,false) :
+                           TabIcon(I18n.t('home_info'), Images.information, styles.textStyle, styles.bgInformationStyle,false)}
                 />
             </Stack>
             <Stack key="tab_3">
                 <Scene key="tab_rank"
                        component={DrawerRank}
                        hideNavBar
-                       icon={({focused}) => focused ? TabIcon(I18n.t('home_sort'), Images.rank2, styles.textStyle2, styles.bgRankStyle2) :
-                           TabIcon(I18n.t('home_sort'), Images.rank, styles.textStyle, styles.bgRankStyle2)}
+                       icon={({focused}) => focused ? TabIcon(I18n.t('home_sort'), Images.rank2, styles.textStyle2, styles.bgRankStyle2,false) :
+                           TabIcon(I18n.t('home_sort'), Images.rank, styles.textStyle, styles.bgRankStyle2,false)}
                 />
             </Stack>
             <Stack key="tab_4">
                 <Scene key="tab_person"
                        component={Personal}
                        hideNavBar
-                       icon={({focused}) => focused ? TabIcon(I18n.t('mine'), Images.mine2, styles.textStyle2, styles.bgHomeStyle) :
-                           TabIcon(I18n.t('mine'), Images.mine, styles.textStyle, styles.bgHomeStyle)}
+                       icon={({focused}) => focused ? TabIcon(I18n.t('mine'), Images.mine2, styles.textStyle2, styles.bgHomeStyle,true) :
+                           TabIcon(I18n.t('mine'), Images.mine, styles.textStyle, styles.bgHomeStyle,true)}
                 />
             </Stack>
         </Tabs>

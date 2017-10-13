@@ -57,7 +57,7 @@ export default class Coming extends Component {
                     </TouchableOpacity>
                 </View>
 
-                <View style={{flexDirection:'row'}}>
+                <View style={{flexDirection:'row',marginLeft:7}}>
                     <FlatList
                         showsHorizontalScrollIndicator={false}
                         horizontal
