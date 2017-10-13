@@ -4,7 +4,7 @@
 import React, {Component, PropTypes} from 'react';
 import {
     StyleSheet, Platform, View, Text, StatusBar, TouchableOpacity,
-    Image
+    Image, Animated
 } from 'react-native';
 import theme from '../styles/theme';
 import TestRouter from './TestRouter';
@@ -38,8 +38,8 @@ export default class NavigationBar extends Component {
         } = this.props;
 
         return (
-            <View style={[styles.container,toolbarStyle]}>
-                <StatusBar barStyle={this.props.barStyle?this.props.barStyle:"light-content"}/>
+            <Animated.View style={[styles.container, toolbarStyle]}>
+                <StatusBar barStyle={this.props.barStyle ? this.props.barStyle : "light-content"}/>
                 <View style={styles.toolbar}>
                     <View style={styles.fixedCell}>
                         {(leftBtnIcon || leftBtnText) ?
@@ -54,11 +54,11 @@ export default class NavigationBar extends Component {
                     <View style={styles.centerCell}>
                         <Text
                             numberOfLines={1}
-                            style={this.props.titleStyle?this.props.titleStyle:styles.title}>{title}</Text>
+                            style={this.props.titleStyle ? this.props.titleStyle : styles.title}>{title}</Text>
                         <TestRouter
-                                    refreshPage={this.props.refreshPage}/>
+                            refreshPage={this.props.refreshPage}/>
                     </View>
-                    <View style={[styles.fixedCell,{justifyContent:'flex-end'}]}>
+                    <View style={[styles.fixedCell, {justifyContent: 'flex-end'}]}>
                         {(rightBtnIcon || rightBtnText) ?
                             <Button
                                 testID="btn_bar_right"
@@ -69,7 +69,7 @@ export default class NavigationBar extends Component {
                         }
                     </View>
                 </View>
-            </View>
+            </Animated.View>
         );
     }
 }
@@ -99,7 +99,7 @@ class Button extends Component {
                     </View>
                     :
                     <View style={styles.btnTextView}>
-                        <Text style={[styles.btnText,this.props.textStyle]}
+                        <Text style={[styles.btnText, this.props.textStyle]}
                               numberOfLines={1}>{this.props.text}</Text>
                     </View>
                 }

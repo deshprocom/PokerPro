@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import {
-    View, Text, Button, Alert, DatePickIOS,
-    Image, StyleSheet, ActivityIndicator,
-    TouchableOpacity, ScrollView,
-    ListView, Animated, Easing
+    View, ScrollView
 }
     from 'react-native';
 import Races from './Races';
@@ -11,17 +8,20 @@ import PukeNews from './PukeNews';
 import Coming from './Coming';
 import Information from './Information';
 import MainBanner from './MainBanner';
-import {styles} from './Styles';
 import {getRecentRaces, getRaceTickets} from '../../services/RacesDao';
 import {getHotInfos, getMainBanners, getPukeNews} from '../../services/NewsDao';
 import Router from '../../configs/Router';
+import {NavigationBar} from '../../components';
+import I18n from 'react-native-i18n';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 
 export default class RaceInfoPage extends Component {
     state = {
         listRace: [],
         raceTickets: [],
         hotInfos: [],
-        banners: []
+        banners: [],
+        opacity: 0
     };
 
     componentWillMount() {
@@ -69,23 +69,51 @@ export default class RaceInfoPage extends Component {
         })
     };
 
+    _onScroll = (event) => {
+        const offsetHeight = 200;
+        let offsetY = event.nativeEvent.contentOffset.y;
+        if (offsetY <= offsetHeight - Metrics.navBarHeight) {
+            let opacity = offsetY / (offsetHeight - Metrics.navBarHeight - 20);
+            this.setState({opacity: opacity});
+        } else {
+            this.setState({opacity: 1});
+        }
+    };
+
     render() {
         const {listRace, raceTickets, hotInfos, banners} = this.state;
 
         return (
-            <ScrollView>
-                <MainBanner
-                    banners={banners}/>
-                <PukeNews/>
 
-                <Races
-                    raceTickets={raceTickets}/>
-                <Coming
-                    listRace={listRace}/>
-                <Information
-                    hotInfos={hotInfos}/>
+            <View>
 
-            </ScrollView>
+                <ScrollView
+                    scrollEventThrottle={16}
+                    onScroll={this._onScroll}
+                >
+                    <MainBanner
+                        banners={banners}/>
+                    <PukeNews/>
+
+                    <Races
+                        raceTickets={raceTickets}/>
+                    <Coming
+                        listRace={listRace}/>
+                    <Information
+                        hotInfos={hotInfos}/>
+
+                </ScrollView>
+
+                <NavigationBar
+                    title={I18n.t('app_name')}
+                    toolbarStyle={{
+                        position: 'absolute',
+                        top: 0,
+                        backgroundColor: Colors._161,
+                        opacity: this.state.opacity
+                    }}/>
+            </View>
+
         );
     }
 }
