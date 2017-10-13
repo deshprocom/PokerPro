@@ -32,14 +32,14 @@ export default class Races extends Component {
                 activeOpacity={1}>
 
                 <Image style={styles.oval} source={Images.oval}>
-                    <View style={{width: 115, height: 155, marginLeft: 5}}>
+                    <View style={{width: 115, height: 160, marginLeft: 5}}>
                         <Image style={styleB.ovalImg} source={{uri: item.big_logo}}/>
                     </View>
 
                     <View style={{marginLeft: 20, marginTop: 14}}>
                         <Text
                             numberOfLines={2}
-                            style={{maxWidth: 160}}>{item.name}</Text>
+                            style={{maxWidth: 160,height:35}}>{item.name}</Text>
                         <View style={[styleB.ovalInner,{marginTop: 19}]}>
                             <Image style={{width: 10, height: 12, marginRight: 7}} source={Images.location}/>
                             <Text style={styles.ovalText}>{item.location}</Text>
@@ -48,7 +48,7 @@ export default class Races extends Component {
                             <Image style={{width: 11, height: 11, marginRight: 7}} source={Images.time}/>
                             <Text style={styles.ovalText}>{this.races_time(item)}</Text>
                         </View>
-                        <View style={[styleB.ovalInner,{marginTop: 25}]}>
+                        <View style={[styleB.ovalInner,{marginTop: 15}]}>
                             <Text style={styles.ovalPrice}>￥{item.min_price}</Text>
                         </View>
                         <TouchableOpacity
@@ -110,7 +110,7 @@ const styleB = StyleSheet.create({
         height: 20, flexDirection: 'row', alignItems: 'center', marginTop: 14
     },
     buyButtonPosition:{
-        position: 'absolute', top: 97,
+        position: 'absolute', top: 105,
         left: 80, right: 16, bottom: 18
     },
     buyButtonPosition2:{
