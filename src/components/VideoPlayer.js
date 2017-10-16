@@ -100,7 +100,7 @@ export default class VideoPlayer extends Component {
          * Player information
          */
         this.player = {
-            controlTimeoutDelay: this.props.controlTimeout || 15000,
+            controlTimeoutDelay: this.props.controlTimeout || 5000,
             volumePanResponder: PanResponder,
             seekPanResponder: PanResponder,
             controlTimeout: null,
