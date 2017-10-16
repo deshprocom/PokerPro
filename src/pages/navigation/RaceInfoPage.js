@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {
-    View, ScrollView
+    View, ScrollView,Platform,StyleSheet,Image,TextInput,
+    Text
 }
     from 'react-native';
 import Races from './Races';
@@ -11,10 +12,9 @@ import MainBanner from './MainBanner';
 import {getRecentRaces, getRaceTickets} from '../../services/RacesDao';
 import {getHotInfos, getMainBanners, getPukeNews} from '../../services/NewsDao';
 import Router from '../../configs/Router';
-import {NavigationBar} from '../../components';
-import I18n from 'react-native-i18n';
-import {Colors, Metrics} from '../../Themes';
-import SearchKeywordPage from '../races/SearchKeywordPage';
+import {Metrics} from '../../Themes';
+import {SearchPage} from './SearchPage';
+
 
 export default class RaceInfoPage extends Component {
     state = {
@@ -22,8 +22,11 @@ export default class RaceInfoPage extends Component {
         raceTickets: [],
         hotInfos: [],
         banners: [],
-        opacity: 0,
-        headlines: []
+        bgColor: 'transparent',
+        opacity:0,
+        headlines: [],
+        next_id: '0',
+        keyword: ''
     };
 
     componentWillMount() {
@@ -87,7 +90,9 @@ export default class RaceInfoPage extends Component {
             let opacity = offsetY / (offsetHeight - Metrics.navBarHeight - 20);
             this.setState({opacity: opacity});
         } else {
-            this.setState({opacity: 1});
+            this.setState({
+                opacity: 1
+            });
         }
     };
 
@@ -103,7 +108,6 @@ export default class RaceInfoPage extends Component {
                     scrollEventThrottle={16}
                     onScroll={this._onScroll}
                 >
-                 <SearchKeywordPage/>
                     <MainBanner
                         banners={banners}/>
                     <Headlines
@@ -117,18 +121,11 @@ export default class RaceInfoPage extends Component {
                         hotInfos={hotInfos}/>
 
                 </ScrollView>
-
-                <NavigationBar
-                    title={I18n.t('app_name')}
-                    toolbarStyle={{
-                        position: 'absolute',
-                        top: 0,
-                        backgroundColor: Colors._161,
-                        opacity: this.state.opacity
-                    }}/>
+                <SearchPage/>
             </View>
 
         );
     }
 }
+
 
