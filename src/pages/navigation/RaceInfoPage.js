@@ -13,7 +13,8 @@ import {getHotInfos, getMainBanners, getPukeNews} from '../../services/NewsDao';
 import Router from '../../configs/Router';
 import {NavigationBar} from '../../components';
 import I18n from 'react-native-i18n';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
+import {Colors, Metrics} from '../../Themes';
+import SearchKeywordPage from '../races/SearchKeywordPage';
 
 export default class RaceInfoPage extends Component {
     state = {
@@ -102,6 +103,7 @@ export default class RaceInfoPage extends Component {
                     scrollEventThrottle={16}
                     onScroll={this._onScroll}
                 >
+                 <SearchKeywordPage/>
                     <MainBanner
                         banners={banners}/>
                     <Headlines
