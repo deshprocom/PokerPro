@@ -7,6 +7,7 @@ import {
     POST_CHANGE_PWD, POST_V_CODE, POST_CARD_IMAGE,
     GET_PLAYER_INFO, POST_BIND_ACCOUNT, POST_CHANGE_BIND,
     POST_CHANGE_PERMISSION, GET_NOTIFICATIONS, DEL_NOTIFICATIONS,
+    GET_UNREAND_MSG,
     FETCH_SUCCESS, FETCHING, FETCH_FAIL
 } from '../actions/ActionTypes';
 
@@ -17,7 +18,8 @@ const initialState = {
     loginUser: {},
     actionType: '',
     player: {},
-    notices: {}
+    notices: {},
+    unread:{}
 };
 
 export default function accountState(state = initialState, action) {
@@ -54,6 +56,8 @@ export default function accountState(state = initialState, action) {
             return handleFetch(state, action);
         case DEL_NOTIFICATIONS:
             return handleNoData(state, action);
+        case GET_UNREAND_MSG:
+            return handleFetch(state, action);
         default:
             return state;
     }
@@ -154,7 +158,18 @@ function handleFetch(state, action) {
                 notices: action.notices
             }
 
-        } else {
+        } else if(action.type === GET_UNREAND_MSG){
+            return {
+                ...state,
+                loading: false,
+                hasData: true,
+                error: false,
+                actionType: action.type,
+                unread: action.unread
+            }
+        }
+
+        else {
             return {
                 ...state,
                 loading: false,

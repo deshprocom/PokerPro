@@ -3,11 +3,11 @@
  */
 import {
     POST_EMAIL_LOGIN, POST_PHONE_LOGIN, POST_VCODE_LOGIN,
-    POST_VERIFY_CODE, POST_RESET_PASSWORD, POST_REGISTER,POST_PASSWORD_IMAGE,
+    POST_VERIFY_CODE, POST_RESET_PASSWORD, POST_REGISTER, POST_PASSWORD_IMAGE,
     POST_CHANGE_PWD, POST_V_CODE, POST_CERTIFICATION, GET_CERTIFICATION,
     POST_CARD_IMAGE, GET_PLAYER_INFO, POST_BIND_ACCOUNT, POST_CHANGE_BIND,
-    POST_CHANGE_PERMISSION, GET_NOTIFICATIONS, DEL_NOTIFICATIONS,
-    FETCH_SUCCESS, FETCHING, FETCH_FAIL,FETCH_PASS, FETCH_PASS_SUCCESS,FETCH_PASS_FAIL
+    POST_CHANGE_PERMISSION, GET_NOTIFICATIONS, DEL_NOTIFICATIONS, GET_UNREAND_MSG,
+    FETCH_SUCCESS, FETCHING, FETCH_FAIL, FETCH_PASS, FETCH_PASS_SUCCESS, FETCH_PASS_FAIL
 } from '../actions/ActionTypes';
 import {showToast} from '../utils/ComonHelper';
 import I18n from 'react-native-i18n';
@@ -20,8 +20,20 @@ import {
     postCertification, getCertification,
     postCardImage, postPasswordImage, playerInfo, postChangeBind,
     postBindAccount, postChangePermission, getNotifications,
-    delNotification
+    delNotification, getMsgUnRead
 } from '../services/AccountDao';
+
+export function fetchUnreadMsg() {
+    return (dispatch) => {
+        dispatch(_getMsgNum());
+        getMsgUnRead((ret) => {
+            dispatch(_getMsgNumOk(ret))
+        }, (err) => {
+            showToast(err);
+            dispatch(_getMsgNumFail(err))
+        })
+    }
+}
 
 
 export function fetchDelNotice(body, success) {
@@ -131,6 +143,7 @@ export function fetchPostPasswordImage(body) {
 }
 
 global.user_extra = {};
+
 /*获取实名信息*/
 export function fetchGetCertification() {
 
@@ -145,6 +158,7 @@ export function fetchGetCertification() {
         })
     }
 }
+
 /*提交实名信息*/
 export function fetchPostCertification(body) {
 
@@ -195,6 +209,7 @@ export function fetchPostChangePwd(body) {
         })
     }
 }
+
 /*登陆*/
 export function fetchPostLogin(body) {
 
@@ -714,6 +729,30 @@ function _delNoticeOk() {
 function _delNoticeFail(error) {
     return {
         type: DEL_NOTIFICATIONS,
+        fetching: FETCH_FAIL,
+        error: error
+    }
+}
+
+
+function _getMsgNum() {
+    return {
+        type: GET_UNREAND_MSG,
+        fetching: FETCHING
+    }
+}
+
+export function _getMsgNumOk(unread) {
+    return {
+        type: GET_UNREAND_MSG,
+        fetching: FETCH_SUCCESS,
+        unread: unread
+    }
+}
+
+function _getMsgNumFail(error) {
+    return {
+        type: GET_UNREAND_MSG,
         fetching: FETCH_FAIL,
         error: error
     }

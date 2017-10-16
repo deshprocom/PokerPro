@@ -17,6 +17,7 @@ import {
 import {fetchGetRecentRaces, _getProfileOk, _getRecentRaces} from '../../actions/RacesAction';
 import {umengEvent} from '../../utils/UmengEvent';
 import StorageKey from '../../configs/StorageKey';
+import {_getMsgNumOk} from '../../actions/AccountAction';
 
 import {setLocalLanguage} from '../../services/ConfigDao';
 
@@ -230,7 +231,7 @@ class SettingPage extends Component {
 
                 this.props._getProfileNull();
                 this.forceUpdate();
-
+                this.props.setMsgUnreadNull();
                 router.toLoginFirstPage()
 
             }
@@ -243,7 +244,7 @@ class SettingPage extends Component {
 const bindAction = dispatch => ({
     _getRecentRaces: (body) => dispatch(fetchGetRecentRaces(body)),
     _getProfileNull: () => dispatch(_getProfileOk({})),
-    _refreshRaces: () => dispatch(_getRecentRaces())
+    setMsgUnreadNull: () => dispatch(_getMsgNumOk())
 });
 
 const mapStateToProps = state => ({});
