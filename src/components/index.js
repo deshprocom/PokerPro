@@ -29,6 +29,7 @@ import Loading from './Loading';
 import CountDownBtn from './CountDownBtn';
 import DatePicker from './datepicker';
 import ImagePicker from 'react-native-image-crop-picker';
+import Badge from './Badge'
 
 export {
     BtnLong, BtnSoild, NavigationBar,
@@ -53,5 +54,6 @@ export {
     Loading,
     CountDownBtn,
     DatePicker,
-    ImagePicker
+    ImagePicker,
+    Badge
 }
