@@ -38,7 +38,7 @@ export class SearchPage extends Component {
         const offsetHeight = 200;
 
         let offsetY = event.nativeEvent.contentOffset.y;
-        console.log(offsetY)
+
         if (offsetY <= offsetHeight) {
             let opacity = offsetY / offsetHeight;
             this.setState({opacity: opacity});

@@ -235,7 +235,7 @@ export function searchVideo(body) {
 
 export function videoList(body) {
     const {type_id, next_id} = body;
-    return 'videos/types/' + type_id + '?page_size=' + page_size + '&next_id=' + next_id
+    return 'videos/types/' + type_id + '/main_lists?page_size=' + page_size + '&next_id=' + next_id
 }
 
 

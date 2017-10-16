@@ -6,23 +6,17 @@
  */
 import React, {Component, PropTypes} from 'react';
 import {
-    StyleSheet, Text, View, ListView,
-    TouchableOpacity, Image, StatusBar,
-    ScrollView, Modal, InteractionManager,
-    ActivityIndicator
+    StyleSheet, Text, View,
+    TouchableOpacity, Image, Modal
 } from 'react-native';
 import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {GET_VIDEO_LIST} from '../../actions/ActionTypes';
 import {isEmptyObject, uniqueArray, FontSize, uVideoShare, strNotNull} from '../../utils/ComonHelper';
 import {ImageLoad, VideoPlayer, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {fetchVideoList} from '../../actions/NewsAction';
 import {getVideoList} from '../../services/NewsDao';
-import {_renderFooter, _renderHeader} from '../../components/LoadingView';
-
-const headerStyle = {height: 35, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.bg_f5};
 
 
 class NewsListView extends Component {
@@ -34,29 +28,21 @@ class NewsListView extends Component {
 
     constructor(props) {
         super(props);
-        this._dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1.race_id !== r2.race_id
-        });
-
 
         this.state = {
             newsListData: [],
             newsListNextId: 0,
             topped: {},
-            componentDataSource: this._dataSource.cloneWithRows([]),
             error: false,
             modalVisible: false,
             video_link: '',
             cover_link: ''
         }
 
-
     }
 
 
     render() {
-        const {newsListData, error} = this.state;
-
 
         return (<View
             style={styles.pullView}
