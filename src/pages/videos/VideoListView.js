@@ -15,7 +15,7 @@ import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {GET_VIDEO_LIST} from '../../actions/ActionTypes';
-import {isEmptyObject, uniqueArray, FontSize, uVideoShare} from '../../utils/ComonHelper';
+import {isEmptyObject, uniqueArray, FontSize, uVideoShare, strNotNull} from '../../utils/ComonHelper';
 import {ImageLoad, VideoPlayer, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {fetchVideoList} from '../../actions/NewsAction';
@@ -78,9 +78,10 @@ class NewsListView extends Component {
                             this.listView.refresh()
                         }}/> : <NoDataView/>;
                 }}
+
             />
 
-            {this._showVideo()}
+
         </View>)
     }
 
@@ -189,30 +190,37 @@ class NewsListView extends Component {
         const {id, cover_link, video_duration, video_link} = item;
         return <View style={styles.listTopImg}>
 
-            <Image
-                source={{uri: cover_link}}
-                style={styles.listTopImg}
-            >
-                <View style={styles.itemBack}>
-                    <TouchableOpacity
-                        onPress={() => {
-                            this.setState({
-                                modalVisible: true,
-                                video_link: video_link,
-                                cover_link: cover_link
-                            })
-                        }}
-                        style={styles.btnPlay}>
-                        <Image
-                            style={styles.imgPlay}
-                            source={Images.video_play}/>
-                    </TouchableOpacity>
-                    <Text style={[styles.listVideoTime, {fontSize: FontSize.h14}]}>{video_duration}</Text>
+            {strNotNull(video_link) && this.state.video_link === video_link ?
+                <View style={styles.listTopImg}>
+                    <VideoPlayer
+                        thumbnailsHeight={208}
+                        thumbnails={cover_link}
+                        source={{uri: video_link.trim()}}
+
+                    />
+                </View> : <Image
+                    source={{uri: cover_link}}
+                    style={styles.listTopImg}
+                >
+                    <View style={styles.itemBack}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                this.setState({
+                                    video_link: video_link,
+                                    cover_link: cover_link
+                                })
+                            }}
+                            style={styles.btnPlay}>
+                            <Image
+                                style={styles.imgPlay}
+                                source={Images.video_play}/>
+                        </TouchableOpacity>
+                        <Text style={[styles.listVideoTime, {fontSize: FontSize.h14}]}>{video_duration}</Text>
 
 
-                </View>
+                    </View>
 
-            </Image>
+                </Image>}
 
 
         </View>
@@ -254,9 +262,6 @@ class NewsListView extends Component {
 
                 </TouchableOpacity>
             </View>
-
-
-            {/*<View style={{height: 6}}/>*/}
 
 
         </View>)

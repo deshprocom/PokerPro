@@ -51,12 +51,12 @@ export default class VideoInfoPage extends Component {
 
             <View
                 style={styles.video}>
-                {isEmptyObject(this.state.videoInfo) ? null : <VideoPlayer
+                {strNotNull(video_link) ? <VideoPlayer
                     thumbnailsHeight={216}
                     thumbnails={cover_link}
                     showBack={true}
                     source={{uri: video_link.trim()}}
-                />}
+                /> : null}
 
             </View>
 
