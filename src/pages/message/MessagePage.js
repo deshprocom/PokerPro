@@ -13,6 +13,8 @@ import {NavigationBar, ImageLoad, SwipeListView} from '../../components';
 import {isEmptyObject, utcDate, showToast} from '../../utils/ComonHelper';
 import {OrderStatus, Verified} from '../../configs/Status';
 import {delNotification, postMsgRead, getNotifications} from '../../services/AccountDao';
+import {fetchUnreadMsg} from '../../actions/AccountAction';
+import {connect} from 'react-redux';
 
 const icons = [
     require('../../../source/message/ic_send.png'),
@@ -25,7 +27,7 @@ const icons = [
 const ORDER = 'order';
 const CERTIFICATION = "certification";
 
-export default class MessagePage extends Component {
+class MessagePage extends Component {
 
     constructor(props) {
         super(props);
@@ -96,6 +98,7 @@ export default class MessagePage extends Component {
                     }
                     postMsgRead({id: id}, data => {
                         this.refresh();
+                        this.props._fetchUnreadMsg();
 
                     }, err => {
 
@@ -191,6 +194,15 @@ export default class MessagePage extends Component {
     };
 
 }
+
+
+const bindAction = dispatch => ({
+    _fetchUnreadMsg: () => dispatch(fetchUnreadMsg())
+});
+
+const mapStateToProps = state => ({});
+
+export default connect(mapStateToProps, bindAction)(MessagePage);
 
 
 const

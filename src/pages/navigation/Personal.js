@@ -13,46 +13,35 @@ import JpushHelp from '../../services/JpushHelper';
 import {connect} from 'react-redux';
 import {BlurView} from 'react-native-blur';
 import {fetchGetProfile} from '../../actions/PersonAction';
-import {getMsgUnRead} from '../../services/AccountDao';
+import {fetchUnreadMsg} from '../../actions/AccountAction';
 import {Badge} from '../../components';
 import {FETCH_SUCCESS, GET_PROFILE} from '../../actions/ActionTypes';
 
 class Personal extends Component {
 
     state = {
-        viewRef: 0,
-        unread_count: 0
+        viewRef: 0
     };
 
-    componentWillReceiveProps(newProps) {
-
-        if (newProps.actionType === GET_PROFILE && isEmptyObject(newProps.profile)) {
-            this.setState({
-                unread_count: 0
-            })
-        } else if (newProps.actionType === GET_PROFILE && !isEmptyObject(newProps.profile)) {
-            this._unReadMsg()
-        }
-    }
 
     componentDidMount() {
 
         if (!isEmptyObject(login_user)) {
             JpushHelp.addPushListener(this.receiveCb, this.openCb);
             this.props._getProfile(login_user.user_id);
+
+        }
+    }
+
+    componentWillReceiveProps(newProps) {
+        if (newProps.actionType === GET_PROFILE && newProps.hasData
+            && isEmptyObject(newProps.unread)) {
             this._unReadMsg()
         }
     }
 
     _unReadMsg = () => {
-        getMsgUnRead(data => {
-            this.setState({
-                unread_count: data.unread_count
-            })
-
-        }, err => {
-
-        })
+        this.props._fetchUnreadMsg()
     };
 
     componentWillUnmount() {
@@ -121,10 +110,7 @@ class Personal extends Component {
                     <Text style={stylesP.personalText}>{I18n.t('message')}</Text>
                     <View style={{flex: 1}}/>
 
-                    {this.state.unread_count > 0 ? <Badge textStyle={{color: '#fff',}} style={{marginRight: 15,}}>
-                        {this.state.unread_count}
-                    </Badge> : null}
-
+                    {this._msgBadge()}
 
                     <Image style={stylesP.personalImg} source={Images.is}/>
                 </View>
@@ -156,6 +142,14 @@ class Personal extends Component {
                 </View>
             </TouchableOpacity>
         </View>
+    };
+
+
+    _msgBadge = () => {
+        if (!isEmptyObject(this.props.unread))
+            return <Badge textStyle={{color: '#fff',}} style={{marginRight: 15,}}>
+                {this.props.unread.unread_count}
+            </Badge>
     };
 
 
@@ -322,6 +316,7 @@ const stylesP = StyleSheet.create({
 
 const bindAction = dispatch => ({
     _getProfile: (user_id) => dispatch(fetchGetProfile(user_id)),
+    _fetchUnreadMsg: () => dispatch(fetchUnreadMsg())
 });
 
 const mapStateToProps = state => ({
@@ -330,6 +325,7 @@ const mapStateToProps = state => ({
     error: state.PersonState.error,
     hasData: state.PersonState.hasData,
     actionType: state.PersonState.actionType,
+    unread: state.AccountState.unread
 
 });
 
