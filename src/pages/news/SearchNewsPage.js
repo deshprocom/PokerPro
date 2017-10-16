@@ -3,7 +3,7 @@
  */
 import React, {Component, PropTypes} from 'react';
 import {
-    StyleSheet, Text, View, ListView,
+    StyleSheet, Text, View, FlatList,
     TouchableOpacity, Image, TextInput,
     InteractionManager, Animated, Platform
 } from 'react-native';
@@ -13,10 +13,10 @@ import I18n from 'react-native-i18n';
 import {GET_NEWS_SEARCH} from '../../actions/ActionTypes';
 import {isEmptyObject, convertDate, strNotNull} from '../../utils/ComonHelper';
 import {connect} from 'react-redux';
-import {fetchNewsSearch} from '../../actions/NewsAction';
+import {getNewsSearch} from '../../services/NewsDao';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
-import {ImageLoad, PullListView} from '../../components';
-import {_renderFooter, _renderHeader} from '../../components/LoadingView';
+import {ImageLoad, UltimateListView} from '../../components';
+
 const headerStyle = {height: 35, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.bg_f5};
 
 
@@ -25,18 +25,12 @@ class SearchNewsPage extends Component {
 
     constructor(props) {
         super(props);
-        this._dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1.race_id !== r2.race_id,
-            sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
-        });
 
         this.state = {
-            componentDataSource: this._dataSource.cloneWithRows([]),
             newsListData: [],
             newsListNextId: '0',
-            keyword: ''
         };
-
+        this.keyword = ''
 
     }
 
@@ -53,86 +47,97 @@ class SearchNewsPage extends Component {
     }
 
 
-    componentWillReceiveProps(newProps) {
-        const {newsSearch, actionType, hasData, loading} = newProps;
-        const {newsListData, newsListNextId} = this.state;
-
-        if (actionType === GET_NEWS_SEARCH
-            && hasData
-            && this.props.loading !== loading) {
-            const {items, next_id} = newsSearch;
-
-            if (newsListNextId !== '0') {
-                this._pullToRefreshListView.endLoadMore();
-                newsListData.concat(items);
-                this.setState({
-                    componentDataSource: this._dataSource.cloneWithRows(newsListData),
-                    newsListNextId: next_id,
-                    newsListData: newsListData
-                })
-            } else {
-                this._pullToRefreshListView.endRefresh();
-                this.setState({
-                    componentDataSource: this._dataSource.cloneWithRows(items),
-                    newsListNextId: '0',
-                    newsListData: items
-                })
-            }
-
-        }
-    }
-
     _content = () => {
 
-        const {newsListData} = this.state;
 
         return (<View>
 
-            <PullListView
-                ref={ (component) => this._pullToRefreshListView = component }
-                viewType={PullListView.constants.viewType.listView}
-                dataSource={this.state.componentDataSource}
-                renderRow={this._itemNewsView}
-                renderHeader={(viewState) => _renderHeader(viewState, headerStyle)}
-                renderFooter={(viewState) => _renderFooter(viewState, headerStyle)}
-                onRefresh={this._onRefresh}
-                onLoadMore={this._onLoadMore}
-                enableEmptySections={true}
+            <UltimateListView
+                keyExtractor={(item, index) => index}
+                ref={(ref) => this.listView = ref}
+                onFetch={this.onFetch}
+                rowView={this._itemNewsView}
+                refreshableTitlePull={I18n.t('pull_refresh')}
+                refreshableTitleRelease={I18n.t('release_refresh')}
+                dateTitle={I18n.t('last_refresh')}
+                allLoadedText={I18n.t('no_more')}
+                waitingSpinnerText={I18n.t('loading')}
+                emptyView={() => {
+                    return this.state.error ? <LoadErrorView
+                        onPress={() => {
+                            this.listView.refresh()
+                        }}/> : <NoDataView/>;
+                }}
             />
-            {isEmptyObject(newsListData) ? <NoDataView/> : null}
 
         </View>)
 
     }
 
 
-    _onRefresh = () => {
-        const {keyword} = this.state;
-        this._getNewsList(keyword, '0')
-    }
+    onFetch = (page = 1, startFetch, abortFetch) => {
+        try {
+            if (page === 1) {
+                this._onRefresh(startFetch, abortFetch)
+            } else {
+                this._onLoadMore(startFetch, abortFetch);
+            }
+        } catch (err) {
+            abortFetch();
+        }
+    };
+    _onRefresh = (startFetch, abortFetch) => {
 
-    _onLoadMore = () => {
 
-        const {newsListNextId, keyword} = this.state;
-        router.log("onEndReached", keyword, newsListNextId);
-        this._getNewsList(keyword, newsListNextId)
-
-    }
-
-    _getNewsList = (keyword, next_id) => {
         const body = {
-            keyword: keyword,
-            next_id: next_id
+            keyword: this.keyword,
+            next_id: '0'
         };
 
-        this.props.getSearchNews(body);
-    }
+        getNewsSearch(body, data => {
+
+            const {items, next_id} = data;
+            this.setState({
+                newsListNextId: next_id
+            });
+            startFetch(items, 6)
+
+        }, err => {
+            abortFetch()
+        });
+    };
+
+    _onLoadMore = (startFetch, abortFetch) => {
+
+        const {newsListNextId} = this.state;
+
+
+        const body = {
+            keyword: this.keyword,
+            next_id: newsListNextId
+        };
+
+        getNewsSearch(body, data => {
+
+            const {items, next_id} = data;
+            this.setState({
+                newsListNextId: next_id
+            });
+            startFetch(items, 6)
+
+        }, err => {
+            abortFetch()
+        });
+
+    };
+
 
     _pressItem = (item) => {
         router.toNewsInfoPage(this.props, item)
     }
 
     _itemNewsView = (rowData, sectionID, rowID) => {
+
         const {image, title, source, date, image_thumb} = rowData;
 
         return (<TouchableOpacity
@@ -180,11 +185,9 @@ class SearchNewsPage extends Component {
                             underlineColorAndroid="transparent"
                             style={this._searchInput()}
                             onChangeText={text => {
-                                this.setState({
-                                    keyword: text
-                                });
+                                this.keyword = text;
                                 if (strNotNull(text))
-                                    this._getNewsList(text, '0')
+                                    this.listView.onRefresh()
                             }}
 
                         />

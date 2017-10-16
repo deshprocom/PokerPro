@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    View, ScrollView,Platform,StyleSheet,Image,TextInput,
+    View, ScrollView, Platform, StyleSheet, Image, TextInput,
     Text
 }
     from 'react-native';
@@ -14,7 +14,6 @@ import {getHotInfos, getMainBanners, getPukeNews} from '../../services/NewsDao';
 import Router from '../../configs/Router';
 import {Metrics} from '../../Themes';
 import {SearchPage} from './SearchPage';
-import BackTop from './BackTop';
 
 
 export default class RaceInfoPage extends Component {
@@ -24,7 +23,7 @@ export default class RaceInfoPage extends Component {
         hotInfos: [],
         banners: [],
         bgColor: 'transparent',
-        opacity:0,
+        opacity: 0,
         headlines: [],
         next_id: '0',
         keyword: ''
@@ -85,16 +84,8 @@ export default class RaceInfoPage extends Component {
     };
 
     _onScroll = (event) => {
-        const offsetHeight = 200;
-        let offsetY = event.nativeEvent.contentOffset.y;
-        if (offsetY <= offsetHeight - Metrics.navBarHeight) {
-            let opacity = offsetY / (offsetHeight - Metrics.navBarHeight - 20);
-            this.setState({opacity: opacity});
-        } else {
-            this.setState({
-                opacity: 1
-            });
-        }
+        if (this.searchBar)
+            this.searchBar.onScroll(event)
     };
 
 
@@ -122,8 +113,8 @@ export default class RaceInfoPage extends Component {
                         hotInfos={hotInfos}/>
 
                 </ScrollView>
-                <SearchPage/>
-                <BackTop/>
+                <SearchPage
+                    ref={ref => this.searchBar = ref}/>
             </View>
 
         );

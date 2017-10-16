@@ -217,7 +217,8 @@ const images = {
     business: require('../../source/navigation/business.png'),
     order: require('../../source/navigation/order.png'),
     settings: require('../../source/navigation/settings.png'),
-    speaker: require('../../source/navigation/speaker.png')
+    speaker: require('../../source/navigation/speaker.png'),
+    news_search:require('../../source/news/news_search.png')
 };
 
 export default images

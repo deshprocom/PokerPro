@@ -51,11 +51,9 @@ class NewsListView extends Component {
 
 
             <UltimateListView
-                key={this.state.layout}
-                keyExtractor={(item, index) => `${this.state.layout} - ${item.race_id}`}
+                keyExtractor={(item, index) => index}
                 ref={(ref) => this.listView = ref}
                 onFetch={this.onFetch}
-                legacyImplementation
                 rowView={this._itemNewsView}
                 refreshableTitlePull={I18n.t('pull_refresh')}
                 refreshableTitleRelease={I18n.t('release_refresh')}

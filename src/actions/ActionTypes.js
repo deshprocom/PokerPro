@@ -106,3 +106,6 @@ export const SEARCH_VIDEO = 'SEARCH_VIDEO';
 //排行
 export const GET_MAIN_RANK = 'GET_MAIN_RANK';
 export const RANK_CHECK_TYPE = 'RANK_CHECK_TYPE';
+
+
+export const GET_UNREAND_MSG = 'GET_UNREAND_MSG';
