@@ -14,6 +14,7 @@ import {getHotInfos, getMainBanners, getPukeNews} from '../../services/NewsDao';
 import Router from '../../configs/Router';
 import {Metrics} from '../../Themes';
 import {SearchPage} from './SearchPage';
+import BackTop from './BackTop';
 
 
 export default class RaceInfoPage extends Component {
@@ -122,6 +123,7 @@ export default class RaceInfoPage extends Component {
 
                 </ScrollView>
                 <SearchPage/>
+                <BackTop/>
             </View>
 
         );

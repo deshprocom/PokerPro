@@ -8,6 +8,7 @@ import {strNotNull} from '../../utils/ComonHelper';
 import {fetchSearchByKeyword} from '../../actions/RacesAction';
 import {Images,Metrics,Colors} from '../../Themes';
 import I18n from 'react-native-i18n';
+import {fetchSearchByKeyword} from '../../actions/RacesAction';
 
 export class SearchPage extends Component{
     state = {
@@ -27,7 +28,7 @@ export class SearchPage extends Component{
                 next_id: next_id,
                 keyword: keyword
             };
-            this.props._searchByDate(body);
+            bindAction._searchByDate(body);
 
         }
 
@@ -91,6 +92,9 @@ export class SearchPage extends Component{
         )
     }
 }
+const bindAction = dispatch => ({
+    _searchByDate: (body) => dispatch(fetchSearchByKeyword(body))
+});
 const styleR = StyleSheet.create({
     searchText:{
         fontSize: 14,
