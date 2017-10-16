@@ -54,7 +54,7 @@ export class SearchPage extends Component {
                        source={Images.search_gray}/>
                 <TextInput
                     placeholderTextColor="#6A6B6B"
-                    placeholder={I18n.t('news_outline')}
+                    placeholder={I18n.t('moreRace')}
                     testID="input_keyword"
                     underlineColorAndroid='transparent'
                     style={styleR.inputSearch}
@@ -85,7 +85,7 @@ export class SearchPage extends Component {
                     <Text style={styleR.searchText}>{I18n.t('app_name')}</Text>
                     {this._search()}
                     <Image style={styleR.imgSearch2}
-                           source={Images.search_gray}/>
+                           source={Images.search_notice}/>
                 </View>
             </View>
         )
