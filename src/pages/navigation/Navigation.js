@@ -11,7 +11,6 @@ import {Images} from '../../Themes';
 import VideoNewsTab from './VideoNewsTab';
 import DrawerRank from '../rank/DrawerRank';
 
-
 export const Navigation = () => {
 
 
@@ -63,8 +62,8 @@ export const Navigation = () => {
                 <Scene key="tab_person"
                        component={Personal}
                        hideNavBar
-                       icon={({focused}) => focused ? TabIcon(I18n.t('mine'), Images.mine2, styles.textStyle2, styles.bgHomeStyle,true) :
-                           TabIcon(I18n.t('mine'), Images.mine, styles.textStyle, styles.bgHomeStyle,true)}
+                       icon={({focused}) => focused ? TabIcon(I18n.t('mine'), Images.mine2, styles.textStyle2, styles.bgHomeStyle,false) :
+                           TabIcon(I18n.t('mine'), Images.mine, styles.textStyle, styles.bgHomeStyle,false)}
                 />
             </Stack>
         </Tabs>

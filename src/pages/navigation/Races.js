@@ -71,7 +71,9 @@ export default class Races extends Component {
     };
 
     render() {
-
+        if(isEmptyObject(this.props.raceTickets)){
+            return <View/>
+        }
         return (
             <View style={{backgroundColor: '#fff', marginTop: 10}}>
                 <View style={styleB.ovalRace}>
