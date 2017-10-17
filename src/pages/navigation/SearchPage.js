@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
     View, ScrollView, Platform, StyleSheet, Image, TextInput,
-    Text, Animated,TouchableOpacity
+    Text, Animated, TouchableOpacity
 }
     from 'react-native';
 import {Images, Metrics, Colors} from '../../Themes';
@@ -39,16 +39,14 @@ export class SearchPage extends Component {
             <TouchableOpacity style={styleR.searchBar}
                               onPress={() => global.router.toSearchKeywordPage(this.props)}>
 
-                    <Image style={styleR.imgSearch}
-                           source={Images.search_gray}/>
-                    <TextInput
-                        placeholderTextColor="#6A6B6B"
-                        placeholder={I18n.t('serachMore')}
-                        editable = {false}
-                        testID="input_keyword"
-                        underlineColorAndroid='transparent'
-                        style={styleR.inputSearch}
-                        onPress={() => global.router.toSearchKeywordPage(this.props)}/>
+                <Image style={styleR.imgSearch}
+                       source={Images.search_gray}/>
+                <Text
+                    style={styleR.inputSearch}
+                    onPress={() => global.router.toSearchKeywordPage(this.props)}>
+                    {I18n.t('serachMore')}
+                </Text>
+
             </TouchableOpacity>
         )
     };
@@ -79,7 +77,8 @@ export class SearchPage extends Component {
                 <View style={{
                     flexDirection: 'row',
                     alignItems: 'center',
-                    height: 50
+                    height: 50,
+                    width: Metrics.screenWidth
                 }}>
                     <Text style={styleR.searchText}>{I18n.t('app_name')}</Text>
 
@@ -91,7 +90,7 @@ export class SearchPage extends Component {
                         activeOpacity={1}>
                         <Image style={styleR.imgSearch2}
                                source={Images.search_notice}
-                               />
+                        />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -108,13 +107,13 @@ const styleR = StyleSheet.create({
     },
     searchBar: {
         height: 28,
-        width: 248,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#FFFFFF',
         opacity: 0.8,
         borderRadius: 3,
-        marginLeft: 23
+        marginLeft: 23,
+        flex: 1
     },
     imgSearch: {
         height: 18,
@@ -129,9 +128,7 @@ const styleR = StyleSheet.create({
         marginRight: 22
     },
     inputSearch: {
-        height: Platform.OS === 'android' ? 40 : 30,
-        flex: 1,
-        color: Colors.white,
+        color: '#6A6B6B',
         fontSize: 15
     }
 })

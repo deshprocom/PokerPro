@@ -11,7 +11,7 @@ export default class BackTop extends PureComponent {
     onScroll = (event) => {
         const offsetHeight = 500;
         let offsetY = event.nativeEvent.contentOffset.y;
-        console.log('offsetY:', offsetY)
+
         if (offsetY >= offsetHeight) {
             this.setState({show: true});
         } else {
