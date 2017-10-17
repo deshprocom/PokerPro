@@ -28,6 +28,7 @@ export default class VideoNewsTab extends PureComponent {
                         tabLabel={'资讯'}/>
 
                     <MainVideoPage
+                        ref={ref => this.mainVideoPage = ref}
                         tabLabel={'视频'}/>
 
                 </ScrollableTabView>
@@ -46,6 +47,8 @@ export default class VideoNewsTab extends PureComponent {
             <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
                 <TouchableOpacity
                     onPress={() => {
+                        if (this.mainVideoPage)
+                            this.mainVideoPage.pauseVideo();
                         this.tabView.goToPage(0, false);
                         this.setState({
                             currentView: 0
@@ -77,6 +80,9 @@ export default class VideoNewsTab extends PureComponent {
                 <View style={{flex: 1}}/>
                 <TouchableOpacity
                     onPress={() => {
+                        if (this.mainVideoPage)
+                            this.mainVideoPage.pauseVideo();
+
                         if (this.state.currentView === 0)
                             router.toSearchNewsPage();
                         else

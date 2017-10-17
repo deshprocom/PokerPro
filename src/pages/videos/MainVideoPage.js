@@ -56,6 +56,16 @@ export default class MainVideoPage extends Component {
         )
     }
 
+    pauseVideo = () => {
+        let that = this;
+        const {typeListData} = this.state;
+
+        typeListData.forEach(function (x) {
+            if (that.refs[`videoList${x.id}`] !== undefined)
+                that.refs[`videoList${x.id}`].setPause();
+        });
+    };
+
     _listView = () => {
         const {typeListData} = this.state;
 
@@ -75,10 +85,7 @@ export default class MainVideoPage extends Component {
         if (pages.length > 0)
             return (  <ScrollableTabView
                 onChangeTab={({i}) => {
-                    typeListData.forEach(function (x) {
-                        if (that.refs[`videoList${x.id}`] !== undefined)
-                            that.refs[`videoList${x.id}`].setPause();
-                    });
+                    this.pauseVideo()
                 }}
                 renderTabBar={() => <ScrollableTabBar
                     tabStyle={{
