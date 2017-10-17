@@ -4,27 +4,21 @@
 /**
  * Created by lorne on 2017/4/21.
  */
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet, Text, View,
     TouchableOpacity, Image, Modal
 } from 'react-native';
-import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {isEmptyObject, uniqueArray, FontSize, uVideoShare, strNotNull} from '../../utils/ComonHelper';
 import {ImageLoad, VideoPlayer, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
-import {fetchVideoList} from '../../actions/NewsAction';
 import {getVideoList} from '../../services/NewsDao';
 
 
-class NewsListView extends Component {
+export default class VideoListView extends Component {
 
-    static propTypes = {
-        newsTypeItem: PropTypes.object,
-        selectTypeId: PropTypes.number
-    };
 
     constructor(props) {
         super(props);
@@ -87,36 +81,10 @@ class NewsListView extends Component {
     }
 
 
-    _showVideo = () => {
-
-        const {modalVisible, video_link, cover_link} = this.state;
-        return ( <Modal
-            style={styles.container}
-            transparent={true}
-            visible={modalVisible}>
-
-            <TouchableOpacity
-                activeOpacity={1}
-                onPress={() => {
-                    this.setState({
-                        modalVisible: false
-                    })
-                }}
-                style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.8)'}}/>
-            <VideoPlayer
-                thumbnails={cover_link}
-                closeFull={true}
-                source={{uri: video_link.trim()}}
-            />
-            <TouchableOpacity
-                activeOpacity={1}
-                onPress={() => {
-                    this.setState({
-                        modalVisible: false
-                    })
-                }}
-                style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.8)'}}/>
-        </Modal>)
+    setPause = () => {
+        this.setState({
+            video_link: ''
+        })
     };
 
 
@@ -275,23 +243,6 @@ class NewsListView extends Component {
     };
 
 }
-
-
-const bindAction = dispatch => ({
-    getNewsList: (body) => dispatch(fetchVideoList(body))
-});
-
-const mapStateToProps = state => ({
-    loading: state.NewsState.loading,
-    error: state.NewsState.error,
-    hasData: state.NewsState.hasData,
-    actionType: state.NewsState.actionType,
-    errorMsg: state.NewsState.errorMsg,
-    videoList: state.NewsState.videoList,
-    videoTypeId: state.NewsState.videoTypeId
-});
-
-export default connect(mapStateToProps, bindAction)(NewsListView);
 
 
 const styles = StyleSheet.create({
