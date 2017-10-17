@@ -10,7 +10,7 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 
 import I18n from 'react-native-i18n';
-import {getDateDiff, convertDate, strNotNull, FontSize, uVideoShare} from '../../utils/ComonHelper';
+import {getDateDiff, isEmptyObject, strNotNull, FontSize, uVideoShare} from '../../utils/ComonHelper';
 import {searchVideos} from '../../services/NewsDao';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {VideoPlayer, UltimateListView} from '../../components';
@@ -25,6 +25,7 @@ export default class SearchVideo extends Component {
         this.state = {
             newsListData: [],
             newsListNextId: '0',
+            video_link: '',
         };
         this.keyword = ''
 
@@ -44,7 +45,8 @@ export default class SearchVideo extends Component {
 
 
     _content = () => {
-
+        let {video_link} = this.state;
+        let that = this;
 
         return (<View>
 
@@ -63,6 +65,19 @@ export default class SearchVideo extends Component {
                         onPress={() => {
                             this.listView.refresh()
                         }}/> : <NoDataView/>;
+                }}
+                onViewableItemsChanged={info => {
+
+                    const {changed} = info;
+                    changed.forEach(function (x) {
+                        if (!x.isViewable && !isEmptyObject(x.item)
+                            && x.item.video_link === video_link) {
+                            that.setState({
+                                video_link: ''
+                            })
+                        }
+
+                    })
                 }}
             />
 
