@@ -4,10 +4,11 @@ import {
     Text, Animated,TouchableOpacity
 }
     from 'react-native';
-import {strNotNull} from '../../utils/ComonHelper';
-import {fetchSearchByKeyword} from '../../actions/RacesAction';
 import {Images, Metrics, Colors} from '../../Themes';
 import I18n from 'react-native-i18n';
+import {umengEvent} from '../../utils/UmengEvent';
+import {isEmptyObject} from '../../utils/ComonHelper';
+import JpushHelp from '../../services/JpushHelper';
 
 export class SearchPage extends Component {
     state = {
@@ -15,25 +16,11 @@ export class SearchPage extends Component {
         headlines: [],
         next_id: '0',
         keyword: '',
-        opacity: 0
+        opacity: 0,
+        badge: false
     };
 
-    loadList = (next_id, keyword) => {
 
-        if (strNotNull(keyword)) {
-            this.setState({
-                next_id: next_id
-            });
-            const body = {
-                next_id: next_id,
-                keyword: keyword
-            };
-            this.props._searchByDate(body);
-
-        }
-
-
-    };
     onScroll = (event) => {
         const offsetHeight = 200;
 
@@ -65,6 +52,20 @@ export class SearchPage extends Component {
             </TouchableOpacity>
         )
     };
+    toMessagePage = () => {
+
+        umengEvent('home_notification');
+        if (isEmptyObject(login_user)) {
+            router.toLoginFirstPage()
+        } else {
+            this.setState({
+                badge: false
+            });
+            JpushHelp.iosSetBadge(0);
+            router.toMessageCenter()
+        }
+
+    };
 
     render() {
         return (
@@ -81,9 +82,17 @@ export class SearchPage extends Component {
                     height: 50
                 }}>
                     <Text style={styleR.searchText}>{I18n.t('app_name')}</Text>
+
                     {this._search()}
-                    <Image style={styleR.imgSearch2}
-                           source={Images.search_notice}/>
+
+                    <TouchableOpacity
+                        testID="btn_bar_right"
+                        onPress={this.toMessagePage}
+                        activeOpacity={1}>
+                        <Image style={styleR.imgSearch2}
+                               source={Images.search_notice}
+                               />
+                    </TouchableOpacity>
                 </View>
             </View>
         )
@@ -115,7 +124,7 @@ const styleR = StyleSheet.create({
     },
     imgSearch2: {
         height: 22,
-        width: 19,
+        width: 21,
         marginLeft: 22,
         marginRight: 22
     },
