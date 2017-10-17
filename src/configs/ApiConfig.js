@@ -94,7 +94,8 @@ export default {
     hot_infos: 'hot_infos',
     info_detail: info_detail,
     video_detail: video_detail,
-    sub_videos:sub_videos
+    sub_videos: sub_videos,
+    search_video: search_video
 }
 
 
@@ -107,6 +108,12 @@ function getUserId() {
 
 const page_size = 10;
 
+
+export function search_video(body) {
+    const {keyword, next_id} = body;
+
+    return `videos/search_main_videos?keyword=${keyword}&next_id=${next_id}&page_size=${page_size}`
+}
 
 export function sub_videos(body) {
     const {group_id} = body;

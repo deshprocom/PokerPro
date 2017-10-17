@@ -77,7 +77,10 @@ export default class VideoNewsTab extends PureComponent {
                 <View style={{flex: 1}}/>
                 <TouchableOpacity
                     onPress={() => {
-                        router.toSearchNewsPage()
+                        if (this.state.currentView === 0)
+                            router.toSearchNewsPage();
+                        else
+                            router.toSearchVideo()
                     }}
                     style={styles.btnSearch}>
                     <Image style={styles.search}
