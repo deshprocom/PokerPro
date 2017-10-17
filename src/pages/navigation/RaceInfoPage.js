@@ -12,7 +12,7 @@ import MainBanner from './MainBanner';
 import {getRecentRaces, getRaceTickets} from '../../services/RacesDao';
 import {getHotInfos, getMainBanners, getPukeNews} from '../../services/NewsDao';
 import Router from '../../configs/Router';
-import {Metrics} from '../../Themes';
+import BackTop from './BackTop';
 import {SearchPage} from './SearchPage';
 
 
@@ -26,7 +26,8 @@ export default class RaceInfoPage extends Component {
         opacity: 0,
         headlines: [],
         next_id: '0',
-        keyword: ''
+        keyword: '',
+        informationY:0
     };
 
     componentWillMount() {
@@ -85,9 +86,10 @@ export default class RaceInfoPage extends Component {
 
     _onScroll = (event) => {
         if (this.searchBar)
-            this.searchBar.onScroll(event)
+            this.searchBar.onScroll(event);
+        if (this.backTop)
+            this.backTop.onScroll(event);
     };
-
 
     render() {
         const {listRace, raceTickets, hotInfos, banners, headlines} = this.state;
@@ -97,6 +99,7 @@ export default class RaceInfoPage extends Component {
             <View>
 
                 <ScrollView
+                    ref={ref=>this.mainScroll = ref}
                     scrollEventThrottle={16}
                     onScroll={this._onScroll}
                 >
@@ -115,6 +118,12 @@ export default class RaceInfoPage extends Component {
                 </ScrollView>
                 <SearchPage
                     ref={ref => this.searchBar = ref}/>
+                <BackTop
+                    scrollToTop={()=>{
+                        this.mainScroll.scrollTo({x: 0, y: 0, animated: false})
+                    }}
+                    ref={scroll => this.backTop = scroll}
+                />
             </View>
 
         );
