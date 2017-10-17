@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
     View, ScrollView, Platform, StyleSheet, Image, TextInput,
-    Text, Animated
+    Text, Animated,TouchableOpacity
 }
     from 'react-native';
 import {strNotNull} from '../../utils/ComonHelper';
@@ -49,22 +49,20 @@ export class SearchPage extends Component {
 
     _search = () => {
         return (
-            <Animated.View style={styleR.searchBar}>
-                <Image style={styleR.imgSearch}
-                       source={Images.search_gray}/>
-                <TextInput
-                    placeholderTextColor="#6A6B6B"
-                    placeholder={I18n.t('moreRace')}
-                    testID="input_keyword"
-                    underlineColorAndroid='transparent'
-                    style={styleR.inputSearch}
-                    onChangeText={txt => {
-                        this.setState({
-                            keyword: txt
-                        });
-                        this.loadList('0', txt)
-                    }}/>
-            </Animated.View>
+            <TouchableOpacity style={styleR.searchBar}
+                              onPress={() => global.router.toSearchKeywordPage(this.props)}>
+
+                    <Image style={styleR.imgSearch}
+                           source={Images.search_gray}/>
+                    <TextInput
+                        placeholderTextColor="#6A6B6B"
+                        placeholder={I18n.t('serachMore')}
+                        editable = {false}
+                        testID="input_keyword"
+                        underlineColorAndroid='transparent'
+                        style={styleR.inputSearch}
+                        onPress={() => global.router.toSearchKeywordPage(this.props)}/>
+            </TouchableOpacity>
         )
     };
 
