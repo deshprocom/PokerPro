@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {isEmptyObject, uniqueArray, FontSize, uVideoShare, strNotNull} from '../../utils/ComonHelper';
+import {isEmptyObject, uniqueArray, FontSize, uVideoShare, strNotNull,getDateDiff} from '../../utils/ComonHelper';
 import {ImageLoad, VideoPlayer, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {getVideoList} from '../../services/NewsDao';
@@ -202,7 +202,7 @@ export default class VideoListView extends Component {
 
     _itemNewsView = (rowData, sectionID, rowID) => {
 
-        const {top, name, cover_link, video_duration, title_desc, id} = rowData;
+        const {created_at, name, cover_link, video_duration, title_desc, id} = rowData;
 
         return (<View
             style={styles.transparent}
@@ -218,7 +218,7 @@ export default class VideoListView extends Component {
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Text
                     numberOfLines={1}
-                    style={{fontSize: 12, color: Colors._AAA}}>两小时前</Text>
+                    style={{fontSize: 12, color: Colors._AAA}}>{getDateDiff(created_at)}</Text>
                 <Text
                     numberOfLines={1}
                     style={{fontSize: 12, color: Colors._AAA}}> # {video_duration}</Text>

@@ -10,7 +10,7 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 
 import I18n from 'react-native-i18n';
-import {isEmptyObject, convertDate, strNotNull, FontSize, uVideoShare} from '../../utils/ComonHelper';
+import {getDateDiff, convertDate, strNotNull, FontSize, uVideoShare} from '../../utils/ComonHelper';
 import {searchVideos} from '../../services/NewsDao';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {VideoPlayer, UltimateListView} from '../../components';
@@ -175,7 +175,7 @@ export default class SearchVideo extends Component {
 
     _itemNewsView = (rowData, sectionID, rowID) => {
 
-        const {top, name, cover_link, video_duration, title_desc, id} = rowData;
+        const {created_at, name, cover_link, video_duration, title_desc, id} = rowData;
 
         return (<View
             style={styles.transparent}
@@ -191,7 +191,7 @@ export default class SearchVideo extends Component {
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Text
                     numberOfLines={1}
-                    style={{fontSize: 12, color: Colors._AAA}}>两小时前</Text>
+                    style={{fontSize: 12, color: Colors._AAA}}>{getDateDiff(created_at)}</Text>
                 <Text
                     numberOfLines={1}
                     style={{fontSize: 12, color: Colors._AAA}}> # {video_duration}</Text>
