@@ -10,10 +10,10 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 
 import I18n from 'react-native-i18n';
-import {isEmptyObject, convertDate, strNotNull,FontSize} from '../../utils/ComonHelper';
+import {isEmptyObject, convertDate, strNotNull, FontSize, uVideoShare} from '../../utils/ComonHelper';
 import {searchVideos} from '../../services/NewsDao';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
-import {ImageLoad, UltimateListView} from '../../components';
+import {VideoPlayer, UltimateListView} from '../../components';
 
 
 export default class SearchVideo extends Component {
@@ -128,14 +128,13 @@ export default class SearchVideo extends Component {
     };
 
 
-    _pressItem = (item) => {
-        router.toNewsInfoPage(this.props, item)
-    };
-
-
     _playView = (item) => {
         const {id, cover_link, video_duration, video_link} = item;
-        return <View style={styles.listTopImg}>
+        return <TouchableOpacity
+            onPress={() => {
+                this._pressItem(item)
+            }}
+            style={styles.listTopImg}>
 
             {strNotNull(video_link) && this.state.video_link === video_link ?
                 <View style={styles.listTopImg}>
@@ -170,7 +169,7 @@ export default class SearchVideo extends Component {
                 </Image>}
 
 
-        </View>
+        </TouchableOpacity>
 
     };
 
@@ -180,39 +179,49 @@ export default class SearchVideo extends Component {
 
         return (<View
             style={styles.transparent}
-            testID={"btn_news_row_" + rowData.id}
-            activeOpacity={1}
-            onPress={() => this._pressItem(rowData)}>
+            testID={"btn_news_row_" + rowData.id}>
+
+            <View>
+
+                <Text style={styles.itemTitle}>{name}</Text>
+
+            </View>
 
             {this._playView(rowData)}
-            <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
-                <TouchableOpacity
-                    style={{flex: 6}}
-                    activeOpacity={1}
-                    onPress={() => this._pressItem(rowData)}>
-                    <Text
-                        numberOfLines={2}
-                        style={[styles.listTopTxt, {fontSize: FontSize.h17}]}>{name}</Text>
-                    <Text
-                        numberOfLines={1}
-                        style={[styles.txtTitle1, {fontSize: FontSize.h14}]}>{title_desc}</Text>
-                </TouchableOpacity>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text
+                    numberOfLines={1}
+                    style={{fontSize: 12, color: Colors._AAA}}>两小时前</Text>
+                <Text
+                    numberOfLines={1}
+                    style={{fontSize: 12, color: Colors._AAA}}> # {video_duration}</Text>
+
+                <View style={{flex: 1}}/>
 
                 <TouchableOpacity
                     onPress={() => {
                         uVideoShare(name, title_desc, cover_link, id)
                     }}
-                    style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    style={{alignItems: 'center', justifyContent: 'center'}}>
 
                     <Image style={styles.imgShare}
-                           source={Images.share}/>
+                           source={Images.video_share}/>
 
                 </TouchableOpacity>
             </View>
 
 
+            <View style={{backgroundColor: Colors._ECE, height: 1}}/>
+
+
         </View>)
+
+
     }
+
+    _pressItem = (item) => {
+        router.toVideoInfoPage(this.props, item)
+    };
 
     _navSearchBar = () => {
         return (<View style={styles.navBar}>
@@ -336,29 +345,53 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 13
     },
-    listSource: {
-        color: Colors._AAA,
-        fontSize: 12,
+    transparent: {
+        paddingLeft: 17,
+        paddingRight: 17,
+        backgroundColor: Colors.white,
+
     },
-    listImg: {
-        height: 74,
-        width: 122,
-        marginTop: 13,
-        marginRight: 17,
-        marginBottom: 16
+    listVideoTime: {
+        color: Colors._EEE,
+        right: 17,
+        position: 'absolute',
+        bottom: 7
     },
-    listTitleView: {
-        marginLeft: 17,
-        marginTop: 13,
-        marginBottom: 16,
+    imgPlay: {
+        height: 68,
+        width: 68
     },
-    listTitleTxt: {
-        color: '#444444',
-        fontSize: 16,
-        width: 216
+    btnPlay: {
+        height: 68,
+        width: 68,
+        alignSelf: 'center',
+        marginTop: 68
+    },
+    imgShare: {
+        height: 17,
+        width: 17,
+        marginTop: 8,
+        marginBottom: 10,
+        marginLeft: 14
+
+    },
+
+    itemTitle: {
+        fontSize: 17,
+        color: Colors._333,
+        fontWeight: 'bold',
+        marginTop: 15,
+        marginBottom: 11
+
     },
     barTxt: {
         fontSize: 15,
         color: '#E4D57F'
+    },
+    listTopImg: {
+        height: 208,
+        width: '100%',
+        backgroundColor: Colors._ECE
+
     },
 });

@@ -228,8 +228,7 @@ export default class VideoListView extends Component {
                 <TouchableOpacity
                     onPress={() => {
                         uVideoShare(name, title_desc, cover_link, id)
-                    }}
-                    style={{alignItems: 'center', justifyContent: 'center'}}>
+                    }}>
 
                     <Image style={styles.imgShare}
                            source={Images.video_share}/>
@@ -259,7 +258,7 @@ const styles = StyleSheet.create({
         width: 17,
         marginTop: 8,
         marginBottom: 10,
-        marginLeft: 8
+        marginLeft: 14
 
     },
     listTopImg: {
