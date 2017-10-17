@@ -8,19 +8,15 @@ import {
     InteractionManager, Animated, Platform
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import TestRouter from '../../components/TestRouter';
+
 import I18n from 'react-native-i18n';
-import {GET_NEWS_SEARCH} from '../../actions/ActionTypes';
 import {isEmptyObject, convertDate, strNotNull} from '../../utils/ComonHelper';
-import {connect} from 'react-redux';
 import {getNewsSearch} from '../../services/NewsDao';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {ImageLoad, UltimateListView} from '../../components';
 
-const headerStyle = {height: 35, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.bg_f5};
 
-
-class SearchNewsPage extends Component {
+export default class SearchNewsPage extends Component {
 
 
     constructor(props) {
@@ -217,21 +213,6 @@ class SearchNewsPage extends Component {
 
 }
 
-
-export default connect(
-    state => ({
-        loading: state.NewsState.loading,
-        error: state.NewsState.error,
-        hasData: state.NewsState.hasData,
-        actionType: state.NewsState.actionType,
-        errorMsg: state.NewsState.errorMsg,
-        newsSearch: state.NewsState.newsSearch
-    }),
-    dispatch => ({
-        getSearchNews: (body) => dispatch(fetchNewsSearch(body))
-
-    })
-)(SearchNewsPage);
 
 const styles = StyleSheet.create({
     topBar: {
