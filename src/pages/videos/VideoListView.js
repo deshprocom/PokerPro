@@ -43,6 +43,8 @@ class NewsListView extends Component {
 
 
     render() {
+        let {video_link} = this.state;
+        let that = this;
 
         return (<View
             style={styles.pullView}
@@ -63,6 +65,19 @@ class NewsListView extends Component {
                         onPress={() => {
                             this.listView.refresh()
                         }}/> : <NoDataView/>;
+                }}
+                onViewableItemsChanged={info => {
+
+                    const {changed} = info;
+                    changed.forEach(function (x) {
+                        if (!x.isViewable && !isEmptyObject(x.item)
+                            && x.item.video_link === video_link) {
+                            that.setState({
+                                video_link: ''
+                            })
+                        }
+
+                    })
                 }}
 
             />
