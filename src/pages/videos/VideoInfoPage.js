@@ -14,31 +14,43 @@ import I18n from 'react-native-i18n';
 import {isEmptyObject, convertDate, strNotNull} from '../../utils/ComonHelper';
 import {LoadingView} from '../../components/load'
 import {NavigationBar, MarkdownPlat, VideoPlayer} from '../../components';
-import {getVideoDetail} from '../../services/NewsDao';
+import {getVideoDetail, getSubVideo} from '../../services/NewsDao';
 
 
 export default class VideoInfoPage extends Component {
     state = {
-        videoInfo: {}
+        videoInfo: {},
+        subVideos: []
     };
 
     componentDidMount() {
         const {info, video_id} = this.props.params;
         if (!isEmptyObject(info)) {
-            this.setState({videoInfo: info})
+            this.setState({videoInfo: info});
+            this._getSubVideos(info.group_id)
         } else if (strNotNull(video_id)) {
             getVideoDetail({video_id}, data => {
-                console.log(data)
+
                 this.setState({
                     videoInfo: data
-                })
-
+                });
+                this._getSubVideos(data.group_id)
             }, err => {
 
             })
         }
-
     }
+
+    _getSubVideos = (group_id) => {
+        getSubVideo({group_id}, data => {
+            console.log(data)
+            this.setState({
+                subVideos: data.items
+            })
+        }, err => {
+
+        })
+    };
 
     render() {
 
@@ -71,39 +83,51 @@ export default class VideoInfoPage extends Component {
 
 
     renderList = () => {
+        const {group_name} = this.state.videoInfo;
+        if (this.state.subVideos.length > 0)
+            return <View style={{backgroundColor: 'white', marginTop: 5, paddingLeft: 17,}}>
+                <View style={styles.listTitle}>
+                    <Text style={styles.childTitle}>{group_name}</Text>
+                    <View style={{flex: 1}}/>
+                    <TouchableOpacity style={{alignItems: 'center', flexDirection: 'row'}}>
+                        <Text style={styles.more}>查看更多</Text>
+                        <Image style={styles.imgMore}
+                               source={Images.is}/>
+                    </TouchableOpacity>
 
-        return <View style={{backgroundColor: 'white', marginTop: 5, paddingLeft: 17,}}>
-            <View style={styles.listTitle}>
-                <Text style={styles.childTitle}>2016APL全集</Text>
-                <View style={{flex: 1}}/>
-                <TouchableOpacity style={{alignItems: 'center', flexDirection: 'row'}}>
-                    <Text style={styles.more}>查看更多</Text>
-                    <Image style={styles.imgMore}
-                           source={Images.is}/>
-                </TouchableOpacity>
+                </View>
+
+                <FlatList
+                    horizontal
+                    keyExtractor={(item, index) => index}
+                    renderItem={this.renderVideoItem}
+                    data={this.state.subVideos}/>
+
 
             </View>
-
-            <FlatList
-                horizontal
-                keyExtractor={(item, index) => index}
-                renderItem={this.renderVideoItem}
-                data={[1, 2, 3, 5]}/>
-
-
-        </View>
     };
 
     renderVideoItem = ({item}) => {
-        return <View style={styles.itemCard}>
-            <Image style={styles.itemImg}>
+        const {video_duration, name, cover_link} = item;
+        return <TouchableOpacity
+            onPress={() => {
+                this.setState({
+                    videoInfo: item
+                })
+            }}
+            style={styles.itemCard}>
+            <Image
+                source={{uri: cover_link.trim()}}
+                style={styles.itemImg}>
                 <View style={{flex: 1}}/>
-                <Text style={styles.itemDuration}>12:23</Text>
+                <Text style={styles.itemDuration}>{video_duration}</Text>
             </Image>
 
-            <Text style={styles.itemName}>APL比赛第一集：开幕式</Text>
+            <Text
+                numberOfLines={2}
+                style={styles.itemName}>{name}</Text>
 
-        </View>
+        </TouchableOpacity>
     };
 
     renderTitle = () => {
@@ -132,10 +156,10 @@ const styles = StyleSheet.create({
     itemName: {fontSize: 14, color: Colors._333, marginTop: 7},
     itemDuration: {
         alignSelf: 'flex-end', fontSize: 14, color: 'white',
-        padding: 3
+        padding: 3, backgroundColor: 'transparent'
     },
     itemCard: {marginRight: 10, width: 149, height: 148},
-    itemImg: {height: 90, width: 149, backgroundColor: 'red'},
+    itemImg: {height: 90, width: 149, backgroundColor: Colors._ECE},
     listTitle: {
         height: 44,
         flexDirection: 'row',

@@ -5,6 +5,13 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 
+
+export function getSubVideo(body, resolve, reject) {
+    helper.get(Api.sub_videos(body), ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
 /*获取某个资讯详情*/
 export function getVideoDetail(body, resolve, reject) {
     helper.get(Api.video_detail(body), ret => {
