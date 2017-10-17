@@ -20,9 +20,8 @@ export const Navigation = () => {
             lazy
             key="Navigation"
             showLabel={false}
-            activeBackgroundColor="rgba(0, 0, 0, 1)"
-            activeTintColor="rgba(255, 0, 0, 1)"
-            inactiveBackgroundColor="rgba(0, 0, 0, 1)"
+            activeBackgroundColor="rgba(255, 255, 255, 0.96)"
+            inactiveBackgroundColor="rgba(255, 255, 255, 0.96)"
             tabBarPosition={'bottom'}
             swipeEnabled={false}
         >
@@ -77,7 +76,7 @@ const styles = StyleSheet.create({
         color: '#AAAAAA'
     },
     textStyle2: {
-        color: '#FFE9AD'
+        color: '#161718'
     },
     bgHomeStyle: {
         height: 24,
