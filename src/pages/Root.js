@@ -6,17 +6,28 @@ import {Router} from 'react-native-router-flux';
 import {Stacks} from '../configs/StackRoute';
 import StorageKey from '../configs/StorageKey';
 import {setAccessToken, getBaseURL} from '../services/RequestHelper';
-import {putLoginUser, getUserData, updateApp} from '../utils/ComonHelper';
+import {putLoginUser, getUserData, updateApp, setDispatchAction} from '../utils/ComonHelper';
 import {init} from '../services/ConfigDao';
 import {getActivityPush, getUpdate} from '../services/AccountDao';
+import {GET_CERTIFICATION, GET_RECENT_RACES, GET_PROFILE} from '../actions/ActionTypes';
 import JpushHelp from '../services/JpushHelper';
+import {fetchGetProfile} from '../actions/PersonAction';
+import {fetchGetRecentRaces} from '../actions/RacesAction';
+import {fetchGetCertification} from '../actions/AccountAction';
+import {connect} from 'react-redux';
 
-export default class Root extends Component {
+ class Root extends Component {
 
     state = {
         languageChange: false,
     };
 
+    componentDidMount() {
+        setDispatchAction(GET_CERTIFICATION, this.props._getRealName);
+        setDispatchAction(GET_RECENT_RACES, this.props._getRecentRaces);
+        setDispatchAction(GET_PROFILE, this.props._getProfile);
+
+    }
 
     constructor(props) {
         super(props);
@@ -75,3 +86,17 @@ export default class Root extends Component {
     }
 
 }
+
+const bindAction = dispatch => ({
+    closeDrawer: () => dispatch(closeDrawer()),
+    _getRealName: () => dispatch(fetchGetCertification()),
+    _getProfile: (user_id) => dispatch(fetchGetProfile(user_id)),
+    _getRecentRaces: (body) => dispatch(fetchGetRecentRaces(body))
+});
+
+const mapStateToProps = state => ({
+    drawerState: state.DrawerRedux.drawerState
+
+});
+
+export default connect(mapStateToProps, bindAction)(Root);

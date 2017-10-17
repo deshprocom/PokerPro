@@ -16,7 +16,7 @@ import {POST_CERTIFICATION, GET_CERTIFICATION} from '../../actions/ActionTypes';
 import ImagePicker from 'react-native-image-crop-picker';
 import {
     isEmptyObject, strNotNull, showToast, call,
-    getCurrentDate, getDispatchAction
+    getCurrentDate
 } from '../../utils/ComonHelper';
 import {Verified} from '../../configs/Status';
 import ActionSheet from '../../components/sheet';
@@ -48,7 +48,7 @@ class IDCardView extends Component {
     };
 
     componentDidMount() {
-        getDispatchAction()[GET_CERTIFICATION]();
+
     }
 
     componentWillReceiveProps(newProps) {

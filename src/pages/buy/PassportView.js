@@ -16,7 +16,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 
 import {POST_CERTIFICATION, GET_CERTIFICATION} from '../../actions/ActionTypes';
 import {
-    isEmptyObject, getDispatchAction, strNotNull, getCurrentDate
+    isEmptyObject, strNotNull, getCurrentDate
     , showToast, call
 } from '../../utils/ComonHelper';
 import {Verified} from '../../configs/Status';
@@ -48,11 +48,6 @@ class PassportView extends Component {
         passport_id: ''
     }
 
-    componentDidMount() {
-        getDispatchAction()[GET_CERTIFICATION]();
-
-
-    }
 
     componentWillReceiveProps(newProps) {
         if (newProps.actionType === POST_CERTIFICATION &&
