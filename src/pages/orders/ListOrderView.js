@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/2/23.
  */
-import React, {Component, PropTypes}from 'react';
+import React, {Component, PropTypes} from 'react';
 import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text, ListView, Platform,
@@ -12,14 +12,14 @@ import {
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {isEmptyObject, strNotNull, orderStatus, getDispatchAction} from '../../utils/ComonHelper';
+import {isEmptyObject, strNotNull} from '../../utils/ComonHelper';
 import {GET_ORDER_LIST, POST_ORDER_CANCEL} from '../../actions/ActionTypes';
 import {fetchOrderList} from '../../actions/OrderAction';
 import {LoginUser} from '../../services/AccountDao';
 import PullToRefreshListView from 'react-native-smart-pull-to-refresh-listview';
 import ItemOrderView from './ItemOrderView';
 import {_renderFooter, _renderHeader} from '../../components/LoadingView';
-import {GET_CERTIFICATION} from '../../actions/ActionTypes';
+
 import {Verified} from '../../configs/Status';
 
 class ListOrderView extends Component {
@@ -27,7 +27,7 @@ class ListOrderView extends Component {
     static propTypes = {
         testViewID: PropTypes.string,
         status: PropTypes.string
-    }
+    };
 
     componentDidMount() {
         this._pullToRefreshListView.beginRefresh()
@@ -116,9 +116,9 @@ class ListOrderView extends Component {
 
     _lookOrderDetail = (order_id, price) => {
         if (user_extra.status !== Verified.PASSED)
-            getDispatchAction()[GET_CERTIFICATION]();
-        router.toOrderInfoPage(this.props, order_id, price,
-            this._beginRefresh)
+
+            router.toOrderInfoPage(this.props, order_id, price,
+                this._beginRefresh)
     };
 
 
@@ -159,7 +159,7 @@ class ListOrderView extends Component {
                 renderHeader={(viewState) => _renderHeader(viewState, headerStyle)}
                 renderFooter={(viewState) => _renderFooter(viewState, headerStyle)}
                 enableEmptySections={true}
-                ref={ (component) => this._pullToRefreshListView = component }
+                ref={(component) => this._pullToRefreshListView = component}
                 viewType={PullToRefreshListView.constants.viewType.listView}
             />
 
