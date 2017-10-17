@@ -157,7 +157,11 @@ export default class VideoListView extends Component {
 
     _playView = (item) => {
         const {id, cover_link, video_duration, video_link} = item;
-        return <View style={styles.listTopImg}>
+        return <TouchableOpacity
+            onPress={() => {
+                this._pressItem(item)
+            }}
+            style={styles.listTopImg}>
 
             {strNotNull(video_link) && this.state.video_link === video_link ?
                 <View style={styles.listTopImg}>
@@ -192,7 +196,7 @@ export default class VideoListView extends Component {
                 </Image>}
 
 
-        </View>
+        </TouchableOpacity>
 
     };
 
@@ -202,35 +206,39 @@ export default class VideoListView extends Component {
 
         return (<View
             style={styles.transparent}
-            testID={"btn_news_row_" + rowData.id}
-            activeOpacity={1}
-            onPress={() => this._pressItem(rowData)}>
+            testID={"btn_news_row_" + rowData.id}>
+
+            <View>
+
+                <Text style={styles.itemTitle}>{name}</Text>
+
+            </View>
 
             {this._playView(rowData)}
-            <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
-                <TouchableOpacity
-                    style={{flex: 6}}
-                    activeOpacity={1}
-                    onPress={() => this._pressItem(rowData)}>
-                    <Text
-                        numberOfLines={2}
-                        style={[styles.listTopTxt, {fontSize: FontSize.h17}]}>{name}</Text>
-                    <Text
-                        numberOfLines={1}
-                        style={[styles.txtTitle1, {fontSize: FontSize.h14}]}>{title_desc}</Text>
-                </TouchableOpacity>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text
+                    numberOfLines={1}
+                    style={{fontSize: 12, color: Colors._AAA}}>两小时前</Text>
+                <Text
+                    numberOfLines={1}
+                    style={{fontSize: 12, color: Colors._AAA}}> # {video_duration}</Text>
+
+                <View style={{flex: 1}}/>
 
                 <TouchableOpacity
                     onPress={() => {
                         uVideoShare(name, title_desc, cover_link, id)
                     }}
-                    style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    style={{alignItems: 'center', justifyContent: 'center'}}>
 
                     <Image style={styles.imgShare}
-                           source={Images.share}/>
+                           source={Images.video_share}/>
 
                 </TouchableOpacity>
             </View>
+
+
+            <View style={{backgroundColor: Colors._ECE, height: 1}}/>
 
 
         </View>)
@@ -247,13 +255,17 @@ export default class VideoListView extends Component {
 
 const styles = StyleSheet.create({
     imgShare: {
-        height: 22,
-        width: 23
+        height: 17,
+        width: 17,
+        marginTop: 8,
+        marginBottom: 10,
+        marginLeft: 8
 
     },
     listTopImg: {
         height: 208,
-        width: Metrics.screenWidth
+        width: '100%',
+        backgroundColor: Colors._ECE
 
     },
     listTopTxtView: {
@@ -318,7 +330,10 @@ const styles = StyleSheet.create({
         flex: 1
     },
     transparent: {
-        backgroundColor: 'transparent',
+        paddingLeft: 17,
+        paddingRight: 17,
+        backgroundColor: Colors.white,
+
     },
     listVideoTime: {
         color: Colors._EEE,
@@ -356,4 +371,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         zIndex: 5
     },
+    itemTitle: {
+        fontSize: 17,
+        color: Colors._333,
+        fontWeight: 'bold',
+        marginTop: 15,
+        marginBottom: 11
+
+    }
 });

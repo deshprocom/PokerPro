@@ -218,7 +218,8 @@ const images = {
     order: require('../../source/navigation/order.png'),
     settings: require('../../source/navigation/settings.png'),
     speaker: require('../../source/navigation/speaker.png'),
-    news_search:require('../../source/news/news_search.png')
+    news_search:require('../../source/news/news_search.png'),
+    video_share:require('../../source/news/video_share.png')
 };
 
 export default images
