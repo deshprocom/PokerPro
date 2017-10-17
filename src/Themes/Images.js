@@ -220,7 +220,8 @@ const images = {
     speaker: require('../../source/navigation/speaker.png'),
     news_search:require('../../source/news/news_search.png'),
     search_notice:require('../../source/navigation/search_notice.png'),
-    search_notice2:require('../../source/navigation/search_notice2.png')
+    search_notice2:require('../../source/navigation/search_notice2.png'),
+    top:require('../../source/navigation/top.png')
 };
 
 export default images
