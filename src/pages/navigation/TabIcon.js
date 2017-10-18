@@ -11,23 +11,26 @@ import {Images} from '../../Themes';
 
 export default class TabIcon extends PureComponent {
 
-
-
+    componentDidMount() {
+        setTimeout(() => {
+            this.forceUpdate()
+        }, 300)
+    }
 
     render() {
         const {tab, focused} = this.props;
-            return (
-                <View>
-                    <View style={{flexDirection: 'column', alignItems: 'center'}}>
-                        <Image style={this._imageStyle(tab)} source={this._imageTab(tab, focused)}/>
-                        <Text style={[this._titleStyle(focused), {
-                            fontSize: 10,
-                            marginTop: 2
-                        }]}>{this._title(tab)}</Text>
-                    </View>
-
+        return (
+            <View>
+                <View style={{flexDirection: 'column', alignItems: 'center'}}>
+                    <Image style={this._imageStyle(tab)} source={this._imageTab(tab, focused)}/>
+                    <Text style={[this._titleStyle(focused), {
+                        fontSize: 10,
+                        marginTop: 2
+                    }]}>{this._title(tab)}</Text>
                 </View>
-            );
+
+            </View>
+        );
 
     }
 
