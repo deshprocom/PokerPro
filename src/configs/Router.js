@@ -41,7 +41,7 @@ export default class Router {
     }
 
     popToTopRefresh() {
-        Actions.tab_4();
+        Actions.reset('Main');
 
     }
 

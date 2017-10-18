@@ -6,14 +6,14 @@ import {
     View, Animated, findNodeHandle
 } from 'react-native';
 import {Images, Colors, Metrics} from '../../Themes';
-import {strNotNull, isEmptyObject, getLoginUser, getUserData,getDispatchAction} from '../../utils/ComonHelper';
+import {strNotNull, isEmptyObject, getLoginUser, getUserData, getDispatchAction} from '../../utils/ComonHelper';
 import {umengEvent} from '../../utils/UmengEvent';
 import I18n from 'react-native-i18n';
 import JpushHelp from '../../services/JpushHelper';
 import {connect} from 'react-redux';
 import {BlurView} from 'react-native-blur';
 import {Badge} from '../../components';
-import {FETCH_SUCCESS, GET_PROFILE,GET_UNREAND_MSG} from '../../actions/ActionTypes';
+import {FETCH_SUCCESS, GET_PROFILE, GET_UNREAND_MSG} from '../../actions/ActionTypes';
 
 class Personal extends Component {
 
@@ -27,12 +27,15 @@ class Personal extends Component {
             && isEmptyObject(newProps.unread)) {
             this._unReadMsg()
         }
+
+        if (newProps.actionType1 === 'SWITCH_LANGUAGE') {
+            this.forceUpdate()
+        }
     }
 
     _unReadMsg = () => {
         getDispatchAction()[GET_UNREAND_MSG]()
     };
-
 
 
     render() {
@@ -301,7 +304,8 @@ const mapStateToProps = state => ({
     error: state.PersonState.error,
     hasData: state.PersonState.hasData,
     actionType: state.PersonState.actionType,
-    unread: state.AccountState.unread
+    unread: state.AccountState.unread,
+    actionType1: state.AccountState.actionType,
 
 });
 

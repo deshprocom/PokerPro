@@ -17,6 +17,7 @@ export default class TabIcon extends PureComponent {
         }, 300)
     }
 
+
     render() {
         const {tab, focused} = this.props;
         return (

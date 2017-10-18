@@ -9,11 +9,17 @@ import {setAccessToken, getBaseURL} from '../services/RequestHelper';
 import {putLoginUser, getUserData, updateApp, setDispatchAction} from '../utils/ComonHelper';
 import {init} from '../services/ConfigDao';
 import {getActivityPush, getUpdate} from '../services/AccountDao';
-import {GET_CERTIFICATION, GET_RECENT_RACES, GET_PROFILE, GET_UNREAND_MSG} from '../actions/ActionTypes';
+import {
+    GET_CERTIFICATION,
+    GET_RECENT_RACES,
+    GET_PROFILE,
+    GET_UNREAND_MSG,
+    SWITCH_LANGUAGE
+} from '../actions/ActionTypes';
 import JpushHelp from '../services/JpushHelper';
 import {fetchGetProfile} from '../actions/PersonAction';
 import {fetchGetRecentRaces} from '../actions/RacesAction';
-import {fetchGetCertification} from '../actions/AccountAction';
+import {fetchGetCertification, switchLanguage} from '../actions/AccountAction';
 import {connect} from 'react-redux';
 import {fetchUnreadMsg} from '../actions/AccountAction';
 
@@ -28,17 +34,18 @@ class Root extends Component {
         setDispatchAction(GET_RECENT_RACES, this.props._getRecentRaces);
         setDispatchAction(GET_PROFILE, this.props._getProfile);
         setDispatchAction(GET_UNREAND_MSG, this.props._fetchUnreadMsg);
-
-    }
-
-    constructor(props) {
-        super(props);
-        JpushHelp.addPushListener(this.receiveCb, this.openCb);
+        setDispatchAction(SWITCH_LANGUAGE, this.props._switchLanguage);
         init(() => {
             this.setState({
                 languageChange: true
             });
         });
+    }
+
+    constructor(props) {
+        super(props);
+        JpushHelp.addPushListener(this.receiveCb, this.openCb);
+
         getUserData();
         getBaseURL(() => {
             this._getUpdate()
@@ -80,7 +87,8 @@ class Root extends Component {
     };
 
     render() {
-        return (<Router scenes={Stacks}/>);
+        return (<Router
+            scenes={Stacks}/>);
     }
 
     componentWillUnmount() {
@@ -90,15 +98,16 @@ class Root extends Component {
 }
 
 const bindAction = dispatch => ({
-    closeDrawer: () => dispatch(closeDrawer()),
     _getRealName: () => dispatch(fetchGetCertification()),
     _getProfile: (user_id) => dispatch(fetchGetProfile(user_id)),
     _getRecentRaces: (body) => dispatch(fetchGetRecentRaces(body)),
-    _fetchUnreadMsg: () => dispatch(fetchUnreadMsg())
+    _fetchUnreadMsg: () => dispatch(fetchUnreadMsg()),
+    _switchLanguage: () => dispatch(switchLanguage())
 });
 
 const mapStateToProps = state => ({
-    drawerState: state.DrawerRedux.drawerState
+    drawerState: state.DrawerRedux.drawerState,
+    actionType: state.AccountState.actionType
 
 });
 

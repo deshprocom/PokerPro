@@ -114,3 +114,4 @@ export const SHOW_BACK_TOP = 'SHOW_BACK_TOP';
 export const HIDE_BACK_TOP = 'HIDE_BACK_TOP';
 export const BACK_TOP = 'BACK_TOP';
 export const VIDEO_PAUSE = 'VIDEO_PAUSE';
+export const SWITCH_LANGUAGE = 'SWITCH_LANGUAGE';

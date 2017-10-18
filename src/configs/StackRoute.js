@@ -1,4 +1,4 @@
-import {Actions, Scene, Stack, Tabs} from 'react-native-router-flux';
+import {Actions, Scene, ActionConst, Tabs} from 'react-native-router-flux';
 import React from 'react';
 import {
     View, StatusBar
@@ -130,11 +130,12 @@ export const Stacks = Actions.create(
         <Scene key="ActivityCenter" component={ActivityCenter} navBar={() => null}/>
         <Scene key="ActivityInfo" component={ActivityInfo} navBar={() => null}/>
 
-        <Scene initial={true} navBar={() => {
+        <Scene type={ActionConst.RESET}
+               initial={true} navBar={() => {
             return <View>
                 <StatusBar barStyle={"light-content"}/>
             </View>
-        }}>
+        }} key="Main">
             {Navigation()}
         </Scene>
 
