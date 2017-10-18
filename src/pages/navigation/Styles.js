@@ -113,7 +113,7 @@ export const styles = StyleSheet.create({
     },
     oval:{
         width:317,
-        height:160,
+        height:170,
         marginLeft:17,
         flexDirection:'row'
     },
