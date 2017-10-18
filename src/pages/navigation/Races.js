@@ -127,7 +127,7 @@ const styleB = StyleSheet.create({
         marginBottom: 5
     },
     ovalImg:{
-        width: 115, height: 155, marginTop:2
+        width: 115, height: 155, marginTop:5
     },
     ovalInner:{
         flexDirection: 'row', alignItems: 'center'
