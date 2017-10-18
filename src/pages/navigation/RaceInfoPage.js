@@ -14,7 +14,6 @@ import {getHotInfos, getMainBanners, getPukeNews} from '../../services/NewsDao';
 import Router from '../../configs/Router';
 import BackTop from './BackTop';
 import {SearchPage} from './SearchPage';
-import BottomNavigation from './BottomNavigation';
 
 
 export default class RaceInfoPage extends Component {
@@ -125,7 +124,6 @@ export default class RaceInfoPage extends Component {
                     }}
                     ref={scroll => this.backTop = scroll}
                 />
-                <BottomNavigation/>
             </View>
 
         );
