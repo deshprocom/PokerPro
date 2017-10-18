@@ -7,7 +7,7 @@ import {
     POST_CHANGE_PWD, POST_V_CODE, POST_CARD_IMAGE,
     GET_PLAYER_INFO, POST_BIND_ACCOUNT, POST_CHANGE_BIND,
     POST_CHANGE_PERMISSION, GET_NOTIFICATIONS, DEL_NOTIFICATIONS,
-    GET_UNREAND_MSG,
+    GET_UNREAND_MSG,SHOW_BACK_TOP,HIDE_BACK_TOP,BACK_TOP,
     FETCH_SUCCESS, FETCHING, FETCH_FAIL
 } from '../actions/ActionTypes';
 
@@ -58,6 +58,21 @@ export default function accountState(state = initialState, action) {
             return handleNoData(state, action);
         case GET_UNREAND_MSG:
             return handleFetch(state, action);
+        case SHOW_BACK_TOP:
+            return {
+                ...state,
+                actionType:SHOW_BACK_TOP
+            };
+        case HIDE_BACK_TOP:
+            return {
+                ...state,
+                actionType:HIDE_BACK_TOP
+            };
+        case BACK_TOP:
+            return {
+                ...state,
+                actionType:BACK_TOP
+            };
         default:
             return state;
     }
