@@ -44,7 +44,7 @@ const styleB = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         left: 0,
-        zIndex: 213
+        zIndex: 999
     },
     buttonView: {
         width: 94,

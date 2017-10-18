@@ -26,7 +26,8 @@ export const styles = StyleSheet.create({
     racesTwo: {
         flexDirection: 'row',
         marginRight:14,
-        alignItems:'center'
+        alignItems:'center',
+        paddingLeft:30
     },
     pukeText: {
         width:62,
