@@ -11,15 +11,16 @@ import {
     ScrollView, Animated
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-
+import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 
 import VideoListView from './VideoListView';
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
 import {getVideoTypes} from '../../services/NewsDao';
+import {news_search} from "../../configs/ApiConfig";
 
 
-export default class MainVideoPage extends Component {
+class MainVideoPage extends Component {
 
     componentDidMount() {
         getVideoTypes({}, data => {
@@ -43,6 +44,13 @@ export default class MainVideoPage extends Component {
 
     };
 
+
+    componentWillReceiveProps(newProps) {
+        if (newProps.actionType === 'VIDEO_PAUSE') {
+            console.log(newProps)
+            this.pauseVideo()
+        }
+    }
 
     render() {
 
@@ -111,77 +119,11 @@ export default class MainVideoPage extends Component {
 }
 
 
-const styles = StyleSheet.create({
-    topBar: {
-        height: 40,
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: Metrics.statusBarHeight,
+const bindAction = dispatch => ({});
 
-    },
-    popBtn: {
-        height: 40,
-        width: 50,
-        justifyContent: 'center'
-    },
-    backImg: {
-        width: 11,
-        height: 20,
-        marginLeft: 15
-    },
-    searchView: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    searchBar: {
-        backgroundColor: '#212325',
-        height: 28,
-        width: 270,
-        alignItems: 'center',
-        flexDirection: 'row',
-        borderRadius: 3
-    },
-    navBar: {
-        backgroundColor: Colors._161817
-    },
-    searchImg: {
-        height: 16,
-        width: 16,
-        marginLeft: 10,
-        marginRight: 10
-    },
-    txtOutline: {
-        color: Colors.txt_666,
-        fontSize: 12
-    },
-    newsTypeView: {
-        height: 50,
-        backgroundColor: Colors.white
-    },
-    itemView: {
-        height: 50,
-        width: 80,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    itemTxt: {
-        color: Colors._888,
-        fontSize: 14
-    },
-    itemTxtSelect: {
-        color: Colors._333,
-        fontSize: 16,
-        marginBottom: 10
-    },
-    triangle: {
-        height: 3,
-        width: 60,
-        marginBottom: 4,
-        backgroundColor: Colors._333
-    },
-    viewPage: {
-        flex: 1
-    }
+const mapStateToProps = state => ({
 
+    actionType: state.AccountState.actionType,
 });
+
+export default connect(mapStateToProps, bindAction)(MainVideoPage);
