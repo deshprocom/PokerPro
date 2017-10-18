@@ -32,7 +32,7 @@ class RaceInfoPage extends Component {
     };
 
     componentWillReceiveProps(newProps) {
-        console.log(newProps)
+
         if (newProps.actionType === BACK_TOP) {
             this.mainScroll.scrollTo({x: 0, y: 0, animated: false})
         }
@@ -49,9 +49,7 @@ class RaceInfoPage extends Component {
     }
 
     _getData = () => {
-        getDispatchAction()[HIDE_BACK_TOP]();
         getMainBanners(data => {
-
             this.setState({
                 banners: data.banners
             });
@@ -102,7 +100,7 @@ class RaceInfoPage extends Component {
 
 
     onTopScroll = (event) => {
-        const offsetHeight = 500;
+        const offsetHeight = 720;
         let offsetY = event.nativeEvent.contentOffset.y;
 
         if (offsetY >= offsetHeight) {

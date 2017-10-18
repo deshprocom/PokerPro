@@ -8,18 +8,20 @@ import {showTabTop, hideTabTop, onPressBackTop} from '../../actions/AccountActio
 import {SHOW_BACK_TOP, HIDE_BACK_TOP, BACK_TOP} from '../../actions/ActionTypes';
 import {connect} from 'react-redux';
 import {setDispatchAction} from '../../utils/ComonHelper';
-import BackTop from './BackTop';
+
 
 class BottomNavigation extends Component {
 
     state = {
         tabIndex: 1,
         showTop: false
+
     };
 
     componentDidMount() {
         setDispatchAction(SHOW_BACK_TOP, this.props._showBackTop);
-        setDispatchAction(HIDE_BACK_TOP, this.props._hideBackTop)
+        setDispatchAction(HIDE_BACK_TOP, this.props._hideBackTop);
+
 
     }
 
@@ -38,9 +40,12 @@ class BottomNavigation extends Component {
         const {tabIndex, showTop} = this.state;
         return (
             <View style={styleBN.navigation}>
-                {showTop ? <TouchableOpacity
+                {this.state.tabIndex === 1 && showTop ? <TouchableOpacity
                         style={styleBN.navigations}
                         onPress={() => {
+                            this.setState({
+                                showTop: false
+                            });
                             this.props._backTop();
                         }}>
                         <View style={styleBN.buttonView}>
@@ -70,6 +75,7 @@ class BottomNavigation extends Component {
                     style={styleBN.navigations}>
                     <TabIcon tab={'news'} focused={tabIndex === 2}/>
                 </TouchableOpacity>
+
                 <TouchableOpacity
                     onPress={() => {
                         this.setState({
