@@ -10,13 +10,13 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 
 import I18n from 'react-native-i18n';
-import {isEmptyObject, convertDate, strNotNull} from '../../utils/ComonHelper';
-import {getNewsSearch} from '../../services/NewsDao';
+import {getDateDiff, isEmptyObject, strNotNull, FontSize, uVideoShare} from '../../utils/ComonHelper';
+import {searchVideos} from '../../services/NewsDao';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
-import {ImageLoad, UltimateListView} from '../../components';
+import {VideoPlayer, UltimateListView} from '../../components';
 
 
-export default class SearchNewsPage extends Component {
+export default class SearchVideo extends Component {
 
 
     constructor(props) {
@@ -25,6 +25,7 @@ export default class SearchNewsPage extends Component {
         this.state = {
             newsListData: [],
             newsListNextId: '0',
+            video_link: '',
         };
         this.keyword = ''
 
@@ -44,7 +45,8 @@ export default class SearchNewsPage extends Component {
 
 
     _content = () => {
-
+        let {video_link} = this.state;
+        let that = this;
 
         return (<View>
 
@@ -63,6 +65,19 @@ export default class SearchNewsPage extends Component {
                         onPress={() => {
                             this.listView.refresh()
                         }}/> : <NoDataView/>;
+                }}
+                onViewableItemsChanged={info => {
+
+                    const {changed} = info;
+                    changed.forEach(function (x) {
+                        if (!x.isViewable && !isEmptyObject(x.item)
+                            && x.item.video_link === video_link) {
+                            that.setState({
+                                video_link: ''
+                            })
+                        }
+
+                    })
                 }}
             />
 
@@ -90,7 +105,7 @@ export default class SearchNewsPage extends Component {
             next_id: '0'
         };
 
-        getNewsSearch(body, data => {
+        searchVideos(body, data => {
 
             const {items, next_id} = data;
             this.setState({
@@ -113,7 +128,7 @@ export default class SearchNewsPage extends Component {
             next_id: newsListNextId
         };
 
-        getNewsSearch(body, data => {
+        searchVideos(body, data => {
 
             const {items, next_id} = data;
             this.setState({
@@ -128,38 +143,100 @@ export default class SearchNewsPage extends Component {
     };
 
 
-    _pressItem = (item) => {
-        router.toNewsInfoPage(this.props, item)
-    }
+    _playView = (item) => {
+        const {id, cover_link, video_duration, video_link} = item;
+        return <TouchableOpacity
+            onPress={() => {
+                this._pressItem(item)
+            }}
+            style={styles.listTopImg}>
+
+            {strNotNull(video_link) && this.state.video_link === video_link ?
+                <View style={styles.listTopImg}>
+                    <VideoPlayer
+                        thumbnailsHeight={208}
+                        thumbnails={cover_link}
+                        source={{uri: video_link.trim()}}
+
+                    />
+                </View> : <Image
+                    source={{uri: cover_link}}
+                    style={styles.listTopImg}
+                >
+                    <View style={styles.itemBack}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                this.setState({
+                                    video_link: video_link,
+                                    cover_link: cover_link
+                                })
+                            }}
+                            style={styles.btnPlay}>
+                            <Image
+                                style={styles.imgPlay}
+                                source={Images.video_play}/>
+                        </TouchableOpacity>
+                        <Text style={[styles.listVideoTime, {fontSize: FontSize.h14}]}>{video_duration}</Text>
+
+
+                    </View>
+
+                </Image>}
+
+
+        </TouchableOpacity>
+
+    };
 
     _itemNewsView = (rowData, sectionID, rowID) => {
 
-        const {image, title, source, date, image_thumb} = rowData;
+        const {created_at, name, cover_link, video_duration, title_desc, id} = rowData;
 
-        return (<TouchableOpacity
-            testID={"btn_news_row_" + rowData.id}
-            activeOpacity={1}
-            onPress={() => this._pressItem(rowData)}
-            style={styles.listView}>
-            <View style={styles.listTitleView}>
-                <Text
-                    numberOfLines={2}
-                    style={styles.listTitleTxt}>{title}</Text>
+        return (<View
+            style={styles.transparent}
+            testID={"btn_news_row_" + rowData.id}>
 
-                <View style={styles.listTimeView}>
-                    <Text style={styles.listSource}>{source}</Text>
-                    <Text style={styles.listTime}>{convertDate(date, 'MM-DD')}</Text>
-                </View>
+            <View>
 
+                <Text style={styles.itemTitle}>{name}</Text>
 
             </View>
 
-            <View style={{flex: 1}}/>
-            <ImageLoad style={styles.listImg}
-                       source={{uri: image_thumb}}/>
+            {this._playView(rowData)}
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text
+                    numberOfLines={1}
+                    style={{fontSize: 12, color: Colors._AAA}}>{getDateDiff(created_at)}</Text>
+                <Text
+                    numberOfLines={1}
+                    style={{fontSize: 12, color: Colors._AAA}}> # {video_duration}</Text>
 
-        </TouchableOpacity>)
+                <View style={{flex: 1}}/>
+
+                <TouchableOpacity
+                    onPress={() => {
+                        uVideoShare(name, title_desc, cover_link, id)
+                    }}
+                    style={{alignItems: 'center', justifyContent: 'center'}}>
+
+                    <Image style={styles.imgShare}
+                           source={Images.video_share}/>
+
+                </TouchableOpacity>
+            </View>
+
+
+            <View style={{backgroundColor: Colors._ECE, height: 1}}/>
+
+
+        </View>)
+
+
     }
+
+    _pressItem = (item) => {
+        router.toVideoInfoPage(this.props, item)
+    };
 
     _navSearchBar = () => {
         return (<View style={styles.navBar}>
@@ -283,29 +360,53 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 13
     },
-    listSource: {
-        color: Colors._AAA,
-        fontSize: 12,
+    transparent: {
+        paddingLeft: 17,
+        paddingRight: 17,
+        backgroundColor: Colors.white,
+
     },
-    listImg: {
-        height: 74,
-        width: 122,
-        marginTop: 13,
-        marginRight: 17,
-        marginBottom: 16
+    listVideoTime: {
+        color: Colors._EEE,
+        right: 17,
+        position: 'absolute',
+        bottom: 7
     },
-    listTitleView: {
-        marginLeft: 17,
-        marginTop: 13,
-        marginBottom: 16,
+    imgPlay: {
+        height: 68,
+        width: 68
     },
-    listTitleTxt: {
-        color: '#444444',
-        fontSize: 16,
-        width: 216
+    btnPlay: {
+        height: 68,
+        width: 68,
+        alignSelf: 'center',
+        marginTop: 68
+    },
+    imgShare: {
+        height: 17,
+        width: 17,
+        marginTop: 8,
+        marginBottom: 10,
+        marginLeft: 14
+
+    },
+
+    itemTitle: {
+        fontSize: 17,
+        color: Colors._333,
+        fontWeight: 'bold',
+        marginTop: 15,
+        marginBottom: 11
+
     },
     barTxt: {
         fontSize: 15,
         color: '#E4D57F'
+    },
+    listTopImg: {
+        height: 208,
+        width: '100%',
+        backgroundColor: Colors._ECE
+
     },
 });

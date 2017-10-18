@@ -47,6 +47,10 @@ export default class Router {
         Actions.tab_2();
     }
 
+    toSearchVideo() {
+        this.stackPush({name: 'SearchVideo'})
+    }
+
     toAddVerified(cert_type, refresh, verified) {
         this.stackPush({
             name: 'AddVerified',
