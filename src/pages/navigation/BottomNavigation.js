@@ -25,7 +25,7 @@ class BottomNavigation extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        console.log(newProps)
+
         if (this.state.tabIndex === 1) {
             this.setState({
                 showTop: newProps.actionType === SHOW_BACK_TOP
