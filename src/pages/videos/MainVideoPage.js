@@ -11,15 +11,11 @@ import {
     ScrollView, Animated
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import TestRouter from '../../components/TestRouter';
+
 import I18n from 'react-native-i18n';
-import {GET_VIDEO_TYPE} from '../../actions/ActionTypes';
-import {isEmptyObject, convertDate} from '../../utils/ComonHelper';
-import {connect} from 'react-redux';
-import {fetchVideoType} from '../../actions/NewsAction';
+
 import VideoListView from './VideoListView';
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
-import {NavigationBar} from '../../components';
 import {getVideoTypes} from '../../services/NewsDao';
 
 
@@ -28,12 +24,10 @@ export default class MainVideoPage extends Component {
     componentDidMount() {
         getVideoTypes({}, data => {
             let {items} = data;
-            items.map(function (x) {
-                x['select'] = false;
-            });
+
             if (items.length > 0) {
 
-                items[0].select = true;
+
                 this.setState({
                     typeListData: items,
                     selectTypeId: items[0].id
@@ -45,7 +39,8 @@ export default class MainVideoPage extends Component {
 
     state = {
         typeListData: [],
-        selectTypeId: 1
+        selectTypeId: 0,
+
     };
 
 
@@ -61,24 +56,37 @@ export default class MainVideoPage extends Component {
         )
     }
 
+    pauseVideo = () => {
+        let that = this;
+        const {typeListData} = this.state;
+
+        typeListData.forEach(function (x) {
+            if (that.refs[`videoList${x.id}`] !== undefined)
+                that.refs[`videoList${x.id}`].setPause();
+        });
+    };
+
     _listView = () => {
-        const {typeListData, selectTypeId} = this.state;
+        const {typeListData} = this.state;
 
         let pages = [];
+        let that = this;
 
         typeListData.forEach(function (x) {
             pages.push(
                 <VideoListView
+                    ref={`videoList${x.id}`}
                     tabLabel={x.name}
                     key={x.id}
-                    selectTypeId={selectTypeId}
                     newsTypeItem={x}/>
             );
         });
 
         if (pages.length > 0)
             return (  <ScrollableTabView
-
+                onChangeTab={({i}) => {
+                    this.pauseVideo()
+                }}
                 renderTabBar={() => <ScrollableTabBar
                     tabStyle={{
                         height: 49,
@@ -98,7 +106,6 @@ export default class MainVideoPage extends Component {
             </ScrollableTabView>)
 
     };
-
 
 
 }

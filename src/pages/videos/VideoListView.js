@@ -4,59 +4,41 @@
 /**
  * Created by lorne on 2017/4/21.
  */
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
-    StyleSheet, Text, View, ListView,
-    TouchableOpacity, Image, StatusBar,
-    ScrollView, Modal, InteractionManager,
-    ActivityIndicator
+    StyleSheet, Text, View,
+    TouchableOpacity, Image, Modal
 } from 'react-native';
-import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {GET_VIDEO_LIST} from '../../actions/ActionTypes';
-import {isEmptyObject, uniqueArray, FontSize, uVideoShare, strNotNull} from '../../utils/ComonHelper';
+import {isEmptyObject, uniqueArray, FontSize, uVideoShare, strNotNull,getDateDiff} from '../../utils/ComonHelper';
 import {ImageLoad, VideoPlayer, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
-import {fetchVideoList} from '../../actions/NewsAction';
 import {getVideoList} from '../../services/NewsDao';
-import {_renderFooter, _renderHeader} from '../../components/LoadingView';
-
-const headerStyle = {height: 35, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.bg_f5};
 
 
-class NewsListView extends Component {
+export default class VideoListView extends Component {
 
-    static propTypes = {
-        newsTypeItem: PropTypes.object,
-        selectTypeId: PropTypes.number
-    };
 
     constructor(props) {
         super(props);
-        this._dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1.race_id !== r2.race_id
-        });
-
 
         this.state = {
             newsListData: [],
             newsListNextId: 0,
             topped: {},
-            componentDataSource: this._dataSource.cloneWithRows([]),
             error: false,
             modalVisible: false,
             video_link: '',
             cover_link: ''
         }
 
-
     }
 
 
     render() {
-        const {newsListData, error} = this.state;
-
+        let {video_link} = this.state;
+        let that = this;
 
         return (<View
             style={styles.pullView}
@@ -78,6 +60,19 @@ class NewsListView extends Component {
                             this.listView.refresh()
                         }}/> : <NoDataView/>;
                 }}
+                onViewableItemsChanged={info => {
+
+                    const {changed} = info;
+                    changed.forEach(function (x) {
+                        if (!x.isViewable && !isEmptyObject(x.item)
+                            && x.item.video_link === video_link) {
+                            that.setState({
+                                video_link: ''
+                            })
+                        }
+
+                    })
+                }}
 
             />
 
@@ -86,36 +81,10 @@ class NewsListView extends Component {
     }
 
 
-    _showVideo = () => {
-
-        const {modalVisible, video_link, cover_link} = this.state;
-        return ( <Modal
-            style={styles.container}
-            transparent={true}
-            visible={modalVisible}>
-
-            <TouchableOpacity
-                activeOpacity={1}
-                onPress={() => {
-                    this.setState({
-                        modalVisible: false
-                    })
-                }}
-                style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.8)'}}/>
-            <VideoPlayer
-                thumbnails={cover_link}
-                closeFull={true}
-                source={{uri: video_link.trim()}}
-            />
-            <TouchableOpacity
-                activeOpacity={1}
-                onPress={() => {
-                    this.setState({
-                        modalVisible: false
-                    })
-                }}
-                style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.8)'}}/>
-        </Modal>)
+    setPause = () => {
+        this.setState({
+            video_link: ''
+        })
     };
 
 
@@ -188,7 +157,11 @@ class NewsListView extends Component {
 
     _playView = (item) => {
         const {id, cover_link, video_duration, video_link} = item;
-        return <View style={styles.listTopImg}>
+        return <TouchableOpacity
+            onPress={() => {
+                this._pressItem(item)
+            }}
+            style={styles.listTopImg}>
 
             {strNotNull(video_link) && this.state.video_link === video_link ?
                 <View style={styles.listTopImg}>
@@ -223,45 +196,48 @@ class NewsListView extends Component {
                 </Image>}
 
 
-        </View>
+        </TouchableOpacity>
 
     };
 
     _itemNewsView = (rowData, sectionID, rowID) => {
 
-        const {top, name, cover_link, video_duration, title_desc, id} = rowData;
+        const {created_at, name, cover_link, video_duration, title_desc, id} = rowData;
 
         return (<View
             style={styles.transparent}
-            testID={"btn_news_row_" + rowData.id}
-            activeOpacity={1}
-            onPress={() => this._pressItem(rowData)}>
+            testID={"btn_news_row_" + rowData.id}>
+
+            <View>
+
+                <Text style={styles.itemTitle}>{name}</Text>
+
+            </View>
 
             {this._playView(rowData)}
-            <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
-                <TouchableOpacity
-                    style={{flex: 6}}
-                    activeOpacity={1}
-                    onPress={() => this._pressItem(rowData)}>
-                    <Text
-                        numberOfLines={2}
-                        style={[styles.listTopTxt, {fontSize: FontSize.h17}]}>{name}</Text>
-                    <Text
-                        numberOfLines={1}
-                        style={[styles.txtTitle1, {fontSize: FontSize.h14}]}>{title_desc}</Text>
-                </TouchableOpacity>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text
+                    numberOfLines={1}
+                    style={{fontSize: 12, color: Colors._AAA}}>{getDateDiff(created_at)}</Text>
+                <Text
+                    numberOfLines={1}
+                    style={{fontSize: 12, color: Colors._AAA}}> # {video_duration}</Text>
+
+                <View style={{flex: 1}}/>
 
                 <TouchableOpacity
                     onPress={() => {
                         uVideoShare(name, title_desc, cover_link, id)
-                    }}
-                    style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    }}>
 
                     <Image style={styles.imgShare}
-                           source={Images.share}/>
+                           source={Images.video_share}/>
 
                 </TouchableOpacity>
             </View>
+
+
+            <View style={{backgroundColor: Colors._ECE, height: 1}}/>
 
 
         </View>)
@@ -276,32 +252,19 @@ class NewsListView extends Component {
 }
 
 
-const bindAction = dispatch => ({
-    getNewsList: (body) => dispatch(fetchVideoList(body))
-});
-
-const mapStateToProps = state => ({
-    loading: state.NewsState.loading,
-    error: state.NewsState.error,
-    hasData: state.NewsState.hasData,
-    actionType: state.NewsState.actionType,
-    errorMsg: state.NewsState.errorMsg,
-    videoList: state.NewsState.videoList,
-    videoTypeId: state.NewsState.videoTypeId
-});
-
-export default connect(mapStateToProps, bindAction)(NewsListView);
-
-
 const styles = StyleSheet.create({
     imgShare: {
-        height: 22,
-        width: 23
+        height: 17,
+        width: 17,
+        marginTop: 8,
+        marginBottom: 10,
+        marginLeft: 14
 
     },
     listTopImg: {
         height: 208,
-        width: Metrics.screenWidth
+        width: '100%',
+        backgroundColor: Colors._ECE
 
     },
     listTopTxtView: {
@@ -366,7 +329,10 @@ const styles = StyleSheet.create({
         flex: 1
     },
     transparent: {
-        backgroundColor: 'transparent',
+        paddingLeft: 17,
+        paddingRight: 17,
+        backgroundColor: Colors.white,
+
     },
     listVideoTime: {
         color: Colors._EEE,
@@ -404,4 +370,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         zIndex: 5
     },
+    itemTitle: {
+        fontSize: 17,
+        color: Colors._333,
+        fontWeight: 'bold',
+        marginTop: 15,
+        marginBottom: 11
+
+    }
 });

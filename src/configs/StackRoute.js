@@ -4,6 +4,7 @@ import {
     View, StatusBar
 } from 'react-native';
 //Pages
+import SearchVideo from '../pages/videos/SearchVideo';
 import HomePage from '../pages/HomePage';
 import InputPwdPage from '../pages/InputPwdPage';
 import DrawerPage from '../pages/DrawerPage';
@@ -69,6 +70,7 @@ import {Navigation} from '../pages/navigation/Navigation';
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="SearchVideo" component={SearchVideo} navBar={() => null}/>
         <Scene key="RaceScene" component={RaceScene} navBar={() => null}/>
         <Scene key="DrawerPage" component={DrawerPage} navBar={() => null}/>
         <Scene key="AddVerified" component={AddVerified} navBar={() => null}/>

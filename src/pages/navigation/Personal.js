@@ -148,7 +148,7 @@ class Personal extends Component {
     _msgBadge = () => {
         if (!isEmptyObject(this.props.unread))
             return <Badge textStyle={{color: '#fff',}} style={{marginRight: 15,}}>
-                {this.props.unread.unread_count >= 100 ? '99+' : this.props.unread.unread_count}
+                {this.props.unread.unread_count}
             </Badge>
     };
 
