@@ -6,16 +6,14 @@ import {
     View, Animated, findNodeHandle
 } from 'react-native';
 import {Images, Colors, Metrics} from '../../Themes';
-import {strNotNull, isEmptyObject, getLoginUser, getUserData} from '../../utils/ComonHelper';
+import {strNotNull, isEmptyObject, getLoginUser, getUserData,getDispatchAction} from '../../utils/ComonHelper';
 import {umengEvent} from '../../utils/UmengEvent';
 import I18n from 'react-native-i18n';
 import JpushHelp from '../../services/JpushHelper';
 import {connect} from 'react-redux';
 import {BlurView} from 'react-native-blur';
-import {fetchGetProfile} from '../../actions/PersonAction';
-import {fetchUnreadMsg} from '../../actions/AccountAction';
 import {Badge} from '../../components';
-import {FETCH_SUCCESS, GET_PROFILE} from '../../actions/ActionTypes';
+import {FETCH_SUCCESS, GET_PROFILE,GET_UNREAND_MSG} from '../../actions/ActionTypes';
 
 class Personal extends Component {
 
@@ -23,15 +21,6 @@ class Personal extends Component {
         viewRef: 0
     };
 
-
-    componentDidMount() {
-
-        if (!isEmptyObject(login_user)) {
-            JpushHelp.addPushListener(this.receiveCb, this.openCb);
-            this.props._getProfile(login_user.user_id);
-
-        }
-    }
 
     componentWillReceiveProps(newProps) {
         if (newProps.actionType === GET_PROFILE && newProps.hasData
@@ -41,23 +30,10 @@ class Personal extends Component {
     }
 
     _unReadMsg = () => {
-        this.props._fetchUnreadMsg()
+        getDispatchAction()[GET_UNREAND_MSG]()
     };
 
-    componentWillUnmount() {
-        JpushHelp.removePushListener();
-    }
 
-    receiveCb = (notification) => {
-        const {aps} = notification;
-        if (aps.badge > 0) {
-            this._unReadMsg()
-        }
-    };
-
-    openCb = (notification) => {
-
-    };
 
     render() {
 

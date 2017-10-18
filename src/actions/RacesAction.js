@@ -10,7 +10,7 @@ import {
 } from '../actions/ActionTypes';
 import {
     getRecentRaces, getRacesInfo, searchRaces,
-    searchBuKeyword, searchByDate, searchRangeList,
+    searchRaceKeyword, searchByDate, searchRangeList,
     subRaces, raceRanks, getSubRaceInfo, getRaceHost,
     getRaceTickets
 } from '../services/RacesDao';
@@ -108,7 +108,7 @@ export function fetchRangeList(body) {
 export function fetchSearchByKeyword(body) {
     return (dispatch) => {
         dispatch(_getSearchByKeyword());
-        searchBuKeyword(body, (ret) => {
+        searchRaceKeyword(body, (ret) => {
             dispatch(_getSearchByKeywordOk(ret))
         }, (err) => {
             showToast(err);

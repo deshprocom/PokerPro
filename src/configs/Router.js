@@ -4,6 +4,7 @@
 
 import {Actions} from 'react-native-router-flux';
 import {NavigationActions} from 'react-navigation';
+import {getDispatchAction} from '../utils/ComonHelper';
 
 
 const customFloatFromRight = '';
@@ -34,6 +35,7 @@ export default class Router {
     }
 
     popToTop() {
+        getDispatchAction()['BACK_TOP']()
         Actions.popTo('tab_home')
 
     }

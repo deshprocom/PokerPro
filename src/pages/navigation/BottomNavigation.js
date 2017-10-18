@@ -5,7 +5,7 @@ import {Images} from '../../Themes';
 import TabIcon from './TabIcon';
 import {Actions} from 'react-native-router-flux';
 import {showTabTop, hideTabTop, onPressBackTop, videoPause} from '../../actions/AccountAction';
-import {SHOW_BACK_TOP, HIDE_BACK_TOP, VIDEO_PAUSE} from '../../actions/ActionTypes';
+import {SHOW_BACK_TOP, HIDE_BACK_TOP, VIDEO_PAUSE, BACK_TOP} from '../../actions/ActionTypes';
 import {connect} from 'react-redux';
 import {setDispatchAction} from '../../utils/ComonHelper';
 
@@ -21,6 +21,7 @@ class BottomNavigation extends Component {
     componentDidMount() {
         setDispatchAction(SHOW_BACK_TOP, this.props._showBackTop);
         setDispatchAction(HIDE_BACK_TOP, this.props._hideBackTop);
+        setDispatchAction(BACK_TOP, this.props._backTop)
 
     }
 
@@ -29,6 +30,10 @@ class BottomNavigation extends Component {
         if (this.state.tabIndex === 1) {
             this.setState({
                 showTop: newProps.actionType === SHOW_BACK_TOP
+            })
+        } else if (newProps.actionType === BACK_TOP) {
+            this.setState({
+                tabIndex: 1
             })
         }
     }

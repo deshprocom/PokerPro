@@ -9,14 +9,15 @@ import {setAccessToken, getBaseURL} from '../services/RequestHelper';
 import {putLoginUser, getUserData, updateApp, setDispatchAction} from '../utils/ComonHelper';
 import {init} from '../services/ConfigDao';
 import {getActivityPush, getUpdate} from '../services/AccountDao';
-import {GET_CERTIFICATION, GET_RECENT_RACES, GET_PROFILE} from '../actions/ActionTypes';
+import {GET_CERTIFICATION, GET_RECENT_RACES, GET_PROFILE, GET_UNREAND_MSG} from '../actions/ActionTypes';
 import JpushHelp from '../services/JpushHelper';
 import {fetchGetProfile} from '../actions/PersonAction';
 import {fetchGetRecentRaces} from '../actions/RacesAction';
 import {fetchGetCertification} from '../actions/AccountAction';
 import {connect} from 'react-redux';
+import {fetchUnreadMsg} from '../actions/AccountAction';
 
- class Root extends Component {
+class Root extends Component {
 
     state = {
         languageChange: false,
@@ -26,6 +27,7 @@ import {connect} from 'react-redux';
         setDispatchAction(GET_CERTIFICATION, this.props._getRealName);
         setDispatchAction(GET_RECENT_RACES, this.props._getRecentRaces);
         setDispatchAction(GET_PROFILE, this.props._getProfile);
+        setDispatchAction(GET_UNREAND_MSG, this.props._fetchUnreadMsg);
 
     }
 
@@ -45,10 +47,12 @@ import {connect} from 'react-redux';
 
         storage.load({key: StorageKey.LoginUser})
             .then(ret => {
-                console.log('User', ret)
-                let {access_token} = ret;
+                console.log('User', ret);
+                let {access_token, user_id} = ret;
                 putLoginUser(ret);
                 setAccessToken(access_token);
+                this.props._getProfile(user_id);
+                this.props._fetchUnreadMsg();
 
             }).catch(err => {
 
@@ -67,9 +71,7 @@ import {connect} from 'react-redux';
     receiveCb = (notification) => {
         const {aps} = notification;
         if (aps.badge > 0) {
-            this.setState({
-                badge: true
-            })
+
         }
     };
 
@@ -91,7 +93,8 @@ const bindAction = dispatch => ({
     closeDrawer: () => dispatch(closeDrawer()),
     _getRealName: () => dispatch(fetchGetCertification()),
     _getProfile: (user_id) => dispatch(fetchGetProfile(user_id)),
-    _getRecentRaces: (body) => dispatch(fetchGetRecentRaces(body))
+    _getRecentRaces: (body) => dispatch(fetchGetRecentRaces(body)),
+    _fetchUnreadMsg: () => dispatch(fetchUnreadMsg())
 });
 
 const mapStateToProps = state => ({

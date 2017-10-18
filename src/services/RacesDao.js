@@ -44,7 +44,7 @@ export function searchRangeList(body, resolve, reject) {
     }, reject);
 }
 
-export function searchBuKeyword(body, resolve, reject) {
+export function searchRaceKeyword(body, resolve, reject) {
     helper.get(Api.search_by_keyword(body), (ret) => {
         resolve(ret.data);
     }, reject);
