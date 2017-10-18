@@ -26,10 +26,9 @@ class SearchKeywordPage extends Component {
         this.state = {
             dataList: [],
             next_id: '0',
-            keyword: '',
             error: false
         };
-
+        this.keyword = '';
     }
 
 
@@ -50,10 +49,9 @@ class SearchKeywordPage extends Component {
                         underlineColorAndroid='transparent'
                         style={styles.inputSearch}
                         onChangeText={txt => {
-                            this.setState({
-                                keyword: txt
-                            });
-                            this.loadList('0', txt)
+                            this.keyword = txt;
+                            if (strNotNull(txt))
+                                this.listView.onRefresh()
                         }}/>
 
                 </View>
@@ -106,39 +104,48 @@ class SearchKeywordPage extends Component {
     };
 
     _onLoadMore = (startFetch, abortFetch) => {
-        const {next_id, keyword} = this.state;
+        const {next_id} = this.state;
         const body = {
             next_id: next_id,
-            keyword: keyword
+            keyword:   this.keyword
         };
         searchRaceKeyword(body, data => {
-
+            const {items, last_id} = data;
+            this.setState({
+                next_id: last_id
+            });
+            startFetch(items, 6)
         }, err => {
+            abortFetch()
         })
     };
     _onRefresh = (startFetch, abortFetch) => {
-        const {next_id, keyword} = this.state;
+        const {next_id} = this.state;
         const body = {
             next_id: next_id,
-            keyword: keyword
+            keyword:   this.keyword
         };
 
         searchRaceKeyword(body, data => {
-            console.log(data)
-
+            const {items, last_id} = data;
+            this.setState({
+                next_id: last_id
+            });
+            startFetch(items, 6)
         }, err => {
+            abortFetch()
         })
 
     };
 
 
-    _renderRow = ({item, index}) => {
+    _renderRow = (rowData, sectionID, rowID) => {
 
         return (
             <RaceRowView
                 isMoreRace={true}
-                rowID={index}
-                rowData={item}/>
+                rowID={rowID}
+                rowData={rowData}/>
         )
     };
 
