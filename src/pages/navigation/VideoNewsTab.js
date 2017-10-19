@@ -17,6 +17,11 @@ class VideoNewsTab extends PureComponent {
         if (newProps.actionType === 'SWITCH_LANGUAGE') {
             this.forceUpdate()
         }
+
+        if (newProps.actionType === 'VIDEO_PAUSE') {
+            if (this.mainVideoPage)
+                this.mainVideoPage.pauseVideo();
+        }
     }
 
     render() {

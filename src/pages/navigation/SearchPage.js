@@ -116,12 +116,20 @@ export class SearchPage extends Component {
                         onPress={this.toMessagePage}
                         activeOpacity={1}>
                         <Image style={styleR.imgSearch2}
-                               source={Images.search_notice}
+                               source={this._imgNotice()}
                         />
                     </TouchableOpacity>
                 </View>
             </View>
         )
+    }
+
+
+    _imgNotice = () => {
+        if (!isEmptyObject(this.props.unread)) {
+            return this.props.unread.unread_count > 0 ? Images.search_notice2 : Images.search_notice;
+        } else
+            return Images.search_notice;
     }
 }
 

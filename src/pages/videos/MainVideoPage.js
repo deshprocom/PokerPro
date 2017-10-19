@@ -20,7 +20,7 @@ import {getVideoTypes} from '../../services/NewsDao';
 import {news_search} from "../../configs/ApiConfig";
 
 
-class MainVideoPage extends Component {
+export default class MainVideoPage extends Component {
 
     componentDidMount() {
         getVideoTypes({}, data => {
@@ -44,13 +44,6 @@ class MainVideoPage extends Component {
 
     };
 
-
-    componentWillReceiveProps(newProps) {
-        if (newProps.actionType === 'VIDEO_PAUSE') {
-            console.log(newProps)
-            this.pauseVideo()
-        }
-    }
 
     render() {
 
@@ -117,13 +110,3 @@ class MainVideoPage extends Component {
 
 
 }
-
-
-const bindAction = dispatch => ({});
-
-const mapStateToProps = state => ({
-
-    actionType: state.AccountState.actionType,
-});
-
-export default connect(mapStateToProps, bindAction)(MainVideoPage);

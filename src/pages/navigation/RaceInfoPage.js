@@ -142,6 +142,7 @@ class RaceInfoPage extends Component {
 
                 </ScrollView>
                 <SearchPage
+                    unread={this.props.unread}
                     ref={ref => this.searchBar = ref}/>
 
 
@@ -157,6 +158,7 @@ const bindAction = dispatch => ({});
 const mapStateToProps = state => ({
 
     actionType: state.AccountState.actionType,
+    unread: state.AccountState.unread,
 });
 
 export default connect(mapStateToProps, bindAction)(RaceInfoPage);

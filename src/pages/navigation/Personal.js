@@ -294,8 +294,7 @@ const stylesP = StyleSheet.create({
 });
 
 const bindAction = dispatch => ({
-    _getProfile: (user_id) => dispatch(fetchGetProfile(user_id)),
-    _fetchUnreadMsg: () => dispatch(fetchUnreadMsg())
+
 });
 
 const mapStateToProps = state => ({
