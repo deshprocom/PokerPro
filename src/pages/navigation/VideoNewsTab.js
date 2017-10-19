@@ -5,12 +5,19 @@ import MainVideoPage from '../videos/MainVideoPage';
 import MainNewsPage from '../news/MainNewsPage';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
+import {connect} from 'react-redux';
 
-export default class VideoNewsTab extends PureComponent {
+class VideoNewsTab extends PureComponent {
 
     state = {
         currentView: 0
     };
+
+    componentWillReceiveProps(newProps) {
+        if (newProps.actionType === 'SWITCH_LANGUAGE') {
+            this.forceUpdate()
+        }
+    }
 
     render() {
         return (
@@ -25,11 +32,11 @@ export default class VideoNewsTab extends PureComponent {
                 >
 
                     <MainNewsPage
-                        tabLabel={'资讯'}/>
+                        tabLabel={I18n.t('home_info')}/>
 
                     <MainVideoPage
                         ref={ref => this.mainVideoPage = ref}
-                        tabLabel={'视频'}/>
+                        tabLabel={I18n.t('home_video')}/>
 
                 </ScrollableTabView>
             </View>
@@ -131,4 +138,11 @@ const styles = StyleSheet.create({
     }
 })
 
+const bindAction = dispatch => ({});
 
+const mapStateToProps = state => ({
+
+    actionType: state.AccountState.actionType,
+});
+
+export default connect(mapStateToProps, bindAction)(VideoNewsTab);

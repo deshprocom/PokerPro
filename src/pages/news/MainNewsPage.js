@@ -24,12 +24,9 @@ export default class MainNewsPage extends Component {
     componentDidMount() {
         getNewsTypes(data => {
             let {items} = data;
-            items.map(function (x) {
-                x['select'] = false;
-            });
+
             if (items.length > 0) {
 
-                items[0].select = true;
                 this.setState({
                     typeListData: items,
                     selectTypeId: items[0].id

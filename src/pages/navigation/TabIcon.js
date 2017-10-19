@@ -7,9 +7,10 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Images} from '../../Themes';
+import {connect} from 'react-redux';
 
 
-export default class TabIcon extends PureComponent {
+class TabIcon extends PureComponent {
 
     componentDidMount() {
         setTimeout(() => {
@@ -17,6 +18,11 @@ export default class TabIcon extends PureComponent {
         }, 300)
     }
 
+    componentWillReceiveProps(newProps) {
+        if (newProps.actionType === 'SWITCH_LANGUAGE') {
+            this.forceUpdate()
+        }
+    }
 
     render() {
         const {tab, focused} = this.props;
@@ -102,3 +108,11 @@ const styles = StyleSheet.create({
     }
 });
 
+const bindAction = dispatch => ({});
+
+const mapStateToProps = state => ({
+
+    actionType: state.AccountState.actionType,
+});
+
+export default connect(mapStateToProps, bindAction)(TabIcon);
