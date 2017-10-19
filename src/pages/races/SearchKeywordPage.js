@@ -37,7 +37,7 @@ class SearchKeywordPage extends Component {
             testID="page_keyword_search"
             style={ApplicationStyles.bg_black}>
             <View style={styles.navBar}>
-                <View style={styles.popBtn}/>
+                <View style={{width: 20}}/>
 
                 <View style={styles.searchBar}>
                     <Image style={styles.imgSearch}
@@ -107,7 +107,7 @@ class SearchKeywordPage extends Component {
         const {next_id} = this.state;
         const body = {
             next_id: next_id,
-            keyword:   this.keyword
+            keyword: this.keyword
         };
         searchRaceKeyword(body, data => {
             const {items, last_id} = data;
@@ -123,7 +123,7 @@ class SearchKeywordPage extends Component {
         const {next_id} = this.state;
         const body = {
             next_id: next_id,
-            keyword:   this.keyword
+            keyword: this.keyword
         };
 
         searchRaceKeyword(body, data => {
@@ -161,8 +161,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     popBtn: {
-        height: 44,
-        width: 50,
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -172,7 +171,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#212325',
         borderRadius: 3,
-        flex: 1
+        width: 270
     },
     imgSearch: {
         height: 18,
