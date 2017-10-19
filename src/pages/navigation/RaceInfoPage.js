@@ -127,6 +127,7 @@ class RaceInfoPage extends Component {
                     ref={ref => this.mainScroll = ref}
                     scrollEventThrottle={16}
                     onScroll={this._onScroll}
+                    showsVerticalScrollIndicator={false}
                 >
                     <MainBanner
                         banners={banners}/>
@@ -139,6 +140,7 @@ class RaceInfoPage extends Component {
                         listRace={listRace}/>
                     <Information
                         hotInfos={hotInfos}/>
+                    <View style={{height: 48}}/>
 
                 </ScrollView>
                 <SearchPage
