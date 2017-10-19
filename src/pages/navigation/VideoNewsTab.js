@@ -5,12 +5,40 @@ import MainVideoPage from '../videos/MainVideoPage';
 import MainNewsPage from '../news/MainNewsPage';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
+import {connect} from 'react-redux';
 
-export default class VideoNewsTab extends PureComponent {
+class VideoNewsTab extends PureComponent {
 
     state = {
         currentView: 0
     };
+
+
+    shouldComponentUpdate(newProps, nextState) {
+
+
+        if (newProps.actionType === 'SWITCH_LANGUAGE') {
+
+            if (this.mainVideoPage && this.state.currentView === 1)
+                this.mainVideoPage.refresh();
+            if (this.mainNewsPage)
+                this.mainNewsPage.refresh();
+
+            return false;
+        }
+
+        if (newProps.actionType === 'VIDEO_PAUSE' && this.state.currentView === 1) {
+
+            if (this.mainVideoPage)
+                this.mainVideoPage.pauseVideo();
+            return false;
+        }
+
+
+        return true;
+    }
+
+
 
     render() {
         return (
@@ -18,23 +46,35 @@ export default class VideoNewsTab extends PureComponent {
 
                 {this.renderHead()}
                 <ScrollableTabView
-                    page={1}
                     ref={ref => this.tabView = ref}
                     locked
                     renderTabBar={false}
+                    prerenderingSiblingsNumber={1}
                 >
 
                     <MainNewsPage
-                        tabLabel={'资讯'}/>
+                        key={'news'}
+                        ref={ref => this.mainNewsPage = ref}
+                        tabLabel={I18n.t('home_info')}/>
 
                     <MainVideoPage
+                        key={'video'}
                         ref={ref => this.mainVideoPage = ref}
-                        tabLabel={'视频'}/>
+                        tabLabel={I18n.t('home_video')}/>
 
                 </ScrollableTabView>
             </View>
         )
     }
+
+
+    goTab = (page) => {
+        this.setState({
+            currentView: page
+        });
+        this.tabView.goToPage(page, false);
+
+    };
 
 
     renderHead = () => {
@@ -49,10 +89,8 @@ export default class VideoNewsTab extends PureComponent {
                     onPress={() => {
                         if (this.mainVideoPage)
                             this.mainVideoPage.pauseVideo();
-                        this.tabView.goToPage(0, false);
-                        this.setState({
-                            currentView: 0
-                        })
+
+                        this.goTab(0)
                     }}
                     style={styles.btn}
                 >
@@ -63,10 +101,7 @@ export default class VideoNewsTab extends PureComponent {
 
                 <TouchableOpacity
                     onPress={() => {
-                        this.tabView.goToPage(1, false);
-                        this.setState({
-                            currentView: 1
-                        })
+                        this.goTab(1)
                     }}
                     style={styles.btn}>
                     <Text style={this.state.currentView === 1 ? styles.selectedTex : styles.selectTex}>
@@ -131,4 +166,11 @@ const styles = StyleSheet.create({
     }
 })
 
+const bindAction = dispatch => ({});
 
+const mapStateToProps = state => ({
+
+    actionType: state.AccountState.actionType,
+});
+
+export default connect(mapStateToProps, bindAction)(VideoNewsTab);

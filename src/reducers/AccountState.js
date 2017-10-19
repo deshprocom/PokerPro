@@ -6,8 +6,8 @@ import {
     POST_VERIFY_CODE, POST_RESET_PASSWORD, POST_REGISTER,
     POST_CHANGE_PWD, POST_V_CODE, POST_CARD_IMAGE,
     GET_PLAYER_INFO, POST_BIND_ACCOUNT, POST_CHANGE_BIND,
-    POST_CHANGE_PERMISSION, GET_NOTIFICATIONS, DEL_NOTIFICATIONS,
-    GET_UNREAND_MSG,SHOW_BACK_TOP,HIDE_BACK_TOP,BACK_TOP,
+    POST_CHANGE_PERMISSION, GET_NOTIFICATIONS, DEL_NOTIFICATIONS,SWITCH_LANGUAGE,
+    GET_UNREAND_MSG, SHOW_BACK_TOP, HIDE_BACK_TOP, BACK_TOP, VIDEO_PAUSE,
     FETCH_SUCCESS, FETCHING, FETCH_FAIL
 } from '../actions/ActionTypes';
 
@@ -19,7 +19,7 @@ const initialState = {
     actionType: '',
     player: {},
     notices: {},
-    unread:{}
+    unread: {}
 };
 
 export default function accountState(state = initialState, action) {
@@ -61,17 +61,27 @@ export default function accountState(state = initialState, action) {
         case SHOW_BACK_TOP:
             return {
                 ...state,
-                actionType:SHOW_BACK_TOP
+                actionType: SHOW_BACK_TOP
             };
         case HIDE_BACK_TOP:
             return {
                 ...state,
-                actionType:HIDE_BACK_TOP
+                actionType: HIDE_BACK_TOP
             };
         case BACK_TOP:
             return {
                 ...state,
-                actionType:BACK_TOP
+                actionType: BACK_TOP
+            };
+        case VIDEO_PAUSE:
+            return {
+                ...state,
+                actionType: VIDEO_PAUSE
+            };
+        case SWITCH_LANGUAGE:
+            return {
+                ...state,
+                actionType: SWITCH_LANGUAGE
             };
         default:
             return state;
@@ -173,7 +183,7 @@ function handleFetch(state, action) {
                 notices: action.notices
             }
 
-        } else if(action.type === GET_UNREAND_MSG){
+        } else if (action.type === GET_UNREAND_MSG) {
             return {
                 ...state,
                 loading: false,

@@ -6,17 +6,25 @@ import {Router} from 'react-native-router-flux';
 import {Stacks} from '../configs/StackRoute';
 import StorageKey from '../configs/StorageKey';
 import {setAccessToken, getBaseURL} from '../services/RequestHelper';
-import {putLoginUser, getUserData, updateApp, setDispatchAction} from '../utils/ComonHelper';
+import {putLoginUser, getUserData, updateApp, setDispatchAction, isEmptyObject} from '../utils/ComonHelper';
 import {init} from '../services/ConfigDao';
 import {getActivityPush, getUpdate} from '../services/AccountDao';
-import {GET_CERTIFICATION, GET_RECENT_RACES, GET_PROFILE} from '../actions/ActionTypes';
+import {
+    GET_CERTIFICATION,
+    GET_RECENT_RACES,
+    GET_PROFILE,
+    GET_UNREAND_MSG,
+    SWITCH_LANGUAGE,
+    VIDEO_PAUSE
+} from '../actions/ActionTypes';
 import JpushHelp from '../services/JpushHelper';
 import {fetchGetProfile} from '../actions/PersonAction';
 import {fetchGetRecentRaces} from '../actions/RacesAction';
-import {fetchGetCertification} from '../actions/AccountAction';
+import {fetchGetCertification, switchLanguage, videoPause} from '../actions/AccountAction';
 import {connect} from 'react-redux';
+import {fetchUnreadMsg} from '../actions/AccountAction';
 
- class Root extends Component {
+class Root extends Component {
 
     state = {
         languageChange: false,
@@ -26,17 +34,20 @@ import {connect} from 'react-redux';
         setDispatchAction(GET_CERTIFICATION, this.props._getRealName);
         setDispatchAction(GET_RECENT_RACES, this.props._getRecentRaces);
         setDispatchAction(GET_PROFILE, this.props._getProfile);
-
-    }
-
-    constructor(props) {
-        super(props);
-        JpushHelp.addPushListener(this.receiveCb, this.openCb);
+        setDispatchAction(GET_UNREAND_MSG, this.props._fetchUnreadMsg);
+        setDispatchAction(SWITCH_LANGUAGE, this.props._switchLanguage);
+        setDispatchAction(VIDEO_PAUSE, this.props._videoPause);
         init(() => {
             this.setState({
                 languageChange: true
             });
         });
+    }
+
+    constructor(props) {
+        super(props);
+        JpushHelp.addPushListener(this.receiveCb, this.openCb);
+
         getUserData();
         getBaseURL(() => {
             this._getUpdate()
@@ -45,10 +56,12 @@ import {connect} from 'react-redux';
 
         storage.load({key: StorageKey.LoginUser})
             .then(ret => {
-                console.log('User', ret)
-                let {access_token} = ret;
+                console.log('User', ret);
+                let {access_token, user_id} = ret;
                 putLoginUser(ret);
                 setAccessToken(access_token);
+                this.props._getProfile(user_id);
+                this.props._fetchUnreadMsg();
 
             }).catch(err => {
 
@@ -67,9 +80,8 @@ import {connect} from 'react-redux';
     receiveCb = (notification) => {
         const {aps} = notification;
         if (aps.badge > 0) {
-            this.setState({
-                badge: true
-            })
+            if (!isEmptyObject(global.login_user))
+                this.props._fetchUnreadMsg()
         }
     };
 
@@ -78,7 +90,8 @@ import {connect} from 'react-redux';
     };
 
     render() {
-        return (<Router scenes={Stacks}/>);
+        return (<Router
+            scenes={Stacks}/>);
     }
 
     componentWillUnmount() {
@@ -88,14 +101,17 @@ import {connect} from 'react-redux';
 }
 
 const bindAction = dispatch => ({
-    closeDrawer: () => dispatch(closeDrawer()),
     _getRealName: () => dispatch(fetchGetCertification()),
     _getProfile: (user_id) => dispatch(fetchGetProfile(user_id)),
-    _getRecentRaces: (body) => dispatch(fetchGetRecentRaces(body))
+    _getRecentRaces: (body) => dispatch(fetchGetRecentRaces(body)),
+    _fetchUnreadMsg: () => dispatch(fetchUnreadMsg()),
+    _switchLanguage: () => dispatch(switchLanguage()),
+    _videoPause: () => dispatch(videoPause())
 });
 
 const mapStateToProps = state => ({
-    drawerState: state.DrawerRedux.drawerState
+    drawerState: state.DrawerRedux.drawerState,
+    actionType: state.AccountState.actionType
 
 });
 

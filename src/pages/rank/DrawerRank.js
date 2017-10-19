@@ -7,6 +7,7 @@ import {Colors, Images, Metrics} from '../../Themes'
 import MainRankPage from './MainRankPage';
 import FiltePage from './FiltePage';
 import TimerMixin from 'react-timer-mixin';
+import {connect} from 'react-redux';
 
 class DrawerRank extends Component {
     constructor(props) {
@@ -14,6 +15,16 @@ class DrawerRank extends Component {
         this.state = {
             drawerState: false
         }
+    }
+
+
+    shouldComponentUpdate(newProps, nextState) {
+        if (newProps.actionType === 'SWITCH_LANGUAGE') {
+            this.mainRank.refresh();
+            return false;
+        }
+
+        return true;
     }
 
 
@@ -84,4 +95,11 @@ const drawerStylesColse = {
     mainOverlay: {backgroundColor: null}
 }
 
-export default DrawerRank;
+const bindAction = dispatch => ({});
+
+const mapStateToProps = state => ({
+
+    actionType: state.AccountState.actionType,
+});
+
+export default connect(mapStateToProps, bindAction)(DrawerRank);

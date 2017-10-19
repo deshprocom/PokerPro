@@ -4,8 +4,8 @@ import I18n from 'react-native-i18n';
 import {Images} from '../../Themes';
 import TabIcon from './TabIcon';
 import {Actions} from 'react-native-router-flux';
-import {showTabTop, hideTabTop, onPressBackTop} from '../../actions/AccountAction';
-import {SHOW_BACK_TOP, HIDE_BACK_TOP, BACK_TOP} from '../../actions/ActionTypes';
+import {showTabTop, hideTabTop, onPressBackTop, videoPause} from '../../actions/AccountAction';
+import {SHOW_BACK_TOP, HIDE_BACK_TOP, VIDEO_PAUSE, BACK_TOP} from '../../actions/ActionTypes';
 import {connect} from 'react-redux';
 import {setDispatchAction} from '../../utils/ComonHelper';
 
@@ -21,7 +21,7 @@ class BottomNavigation extends Component {
     componentDidMount() {
         setDispatchAction(SHOW_BACK_TOP, this.props._showBackTop);
         setDispatchAction(HIDE_BACK_TOP, this.props._hideBackTop);
-
+        setDispatchAction(BACK_TOP, this.props._backTop)
 
     }
 
@@ -30,6 +30,10 @@ class BottomNavigation extends Component {
         if (this.state.tabIndex === 1) {
             this.setState({
                 showTop: newProps.actionType === SHOW_BACK_TOP
+            })
+        } else if (newProps.actionType === BACK_TOP) {
+            this.setState({
+                tabIndex: 1
             })
         }
     }
@@ -58,7 +62,9 @@ class BottomNavigation extends Component {
                             this.setState({
                                 tabIndex: 1
                             });
-                            Actions.push('tab_1')
+                            this.props._videoPause();
+                            Actions.push('tab_1');
+
                         }}
                         style={styleBN.navigations}>
                         <TabIcon tab={'home'} focused={tabIndex === 1}/>
@@ -67,6 +73,7 @@ class BottomNavigation extends Component {
 
                 <TouchableOpacity
                     onPress={() => {
+                        this.props._hideBackTop();
                         this.setState({
                             tabIndex: 2
                         });
@@ -78,20 +85,24 @@ class BottomNavigation extends Component {
 
                 <TouchableOpacity
                     onPress={() => {
+                        this.props._videoPause();
                         this.setState({
                             tabIndex: 3
                         });
-                        Actions.push('tab_3')
+                        Actions.push('tab_3');
+
                     }}
                     style={styleBN.navigations}>
                     <TabIcon tab={'rank'} focused={tabIndex === 3}/>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
+                        this.props._videoPause();
                         this.setState({
                             tabIndex: 4
                         });
-                        Actions.push('tab_4')
+                        Actions.push('tab_4');
+
                     }}
                     style={styleBN.navigations}>
                     <TabIcon tab={'me'} focused={tabIndex === 4}/>
@@ -159,7 +170,8 @@ const styleBN = StyleSheet.create({
 const bindAction = dispatch => ({
     _showBackTop: () => dispatch(showTabTop()),
     _hideBackTop: () => dispatch(hideTabTop()),
-    _backTop: () => dispatch(onPressBackTop())
+    _backTop: () => dispatch(onPressBackTop()),
+    _videoPause: () => dispatch(videoPause())
 
 });
 

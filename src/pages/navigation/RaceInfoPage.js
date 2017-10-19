@@ -36,6 +36,10 @@ class RaceInfoPage extends Component {
         if (newProps.actionType === BACK_TOP) {
             this.mainScroll.scrollTo({x: 0, y: 0, animated: false})
         }
+
+        if (newProps.actionType === 'SWITCH_LANGUAGE') {
+            this._getData()
+        }
     }
 
     componentWillMount() {
@@ -123,6 +127,7 @@ class RaceInfoPage extends Component {
                     ref={ref => this.mainScroll = ref}
                     scrollEventThrottle={16}
                     onScroll={this._onScroll}
+                    showsVerticalScrollIndicator={false}
                 >
                     <MainBanner
                         banners={banners}/>
@@ -135,9 +140,11 @@ class RaceInfoPage extends Component {
                         listRace={listRace}/>
                     <Information
                         hotInfos={hotInfos}/>
+                    <View style={{height: 48}}/>
 
                 </ScrollView>
                 <SearchPage
+                    unread={this.props.unread}
                     ref={ref => this.searchBar = ref}/>
 
 
@@ -153,6 +160,7 @@ const bindAction = dispatch => ({});
 const mapStateToProps = state => ({
 
     actionType: state.AccountState.actionType,
+    unread: state.AccountState.unread,
 });
 
 export default connect(mapStateToProps, bindAction)(RaceInfoPage);

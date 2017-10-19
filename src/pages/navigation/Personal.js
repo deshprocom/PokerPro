@@ -6,16 +6,14 @@ import {
     View, Animated, findNodeHandle
 } from 'react-native';
 import {Images, Colors, Metrics} from '../../Themes';
-import {strNotNull, isEmptyObject, getLoginUser, getUserData} from '../../utils/ComonHelper';
+import {strNotNull, isEmptyObject, getLoginUser, getUserData, getDispatchAction} from '../../utils/ComonHelper';
 import {umengEvent} from '../../utils/UmengEvent';
 import I18n from 'react-native-i18n';
 import JpushHelp from '../../services/JpushHelper';
 import {connect} from 'react-redux';
 import {BlurView} from 'react-native-blur';
-import {fetchGetProfile} from '../../actions/PersonAction';
-import {fetchUnreadMsg} from '../../actions/AccountAction';
 import {Badge} from '../../components';
-import {FETCH_SUCCESS, GET_PROFILE} from '../../actions/ActionTypes';
+import {FETCH_SUCCESS, GET_PROFILE, GET_UNREAND_MSG} from '../../actions/ActionTypes';
 
 class Personal extends Component {
 
@@ -24,40 +22,22 @@ class Personal extends Component {
     };
 
 
-    componentDidMount() {
-
-        if (!isEmptyObject(login_user)) {
-            JpushHelp.addPushListener(this.receiveCb, this.openCb);
-            this.props._getProfile(login_user.user_id);
-
-        }
-    }
-
     componentWillReceiveProps(newProps) {
         if (newProps.actionType === GET_PROFILE && newProps.hasData
             && isEmptyObject(newProps.unread)) {
             this._unReadMsg()
         }
+
+        if (newProps.actionType1 === 'SWITCH_LANGUAGE') {
+            this.forceUpdate()
+        }
     }
 
     _unReadMsg = () => {
-        this.props._fetchUnreadMsg()
+        if (!isEmptyObject(global.login_user))
+            getDispatchAction()[GET_UNREAND_MSG]()
     };
 
-    componentWillUnmount() {
-        JpushHelp.removePushListener();
-    }
-
-    receiveCb = (notification) => {
-        const {aps} = notification;
-        if (aps.badge > 0) {
-            this._unReadMsg()
-        }
-    };
-
-    openCb = (notification) => {
-
-    };
 
     render() {
 
@@ -95,28 +75,6 @@ class Personal extends Component {
 
             <View style={stylesP.textLine}/>
 
-            <TouchableOpacity style={stylesP.personalView} onPress={() => {
-                umengEvent('home_notification');
-                if (isEmptyObject(login_user)) {
-                    router.toLoginFirstPage()
-                } else {
-
-                    JpushHelp.iosSetBadge(0);
-                    router.toMessageCenter()
-                }
-            }}>
-                <View style={stylesP.personalView2}>
-                    <Image style={stylesP.personalView2Img} source={Images.speaker}/>
-                    <Text style={stylesP.personalText}>{I18n.t('message')}</Text>
-                    <View style={{flex: 1}}/>
-
-                    {this._msgBadge()}
-
-                    <Image style={stylesP.personalImg} source={Images.is}/>
-                </View>
-            </TouchableOpacity>
-
-            <View style={stylesP.textLine}/>
 
             <TouchableOpacity style={stylesP.personalView} onPress={() => {
                 umengEvent('more_business');
@@ -144,6 +102,30 @@ class Personal extends Component {
         </View>
     };
 
+
+    _msgItem = ()=>{
+        return  <TouchableOpacity style={stylesP.personalView} onPress={() => {
+                umengEvent('home_notification');
+                if (isEmptyObject(login_user)) {
+                    router.toLoginFirstPage()
+                } else {
+
+                    JpushHelp.iosSetBadge(0);
+                    router.toMessageCenter()
+                }
+            }}>
+                <View style={stylesP.personalView2}>
+                    <Image style={stylesP.personalView2Img} source={Images.speaker}/>
+                    <Text style={stylesP.personalText}>{I18n.t('message')}</Text>
+                    <View style={{flex: 1}}/>
+
+                    {this._msgBadge()}
+
+                    <Image style={stylesP.personalImg} source={Images.is}/>
+                </View>
+            </TouchableOpacity>
+
+    };
 
     _msgBadge = () => {
         if (!isEmptyObject(this.props.unread))
@@ -219,7 +201,43 @@ class Personal extends Component {
 
             {this._username()}
 
+            {this._msgView()}
         </Animated.Image>)
+    };
+
+
+    _msgView = () => {
+        return <TouchableOpacity
+            style={{
+                height: 50, width: 44, alignItems: 'center', justifyContent: 'center',
+                position: 'absolute', top: Metrics.statusBarHeight, right: 10
+            }}
+            testID="btn_bar_right"
+            onPress={this.toMessagePage}
+            activeOpacity={1}>
+            <Image style={stylesP.msgImg}
+                   source={this._imgNotice()}
+            />
+        </TouchableOpacity>;
+    };
+
+    toMessagePage = () => {
+        umengEvent('home_notification');
+        if (isEmptyObject(login_user)) {
+            router.toLoginFirstPage()
+        } else {
+
+            JpushHelp.iosSetBadge(0);
+            router.toMessageCenter()
+        }
+
+    };
+
+    _imgNotice = () => {
+        if (!isEmptyObject(this.props.unread)) {
+            return this.props.unread.unread_count > 0 ? Images.search_notice2 : Images.search_notice;
+        } else
+            return Images.search_notice;
     }
 
 }
@@ -310,14 +328,15 @@ const stylesP = StyleSheet.create({
         backgroundColor: '#ffffff',
 
     },
+    msgImg: {
+        height: 22,
+        width: 21
+    }
 
 
 });
 
-const bindAction = dispatch => ({
-    _getProfile: (user_id) => dispatch(fetchGetProfile(user_id)),
-    _fetchUnreadMsg: () => dispatch(fetchUnreadMsg())
-});
+const bindAction = dispatch => ({});
 
 const mapStateToProps = state => ({
     loading: state.PersonState.loading,
@@ -325,7 +344,8 @@ const mapStateToProps = state => ({
     error: state.PersonState.error,
     hasData: state.PersonState.hasData,
     actionType: state.PersonState.actionType,
-    unread: state.AccountState.unread
+    unread: state.AccountState.unread,
+    actionType1: state.AccountState.actionType,
 
 });
 

@@ -7,7 +7,7 @@ import {
     POST_CHANGE_PWD, POST_V_CODE, POST_CERTIFICATION, GET_CERTIFICATION,
     POST_CARD_IMAGE, GET_PLAYER_INFO, POST_BIND_ACCOUNT, POST_CHANGE_BIND,
     POST_CHANGE_PERMISSION, GET_NOTIFICATIONS, DEL_NOTIFICATIONS, GET_UNREAND_MSG,
-    SHOW_BACK_TOP, HIDE_BACK_TOP,BACK_TOP,
+    SHOW_BACK_TOP, HIDE_BACK_TOP,BACK_TOP,VIDEO_PAUSE,SWITCH_LANGUAGE,
     FETCH_SUCCESS, FETCHING, FETCH_FAIL, FETCH_PASS, FETCH_PASS_SUCCESS, FETCH_PASS_FAIL
 } from '../actions/ActionTypes';
 import {showToast} from '../utils/ComonHelper';
@@ -24,6 +24,17 @@ import {
     delNotification, getMsgUnRead
 } from '../services/AccountDao';
 
+export function switchLanguage() {
+    return {
+        type: SWITCH_LANGUAGE
+    }
+}
+
+export function videoPause() {
+    return {
+        type: VIDEO_PAUSE
+    }
+}
 
 export function onPressBackTop() {
     return {
