@@ -6,7 +6,7 @@ import {Router} from 'react-native-router-flux';
 import {Stacks} from '../configs/StackRoute';
 import StorageKey from '../configs/StorageKey';
 import {setAccessToken, getBaseURL} from '../services/RequestHelper';
-import {putLoginUser, getUserData, updateApp, setDispatchAction} from '../utils/ComonHelper';
+import {putLoginUser, getUserData, updateApp, setDispatchAction, isEmptyObject} from '../utils/ComonHelper';
 import {init} from '../services/ConfigDao';
 import {getActivityPush, getUpdate} from '../services/AccountDao';
 import {
@@ -80,7 +80,8 @@ class Root extends Component {
     receiveCb = (notification) => {
         const {aps} = notification;
         if (aps.badge > 0) {
-            this.props._fetchUnreadMsg()
+            if (!isEmptyObject(global.login_user))
+                this.props._fetchUnreadMsg()
         }
     };
 

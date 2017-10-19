@@ -17,10 +17,14 @@ class DrawerRank extends Component {
         }
     }
 
-    componentWillReceiveProps(newProps) {
+
+    shouldComponentUpdate(newProps, nextState) {
         if (newProps.actionType === 'SWITCH_LANGUAGE') {
-            this.mainRank.refresh()
+            this.mainRank.refresh();
+            return false;
         }
+
+        return true;
     }
 
 

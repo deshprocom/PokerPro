@@ -24,18 +24,18 @@ class VideoNewsTab extends PureComponent {
             if (this.mainNewsPage)
                 this.mainNewsPage.refresh();
 
-            return true;
+            return false;
         }
 
         if (newProps.actionType === 'VIDEO_PAUSE' && this.state.currentView === 1) {
 
             if (this.mainVideoPage)
                 this.mainVideoPage.pauseVideo();
-            return true;
+            return false;
         }
 
 
-        return nextState.currentView !== this.state.currentView;
+        return true;
     }
 
     render() {
@@ -48,6 +48,7 @@ class VideoNewsTab extends PureComponent {
                     ref={ref => this.tabView = ref}
                     locked
                     renderTabBar={false}
+                    prerenderingSiblingsNumber={1}
                 >
 
                     <MainNewsPage
