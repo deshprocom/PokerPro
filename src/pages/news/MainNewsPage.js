@@ -22,6 +22,11 @@ import {getNewsTypes} from '../../services/NewsDao';
 export default class MainNewsPage extends Component {
 
     componentDidMount() {
+        this.refresh()
+    }
+
+
+    refresh = () => {
         getNewsTypes(data => {
             let {items} = data;
 
@@ -34,7 +39,7 @@ export default class MainNewsPage extends Component {
             }
         }, err => {
         })
-    }
+    };
 
     state = {
         typeListData: [],

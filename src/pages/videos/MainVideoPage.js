@@ -23,6 +23,11 @@ import {news_search} from "../../configs/ApiConfig";
 export default class MainVideoPage extends Component {
 
     componentDidMount() {
+       this.refresh();
+    }
+
+
+    refresh = () => {
         getVideoTypes({}, data => {
             let {items} = data;
 
@@ -36,7 +41,7 @@ export default class MainVideoPage extends Component {
             }
         }, err => {
         })
-    }
+    };
 
     state = {
         typeListData: [],

@@ -13,9 +13,15 @@ class VideoNewsTab extends PureComponent {
         currentView: 0
     };
 
+
     componentWillReceiveProps(newProps) {
+
         if (newProps.actionType === 'SWITCH_LANGUAGE') {
-            this.forceUpdate()
+
+            if (this.mainVideoPage)
+                this.mainVideoPage.refresh();
+            if (this.mainNewsPage)
+                this.mainNewsPage.refresh();
         }
 
         if (newProps.actionType === 'VIDEO_PAUSE') {
@@ -37,6 +43,7 @@ class VideoNewsTab extends PureComponent {
                 >
 
                     <MainNewsPage
+                        ref={ref => this.mainNewsPage = ref}
                         tabLabel={I18n.t('home_info')}/>
 
                     <MainVideoPage
