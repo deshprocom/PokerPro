@@ -24,6 +24,10 @@ export default class MainRankPage extends Component {
         this.rankList.filterRank(param)
     };
 
+    refresh = () => {
+        this.rankList.update()
+    };
+
 
     topHeader = () => {
         return (<View style={styles.header_bar}>

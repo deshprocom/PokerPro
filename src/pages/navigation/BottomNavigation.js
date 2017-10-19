@@ -90,7 +90,6 @@ class BottomNavigation extends Component {
                             tabIndex: 3
                         });
                         Actions.push('tab_3');
-                        console.log('lasjdflkjls')
 
                     }}
                     style={styleBN.navigations}>

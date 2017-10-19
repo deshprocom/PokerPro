@@ -34,7 +34,8 @@ class Personal extends Component {
     }
 
     _unReadMsg = () => {
-        getDispatchAction()[GET_UNREAND_MSG]()
+        if (!isEmptyObject(global.login_user))
+            getDispatchAction()[GET_UNREAND_MSG]()
     };
 
 
@@ -293,9 +294,7 @@ const stylesP = StyleSheet.create({
 
 });
 
-const bindAction = dispatch => ({
-
-});
+const bindAction = dispatch => ({});
 
 const mapStateToProps = state => ({
     loading: state.PersonState.loading,

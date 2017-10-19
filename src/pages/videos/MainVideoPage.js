@@ -6,9 +6,7 @@
  */
 import React, {Component, PropTypes} from 'react';
 import {
-    StyleSheet, Text, View, FlatList,
-    TouchableOpacity, Image, StatusBar,
-    ScrollView, Animated
+    View
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {connect} from 'react-redux';
@@ -17,13 +15,13 @@ import I18n from 'react-native-i18n';
 import VideoListView from './VideoListView';
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
 import {getVideoTypes} from '../../services/NewsDao';
-import {news_search} from "../../configs/ApiConfig";
 
 
 export default class MainVideoPage extends Component {
 
     componentDidMount() {
-       this.refresh();
+        console.log('MainVideo')
+        this.refresh();
     }
 
 
@@ -76,7 +74,6 @@ export default class MainVideoPage extends Component {
         const {typeListData} = this.state;
 
         let pages = [];
-        let that = this;
 
         typeListData.forEach(function (x) {
             pages.push(

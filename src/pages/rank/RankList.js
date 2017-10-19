@@ -60,6 +60,7 @@ export function listRenderRow(rowData, sectionID, rowID, isSearch) {
         <View style={{height: 1, backgroundColor: Colors.bg_f5, marginLeft: 16}}></View>
     </TouchableOpacity>)
 }
+
 rankNum = (rowID) => {
     if (rowID == 1) {
         return (
@@ -86,11 +87,9 @@ export default class RankList extends Component {
 
     constructor(props) {
         super(props);
-        this._dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1.race_id !== r2.race_id
-        });
+
         this.state = {
-            dataSource: this._dataSource.cloneWithRows([]),
+
             rankData: [],
             rankListNextID: '0',
             error: false,
@@ -99,6 +98,12 @@ export default class RankList extends Component {
 
         this.filterParam = {};
     }
+
+
+    update = () => {
+        if (this.listView)
+            this.listView.refresh();
+    };
 
 
     filterRank = (param) => {
@@ -139,7 +144,6 @@ export default class RankList extends Component {
     onFetch = (page = 1, startFetch, abortFetch) => {
         try {
 
-            console.log(page)
             if (page === 1) {
                 this.refresh(startFetch, abortFetch);
                 this.listView.scrollTo({x: 0, y: 0, animated: true})

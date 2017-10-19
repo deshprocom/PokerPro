@@ -14,20 +14,28 @@ class VideoNewsTab extends PureComponent {
     };
 
 
-    componentWillReceiveProps(newProps) {
+    shouldComponentUpdate(newProps, nextState) {
+
 
         if (newProps.actionType === 'SWITCH_LANGUAGE') {
 
-            if (this.mainVideoPage)
+            if (this.mainVideoPage && this.state.currentView === 1)
                 this.mainVideoPage.refresh();
             if (this.mainNewsPage)
                 this.mainNewsPage.refresh();
+
+            return true;
         }
 
-        if (newProps.actionType === 'VIDEO_PAUSE') {
+        if (newProps.actionType === 'VIDEO_PAUSE' && this.state.currentView === 1) {
+
             if (this.mainVideoPage)
                 this.mainVideoPage.pauseVideo();
+            return true;
         }
+
+
+        return nextState.currentView !== this.state.currentView;
     }
 
     render() {
@@ -43,10 +51,12 @@ class VideoNewsTab extends PureComponent {
                 >
 
                     <MainNewsPage
+                        key={'news'}
                         ref={ref => this.mainNewsPage = ref}
                         tabLabel={I18n.t('home_info')}/>
 
                     <MainVideoPage
+                        key={'video'}
                         ref={ref => this.mainVideoPage = ref}
                         tabLabel={I18n.t('home_video')}/>
 
@@ -54,6 +64,15 @@ class VideoNewsTab extends PureComponent {
             </View>
         )
     }
+
+
+    goTab = (page) => {
+        this.setState({
+            currentView: page
+        });
+        this.tabView.goToPage(page, false);
+
+    };
 
 
     renderHead = () => {
@@ -68,10 +87,8 @@ class VideoNewsTab extends PureComponent {
                     onPress={() => {
                         if (this.mainVideoPage)
                             this.mainVideoPage.pauseVideo();
-                        this.tabView.goToPage(0, false);
-                        this.setState({
-                            currentView: 0
-                        })
+
+                        this.goTab(0)
                     }}
                     style={styles.btn}
                 >
@@ -82,10 +99,7 @@ class VideoNewsTab extends PureComponent {
 
                 <TouchableOpacity
                     onPress={() => {
-                        this.tabView.goToPage(1, false);
-                        this.setState({
-                            currentView: 1
-                        })
+                        this.goTab(1)
                     }}
                     style={styles.btn}>
                     <Text style={this.state.currentView === 1 ? styles.selectedTex : styles.selectTex}>
