@@ -17,8 +17,7 @@ export class SearchPage extends Component {
         headlines: [],
         next_id: '0',
         keyword: '',
-        opacity: 0,
-        badge: false
+        opacity: 0
     };
 
 
@@ -57,9 +56,7 @@ export class SearchPage extends Component {
         if (isEmptyObject(login_user)) {
             router.toLoginFirstPage()
         } else {
-            this.setState({
-                badge: false
-            });
+
             JpushHelp.iosSetBadge(0);
             router.toMessageCenter()
         }

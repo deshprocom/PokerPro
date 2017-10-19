@@ -75,28 +75,6 @@ class Personal extends Component {
 
             <View style={stylesP.textLine}/>
 
-            <TouchableOpacity style={stylesP.personalView} onPress={() => {
-                umengEvent('home_notification');
-                if (isEmptyObject(login_user)) {
-                    router.toLoginFirstPage()
-                } else {
-
-                    JpushHelp.iosSetBadge(0);
-                    router.toMessageCenter()
-                }
-            }}>
-                <View style={stylesP.personalView2}>
-                    <Image style={stylesP.personalView2Img} source={Images.speaker}/>
-                    <Text style={stylesP.personalText}>{I18n.t('message')}</Text>
-                    <View style={{flex: 1}}/>
-
-                    {this._msgBadge()}
-
-                    <Image style={stylesP.personalImg} source={Images.is}/>
-                </View>
-            </TouchableOpacity>
-
-            <View style={stylesP.textLine}/>
 
             <TouchableOpacity style={stylesP.personalView} onPress={() => {
                 umengEvent('more_business');
@@ -124,6 +102,30 @@ class Personal extends Component {
         </View>
     };
 
+
+    _msgItem = ()=>{
+        return  <TouchableOpacity style={stylesP.personalView} onPress={() => {
+                umengEvent('home_notification');
+                if (isEmptyObject(login_user)) {
+                    router.toLoginFirstPage()
+                } else {
+
+                    JpushHelp.iosSetBadge(0);
+                    router.toMessageCenter()
+                }
+            }}>
+                <View style={stylesP.personalView2}>
+                    <Image style={stylesP.personalView2Img} source={Images.speaker}/>
+                    <Text style={stylesP.personalText}>{I18n.t('message')}</Text>
+                    <View style={{flex: 1}}/>
+
+                    {this._msgBadge()}
+
+                    <Image style={stylesP.personalImg} source={Images.is}/>
+                </View>
+            </TouchableOpacity>
+
+    };
 
     _msgBadge = () => {
         if (!isEmptyObject(this.props.unread))
@@ -199,7 +201,43 @@ class Personal extends Component {
 
             {this._username()}
 
+            {this._msgView()}
         </Animated.Image>)
+    };
+
+
+    _msgView = () => {
+        return <TouchableOpacity
+            style={{
+                height: 50, width: 44, alignItems: 'center', justifyContent: 'center',
+                position: 'absolute', top: Metrics.statusBarHeight, right: 10
+            }}
+            testID="btn_bar_right"
+            onPress={this.toMessagePage}
+            activeOpacity={1}>
+            <Image style={stylesP.msgImg}
+                   source={this._imgNotice()}
+            />
+        </TouchableOpacity>;
+    };
+
+    toMessagePage = () => {
+        umengEvent('home_notification');
+        if (isEmptyObject(login_user)) {
+            router.toLoginFirstPage()
+        } else {
+
+            JpushHelp.iosSetBadge(0);
+            router.toMessageCenter()
+        }
+
+    };
+
+    _imgNotice = () => {
+        if (!isEmptyObject(this.props.unread)) {
+            return this.props.unread.unread_count > 0 ? Images.search_notice2 : Images.search_notice;
+        } else
+            return Images.search_notice;
     }
 
 }
@@ -290,6 +328,10 @@ const stylesP = StyleSheet.create({
         backgroundColor: '#ffffff',
 
     },
+    msgImg: {
+        height: 22,
+        width: 21
+    }
 
 
 });
