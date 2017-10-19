@@ -97,7 +97,7 @@ export class SearchPage extends Component {
                 <View style={{
                     flexDirection: 'row',
                     alignItems: 'center',
-                    height: 50,
+                    height: 44,
                     width: Metrics.screenWidth
                 }}>
                     <TouchableOpacity

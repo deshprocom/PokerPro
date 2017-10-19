@@ -38,13 +38,14 @@ class VideoNewsTab extends PureComponent {
         return true;
     }
 
+
+
     render() {
         return (
             <View style={{flex: 1}}>
 
                 {this.renderHead()}
                 <ScrollableTabView
-                    page={1}
                     ref={ref => this.tabView = ref}
                     locked
                     renderTabBar={false}
