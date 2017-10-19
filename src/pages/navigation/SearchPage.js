@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import {
     View, ScrollView, Platform, StyleSheet, Image, TextInput,
-    Text, Animated, TouchableOpacity
+    Text, Alert, TouchableOpacity
 }
     from 'react-native';
 import {Images, Metrics, Colors} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {umengEvent} from '../../utils/UmengEvent';
-import {isEmptyObject} from '../../utils/ComonHelper';
+import {isEmptyObject, getDispatchAction} from '../../utils/ComonHelper';
 import JpushHelp from '../../services/JpushHelper';
+import {setLocalLanguage} from '../../services/ConfigDao';
 
 export class SearchPage extends Component {
     state = {
@@ -16,8 +17,7 @@ export class SearchPage extends Component {
         headlines: [],
         next_id: '0',
         keyword: '',
-        opacity: 0,
-        badge: false
+        opacity: 0
     };
 
 
@@ -56,13 +56,30 @@ export class SearchPage extends Component {
         if (isEmptyObject(login_user)) {
             router.toLoginFirstPage()
         } else {
-            this.setState({
-                badge: false
-            });
+
             JpushHelp.iosSetBadge(0);
             router.toMessageCenter()
         }
 
+    };
+
+    _switchLanguage = () => {
+        Alert.alert(I18n.t('language_switch'), '', [
+            {
+                text: I18n.t('chinese'), onPress: () => {
+                setLocalLanguage('zh');
+                getDispatchAction()['SWITCH_LANGUAGE']()
+
+            }
+            },
+            {
+                text: I18n.t('english'), onPress: () => {
+                setLocalLanguage('en');
+                getDispatchAction()['SWITCH_LANGUAGE']()
+
+            }
+            }
+        ]);
     };
 
     render() {
@@ -77,10 +94,17 @@ export class SearchPage extends Component {
                 <View style={{
                     flexDirection: 'row',
                     alignItems: 'center',
-                    height: 50,
+                    height: 44,
                     width: Metrics.screenWidth
                 }}>
-                    <Text style={styleR.searchText}>{I18n.t('app_name')}</Text>
+                    <TouchableOpacity
+                        onPress={() => {
+                            this._switchLanguage()
+                        }}>
+                        <Text style={styleR.searchText}>{global.language === 'zh' ?
+                            I18n.t('chinese') : I18n.t('english')}</Text>
+                    </TouchableOpacity>
+
 
                     {this._search()}
 
@@ -89,12 +113,20 @@ export class SearchPage extends Component {
                         onPress={this.toMessagePage}
                         activeOpacity={1}>
                         <Image style={styleR.imgSearch2}
-                               source={Images.search_notice}
+                               source={this._imgNotice()}
                         />
                     </TouchableOpacity>
                 </View>
             </View>
         )
+    }
+
+
+    _imgNotice = () => {
+        if (!isEmptyObject(this.props.unread)) {
+            return this.props.unread.unread_count > 0 ? Images.search_notice2 : Images.search_notice;
+        } else
+            return Images.search_notice;
     }
 }
 

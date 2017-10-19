@@ -12,12 +12,12 @@ import MainBanner from './MainBanner';
 import {getRecentRaces, getRaceTickets} from '../../services/RacesDao';
 import {getHotInfos, getMainBanners, getPukeNews} from '../../services/NewsDao';
 import Router from '../../configs/Router';
-import BackTop from './BackTop';
+import {connect} from 'react-redux';
 import {SearchPage} from './SearchPage';
-import BottomNavigation from './BottomNavigation';
+import {SHOW_BACK_TOP, HIDE_BACK_TOP, BACK_TOP} from '../../actions/ActionTypes';
+import {getDispatchAction} from '../../utils/ComonHelper';
 
-
-export default class RaceInfoPage extends Component {
+class RaceInfoPage extends Component {
     state = {
         listRace: [],
         raceTickets: [],
@@ -28,8 +28,19 @@ export default class RaceInfoPage extends Component {
         headlines: [],
         next_id: '0',
         keyword: '',
-        informationY:0
+        informationY: 0
     };
+
+    componentWillReceiveProps(newProps) {
+
+        if (newProps.actionType === BACK_TOP) {
+            this.mainScroll.scrollTo({x: 0, y: 0, animated: false})
+        }
+
+        if (newProps.actionType === 'SWITCH_LANGUAGE') {
+            this._getData()
+        }
+    }
 
     componentWillMount() {
         this.router = this.router || new Router();
@@ -43,7 +54,6 @@ export default class RaceInfoPage extends Component {
 
     _getData = () => {
         getMainBanners(data => {
-
             this.setState({
                 banners: data.banners
             });
@@ -88,8 +98,22 @@ export default class RaceInfoPage extends Component {
     _onScroll = (event) => {
         if (this.searchBar)
             this.searchBar.onScroll(event);
-        if (this.backTop)
-            this.backTop.onScroll(event);
+
+        this.onTopScroll(event);
+    };
+
+
+    onTopScroll = (event) => {
+        const offsetHeight = 720;
+        let offsetY = event.nativeEvent.contentOffset.y;
+
+        if (offsetY >= offsetHeight) {
+
+            getDispatchAction()[SHOW_BACK_TOP]()
+        } else {
+
+            getDispatchAction()[HIDE_BACK_TOP]()
+        }
     };
 
     render() {
@@ -100,9 +124,10 @@ export default class RaceInfoPage extends Component {
             <View>
 
                 <ScrollView
-                    ref={ref=>this.mainScroll = ref}
+                    ref={ref => this.mainScroll = ref}
                     scrollEventThrottle={16}
                     onScroll={this._onScroll}
+                    showsVerticalScrollIndicator={false}
                 >
                     <MainBanner
                         banners={banners}/>
@@ -115,21 +140,29 @@ export default class RaceInfoPage extends Component {
                         listRace={listRace}/>
                     <Information
                         hotInfos={hotInfos}/>
+                    <View style={{height: 48}}/>
 
                 </ScrollView>
                 <SearchPage
+                    unread={this.props.unread}
                     ref={ref => this.searchBar = ref}/>
-                <BackTop
-                    scrollToTop={()=>{
-                        this.mainScroll.scrollTo({x: 0, y: 0, animated: false})
-                    }}
-                    ref={scroll => this.backTop = scroll}
-                />
-                <BottomNavigation/>
+
+
             </View>
 
         );
     }
 }
+
+
+const bindAction = dispatch => ({});
+
+const mapStateToProps = state => ({
+
+    actionType: state.AccountState.actionType,
+    unread: state.AccountState.unread,
+});
+
+export default connect(mapStateToProps, bindAction)(RaceInfoPage);
 
 

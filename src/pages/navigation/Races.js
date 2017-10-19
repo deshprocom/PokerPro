@@ -3,7 +3,7 @@ import {
     View, Text, Button, Alert, DatePickIOS,
     Image, StyleSheet, ActivityIndicator,
     TouchableOpacity, ScrollView, Dimensions,
-    ListView, Animated, Easing, FlatList,Platform
+    ListView, Animated, Easing, FlatList, Platform
 }
     from 'react-native';
 import {Images} from '../../Themes';
@@ -32,29 +32,27 @@ export default class Races extends Component {
                 activeOpacity={1}>
 
                 <Image style={styles.oval} source={Images.oval}>
-                    <View style={{width: 115, height: 160, marginLeft: 5}}>
-                        <Image style={styleB.ovalImg} source={{uri: item.big_logo}}/>
-                    </View>
+                    <Image style={styleB.ovalImg} source={{uri: item.big_logo}}/>
 
                     <View style={{marginLeft: 20, marginTop: 14}}>
                         <Text
                             numberOfLines={2}
-                            style={{maxWidth: 160,height:35}}>{item.name}</Text>
-                        <View style={[styleB.ovalInner,{marginTop: 19}]}>
+                            style={{maxWidth: 160, height: 35}}>{item.name}</Text>
+                        <View style={[styleB.ovalInner, {marginTop: 19}]}>
                             <Image style={{width: 10, height: 12, marginRight: 7}} source={Images.location}/>
                             <Text style={styles.ovalText}>{item.location}</Text>
                         </View>
-                        <View style={[styleB.ovalInner,{marginTop: 9}]}>
+                        <View style={[styleB.ovalInner, {marginTop: 9}]}>
                             <Image style={{width: 11, height: 11, marginRight: 7}} source={Images.time}/>
                             <Text style={styles.ovalText}>{this.races_time(item)}</Text>
                         </View>
-                        <View style={[styleB.ovalInner,{marginTop: 15}]}>
+                        <View style={[styleB.ovalInner, {marginTop: 15}]}>
                             <Text style={styles.ovalPrice}>￥{item.min_price}</Text>
                         </View>
                         <TouchableOpacity
                             onPress={() => router.toChoiseTicketPage(this.props, item.race_id)}
                             activeOpacity={1}
-                            style={Platform.OS == 'ios' ? styleB.buyButtonPosition: styleB.buyButtonPosition2}>
+                            style={Platform.OS == 'ios' ? styleB.buyButtonPosition : styleB.buyButtonPosition2}>
                             <Image
                                 style={styles.button}
                                 source={Images.button}
@@ -71,7 +69,7 @@ export default class Races extends Component {
     };
 
     render() {
-        if(isEmptyObject(this.props.raceTickets)){
+        if (isEmptyObject(this.props.raceTickets)) {
             return <View/>
         }
         return (
@@ -81,7 +79,7 @@ export default class Races extends Component {
                         <Text style={styles.raceText1}>{I18n.t('hot_races')}</Text>
                         <Image style={{width: 13, height: 17, marginLeft: 6}} source={Images.raceBegin}/>
                     </View>
-                    <View style={{flex:1}}/>
+                    <View style={{flex: 1}}/>
                     <TouchableOpacity style={styles.racesTwo} onPress={() => {
                         umengEvent('home_ticket');
                         router.toTicketPage()
@@ -108,28 +106,28 @@ export default class Races extends Component {
 }
 
 const styleB = StyleSheet.create({
-    ovalRace:{
+    ovalRace: {
         height: 20, flexDirection: 'row', alignItems: 'center', marginTop: 14
     },
-    buyButtonPosition:{
+    buyButtonPosition: {
         position: 'absolute', top: 105,
         left: 80, right: 16, bottom: 18
     },
-    buyButtonPosition2:{
+    buyButtonPosition2: {
         position: 'absolute', top: 107,
         left: 80
     },
-    buyText:{
+    buyText: {
         backgroundColor: 'transparent',
         color: '#ffffff',
         fontSize: 14,
         fontWeight: 'bold',
         marginBottom: 5
     },
-    ovalImg:{
-        width: 115, height: 155, marginTop:5
+    ovalImg: {
+        width: 115, height: 155, marginLeft: 5, marginTop: 3
     },
-    ovalInner:{
+    ovalInner: {
         flexDirection: 'row', alignItems: 'center'
     }
 })

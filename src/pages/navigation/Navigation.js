@@ -5,12 +5,13 @@ import Personal from './Personal';
 import {
     StyleSheet
 } from 'react-native';
-import {TabIcon} from './TabIcon';
+import TabIcon from './TabIcon';
 import I18n from 'react-native-i18n';
 import {Images} from '../../Themes';
 import VideoNewsTab from './VideoNewsTab';
 import DrawerRank from '../rank/DrawerRank';
-import ConstomTab from './BottomNavigation'
+import ConstomTabBar from './BottomNavigation';
+
 
 export const Navigation = () => {
 
@@ -25,17 +26,14 @@ export const Navigation = () => {
             inactiveBackgroundColor="rgba(255, 255, 255, 0.96)"
             tabBarPosition={'bottom'}
             swipeEnabled={false}
-            tabBarComponent={() => <ConstomTab/>}
+            tabBarComponent={() => <ConstomTabBar/>}
         >
             <Stack
                 key="tab_1"
                 tabBarLabel="TAB #1"
                 inactiveBackgroundColor="#FFF"
 
-                icon={({focused}) => focused ? TabIcon(I18n.t('home'), Images.home2, styles.textStyle2, styles.bgHomeStyle, false) :
-                    TabIcon(I18n.t('home'), Images.home, styles.textStyle, styles.bgHomeStyle, false)}
-
-                titleStyle={{color: 'white', alignSelf: 'center'}}
+                icon={({focused}) => <TabIcon tab={'home'} focused={focused}/>}
             >
                 <Scene
                     key="tab_home"
@@ -47,29 +45,26 @@ export const Navigation = () => {
                 <Scene key="tab_news"
                        component={VideoNewsTab}
                        hideNavBar
-                       icon={({focused}) => focused ? TabIcon(I18n.t('home_info'), Images.information2, styles.textStyle2, styles.bgInformationStyle, false) :
-                           TabIcon(I18n.t('home_info'), Images.information, styles.textStyle, styles.bgInformationStyle, false)}
+                       icon={({focused}) => <TabIcon tab={'news'} focused={focused}/>}
                 />
             </Stack>
             <Stack key="tab_3">
                 <Scene key="tab_rank"
                        component={DrawerRank}
                        hideNavBar
-                       icon={({focused}) => focused ? TabIcon(I18n.t('home_sort'), Images.rank2, styles.textStyle2, styles.bgRankStyle2, false) :
-                           TabIcon(I18n.t('home_sort'), Images.rank, styles.textStyle, styles.bgRankStyle2, false)}
+                       icon={({focused}) => <TabIcon tab={'rank'} focused={focused}/>}
                 />
             </Stack>
             <Stack key="tab_4">
                 <Scene key="tab_person"
                        component={Personal}
                        hideNavBar
-                       icon={({focused}) => focused ? TabIcon(I18n.t('mine'), Images.mine2, styles.textStyle2, styles.bgHomeStyle, false) :
-                           TabIcon(I18n.t('mine'), Images.mine, styles.textStyle, styles.bgHomeStyle, false)}
+                       icon={({focused}) => <TabIcon tab={'me'} focused={focused}/>}
                 />
             </Stack>
         </Tabs>
     );
-}
+};
 const styles = StyleSheet.create({
     tabs: {
         height: 50

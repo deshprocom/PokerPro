@@ -10,11 +10,11 @@ import {
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import PullToRefreshListView from 'react-native-smart-pull-to-refresh-listview';
+import {ImageLoad, UltimateListView} from '../../components';
 import {_renderFooter, _renderHeader} from '../../components/LoadingView';
-import {fetchSearchByKeyword} from '../../actions/RacesAction';
+import {searchRaceKeyword} from '../../services/RacesDao';
 import {isEmptyObject, strNotNull} from '../../utils/ComonHelper';
-import {SEARCH_BY_KEYWORD} from '../../actions/ActionTypes';
+
 import {NoDataView, NoNetWorkView, LoadErrorView} from '../../components/load';
 import RaceRowView from '../../components/listitem/RaceRowView';
 
@@ -23,22 +23,13 @@ class SearchKeywordPage extends Component {
 
     constructor(props) {
         super(props);
-        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
-        this.initData();
-
-    }
-
-
-    initData = () => {
-        let dataList = [];
         this.state = {
-            dataList: dataList,
-            dataSource: this.ds.cloneWithRows(dataList),
+            dataList: [],
             next_id: '0',
-            keyword: ''
+            error: false
         };
-    };
+        this.keyword = '';
+    }
 
 
     render() {
@@ -58,10 +49,9 @@ class SearchKeywordPage extends Component {
                         underlineColorAndroid='transparent'
                         style={styles.inputSearch}
                         onChangeText={txt => {
-                            this.setState({
-                                keyword: txt
-                            });
-                            this.loadList('0', txt)
+                            this.keyword = txt;
+                            if (strNotNull(txt))
+                                this.listView.onRefresh()
                         }}/>
 
                 </View>
@@ -81,95 +71,75 @@ class SearchKeywordPage extends Component {
     }
 
     content = () => {
-        const {actionType, error, hasData} = this.props;
-        const {dataList} = this.state;
-
-        if (actionType === SEARCH_BY_KEYWORD && dataList.length <= 0)
-            if (hasData) {
-                return <NoDataView
-                    pageStyle={{backgroundColor: Colors.bg_ec}}/>
-            } else if (error)
-                return <LoadErrorView
-                    onPress={() => this._onRefresh()}/>
-        return <PullToRefreshListView
-            ref={ (component) => this._pullToRefreshListView = component }
-            viewType={PullToRefreshListView.constants.viewType.listView}
-            dataSource={this.state.dataSource}
-            renderRow={this._renderRow}
-            renderHeader={(viewState) => _renderHeader(viewState, headerStyle)}
-            renderFooter={(viewState) => _renderFooter(viewState, headerStyle)}
-            onRefresh={this._onRefresh}
-            onLoadMore={this._onLoadMore}
-            enableEmptySections={true}
-            automaticallyAdjustContentInsets={false}
+        return <UltimateListView
+            keyExtractor={(item, index) => index}
+            ref={(ref) => this.listView = ref}
+            onFetch={this.onFetch}
+            rowView={this._renderRow}
+            refreshableTitlePull={I18n.t('pull_refresh')}
+            refreshableTitleRelease={I18n.t('release_refresh')}
+            dateTitle={I18n.t('last_refresh')}
+            allLoadedText={I18n.t('no_more')}
+            waitingSpinnerText={I18n.t('loading')}
+            emptyView={() => {
+                return this.state.error ? <LoadErrorView
+                    onPress={() => {
+                        this.listView.refresh()
+                    }}/> : <NoDataView/>;
+            }}
         />
     };
 
-    componentWillReceiveProps(newProps) {
-        const {hasData, listRaces, loading, actionType} = newProps;
 
-        if (hasData && this.props.loading !== loading)
-            if (actionType === SEARCH_BY_KEYWORD) {
-
-                console.log(this.state.next_id, this.state.dataList)
-                if (this.state.next_id === '0') {
-                    this.state.dataList.splice(0, this.state.dataList.length);
-                    this._pullToRefreshListView.endRefresh()
-                } else {
-                    this._pullToRefreshListView.endLoadMore(false)
-                }
-
-
-                const {items, next_id} = listRaces;
-                let newDataList = this.state.dataList.concat(items)
-
-                this.setState({
-                    dataList: newDataList,
-                    dataSource: this.ds.cloneWithRows(newDataList),
-                    next_id: next_id
-                });
+    onFetch = (page = 1, startFetch, abortFetch) => {
+        try {
+            if (page === 1) {
+                this._onRefresh(startFetch, abortFetch)
+            } else {
+                this._onLoadMore(startFetch, abortFetch);
             }
-    }
-
-    _onLoadMore = () => {
-        const {next_id, keyword} = this.state;
-        if (strNotNull(next_id)) {
-            this.loadList(next_id, keyword);
-        } else {
-            this._pullToRefreshListView.endLoadMore(false)
+        } catch (err) {
+            abortFetch();
         }
     };
-    _onRefresh = () => {
-        if (strNotNull(this.state.keyword)) {
+
+    _onLoadMore = (startFetch, abortFetch) => {
+        const {next_id} = this.state;
+        const body = {
+            next_id: next_id,
+            keyword:   this.keyword
+        };
+        searchRaceKeyword(body, data => {
+            const {items, last_id} = data;
             this.setState({
-                next_id: '0'
+                next_id: last_id
             });
-            this.loadList('0', this.state.keyword)
-        } else {
-            this._pullToRefreshListView.endRefresh();
-        }
-
+            startFetch(items, 6)
+        }, err => {
+            abortFetch()
+        })
     };
+    _onRefresh = (startFetch, abortFetch) => {
+        const {next_id} = this.state;
+        const body = {
+            next_id: next_id,
+            keyword:   this.keyword
+        };
 
-
-    loadList = (next_id, keyword) => {
-
-        if (strNotNull(keyword)) {
+        searchRaceKeyword(body, data => {
+            const {items, last_id} = data;
             this.setState({
-                next_id: next_id
+                next_id: last_id
             });
-            const body = {
-                next_id: next_id,
-                keyword: keyword
-            };
-            this.props._searchByDate(body);
-
-        }
-
+            startFetch(items, 6)
+        }, err => {
+            abortFetch()
+        })
 
     };
 
-    _renderRow = (rowData, sectionID, rowID, highlightRow) => {
+
+    _renderRow = (rowData, sectionID, rowID) => {
 
         return (
             <RaceRowView

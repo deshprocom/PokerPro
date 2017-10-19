@@ -6,12 +6,10 @@
  */
 import React, {Component, PropTypes} from 'react';
 import {
-    StyleSheet, Text, View, FlatList,
-    TouchableOpacity, Image, StatusBar,
-    ScrollView, Animated
+    View
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-
+import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 
 import VideoListView from './VideoListView';
@@ -22,6 +20,12 @@ import {getVideoTypes} from '../../services/NewsDao';
 export default class MainVideoPage extends Component {
 
     componentDidMount() {
+        console.log('MainVideo')
+        this.refresh();
+    }
+
+
+    refresh = () => {
         getVideoTypes({}, data => {
             let {items} = data;
 
@@ -35,7 +39,7 @@ export default class MainVideoPage extends Component {
             }
         }, err => {
         })
-    }
+    };
 
     state = {
         typeListData: [],
@@ -70,7 +74,6 @@ export default class MainVideoPage extends Component {
         const {typeListData} = this.state;
 
         let pages = [];
-        let that = this;
 
         typeListData.forEach(function (x) {
             pages.push(
@@ -109,79 +112,3 @@ export default class MainVideoPage extends Component {
 
 
 }
-
-
-const styles = StyleSheet.create({
-    topBar: {
-        height: 40,
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: Metrics.statusBarHeight,
-
-    },
-    popBtn: {
-        height: 40,
-        width: 50,
-        justifyContent: 'center'
-    },
-    backImg: {
-        width: 11,
-        height: 20,
-        marginLeft: 15
-    },
-    searchView: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    searchBar: {
-        backgroundColor: '#212325',
-        height: 28,
-        width: 270,
-        alignItems: 'center',
-        flexDirection: 'row',
-        borderRadius: 3
-    },
-    navBar: {
-        backgroundColor: Colors._161817
-    },
-    searchImg: {
-        height: 16,
-        width: 16,
-        marginLeft: 10,
-        marginRight: 10
-    },
-    txtOutline: {
-        color: Colors.txt_666,
-        fontSize: 12
-    },
-    newsTypeView: {
-        height: 50,
-        backgroundColor: Colors.white
-    },
-    itemView: {
-        height: 50,
-        width: 80,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    itemTxt: {
-        color: Colors._888,
-        fontSize: 14
-    },
-    itemTxtSelect: {
-        color: Colors._333,
-        fontSize: 16,
-        marginBottom: 10
-    },
-    triangle: {
-        height: 3,
-        width: 60,
-        marginBottom: 4,
-        backgroundColor: Colors._333
-    },
-    viewPage: {
-        flex: 1
-    }
-
-});
