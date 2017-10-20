@@ -188,8 +188,6 @@ export default class VideoListView extends Component {
                                 style={styles.imgPlay}
                                 source={Images.video_play}/>
                         </TouchableOpacity>
-                        <Text style={[styles.listVideoTime, {fontSize: FontSize.h14}]}>{video_duration}</Text>
-
 
                     </View>
 
