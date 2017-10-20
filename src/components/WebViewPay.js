@@ -140,7 +140,7 @@ export default class WebViewPay extends Component {
     _renderError() {
         return (
             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                <Text> 出错了, 重新刷新下吧～</Text>
+                <Text onPress={()=>{this.webView.reload()}}> 出错了, 重新刷新下吧～</Text>
             </View>
         );
     }
