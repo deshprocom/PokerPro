@@ -37,7 +37,7 @@ export default class NewsInfoPage extends Component {
     }
 
     renderHeader = () => {
-        const {date, description, source, title, id, image} = this.state.newsInfo;
+        const {date, description, source, title, id, image,image_thumb} = this.state.newsInfo;
         return <NavigationBar
             toolbarStyle={{backgroundColor: Colors.bg_09}}
             leftBtnIcon={Images.sign_return}
@@ -46,7 +46,7 @@ export default class NewsInfoPage extends Component {
             rightBtnIcon={Images.share}
             rightImageStyle={{height: 22, width: 23, marginRight: 24.8}}
             rightBtnPress={() => {
-                newShare(title, date + '\n' + source, image, id);
+                newShare(title, date + '\n' + source, image_thumb, id);
 
             }}/>
     }
