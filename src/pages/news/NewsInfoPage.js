@@ -36,6 +36,21 @@ export default class NewsInfoPage extends Component {
 
     }
 
+    renderHeader = () => {
+        const {date, description, source, title, id, image} = this.state.newsInfo;
+        return <NavigationBar
+            toolbarStyle={{backgroundColor: Colors.bg_09}}
+            leftBtnIcon={Images.sign_return}
+            leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+            leftBtnPress={() => router.pop()}
+            rightBtnIcon={Images.share}
+            rightImageStyle={{height: 22, width: 23, marginRight: 24.8}}
+            rightBtnPress={() => {
+                newShare(title, date + '\n' + source, image, id);
+
+            }}/>
+    }
+
     render() {
 
         const {date, description, source, title, id, image} = this.state.newsInfo;
@@ -43,17 +58,8 @@ export default class NewsInfoPage extends Component {
         return (<View
             testID="page_news_info"
             style={styles.page}>
-            <NavigationBar
-                toolbarStyle={{backgroundColor: Colors.bg_09}}
-                leftBtnIcon={Images.sign_return}
-                leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                leftBtnPress={() => router.pop()}
-                rightBtnIcon={Images.share}
-                rightImageStyle={{height: 22, width: 23, marginRight: 24.8}}
-                rightBtnPress={() => {
-                    newShare(title, date + '\n' + source, image, id);
 
-                }}/>
+            {this.renderHeader()}
 
             <ScrollView>
 
