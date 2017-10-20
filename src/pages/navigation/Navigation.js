@@ -5,12 +5,9 @@ import Personal from './Personal';
 import {
     StyleSheet
 } from 'react-native';
-import TabIcon from './TabIcon';
-import I18n from 'react-native-i18n';
-import {Images} from '../../Themes';
 import VideoNewsTab from './VideoNewsTab';
 import DrawerRank from '../rank/DrawerRank';
-import ConstomTabBar from './BottomNavigation';
+import CustomTabBar from './BottomNavigation';
 
 
 export const Navigation = () => {
@@ -22,18 +19,12 @@ export const Navigation = () => {
             lazy
             key="Navigation"
             showLabel={false}
-            activeBackgroundColor="rgba(255, 255, 255, 0.96)"
-            inactiveBackgroundColor="rgba(255, 255, 255, 0.96)"
             tabBarPosition={'bottom'}
             swipeEnabled={false}
-            tabBarComponent={() => <ConstomTabBar/>}
+            tabBarComponent={CustomTabBar}
         >
             <Stack
                 key="tab_1"
-                tabBarLabel="TAB #1"
-                inactiveBackgroundColor="#FFF"
-
-                icon={({focused}) => <TabIcon tab={'home'} focused={focused}/>}
             >
                 <Scene
                     key="tab_home"
@@ -45,21 +36,20 @@ export const Navigation = () => {
                 <Scene key="tab_news"
                        component={VideoNewsTab}
                        hideNavBar
-                       icon={({focused}) => <TabIcon tab={'news'} focused={focused}/>}
+
                 />
             </Stack>
             <Stack key="tab_3">
                 <Scene key="tab_rank"
                        component={DrawerRank}
                        hideNavBar
-                       icon={({focused}) => <TabIcon tab={'rank'} focused={focused}/>}
+
                 />
             </Stack>
             <Stack key="tab_4">
                 <Scene key="tab_person"
                        component={Personal}
                        hideNavBar
-                       icon={({focused}) => <TabIcon tab={'me'} focused={focused}/>}
                 />
             </Stack>
         </Tabs>

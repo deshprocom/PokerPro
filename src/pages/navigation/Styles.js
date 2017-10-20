@@ -1,11 +1,12 @@
 import {
-    StyleSheet,Dimensions
+    StyleSheet, Dimensions
 }
     from 'react-native';
 import {Images} from '../../Themes';
+
 var deviceWidth = Dimensions.get('window').width;
 export const styles = StyleSheet.create({
-    scrollImg:{
+    scrollImg: {
         flex: 1,
         height: 200
     },
@@ -16,7 +17,7 @@ export const styles = StyleSheet.create({
     pukes: {
         height: 40,
         justifyContent: 'center',
-        backgroundColor:'#fff'
+        backgroundColor: '#fff'
     },
     puke: {
         flexDirection: 'row',
@@ -25,20 +26,21 @@ export const styles = StyleSheet.create({
     },
     racesTwo: {
         flexDirection: 'row',
-        marginRight:14,
-        alignItems:'center',
-        paddingLeft:30
+        marginRight: 14,
+        alignItems: 'center',
+        paddingLeft: 30,
+        height: 40
     },
     pukeText: {
-        width:62,
-        height:15
+        width: 62,
+        height: 15
 
     },
-    pukeText2:{
-        width:247,
-        fontSize:13,
-        fontFamily:'PingFangSC-Regular',
-        color:'#666666'
+    pukeText2: {
+        width: 247,
+        fontSize: 13,
+        fontFamily: 'PingFangSC-Regular',
+        color: '#666666'
 
     },
     races: {
@@ -49,8 +51,8 @@ export const styles = StyleSheet.create({
     raceText1: {
         fontSize: 14,
         color: '#333333',
-        fontFamily:'PingFangSC-Regular',
-        fontWeight:'bold'
+        fontFamily: 'PingFangSC-Regular',
+        fontWeight: 'bold'
     },
     raceText: {
         fontSize: 14,
@@ -68,21 +70,19 @@ export const styles = StyleSheet.create({
 
 
     information: {
-        height:103,
-        marginLeft:20,
-        marginRight:17,
-        flexDirection:'row',
-        alignItems:'center'
+        height: 103,
+        marginLeft: 20,
+        marginRight: 17,
+        flexDirection: 'row',
+        alignItems: 'center'
     },
-    informationTwo: {
-
-    },
+    informationTwo: {},
     informationImg: {
         marginLeft: 100,
 
     },
-    informationText:{
-        color:'#AAAAAA',fontSize:12
+    informationText: {
+        color: '#AAAAAA', fontSize: 12
     },
     page: {
         width: deviceWidth,
@@ -104,27 +104,27 @@ export const styles = StyleSheet.create({
         color: 'white',
         marginBottom: 10
     },
-    button:{
-        width:68,
-        height:28,
-        alignItems:'center',
-        justifyContent:'center'
+    button: {
+        width: 68,
+        height: 28,
+        alignItems: 'center',
+        justifyContent: 'center'
 
     },
-    oval:{
-        width:317,
-        height:165,
-        marginLeft:17,
-        flexDirection:'row'
+    oval: {
+        width: 317,
+        height: 165,
+        marginLeft: 17,
+        flexDirection: 'row'
     },
-    ovalText:{
+    ovalText: {
         fontSize: 12,
-        color:'#888888'
+        color: '#888888'
 
     },
-    ovalPrice:{
+    ovalPrice: {
         fontSize: 15,
-        color:'#DF1D0F'
+        color: '#DF1D0F'
     },
 
 

@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {isEmptyObject, convertDate, strNotNull} from '../../utils/ComonHelper';
+import {isEmptyObject, uVideoShare, strNotNull} from '../../utils/ComonHelper';
 import {LoadingView} from '../../components/load'
 import {NavigationBar, MarkdownPlat, VideoPlayer} from '../../components';
 import {getVideoDetail, getSubVideo} from '../../services/NewsDao';
@@ -84,16 +84,16 @@ export default class VideoInfoPage extends Component {
 
     renderList = () => {
         const {group_name} = this.state.videoInfo;
-        if (this.state.subVideos.length > 0)
+        if (this.state.subVideos.length > 1)
             return <View style={{backgroundColor: 'white', marginTop: 5, paddingLeft: 17,}}>
                 <View style={styles.listTitle}>
                     <Text style={styles.childTitle}>{group_name}</Text>
                     <View style={{flex: 1}}/>
-                    <TouchableOpacity style={{alignItems: 'center', flexDirection: 'row'}}>
+                   {/* <TouchableOpacity style={{alignItems: 'center', flexDirection: 'row'}}>
                         <Text style={styles.more}>查看更多</Text>
                         <Image style={styles.imgMore}
                                source={Images.is}/>
-                    </TouchableOpacity>
+                    </TouchableOpacity>*/}
 
                 </View>
 
@@ -131,9 +131,20 @@ export default class VideoInfoPage extends Component {
     };
 
     renderTitle = () => {
-        const {name} = this.state.videoInfo;
+        const {name, cover_link, id, title_desc} = this.state.videoInfo;
         return <View style={styles.viewTitle}>
             <Text style={styles.txtTitle}>{name}</Text>
+
+            <View style={{flex: 1}}/>
+            <TouchableOpacity
+                onPress={() => {
+                    uVideoShare(name, title_desc, cover_link, id)
+                }}>
+
+                <Image style={styles.imgShare}
+                       source={Images.video_share}/>
+
+            </TouchableOpacity>
         </View>
     };
 
@@ -185,13 +196,14 @@ const styles = StyleSheet.create({
         height: 80,
         width: '100%',
         backgroundColor: 'white',
-        paddingLeft: 17
+        flexDirection: 'row'
 
     },
     txtTitle: {
         fontSize: 17,
         color: Colors._333,
         marginTop: 15,
+        marginLeft: 17
     },
     txtTime: {
         fontSize: 12,
@@ -222,6 +234,13 @@ const styles = StyleSheet.create({
     },
     fullVideo: {
         flex: 1
-    }
+    },
+    imgShare: {
+        height: 17,
+        width: 17,
+        margin: 14,
+        marginTop: 34
+
+    },
 
 })

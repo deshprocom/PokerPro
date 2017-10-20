@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/8/4.
  */
-import React, {Component, PropTypes}from 'react';
+import React, {Component, PropTypes} from 'react';
 import {
     TouchableOpacity, View, Modal,
     StyleSheet, Image, Text, ScrollView, Platform
@@ -133,13 +133,23 @@ export default class PayModal extends Component {
             <View>
                 <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
                     <Text style={styles.txt3}>{I18n.t('pay_need')}  </Text>
-                    <Text style={styles.txt32}> ¥{price}</Text>
+                    <Text style={styles.txt32}> ¥{this._invitePrice()}</Text>
                 </View>
                 <Text style={styles.txt31}>{I18n.t('order_num')}: {order_number}</Text>
             </View>
 
         </View>;
     };
+
+
+    _invitePrice = () => {
+        const {price} = this.state.payUrl;
+        const {toOrder, invitePrice} = this.props;
+        if (toOrder && strNotNull(invitePrice))
+            return invitePrice;
+        else
+            return price;
+    }
 
     cardView = () => {
         return <TouchableOpacity

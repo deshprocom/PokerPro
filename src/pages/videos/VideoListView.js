@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {isEmptyObject, uniqueArray, FontSize, uVideoShare, strNotNull,getDateDiff} from '../../utils/ComonHelper';
+import {isEmptyObject, uniqueArray, FontSize, uVideoShare, strNotNull, getDateDiff} from '../../utils/ComonHelper';
 import {ImageLoad, VideoPlayer, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {getVideoList} from '../../services/NewsDao';
@@ -188,8 +188,6 @@ export default class VideoListView extends Component {
                                 style={styles.imgPlay}
                                 source={Images.video_play}/>
                         </TouchableOpacity>
-                        <Text style={[styles.listVideoTime, {fontSize: FontSize.h14}]}>{video_duration}</Text>
-
 
                     </View>
 
@@ -208,11 +206,15 @@ export default class VideoListView extends Component {
             style={styles.transparent}
             testID={"btn_news_row_" + rowData.id}>
 
-            <View>
+            <TouchableOpacity
+                onPress={() => {
+                    this._pressItem(rowData)
+                }}
+            >
 
                 <Text style={styles.itemTitle}>{name}</Text>
 
-            </View>
+            </TouchableOpacity>
 
             {this._playView(rowData)}
             <View style={{flexDirection: 'row', alignItems: 'center'}}>

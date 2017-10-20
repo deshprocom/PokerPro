@@ -18,10 +18,11 @@ import {
 import Communications from 'react-native-communications';
 import NameRealView from './NameRealView';
 import StorageKey from '../../configs/StorageKey';
-import {getBuyRaceTicket, postOrderTicket, getUnpaidOrder} from '../../services/OrderDao';
+import {getBuyRaceTicket, postOrderTicket, getUnpaidOrder, postInvite} from '../../services/OrderDao';
 import {umengEvent} from '../../utils/UmengEvent';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import PayModal from './PayModal';
+import {CouponType} from '../../configs/Status';
 
 
 const E_TICKET = 'e_ticket',
@@ -39,7 +40,8 @@ export default class BuyTicketPage extends Component {
         tickets: {},
         shipping_address: {},
         order_number: '',
-        inviteCode: ''
+        inviteCode: '',
+        invitePrice: {}
     };
 
 
@@ -404,7 +406,7 @@ export default class BuyTicketPage extends Component {
     render() {
 
         const {race, tickets, ordered, isEntity, knowRed, email, order} = this.state;
-        const {ticket_info, price} = tickets;
+        const {ticket_info, price, unformatted_price} = tickets;
 
         return (
             <View
@@ -543,7 +545,7 @@ export default class BuyTicketPage extends Component {
 
                         <Text style={{fontSize: 18, color: Colors._DF1}}
                               testID="txt_ticket_price">
-                            ¥{price}
+                            ¥{this._isDiscount() ? this.couponPrice(unformatted_price) : price}
                         </Text>
                     </View>
                     <View style={{height: 41, width: 1, backgroundColor: Colors.txt_DDD}}/>
@@ -575,6 +577,7 @@ export default class BuyTicketPage extends Component {
                 </View>
 
                 <PayModal
+                    invitePrice={this._isDiscount() ? this.couponPrice(unformatted_price) : ''}
                     toOrder={true}
                     ref={ref => this.payModal = ref}/>
             </View>
@@ -594,7 +597,18 @@ export default class BuyTicketPage extends Component {
             <TextInput
                 style={{height: 50, flex: 1, fontSize: 14}}
                 placeholder={I18n.t('buy_invite_placeholder')}
-                onChangeText={(inviteCode) => this.setState({inviteCode})}
+                onChangeText={(inviteCode) => {
+                    this.setState({inviteCode});
+                    postInvite({invite_code: inviteCode}, data => {
+                        this.setState({
+                            invitePrice: data.invite_code
+                        })
+                    }, err => {
+                        this.setState({
+                            invitePrice: {}
+                        })
+                    })
+                }}
             />
         </View>)
     };
@@ -603,7 +617,7 @@ export default class BuyTicketPage extends Component {
         const {tickets} = this.state;
         if (isEmptyObject(tickets))
             return;
-        const {original_price, price} = tickets;
+        const {original_price, price, unformatted_price} = tickets;
         return (<View style={{backgroundColor: 'white', marginTop: 8}}>
             <View style={{height: 35}}>
                 <Text style={{
@@ -631,12 +645,58 @@ export default class BuyTicketPage extends Component {
                 <Text style={styles.txtPrice1}>{I18n.t('order_pay')}</Text>
 
                 <Text
-                    style={{color: Colors._DF1, fontSize: 14, marginRight: 17}}>{price}</Text>
+                    style={{
+                        color: Colors._DF1, fontSize: 14, marginRight: 17,
+                        textDecorationLine: this._isDiscount() ? 'line-through' : 'none'
+                    }}>{price}</Text>
 
             </View>
+            {this._isDiscount() ?
+                <View style={{marginLeft: 18, marginRight: 18, height: 1, backgroundColor: Colors._ECE}}/> : null}
+
+            {this._invitePrice(unformatted_price)}
 
         </View>)
     };
+
+    _isDiscount = () => {
+        const {invitePrice} = this.state;
+        return !isEmptyObject(invitePrice) && invitePrice.coupon_type !== CouponType.no_discount;
+    };
+
+    _invitePrice = (price) => {
+        const {invitePrice} = this.state;
+        if (isEmptyObject(invitePrice))
+            return;
+        if (invitePrice.coupon_type === CouponType.no_discount)
+            return;
+
+        return <View style={styles.viewPrice1}>
+            <Text style={styles.txtPrice1}>{I18n.t('discount')}</Text>
+
+            <Text
+                style={{
+                    color: Colors._DF1,
+                    fontSize: 14,
+                    marginRight: 17
+                }}>{this.couponPrice(price)}</Text>
+
+        </View>
+    };
+
+    couponPrice = (price) => {
+        const {invitePrice} = this.state;
+        if (invitePrice.coupon_type === CouponType.rebate) {
+            let discount = Number.parseFloat(price) * Number.parseFloat(invitePrice.coupon_number / 100);
+            return discount
+        } else if (invitePrice.coupon_type === CouponType.reduce) {
+            let discount = Number.parseFloat(price) - Number.parseFloat(invitePrice.coupon_number);
+            return discount
+        }
+
+
+    };
+
 
     _emailViwe = (email) => {
         return (  <View
@@ -826,12 +886,12 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     viewPrice: {
-        flexDirection: 'row', justifyContent: 'space-between', marginTop: 16,
-        marginBottom: 14
+        flexDirection: 'row', justifyContent: 'space-between',
+        height: 40, alignItems: 'center'
     },
     viewPrice1: {
         flexDirection: 'row', justifyContent: 'space-between',
-        marginBottom: 16
+        height: 40, alignItems: 'center'
     },
     txtPrice1: {color: Colors._333, fontSize: 14, marginLeft: 18}
 

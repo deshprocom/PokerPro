@@ -101,8 +101,9 @@ export class SearchPage extends Component {
                         onPress={() => {
                             this._switchLanguage()
                         }}>
-                        <Text style={styleR.searchText}>{global.language === 'zh' ?
-                            I18n.t('chinese') : I18n.t('english')}</Text>
+                        <Text
+                            style={global.language === 'zh' ? styleR.searchText : [styleR.searchText, {fontSize: 16}]}>{global.language === 'zh' ?
+                            I18n.t('chinese') : "EN"}</Text>
                     </TouchableOpacity>
 
 

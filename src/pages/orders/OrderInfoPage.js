@@ -23,7 +23,7 @@ import Button from 'react-native-smart-button';
 import {fetchGetRecentRaces, fetchRacesInfo} from '../../actions/RacesAction';
 import {Verified} from '../../configs/Status';
 import PayModal from '../buy/PayModal';
-import {postOrderCancel, postPayOrder, postOrderComplete} from '../../services/OrderDao';
+import {postOrderCancel, postInvite, postOrderComplete} from '../../services/OrderDao';
 
 class OrderInfoPage extends React.Component {
 
@@ -38,7 +38,8 @@ class OrderInfoPage extends React.Component {
 
     state = {
         user_id: '',
-        verified: {}
+        verified: {},
+        isDiscount: false
     };
 
     componentWillReceiveProps(newProps) {
@@ -65,8 +66,15 @@ class OrderInfoPage extends React.Component {
             && this.props.loading !== newProps.loading
             && newProps.hasData) {
 
-            const {user_extra} = newProps.orderDetail;
+            const {user_extra, order_info} = newProps.orderDetail;
+            postInvite({invite_code: order_info.invite_code}, data => {
+                const {coupon_type} = data.invite_code;
+                this.setState({
+                    isDiscount: 'no_discount' !== coupon_type
+                })
+            }, err => {
 
+            });
             this.setState({verified: user_extra});
 
 
@@ -202,36 +210,53 @@ class OrderInfoPage extends React.Component {
                     </View>
                 </View>
                 {/*订单明细*/}
-                <View style={{height: 121, backgroundColor: Colors.white, paddingLeft: 17, marginTop: 5}}>
+                {this._orderPrice()}
 
-                    <View style={{height: 40, alignItems: 'center', flexDirection: 'row'}}>
-                        <Text style={{fontSize: Fonts.size.h16, color: Colors.txt_444}}>{I18n.t('order_msg')}</Text>
-                    </View>
-                    <View style={{height: 1, backgroundColor: Colors.bg_f5}}/>
-
-
-                    <View style={{flex: 1}}>
-                        <View
-                            style={{justifyContent: 'space-between', flexDirection: 'row', marginTop: 14}}>
-                            <Text style={{fontSize: 14, color: Colors.txt_666}}>{I18n.t('order_price')}</Text>
-                            <Text
-                                testID="txt_original_price"
-                                style={{
-                                    fontSize: 14, color: Colors._AAA, marginRight: 18,
-                                    textDecorationLine: 'line-through'
-                                }}>{order_info.original_price}</Text>
-                        </View>
-                        <View
-                            style={{justifyContent: 'space-between', flexDirection: 'row', marginTop: 16}}>
-                            <Text style={{fontSize: 14, color: Colors.txt_666}}>{I18n.t('order_pay')}</Text>
-                            <Text
-                                testID="txt_price"
-                                style={{fontSize: 14, color: '#DF1D0F', marginRight: 18}}>{order_info.price}</Text>
-                        </View>
-                    </View>
-
-                </View>
             </View>)
+    };
+
+
+    _orderPrice = () => {
+        const {race_info, order_info, ticket} = this.props.orderDetail;
+        return <View style={{backgroundColor: Colors.white, paddingLeft: 17, marginTop: 5}}>
+
+            <View style={{height: 40, alignItems: 'center', flexDirection: 'row'}}>
+                <Text style={{fontSize: Fonts.size.h16, color: Colors.txt_444}}>{I18n.t('order_msg')}</Text>
+            </View>
+            <View style={{height: 1, backgroundColor: Colors.bg_f5}}/>
+
+
+            <View
+                style={styles.viewPrice}>
+                <Text style={{fontSize: 14, color: Colors.txt_666}}>{I18n.t('order_price')}</Text>
+                <Text
+                    testID="txt_original_price"
+                    style={{
+                        fontSize: 14, color: Colors._AAA, marginRight: 18,
+                        textDecorationLine: 'line-through'
+                    }}>{order_info.original_price}</Text>
+            </View>
+            <View
+                style={styles.viewPrice}>
+                <Text style={{fontSize: 14, color: Colors.txt_666}}>{I18n.t('order_pay')}</Text>
+                <Text
+                    testID="txt_price"
+                    style={{
+                        fontSize: 14, color: '#DF1D0F', marginRight: 18,
+                        textDecorationLine: this.state.isDiscount ? 'line-through' : 'none'
+                    }}>{ticket.price}</Text>
+            </View>
+
+            {this.state.isDiscount ? <View
+                style={styles.viewPrice}>
+                <Text style={{fontSize: 14, color: Colors.txt_666}}>{I18n.t('discount')}</Text>
+                <Text
+                    testID="txt_price"
+                    style={{fontSize: 14, color: '#DF1D0F', marginRight: 18}}>{order_info.price}</Text>
+            </View> : null}
+
+
+        </View>
     };
 
 
@@ -681,6 +706,7 @@ const styles = StyleSheet.create({
     certName: {
         fontSize: 15,
         color: Colors._888
-    }
+    },
+    viewPrice: {justifyContent: 'space-between', flexDirection: 'row', height: 40, alignItems: 'center'}
 
 });
