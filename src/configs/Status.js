@@ -50,3 +50,11 @@ export class SellStatus {
     static end = 'end';
     static sold_out = 'sold_out';
 }
+//赛事状态
+export class RaceStatus {
+    static unbegin = 'unbegin';
+    static go_ahead = 'go_ahead';
+    static ended = 'ended';
+    static closed = 'closed';
+}
+
