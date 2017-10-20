@@ -23,6 +23,8 @@ class BottomNavigation extends Component {
         setDispatchAction(HIDE_BACK_TOP, this.props._hideBackTop);
         setDispatchAction(BACK_TOP, this.props._backTop)
 
+        console.log(this)
+
     }
 
     componentWillReceiveProps(newProps) {
@@ -42,6 +44,7 @@ class BottomNavigation extends Component {
     render() {
 
         const {tabIndex, showTop} = this.state;
+        const {jumpToIndex} = this.props;
         return (
             <View style={styleBN.navigation}>
                 {this.state.tabIndex === 1 && showTop ? <TouchableOpacity
@@ -63,7 +66,7 @@ class BottomNavigation extends Component {
                                 tabIndex: 1
                             });
                             this.props._videoPause();
-                            Actions.push('tab_1');
+                            jumpToIndex(0)
 
                         }}
                         style={styleBN.navigations}>
@@ -77,7 +80,7 @@ class BottomNavigation extends Component {
                         this.setState({
                             tabIndex: 2
                         });
-                        Actions.push('tab_2')
+                        jumpToIndex(1)
                     }}
                     style={styleBN.navigations}>
                     <TabIcon tab={'news'} focused={tabIndex === 2}/>
@@ -89,7 +92,7 @@ class BottomNavigation extends Component {
                         this.setState({
                             tabIndex: 3
                         });
-                        Actions.push('tab_3');
+                        jumpToIndex(2)
 
                     }}
                     style={styleBN.navigations}>
@@ -101,7 +104,7 @@ class BottomNavigation extends Component {
                         this.setState({
                             tabIndex: 4
                         });
-                        Actions.push('tab_4');
+                        jumpToIndex(3)
 
                     }}
                     style={styleBN.navigations}>
