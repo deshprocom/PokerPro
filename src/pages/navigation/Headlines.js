@@ -32,7 +32,7 @@ export default class Headlines extends Component {
             flex: 1,height: 30,paddingRight:17
         }}>
             {this.props.headlines.length > 0 ? <Swiper
-                    autoplayTimeout={5}
+                    autoplayTimeout={4}
                     renderPagination={() => null}
                     horizontal={false}
                     autoplay>
