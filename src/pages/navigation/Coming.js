@@ -33,9 +33,9 @@ export default class Coming extends Component {
                     <Image style={styles.moreTwoImg} source={{uri: item.big_logo}}>
                         {(item.status===RaceStatus.go_ahead)?<Image style={styles.comingImg} source={Images.coming}/>:null}
                     </Image>
-                    <Text numberOfLines={2} style={[styles.moreTwoText,{color:'#333333'}]}>{item.name}</Text>
+                    <Text numberOfLines={1} style={[styles.moreTwoText,{color:'#333333'}]}>{item.name}</Text>
                     <Text style={[styles.moreTwoText,{color:'#888888'}]}>{this.races_time(item)}</Text>
-                    <Text style={[styles.moreTwoText,{color:'#888888'}]}>{item.location}</Text>
+                    <Text style={[styles.moreTwoTextLocation,{color:'#888888'}]}>{item.location}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -80,7 +80,10 @@ const styles = StyleSheet.create({
         width:101,height:143,borderRadius:3
     },
     moreTwoText:{
-        fontSize:12,marginTop:8
+        fontSize:12,marginTop:7
+    },
+    moreTwoTextLocation:{
+        fontSize:12,marginTop:2
     },
     coming:{
         backgroundColor:'#fff',marginTop:8

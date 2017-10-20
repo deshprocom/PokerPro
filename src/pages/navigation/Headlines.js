@@ -29,17 +29,17 @@ export default class Headlines extends Component {
 
     _hotLine = () => {
         return <View style={{
-            flex: 1,height: 49,paddingRight:17
+            flex: 1,height: 30,paddingRight:17
         }}>
             {this.props.headlines.length > 0 ? <Swiper
-                    autoplayTimeout={5}
+                    autoplayTimeout={4}
                     renderPagination={() => null}
                     horizontal={false}
                     autoplay>
                     {this.props.headlines.map((item, key) => {
                         return <TouchableOpacity
                             style={{
-                            height: 49,
+                            height: 30,
                             alignItems: 'center', justifyContent: 'center'
                         }}
                             key={key}

@@ -32,7 +32,7 @@ export default class BlindsList extends Component {
             <Text style={styles.title}>{I18n.t('Level')}</Text>
             <Text style={styles.title}>{I18n.t('Blinds')}</Text>
             <Text style={styles.title}>{I18n.t('Ante')}</Text>
-            <Text style={styles.title}>{I18n.t('time')}</Text>
+            <Text style={styles.title}>{I18n.t('Duration')}</Text>
         </View>)
     }
 
