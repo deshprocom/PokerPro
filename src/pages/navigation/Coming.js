@@ -12,6 +12,7 @@ import {
 } from '../../utils/ComonHelper';
 import I18n from 'react-native-i18n';
 import {umengEvent} from '../../utils/UmengEvent';
+import {RaceStatus} from "../../configs/Status"
 
 export default class Coming extends Component {
     races_time = (raceInfo) => {
@@ -29,7 +30,11 @@ export default class Coming extends Component {
                 activeOpacity={1}
                 style={styles.moreTwos}>
                 <View style={styles.moreTwo}>
-                    <Image style={styles.moreTwoImg} source={{uri: item.big_logo}}/>
+
+                    <Image style={styles.moreTwoImg} source={{uri: item.big_logo}}>
+                        {(item.status === RaceStatus.go_ahead) ?
+                            <Image style={styles.comingImg} source={Images.coming}/> : null}
+                    </Image>
                     <Text numberOfLines={2} style={[styles.moreTwoText, {color: '#333333'}]}>{item.name}</Text>
                     <Text style={[styles.moreTwoText, {color: '#888888'}]}>{this.races_time(item)}</Text>
                     <Text style={[styles.moreTwoText, {color: '#888888'}]}>{item.location}</Text>
@@ -119,4 +124,8 @@ const styles = StyleSheet.create({
     moreTwo: {
         width: 101,
     },
+    comingImg: {
+        width: 42.5,
+        height: 41
+    }
 })
