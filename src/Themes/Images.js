@@ -222,7 +222,8 @@ const images = {
     video_share:require('../../source/news/video_share.png'),
     search_notice:require('../../source/navigation/search_notice.png'),
     search_notice2:require('../../source/navigation/search_notice2.png'),
-    top:require('../../source/navigation/top.png')
+    top:require('../../source/navigation/top.png'),
+    coming:require('../../source/navigation/coming.png')
 
 };
 
