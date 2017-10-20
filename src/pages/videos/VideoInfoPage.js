@@ -84,7 +84,7 @@ export default class VideoInfoPage extends Component {
 
     renderList = () => {
         const {group_name} = this.state.videoInfo;
-        if (this.state.subVideos.length > 0)
+        if (this.state.subVideos.length > 1)
             return <View style={{backgroundColor: 'white', marginTop: 5, paddingLeft: 17,}}>
                 <View style={styles.listTitle}>
                     <Text style={styles.childTitle}>{group_name}</Text>
