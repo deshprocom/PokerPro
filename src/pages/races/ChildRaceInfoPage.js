@@ -57,25 +57,25 @@ class ChildRaceInfoPage extends Component {
 
                 <Text
                     testID="txt_race_time"
-                    style={styles.txtTime}>{I18n.t('time')}：{this.subTime(subRaceInfo)}</Text>
+                    style={styles.txtTime}>{I18n.t('time')}: {this.subTime(subRaceInfo)}</Text>
 
                 <Text
                     testID="txt_race_addr"
-                    style={styles.txtLocation}>{I18n.t('address')}{subRaceInfo.location}</Text>
+                    style={styles.txtLocation}>{I18n.t('address')} {subRaceInfo.location}</Text>
 
                 <View>
                     <Text
                         testID="txt_race_price"
-                        style={styles.txtPrice}>{I18n.t('prize')}{subRaceInfo.prize}</Text>
+                        style={styles.txtPrice}>{I18n.t('prize')} {subRaceInfo.prize}</Text>
                     <Text
                         testID="txt_race_joinNum"
-                        style={styles.txtNum}>{I18n.t('peoples')}{subRaceInfo.participants}</Text>
+                        style={styles.txtNum}>{I18n.t('peoples')} {subRaceInfo.participants}</Text>
                     <Text
                         testID="txt_race_buy_in"
-                        style={styles.txtPrice}>{I18n.t('buy')}：{subRaceInfo.ticket_price}</Text>
+                        style={styles.txtPrice}>{I18n.t('buy')}: {subRaceInfo.ticket_price}</Text>
                     <Text
                         testID="txt_race_begin_chips"
-                        style={styles.txtNum}>{I18n.t('beginChip')}{subRaceInfo.blind}</Text>
+                        style={styles.txtNum}>{I18n.t('beginChip')} {subRaceInfo.blind}</Text>
 
                 </View>
 
@@ -94,7 +94,7 @@ class ChildRaceInfoPage extends Component {
 
 
     subTime = (subRaceInfo) => {
-        const format = 'YYYY年MM月DD日';
+        const format = 'YYYY/MM/DD';
 
         return convertDate(subRaceInfo.begin_date, format) + '-'
             + convertDate(subRaceInfo.end_date, format);

@@ -29,35 +29,35 @@ export default class Headlines extends Component {
 
     _hotLine = () => {
         return <View style={{
-            flex: 1, height: 49, paddingRight: 17
+            flex: 1,height: 30,paddingRight:17
         }}>
             {this.props.headlines.length > 0 ? <Swiper
-                autoplayTimeout={5}
-                renderPagination={() => null}
-                horizontal={false}
-                autoplay>
-                {this.props.headlines.map((item, key) => {
-                    return <TouchableOpacity
-                        style={{
-                            height: 49,
-                            justifyContent: 'center',
-                        }}
-                        key={key}
-                        onPress={() => this._clickBanner(item)}
-                        activeOpacity={1}>
-                        <Text
-                            numberOfLines={1}
+                    autoplayTimeout={4}
+                    renderPagination={() => null}
+                    horizontal={false}
+                    autoplay>
+                    {this.props.headlines.map((item, key) => {
+                        return <TouchableOpacity
                             style={{
+                            height: 30,
+                            alignItems: 'center', justifyContent: 'center'
+                        }}
+                            key={key}
+                            onPress={() => this._clickBanner(item)}
+                            activeOpacity={1}>
+                            <Text
+                                numberOfLines={1}
+                                style={{
                                 marginLeft: 15,
                                 fontSize: 13,
                                 color: '#666666'
                             }}
-                        >{item.title}</Text>
-                    </TouchableOpacity>
+                            >{item.title}</Text>
+                        </TouchableOpacity>
 
-                })}
+                    })}
 
-            </Swiper> : null}
+                </Swiper> : null}
         </View>
     }
 

@@ -41,7 +41,7 @@
   "home_sort": "Ranking",
   "home_recent_races": "Upcoming",
   "prize": "Price:",
-  "address": "Address:",
+  "address": "Venue:",
   "have_no_races": "To be continued",
   "races_unstart": "Upcoming",
   "input_pwd": "Enter password",
@@ -189,14 +189,14 @@
   "GameInformation": "Information",
   "GameResult": "Result",
   "Schudel": "Schedule",
-  "Blind": "Blind structure",
+  "Blind": "Blind Structure",
   "Ranks": "Ranks",
-  "time": "Time(min)",
-  "peoples": " Entries:",
+  "time": "Date",
+  "peoples": "Entries:",
   "beginChip": "Start chips:",
   "Level": "Level",
   "Blinds": "Blinds",
-  "Ante": "Supra note",
+  "Ante": "Ante",
   "Company": "Beijing De Shang Quan Cai Sports & Cultural Media Co.,Ltd@",
   "phoneBang": "Successfully combine with phone",
   "phone": "combine with phone",
@@ -397,6 +397,7 @@
   "mine": "Me",
   "message": "Message",
   "backTop": "Top",
-  "discount":"Final Payment"
+  "discount":"Final Payment",
+  "Duration":"Duration"
 }
 

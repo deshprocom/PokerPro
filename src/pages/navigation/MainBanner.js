@@ -69,7 +69,7 @@ const stylesM = StyleSheet.create({
         marginLeft: 3,
         marginRight: 3,
         marginTop: 3,
-        marginBottom: 3
+        marginBottom: -8
     },
     dot: {
         backgroundColor: 'rgba(0,0,0,.2)',
@@ -79,7 +79,10 @@ const stylesM = StyleSheet.create({
         marginLeft: 3,
         marginRight: 3,
         marginTop: 3,
-        marginBottom: 3
+        marginBottom: -8
+    },
+    paginationStyle:{
+        marginTop:300
     }
 
 });

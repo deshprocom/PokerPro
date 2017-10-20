@@ -31,7 +31,7 @@ export default class Information extends Component {
                     style={styles.information}>
                     <View style={{flex: 1}}>
                         <Text
-                            style={[styles.raceText, {marginTop: 10, marginRight: 20}]}>{item.info.title}</Text>
+                            style={[styles.raceText, {marginRight: 20}]}>{item.info.title}</Text>
                         <View style={{flexDirection: 'row', marginTop: 14}}>
                             <Text style={styles.informationText}>{item.info.source}</Text>
                             <Text
@@ -45,7 +45,7 @@ export default class Information extends Component {
             )
         } else if (item.source_type == 'video') {
             return (
-                <View style={{marginLeft: 20, marginTop: 21, marginRight: 17}}>
+                <View style={{marginLeft: 20, marginTop: 17, marginRight: 17}}>
                     <Text style={{
                         fontSize: 15,
                         color: '#333333'
@@ -53,7 +53,7 @@ export default class Information extends Component {
 
                     <TouchableOpacity
                         onPress={() => router.toVideoInfoPage(this.props, item.video)}
-                        style={{height: 207, marginTop: 11,marginBottom:10}}>
+                        style={{height: 207, marginTop: 14,marginBottom:14}}>
                         <Image style={{height: 207, alignItems: 'center', justifyContent: 'center'}}
                                source={{uri: item.video.cover_link.trim()}}>
                             <Image style={{width: 70, height: 70}} source={Images.begin}/>
@@ -66,7 +66,7 @@ export default class Information extends Component {
 
     };
     _separator = () => {
-        return <View style={{height:1,marginLeft:17,marginRight:17,backgroundColor:'#ECECEE'}}/>;
+        return <View style={{height:0.5,marginLeft:17,marginRight:17,backgroundColor:'#ECECEE'}}/>;
     }
     render() {
         return (

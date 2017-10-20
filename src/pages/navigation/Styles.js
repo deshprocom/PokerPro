@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     pukes: {
-        height: 49,
+        height: 40,
         justifyContent: 'center',
         backgroundColor: '#fff'
     },
