@@ -16,6 +16,7 @@ import {connect} from 'react-redux';
 import {SearchPage} from './SearchPage';
 import {SHOW_BACK_TOP, HIDE_BACK_TOP, BACK_TOP} from '../../actions/ActionTypes';
 import {getDispatchAction} from '../../utils/ComonHelper';
+import {Loading} from '../../components';
 
 class RaceInfoPage extends Component {
     state = {
@@ -28,7 +29,8 @@ class RaceInfoPage extends Component {
         headlines: [],
         next_id: '0',
         keyword: '',
-        informationY: 0
+        informationY: 0,
+        isLoading: false
     };
 
     componentWillReceiveProps(newProps) {
@@ -38,7 +40,10 @@ class RaceInfoPage extends Component {
         }
 
         if (newProps.actionType === 'SWITCH_LANGUAGE') {
-            this._getData()
+            this.setState({
+                isLoading: true
+            });
+            setTimeout(this._getData, 300)
         }
     }
 
@@ -55,7 +60,8 @@ class RaceInfoPage extends Component {
     _getData = () => {
         getMainBanners(data => {
             this.setState({
-                banners: data.banners
+                banners: data.banners,
+                isLoading: false
             });
 
         }, err => {
@@ -148,6 +154,7 @@ class RaceInfoPage extends Component {
                     ref={ref => this.searchBar = ref}/>
 
 
+                <Loading visible={this.state.isLoading}/>
             </View>
 
         );
