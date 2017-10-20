@@ -406,7 +406,7 @@ export default class BuyTicketPage extends Component {
     render() {
 
         const {race, tickets, ordered, isEntity, knowRed, email, order} = this.state;
-        const {ticket_info, price} = tickets;
+        const {ticket_info, price, unformatted_price} = tickets;
 
         return (
             <View
@@ -545,7 +545,7 @@ export default class BuyTicketPage extends Component {
 
                         <Text style={{fontSize: 18, color: Colors._DF1}}
                               testID="txt_ticket_price">
-                            ¥{price}
+                            ¥{this._isDiscount() ? this.couponPrice(unformatted_price) : price}
                         </Text>
                     </View>
                     <View style={{height: 41, width: 1, backgroundColor: Colors.txt_DDD}}/>
@@ -577,6 +577,7 @@ export default class BuyTicketPage extends Component {
                 </View>
 
                 <PayModal
+                    invitePrice={this._isDiscount() ? this.couponPrice(unformatted_price) : ''}
                     toOrder={true}
                     ref={ref => this.payModal = ref}/>
             </View>
@@ -678,13 +679,13 @@ export default class BuyTicketPage extends Component {
                     color: Colors._DF1,
                     fontSize: 14,
                     marginRight: 17
-                }}>{this.couponPrice(invitePrice, price)}</Text>
+                }}>{this.couponPrice(price)}</Text>
 
         </View>
     };
 
-    couponPrice = (invitePrice, price) => {
-
+    couponPrice = (price) => {
+        const {invitePrice} = this.state;
         if (invitePrice.coupon_type === CouponType.rebate) {
             let discount = Number.parseFloat(price) * Number.parseFloat(invitePrice.coupon_number / 100);
             return discount
