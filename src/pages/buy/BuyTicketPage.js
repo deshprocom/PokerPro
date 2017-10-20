@@ -18,10 +18,11 @@ import {
 import Communications from 'react-native-communications';
 import NameRealView from './NameRealView';
 import StorageKey from '../../configs/StorageKey';
-import {getBuyRaceTicket, postOrderTicket, getUnpaidOrder} from '../../services/OrderDao';
+import {getBuyRaceTicket, postOrderTicket, getUnpaidOrder, postInvite} from '../../services/OrderDao';
 import {umengEvent} from '../../utils/UmengEvent';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import PayModal from './PayModal';
+import {CouponType} from '../../configs/Status';
 
 
 const E_TICKET = 'e_ticket',
@@ -39,7 +40,8 @@ export default class BuyTicketPage extends Component {
         tickets: {},
         shipping_address: {},
         order_number: '',
-        inviteCode: ''
+        inviteCode: '',
+        invitePrice: {}
     };
 
 
@@ -594,7 +596,15 @@ export default class BuyTicketPage extends Component {
             <TextInput
                 style={{height: 50, flex: 1, fontSize: 14}}
                 placeholder={I18n.t('buy_invite_placeholder')}
-                onChangeText={(inviteCode) => this.setState({inviteCode})}
+                onChangeText={(inviteCode) => {
+                    this.setState({inviteCode});
+                    postInvite({invite_code: inviteCode}, data => {
+                        this.setState({
+                            invitePrice: data
+                        })
+                    }, err => {
+                    })
+                }}
             />
         </View>)
     };
@@ -631,12 +641,57 @@ export default class BuyTicketPage extends Component {
                 <Text style={styles.txtPrice1}>{I18n.t('order_pay')}</Text>
 
                 <Text
-                    style={{color: Colors._DF1, fontSize: 14, marginRight: 17}}>{price}</Text>
+                    style={{
+                        color: Colors._DF1, fontSize: 14, marginRight: 17,
+                        textDecorationLine: this._isDiscount() ? 'line-through' : 'none'
+                    }}>{price}</Text>
 
             </View>
+            <View style={{height: 1, backgroundColor: Colors._ECE}}/>
+            {this._invitePrice(price)}
 
         </View>)
     };
+
+    _isDiscount = () => {
+        const {invitePrice} = this.state;
+        return !isEmptyObject(invitePrice) && invitePrice.coupon_type !== CouponType.no_discount;
+    };
+
+    _invitePrice = (price) => {
+        const {invitePrice} = this.state;
+        if (isEmptyObject(invitePrice))
+            return;
+        if (invitePrice.coupon_type === CouponType.no_discount)
+            return;
+
+        return <View style={styles.viewPrice1}>
+            <Text style={styles.txtPrice1}>{I18n.t('discount')}</Text>
+
+            <Text
+                style={{
+                    color: Colors._DF1,
+                    fontSize: 14,
+                    marginRight: 17
+                }}>{this.couponPrice(invitePrice, price)}</Text>
+
+        </View>
+    };
+
+    couponPrice = (invitePrice, price) => {
+        if (invitePrice.coupon === CouponType.rebate) {
+            let discount = Number.parseFloat(price) * Number.parseFloat(invitePrice.coupon_number / 100);
+            return moneyFormat(discount)
+        }
+
+        else if (invitePrice.coupon === CouponType.reduce) {
+            let discount = Number.parseFloat(price) - Number.parseFloat(invitePrice.coupon_number);
+            return moneyFormat(discount)
+        }
+
+
+    };
+
 
     _emailViwe = (email) => {
         return (  <View
@@ -826,12 +881,12 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     viewPrice: {
-        flexDirection: 'row', justifyContent: 'space-between', marginTop: 16,
-        marginBottom: 14
+        flexDirection: 'row', justifyContent: 'space-between',
+        height: 40, alignItems: 'center'
     },
     viewPrice1: {
         flexDirection: 'row', justifyContent: 'space-between',
-        marginBottom: 16
+        height: 40, alignItems: 'center'
     },
     txtPrice1: {color: Colors._333, fontSize: 14, marginLeft: 18}
 

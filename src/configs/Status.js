@@ -4,6 +4,13 @@
 import I18n from 'react-native-i18n';
 
 
+//邀请码折扣类型
+export class CouponType{
+    static no_discount = 'no_discount';
+    static rebate = 'rebate';
+    static reduce = 'reduce';
+}
+
 //首页Banner
 export class BannerStatus {
     static INFO = 'info';

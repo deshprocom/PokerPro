@@ -12,11 +12,6 @@ import {setDispatchAction} from '../../utils/ComonHelper';
 
 class BottomNavigation extends Component {
 
-    state = {
-        tabIndex: 0,
-        showTop: false
-
-    };
 
     componentDidMount() {
         setDispatchAction(SHOW_BACK_TOP, this.props._showBackTop);
@@ -26,32 +21,18 @@ class BottomNavigation extends Component {
 
     }
 
-    componentWillReceiveProps(newProps) {
-
-        if (this.state.tabIndex === 0) {
-            this.setState({
-                showTop: newProps.actionType === SHOW_BACK_TOP
-            })
-        } else if (newProps.actionType === BACK_TOP) {
-            this.setState({
-                tabIndex: 0
-            })
-        }
-    }
 
 
     render() {
 
-        const {tabIndex, showTop} = this.state;
-        const {jumpToIndex} = this.props;
+        const {index} = this.props.navigationState;
+        const {jumpToIndex,actionType} = this.props;
+
         return (
             <View style={styleBN.navigation}>
-                {this.state.tabIndex === 0 && showTop ? <TouchableOpacity
+                {index === 0 && actionType === SHOW_BACK_TOP ? <TouchableOpacity
                         style={styleBN.navigations}
                         onPress={() => {
-                            this.setState({
-                                showTop: false
-                            });
                             this.props._backTop();
                         }}>
                         <View style={styleBN.buttonView}>
@@ -61,53 +42,45 @@ class BottomNavigation extends Component {
                     </TouchableOpacity> :
                     <TouchableOpacity
                         onPress={() => {
-                            this.setState({
-                                tabIndex: 0
-                            });
+
                             this.props._videoPause();
                             jumpToIndex(0)
 
                         }}
                         style={styleBN.navigations}>
-                        <TabIcon tab={'home'} focused={tabIndex === 0}/>
+                        <TabIcon tab={'home'} focused={index === 0}/>
                     </TouchableOpacity>}
 
 
                 <TouchableOpacity
                     onPress={() => {
                         this.props._hideBackTop();
-                        this.setState({
-                            tabIndex: 1
-                        });
+
                         jumpToIndex(1)
                     }}
                     style={styleBN.navigations}>
-                    <TabIcon tab={'news'} focused={tabIndex === 1}/>
+                    <TabIcon tab={'news'} focused={index === 1}/>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => {
                         this.props._videoPause();
-                        this.setState({
-                            tabIndex: 2
-                        });
+
                         jumpToIndex(2)
 
                     }}
                     style={styleBN.navigations}>
-                    <TabIcon tab={'rank'} focused={tabIndex === 2}/>
+                    <TabIcon tab={'rank'} focused={index === 2}/>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
                         this.props._videoPause();
-                        this.setState({
-                            tabIndex: 3
-                        });
+
                         jumpToIndex(3)
 
                     }}
                     style={styleBN.navigations}>
-                    <TabIcon tab={'me'} focused={tabIndex === 3}/>
+                    <TabIcon tab={'me'} focused={index === 3}/>
                 </TouchableOpacity>
             </View>
 

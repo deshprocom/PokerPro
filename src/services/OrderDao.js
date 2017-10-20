@@ -21,7 +21,7 @@ export function postInvite(body, resolve, reject) {
         resolve(ret.data)
     }, err => {
         reject(err);
-        showToast(err)
+
     })
 }
 
