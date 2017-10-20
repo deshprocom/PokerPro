@@ -36,7 +36,7 @@ class RaceInfoPage extends Component {
     componentWillReceiveProps(newProps) {
 
         if (newProps.actionType === BACK_TOP) {
-            this.mainScroll.scrollTo({x: 0, y: 0, animated: false})
+            this.mainScroll.scrollTo({x: 0, y: 0, animated: true})
         }
 
         if (newProps.actionType === 'SWITCH_LANGUAGE') {
