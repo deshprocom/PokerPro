@@ -89,11 +89,11 @@ export default class VideoInfoPage extends Component {
                 <View style={styles.listTitle}>
                     <Text style={styles.childTitle}>{group_name}</Text>
                     <View style={{flex: 1}}/>
-                    <TouchableOpacity style={{alignItems: 'center', flexDirection: 'row'}}>
+                   {/* <TouchableOpacity style={{alignItems: 'center', flexDirection: 'row'}}>
                         <Text style={styles.more}>查看更多</Text>
                         <Image style={styles.imgMore}
                                source={Images.is}/>
-                    </TouchableOpacity>
+                    </TouchableOpacity>*/}
 
                 </View>
 
