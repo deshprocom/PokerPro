@@ -600,9 +600,12 @@ export default class BuyTicketPage extends Component {
                     this.setState({inviteCode});
                     postInvite({invite_code: inviteCode}, data => {
                         this.setState({
-                            invitePrice: data
+                            invitePrice: data.invite_code
                         })
                     }, err => {
+                        this.setState({
+                            invitePrice: {}
+                        })
                     })
                 }}
             />
@@ -613,7 +616,7 @@ export default class BuyTicketPage extends Component {
         const {tickets} = this.state;
         if (isEmptyObject(tickets))
             return;
-        const {original_price, price} = tickets;
+        const {original_price, price, unformatted_price} = tickets;
         return (<View style={{backgroundColor: 'white', marginTop: 8}}>
             <View style={{height: 35}}>
                 <Text style={{
@@ -647,8 +650,10 @@ export default class BuyTicketPage extends Component {
                     }}>{price}</Text>
 
             </View>
-            <View style={{height: 1, backgroundColor: Colors._ECE}}/>
-            {this._invitePrice(price)}
+            {this._isDiscount() ?
+                <View style={{marginLeft: 18, marginRight: 18, height: 1, backgroundColor: Colors._ECE}}/> : null}
+
+            {this._invitePrice(unformatted_price)}
 
         </View>)
     };
@@ -679,14 +684,13 @@ export default class BuyTicketPage extends Component {
     };
 
     couponPrice = (invitePrice, price) => {
-        if (invitePrice.coupon === CouponType.rebate) {
-            let discount = Number.parseFloat(price) * Number.parseFloat(invitePrice.coupon_number / 100);
-            return moneyFormat(discount)
-        }
 
-        else if (invitePrice.coupon === CouponType.reduce) {
+        if (invitePrice.coupon_type === CouponType.rebate) {
+            let discount = Number.parseFloat(price) * Number.parseFloat(invitePrice.coupon_number / 100);
+            return discount
+        } else if (invitePrice.coupon_type === CouponType.reduce) {
             let discount = Number.parseFloat(price) - Number.parseFloat(invitePrice.coupon_number);
-            return moneyFormat(discount)
+            return discount
         }
 
 
