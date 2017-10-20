@@ -29,7 +29,7 @@ export default class Headlines extends Component {
 
     _hotLine = () => {
         return <View style={{
-            flex: 1,height: 49,paddingRight:17
+            flex: 1,height: 30,paddingRight:17
         }}>
             {this.props.headlines.length > 0 ? <Swiper
                     autoplayTimeout={5}
@@ -39,7 +39,7 @@ export default class Headlines extends Component {
                     {this.props.headlines.map((item, key) => {
                         return <TouchableOpacity
                             style={{
-                            height: 49,
+                            height: 30,
                             alignItems: 'center', justifyContent: 'center'
                         }}
                             key={key}

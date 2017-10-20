@@ -35,7 +35,7 @@ export default class Coming extends Component {
                     </Image>
                     <Text numberOfLines={2} style={[styles.moreTwoText,{color:'#333333'}]}>{item.name}</Text>
                     <Text style={[styles.moreTwoText,{color:'#888888'}]}>{this.races_time(item)}</Text>
-                    <Text style={[styles.moreTwoText,{color:'#888888'}]}>{item.location}</Text>
+                    <Text style={[styles.moreTwoTextLocation,{color:'#888888'}]}>{item.location}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -80,7 +80,10 @@ const styles = StyleSheet.create({
         width:101,height:143,borderRadius:3
     },
     moreTwoText:{
-        fontSize:12,marginTop:8
+        fontSize:12,marginTop:7
+    },
+    moreTwoTextLocation:{
+        fontSize:12,marginTop:2
     },
     coming:{
         backgroundColor:'#fff',marginTop:8

@@ -88,7 +88,7 @@ export default class Races extends Component {
                         <Image style={{width: 8, height: 12, marginLeft: 6}} source={Images.is}/>
                     </TouchableOpacity>
                 </View>
-                <View style={{marginTop: 30, flexDirection: 'row'}}>
+                <View style={{marginTop: 16, flexDirection: 'row'}}>
                     {this.props.raceTickets.length > 0 ? <FlatList
                         showsHorizontalScrollIndicator={false}
                         horizontal
@@ -99,7 +99,7 @@ export default class Races extends Component {
 
 
                 </View>
-                <View style={{height: 15}}/>
+                <View style={{height: 16}}/>
             </View>
         );
     }
@@ -125,7 +125,7 @@ const styleB = StyleSheet.create({
         marginBottom: 5
     },
     ovalImg: {
-        width: 115, height: 155, marginLeft: 5, marginTop: 3
+        width: 116, height: 158, marginLeft: 5, marginTop: 1
     },
     ovalInner: {
         flexDirection: 'row', alignItems: 'center'
