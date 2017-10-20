@@ -5,12 +5,9 @@ import Personal from './Personal';
 import {
     StyleSheet
 } from 'react-native';
-import TabIcon from './TabIcon';
-import I18n from 'react-native-i18n';
-import {Images} from '../../Themes';
 import VideoNewsTab from './VideoNewsTab';
 import DrawerRank from '../rank/DrawerRank';
-import ConstomTabBar from './BottomNavigation';
+import CustomTabBar from './BottomNavigation';
 
 
 export const Navigation = () => {
@@ -22,11 +19,9 @@ export const Navigation = () => {
             lazy
             key="Navigation"
             showLabel={false}
-            activeBackgroundColor="rgba(255, 255, 255, 0.96)"
-            inactiveBackgroundColor="rgba(255, 255, 255, 0.96)"
             tabBarPosition={'bottom'}
             swipeEnabled={false}
-            tabBarComponent={ConstomTabBar}
+            tabBarComponent={CustomTabBar}
         >
             <Stack
                 key="tab_1"

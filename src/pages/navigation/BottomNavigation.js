@@ -13,7 +13,7 @@ import {setDispatchAction} from '../../utils/ComonHelper';
 class BottomNavigation extends Component {
 
     state = {
-        tabIndex: 1,
+        tabIndex: 0,
         showTop: false
 
     };
@@ -23,19 +23,18 @@ class BottomNavigation extends Component {
         setDispatchAction(HIDE_BACK_TOP, this.props._hideBackTop);
         setDispatchAction(BACK_TOP, this.props._backTop)
 
-        console.log(this)
 
     }
 
     componentWillReceiveProps(newProps) {
 
-        if (this.state.tabIndex === 1) {
+        if (this.state.tabIndex === 0) {
             this.setState({
                 showTop: newProps.actionType === SHOW_BACK_TOP
             })
         } else if (newProps.actionType === BACK_TOP) {
             this.setState({
-                tabIndex: 1
+                tabIndex: 0
             })
         }
     }
@@ -47,7 +46,7 @@ class BottomNavigation extends Component {
         const {jumpToIndex} = this.props;
         return (
             <View style={styleBN.navigation}>
-                {this.state.tabIndex === 1 && showTop ? <TouchableOpacity
+                {this.state.tabIndex === 0 && showTop ? <TouchableOpacity
                         style={styleBN.navigations}
                         onPress={() => {
                             this.setState({
@@ -63,14 +62,14 @@ class BottomNavigation extends Component {
                     <TouchableOpacity
                         onPress={() => {
                             this.setState({
-                                tabIndex: 1
+                                tabIndex: 0
                             });
                             this.props._videoPause();
                             jumpToIndex(0)
 
                         }}
                         style={styleBN.navigations}>
-                        <TabIcon tab={'home'} focused={tabIndex === 1}/>
+                        <TabIcon tab={'home'} focused={tabIndex === 0}/>
                     </TouchableOpacity>}
 
 
@@ -78,37 +77,37 @@ class BottomNavigation extends Component {
                     onPress={() => {
                         this.props._hideBackTop();
                         this.setState({
-                            tabIndex: 2
+                            tabIndex: 1
                         });
                         jumpToIndex(1)
                     }}
                     style={styleBN.navigations}>
-                    <TabIcon tab={'news'} focused={tabIndex === 2}/>
+                    <TabIcon tab={'news'} focused={tabIndex === 1}/>
                 </TouchableOpacity>
 
+                <TouchableOpacity
+                    onPress={() => {
+                        this.props._videoPause();
+                        this.setState({
+                            tabIndex: 2
+                        });
+                        jumpToIndex(2)
+
+                    }}
+                    style={styleBN.navigations}>
+                    <TabIcon tab={'rank'} focused={tabIndex === 2}/>
+                </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
                         this.props._videoPause();
                         this.setState({
                             tabIndex: 3
                         });
-                        jumpToIndex(2)
-
-                    }}
-                    style={styleBN.navigations}>
-                    <TabIcon tab={'rank'} focused={tabIndex === 3}/>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => {
-                        this.props._videoPause();
-                        this.setState({
-                            tabIndex: 4
-                        });
                         jumpToIndex(3)
 
                     }}
                     style={styleBN.navigations}>
-                    <TabIcon tab={'me'} focused={tabIndex === 4}/>
+                    <TabIcon tab={'me'} focused={tabIndex === 3}/>
                 </TouchableOpacity>
             </View>
 
@@ -123,9 +122,7 @@ const styleBN = StyleSheet.create({
         backgroundColor: '#ffffff',
         opacity: 0.96,
         flexDirection: 'row',
-        alignItems: 'center',
-        position: 'absolute',
-        bottom: 0
+        alignItems: 'center'
     },
     navigations: {
         flex: 1
