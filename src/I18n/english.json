@@ -388,6 +388,7 @@
   "cert_buy_china": "The ticket requires ID verification",
   "verified_image_lb_pass": "Please upload Passport Info.",
   "SERVER_ERROR": "Network Error",
+
   "TIMEOUT_ERROR": "Timeout, please try later",
   "NETWORK_ERROR": "Network Error, please check authorization",
   "home": "Home",
