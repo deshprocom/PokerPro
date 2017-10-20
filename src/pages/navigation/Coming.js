@@ -30,9 +30,9 @@ export default class Coming extends Component {
                 style={styles.moreTwos}>
                 <View style={styles.moreTwo}>
                     <Image style={styles.moreTwoImg} source={{uri: item.big_logo}}/>
-                    <Text numberOfLines={2} style={[styles.moreTwoText,{color:'#333333'}]}>{item.name}</Text>
-                    <Text style={[styles.moreTwoText,{color:'#888888'}]}>{this.races_time(item)}</Text>
-                    <Text style={[styles.moreTwoText,{color:'#888888'}]}>{item.location}</Text>
+                    <Text numberOfLines={2} style={[styles.moreTwoText, {color: '#333333'}]}>{item.name}</Text>
+                    <Text style={[styles.moreTwoText, {color: '#888888'}]}>{this.races_time(item)}</Text>
+                    <Text style={[styles.moreTwoText, {color: '#888888'}]}>{item.location}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -47,43 +47,43 @@ export default class Coming extends Component {
                     <View style={[styles.races]}>
                         <Text style={styles.raceText1}>{I18n.t('home_recent_races')}</Text>
                     </View>
-                    <View style={{flex:1}}/>
-                    <TouchableOpacity style={[styles.racesTwo,{marginRight:14}]} onPress={() => {
-                                   umengEvent('home_more');
-                                router.toSearchRacesPage()
-                                }}>
+                    <View style={{flex: 1}}/>
+                    <TouchableOpacity style={[styles.racesTwo, {marginRight: 14}]} onPress={() => {
+                        umengEvent('home_more');
+                        router.toSearchRacesPage()
+                    }}>
                         <Text style={[styles.raceText]}>{I18n.t('more')}</Text>
-                        <Image style={{width:8,height:12,marginLeft:6}} source={Images.is}/>
+                        <Image style={{width: 8, height: 12, marginLeft: 6}} source={Images.is}/>
                     </TouchableOpacity>
                 </View>
 
-                <View style={{flexDirection:'row',marginLeft:7}}>
+                <View style={{flexDirection: 'row', marginLeft: 7}}>
                     <FlatList
                         showsHorizontalScrollIndicator={false}
                         horizontal
                         data={this.props.listRace}
                         renderItem={this._renderItem}
-                        keyExtractor={(item,index)=>index}
+                        keyExtractor={(item, index) => index}
                     />
 
                 </View>
-                <View style={{height:10}}/>
+                <View style={{height: 10}}/>
             </View>
         );
     }
 }
 const styles = StyleSheet.create({
-    moreTwoImg:{
-        width:101,height:143,borderRadius:3
+    moreTwoImg: {
+        width: 101, height: 143, borderRadius: 3
     },
-    moreTwoText:{
-        fontSize:12,marginTop:8
+    moreTwoText: {
+        fontSize: 12, marginTop: 8
     },
-    coming:{
-        backgroundColor:'#fff',marginTop:8
+    coming: {
+        backgroundColor: '#fff', marginTop: 8
     },
-    comingInner:{
-        height:20,flexDirection:'row',alignItems:'center',marginTop:14
+    comingInner: {
+        height: 20, flexDirection: 'row', alignItems: 'center', marginTop: 14
     },
     races: {
         flexDirection: 'row',
@@ -93,8 +93,8 @@ const styles = StyleSheet.create({
     raceText1: {
         fontSize: 14,
         color: '#333333',
-        fontFamily:'PingFangSC-Regular',
-        fontWeight:'bold'
+        fontFamily: 'PingFangSC-Regular',
+        fontWeight: 'bold'
     },
     raceText: {
         fontSize: 14,
@@ -102,8 +102,10 @@ const styles = StyleSheet.create({
     },
     racesTwo: {
         flexDirection: 'row',
-        marginRight:14,
-        alignItems:'center'
+        marginRight: 14,
+        alignItems: 'center',
+        height: 40,
+        paddingLeft: 30
     },
     racesTwoRight: {
         flexDirection: 'column',
@@ -112,9 +114,9 @@ const styles = StyleSheet.create({
     },
     moreTwos: {
         marginTop: 16,
-        marginLeft:10
+        marginLeft: 10
     },
     moreTwo: {
-        width:101,
+        width: 101,
     },
 })
