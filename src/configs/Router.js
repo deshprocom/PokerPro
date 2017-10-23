@@ -46,7 +46,7 @@ export default class Router {
     }
 
     toTabNews() {
-        Actions.tab_news();
+        Actions.tab_2();
     }
 
     toSearchVideo() {
