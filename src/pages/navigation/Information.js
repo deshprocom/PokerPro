@@ -30,7 +30,7 @@ export default class Information extends Component {
                     onPress={() => router.toNewsInfoPage(this.props, item.info)}
                     style={styles.information}>
                     <View style={{flex: 1}}>
-                        <Text
+                        <Text numberOfLines={2}
                             style={[styles.raceText, {marginRight: 20}]}>{item.info.title}</Text>
                         <View style={{flexDirection: 'row', marginTop: 14}}>
                             <Text style={styles.informationText}>{item.info.source}</Text>

@@ -23,35 +23,33 @@ export const Navigation = () => {
             swipeEnabled={false}
             tabBarComponent={CustomTabBar}
         >
-            <Stack
-                key="tab_1"
-            >
+
                 <Scene
                     key="tab_home"
                     component={RaceInfoPage}
                     hideNavBar
                 />
-            </Stack>
-            <Stack key="tab_2">
+
+
                 <Scene key="tab_news"
                        component={VideoNewsTab}
                        hideNavBar
 
                 />
-            </Stack>
-            <Stack key="tab_3">
+
+
                 <Scene key="tab_rank"
                        component={DrawerRank}
                        hideNavBar
 
                 />
-            </Stack>
-            <Stack key="tab_4">
+
+
                 <Scene key="tab_person"
                        component={Personal}
                        hideNavBar
                 />
-            </Stack>
+
         </Tabs>
     );
 };
