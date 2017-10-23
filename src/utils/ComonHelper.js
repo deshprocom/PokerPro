@@ -255,7 +255,9 @@ export function uShareRace(title, location, icon, raceId) {
 }
 
 export function newShare(title, location, icon, newsId) {
-    UMShare.share(title, location, getShareIcon(icon), shareHost() + "news/" + newsId + "/" + Lang)
+
+    let thumb = getShareIcon(icon)
+    UMShare.share(title, location, thumb, shareHost() + "news/" + newsId + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {

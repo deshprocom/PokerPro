@@ -89,7 +89,7 @@ export default class VideoInfoPage extends Component {
                 <View style={styles.listTitle}>
                     <Text style={styles.childTitle}>{group_name}</Text>
                     <View style={{flex: 1}}/>
-                   {/* <TouchableOpacity style={{alignItems: 'center', flexDirection: 'row'}}>
+                    {/* <TouchableOpacity style={{alignItems: 'center', flexDirection: 'row'}}>
                         <Text style={styles.more}>查看更多</Text>
                         <Image style={styles.imgMore}
                                source={Images.is}/>
@@ -238,8 +238,8 @@ const styles = StyleSheet.create({
     imgShare: {
         height: 17,
         width: 17,
-        margin: 14,
-        marginTop: 34
+        marginTop: 34,
+        marginRight: 14
 
     },
 
