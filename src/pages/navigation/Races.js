@@ -34,7 +34,7 @@ export default class Races extends Component {
                 <Image style={styles.oval} source={Images.oval}>
                     <Image style={styleB.ovalImg} source={{uri: item.big_logo}}/>
 
-                    <View style={{marginLeft: 20, marginTop: 14}}>
+                    <View style={{marginLeft: 17, marginTop: 14}}>
                         <Text
                             numberOfLines={2}
                             style={{maxWidth: 160, height: 35}}>{item.name}</Text>
@@ -125,7 +125,7 @@ const styleB = StyleSheet.create({
         marginBottom: 5
     },
     ovalImg: {
-        width: 116, height: 158, marginLeft: 5, marginTop: 1
+        width: 116, height: 158,  marginTop: 1
     },
     ovalInner: {
         flexDirection: 'row', alignItems: 'center'
