@@ -97,13 +97,12 @@ const styles = StyleSheet.create({
     },
     races: {
         flexDirection: 'row',
-        marginLeft: 20,
+        marginLeft: 17,
         alignItems: 'center'
     },
     raceText1: {
         fontSize: 14,
         color: '#333333',
-        fontFamily: 'PingFangSC-Regular',
         fontWeight: 'bold'
     },
     raceText: {
