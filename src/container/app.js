@@ -24,6 +24,19 @@ console.disableYellowBox = true;
 
 const store = configureStore();
 
+if (!__DEV__) {
+    global.console = {
+        info: () => {
+        },
+        log: () => {
+        },
+        warn: () => {
+        },
+        error: () => {
+        },
+    };
+}
+
 export default class App extends Component {
 
     render() {

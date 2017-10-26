@@ -80,7 +80,17 @@ class BottomNavigation extends Component {
 
                     }}
                     style={styleBN.navigations}>
-                    <TabIcon tab={'me'} focused={index === 3}/>
+                    <TabIcon tab={'mall'} focused={index === 3}/>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => {
+                        this.props._videoPause();
+
+                        jumpToIndex(4)
+
+                    }}
+                    style={styleBN.navigations}>
+                    <TabIcon tab={'me'} focused={index === 4}/>
                 </TouchableOpacity>
             </View>
 

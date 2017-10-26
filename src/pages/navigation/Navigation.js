@@ -8,6 +8,7 @@ import {
 import VideoNewsTab from './VideoNewsTab';
 import DrawerRank from '../rank/DrawerRank';
 import CustomTabBar from './BottomNavigation';
+import MallPage from '../malls/MallPage';
 
 
 export const Navigation = () => {
@@ -47,6 +48,12 @@ export const Navigation = () => {
                 />
             </Stack>
             <Stack key="tab_4">
+                <Scene key="tab_mall"
+                       component={MallPage}
+                       hideNavBar
+                />
+            </Stack>
+            <Stack key="tab_5">
                 <Scene key="tab_person"
                        component={Personal}
                        hideNavBar

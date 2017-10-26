@@ -223,7 +223,9 @@ const images = {
     search_notice:require('../../source/navigation/search_notice.png'),
     search_notice2:require('../../source/navigation/search_notice2.png'),
     top:require('../../source/navigation/top.png'),
-    coming:require('../../source/navigation/coming.png')
+    coming:require('../../source/navigation/coming.png'),
+    nav_mall:require('../../source/navigation/nav_mall.png'),
+    nav_malled:require('../../source/navigation/nav_malled.png')
 
 };
 
