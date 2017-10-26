@@ -45,7 +45,7 @@ export default class Information extends Component {
             )
         } else if (item.source_type == 'video') {
             return (
-                <View style={{marginLeft: 20, marginTop: 17, marginRight: 17}}>
+                <View style={{marginLeft: 17, marginTop: 17, marginRight: 17}}>
                     <Text style={{
                         fontSize: 15,
                         color: '#333333'

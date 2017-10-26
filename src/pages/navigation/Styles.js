@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
     },
     puke: {
         flexDirection: 'row',
-        marginLeft: 20,
+        marginLeft: 17,
         alignItems: 'center'
     },
     racesTwo: {
@@ -45,7 +45,7 @@ export const styles = StyleSheet.create({
     },
     races: {
         flexDirection: 'row',
-        marginLeft: 18,
+        marginLeft: 17,
         alignItems: 'center'
     },
     raceText1: {
@@ -71,7 +71,7 @@ export const styles = StyleSheet.create({
 
     information: {
         height: 103,
-        marginLeft: 20,
+        marginLeft: 17,
         marginRight: 17,
         flexDirection: 'row',
         alignItems: 'center'

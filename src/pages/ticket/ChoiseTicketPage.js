@@ -15,7 +15,7 @@ import {UltimateListView, NavigationBar, ImageLoad, ActionSide} from '../../comp
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {getSelectRaceTicket, getUnpaidOrder} from '../../services/OrderDao';
 import {subRaces} from '../../services/RacesDao';
-import {isEmptyObject, convertDate, strNotNull, ticketStatusConvert} from '../../utils/ComonHelper';
+import {isEmptyObject, convertDate, strNotNull, uShareChoiseTicket} from '../../utils/ComonHelper';
 import {umengEvent} from '../../utils/UmengEvent';
 
 const RACE_MAIN = 'RACE_MAIN',
@@ -66,7 +66,6 @@ export default class ChoiseTicketPage extends Component {
         })
     };
 
-
     render() {
         return (<View style={ApplicationStyles.bgContainer}>
             {this.topBar()}
@@ -93,7 +92,20 @@ export default class ChoiseTicketPage extends Component {
                     height: 19, width: 11,
                     marginLeft: 20, marginRight: 20
                 }}
-                leftBtnPress={() => router.pop()}/>
+                leftBtnPress={() => router.pop()}
+                rightBtnIcon={Images.share}
+                rightImageStyle={{height:22,width:22,resizeMode:'contain',marginRight:25}}
+                rightBtnPress={() => {
+                    const {race, tickets} = this.state.selectRaceData;
+                    console.log(race);
+                    console.log(tickets);
+                    if (!isEmptyObject(race) && !isEmptyObject(tickets)) {
+                        const {name, location,logo, race_id,begin_date,end_date} = race;
+                        var time=convertDate(begin_date, 'YYYY.MM.DD') + "-" + convertDate(end_date, 'YYYY.MM.DD');
+                        uShareChoiseTicket(name, I18n.t('address') + location , time, logo, race_id)
+                    }
+
+                }}/>
 
         </View>)
     };
@@ -708,6 +720,11 @@ const styles = StyleSheet.create({
     txtNum: {
         fontSize: 14,
         color: '#DF1D0F'
+    },
+    imgShare: {
+        height: 22,
+        width: 23,
+        marginRight: 24.8
     }
 
 });
