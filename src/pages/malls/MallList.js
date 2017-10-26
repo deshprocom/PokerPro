@@ -38,9 +38,18 @@ export default class MallList extends PureComponent {
 
     renderItem = (item, index, separator) => {
         return <View style={[styles.listItem, index % 2 === 0 ? {} : {marginLeft: 8}]}>
-            <Image style={styles.imgThem}/>
+            <Image style={styles.imgThem}
+                   source={{uri: 'https://www.deshpro.com/pokerpro.png'}}/>
 
             <Text style={styles.txtName}>塑料扑克牌创意透明水晶防水可水洗</Text>
+            <View style={{flex: 1}}/>
+            <View style={styles.viewPrice}>
+
+                <Text>280.8</Text>
+                <View style={{flex: 1}}/>
+                <Text style={styles.txtNum}>剩余1件</Text>
+
+            </View>
 
         </View>
     };
@@ -63,6 +72,7 @@ export default class MallList extends PureComponent {
                 <Image style={styles.imgSort}
                        source={Images.sort}/>
             </View>
+
             <View style={styles.rowAlign}>
                 <Text style={styles.txtSort}>价格</Text>
                 <Image style={styles.imgSort}
@@ -92,7 +102,8 @@ const styles = StyleSheet.create({
     txtName: {
         fontSize: 14,
         color: Colors.txt_444,
-        marginTop: 7
+        marginTop: 7,
+        marginLeft: 15
     },
     rowAlign: {
         flexDirection: 'row',
@@ -108,5 +119,16 @@ const styles = StyleSheet.create({
     imgSort: {
         height: 12,
         width: 12
+    },
+    viewPrice: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: 15,
+        marginBottom: 8
+    },
+    txtNum: {
+        fontSize: 12,
+        color: Colors._AAA,
+        marginRight: 15
     }
 });
