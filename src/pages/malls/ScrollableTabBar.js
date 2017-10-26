@@ -195,7 +195,11 @@ const ScrollableTabBar = React.createClass({
                         return renderTab(name, page, isTabActive, this.props.goToPage, this.measureTab.bind(this, page));
                     })}
 
-                    <TouchableOpacity style={styles.btnFilter}>
+                    <TouchableOpacity
+                        onPress={()=>{
+                            this.props.showCatePage()
+                        }}
+                        style={styles.btnFilter}>
                         <Image style={styles.imgFilter}
                                source={Images.mall_filter}/>
 

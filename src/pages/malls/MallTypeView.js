@@ -15,6 +15,7 @@ export default class MallTypeView extends PureComponent {
         return <View style={ApplicationStyles.bgContainer}>
             <ScrollableTabView
                 renderTabBar={() => <ScrollableTabBar
+                    showCatePage={this.props.showCatePage}
                     backgroundColor={Colors.white}
                     activeTextColor="#F34A4A"
                     inactiveTextColor={Colors.txt_444}
