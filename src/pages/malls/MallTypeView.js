@@ -7,6 +7,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import ScrollableTabBar from './ScrollableTabBar';
+import MallList from './MallList';
 
 export default class MallTypeView extends PureComponent {
 
@@ -21,18 +22,15 @@ export default class MallTypeView extends PureComponent {
                     style={{borderColor: Colors._EEE}}
                     underlineStyle={{backgroundColor: '#F34A4A', height: 2}}
                 />}>
-                <View tabLabel={'推荐'}>
+                <MallList tabLabel={'推荐'}/>
 
-                </View>
-                <View tabLabel={'旅游'}>
 
-                </View>
-                <View tabLabel={'筹码'}>
+                <MallList tabLabel={'旅游'}/>
 
-                </View>
-                <View tabLabel={'扑克'}>
+                <MallList tabLabel={'筹码'}/>
 
-                </View>
+                <MallList tabLabel={'扑克'}/>
+
 
             </ScrollableTabView>
         </View>
