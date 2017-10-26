@@ -66,23 +66,14 @@ const stylesM = StyleSheet.create({
         width: 18,
         height: 4,
         borderRadius: 2,
-        marginLeft: 3,
-        marginRight: 3,
-        marginTop: 3,
-        marginBottom: -8
+        marginBottom: 0
     },
     dot: {
         backgroundColor: 'rgba(0,0,0,.2)',
         width: 9,
         height: 4,
         borderRadius: 2,
-        marginLeft: 3,
-        marginRight: 3,
-        marginTop: 3,
-        marginBottom: -8
-    },
-    paginationStyle:{
-        marginTop:300
+        marginBottom: 0
     }
 
 });

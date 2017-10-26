@@ -56,11 +56,11 @@ export function updateApp(data) {
     const {android_platform, ios_platform} = data;
     console.log(data)
     if (Platform.OS === 'ios') {
-        if (ios_platform.version !== Constants.UpdateVersion) {
+        if (Number.parseInt(ios_platform.version) > Constants.UpdateVersion) {
             updateAlet(ios_platform)
         }
     } else {
-        if (android_platform.version !== Constants.UpdateVersion) {
+        if (Number.parseInt(android_platform.version) > Constants.UpdateVersion) {
             updateAlet(android_platform)
         }
     }

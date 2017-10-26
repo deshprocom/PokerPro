@@ -4,6 +4,9 @@ pwd:Pokerpro888
 深圳德尚全彩体育文化传播有限公司
 深圳市福田区福田街道卓越世纪中心3号楼A座907
 
+AppleID
+3584196767@qq.com
+密码Deshpro123
 
 googleplay
 xiaomi
@@ -17,11 +20,3 @@ baidu
 cucumber -p iphonesim -f html -o ./cucumber_result_5_4.html -verbose
 
 react-navigation目录下src/routers/StackRouter.js
-
- if (backRouteIndex == 0) {
-                    return {
-                        ...state,
-                        routes: state.routes.slice(0, 1),
-                        index: 0,
-                    };
-                }

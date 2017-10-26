@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {
-    View, ScrollView, Platform, StyleSheet, Image, TextInput,
-    Text
+    View, ScrollView, StyleSheet,
 }
     from 'react-native';
 import Races from './Races';

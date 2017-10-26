@@ -190,7 +190,8 @@ export default class RefreshableScrollView extends ScrollView {
         }
 
         return (
-            <View style={[defaultHeaderStyles.header, this.props.refreshViewStyle, {height: this.state.showRefreshHeader ? this.props.refreshViewHeight : 0}]}>
+            <View
+                style={[defaultHeaderStyles.header, this.props.refreshViewStyle, {height: this.props.refreshViewHeight}]}>
                 <View style={defaultHeaderStyles.status}>
                     {this.renderSpinner()}
                     <Text style={defaultHeaderStyles.statusTitle}>{this.state.refreshTitle}</Text>
@@ -234,7 +235,7 @@ export default class RefreshableScrollView extends ScrollView {
                 {...this.props}
                 scrollEventThrottle={16}
                 onScroll={this.onScroll}
-                //contentContainerStyle={{paddingBottom: 80}}
+                contentContainerStyle={{minHeight: height}}
                 //onMomentumScrollEnd={this.onScrollEndDrag}
                 onScrollEndDrag={this.onScrollEndDrag}
                 onScrollBeginDrag={this.onScrollBeginDrag}>

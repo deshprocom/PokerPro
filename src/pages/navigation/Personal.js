@@ -43,7 +43,6 @@ class Personal extends Component {
 
         return (
             <View>
-
                 {this.renderPerson()}
 
                 {this.renderItem()}
@@ -103,27 +102,27 @@ class Personal extends Component {
     };
 
 
-    _msgItem = ()=>{
-        return  <TouchableOpacity style={stylesP.personalView} onPress={() => {
-                umengEvent('home_notification');
-                if (isEmptyObject(login_user)) {
-                    router.toLoginFirstPage()
-                } else {
+    _msgItem = () => {
+        return <TouchableOpacity style={stylesP.personalView} onPress={() => {
+            umengEvent('home_notification');
+            if (isEmptyObject(login_user)) {
+                router.toLoginFirstPage()
+            } else {
 
-                    JpushHelp.iosSetBadge(0);
-                    router.toMessageCenter()
-                }
-            }}>
-                <View style={stylesP.personalView2}>
-                    <Image style={stylesP.personalView2Img} source={Images.speaker}/>
-                    <Text style={stylesP.personalText}>{I18n.t('message')}</Text>
-                    <View style={{flex: 1}}/>
+                JpushHelp.iosSetBadge(0);
+                router.toMessageCenter()
+            }
+        }}>
+            <View style={stylesP.personalView2}>
+                <Image style={stylesP.personalView2Img} source={Images.speaker}/>
+                <Text style={stylesP.personalText}>{I18n.t('message')}</Text>
+                <View style={{flex: 1}}/>
 
-                    {this._msgBadge()}
+                {this._msgBadge()}
 
-                    <Image style={stylesP.personalImg} source={Images.is}/>
-                </View>
-            </TouchableOpacity>
+                <Image style={stylesP.personalImg} source={Images.is}/>
+            </View>
+        </TouchableOpacity>
 
     };
 

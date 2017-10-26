@@ -51,6 +51,8 @@ class TabIcon extends PureComponent {
                 return I18n.t('home_sort');
             case 'me':
                 return I18n.t('mine');
+            case 'mall':
+                return I18n.t('mall');
         }
 
     };
@@ -69,6 +71,8 @@ class TabIcon extends PureComponent {
                 return focused ? Images.rank2 : Images.rank;
             case 'me':
                 return focused ? Images.mine2 : Images.mine;
+            case 'mall':
+                return focused ? Images.nav_malled : Images.nav_mall
         }
     };
 
@@ -81,6 +85,8 @@ class TabIcon extends PureComponent {
             case 'rank':
                 return styles.bgRankStyle2;
             case 'me':
+                return styles.bgHomeStyle;
+            case 'mall':
                 return styles.bgHomeStyle;
         }
     }

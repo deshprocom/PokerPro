@@ -1,5 +1,5 @@
-import React, {Component, PropTypes} from 'react';
-import {View, Text, StyleSheet, BackAndroid, InteractionManager} from 'react-native';
+import React, {Component} from 'react';
+import {View} from 'react-native';
 import Drawer from 'react-native-drawer';
 
 import {Colors, Images, Metrics} from '../../Themes'
