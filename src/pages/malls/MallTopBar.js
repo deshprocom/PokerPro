@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {
-    StyleSheet, Text, View, TextInput,
+    StyleSheet, Text, View, Image,
     TouchableOpacity,
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
@@ -13,7 +13,17 @@ export default class MallTopBar extends PureComponent {
         return (<View style={styles.navBar}>
 
             <View style={styles.navContent}>
-                <View style={styles.search}></View>
+                <TouchableOpacity style={styles.search}>
+                    <Image style={styles.searchImg}
+                           source={Images.search_gray}/>
+                    <Text style={styles.txtSearch}>{I18n.t('mall_search')}</Text>
+
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.btnCat}>
+                    <Image style={styles.imgCat}
+                           source={Images.shopping_cart}/>
+
+                </TouchableOpacity>
             </View>
 
         </View>)
@@ -37,7 +47,29 @@ const styles = StyleSheet.create({
         height: 28,
         width: 270,
         backgroundColor: Colors._ECE,
-        borderRadius: 3
+        borderRadius: 3,
+        marginLeft: 47,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    searchImg: {
+        height: 17,
+        width: 17,
+        marginLeft: 20,
+        marginRight: 9
+    },
+    txtSearch: {
+        color: Colors._AAA,
+        fontSize: 12
+    },
+    btnCat: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    imgCat: {
+        height: 20,
+        width: 22
     }
 
 });

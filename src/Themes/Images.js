@@ -225,7 +225,8 @@ const images = {
     top:require('../../source/navigation/top.png'),
     coming:require('../../source/navigation/coming.png'),
     nav_mall:require('../../source/navigation/nav_mall.png'),
-    nav_malled:require('../../source/navigation/nav_malled.png')
+    nav_malled:require('../../source/navigation/nav_malled.png'),
+    shopping_cart:require('../../source/mall/cart.png')
 
 };
 
