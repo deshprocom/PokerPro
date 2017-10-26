@@ -5,12 +5,14 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import TopBar from './MallTopBar';
+import MallTypeView from './MallTypeView';
 
 
 export default class MallPage extends PureComponent {
     render() {
-        return (<View>
+        return (<View style={{flex: 1}}>
             <TopBar/>
+            <MallTypeView/>
 
         </View>)
     }
