@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, Animated, Image} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, StatusBar, Image} from 'react-native';
 import I18n from 'react-native-i18n';
 import {Images} from '../../Themes';
 import TabIcon from './TabIcon';
@@ -22,14 +22,14 @@ class BottomNavigation extends Component {
     }
 
 
-
     render() {
 
         const {index} = this.props.navigationState;
-        const {jumpToIndex,actionType} = this.props;
+        const {jumpToIndex, actionType} = this.props;
 
         return (
             <View style={styleBN.navigation}>
+                <StatusBar barStyle={index === 3 ? "dark-content" : "light-content"}/>
                 {index === 0 && actionType === SHOW_BACK_TOP ? <TouchableOpacity
                         style={styleBN.navigations}
                         onPress={() => {

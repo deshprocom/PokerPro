@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, Image,StatusBar} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
 import MainVideoPage from '../videos/MainVideoPage';
 import MainNewsPage from '../news/MainNewsPage';
@@ -43,7 +43,7 @@ class VideoNewsTab extends PureComponent {
     render() {
         return (
             <View style={{flex: 1}}>
-                <StatusBar barStyle={this.props.barStyle ? this.props.barStyle : "light-content"}/>
+
                 {this.renderHead()}
                 <ScrollableTabView
                     ref={ref => this.tabView = ref}

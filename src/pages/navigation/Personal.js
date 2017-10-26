@@ -3,7 +3,7 @@ import {
     TouchableOpacity,
     StyleSheet, Platform,
     Text, Image,
-    View, Animated, findNodeHandle, StatusBar
+    View, Animated, findNodeHandle
 } from 'react-native';
 import {Images, Colors, Metrics} from '../../Themes';
 import {strNotNull, isEmptyObject, getLoginUser, getUserData, getDispatchAction} from '../../utils/ComonHelper';
@@ -43,7 +43,6 @@ class Personal extends Component {
 
         return (
             <View>
-                <StatusBar barStyle={this.props.barStyle ? this.props.barStyle : "light-content"}/>
                 {this.renderPerson()}
 
                 {this.renderItem()}
