@@ -70,72 +70,70 @@ import {Navigation} from '../pages/navigation/Navigation';
 
 export const Stacks = Actions.create(
     <Scene key="root">
-        <Scene key="SearchVideo" component={SearchVideo} navBar={() => null}/>
-        <Scene key="RaceScene" component={RaceScene} navBar={() => null}/>
-        <Scene key="DrawerPage" component={DrawerPage} navBar={() => null}/>
-        <Scene key="AddVerified" component={AddVerified} navBar={() => null}/>
-        <Scene key="VerifiedPage" component={VerifiedPage} navBar={() => null}/>
-        <Scene key="HomePage" component={HomePage} navBar={() => null}/>
-        <Scene key="InputPwdPage" component={InputPwdPage} navBar={() => null}/>
-        <Scene key="PersonPage" component={PersonPage} navBar={() => null}/>
-        <Scene key="SettingPage" component={SettingPage} navBar={() => null}/>
-        <Scene key="RegisterPage" component={RegisterPage} navBar={() => null}/>
-        <Scene key="ForgetPage" component={ForgetPage} navBar={() => null}/>
-        <Scene key="RacesInfoPage" component={RacesInfoPage} navBar={() => null}/>
-        <Scene key="LoginFirstPage" component={LoginFirstPage} navBar={() => null}/>
-        <Scene key="LoginCodePage" component={LoginCodePage} navBar={() => null}/>
-        <Scene key="EmailRegisterPage" component={EmailRegisterPage} navBar={() => null}/>
-        <Scene key="ImageGallery" component={ImageGallery} navBar={() => null}/>
-        <Scene key="ForgetEmailPage" component={ForgetEmailPage} navBar={() => null}/>
-        <Scene key="BuyTicketPage" component={BuyTicketPage} navBar={() => null}/>
-        <Scene key="OrderInfoPage" component={OrderInfoPage} navBar={() => null}/>
-        <Scene key="BuyKnowPage" component={BuyKnowPage} navBar={() => null}/>
-        <Scene key="CertificationPage" component={CertificationPage} navBar={() => null}/>
-        <Scene key="OrderListPage" component={OrderListPage} navBar={() => null}/>
-        <Scene key="SecurityPage" component={SecurityPage} navBar={() => null}/>
-        <Scene key="ModifyPwdPage" component={ModifyPwdPage} navBar={() => null}/>
-        <Scene key="SearchRacesPage" component={SearchRacesPage} navBar={() => null}/>
-        <Scene key="BusinessPage" component={BusinessPage} navBar={() => null}/>
-        <Scene key="SearchKeywordPage" component={SearchKeywordPage} navBar={() => null}/>
-        <Scene key="ChildRaceInfoPage" component={ChildRaceInfoPage} navBar={() => null}/>
-        <Scene key="AboutPage" component={AboutPage} navBar={() => null}/>
-        <Scene key="PokerPersonPage" component={PokerPersonPage} navBar={() => null}/>
-        <Scene key="MainNewsPage" component={MainNewsPage} navBar={() => null}/>
-        <Scene key="NewsInfoPage" component={NewsInfoPage} navBar={() => null}/>
-        <Scene key="SearchNewsPage" component={SearchNewsPage} navBar={() => null}/>
-        <Scene key="TicketPage" component={TicketPage} navBar={() => null}/>
-        <Scene key="ApiSettingPage" component={ApiSettingPage} navBar={() => null}/>
-        <Scene key="BindingPhonePage" component={BindingPhonePage} navBar={() => null}/>
-        <Scene key="ChangePhonePage" component={ChangePhonePage} navBar={() => null}/>
-        <Scene key="MessagePage" component={MessagePage} navBar={() => null}/>
-        <Scene key="MainVideoPage" component={MainVideoPage} navBar={() => null}/>
-        <Scene key="VideoInfoPage" component={VideoInfoPage} navBar={() => null}/>
-        <Scene key="TicketSearchPage" component={TicketSearchPage} navBar={() => null}/>
-        <Scene key="ChoiseTicketPage" component={ChoiseTicketPage} navBar={() => null}/>
-        <Scene key="TicketInfoPage" component={TicketInfoPage} navBar={() => null}/>
-        <Scene key="WebViewPage" component={WebViewPage} navBar={() => null}/>
-        <Scene key="NewAddressPage" component={NewAddressPage} navBar={() => null}/>
-        <Scene key="AdrListPage" component={AdrListPage} navBar={() => null}/>
-        <Scene key="DrawerRank" component={DrawerRank} navBar={() => null}/>
-        <Scene key="FocusPlayer" component={FocusPlayer} navBar={() => null}/>
-        <Scene key="PokerRankPage" component={PokerRankPage} navBar={() => null}/>
-        <Scene key="PokerRacePage" component={PokerRacePage} navBar={() => null}/>
-        <Scene key="SearchPoker" component={SearchPoker} navBar={() => null}/>
-        <Scene key="WebViewPay" component={WebViewPay} navBar={() => null}/>
-        <Scene key="Protocol" component={Protocol} navBar={() => null}/>
-        <Scene key="Suggest" component={Suggest} navBar={() => null}/>
-        <Scene key="WxRegister" component={WxRegister} navBar={() => null}/>
-        <Scene key="InputPwd" component={InputPwd} navBar={() => null}/>
-        <Scene key="MessageCenter" component={MessageCenter} navBar={() => null}/>
-        <Scene key="ActivityCenter" component={ActivityCenter} navBar={() => null}/>
-        <Scene key="ActivityInfo" component={ActivityInfo} navBar={() => null}/>
+        <Scene key="SearchVideo" component={SearchVideo} hideNavBar/>
+        <Scene key="RaceScene" component={RaceScene} hideNavBar/>
+        <Scene key="DrawerPage" component={DrawerPage} hideNavBar/>
+        <Scene key="AddVerified" component={AddVerified} hideNavBar/>
+        <Scene key="VerifiedPage" component={VerifiedPage} hideNavBar/>
+        <Scene key="HomePage" component={HomePage} hideNavBar/>
+        <Scene key="InputPwdPage" component={InputPwdPage} hideNavBar/>
+        <Scene key="PersonPage" component={PersonPage} hideNavBar/>
+        <Scene key="SettingPage" component={SettingPage} hideNavBar/>
+        <Scene key="RegisterPage" component={RegisterPage} hideNavBar/>
+        <Scene key="ForgetPage" component={ForgetPage} hideNavBar/>
+        <Scene key="RacesInfoPage" component={RacesInfoPage} hideNavBar/>
+        <Scene key="LoginFirstPage" component={LoginFirstPage} hideNavBar/>
+        <Scene key="LoginCodePage" component={LoginCodePage} hideNavBar/>
+        <Scene key="EmailRegisterPage" component={EmailRegisterPage} hideNavBar/>
+        <Scene key="ImageGallery" component={ImageGallery} hideNavBar/>
+        <Scene key="ForgetEmailPage" component={ForgetEmailPage} hideNavBar/>
+        <Scene key="BuyTicketPage" component={BuyTicketPage} hideNavBar/>
+        <Scene key="OrderInfoPage" component={OrderInfoPage} hideNavBar/>
+        <Scene key="BuyKnowPage" component={BuyKnowPage} hideNavBar/>
+        <Scene key="CertificationPage" component={CertificationPage} hideNavBar/>
+        <Scene key="OrderListPage" component={OrderListPage} hideNavBar/>
+        <Scene key="SecurityPage" component={SecurityPage} hideNavBar/>
+        <Scene key="ModifyPwdPage" component={ModifyPwdPage} hideNavBar/>
+        <Scene key="SearchRacesPage" component={SearchRacesPage} hideNavBar/>
+        <Scene key="BusinessPage" component={BusinessPage} hideNavBar/>
+        <Scene key="SearchKeywordPage" component={SearchKeywordPage} hideNavBar/>
+        <Scene key="ChildRaceInfoPage" component={ChildRaceInfoPage} hideNavBar/>
+        <Scene key="AboutPage" component={AboutPage} hideNavBar/>
+        <Scene key="PokerPersonPage" component={PokerPersonPage} hideNavBar/>
+        <Scene key="MainNewsPage" component={MainNewsPage} hideNavBar/>
+        <Scene key="NewsInfoPage" component={NewsInfoPage} hideNavBar/>
+        <Scene key="SearchNewsPage" component={SearchNewsPage} hideNavBar/>
+        <Scene key="TicketPage" component={TicketPage} hideNavBar/>
+        <Scene key="ApiSettingPage" component={ApiSettingPage} hideNavBar/>
+        <Scene key="BindingPhonePage" component={BindingPhonePage} hideNavBar/>
+        <Scene key="ChangePhonePage" component={ChangePhonePage} hideNavBar/>
+        <Scene key="MessagePage" component={MessagePage} hideNavBar/>
+        <Scene key="MainVideoPage" component={MainVideoPage} hideNavBar/>
+        <Scene key="VideoInfoPage" component={VideoInfoPage} hideNavBar/>
+        <Scene key="TicketSearchPage" component={TicketSearchPage} hideNavBar/>
+        <Scene key="ChoiseTicketPage" component={ChoiseTicketPage} hideNavBar/>
+        <Scene key="TicketInfoPage" component={TicketInfoPage} hideNavBar/>
+        <Scene key="WebViewPage" component={WebViewPage} hideNavBar/>
+        <Scene key="NewAddressPage" component={NewAddressPage} hideNavBar/>
+        <Scene key="AdrListPage" component={AdrListPage} hideNavBar/>
+        <Scene key="DrawerRank" component={DrawerRank} hideNavBar/>
+        <Scene key="FocusPlayer" component={FocusPlayer} hideNavBar/>
+        <Scene key="PokerRankPage" component={PokerRankPage} hideNavBar/>
+        <Scene key="PokerRacePage" component={PokerRacePage} hideNavBar/>
+        <Scene key="SearchPoker" component={SearchPoker} hideNavBar/>
+        <Scene key="WebViewPay" component={WebViewPay} hideNavBar/>
+        <Scene key="Protocol" component={Protocol} hideNavBar/>
+        <Scene key="Suggest" component={Suggest} hideNavBar/>
+        <Scene key="WxRegister" component={WxRegister} hideNavBar/>
+        <Scene key="InputPwd" component={InputPwd} hideNavBar/>
+        <Scene key="MessageCenter" component={MessageCenter} hideNavBar/>
+        <Scene key="ActivityCenter" component={ActivityCenter} hideNavBar/>
+        <Scene key="ActivityInfo" component={ActivityInfo} hideNavBar/>
 
         <Scene type={ActionConst.RESET}
-               initial={true} navBar={() => {
-            return <View>
-                <StatusBar barStyle={"light-content"}/>
-            </View>
-        }} key="Main">
+               initial={true}
+               hideNavBar
+               key="Main">
             {Navigation()}
         </Scene>
 

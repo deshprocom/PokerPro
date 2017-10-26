@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    View, ScrollView, Platform, StyleSheet, Image, TextInput,
+    View, ScrollView, StatusBar, StyleSheet, Image, TextInput,
     Text
 }
     from 'react-native';
@@ -128,7 +128,7 @@ class RaceInfoPage extends Component {
         return (
 
             <View>
-
+                <StatusBar barStyle={this.props.barStyle ? this.props.barStyle : "light-content"}/>
                 <ScrollView
                     ref={ref => this.mainScroll = ref}
                     scrollEventThrottle={16}

@@ -1,5 +1,5 @@
-import React, {Component, PropTypes} from 'react';
-import {View, Text, StyleSheet, BackAndroid, InteractionManager} from 'react-native';
+import React, {Component} from 'react';
+import {View, StatusBar} from 'react-native';
 import Drawer from 'react-native-drawer';
 
 import {Colors, Images, Metrics} from '../../Themes'
@@ -75,6 +75,7 @@ class DrawerRank extends Component {
                         main: {opacity: (2 - ratio) / 2}
                     })}
                     side="right">
+                <StatusBar barStyle={this.props.barStyle ? this.props.barStyle : "light-content"}/>
 
                 <MainRankPage
                     ref={ref => this.mainRank = ref}
