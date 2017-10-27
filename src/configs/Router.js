@@ -645,5 +645,11 @@ export default class Router {
 
     }
 
+    toMallInfoPage(props) {
+        this.push(props, {
+            name: 'MallInfoPage',
+        })
+    }
+
 
 }
