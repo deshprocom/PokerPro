@@ -19,12 +19,13 @@ export default class MallCategories extends PureComponent {
             selectedIndex: id
         })
     }
-    _renderItem=({item,index})=>{
-        console.log(index)
-        console.log(this.selectedIndex)
+    _renderItem=({item})=>{
+        console.log(this)
+        console.log("index:",item.id);
+        console.log("selectedId:",this.selectedId);
         return(
-            <TouchableOpacity style={this.selectedId === index ? styles.categoriesOneSlected:styles.categoriesOne}
-                              onPress={() => selectIndex(index)}>
+            <TouchableOpacity id={item.id} style={this.selectedId === item.id ? styles.categoriesOneSlected:styles.categoriesOne}
+                              onPress={() => this.selectItem(item.id)}>
                 <Text style={styles.categoriesOneText}>{'热门'} (23)</Text>
             </TouchableOpacity>
         )
@@ -53,7 +54,7 @@ export default class MallCategories extends PureComponent {
                         numColumns={1}
                         data={data1}
                         renderItem={this._renderItem}
-                        keyExtractor={(item, index) => index}
+                        keyExtractor={(item, index) => item.id}
                     />
 
                 </ScrollView>
