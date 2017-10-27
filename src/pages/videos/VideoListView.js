@@ -200,7 +200,7 @@ export default class VideoListView extends Component {
 
     _itemNewsView = (rowData, sectionID, rowID) => {
 
-        const {created_at, name, cover_link, video_duration, title_desc, id} = rowData;
+        const {created_at, group_name, cover_link, video_duration, title_desc, id} = rowData;
 
         return (<View
             style={styles.transparent}
@@ -212,7 +212,7 @@ export default class VideoListView extends Component {
                 }}
             >
 
-                <Text style={styles.itemTitle}>{name}</Text>
+                <Text style={styles.itemTitle}>{group_name}</Text>
 
             </TouchableOpacity>
 
