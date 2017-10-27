@@ -8,26 +8,24 @@ import I18n from 'react-native-i18n';
 import * as Animatable from 'react-native-animatable';
 
 export default class MallCategories extends PureComponent {
-    componentDidMount() {
-        this.selectedId = -1;
-    }
 
-    selectItem = (id) => {
-        this.selectedId = id;
 
-        this.setState({
-            selectedIndex: id
-        })
-    }
+    state = {
+        speciesId: 1
+    };
+
+
     _renderItem = ({item}) => {
-        console.log(this)
-        console.log("index:", item.id);
-        console.log("selectedId:", this.selectedId);
+        const {speciesId} = this.state;
         return (
-            <TouchableOpacity id={item.id}
-                              style={this.selectedId === item.id ? styles.categoriesOneSlected : styles.categoriesOne}
-                              onPress={() => this.selectItem(item.id)}>
-                <Text style={styles.categoriesOneText}>{'热门'} (23)</Text>
+            <TouchableOpacity
+                style={speciesId === item ? styles.categoriesOneSlected : styles.categoriesOne}
+                onPress={() => {
+                    this.setState({
+                        speciesId: item
+                    })
+                }}>
+                <Text style={styles.categoriesOneText}>{`热门${item}`} (23)</Text>
             </TouchableOpacity>
         )
     };
@@ -96,12 +94,13 @@ const styles = StyleSheet.create({
     },
     categoriesOne: {
         width: 116,
-        height: 40
+        height: 40,
+        backgroundColor: Colors._ECE
     },
     categoriesOneSlected: {
         width: 116,
         height: 40,
-        backgroundColor: '#ECECEE'
+        backgroundColor: 'white'
     },
     categoriesOneText: {
         marginLeft: 17,
