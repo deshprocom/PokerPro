@@ -235,7 +235,7 @@ export function uShareTicket(title, desc, icon, id, ticket_id) {
 }
 export function uShareChoiseTicket(name, location,time,logo, race_id){
     var des=time+"\n"+location;
-    UMShare.share(name, shareTxt(des), getShareIcon(logo), shareHost() + "raceTickets/" + race_id)
+    UMShare.share(name, shareTxt(des), getShareIcon(logo), shareHost() + "raceTickets/" + race_id + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
