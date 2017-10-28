@@ -615,8 +615,14 @@ export default class Router {
 
 
     toPersonPage(props) {
+
         this.push(props, {
             name: 'PersonPage',
+        })
+    }
+    toMallInfoPage() {
+        this.stackPush({
+            name: 'MallInfoPage',
         })
     }
 
@@ -643,12 +649,6 @@ export default class Router {
 
         navigation.dispatch(backTo)
 
-    }
-
-    toMallInfoPage(props) {
-        this.push(props, {
-            name: 'MallInfoPage',
-        })
     }
 
 

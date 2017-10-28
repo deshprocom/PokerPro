@@ -1,0 +1,125 @@
+import React,{Component} from 'react';
+import {View,StyleSheet,ScrollView,Text,Image,TouchableOpacity} from 'react-native';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
+import I18n from 'react-native-i18n';
+import Swiper from 'react-native-swiper';
+
+export default class  MallInfoPageTopBar extends Component{
+
+    componentDidMount(){
+
+    }
+    _clickBanner=()=>{
+        return ""
+    }
+
+
+    render(){
+        const{banners,topBar} = this.props;
+        console.log("banner:",banners)
+        return(
+            <View style={{backgroundColor:'#FFFFFF'}}>
+                <View style={styleM.mallInfoBgImg}>
+                    {topBar}
+                    <Swiper
+                        autoplayTimeout={3}
+                        autoplay>
+                        {banners.map((item, key) => {
+                            return <TouchableOpacity
+                                key={key}
+                                onPress={()=>this._clickBanner}
+                                activeOpacity={1}>
+                                <Image style={{height: 200, width: '100%'}} source={{uri: Images.home_bg}}/>
+                            </TouchableOpacity>
+
+                        })}
+
+                    </Swiper>
+                </View>
+                <View style={styleM.mallInfoTop}>
+                    <Text style={styleM.mallInfoTopText}>ssssdsdsdsd</Text>
+                </View>
+                <View style={styleM.textPrices}>
+                    <Text style={styleM.textPrice}>¥139</Text>
+                    <Text style={styleM.textOriginPrice}>¥239</Text>
+                    <Text style={styleM.discount}>2.3折</Text>
+                </View>
+                <View style={styleM.locations}>
+                    <View style={styleM.return7}><Text style={styleM.return7Txt}>7天退换</Text></View>
+                    <Text style={styleM.freight}>运费：¥12.00</Text>
+                    <View style={{flex:1}}/>
+                    <Text style={styleM.location}>深圳</Text>
+                </View>
+            </View>
+        );
+    }
+}
+
+const styleM = StyleSheet.create({
+    mallInfoBgImg:{
+        height:362,
+        backgroundColor:'#FFFFFF'
+    },
+    mallInfoTop:{
+      backgroundColor:'#FFFFFF'
+    },
+    mallInfoTopText:{
+        marginLeft:17,
+        marginRight:29,
+        fontSize: 17,
+        color: '#333333',
+        backgroundColor:'#FFFFFF'
+    },
+    textPrices:{
+        flexDirection:'row',
+        alignItems:'center',
+        backgroundColor:'#FFFFFF',
+        marginTop:3
+    },
+    textPrice:{
+        fontSize: 24,
+        color: '#F34A4A',
+        marginLeft:17,
+    },
+    textOriginPrice:{
+        fontSize: 14,
+        color: '#CCCCCC',
+        marginLeft:14,
+        textDecorationLine:'line-through',
+        textDecorationColor:'#CCCCCC'
+    },
+    discount:{
+        fontSize: 14,
+        color: '#CCCCCC',
+        marginLeft:8
+    },
+    locations:{
+        flexDirection:'row',
+        alignItems:'center',
+        backgroundColor:'#FFFFFF',
+        paddingBottom:23,
+        marginTop:5
+    },
+    return7:{
+        width:55,
+        height:21,
+        backgroundColor:"#FF6C6C",
+        marginLeft:17,
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    return7Txt:{
+        fontSize: 12,
+        color: '#FFFFFF'
+    },
+    freight:{
+        fontSize: 14,
+        color: '#AAAAAA',
+        marginLeft:13
+    },
+    location:{
+        fontSize: 14,
+        color: '#666666',
+        marginRight:16
+    }
+})

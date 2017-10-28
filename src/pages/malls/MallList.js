@@ -38,8 +38,8 @@ export default class MallList extends PureComponent {
 
     renderItem = (item, index, separator) => {
         return <TouchableOpacity style={[styles.listItem, index % 2 === 0 ? {} : {marginLeft: 8}]}
-                onpress={()=>{
-                    router.toMallInfoPage(this.props);
+                onPress={()=>{
+                    router.toMallInfoPage()
                 }}>
             <Image style={styles.imgThem}
                    source={{uri: 'https://www.deshpro.com/pokerpro.png'}}/>
