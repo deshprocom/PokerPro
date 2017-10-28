@@ -4,6 +4,7 @@ import {
     View, StatusBar
 } from 'react-native';
 //Pages
+import SearchMallPage from '../pages/malls/SearchMallPage';
 import SearchVideo from '../pages/videos/SearchVideo';
 import HomePage from '../pages/HomePage';
 import InputPwdPage from '../pages/InputPwdPage';
@@ -66,10 +67,12 @@ import RaceScene from '../pages/races/RaceScene';
 import TabIcon from '../pages/navigation/TabIcon';
 import RaceInfoPage from '../pages/navigation/RaceInfoPage';
 import {Navigation} from '../pages/navigation/Navigation';
+import Search from "../components/Search";
 
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="SearchMallPage" component={SearchMallPage} hideNavBar/>
         <Scene key="SearchVideo" component={SearchVideo} hideNavBar/>
         <Scene key="RaceScene" component={RaceScene} hideNavBar/>
         <Scene key="DrawerPage" component={DrawerPage} hideNavBar/>
