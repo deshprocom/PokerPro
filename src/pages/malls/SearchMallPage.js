@@ -162,10 +162,10 @@ export default class SearchMallPage extends PureComponent {
         let tabs = ['扑克', '澳门景点门票', '澳门景点门票 澳门酒店三天三夜'];
         return <View style={{flexDirection: 'row', flexWrap: 'wrap', marginLeft: 19}}>
             {tabs.map(function (item, index) {
-                return <View key={`tab${index}`} style={styles.tabSearch}>
+                return <TouchableOpacity key={`tab${index}`} style={styles.tabSearch}>
                     <Text style={styles.txtTab}>{item}</Text>
 
-                </View>
+                </TouchableOpacity>
             })}
 
         </View>
