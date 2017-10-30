@@ -232,7 +232,11 @@ const images = {
     sort_up:require('../../source/mall/sort_up.png'),
     sort:require('../../source/mall/sort.png'),
     mall_del:require('../../source/mall/mall_del.png'),
-    shoppingCart:require('../../source/mall/shoppingCart.png')
+    shoppingCart:require('../../source/mall/shoppingCart.png'),
+    close:require('../../source/mall/close.png'),
+    cut:require('../../source/mall/cut.png'),
+    add:require('../../source/mall/add.png')
+
 
 };
 
