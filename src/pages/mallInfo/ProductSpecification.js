@@ -1,40 +1,35 @@
-import React,{Component} from 'react';
-import {View,StyleSheet,ScrollView,Text,Image,TouchableOpacity,Modal} from 'react-native';
+import React, {Component} from 'react';
+import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, Modal} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import ProductSpecificationInfo from './ProductSpecificationInfo';
+import propTypes from 'prop-types';
 
-export default class  ProductSpecification extends Component{
-    state={
-        show:false
+export default class ProductSpecification extends Component {
+    static propTypes = {
+        showSpecInfo: propTypes.func.isRequired
+    };
+
+    componentDidMount() {
+
     }
 
-    componentDidMount(){
-
-    }
-
-    render(){
-        return(
+    render() {
+        return (
             <View>
                 <TouchableOpacity
                     style={styleP.specification}
-                    onPress={()=>{
-                       this.setState({
-                           show:true,
-                           animationType:true
-                       })
-            }}>
+                    onPress={() => {
+                        this.props.showSpecInfo()
+
+                    }}>
                     <Text style={styleP.specificationTxt1}>产品规格</Text>
                     <Text style={styleP.specificationTxt2}>未选</Text>
                     <Text style={styleP.specificationTxt3}>已选</Text>
                     <Text style={styleP.specificationTxt4}>A套餐</Text>
-                    <View style={{flex:1}}/>
+                    <View style={{flex: 1}}/>
                     <Image style={styleP.specificationImg} source={Images.is}/>
                 </TouchableOpacity>
 
-                {this.state.show?
-                    <ProductSpecificationInfo/>
-                    :null}
             </View>
 
         );
@@ -42,36 +37,36 @@ export default class  ProductSpecification extends Component{
 }
 
 const styleP = StyleSheet.create({
-    specification:{
-        height:48,
-        backgroundColor:"#FFFFFF",
-        marginTop:7,
-        flexDirection:'row',
-        alignItems:'center'
+    specification: {
+        height: 48,
+        backgroundColor: "#FFFFFF",
+        marginTop: 7,
+        flexDirection: 'row',
+        alignItems: 'center'
     },
-    specificationTxt1:{
+    specificationTxt1: {
         fontSize: 14,
-        color:'#333333',
-        marginLeft:17
+        color: '#333333',
+        marginLeft: 17
     },
-    specificationTxt2:{
+    specificationTxt2: {
         fontSize: 14,
-        color:'#AAAAAA',
-        marginLeft:24
+        color: '#AAAAAA',
+        marginLeft: 24
     },
-    specificationTxt3:{
+    specificationTxt3: {
         fontSize: 14,
-        color:'#AAAAAA',
-        marginLeft:41
+        color: '#AAAAAA',
+        marginLeft: 41
     },
-    specificationTxt4:{
+    specificationTxt4: {
         fontSize: 14,
-        color:'#333333',
-        marginLeft:24
+        color: '#333333',
+        marginLeft: 24
     },
-    specificationImg:{
-        width:8,
-        height:16,
-        marginRight:16
+    specificationImg: {
+        width: 8,
+        height: 16,
+        marginRight: 16
     }
 })
