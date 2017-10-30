@@ -7,22 +7,22 @@ import I18n from 'react-native-i18n';
 import TopBar from './MallTopBar';
 import MallTypeView from './MallTypeView';
 import MallCategories from './MallCategories';
-import {getCategories,categoriesChild} from '../../services/MallDao';
+import {getCategories} from '../../services/MallDao';
 
 
 export default class MallPage extends PureComponent {
 
     state = {
         showCategories: false,
-        categories:[]
+        categories: []
     };
 
-    componentDidMount(){
-        getCategories(data=>{
-            console.log('categories',data)
+    componentDidMount() {
+        getCategories(data => {
+            console.log('categories', data)
             const {categories} = data;
             this.setState({categories})
-        },err=>{
+        }, err => {
 
         })
     }
@@ -34,7 +34,8 @@ export default class MallPage extends PureComponent {
             <MallTypeView
                 categories={categories}
                 showCatePage={this.toggle}/>
-            {this.state.showCategories ? <MallCategories/> : null}
+            {this.state.showCategories ? <MallCategories
+                categories={categories}/> : null}
 
 
         </View>)
