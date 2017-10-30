@@ -20,7 +20,6 @@ export default class  MallInfoPageTopBar extends Component{
         return(
             <View style={{backgroundColor:'#FFFFFF'}}>
                 <View style={styleM.mallInfoBgImg}>
-                    {topBar}
                     <Swiper
                         autoplayTimeout={3}
                         autoplay>
@@ -29,7 +28,7 @@ export default class  MallInfoPageTopBar extends Component{
                                 key={key}
                                 onPress={()=>this._clickBanner}
                                 activeOpacity={1}>
-                                <Image style={{height: 200, width: '100%'}} source={{uri: Images.home_bg}}/>
+                                <Image style={{height: 362, width: '100%'}} source={Images.home_bg}/>
                             </TouchableOpacity>
 
                         })}
