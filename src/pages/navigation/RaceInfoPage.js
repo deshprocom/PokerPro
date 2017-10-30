@@ -123,7 +123,7 @@ class RaceInfoPage extends Component {
 
     render() {
         const {listRace, raceTickets, hotInfos, banners, headlines} = this.state;
-
+        console.log("banner:",banners)
         return (
 
             <View>

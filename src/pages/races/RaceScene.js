@@ -545,7 +545,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         position: 'absolute',
         top: 0,
-        width
 
     },
     popBtn: {

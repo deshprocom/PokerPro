@@ -621,8 +621,14 @@ export default class Router {
 
 
     toPersonPage(props) {
+
         this.push(props, {
             name: 'PersonPage',
+        })
+    }
+    toMallInfoPage() {
+        this.stackPush({
+            name: 'MallInfoPage',
         })
     }
 

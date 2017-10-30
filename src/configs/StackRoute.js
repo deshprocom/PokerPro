@@ -64,6 +64,7 @@ import ActivityInfo from '../pages/message/ActivityInfo';
 import VerifiedPage from '../pages/verifieds/VerifiedPage';
 import AddVerified from '../pages/verifieds/AddVerified';
 import RaceScene from '../pages/races/RaceScene';
+import MallInfoPage from '../pages/mallInfo/MallInfoPage';
 import TabIcon from '../pages/navigation/TabIcon';
 import RaceInfoPage from '../pages/navigation/RaceInfoPage';
 import {Navigation} from '../pages/navigation/Navigation';
@@ -132,6 +133,7 @@ export const Stacks = Actions.create(
         <Scene key="MessageCenter" component={MessageCenter} hideNavBar/>
         <Scene key="ActivityCenter" component={ActivityCenter} hideNavBar/>
         <Scene key="ActivityInfo" component={ActivityInfo} hideNavBar/>
+        <Scene key="MallInfoPage" component={MallInfoPage} hideNavBar/>
 
         <Scene type={ActionConst.RESET}
                initial={true}
