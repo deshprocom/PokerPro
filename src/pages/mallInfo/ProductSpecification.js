@@ -1,27 +1,42 @@
 import React,{Component} from 'react';
-import {View,StyleSheet,ScrollView,Text,Image} from 'react-native';
+import {View,StyleSheet,ScrollView,Text,Image,TouchableOpacity,Modal} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {NavigationBar} from '../../components';
+import ProductSpecificationInfo from './ProductSpecificationInfo';
 
 export default class  ProductSpecification extends Component{
+    state={
+        show:false
+    }
 
     componentDidMount(){
 
     }
 
-
-
     render(){
         return(
-            <View style={styleP.specification}>
-                <Text style={styleP.specificationTxt1}>产品规格</Text>
-                <Text style={styleP.specificationTxt2}>未选</Text>
-                <Text style={styleP.specificationTxt3}>已选</Text>
-                <Text style={styleP.specificationTxt4}>A套餐</Text>
-                <View style={{flex:1}}/>
-                <Image style={styleP.specificationImg} source={Images.is}/>
+            <View>
+                <TouchableOpacity
+                    style={styleP.specification}
+                    onPress={()=>{
+                       this.setState({
+                           show:true,
+                           animationType:true
+                       })
+            }}>
+                    <Text style={styleP.specificationTxt1}>产品规格</Text>
+                    <Text style={styleP.specificationTxt2}>未选</Text>
+                    <Text style={styleP.specificationTxt3}>已选</Text>
+                    <Text style={styleP.specificationTxt4}>A套餐</Text>
+                    <View style={{flex:1}}/>
+                    <Image style={styleP.specificationImg} source={Images.is}/>
+                </TouchableOpacity>
+
+                {this.state.show?
+                    <ProductSpecificationInfo/>
+                    :null}
             </View>
+
         );
     }
 }
