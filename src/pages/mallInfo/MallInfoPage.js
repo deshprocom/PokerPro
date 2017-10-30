@@ -1,5 +1,5 @@
-import React,{Component} from 'react';
-import {View,StyleSheet,ScrollView,Text,Image,TouchableOpacity} from 'react-native';
+import React, {Component} from 'react';
+import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {NavigationBar} from '../../components';
@@ -9,14 +9,14 @@ import ShipAddress from './ShipAddress';
 import MallIntroduction from './MallIntroduction';
 import MallInfoBottom from './MallInfoBottom';
 
-export default class  MallInfoPage extends Component{
+export default class MallInfoPage extends Component {
     state = {
         banners: []
     };
 
-    componentDidMount(){
+    componentDidMount() {
         this.setState({
-            banners: [1,2,3,4]
+            banners: [1, 2, 3, 4]
         })
     }
 
@@ -43,19 +43,19 @@ export default class  MallInfoPage extends Component{
         </View>)
     };
 
-    render(){
-        return(
-            <View>
+    render() {
+        return (
+            <View style={{flex:1}}>
 
                 <ScrollView style={{backgroundColor:'#EEEEEE'}}>
                     <MallInfoPageTopBar banners={this.state.banners}/>
                     <ProductSpecification/>
                     <ShipAddress/>
                     <MallIntroduction/>
-                    <MallInfoBottom/>
-
-
+                    <View style={{height:50}}/>
                 </ScrollView>
+
+                <MallInfoBottom/>
                 {this.topBar()}
             </View>
 
@@ -75,7 +75,7 @@ const styleM = StyleSheet.create({
         backgroundColor: 'transparent',
         position: 'absolute',
         top: 0,
-        width:'100%'
+        width: '100%'
     },
     popBtn: {
         height: 44,

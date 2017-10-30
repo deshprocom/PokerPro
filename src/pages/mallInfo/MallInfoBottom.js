@@ -34,11 +34,14 @@ export default class  MallInfoBottom extends Component{
 const styleB = StyleSheet.create({
     mallBottom:{
         height:50,
-        marginTop:17,
+        width:'100%',
         backgroundColor: '#FFFFFF',
         borderColor: '#EEEEEE',
         flexDirection:'row',
-        alignItems:'center'
+        alignItems:'center',
+        position:'absolute',
+        bottom:0,
+        zIndex:99
     },
     shoppingCar:{
         borderRadius: 3,
