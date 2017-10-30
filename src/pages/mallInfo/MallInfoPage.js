@@ -45,15 +45,20 @@ export default class  MallInfoPage extends Component{
 
     render(){
         return(
-            <ScrollView style={{backgroundColor:'#EEEEEE'}}>
-                <MallInfoPageTopBar banners={this.state.banners}/>
-                <ProductSpecification/>
-                <ShipAddress/>
-                <MallIntroduction/>
-                <MallInfoBottom/>
+            <View>
 
+                <ScrollView style={{backgroundColor:'#EEEEEE'}}>
+                    <MallInfoPageTopBar banners={this.state.banners}/>
+                    <ProductSpecification/>
+                    <ShipAddress/>
+                    <MallIntroduction/>
+                    <MallInfoBottom/>
+
+
+                </ScrollView>
                 {this.topBar()}
-            </ScrollView>
+            </View>
+
         );
     }
 }
