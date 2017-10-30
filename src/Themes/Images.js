@@ -230,7 +230,8 @@ const images = {
     mall_filter:require('../../source/mall/mall_filter.png'),
     sort_down:require('../../source/mall/sort_down.png'),
     sort_up:require('../../source/mall/sort_up.png'),
-    sort:require('../../source/mall/sort.png')
+    sort:require('../../source/mall/sort.png'),
+    mall_del:require('../../source/mall/mall_del.png')
 
 };
 

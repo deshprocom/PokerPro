@@ -13,7 +13,11 @@ export default class MallTopBar extends PureComponent {
         return (<View style={styles.navBar}>
 
             <View style={styles.navContent}>
-                <TouchableOpacity style={styles.search}>
+                <TouchableOpacity
+                    onPress={() => {
+                        global.router.toSearchMallPage()
+                    }}
+                    style={styles.search}>
                     <Image style={styles.searchImg}
                            source={Images.search_gray}/>
                     <Text style={styles.txtSearch}>{I18n.t('mall_search')}</Text>

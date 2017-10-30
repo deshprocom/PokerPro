@@ -40,6 +40,12 @@ export default class Router {
 
     }
 
+    toSearchMallPage() {
+        this.stackPush({
+            name: 'SearchMallPage'
+        })
+    }
+
     popToTopRefresh() {
         Actions.reset('Main');
 
