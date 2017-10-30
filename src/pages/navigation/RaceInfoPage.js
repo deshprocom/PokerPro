@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    View, ScrollView, StyleSheet,
+    View, ScrollView, StyleSheet, RefreshControl
 }
     from 'react-native';
 import Races from './Races';
@@ -29,13 +29,15 @@ class RaceInfoPage extends Component {
         next_id: '0',
         keyword: '',
         informationY: 0,
-        isLoading: false
+        isLoading: false,
+        isRefreshing: false
     };
 
     componentWillReceiveProps(newProps) {
 
         if (newProps.actionType === BACK_TOP) {
-            this.mainScroll.scrollTo({x: 0, y: 0, animated: true})
+            if (this.mainScroll)
+                this.mainScroll.scrollTo({x: 0, y: 0, animated: true})
         }
 
         if (newProps.actionType === 'SWITCH_LANGUAGE') {
@@ -121,9 +123,18 @@ class RaceInfoPage extends Component {
         }
     };
 
+
+    _onRefresh = () => {
+        this.setState({isRefreshing: true});
+        setTimeout(() => {
+            this._getData();
+            this.setState({isRefreshing: false});
+        }, 2000)
+    };
+
     render() {
         const {listRace, raceTickets, hotInfos, banners, headlines} = this.state;
-        console.log("banner:",banners)
+
         return (
 
             <View>
@@ -133,6 +144,10 @@ class RaceInfoPage extends Component {
                     scrollEventThrottle={16}
                     onScroll={this._onScroll}
                     showsVerticalScrollIndicator={false}
+                    refreshControl={<RefreshControl
+                        refreshing={this.state.isRefreshing}
+                        onRefresh={this._onRefresh}
+                    />}
                 >
                     <MainBanner
                         banners={banners}/>

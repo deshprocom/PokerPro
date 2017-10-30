@@ -18,12 +18,6 @@ class TabIcon extends PureComponent {
         }, 300)
     }
 
-    componentWillReceiveProps(newProps) {
-        if (newProps.actionType === 'SWITCH_LANGUAGE') {
-            this.forceUpdate()
-        }
-    }
-
     render() {
         const {tab, focused} = this.props;
         return (

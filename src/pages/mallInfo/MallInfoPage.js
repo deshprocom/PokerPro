@@ -8,10 +8,12 @@ import ProductSpecification from './ProductSpecification';
 import ShipAddress from './ShipAddress';
 import MallIntroduction from './MallIntroduction';
 import MallInfoBottom from './MallInfoBottom';
+import ProductSpecificationInfo from './ProductSpecificationInfo';
 
 export default class MallInfoPage extends Component {
     state = {
-        banners: []
+        banners: [],
+        specShow: false
     };
 
     componentDidMount() {
@@ -29,7 +31,7 @@ export default class MallInfoPage extends Component {
                 <Image style={styleM.backImg}
                        source={Images.sign_return}/>
             </TouchableOpacity>
-            <View style={{flex:1}}/>
+            <View style={{flex: 1}}/>
             <TouchableOpacity
                 testID="btn_bar_right"
                 style={styleM.popBtn}
@@ -44,22 +46,37 @@ export default class MallInfoPage extends Component {
     };
 
     render() {
+        const {specShow} = this.state;
         return (
-            <View style={{flex:1}}>
+            <View style={{flex: 1}}>
 
-                <ScrollView style={{backgroundColor:'#EEEEEE'}}>
+                <ScrollView style={{backgroundColor: '#EEEEEE'}}>
                     <MallInfoPageTopBar banners={this.state.banners}/>
-                    <ProductSpecification/>
+                    <ProductSpecification
+                        showSpecInfo={this.showSpecInfo}
+                    />
                     <ShipAddress/>
                     <MallIntroduction/>
-                    <View style={{height:50}}/>
+                    <View style={{height: 50}}/>
                 </ScrollView>
 
-                <MallInfoBottom/>
+
                 {this.topBar()}
+
+                {specShow ? <ProductSpecificationInfo/> : null}
+
+                <MallInfoBottom
+                    showSpecInfo={this.showSpecInfo}/>
+
             </View>
 
         );
+    }
+
+    showSpecInfo = () => {
+        this.setState({
+            specShow: !this.state.specShow
+        })
     }
 }
 

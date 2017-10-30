@@ -1,52 +1,65 @@
-import React,{Component} from 'react';
-import {View,Text,Image,StyleSheet} from 'react-native';
+import React, {PureComponent} from 'react';
+import {View, Text, Image, StyleSheet} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 
-export default class  ProductSpecificationInfo extends Component{
+export default class ProductSpecificationInfo extends PureComponent {
 
-    render(){
-        return(
-          <View style={styleP.specificationInfo}>
-            <View style={styleP.specificationInfoTop}>
-                <Image style={styleP.specificationInfoTopImg} source={Images.home_bg}/>
-                <View style={styleP.specificationInfoTopM}>
-                    <Text style={styleP.specificationInfoTopP}>
-                        239.4
-                    </Text>
-                    <Text style={styleP.specificationInfoTopS}>
-                        库存34件
-                    </Text>
+
+    render() {
+        return (
+            <View
+                style={styleP.page}>
+                <View style={styleP.specificationInfo}>
+                    <View style={styleP.specificationInfoTop}>
+                        <Image style={styleP.specificationInfoTopImg} source={Images.home_bg}/>
+                        <View style={styleP.specificationInfoTopM}>
+                            <Text style={styleP.specificationInfoTopP}>
+                                239.4
+                            </Text>
+                            <Text style={styleP.specificationInfoTopS}>
+                                库存34件
+                            </Text>
+                        </View>
+
+                    </View>
                 </View>
-
             </View>
-          </View>
+
         );
     }
 }
 const styleP = StyleSheet.create({
-    specificationInfo:{
-        marginTop:160,
-        backgroundColor:'#EEEEEE'
+    page: {
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
     },
-    specificationInfoTop:{
-        height:87,
-        backgroundColor:'#FFFFFF',
-        flexDirection:'row'
+    specificationInfo: {
+        marginTop: 160,
+        backgroundColor: '#EEEEEE'
     },
-    specificationInfoTopImg:{
-        width:124,
-        height:120,
-        marginLeft:17
+    specificationInfoTop: {
+        height: 87,
+        backgroundColor: '#FFFFFF',
+        flexDirection: 'row'
     },
-    specificationInfoTopM:{
-        flexDirection:'column',
-        marginLeft:17
+    specificationInfoTopImg: {
+        width: 124,
+        height: 120,
+        marginLeft: 17
     },
-    specificationInfoTopP:{
+    specificationInfoTopM: {
+        flexDirection: 'column',
+        marginLeft: 17
+    },
+    specificationInfoTopP: {
         fontSize: 18,
         color: '#F34A4A'
     },
-    specificationInfoTopS:{
+    specificationInfoTopS: {
         fontSize: 14,
         color: '#333333'
     }
