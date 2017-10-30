@@ -16,11 +16,10 @@ export default class  MallInfoBottom extends Component{
         return(
             <View style={styleB.mallBottom}>
                 <TouchableOpacity style={styleB.shoppingCar}>
-                    <Image style={styleB.shoppingCarImg}>
-                        <View style={styleB.shoppingCarView}>
-                            <Text style={styleB.shoppingCarTxt}>1</Text>
-                        </View>
-                    </Image>
+                    <Image style={styleB.shoppingCarImg} source={Images.shoppingCart}/>
+                    <View style={styleB.shoppingCarView}>
+                        <Text style={styleB.shoppingCarTxt}>1</Text>
+                    </View>
                 </TouchableOpacity>
                 <View style={{flex:1}}/>
                 <TouchableOpacity style={styleB.joinShoppingCar}>
@@ -72,7 +71,10 @@ const styleB = StyleSheet.create({
         height:16,
         borderRadius:8,
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
+        position:'absolute',
+        left:60,
+        bottom:15
     },
     shoppingCarTxt:{
         fontSize: 12,
