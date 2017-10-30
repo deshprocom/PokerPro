@@ -20,7 +20,7 @@ const client = create({
         'X-DP-APP-KEY': '467109f4b44be6398c17f6c058dfa7ee',
         'X-DP-CLIENT-IP': '192.168.2.231'
     },
-    timeout: 20000,
+    timeout: 30000,
 });
 
 export function setDpLang(lang) {
