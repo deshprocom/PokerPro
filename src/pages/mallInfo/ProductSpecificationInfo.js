@@ -8,7 +8,7 @@ export default class  ProductSpecificationInfo extends Component{
         return(
           <View style={styleP.specificationInfo}>
             <View style={styleP.specificationInfoTop}>
-                <Imgae style={styleP.specificationInfoTopImg} source={Images.home_bg}/>
+                <Image style={styleP.specificationInfoTopImg} source={Images.home_bg}/>
                 <View style={styleP.specificationInfoTopM}>
                     <Text style={styleP.specificationInfoTopP}>
                         239.4
