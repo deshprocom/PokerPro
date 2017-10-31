@@ -44,13 +44,21 @@ export default class MallCategories extends Component {
         const {speciesId} = this.state;
         return (
             <TouchableOpacity
-                key={'sepcies' + item.id}
-                style={speciesId === item.id ? styles.categoriesOneSlected : styles.categoriesOne}
                 onPress={() => {
                     this._clickSpecies(item)
 
-                }}>
-                <Text style={styles.categoriesOneText}>{`${item.name} (${item.products_count})`}</Text>
+                }}
+                key={'sepcies' + item.id}
+                style={[speciesId === item.id ? styles.categoriesOneSlected : styles.categoriesOne, {
+                    flexDirection: 'row',
+                    alignItems: 'center'
+                }]}>
+
+                <View style={speciesId === item.id ?styles.selected:styles.select}/>
+
+
+                <Text style={styles.categoriesOneText}>{`${item.name}  (${item.products_count})`}</Text>
+
             </TouchableOpacity>
         )
     };
@@ -64,7 +72,8 @@ export default class MallCategories extends Component {
                         style={styles.imgCate}
                         source={{uri: item.image}}/>
                 </TouchableOpacity>
-                <Text style={styles.categoriesTwoText}>{`${item.name} (${item.products_count})`}</Text>
+                <Text style={styles.categoriesTwoText}>{`${item.name}  (${item.products_count})`}</Text>
+
             </View>
 
         )
@@ -128,9 +137,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     categoriesOneText: {
-        marginLeft: 17,
-        marginTop: 10,
-        alignItems: 'center'
+        color: Colors._333,
+        fontSize: 14
     },
     categoriesTwos: {
         width: 110,
@@ -154,6 +162,12 @@ const styles = StyleSheet.create({
     itemTwo: {
         flex: 1, backgroundColor: 'white', marginTop: 10,
         marginLeft: 17
+    },
+    select:{
+        height: 24, width: 4, backgroundColor: Colors._ECE,marginRight:13
+    },
+    selected:{
+        height: 24, width: 4, backgroundColor: Colors._DF1,marginRight:13
     }
 
 });
