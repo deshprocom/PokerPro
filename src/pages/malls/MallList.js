@@ -76,13 +76,15 @@ export default class MallList extends Component {
     };
 
     renderItem = (item, index, separator) => {
-        const {title, price, all_stock} = item;
+        const {title, price, all_stock, icon} = item;
         return <TouchableOpacity style={[styles.listItem, index % 2 === 0 ? {} : {marginLeft: 8}]}
                                  onPress={() => {
                                      router.toMallInfoPage()
                                  }}>
-            <Image style={styles.imgThem}
-                   source={{uri: 'https://www.deshpro.com/pokerpro.png'}}/>
+            <Image
+                resizeMode={'cover'}
+                style={styles.imgThem}
+                source={{uri: icon}}/>
 
             <Text style={styles.txtName}>{title}</Text>
             <View style={{flex: 1}}/>
