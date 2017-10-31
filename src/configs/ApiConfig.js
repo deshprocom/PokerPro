@@ -97,8 +97,9 @@ export default {
     sub_videos: sub_videos,
     search_video: search_video,
     categories: 'categories',
-    categories_child: categories_child
-
+    categories_child: categories_child,
+    cat_products: cat_products,
+    products:'products'
 }
 
 
@@ -111,6 +112,13 @@ function getUserId() {
 
 const page_size = 10;
 
+
+
+
+export function cat_products(body) {
+    const {id} = body;
+    return `categories/${id}/products`
+}
 
 export function categories_child(body) {
     const {id} = body;

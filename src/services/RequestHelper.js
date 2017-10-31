@@ -170,9 +170,9 @@ export function put(url, body, resolve, reject) {
     });
 }
 
-export function get(url, resolve, reject) {
+export function get(url, resolve, reject, params = {}) {
     router.log(url)
-    client.get(url)
+    client.get(url, params)
         .then((response) => {
             if (response.ok) {
                 const {code, msg} = response.data;
