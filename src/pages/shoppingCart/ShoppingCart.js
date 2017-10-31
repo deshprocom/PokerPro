@@ -68,6 +68,7 @@ export default class ShoppingCart extends Component {
         )
     }
     _renderItem = (item, index) => {
+
         let swipeoutBtns = [
             {
                 text: 'Delete',
@@ -75,12 +76,13 @@ export default class ShoppingCart extends Component {
                 onPress:this.closeThisMall
             }
         ];
-        console.log("th",this.props)
         return (
             <Swipeout right={swipeoutBtns}>
                 <View style={styleS.renderItem}>
                     <TouchableOpacity
-                        onPress={() => this.props.pressItem(item)}>
+                        onPress={()=>{
+
+                        }}>
                         <Image style={styleS.radioImg}
                                source={item.select?Images.radioSelected:Images.radio}/>
                     </TouchableOpacity>
@@ -147,7 +149,8 @@ export default class ShoppingCart extends Component {
     };
 
     render() {
-        console.log("render",this.props)
+        console.log(this)
+        const {pressItem} = this.props;
         return (
             <View style={{flex:1}}>
                 {this.topBar()}
