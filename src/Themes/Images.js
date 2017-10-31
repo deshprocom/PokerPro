@@ -235,7 +235,9 @@ const images = {
     shoppingCart:require('../../source/mall/shoppingCart.png'),
     close:require('../../source/mall/close.png'),
     cut:require('../../source/mall/cut.png'),
-    add:require('../../source/mall/add.png')
+    add:require('../../source/mall/add.png'),
+    mall_return:require('../../source/mall/mall_return.png'),
+    mall_share:require('../../source/mall/mall_share.png')
 
 
 };
