@@ -6,7 +6,8 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-
+import StorageKey from '../../configs/StorageKey';
+import {searchProducts} from '../../services/MallDao';
 
 const styles = StyleSheet.create({
     navBar: {
@@ -90,6 +91,22 @@ const styles = StyleSheet.create({
 
 export default class SearchMallPage extends PureComponent {
 
+    componentWillMount() {
+        this.setwords = new Set();
+        this.keywords = '';
+        storage.load({key: StorageKey.MallSearchRecord})
+            .then(ret => {
+                this.setwords = new Set(ret);
+                this.setState({
+                    recordKeys: Array.from(this.setwords)
+                })
+            })
+    }
+
+    state = {
+        recordKeys: []
+    };
+
 
     render() {
         return (
@@ -117,6 +134,9 @@ export default class SearchMallPage extends PureComponent {
 
                     <TextInput
                         ref={ref => this.input = ref}
+                        onChangeText={text => {
+                            this.keywords = text;
+                        }}
                         style={styles.txtSearch}
                         underlineColorAndroid='transparent'
                         returnKeyLabel={I18n.t('certain')}
@@ -142,7 +162,21 @@ export default class SearchMallPage extends PureComponent {
     };
 
     submitSearch = () => {
+        this.setwords.add(this.keywords);
+        console.log('submit', this.setwords)
+        storage.save({
+            key: StorageKey.MallSearchRecord,
+            rawData: Array.from(this.setwords)
+        });
 
+        searchProducts({
+            page: 1,
+            page_size: 20,
+            keyword: this.keywords
+        }, data => {
+            console.log(data)
+        }, err => {
+        })
     };
 
     resentBlank = () => {
@@ -159,9 +193,9 @@ export default class SearchMallPage extends PureComponent {
     };
 
     tabBlank = () => {
-        let tabs = ['扑克', '澳门景点门票', '澳门景点门票 澳门酒店三天三夜'];
+
         return <View style={{flexDirection: 'row', flexWrap: 'wrap', marginLeft: 19}}>
-            {tabs.map(function (item, index) {
+            {this.state.recordKeys.map(function (item, index) {
                 return <TouchableOpacity key={`tab${index}`} style={styles.tabSearch}>
                     <Text style={styles.txtTab}>{item}</Text>
 
