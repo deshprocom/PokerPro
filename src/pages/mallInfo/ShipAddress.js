@@ -53,11 +53,11 @@ const styleS = StyleSheet.create({
 
     },
     shipAddr:{
-        height:72,
         backgroundColor:'#FFFFFF',
         marginTop:1,
         flexDirection:'row',
-        alignItems:'center'
+        alignItems:'center',
+       paddingBottom:15
     },
     shipAddrImg:{
         width:8,
