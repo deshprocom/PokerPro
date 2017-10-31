@@ -240,7 +240,8 @@ const images = {
     mall_share:require('../../source/mall/mall_share.png'),
 
     radioSelected:require('../../source/cart/radioSelected.png'),
-    radio:require('../../source/cart/radio.png')
+    radio:require('../../source/cart/radio.png'),
+    emptyCart:require('../../source/cart/emptyCart.png')
 
 
 };

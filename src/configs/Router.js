@@ -659,7 +659,15 @@ export default class Router {
     toShippingCart(props){
         this.push(props, {
 
+            // name: 'ShoppingCart',
             name: 'ShoppingCart',
+
+        })
+    }
+    toEditCart(props){
+        this.push(props, {
+
+            name: 'EditCartPage',
 
         })
     }

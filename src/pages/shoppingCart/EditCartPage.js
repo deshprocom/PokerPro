@@ -2,100 +2,27 @@ import React, {Component,PropTypes} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
-import Swipeout from 'react-native-swipeout';
 
-
-export default class ShoppingCart extends Component {
+export default class EditCartPage extends Component {
     state = {
         selected: false,
         text: "1",
     }
-    static propTypes = {
-        pressItem: PropTypes.func,
-        pressAll: PropTypes.func,
-        selectAll: PropTypes.bool
-    };
-
-    toBottom = () => {
-        return (
-            <View style={styleS.bottomView}>
-                <TouchableOpacity
-
-                    onPress={this.props.pressAll}>
-                    <Image style={styleS.radioImg} source={this.props.selectAll?Images.radioSelected:Images.radio}/>
-                </TouchableOpacity>
-                <Text style={styleS.selectedAll}>全选</Text>
-                <View style={{flexDirection:'row',alignItems:'center'}}>
-                    <Text style={styleS.total}>合计：</Text>
-                    <Text style={styleS.selectedPrice}>¥23,300.8</Text>
-                </View>
-                <View style={{flex:1}}/>
-                <TouchableOpacity style={styleS.settlementView}>
-                    <Text style={styleS.settlement}>去结算</Text>
-                    <Text style={styleS.settlementQuantity}>(3)</Text>
-                </TouchableOpacity>
-            </View>
-        )
-    }
 
     topBar = () => {
-        return (<View style={styleS.topBar}>
+        return (<View style={styleE.topBar}>
             <TouchableOpacity
                 testID="btn_bar_left"
-                style={styleS.popBtn}
+                style={styleE.popBtn}
                 onPress={() => router.pop()}>
-                <Image style={styleS.backImg}
+                <Image style={styleE.backImg}
                        source={Images.mall_return}/>
             </TouchableOpacity>
             <View style={{flex: 1}}/>
-            <Text style={styleS.cart}>购物车</Text>
-            <View style={{flex: 1}}/>
-            <TouchableOpacity
-                testID="btn_bar_right"
-                style={styleS.popBtn}
-                onPress={() => {
-                    router.toEditCart()
-                }}>
-                <Text style={styleS.rightTxt}>编辑</Text>
+            <TouchableOpacity style={styleE.popBtn}>
+                <Text style={styleE.popBtnTxt}>完成</Text>
             </TouchableOpacity>
-
-
         </View>)
-    };
-    closeThisMall=()=>{
-        return(
-           window.confirm("确认删除该商品吗？")
-        )
-    }
-    _renderItem = (item, index) => {
-        let swipeoutBtns = [
-            {
-                text: 'Delete',
-                backgroundColor:'#F34A4A',
-                onPress:this.closeThisMall
-            }
-        ];
-        console.log("th",this.props)
-        return (
-            <Swipeout right={swipeoutBtns}>
-                <View style={styleS.renderItem}>
-                    <TouchableOpacity
-                        onPress={() => this.props.pressItem(item)}>
-                        <Image style={styleS.radioImg}
-                               source={item.select?Images.radioSelected:Images.radio}/>
-                    </TouchableOpacity>
-                    <Image style={styleS.mallImg} source={Images.empty_image}/>
-                    <View style={styleS.TxtView}>
-                        <Text numberOfLines={2} style={styleS.mallTextName}>筹码14克皇冠粘土百家乐德州扑克筹码币</Text>
-                        <Text style={styleS.mallAttributes}>重量：1.62KG 颜色：黑 数量：500</Text>
-                        <View style={styleS.PriceView}>
-                            <Text style={styleS.Price}>¥555555.55</Text>
-                            {this.buyQuantity()}
-                        </View>
-                    </View>
-                </View>
-            </Swipeout>
-        )
     };
     buyQuantity = () => {
         const styleCutDisable = {
@@ -105,9 +32,9 @@ export default class ShoppingCart extends Component {
             backgroundColor: '#F6F5F5'
         };
         return (
-            <View style={styleS.quantity}>
+            <View style={styleE.quantity}>
                 <TouchableOpacity
-                    style={[styleS.buyTouch,Number(this.state.text)==="1"?styleCutDisable:styleCut]}
+                    style={[styleE.buyTouch,Number(this.state.text)==="1"?styleCutDisable:styleCut]}
                     onPress={()=>{
                         let number =Number(this.state.text)
                         if(number>=1){
@@ -117,27 +44,47 @@ export default class ShoppingCart extends Component {
                         }
 
                     }}>
-                    <Image style={styleS.buyImgCut} source={Images.cut}/>
+                    <Image style={styleE.buyImgCut} source={Images.cut}/>
                 </TouchableOpacity>
 
-                <View style={styleS.buyInput}>
+                <View style={styleE.buyInput}>
                     <Text>1</Text>
                 </View>
 
                 <TouchableOpacity
-                    style={styleS.buyTouch}
+                    style={styleE.buyTouch}
                     onPress={()=>{
                         let number =Number(this.state.text)
                         this.setState({
                             text:number+1
                         })
                     }}>
-                    <Image style={styleS.buyImgAdd} source={Images.add}/>
+                    <Image style={styleE.buyImgAdd} source={Images.add}/>
                 </TouchableOpacity>
             </View>
         )
     };
+    _renderItem = (item, index) => {
 
+        return (
+            <View style={styleE.renderItem}>
+                <TouchableOpacity
+                    onPress={() => this.props.pressItem(item)}>
+                    <Image style={styleE.radioImg}
+                           source={item.select?Images.radioSelected:Images.radio}/>
+                </TouchableOpacity>
+                <Image style={styleE.mallImg} source={Images.empty_image}/>
+                <View style={styleE.TxtView}>
+                    <Text numberOfLines={2} style={styleE.mallTextName}>筹码14克皇冠粘土百家乐德州扑克筹码币</Text>
+                    <Text style={styleE.mallAttributes}>重量：1.62KG 颜色：黑 数量：500</Text>
+                    <View style={styleE.PriceView}>
+                        <Text style={styleE.Price}>¥555555.55</Text>
+                        {this.buyQuantity()}
+                    </View>
+                </View>
+            </View>
+        )
+    };
     onFetch = (page = 1, startFetch, abortFetch) => {
         startFetch([1, 2, 3, 4, 5, 6], 8)
     };
@@ -145,13 +92,27 @@ export default class ShoppingCart extends Component {
     _separator = () => {
         return <View style={{height:10,marginLeft:17,marginRight:17,backgroundColor:'#ECECEE'}}/>;
     };
-
-    render() {
-        console.log("render",this.props)
+    toBottom = () => {
         return (
+            <View style={styleE.bottomView}>
+                <TouchableOpacity
+
+                    onPress={this.props.pressAll}>
+                    <Image style={styleE.radioImg} source={this.props.selectAll?Images.radioSelected:Images.radio}/>
+                </TouchableOpacity>
+                <Text style={styleE.selectedAll}>全选</Text>
+                <View style={{flex:1}}/>
+                <TouchableOpacity style={styleE.settlementView}>
+                    <Text style={styleE.settlement}>删除</Text>
+                </TouchableOpacity>
+            </View>
+        )
+    };
+
+    render(){
+        return(
             <View style={{flex:1}}>
                 {this.topBar()}
-
                 <UltimateFlatList
                     style={{paddingTop:6,marginBottom:50}}
                     onFetch={this.onFetch}
@@ -160,15 +121,13 @@ export default class ShoppingCart extends Component {
                     item={this._renderItem}
                     keyExtractor={(item, index) => index}
                 />
-
                 {this.toBottom()}
-
             </View>
         )
     }
 }
 
-const styleS = StyleSheet.create({
+const styleE = StyleSheet.create({
     topBar: {
         height: Metrics.navBarHeight,
         flexDirection: 'row',
@@ -183,19 +142,42 @@ const styleS = StyleSheet.create({
         width: 50,
         justifyContent: 'center'
     },
+    popBtnTxt:{
+        fontSize: 15,
+        color: '#161718'
+    },
     backImg: {
         width: 11,
         height: 20,
         marginLeft: 15
     },
-    rightTxt: {
-        fontSize: 15,
-        color: '#161718'
-    },
     cart: {
         fontSize: 17,
         color: '#161718',
         alignItems: 'center'
+    },
+    cartView:{
+        marginTop:64,
+        alignItems:'center'
+    },
+    cartImg:{
+        width:69,
+        height:64
+    },
+    cartViewTxt:{
+        marginTop:44,
+        width:140,
+        height:37,
+        alignItems:'center',
+        justifyContent:'center',
+        borderWidth:1,
+        borderColor:'#F34A4A',
+        borderRadius:4
+    },
+    cartTxt:{
+        fontSize: 18,
+        color: '#F34A4A',
+
     },
     radioImg: {
         width: 22,
@@ -283,13 +265,15 @@ const styleS = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        height: 50,
-        width: 120,
-        backgroundColor: '#F34A4A'
+        height: 37,
+        width: 89,
+        marginRight:15,
+        borderWidth:1,
+        borderColor:'#F34A4A'
     },
     settlement: {
         fontSize: 18,
-        color: '#FFFFFF',
+        color: '#F34A4A',
     },
     settlementQuantity: {
         fontSize: 14,
