@@ -183,7 +183,14 @@ export default class SearchMallPage extends PureComponent {
         return <View style={styles.resent}>
             <Text style={styles.txtRecent}>{I18n.t('mall_resent')}</Text>
             <View style={{flex: 1}}/>
-            <TouchableOpacity style={styles.btnDel}>
+            <TouchableOpacity
+                onPress={() => {
+                    this.setwords.clear();
+                    this.setState({
+                        recordKeys: []
+                    })
+                }}
+                style={styles.btnDel}>
                 <Image style={styles.imgDel}
                        source={Images.mall_del}/>
 
@@ -194,9 +201,16 @@ export default class SearchMallPage extends PureComponent {
 
     tabBlank = () => {
 
+        let that = this;
         return <View style={{flexDirection: 'row', flexWrap: 'wrap', marginLeft: 19}}>
             {this.state.recordKeys.map(function (item, index) {
-                return <TouchableOpacity key={`tab${index}`} style={styles.tabSearch}>
+                return <TouchableOpacity
+                    onPress={() => {
+                        that.keywords = item;
+                        that.submitSearch();
+                    }}
+                    key={`tab${index}`}
+                    style={styles.tabSearch}>
                     <Text style={styles.txtTab}>{item}</Text>
 
                 </TouchableOpacity>
