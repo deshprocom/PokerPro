@@ -96,7 +96,10 @@ export default class SearchMallPage extends PureComponent {
         this.keywords = '';
         storage.load({key: StorageKey.MallSearchRecord})
             .then(ret => {
-                this.setwords = new Set(ret);
+                if (ret.length > 20) {
+                    ret = ret.slice(ret.length - 20)
+                }
+                this.setwords = new Set(ret.reverse());
                 this.setState({
                     recordKeys: Array.from(this.setwords)
                 })

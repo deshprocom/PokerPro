@@ -7,7 +7,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
 import propTypes from 'prop-types';
-import {catProducts} from '../../services/MallDao';
+import {catProducts, searchProducts} from '../../services/MallDao';
 
 
 export default class MallList extends Component {
