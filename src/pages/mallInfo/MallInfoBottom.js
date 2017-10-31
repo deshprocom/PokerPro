@@ -15,7 +15,11 @@ export default class  MallInfoBottom extends Component{
     render(){
         return(
             <View style={styleB.mallBottom}>
-                <TouchableOpacity style={styleB.shoppingCar}>
+                <TouchableOpacity
+                    style={styleB.shoppingCar}
+                onPress={()=>{
+                    router.toShippingCart(this.props)
+                }}>
                     <Image style={styleB.shoppingCarImg} source={Images.shoppingCart}/>
                     <View style={styleB.shoppingCarView}>
                         <Text style={styleB.shoppingCarTxt}>1</Text>

@@ -65,10 +65,8 @@ import VerifiedPage from '../pages/verifieds/VerifiedPage';
 import AddVerified from '../pages/verifieds/AddVerified';
 import RaceScene from '../pages/races/RaceScene';
 import MallInfoPage from '../pages/mallInfo/MallInfoPage';
-import TabIcon from '../pages/navigation/TabIcon';
-import RaceInfoPage from '../pages/navigation/RaceInfoPage';
 import {Navigation} from '../pages/navigation/Navigation';
-import Search from "../components/Search";
+import ShoppingCart from "../pages/shoppingCart/ShoppingCart";
 
 
 export const Stacks = Actions.create(
@@ -134,6 +132,7 @@ export const Stacks = Actions.create(
         <Scene key="ActivityCenter" component={ActivityCenter} hideNavBar/>
         <Scene key="ActivityInfo" component={ActivityInfo} hideNavBar/>
         <Scene key="MallInfoPage" component={MallInfoPage} hideNavBar/>
+        <Scene key="ShoppingCart" component={ShoppingCart} hideNavBar/>
 
         <Scene type={ActionConst.RESET}
                initial={true}

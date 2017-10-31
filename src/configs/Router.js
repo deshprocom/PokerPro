@@ -656,6 +656,13 @@ export default class Router {
         navigation.dispatch(backTo)
 
     }
+    toShippingCart(props){
+        this.push(props, {
+
+            name: 'ShoppingCart',
+
+        })
+    }
 
 
 }

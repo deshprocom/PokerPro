@@ -237,7 +237,10 @@ const images = {
     cut:require('../../source/mall/cut.png'),
     add:require('../../source/mall/add.png'),
     mall_return:require('../../source/mall/mall_return.png'),
-    mall_share:require('../../source/mall/mall_share.png')
+    mall_share:require('../../source/mall/mall_share.png'),
+
+    radioSelected:require('../../source/cart/radioSelected.png'),
+    radio:require('../../source/cart/radio.png')
 
 
 };
