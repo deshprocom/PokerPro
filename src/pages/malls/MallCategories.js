@@ -42,7 +42,6 @@ export default class MallCategories extends Component {
 
     _renderItem = (item) => {
         const {speciesId} = this.state;
-        console.log(speciesId)
         return (
             <TouchableOpacity
                 key={'sepcies' + item.id}
