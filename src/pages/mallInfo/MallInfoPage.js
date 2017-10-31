@@ -63,10 +63,12 @@ export default class MallInfoPage extends Component {
 
                 {this.topBar()}
 
-                {specShow ? <ProductSpecificationInfo/> : null}
-
                 <MallInfoBottom
                     showSpecInfo={this.showSpecInfo}/>
+
+                {specShow ? <ProductSpecificationInfo showSpecInfo={this.showSpecInfo}/> : null}
+
+
 
             </View>
 
