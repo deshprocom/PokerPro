@@ -63,6 +63,7 @@ const styleM = StyleSheet.create({
       backgroundColor:'#FFFFFF'
     },
     mallInfoTopText:{
+        marginTop:14,
         marginLeft:17,
         marginRight:29,
         fontSize: 17,

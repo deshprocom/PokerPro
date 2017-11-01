@@ -9,6 +9,8 @@ export default class ShoppingCart extends Component {
     state = {
         selected: false,
         text: "1",
+        selectAll: false,
+        dataHosts: [1, 2, 3, 4, 5, 6],
     }
     static propTypes = {
         pressItem: PropTypes.func,
@@ -21,7 +23,7 @@ export default class ShoppingCart extends Component {
             <View style={styleS.bottomView}>
                 <TouchableOpacity
 
-                    onPress={this.props.pressAll}>
+                    onPress={this._pressAll}>
                     <Image style={styleS.radioImg} source={this.props.selectAll?Images.radioSelected:Images.radio}/>
                 </TouchableOpacity>
                 <Text style={styleS.selectedAll}>全选</Text>
@@ -64,9 +66,39 @@ export default class ShoppingCart extends Component {
     };
     closeThisMall=()=>{
         return(
-           window.confirm("确认删除该商品吗？")
+           alert("确认删除该商品吗？")
         )
+    };
+    _pressAll = () => {
+        const {selectAll} = this.state;
+        this.setState((state) => {
+            const newData = [...state.dataHosts];
+            newData.map(function (element) {
+                element.select = !selectAll;
+                return element;
+            });
+
+            return {
+                dataHosts: newData,
+                selectAll: !selectAll
+            }
+        })
     }
+
+    _pressItem = (item) => {
+
+        this.setState((state) => {
+            const newData = [...state.dataHosts];
+            newData.map(function (element) {
+                if (item.id === element.id) {
+                    element.select = !item.select;
+                }
+                return element;
+            });
+
+            return {dataHosts: newData}
+        })
+    };
     _renderItem = (item, index) => {
 
         let swipeoutBtns = [
@@ -81,7 +113,7 @@ export default class ShoppingCart extends Component {
                 <View style={styleS.renderItem}>
                     <TouchableOpacity
                         onPress={()=>{
-
+                            this._pressItem(item)
                         }}>
                         <Image style={styleS.radioImg}
                                source={item.select?Images.radioSelected:Images.radio}/>
@@ -149,8 +181,6 @@ export default class ShoppingCart extends Component {
     };
 
     render() {
-        console.log(this)
-        const {pressItem} = this.props;
         return (
             <View style={{flex:1}}>
                 {this.topBar()}
