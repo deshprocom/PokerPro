@@ -40,6 +40,13 @@ export default class Router {
 
     }
 
+    toMallResult(categories){
+        this.stackPush( {
+            name: 'MallSearchResult',
+            params:{category:categories}
+        })
+    }
+
     toSearchMallPage() {
         this.stackPush({
             name: 'SearchMallPage'
@@ -671,6 +678,7 @@ export default class Router {
 
         })
     }
+
 
 
 }

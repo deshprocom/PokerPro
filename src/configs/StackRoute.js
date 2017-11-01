@@ -69,6 +69,7 @@ import {Navigation} from '../pages/navigation/Navigation';
 import ShoppingCart from "../pages/shoppingCart/ShoppingCart";
 import EmptyCart from "../pages/shoppingCart/EmptyCart";
 import EditCartPage from "../pages/shoppingCart/EditCartPage";
+import MallSearchResult from "../pages/malls/MallSearchResult";
 
 
 export const Stacks = Actions.create(
@@ -137,6 +138,7 @@ export const Stacks = Actions.create(
         <Scene key="ShoppingCart" component={ShoppingCart} hideNavBar/>
         <Scene key="EmptyCart" component={EmptyCart} hideNavBar/>
         <Scene key="EditCartPage" component={EditCartPage} hideNavBar/>
+         <Scene key="MallSearchResult" component={MallSearchResult} hideNavBar/>
 
         <Scene type={ActionConst.RESET}
                initial={true}
