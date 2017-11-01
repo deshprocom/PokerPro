@@ -8,10 +8,16 @@ import I18n from 'react-native-i18n';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import ScrollableTabBar from './ScrollableTabBar';
 import MallList from './MallList';
+import propTypes from 'prop-types';
 
 export default class MallTypeView extends PureComponent {
+    static propTypes = {
+        categories: propTypes.array.isRequired,
+        showCatePage: propTypes.func.isRequired
+    };
 
     render() {
+        const {categories} = this.props;
         return <View style={ApplicationStyles.bgContainer}>
             <ScrollableTabView
                 renderTabBar={() => <ScrollableTabBar
@@ -23,14 +29,14 @@ export default class MallTypeView extends PureComponent {
                     style={{borderColor: Colors._EEE}}
                     underlineStyle={{backgroundColor: '#F34A4A', height: 2}}
                 />}>
-                <MallList tabLabel={'推荐'}/>
 
+                {categories.map((item, key) => {
 
-                <MallList tabLabel={'旅游'}/>
-
-                <MallList tabLabel={'筹码'}/>
-
-                <MallList tabLabel={'扑克'}/>
+                    return <MallList
+                        category={item}
+                        tabLabel={item.name}
+                        key={`mallList${key}`}/>
+                })}
 
 
             </ScrollableTabView>

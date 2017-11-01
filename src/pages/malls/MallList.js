@@ -1,14 +1,26 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet, Text, View, Image,
     TouchableOpacity, Platform
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import UltimateFlatList from '../../components/ultimate/UltimateFlatList'
+import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
+import propTypes from 'prop-types';
+import {catProducts, searchProducts} from '../../services/MallDao';
+import {isEmptyObject} from '../../utils/ComonHelper';
 
 
-export default class MallList extends PureComponent {
+export default class MallList extends Component {
+
+    static propTypes = {
+        category: propTypes.object,
+        isSearch: propTypes.bool
+    };
+
+    componentWillMount() {
+        this.searchKey = '';
+    }
 
     render() {
         return (<View style={{flex: 1}}>
@@ -22,9 +34,10 @@ export default class MallList extends PureComponent {
 
     renderFlatList = () => {
         return <UltimateFlatList
+            firstLoader={!this.props.isSearch}
             ref={(ref) => this.listView = ref}
             onFetch={this.onFetch}
-            keyExtractor={(item, index) => `${index}`}  //this is required when you are using FlatList
+            keyExtractor={(item, index) => `mallList${index}`}  //this is required when you are using FlatList
             item={this.renderItem}  //this takes two params (item, index)
             numColumns={2}
         />
@@ -32,25 +45,105 @@ export default class MallList extends PureComponent {
 
     };
 
+    search = (keywords) => {
+        this.searchKey = keywords;
+        this.listView.refresh()
+    };
+
     onFetch = (page = 1, startFetch, abortFetch) => {
-        startFetch([1, 2, 3, 4, 5, 6], 8)
+        try {
+
+            if (page === 1) {
+                if (this.props.isSearch)
+                    this.searchRefresh(startFetch, abortFetch);
+                else
+                    this.refresh(startFetch, abortFetch)
+            } else {
+                if (this.props.isSearch)
+                    this.searchLoad(page, startFetch, abortFetch);
+                else
+                    this.loadmore(page, startFetch, abortFetch);
+            }
+        } catch (err) {
+            abortFetch();
+        }
+    };
+
+
+    searchRefresh = (startFetch, abortFetch) => {
+        searchProducts({
+            page: 1,
+            page_size: 20,
+            keywords: this.searchKey
+        }, data => {
+            startFetch(data.products, 6)
+        }, err => {
+            abortFetch()
+        })
+
+    };
+
+
+    searchLoad = (page, startFetch, abortFetch) => {
+        searchProducts({
+            page: page,
+            page_size: 20,
+            keywords: this.searchKey
+        }, data => {
+            startFetch(data.products, 6)
+        }, err => {
+            abortFetch()
+        })
+    };
+
+    refresh = (startFetch, abortFetch) => {
+        const {id} = this.props.category;
+        catProducts({id}, data => {
+            startFetch(data.products, 6)
+        }, err => {
+            abortFetch()
+        }, {
+            page: 1,
+            page_size: 20
+        })
+    };
+
+    loadmore = (page, startFetch, abortFetch) => {
+        const {id} = this.props.category;
+        catProducts({id}, data => {
+            startFetch(data.products, 6)
+        }, err => {
+            abortFetch()
+        }, {
+            page: page,
+            page_size: 20
+        })
     };
 
     renderItem = (item, index, separator) => {
+        const {title, price, all_stock, icon} = item;
         return <TouchableOpacity style={[styles.listItem, index % 2 === 0 ? {} : {marginLeft: 8}]}
-                onPress={()=>{
-                    router.toMallInfoPage()
-                }}>
-            <Image style={styles.imgThem}
-                   source={{uri: 'https://www.deshpro.com/pokerpro.png'}}/>
+                                 onPress={() => {
+                                     router.toMallInfoPage()
+                                 }}>
+            <Image
+                resizeMode={'cover'}
+                style={styles.imgThem}
+                source={{uri: icon}}/>
 
-            <Text style={styles.txtName}>塑料扑克牌创意透明水晶防水可水洗</Text>
+            <Text style={styles.txtName}>{title}</Text>
             <View style={{flex: 1}}/>
             <View style={styles.viewPrice}>
 
-                <Text>280.8</Text>
+                <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
+                    <Text style={{fontSize: 14, color: Colors._DF1}}>¥</Text>
+                    <Text style={{fontSize: 18, color: Colors._DF1}}>{price}</Text>
+                </View>
+
                 <View style={{flex: 1}}/>
-                <Text style={styles.txtNum}>剩余1件</Text>
+                {all_stock > 0 ?
+                    <Text style={styles.txtNum}>{I18n.t('surplus') + all_stock + I18n.t('pieces')}</Text> : null}
+
 
             </View>
 
