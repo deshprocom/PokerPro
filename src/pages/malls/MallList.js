@@ -8,13 +8,19 @@ import I18n from 'react-native-i18n';
 import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
 import propTypes from 'prop-types';
 import {catProducts, searchProducts} from '../../services/MallDao';
+import {isEmptyObject} from '../../utils/ComonHelper';
 
 
 export default class MallList extends Component {
 
     static propTypes = {
-        category: propTypes.object.isRequired
+        category: propTypes.object,
+        isSearch: propTypes.bool
     };
+
+    componentWillMount() {
+        this.searchKey = '';
+    }
 
     render() {
         return (<View style={{flex: 1}}>
@@ -28,6 +34,7 @@ export default class MallList extends Component {
 
     renderFlatList = () => {
         return <UltimateFlatList
+            firstLoader={!this.props.isSearch}
             ref={(ref) => this.listView = ref}
             onFetch={this.onFetch}
             keyExtractor={(item, index) => `mallList${index}`}  //this is required when you are using FlatList
@@ -38,17 +45,55 @@ export default class MallList extends Component {
 
     };
 
+    search = (keywords) => {
+        this.searchKey = keywords;
+        this.listView.refresh()
+    };
+
     onFetch = (page = 1, startFetch, abortFetch) => {
         try {
 
             if (page === 1) {
-                this.refresh(startFetch, abortFetch)
+                if (this.props.isSearch)
+                    this.searchRefresh(startFetch, abortFetch);
+                else
+                    this.refresh(startFetch, abortFetch)
             } else {
-                this.loadmore(page, startFetch, abortFetch);
+                if (this.props.isSearch)
+                    this.searchLoad(page, startFetch, abortFetch);
+                else
+                    this.loadmore(page, startFetch, abortFetch);
             }
         } catch (err) {
             abortFetch();
         }
+    };
+
+
+    searchRefresh = (startFetch, abortFetch) => {
+        searchProducts({
+            page: 1,
+            page_size: 20,
+            keywords: this.searchKey
+        }, data => {
+            startFetch(data.products, 6)
+        }, err => {
+            abortFetch()
+        })
+
+    };
+
+
+    searchLoad = (page, startFetch, abortFetch) => {
+        searchProducts({
+            page: page,
+            page_size: 20,
+            keywords: this.searchKey
+        }, data => {
+            startFetch(data.products, 6)
+        }, err => {
+            abortFetch()
+        })
     };
 
     refresh = (startFetch, abortFetch) => {

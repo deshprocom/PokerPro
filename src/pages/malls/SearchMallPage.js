@@ -7,14 +7,16 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import StorageKey from '../../configs/StorageKey';
-import {searchProducts} from '../../services/MallDao';
+import MallList from './MallList';
 
 const styles = StyleSheet.create({
     navBar: {
         height: Metrics.navBarHeight,
         width: '100%',
         paddingTop: Metrics.statusBarHeight,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        borderBottomWidth: 1,
+        borderBottomColor: Colors._ECE
     },
     navContent: {
         flexDirection: 'row',
@@ -85,6 +87,14 @@ const styles = StyleSheet.create({
         width: 60,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    viewSearch: {
+        position: 'absolute',
+        top: Metrics.navBarHeight,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: Colors._ECE
     }
 });
 
@@ -107,16 +117,23 @@ export default class SearchMallPage extends PureComponent {
     }
 
     state = {
-        recordKeys: []
+        recordKeys: [],
+        submit: false
     };
 
 
     render() {
         return (
-            <View>
+            <View style={ApplicationStyles.bgContainer}>
                 {this.TopBar()}
-                {this.resentBlank()}
-                {this.tabBlank()}
+                <MallList
+                    ref={ref => this.mallList = ref}
+                    isSearch={true}/>
+                {this.state.submit ? null : <View style={styles.viewSearch}>
+                    {this.resentBlank()}
+                    {this.tabBlank()}
+                </View>}
+
 
             </View>
         );
@@ -171,15 +188,12 @@ export default class SearchMallPage extends PureComponent {
             key: StorageKey.MallSearchRecord,
             rawData: Array.from(this.setwords)
         });
+        this.setState({
+            submit: true
+        });
+        if (this.mallList)
+            this.mallList.search(this.keywords)
 
-        searchProducts({
-            page: 1,
-            page_size: 20,
-            keyword: this.keywords
-        }, data => {
-            console.log(data)
-        }, err => {
-        })
     };
 
     resentBlank = () => {
