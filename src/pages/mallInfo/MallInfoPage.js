@@ -13,7 +13,8 @@ import ProductSpecificationInfo from './ProductSpecificationInfo';
 export default class MallInfoPage extends Component {
     state = {
         banners: [],
-        specShow: false
+        specShow: false,
+        opacity: 0
     };
 
     componentDidMount() {
@@ -23,13 +24,13 @@ export default class MallInfoPage extends Component {
     }
 
     topBar = () => {
-        return (<View style={styleM.topBar}>
+        return (<View style={[styleM.topBar,{backgroundColor:'rgba(255,255,255,' + this.state.opacity + ')'}]}>
             <TouchableOpacity
                 testID="btn_bar_left"
                 style={styleM.popBtn}
                 onPress={() => router.pop()}>
                 <Image style={styleM.backImg}
-                       source={Images.sign_return}/>
+                       source={Images.mall_return}/>
             </TouchableOpacity>
             <View style={{flex: 1}}/>
             <TouchableOpacity
@@ -38,19 +39,23 @@ export default class MallInfoPage extends Component {
                 onPress={() => {
                 }}>
                 <Image style={styleM.imgShare}
-                       source={Images.share}/>
+                       source={Images.mall_share}/>
             </TouchableOpacity>
 
 
         </View>)
     };
 
+
     render() {
         const {specShow} = this.state;
         return (
             <View style={{flex: 1}}>
 
-                <ScrollView style={{backgroundColor: '#EEEEEE'}}>
+                <ScrollView
+                    onScroll={this._onScroll}
+                    scrollEventThrottle={16}
+                    style={{backgroundColor: '#EEEEEE'}}>
                     <MallInfoPageTopBar banners={this.state.banners}/>
                     <ProductSpecification
                         showSpecInfo={this.showSpecInfo}
@@ -69,11 +74,24 @@ export default class MallInfoPage extends Component {
                 {specShow ? <ProductSpecificationInfo showSpecInfo={this.showSpecInfo}/> : null}
 
 
-
             </View>
 
         );
     }
+
+    _onScroll = (event) => {
+        let offsetY = Math.abs(event.nativeEvent.contentOffset.y);
+        const offsetHeight = 360;
+
+        if (offsetY >= offsetHeight) {
+            this.setState({
+                opacity: 1
+            })
+        } else {
+            let opacity = offsetY / offsetHeight;
+            this.setState({opacity})
+        }
+    };
 
     showSpecInfo = () => {
         this.setState({
@@ -91,7 +109,6 @@ const styleM = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingTop: Metrics.statusBarHeight,
-        backgroundColor: 'transparent',
         position: 'absolute',
         top: 0,
         width: '100%'
@@ -102,8 +119,8 @@ const styleM = StyleSheet.create({
         justifyContent: 'center'
     },
     backImg: {
-        width: 11,
-        height: 20,
+        width: 23,
+        height: 23,
         marginLeft: 15
     },
     imgShare: {

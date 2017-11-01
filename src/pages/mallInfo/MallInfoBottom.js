@@ -2,7 +2,6 @@ import React,{Component} from 'react';
 import {View,StyleSheet,ScrollView,Text,Image,TouchableOpacity} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {NavigationBar} from '../../components';
 
 export default class  MallInfoBottom extends Component{
 
@@ -15,7 +14,11 @@ export default class  MallInfoBottom extends Component{
     render(){
         return(
             <View style={styleB.mallBottom}>
-                <TouchableOpacity style={styleB.shoppingCar}>
+                <TouchableOpacity
+                    style={styleB.shoppingCar}
+                    onPress={()=>{
+                        router.toShippingCart(this.props)
+                    }}>
                     <Image style={styleB.shoppingCarImg} source={Images.shoppingCart}/>
                     <View style={styleB.shoppingCarView}>
                         <Text style={styleB.shoppingCarTxt}>1</Text>

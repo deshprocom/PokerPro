@@ -18,7 +18,7 @@ export default class  MallIntroduction extends Component{
                     <Text style={styleI.productionNameTxt}>商品介绍</Text>
                 </View>
                 <View style={{backgroundColor:'#FFFFFF',marginTop:1}}>
-                    <View style={{height:500,backgroundColor:'red',marginLeft:17,marginRight:16}}>
+                    <View style={{height:500,backgroundColor:'red',marginLeft:17,marginRight:16,marginTop:9}}>
 
                     </View>
                 </View>
