@@ -67,7 +67,11 @@ export default class MallCategories extends Component {
     _renderItemTwo = ({item}) => {
         return (
             <View style={styles.categoriesTwos}>
-                <TouchableOpacity style={styles.categoriesTwo}>
+                <TouchableOpacity
+                    style={styles.categoriesTwo}
+                onPress={()=>{
+                    router.toMallResult(item)
+                }}>
                     <Image
                         style={styles.imgCate}
                         source={{uri: item.image}}/>
