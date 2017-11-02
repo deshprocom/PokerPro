@@ -127,7 +127,7 @@ export default class MainRaceResultView extends Component {
     _tabPage = () => {
 
         const {curTab} = this.state;
-        const {raceRanks, schedules, blinds, isSideRace, schedules_markdown} = this.props;
+        const {raceRanks, schedules, blinds, isSideRace, schedules_markdown,raceInfo} = this.props;
 
 
         switch (curTab) {
@@ -140,6 +140,7 @@ export default class MainRaceResultView extends Component {
                         schedules={schedules}/>;
             case TAB_BLINDS:
                 return <BlindsList
+                    startChips={raceInfo.blind}
                     blinds={blinds}/>;
             case TAB_RESULT:
                 return <RaceResultList

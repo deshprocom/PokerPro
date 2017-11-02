@@ -388,7 +388,6 @@
   "cert_buy_china": "The ticket requires ID verification",
   "verified_image_lb_pass": "Please upload Passport Info.",
   "SERVER_ERROR": "Network Error",
-
   "TIMEOUT_ERROR": "Timeout, please try later",
   "NETWORK_ERROR": "Network Error, please check authorization",
   "home": "Home",
@@ -398,9 +397,13 @@
   "mine": "Me",
   "message": "Message",
   "backTop": "Top",
-  "discount":"Final Payment",
-  "Duration":"Duration",
-  "mall":"商城",
-  "mall_search":"请输入商品关键字"
+  "discount": "Final Payment",
+  "Duration": "Duration",
+  "mall": "商城",
+  "mall_search": "请输入商品关键字",
+  "mall_resent": "最近搜索",
+  "pieces": "件",
+  "staring_chips": "Staring Chips",
+  "load_err": "Loading Error"
 }
 

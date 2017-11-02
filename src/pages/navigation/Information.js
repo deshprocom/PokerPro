@@ -31,7 +31,7 @@ export default class Information extends Component {
                     style={styles.information}>
                     <View style={{flex: 1}}>
                         <Text numberOfLines={2}
-                            style={[styles.raceText, {marginRight: 20}]}>{item.info.title}</Text>
+                              style={[styles.raceText, {marginRight: 20}]}>{item.info.title}</Text>
                         <View style={{flexDirection: 'row', marginTop: 14}}>
                             <Text style={styles.informationText}>{item.info.source}</Text>
                             <Text
@@ -46,14 +46,16 @@ export default class Information extends Component {
         } else if (item.source_type == 'video') {
             return (
                 <View style={{marginLeft: 17, marginTop: 17, marginRight: 17}}>
-                    <Text style={{
-                        fontSize: 15,
-                        color: '#333333'
-                    }}>{item.video.name}</Text>
+                    <Text
+                        onPress={() => router.toVideoInfoPage(this.props, item.video)}
+                        style={{
+                            fontSize: 15,
+                            color: '#333333'
+                        }}>{item.video.name}</Text>
 
                     <TouchableOpacity
                         onPress={() => router.toVideoInfoPage(this.props, item.video)}
-                        style={{height: 207, marginTop: 14,marginBottom:14}}>
+                        style={{height: 207, marginTop: 14, marginBottom: 14}}>
                         <Image style={{height: 207, alignItems: 'center', justifyContent: 'center'}}
                                source={{uri: item.video.cover_link.trim()}}>
                             <Image style={{width: 70, height: 70}} source={Images.begin}/>
@@ -66,8 +68,9 @@ export default class Information extends Component {
 
     };
     _separator = () => {
-        return <View style={{height:0.5,marginLeft:17,marginRight:17,backgroundColor:'#ECECEE'}}/>;
+        return <View style={{height: 0.5, marginLeft: 17, marginRight: 17, backgroundColor: '#ECECEE'}}/>;
     }
+
     render() {
         return (
             <View style={{backgroundColor: '#fff', marginTop: 8}}>
@@ -104,11 +107,11 @@ export default class Information extends Component {
 }
 
 const styleI = StyleSheet.create({
-    informationLine:{
+    informationLine: {
 
         height: 1,
         marginLeft: 17,
-        marginRight:17,
+        marginRight: 17,
         backgroundColor: '#ECECEE',
         marginTop: 13
     }

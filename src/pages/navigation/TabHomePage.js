@@ -14,10 +14,10 @@ import Router from '../../configs/Router';
 import {connect} from 'react-redux';
 import {SearchPage} from './SearchPage';
 import {SHOW_BACK_TOP, HIDE_BACK_TOP, BACK_TOP} from '../../actions/ActionTypes';
-import {getDispatchAction} from '../../utils/ComonHelper';
+import {getDispatchAction, alertRefresh} from '../../utils/ComonHelper';
 import {Loading} from '../../components';
 
-class RaceInfoPage extends Component {
+class TabHomePage extends Component {
     state = {
         listRace: [],
         raceTickets: [],
@@ -99,6 +99,10 @@ class RaceInfoPage extends Component {
             })
 
         }, err => {
+            setTimeout(()=>{
+                alertRefresh(this._getData)
+            },2000)
+
         })
     };
 
@@ -129,7 +133,7 @@ class RaceInfoPage extends Component {
         setTimeout(() => {
             this._getData();
             this.setState({isRefreshing: false});
-        }, 2000)
+        }, 1000)
     };
 
     render() {
@@ -184,6 +188,6 @@ const mapStateToProps = state => ({
     unread: state.AccountState.unread,
 });
 
-export default connect(mapStateToProps, bindAction)(RaceInfoPage);
+export default connect(mapStateToProps, bindAction)(TabHomePage);
 
 
