@@ -10,7 +10,7 @@ import {strNotNull, FontSize, showToast} from '../utils/ComonHelper';
 
 
 import Markdown, {getUniqueID} from 'react-native-markdown-renderer';
-import FitImage from 'react-native-fit-image';
+import FitImage from './ImageMark';
 
 
 const imageClick = (source) => {
@@ -41,8 +41,7 @@ const rules = {
                                  activeOpacity={1}
                                  onPress={() => imageClick(node.attributes.src)}>
             <FitImage
-                source={{uri: node.attributes.src}}>
-            </FitImage>
+                src={node.attributes.src}/>
         </TouchableOpacity>;
     },
 };
