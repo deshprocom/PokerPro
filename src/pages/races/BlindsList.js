@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {singleOrdouble, convertDate} from '../../utils/ComonHelper';
+import {strNotNull, convertDate} from '../../utils/ComonHelper';
 
 
 export default class BlindsList extends Component {
@@ -30,7 +30,7 @@ export default class BlindsList extends Component {
     }
 
     startChipsView = () => {
-        if (this.props.startChips)
+        if (strNotNull(this.props.startChips))
             return <Text style={styles.record}>{I18n.t('staring_chips')}: {this.props.startChips}</Text>
     };
 
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     record: {
-        fontSize: 18,
+        fontSize: 14,
         color: Colors._333,
         fontWeight: 'bold',
         marginBottom: 8,
