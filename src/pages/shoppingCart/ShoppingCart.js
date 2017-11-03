@@ -1,22 +1,38 @@
 import React, {Component,PropTypes} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
 import Swipeout from 'react-native-swipeout';
 
 
 export default class ShoppingCart extends Component {
     state = {
+        showCart:true,
+        showEdit:true,
+        showBottom:true,
         selected: false,
         text: "1",
         selectAll: false,
-        dataHosts: [1, 2, 3, 4, 5, 6],
+        dataHosts: [],
     }
     static propTypes = {
         pressItem: PropTypes.func,
         pressAll: PropTypes.func,
         selectAll: PropTypes.bool
     };
+    componentDidMount() {
+        let array = this.state.dataHosts;
+        let newArray = []
+        //服务器返回的数据,自己增加一个状态,控制是否选中
+        for (let i = 0; i < array.length; i++) {
+            let dict = array[i]
+            dict.isSelect = false;
+            newArray.push(dict);
+        }
+        this.setState({
+            dataHosts: newArray
+        });
+    }
+
 
     toBottom = () => {
         return (
@@ -38,7 +54,23 @@ export default class ShoppingCart extends Component {
                 </TouchableOpacity>
             </View>
         )
-    }
+    };
+    toBottom2 = () => {
+        return (
+            <View style={styleS.bottomView}>
+                <TouchableOpacity
+
+                    onPress={this.props.pressAll}>
+                    <Image style={styleS.radioImg} source={this.props.selectAll?Images.radioSelected:Images.radio}/>
+                </TouchableOpacity>
+                <Text style={styleS.selectedAll}>全选</Text>
+                <View style={{flex:1}}/>
+                <TouchableOpacity style={styleS.settlementView2}>
+                    <Text style={styleS.settlement2}>删除</Text>
+                </TouchableOpacity>
+            </View>
+        )
+    };
 
     topBar = () => {
         return (<View style={styleS.topBar}>
@@ -50,15 +82,19 @@ export default class ShoppingCart extends Component {
                        source={Images.mall_return}/>
             </TouchableOpacity>
             <View style={{flex: 1}}/>
-            <Text style={styleS.cart}>购物车</Text>
+            <Text style={styleS.cart}>{this.state.showCart?'购物车':""}</Text>
             <View style={{flex: 1}}/>
             <TouchableOpacity
                 testID="btn_bar_right"
                 style={styleS.popBtn}
                 onPress={() => {
-                    router.toEditCart()
+                    this.setState({
+                        showEdit:!this.state.showEdit,
+                        showCart:!this.state.showCart,
+                        showBottom:!this.state.showBottom
+                    })
                 }}>
-                <Text style={styleS.rightTxt}>编辑</Text>
+                <Text style={styleS.rightTxt}>{this.state.showEdit?'编辑':'完成'}</Text>
             </TouchableOpacity>
 
 
@@ -93,6 +129,7 @@ export default class ShoppingCart extends Component {
                 if (item.id === element.id) {
                     element.select = !item.select;
                 }
+                console.log("item",element.id)
                 return element;
             });
 
@@ -100,7 +137,6 @@ export default class ShoppingCart extends Component {
         })
     };
     _renderItem = (item, index) => {
-
         let swipeoutBtns = [
             {
                 text: 'Delete',
@@ -172,29 +208,27 @@ export default class ShoppingCart extends Component {
         )
     };
 
-    onFetch = (page = 1, startFetch, abortFetch) => {
-        startFetch([1, 2, 3, 4, 5, 6], 8)
-    };
 
     _separator = () => {
         return <View style={{height:10,marginLeft:17,marginRight:17,backgroundColor:'#ECECEE'}}/>;
     };
 
     render() {
+        data=[1,2,3,4]
         return (
             <View style={{flex:1}}>
                 {this.topBar()}
 
-                <UltimateFlatList
+                <FlatList
                     style={{paddingTop:6,marginBottom:50}}
-                    onFetch={this.onFetch}
+                    data={data}
                     showsHorizontalScrollIndicator={false}
-                    separator={this._separator}
+                    ItemSeparatorComponent={this._separator}
                     item={this._renderItem}
                     keyExtractor={(item, index) => index}
                 />
 
-                {this.toBottom()}
+                {this.state.showBottom?this.toBottom():this.toBottom2()}
 
             </View>
         )
@@ -202,6 +236,7 @@ export default class ShoppingCart extends Component {
 }
 
 const styleS = StyleSheet.create({
+
     topBar: {
         height: Metrics.navBarHeight,
         flexDirection: 'row',
@@ -336,5 +371,19 @@ const styleS = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%'
-    }
+    },
+    settlementView2: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 37,
+        width: 89,
+        marginRight:15,
+        borderWidth:1,
+        borderColor:'#F34A4A'
+    },
+    settlement2: {
+        fontSize: 18,
+        color: '#F34A4A',
+    },
 })
