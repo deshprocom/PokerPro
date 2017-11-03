@@ -1,11 +1,11 @@
 /**
  * Created by lorne on 2017/4/21.
  */
-import React, {PropTypes, Component} from 'react';
-import {Image, TouchableOpacity, Platform, View} from 'react-native';
+import React, {Component} from 'react';
+import { ActivityIndicator, View} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes/index';
-import {pixel, strNotNull} from '../utils/ComonHelper';
 import FitImage from 'react-native-fit-image';
+import PropTypes from 'prop-types';
 
 export default class ImageMark extends Component {
     static propTypes = {
@@ -31,7 +31,14 @@ export default class ImageMark extends Component {
                         })
                     }}
                     source={{uri: src}}/>
-                {success ? null : <View style={{height: 300, width: '100%', backgroundColor: Colors._ECE}}/>}
+                {success ? null : <View style={{
+                    height: 300, width: '100%', backgroundColor: Colors._ECE, alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+
+                    <ActivityIndicator/>
+
+                </View>}
 
             </View>
 
