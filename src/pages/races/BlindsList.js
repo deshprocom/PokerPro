@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {strNotNull, convertDate} from '../../utils/ComonHelper';
+import {strNotNull, moneyFormat} from '../../utils/ComonHelper';
 
 
 export default class BlindsList extends Component {
@@ -59,11 +59,11 @@ export default class BlindsList extends Component {
                     style={styles.txtInfo}>{item.level}</Text>
                 <Text
                     testID={"txt_blind_" + item.blind_id}
-                    style={styles.txtInfo}>{item.small_blind
-                + '-' + item.big_blind}</Text>
+                    style={styles.txtInfo}>{moneyFormat(item.small_blind)
+                + '-' + moneyFormat(item.big_blind)}</Text>
                 <Text
                     testID={"txt_ante_" + item.blind_id}
-                    style={styles.txtInfo}>{item.ante}</Text>
+                    style={styles.txtInfo}>{moneyFormat(item.ante)}</Text>
                 <Text
                     testID={"txt_time_" + item.blind_id}
                     style={styles.txtInfo}>{item.race_time}</Text>
