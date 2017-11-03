@@ -1,10 +1,11 @@
-import React, {Component,PropTypes} from 'react';
-import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList} from 'react-native';
+import React, {PureComponent,PropTypes} from 'react';
+import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList,ListView} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import Swipeout from 'react-native-swipeout';
+const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+const data=[1,2,3,4];
 
-
-export default class ShoppingCart extends Component {
+export default class ShoppingCart extends PureComponent {
     state = {
         showCart:true,
         showEdit:true,
@@ -13,18 +14,21 @@ export default class ShoppingCart extends Component {
         text: "1",
         selectAll: false,
         dataHosts: [],
-    }
-    static propTypes = {
-        pressItem: PropTypes.func,
-        pressAll: PropTypes.func,
-        selectAll: PropTypes.bool
+        selectArray: []
     };
+
     componentDidMount() {
+        this.setState({
+            dataHosts:data
+        });
+        for(let i=0;i<data.length;i++){
+
+        }
+
         let array = this.state.dataHosts;
-        let newArray = []
-        //服务器返回的数据,自己增加一个状态,控制是否选中
+        let newArray = [];
         for (let i = 0; i < array.length; i++) {
-            let dict = array[i]
+            let dict = array[i];
             dict.isSelect = false;
             newArray.push(dict);
         }
@@ -122,21 +126,49 @@ export default class ShoppingCart extends Component {
     }
 
     _pressItem = (item) => {
-
-        this.setState((state) => {
-            const newData = [...state.dataHosts];
-            newData.map(function (element) {
-                if (item.id === element.id) {
-                    element.select = !item.select;
+        let selectArray = this.state.selectArray;
+        let data = this.state.dataHosts;
+        let newArray = [];
+        for (let i = 0; i < data.length; i++) {
+            let dict = data[i];
+            if (item.index == i) {
+                if (dict.isSelect == true) {
+                    dict.isSelect = false
+                    for (let j = 0; j < selectArray.length; j++) {
+                        let id = selectArray[j];
+                        if (id == dict.id) {
+                            selectArray.splice(j, 1);
+                        }
+                    }
+                } else {
+                    dict.isSelect = true;
+                    selectArray.push(dict.id);
                 }
-                console.log("item",element.id)
-                return element;
-            });
-
-            return {dataHosts: newData}
-        })
+            }
+            newArray.push(dict);
+        }
+        this.setState({
+            selectArray: selectArray,
+            dataHosts: newArray
+        });
     };
-    _renderItem = (item, index) => {
+
+    renderShowEditView(item, onPress) {
+        let imageURL = Images.radio;
+        if (item.isSelect == true) {
+            imageURL = Images.radioSelected
+        }
+        return (
+            <TouchableOpacity
+                onPress={()=>{
+                            onPress(item, item.index)
+                        }}>
+                <Image style={styleS.radioImg}
+                       source={imageURL}/>
+            </TouchableOpacity>
+        )
+    };
+    _renderItem = (item) => {
         let swipeoutBtns = [
             {
                 text: 'Delete',
@@ -147,13 +179,10 @@ export default class ShoppingCart extends Component {
         return (
             <Swipeout right={swipeoutBtns}>
                 <View style={styleS.renderItem}>
-                    <TouchableOpacity
-                        onPress={()=>{
-                            this._pressItem(item)
-                        }}>
-                        <Image style={styleS.radioImg}
-                               source={item.select?Images.radioSelected:Images.radio}/>
-                    </TouchableOpacity>
+                    {this.renderShowEditView(item,()=> {
+                        this._pressItem(item)
+                    })}
+
                     <Image style={styleS.mallImg} source={Images.empty_image}/>
                     <View style={styleS.TxtView}>
                         <Text numberOfLines={2} style={styleS.mallTextName}>筹码14克皇冠粘土百家乐德州扑克筹码币</Text>
@@ -212,9 +241,10 @@ export default class ShoppingCart extends Component {
     _separator = () => {
         return <View style={{height:10,marginLeft:17,marginRight:17,backgroundColor:'#ECECEE'}}/>;
     };
+    _keyExtractor = (item, index) => item.id;
 
     render() {
-        data=[1,2,3,4]
+
         return (
             <View style={{flex:1}}>
                 {this.topBar()}
@@ -224,8 +254,8 @@ export default class ShoppingCart extends Component {
                     data={data}
                     showsHorizontalScrollIndicator={false}
                     ItemSeparatorComponent={this._separator}
-                    item={this._renderItem}
-                    keyExtractor={(item, index) => index}
+                    renderItem={this._renderItem}
+                    keyExtractor={this._keyExtractor}
                 />
 
                 {this.state.showBottom?this.toBottom():this.toBottom2()}
