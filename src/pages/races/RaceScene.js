@@ -327,6 +327,7 @@ class RaceScene extends Component {
                     paddingBottom: headHeight
                 }}>
                     <MainRaceResultView
+                        raceInfo={raceInfo}
                         blinds={blinds}
                         schedules={schedules}
                         raceRanks={raceRanks}/>

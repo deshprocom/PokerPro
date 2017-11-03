@@ -233,15 +233,18 @@ export function uShareTicket(title, desc, icon, id, ticket_id) {
             showToast(error)
         })
 }
-export function uShareChoiseTicket(name, location,time,logo, race_id){
-    var des=time+"\n"+location;
-    UMShare.share(name, shareTxt(des), getShareIcon(logo), shareHost() + "raceTickets/" + race_id + Lang)
+
+export function uShareChoiseTicket(name, location, time, logo, race_id) {
+    let des = time + "\n" + location;
+    let url = `${shareHost()}raceTickets/${race_id}/${Lang}?x=${new Date().getTime()}`
+    UMShare.share(name, shareTxt(des), getShareIcon(logo), url)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
             showToast(error)
         })
 }
+
 export function uShareActivity(title, desc, icon, id) {
 
     UMShare.share(title, shareTxt(desc), getShareIcon(icon), shareHost() + "activities/" + id + "/" + Lang)
@@ -789,9 +792,14 @@ export function getDispatchAction() {
 }
 
 //正在开发提示
-export function developing() {
-    Alert.alert(`${I18n.t('alert_doing')}`, `${I18n.t('alert_help')}`, [{
-        text: `${I18n.t('alert_sure')}`, onPress: () => {
+export function alertRefresh(callback) {
+    Alert.alert(`${I18n.t('tint')}`, `${I18n.t('load_err')}`, [{
+        text: `${I18n.t('cancel')}`, onPress: () => {
+
+        }
+    }, {
+        text: `${I18n.t('retry')}`, onPress: () => {
+            callback()
         }
     }])
 }

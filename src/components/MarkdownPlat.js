@@ -7,7 +7,9 @@ import {
     StyleSheet, Text, Platform, Alert, Image
 } from 'react-native';
 import {strNotNull, FontSize, showToast} from '../utils/ComonHelper';
-import createMarkdownRenderer from 'rn-markdown';
+
+
+import Markdown, {getUniqueID} from 'react-native-markdown-renderer';
 import FitImage from './ImageMark';
 
 
@@ -24,34 +26,24 @@ const imageClick = (source) => {
 };
 
 
-const Markdown = createMarkdownRenderer({gfm: false});
-Markdown.renderer.link = props => {
-    const {markdown} = props;
-    const {href} = markdown;
-    return (
-        <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => router.toWebViewPage(props, href)}>
-            <View>
-                {props.children}
-            </View>
-        </TouchableOpacity>
-    )
-};
+const rules = {
+    a: (node, children, parent, styles) => {
+        return (
+            <Text key={node.key} style={styleMark.a}
+                  onPress={() => router.toWebViewPage(parent, node.attributes.href)}>
+                {children}
+            </Text>
+        );
+    },
+    img: (node, children, parent, styles) => {
 
-Markdown.renderer.image = props => {
-    const {markdown} = props;
-    const {href} = markdown;
-    return (
-        <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => imageClick(href)}>
-            <View>
-                <FitImage
-                    src={href}/>
-            </View>
-        </TouchableOpacity>
-    )
+        return <TouchableOpacity key={node.key} style={{flex: 1}}
+                                 activeOpacity={1}
+                                 onPress={() => imageClick(node.attributes.src)}>
+            <FitImage
+                src={node.attributes.src}/>
+        </TouchableOpacity>;
+    },
 };
 
 export default class MarkdownPlat extends Component {
@@ -62,33 +54,12 @@ export default class MarkdownPlat extends Component {
         try {
             if (strNotNull(markdownStr))
                 return (
-                    <Markdown contentContainerStyle={styles.container} markdownStyles={{
-                        container: {
-                            padding: 20
-                        },
-                        heading1: {
-                            fontSize: 24,
-                            color: 'purple',
-                        },
-                        link: {
-                            color: 'blue',
-                        },
-                        mail_to: {
-                            color: 'orange',
-                        },
-                        text: {
-                            color: '#444444',
-                            fontSize: FontSize.h15,
-                            lineHeight: 25,
-                            letterSpacing: 0.3
-                        },
-                        heading5: {
-                            alignSelf: 'center',
-                            fontSize: FontSize.h15,
-                        }
-                    }}>
-                        {markdownStr}
-                    </Markdown>
+                    <View style={{padding: 20}}>
+                        <Markdown style={styleMark} rules={rules}>
+                            {markdownStr}
+                        </Markdown>
+                    </View>
+
                 );
             else
                 return <View/>
@@ -101,11 +72,53 @@ export default class MarkdownPlat extends Component {
 }
 
 
-const styles = StyleSheet.create({
-    container: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-        flex: 1
-    }
+const styleMark = StyleSheet.create({
+    view: {
+        padding: 20
+    },
+    heading1: {
+        fontSize: 24,
+        color: 'purple',
+    },
+    a: {
+        color: 'blue',
+        textDecorationLine: 'underline',
+    },
+    mail_to: {
+        color: 'orange',
+    },
+    text: {
+        color: '#444444',
+        fontSize: FontSize.h15,
+        lineHeight: 25,
+        letterSpacing: 0.3
+    },
+    heading5: {
+        alignSelf: 'center',
+        fontSize: FontSize.h15,
+    },
+    tableHeader: {
+        backgroundColor: 'yellow'
+    },
+    table: {
+        borderWidth: 0.5,
+        borderColor: '#000000',
+    },
+    tableHeaderCell: {
+        flex: 1,
+        padding: 5,
+        borderRightColor: '#000000',
+        borderRightWidth: 0.5
+    },
+    tableRowCell: {
+        flex: 1,
+        padding: 5,
+        borderRightColor: '#000000',
+        borderRightWidth: 0.5
+    },
+    tableRow: {
+        borderBottomWidth: 0.5,
+        borderColor: '#000000',
+        flexDirection: 'row',
+    },
 });

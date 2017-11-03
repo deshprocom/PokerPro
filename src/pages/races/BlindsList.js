@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {singleOrdouble, convertDate} from '../../utils/ComonHelper';
+import {strNotNull, convertDate} from '../../utils/ComonHelper';
 
 
 export default class BlindsList extends Component {
@@ -16,6 +16,8 @@ export default class BlindsList extends Component {
     render() {
 
         return (<View testID="BlindsList">
+
+            {this.startChipsView()}
 
             <FlatList
                 ListHeaderComponent={this._listHeader}
@@ -26,6 +28,11 @@ export default class BlindsList extends Component {
         </View>)
 
     }
+
+    startChipsView = () => {
+        if (strNotNull(this.props.startChips))
+            return <Text style={styles.record}>{I18n.t('staring_chips')}: {this.props.startChips}</Text>
+    };
 
     _listHeader = () => {
         return ( <View style={styles.tableTitle}>
@@ -48,24 +55,24 @@ export default class BlindsList extends Component {
             return (<View
                 style={styles.item1}>
                 <Text
-                    testID={"txt_level_"+item.blind_id}
+                    testID={"txt_level_" + item.blind_id}
                     style={styles.txtInfo}>{item.level}</Text>
                 <Text
-                    testID={"txt_blind_"+item.blind_id}
+                    testID={"txt_blind_" + item.blind_id}
                     style={styles.txtInfo}>{item.small_blind
                 + '-' + item.big_blind}</Text>
                 <Text
-                    testID={"txt_ante_"+item.blind_id}
+                    testID={"txt_ante_" + item.blind_id}
                     style={styles.txtInfo}>{item.ante}</Text>
                 <Text
-                    testID={"txt_time_"+item.blind_id}
+                    testID={"txt_time_" + item.blind_id}
                     style={styles.txtInfo}>{item.race_time}</Text>
             </View>)
         } else if (item.blind_type === "blind_content") {
 
             return (<View style={styles.blind_content}>
                 <Text
-                    testID={"txt_blind_content_"+item.blind_id}
+                    testID={"txt_blind_content_" + item.blind_id}
                     style={styles.txtInfo}>{item.content}</Text>
             </View>)
 
@@ -123,5 +130,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row'
+    },
+    record: {
+        fontSize: 14,
+        color: Colors._333,
+        fontWeight: 'bold',
+        marginBottom: 8,
+        marginLeft: 17
     }
 })

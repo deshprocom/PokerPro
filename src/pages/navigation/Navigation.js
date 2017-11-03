@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Scene, Stack, Tabs} from 'react-native-router-flux';
-import RaceInfoPage from './RaceInfoPage';
+import TabHomePage from './TabHomePage';
 import Personal from './Personal';
 import {
     StyleSheet
@@ -29,7 +29,7 @@ export const Navigation = () => {
             >
                 <Scene
                     key="tab_home"
-                    component={RaceInfoPage}
+                    component={TabHomePage}
                     hideNavBar
                 />
             </Stack>

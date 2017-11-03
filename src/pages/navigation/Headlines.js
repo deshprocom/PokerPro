@@ -17,7 +17,7 @@ export default class Headlines extends Component {
         return (
             <View style={styles.pukes}>
                 <View style={styles.puke}>
-                    <Image style={styles.pukeText} source={Images.pukes}/>
+                    <Image style={styles.pukeText} source={global.language === 'zh' ? Images.pukes : Images.poker_key}/>
                     <View style={{width: 1, height: 16, backgroundColor: '#E5E5E5', marginLeft: 15}}/>
                     {this._hotLine()}
                 </View>

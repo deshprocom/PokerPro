@@ -74,7 +74,7 @@ export default class MallList extends Component {
         searchProducts({
             page: 1,
             page_size: 20,
-            keywords: this.searchKey
+            keyword: this.searchKey
         }, data => {
             startFetch(data.products, 6)
         }, err => {
@@ -88,7 +88,7 @@ export default class MallList extends Component {
         searchProducts({
             page: page,
             page_size: 20,
-            keywords: this.searchKey
+            keyword: this.searchKey
         }, data => {
             startFetch(data.products, 6)
         }, err => {
