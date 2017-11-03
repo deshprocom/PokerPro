@@ -200,7 +200,7 @@ export default class VideoListView extends Component {
 
     _itemNewsView = (rowData, sectionID, rowID) => {
 
-        const {created_at, group_name, cover_link, video_duration, title_desc, id} = rowData;
+        const {created_at, group_name, cover_link, video_duration, title_desc, id, name} = rowData;
 
         return (<View
             style={styles.transparent}
@@ -229,7 +229,7 @@ export default class VideoListView extends Component {
 
                 <TouchableOpacity
                     onPress={() => {
-                        uVideoShare(name, title_desc, cover_link, id)
+                        uVideoShare(group_name, title_desc, cover_link, id)
                     }}>
 
                     <Image style={styles.imgShare}
