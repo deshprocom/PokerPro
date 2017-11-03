@@ -3,7 +3,6 @@ import {StyleSheet, View, Text, TouchableOpacity, StatusBar, Image} from 'react-
 import I18n from 'react-native-i18n';
 import {Images} from '../../Themes';
 import TabIcon from './TabIcon';
-import {Actions} from 'react-native-router-flux';
 import {showTabTop, hideTabTop, onPressBackTop, videoPause} from '../../actions/AccountAction';
 import {SHOW_BACK_TOP, HIDE_BACK_TOP, VIDEO_PAUSE, BACK_TOP} from '../../actions/ActionTypes';
 import {connect} from 'react-redux';
