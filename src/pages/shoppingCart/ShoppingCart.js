@@ -37,8 +37,12 @@ export default class ShoppingCart extends PureComponent {
             <View style={styleS.bottomView}>
                 <TouchableOpacity
 
-                    onPress={this._pressAll}>
-                    <Image style={styleS.radioImg} source={this.props.selectAll ? Images.radioSelected : Images.radio}/>
+                    onPress={()=>{
+                            this.setState({
+                                selectAll:!this.state.selectAll
+                            }),this._pressAll()
+                        }}>
+                    <Image style={styleS.radioImg} source={this.state.selectAll ? Images.radioSelected : Images.radio}/>
                 </TouchableOpacity>
                 <Text style={styleS.selectedAll}>全选</Text>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -104,19 +108,13 @@ export default class ShoppingCart extends PureComponent {
         )
     };
     _pressAll = () => {
-        const {selectAll} = this.state;
-        this.setState((state) => {
-            const newData = [...state.dataHosts];
-            newData.map(function (element) {
-                element.select = !selectAll;
-                return element;
-            });
+        const {dataHosts} = this.state;
+        let newSelects = [...dataHosts];
+        newSelects.map(function (x) {
+            x.isSelect = !x.isSelect;
+        });
 
-            return {
-                dataHosts: newData,
-                selectAll: !selectAll
-            }
-        })
+         this.setState({newSelects})
     }
 
     _pressItem = (item) => {
@@ -125,7 +123,6 @@ export default class ShoppingCart extends PureComponent {
         let newSelects = [...dataHosts];
         newSelects.map(function (x) {
             if (x.id === item.id) {
-                console.log(item)
                 item.isSelect = !item.isSelect;
             }
         });
