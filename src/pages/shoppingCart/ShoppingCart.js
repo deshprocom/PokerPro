@@ -3,7 +3,6 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, L
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import Swipeout from 'react-native-swipeout';
 
-const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 const data = [{id: 1}, {id: 2}, {id: 3}, {id: 4}];
 
 export default class ShoppingCart extends PureComponent {
@@ -23,9 +22,6 @@ export default class ShoppingCart extends PureComponent {
         data.map(function (x) {
             x.isSelect = false
         });
-
-        console.log('no select prop arr', data)
-
         this.setState({
             dataHosts: data
         })
@@ -110,9 +106,16 @@ export default class ShoppingCart extends PureComponent {
     _pressAll = () => {
         const {dataHosts} = this.state;
         let newSelects = [...dataHosts];
-        newSelects.map(function (x) {
-            x.isSelect = !x.isSelect;
-        });
+        if(this.state.selectAll===false){
+            newSelects.map(function (x) {
+                x.isSelect=true
+            });
+        }else{
+            newSelects.map(function (x) {
+                x.isSelect=false
+            });
+        }
+
 
          this.setState({newSelects})
     }
@@ -127,7 +130,6 @@ export default class ShoppingCart extends PureComponent {
             }
         });
 
-        console.log('selectd Items:', newSelects)
         this.setState({newSelects})
     };
 
@@ -155,7 +157,6 @@ export default class ShoppingCart extends PureComponent {
                 onPress: this.closeThisMall
             }
         ];
-        console.log(item)
         return (
             <Swipeout right={swipeoutBtns}>
                 <View style={styleS.renderItem}>
