@@ -1,36 +1,29 @@
 import React, {PureComponent} from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity, TextInput} from 'react-native';
+import {View, Text, Image, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
+import * as Animatable from 'react-native-animatable';
+import I18n from 'react-native-i18n';
 
 export default class ProductSpecificationInfo extends PureComponent {
     state = {
         text: "1"
-    }
+    };
 
     componentDidMount() {
         console.log(Number(this.state.text))
     }
 
-    tabBlank = () => {
-        let tabs = ['2cm', '5cm', '5cm-6cm', '5cm-6cm', '5cm', '2cm'];
-        return <View style={{flexDirection: 'row', flexWrap: 'wrap', marginLeft: 17,marginTop:16}}>
+    tabBlank = (tabs) => {
+
+        return <View style={{flexDirection: 'row', flexWrap: 'wrap', marginLeft: 17, marginTop: 16}}>
             {tabs.map(function (item, index) {
                 return <TouchableOpacity key={`tab${index}`} style={styleP.tabSearch}>
-                    <Text style={styleP.txtTab}>{item}</Text>
+                    <Text style={styleP.txtTab}>{item.name}</Text>
                 </TouchableOpacity>
             })}
         </View>
     };
-    classification = () => {
-        let tabs = ['2cm', '5cm', '5cm-6cm', '5cm-6cm', '5cm', '2cm'];
-        return <View style={{flexDirection: 'row', flexWrap: 'wrap', marginLeft: 17,marginTop:16}}>
-            {tabs.map(function (item, index) {
-                return <TouchableOpacity key={`tab${index}`} style={styleP.tabSearch}>
-                    <Text style={styleP.txtTab}>{item}</Text>
-                </TouchableOpacity>
-            })}
-        </View>
-    };
+
     buyQuantity = () => {
         const styleCutDisable = {
             backgroundColor: '#FBFAFA'
@@ -39,15 +32,15 @@ export default class ProductSpecificationInfo extends PureComponent {
             backgroundColor: '#F6F5F5'
         };
         return (
-            <View style={{marginRight:29,flexDirection:'row',alignItems:'center',marginTop:14}}>
+            <View style={{marginRight: 29, flexDirection: 'row', alignItems: 'center', marginTop: 14}}>
                 <TouchableOpacity
-                    style={[styleP.buyTouch,Number(this.state.text)==="1"?styleCutDisable:styleCut]}
-                    onPress={()=>{
-                        let number =Number(this.state.text)
-                        if(number>=1){
-                          this.setState({
-                            text:number-1
-                          })
+                    style={[styleP.buyTouch, Number(this.state.text) === "1" ? styleCutDisable : styleCut]}
+                    onPress={() => {
+                        let number = Number(this.state.text)
+                        if (number >= 1) {
+                            this.setState({
+                                text: number - 1
+                            })
                         }
 
                     }}>
@@ -60,23 +53,50 @@ export default class ProductSpecificationInfo extends PureComponent {
 
                 <TouchableOpacity
                     style={styleP.buyTouch}
-                    onPress={()=>{
-                        let number =Number(this.state.text)
+                    onPress={() => {
+                        let number = Number(this.state.text);
                         this.setState({
-                            text:number+1
+                            text: number + 1
                         })
                     }}>
                     <Image style={styleP.buyImgAdd} source={Images.add}/>
                 </TouchableOpacity>
             </View>
         )
-    }
+    };
+
+    optionTypesView = (option_types) => {
+        let that = this;
+        return <ScrollView>
+            {option_types.map((x, index) => {
+                return <View
+                    key={`option_types${x.id}`}
+                    style={styleP.size}>
+                    <Text style={[styleP.sizeTxt1, {marginTop: 11}]}>{x.name}</Text>
+                    {that.tabBlank(x.option_values)}
+                </View>
+            })}
+
+            <View style={styleP.buyQuantity}>
+                <Text style={[styleP.sizeTxt1, {marginTop: 20}]}>购买数量</Text>
+                <View style={{flex: 1}}/>
+                {this.buyQuantity()}
+            </View>
+
+            <View style={{height: 50}}/>
+
+        </ScrollView>
+    };
+
 
     render() {
 
-
+        const {icon, master, option_types} = this.props.product;
+        const {price, stock} = master;
         return (
-            <View
+            <Animatable.View
+                duration={300}
+                animation={'fadeInUp'}
                 style={styleP.page}>
                 <View style={styleP.specificationInfo}>
 
@@ -84,43 +104,33 @@ export default class ProductSpecificationInfo extends PureComponent {
                         <Image style={styleP.specificationInfoTopImg} source={Images.home_bg}/>
                         <View style={styleP.specificationInfoTopM}>
                             <Text style={styleP.specificationInfoTopP}>
-                                239.4
+                                {price}
                             </Text>
                             <Text style={styleP.specificationInfoTopS}>
-                                库存34件
+                                {I18n.t('stock') + stock + I18n.t('pieces')}
                             </Text>
                         </View>
                     </View>
                     <TouchableOpacity
                         style={styleP.closeView}
-                        onPress={()=>{
-                        this.props.showSpecInfo()
-                    }}>
+                        onPress={() => {
+                            this.props.showSpecInfo()
+                        }}>
                         <Image style={styleP.closeImg} source={Images.close}/>
                     </TouchableOpacity>
-                    <View style={styleP.size}>
-                        <Text style={[styleP.sizeTxt1,{marginTop:11}]}>尺寸</Text>
-                        {this.tabBlank()}
-                    </View>
 
-                    <View style={styleP.colorClass}>
-                        <Text style={[styleP.sizeTxt1,{marginTop:16}]}>颜色分类</Text>
-                        {this.classification()}
-                    </View>
-                    <View style={styleP.buyQuantity}>
-                        <Text style={[styleP.sizeTxt1,{marginTop:20}]}>购买数量</Text>
-                        <View style={{flex:1}}/>
-                        {this.buyQuantity()}
-                    </View>
 
-                    <View style={styleP.confirmView}>
-                        <TouchableOpacity style={styleP.confirm}>
-                            <Text style={styleP.confirmTxt}>确认</Text>
-                        </TouchableOpacity>
-                    </View>
+                    {this.optionTypesView(option_types)}
+
                 </View>
 
-            </View>
+
+                <View style={styleP.confirmView}>
+                    <TouchableOpacity style={styleP.confirm}>
+                        <Text style={styleP.confirmTxt}>{I18n.t('confirm')}</Text>
+                    </TouchableOpacity>
+                </View>
+            </Animatable.View>
 
         );
     }
@@ -133,7 +143,7 @@ const styleP = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
-        zIndex: 100
+        zIndex: 99
     },
     specificationInfo: {
         height: '100%',
@@ -150,8 +160,7 @@ const styleP = StyleSheet.create({
         height: 120,
         marginLeft: 17,
         position: 'absolute',
-        top: -49,
-        zIndex: 999
+        top: -49
     },
     specificationInfoTopM: {
         flexDirection: 'column',
@@ -247,6 +256,10 @@ const styleP = StyleSheet.create({
     confirmView: {
         marginTop: 1,
         backgroundColor: '#FFFFFF',
+        position: 'absolute',
+        bottom: 0,
+        height: 50,
+        width: '100%'
     },
     confirm: {
         height: 40,

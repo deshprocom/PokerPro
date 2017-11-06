@@ -6,6 +6,7 @@ import Api from '../configs/ApiConfig';
 import StorageKey from '../configs/StorageKey';
 import JpushHelp from './JpushHelper';
 import {isEmptyObject, showToast} from '../utils/ComonHelper';
+import {getAddressList} from './OrderDao';
 
 
 export function getPreferential(body, resolve, reject) {
@@ -222,8 +223,6 @@ export function postLogin(body, resolve, reject) {
 
 export var LoginUser = {};
 
-global.login_user = {};
-
 export function setLoginUser(ret) {
     LoginUser = ret;
     global.login_user = ret;
@@ -240,6 +239,10 @@ export function setLoginUser(ret) {
             //获取实名信息
             listVerified(data => {
             }, err => {
+            });
+
+            //获取收货地址
+            getAddressList(data=>{
             });
 
             //统计登陆用户

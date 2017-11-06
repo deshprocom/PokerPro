@@ -760,6 +760,24 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		487F420C1FB00F090012BBA0 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				DB0BACF0D8184B64A88AEB16 /* libRCTJPushModule.a */,
+				E5B691665E9D489B86A40DF4 /* libRNBlur.a */,
+				AB4024AE644343769EFDB725 /* libRNI18n.a */,
+				4FAE4E481EE5450EA99C9B00 /* libimageCropPicker.a */,
+				35A4ADF4B9D34FC59A56B29E /* libRCTBEEPickerManager.a */,
+				2063F180AB3544E499BF51F4 /* libRCTSplashScreen.a */,
+				F65F9BBF16D94397A8309064 /* libRCTVideo.a */,
+				63B3DFB4A75043F5A7D8217C /* libRCTOrientation.a */,
+				F64DDFDD47D44B8FA82B6931 /* libRNNetworkInfo.a */,
+				6399DCFEAEF04A9EAB2F3551 /* libRCTUMShareModule.a */,
+				D6DFF223F1234E3AAB30CE99 /* libRCTUmeng.a */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		4893CF941ED4371100A35F78 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -863,6 +881,7 @@
 				00E356EF1AD99517003FC87E /* PokerProTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				9966DE741C5E48F5ABB6858B /* Frameworks */,
+				487F420C1FB00F090012BBA0 /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";

@@ -148,7 +148,7 @@ const
     styles = StyleSheet.create({
         viewTop: {
             height: 35,
-            width: Metrics.screenWidth,
+            width: '100%',
             flexDirection: 'row',
             alignItems: 'flex-end'
         },
@@ -157,7 +157,8 @@ const
             fontWeight: 'bold',
             color: Colors._333,
             marginLeft: 20,
-            marginRight: 20
+            marginRight: 20,
+            maxWidth: '80%'
         },
         viewRank: {
             backgroundColor: '#F34A4A',

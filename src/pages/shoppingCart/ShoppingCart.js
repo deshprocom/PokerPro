@@ -1,4 +1,4 @@
-import React, {Component,PropTypes} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
@@ -24,15 +24,19 @@ export default class ShoppingCart extends Component {
                 <TouchableOpacity
 
                     onPress={this._pressAll}>
-                    <Image style={styleS.radioImg} source={this.props.selectAll?Images.radioSelected:Images.radio}/>
+                    <Image style={styleS.radioImg} source={this.props.selectAll ? Images.radioSelected : Images.radio}/>
                 </TouchableOpacity>
                 <Text style={styleS.selectedAll}>全选</Text>
-                <View style={{flexDirection:'row',alignItems:'center'}}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <Text style={styleS.total}>合计：</Text>
                     <Text style={styleS.selectedPrice}>¥23,300.8</Text>
                 </View>
-                <View style={{flex:1}}/>
-                <TouchableOpacity style={styleS.settlementView}>
+                <View style={{flex: 1}}/>
+                <TouchableOpacity
+                    onPress={() => {
+                        router.toConfirmOrder()
+                    }}
+                    style={styleS.settlementView}>
                     <Text style={styleS.settlement}>去结算</Text>
                     <Text style={styleS.settlementQuantity}>(3)</Text>
                 </TouchableOpacity>
@@ -64,9 +68,9 @@ export default class ShoppingCart extends Component {
 
         </View>)
     };
-    closeThisMall=()=>{
-        return(
-           alert("确认删除该商品吗？")
+    closeThisMall = () => {
+        return (
+            alert("确认删除该商品吗？")
         )
     };
     _pressAll = () => {
@@ -104,19 +108,19 @@ export default class ShoppingCart extends Component {
         let swipeoutBtns = [
             {
                 text: 'Delete',
-                backgroundColor:'#F34A4A',
-                onPress:this.closeThisMall
+                backgroundColor: '#F34A4A',
+                onPress: this.closeThisMall
             }
         ];
         return (
             <Swipeout right={swipeoutBtns}>
                 <View style={styleS.renderItem}>
                     <TouchableOpacity
-                        onPress={()=>{
+                        onPress={() => {
                             this._pressItem(item)
                         }}>
                         <Image style={styleS.radioImg}
-                               source={item.select?Images.radioSelected:Images.radio}/>
+                               source={item.select ? Images.radioSelected : Images.radio}/>
                     </TouchableOpacity>
                     <Image style={styleS.mallImg} source={Images.empty_image}/>
                     <View style={styleS.TxtView}>
@@ -141,13 +145,13 @@ export default class ShoppingCart extends Component {
         return (
             <View style={styleS.quantity}>
                 <TouchableOpacity
-                    style={[styleS.buyTouch,Number(this.state.text)==="1"?styleCutDisable:styleCut]}
-                    onPress={()=>{
-                        let number =Number(this.state.text)
-                        if(number>=1){
-                          this.setState({
-                            text:number-1
-                          })
+                    style={[styleS.buyTouch, Number(this.state.text) === "1" ? styleCutDisable : styleCut]}
+                    onPress={() => {
+                        let number = Number(this.state.text)
+                        if (number >= 1) {
+                            this.setState({
+                                text: number - 1
+                            })
                         }
 
                     }}>
@@ -160,10 +164,10 @@ export default class ShoppingCart extends Component {
 
                 <TouchableOpacity
                     style={styleS.buyTouch}
-                    onPress={()=>{
-                        let number =Number(this.state.text)
+                    onPress={() => {
+                        let number = Number(this.state.text)
                         this.setState({
-                            text:number+1
+                            text: number + 1
                         })
                     }}>
                     <Image style={styleS.buyImgAdd} source={Images.add}/>
@@ -177,16 +181,16 @@ export default class ShoppingCart extends Component {
     };
 
     _separator = () => {
-        return <View style={{height:10,marginLeft:17,marginRight:17,backgroundColor:'#ECECEE'}}/>;
+        return <View style={{height: 10, marginLeft: 17, marginRight: 17, backgroundColor: '#ECECEE'}}/>;
     };
 
     render() {
         return (
-            <View style={{flex:1}}>
+            <View style={{flex: 1}}>
                 {this.topBar()}
 
                 <UltimateFlatList
-                    style={{paddingTop:6,marginBottom:50}}
+                    style={{paddingTop: 6, marginBottom: 50}}
                     onFetch={this.onFetch}
                     showsHorizontalScrollIndicator={false}
                     separator={this._separator}

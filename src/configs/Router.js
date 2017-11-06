@@ -40,10 +40,16 @@ export default class Router {
 
     }
 
-    toMallResult(categories){
-        this.stackPush( {
+    toConfirmOrder() {
+        this.stackPush({
+            name: 'ConfirmOrder'
+        })
+    }
+
+    toMallResult(categories) {
+        this.stackPush({
             name: 'MallSearchResult',
-            params:{category:categories}
+            params: {category: categories}
         })
     }
 
@@ -633,9 +639,11 @@ export default class Router {
             name: 'PersonPage',
         })
     }
-    toMallInfoPage() {
+
+    toMallInfoPage(product) {
         this.stackPush({
             name: 'MallInfoPage',
+            params:product
         })
     }
 
@@ -663,7 +671,8 @@ export default class Router {
         navigation.dispatch(backTo)
 
     }
-    toShippingCart(props){
+
+    toShippingCart(props) {
         this.push(props, {
 
             // name: 'ShoppingCart',
@@ -671,14 +680,14 @@ export default class Router {
 
         })
     }
-    toEditCart(props){
+
+    toEditCart(props) {
         this.push(props, {
 
             name: 'EditCartPage',
 
         })
     }
-
 
 
 }
