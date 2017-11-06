@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity, TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
+import * as Animatable from 'react-native-animatable';
 
 export default class ProductSpecificationInfo extends PureComponent {
     state = {
@@ -13,7 +14,7 @@ export default class ProductSpecificationInfo extends PureComponent {
 
     tabBlank = () => {
         let tabs = ['2cm', '5cm', '5cm-6cm', '5cm-6cm', '5cm', '2cm'];
-        return <View style={{flexDirection: 'row', flexWrap: 'wrap', marginLeft: 17,marginTop:16}}>
+        return <View style={{flexDirection: 'row', flexWrap: 'wrap', marginLeft: 17, marginTop: 16}}>
             {tabs.map(function (item, index) {
                 return <TouchableOpacity key={`tab${index}`} style={styleP.tabSearch}>
                     <Text style={styleP.txtTab}>{item}</Text>
@@ -23,7 +24,7 @@ export default class ProductSpecificationInfo extends PureComponent {
     };
     classification = () => {
         let tabs = ['2cm', '5cm', '5cm-6cm', '5cm-6cm', '5cm', '2cm'];
-        return <View style={{flexDirection: 'row', flexWrap: 'wrap', marginLeft: 17,marginTop:16}}>
+        return <View style={{flexDirection: 'row', flexWrap: 'wrap', marginLeft: 17, marginTop: 16}}>
             {tabs.map(function (item, index) {
                 return <TouchableOpacity key={`tab${index}`} style={styleP.tabSearch}>
                     <Text style={styleP.txtTab}>{item}</Text>
@@ -39,15 +40,15 @@ export default class ProductSpecificationInfo extends PureComponent {
             backgroundColor: '#F6F5F5'
         };
         return (
-            <View style={{marginRight:29,flexDirection:'row',alignItems:'center',marginTop:14}}>
+            <View style={{marginRight: 29, flexDirection: 'row', alignItems: 'center', marginTop: 14}}>
                 <TouchableOpacity
-                    style={[styleP.buyTouch,Number(this.state.text)==="1"?styleCutDisable:styleCut]}
-                    onPress={()=>{
-                        let number =Number(this.state.text)
-                        if(number>=1){
-                          this.setState({
-                            text:number-1
-                          })
+                    style={[styleP.buyTouch, Number(this.state.text) === "1" ? styleCutDisable : styleCut]}
+                    onPress={() => {
+                        let number = Number(this.state.text)
+                        if (number >= 1) {
+                            this.setState({
+                                text: number - 1
+                            })
                         }
 
                     }}>
@@ -60,10 +61,10 @@ export default class ProductSpecificationInfo extends PureComponent {
 
                 <TouchableOpacity
                     style={styleP.buyTouch}
-                    onPress={()=>{
-                        let number =Number(this.state.text)
+                    onPress={() => {
+                        let number = Number(this.state.text)
                         this.setState({
-                            text:number+1
+                            text: number + 1
                         })
                     }}>
                     <Image style={styleP.buyImgAdd} source={Images.add}/>
@@ -76,7 +77,8 @@ export default class ProductSpecificationInfo extends PureComponent {
 
 
         return (
-            <View
+            <Animatable.View
+                animation={'fadeInUp'}
                 style={styleP.page}>
                 <View style={styleP.specificationInfo}>
 
@@ -93,23 +95,23 @@ export default class ProductSpecificationInfo extends PureComponent {
                     </View>
                     <TouchableOpacity
                         style={styleP.closeView}
-                        onPress={()=>{
-                        this.props.showSpecInfo()
-                    }}>
+                        onPress={() => {
+                            this.props.showSpecInfo()
+                        }}>
                         <Image style={styleP.closeImg} source={Images.close}/>
                     </TouchableOpacity>
                     <View style={styleP.size}>
-                        <Text style={[styleP.sizeTxt1,{marginTop:11}]}>尺寸</Text>
+                        <Text style={[styleP.sizeTxt1, {marginTop: 11}]}>尺寸</Text>
                         {this.tabBlank()}
                     </View>
 
                     <View style={styleP.colorClass}>
-                        <Text style={[styleP.sizeTxt1,{marginTop:16}]}>颜色分类</Text>
+                        <Text style={[styleP.sizeTxt1, {marginTop: 16}]}>颜色分类</Text>
                         {this.classification()}
                     </View>
                     <View style={styleP.buyQuantity}>
-                        <Text style={[styleP.sizeTxt1,{marginTop:20}]}>购买数量</Text>
-                        <View style={{flex:1}}/>
+                        <Text style={[styleP.sizeTxt1, {marginTop: 20}]}>购买数量</Text>
+                        <View style={{flex: 1}}/>
                         {this.buyQuantity()}
                     </View>
 
@@ -120,7 +122,7 @@ export default class ProductSpecificationInfo extends PureComponent {
                     </View>
                 </View>
 
-            </View>
+            </Animatable.View>
 
         );
     }

@@ -99,7 +99,8 @@ export default {
     categories: 'categories',
     categories_child: categories_child,
     cat_products: cat_products,
-    products:'products'
+    products: 'products',
+    product_detail: product_detail
 }
 
 
@@ -113,7 +114,10 @@ function getUserId() {
 const page_size = 10;
 
 
+export function product_detail(body) {
+    return `products/${body.id}`
 
+}
 
 export function cat_products(body) {
     const {id} = body;
