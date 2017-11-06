@@ -640,9 +640,10 @@ export default class Router {
         })
     }
 
-    toMallInfoPage() {
+    toMallInfoPage(product) {
         this.stackPush({
             name: 'MallInfoPage',
+            params:product
         })
     }
 
