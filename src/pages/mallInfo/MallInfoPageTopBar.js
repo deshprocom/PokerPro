@@ -20,8 +20,8 @@ export default class MallInfoPageTopBar extends Component {
     _carouselView = () => {
         if (isEmptyObject(this.props.product))
             return;
-        const {image} = this.props.product.master;
-        let banners = [image];
+        const {icon} = this.props.product;
+        let banners = [icon];
 
         return <View style={styleM.mallInfoBgImg}>
             <Swiper

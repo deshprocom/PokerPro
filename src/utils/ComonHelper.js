@@ -585,6 +585,7 @@ export function clearLoginUser() {
     removeToken();
     setLoginUser({});
     global.user_extra = {};
+    global.addressList = []
 }
 
 /*身份证验证状态*/
