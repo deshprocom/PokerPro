@@ -65,8 +65,8 @@ export default class MallInfoPage extends Component {
                     scrollEventThrottle={16}>
 
                     <MallInfoPageTopBar
-                        product={product}
-                        banners={[1, 2, 3, 4]}/>
+                        product={product}/>
+
                     <ProductSpecification
                         showSpecInfo={this.showSpecInfo}
                     />
@@ -82,7 +82,9 @@ export default class MallInfoPage extends Component {
                 <MallInfoBottom
                     showSpecInfo={this.showSpecInfo}/>
 
-                {specShow ? <ProductSpecificationInfo showSpecInfo={this.showSpecInfo}/> : null}
+                {specShow ? <ProductSpecificationInfo
+                    product={product}
+                    showSpecInfo={this.showSpecInfo}/> : null}
 
 
             </View>
