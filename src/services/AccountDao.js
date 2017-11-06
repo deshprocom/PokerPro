@@ -222,8 +222,6 @@ export function postLogin(body, resolve, reject) {
 
 export var LoginUser = {};
 
-global.login_user = {};
-
 export function setLoginUser(ret) {
     LoginUser = ret;
     global.login_user = ret;

@@ -71,7 +71,8 @@ export default class MallInfoPage extends Component {
                         showSpecInfo={this.showSpecInfo}
                     />
                     <ShipAddress/>
-                    <MallIntroduction/>
+                    <MallIntroduction
+                        product={product}/>
                     <View style={{height: 50}}/>
                 </ScrollView>
 
