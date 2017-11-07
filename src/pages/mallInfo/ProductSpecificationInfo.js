@@ -3,10 +3,11 @@ import {View, Text, Image, StyleSheet, TouchableOpacity, ScrollView} from 'react
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import * as Animatable from 'react-native-animatable';
 import I18n from 'react-native-i18n';
+import {showToast} from '../../utils/ComonHelper';
 
 export default class ProductSpecificationInfo extends PureComponent {
     state = {
-        text: "1",
+        number: 1,
         optionTypes: []
     };
 
@@ -33,7 +34,7 @@ export default class ProductSpecificationInfo extends PureComponent {
                     key={`tab${index}`}
                     style={[styleP.tabSearch, {
                         backgroundColor: x.hasOwnProperty('select') && x.select.id === item.id ?
-                            Colors._DF1 : '#F6F5F5'
+                            '#F34A4A' : '#F6F5F5'
                     }]}>
                     <Text
                         style={[styleP.txtTab, {
@@ -47,22 +48,27 @@ export default class ProductSpecificationInfo extends PureComponent {
 
 
     buyQuantity = () => {
+
+        const {stock} = this.props.product.master;
+
         const styleCutDisable = {
             backgroundColor: '#FBFAFA'
         };
         const styleCut = {
             backgroundColor: '#F6F5F5'
         };
+        let {number} = this.state;
+
+
         return (
+
             <View style={{marginRight: 29, flexDirection: 'row', alignItems: 'center', marginTop: 14}}>
                 <TouchableOpacity
-                    style={[styleP.buyTouch, Number(this.state.text) === "1" ? styleCutDisable : styleCut]}
+                    style={[styleP.buyTouch, number === 1 ? styleCutDisable : styleCut]}
                     onPress={() => {
-                        let number = Number(this.state.text)
-                        if (number >= 1) {
-                            this.setState({
-                                text: number - 1
-                            })
+                        if (number > 1) {
+
+                            this.setState({number: --number})
                         }
 
                     }}>
@@ -70,16 +76,21 @@ export default class ProductSpecificationInfo extends PureComponent {
                 </TouchableOpacity>
 
                 <View style={styleP.buyInput}>
-                    <Text>1</Text>
+                    <Text>{number}</Text>
                 </View>
 
                 <TouchableOpacity
                     style={styleP.buyTouch}
                     onPress={() => {
-                        let number = Number(this.state.text);
-                        this.setState({
-                            text: number + 1
-                        })
+
+                        if (number < stock) {
+                            this.setState({
+                                number: ++number
+                            })
+                        } else {
+                            showToast(I18n.t('max_stock'))
+                        }
+
                     }}>
                     <Image style={styleP.buyImgAdd} source={Images.add}/>
                 </TouchableOpacity>
@@ -89,7 +100,7 @@ export default class ProductSpecificationInfo extends PureComponent {
 
     optionTypesView = (option_types) => {
         let that = this;
-        console.log(option_types);
+
         return <ScrollView>
             {option_types.map((x, index, array) => {
 
