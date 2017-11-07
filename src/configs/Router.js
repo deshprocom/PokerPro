@@ -524,9 +524,8 @@ export default class Router {
         })
     }
 
-    toImageGalleryPage(props, images, index) {
-        this.push(props, {
-
+    toImageGalleryPage(images, index) {
+        this.stackPush({
             name: 'ImageGallery',
             params: {
                 images: images,
@@ -643,7 +642,7 @@ export default class Router {
     toMallInfoPage(product) {
         this.stackPush({
             name: 'MallInfoPage',
-            params:product
+            params: product
         })
     }
 

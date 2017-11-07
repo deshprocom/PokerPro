@@ -12,28 +12,33 @@ export default class MallInfoPageTopBar extends Component {
 
     }
 
-    _clickBanner = () => {
-        return ""
-    }
+    _clickBanner = (index) => {
+        const {images} = this.props.product;
+        let urls = images.map(item => {
+            return {url: item.large}
+        });
+        console.log(urls);
+        router.toImageGalleryPage(urls, index)
+    };
 
 
     _carouselView = () => {
         if (isEmptyObject(this.props.product))
             return;
-        const {icon} = this.props.product;
-        let banners = [icon];
+        const {images} = this.props.product;
+
 
         return <View style={styleM.mallInfoBgImg}>
             <Swiper
                 autoplayTimeout={3}
                 autoplay>
-                {banners.map((item, key) => {
+                {images.map((item, index) => {
                     return <TouchableOpacity
-                        key={key}
-                        onPress={() => this._clickBanner}
+                        key={`banner${index}`}
+                        onPress={() => this._clickBanner(index)}
                         activeOpacity={1}>
                         <Image style={{height: 362, width: '100%'}}
-                               source={{uri: item}}/>
+                               source={{uri: item.preview}}/>
                     </TouchableOpacity>
 
                 })}

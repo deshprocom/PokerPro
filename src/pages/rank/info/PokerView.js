@@ -80,7 +80,7 @@ export default class PokerView extends Component {
                 onPress={() => {
                     if (strNotNull(avatar)) {
                         let images = [{url: avatar}];
-                        router.toImageGalleryPage(this.props, images, 0);
+                        router.toImageGalleryPage(images, 0);
                     }
 
                 }}>

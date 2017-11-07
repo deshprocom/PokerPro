@@ -3,44 +3,80 @@ import {View, Text, Image, StyleSheet, TouchableOpacity, ScrollView} from 'react
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import * as Animatable from 'react-native-animatable';
 import I18n from 'react-native-i18n';
+import {showToast} from '../../utils/ComonHelper';
+import _ from 'lodash'
 
 export default class ProductSpecificationInfo extends PureComponent {
     state = {
-        text: "1"
+        number: 1,
+        optionTypes: [],
+        tempImg: '',
+        tempPrice: '',
+        tempStock: 0
     };
 
     componentDidMount() {
-        console.log(Number(this.state.text))
+
+        const {icon, master, option_types} = this.props.product;
+        const {price, stock} = master;
+        this.setState({
+            optionTypes: option_types,
+            tempImg: icon,
+            tempPrice: price,
+            tempStock: stock
+        })
     }
 
-    tabBlank = (tabs) => {
+    tabBlank = (x, array) => {
 
+        const {option_values} = x;
+        let that = this;
         return <View style={{flexDirection: 'row', flexWrap: 'wrap', marginLeft: 17, marginTop: 16}}>
-            {tabs.map(function (item, index) {
-                return <TouchableOpacity key={`tab${index}`} style={styleP.tabSearch}>
-                    <Text style={styleP.txtTab}>{item.name}</Text>
+            {option_values.map(function (item, index) {
+
+                return <TouchableOpacity
+                    onPress={() => {
+                        x.select = item;
+                        let newOptions = Array.from(array);
+
+                        that.tempValue(newOptions);
+                    }}
+                    key={`tab${index}`}
+                    style={[styleP.tabSearch, {
+                        backgroundColor: x.hasOwnProperty('select') && x.select.id === item.id ?
+                            '#F34A4A' : '#F6F5F5'
+                    }]}>
+                    <Text
+                        style={[styleP.txtTab, {
+                            color: x.hasOwnProperty('select') && x.select.id === item.id ?
+                                Colors.white : Colors.txt_444
+                        }]}>{item.name}</Text>
                 </TouchableOpacity>
             })}
         </View>
     };
 
+
     buyQuantity = () => {
+
         const styleCutDisable = {
             backgroundColor: '#FBFAFA'
         };
         const styleCut = {
             backgroundColor: '#F6F5F5'
         };
+        let {number, tempStock} = this.state;
+
+
         return (
+
             <View style={{marginRight: 29, flexDirection: 'row', alignItems: 'center', marginTop: 14}}>
                 <TouchableOpacity
-                    style={[styleP.buyTouch, Number(this.state.text) === "1" ? styleCutDisable : styleCut]}
+                    style={[styleP.buyTouch, number === 1 ? styleCutDisable : styleCut]}
                     onPress={() => {
-                        let number = Number(this.state.text)
-                        if (number >= 1) {
-                            this.setState({
-                                text: number - 1
-                            })
+                        if (number > 1) {
+
+                            this.setState({number: --number})
                         }
 
                     }}>
@@ -48,16 +84,21 @@ export default class ProductSpecificationInfo extends PureComponent {
                 </TouchableOpacity>
 
                 <View style={styleP.buyInput}>
-                    <Text>1</Text>
+                    <Text>{number}</Text>
                 </View>
 
                 <TouchableOpacity
                     style={styleP.buyTouch}
                     onPress={() => {
-                        let number = Number(this.state.text);
-                        this.setState({
-                            text: number + 1
-                        })
+
+                        if (number < tempStock) {
+                            this.setState({
+                                number: ++number
+                            })
+                        } else {
+                            showToast(I18n.t('max_stock'))
+                        }
+
                     }}>
                     <Image style={styleP.buyImgAdd} source={Images.add}/>
                 </TouchableOpacity>
@@ -67,13 +108,15 @@ export default class ProductSpecificationInfo extends PureComponent {
 
     optionTypesView = (option_types) => {
         let that = this;
+
         return <ScrollView>
-            {option_types.map((x, index) => {
+            {option_types.map((x, index, array) => {
+
                 return <View
                     key={`option_types${x.id}`}
                     style={styleP.size}>
                     <Text style={[styleP.sizeTxt1, {marginTop: 11}]}>{x.name}</Text>
-                    {that.tabBlank(x.option_values)}
+                    {that.tabBlank(x, array)}
                 </View>
             })}
 
@@ -89,10 +132,45 @@ export default class ProductSpecificationInfo extends PureComponent {
     };
 
 
+    tempValue = (optionTypes) => {
+
+        const {icon, master, variants} = this.props.product;
+        let obj = {};
+        optionTypes.forEach(item => {
+            if (item.hasOwnProperty('select')) {
+                if (!obj[`${item.id}`]) {
+                    obj[`${item.id}`] = item.select.id
+                }
+            }
+        });
+        console.log('selectOption', obj)
+
+        let tempArr = variants.filter(item => {
+            return _.isEqual(obj, item.sku_option_values)
+
+        });
+
+        console.log('arr', tempArr);
+
+        if (tempArr.length > 0) {
+            const {image, price, stock} = tempArr[0];
+            this.setState({
+                tempStock: stock,
+                tempImg: image,
+                tempPrice: price,
+                optionTypes: optionTypes
+            })
+        } else
+            this.setState({optionTypes})
+
+
+    };
+
     render() {
 
-        const {icon, master, option_types} = this.props.product;
-        const {price, stock} = master;
+        const {optionTypes, tempImg, tempPrice, tempStock} = this.state;
+
+
         return (
             <Animatable.View
                 duration={300}
@@ -101,13 +179,13 @@ export default class ProductSpecificationInfo extends PureComponent {
                 <View style={styleP.specificationInfo}>
 
                     <View style={styleP.specificationInfoTop}>
-                        <Image style={styleP.specificationInfoTopImg} source={Images.home_bg}/>
+                        <Image style={styleP.specificationInfoTopImg} source={{uri: tempImg}}/>
                         <View style={styleP.specificationInfoTopM}>
                             <Text style={styleP.specificationInfoTopP}>
-                                {price}
+                                {tempPrice}
                             </Text>
                             <Text style={styleP.specificationInfoTopS}>
-                                {I18n.t('stock') + stock + I18n.t('pieces')}
+                                {I18n.t('stock') + tempStock + I18n.t('pieces')}
                             </Text>
                         </View>
                     </View>
@@ -120,7 +198,7 @@ export default class ProductSpecificationInfo extends PureComponent {
                     </TouchableOpacity>
 
 
-                    {this.optionTypesView(option_types)}
+                    {this.optionTypesView(optionTypes)}
 
                 </View>
 
@@ -160,7 +238,8 @@ const styleP = StyleSheet.create({
         height: 120,
         marginLeft: 17,
         position: 'absolute',
-        top: -49
+        top: -49,
+        backgroundColor: Colors._ECE
     },
     specificationInfoTopM: {
         flexDirection: 'column',
