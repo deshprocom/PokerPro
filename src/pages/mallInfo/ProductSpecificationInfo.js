@@ -6,23 +6,45 @@ import I18n from 'react-native-i18n';
 
 export default class ProductSpecificationInfo extends PureComponent {
     state = {
-        text: "1"
+        text: "1",
+        optionTypes: []
     };
 
     componentDidMount() {
-        console.log(Number(this.state.text))
+        const {option_types} = this.props.product;
+        this.setState({optionTypes: option_types})
     }
 
-    tabBlank = (tabs) => {
+    tabBlank = (x, array) => {
 
+        const {option_values} = x;
+        let that = this;
         return <View style={{flexDirection: 'row', flexWrap: 'wrap', marginLeft: 17, marginTop: 16}}>
-            {tabs.map(function (item, index) {
-                return <TouchableOpacity key={`tab${index}`} style={styleP.tabSearch}>
-                    <Text style={styleP.txtTab}>{item.name}</Text>
+            {option_values.map(function (item, index) {
+
+                return <TouchableOpacity
+                    onPress={() => {
+                        x.select = item;
+                        let newOptions = Array.from(array);
+                        that.setState({
+                            optionTypes: newOptions
+                        })
+                    }}
+                    key={`tab${index}`}
+                    style={[styleP.tabSearch, {
+                        backgroundColor: x.hasOwnProperty('select') && x.select.id === item.id ?
+                            Colors._DF1 : '#F6F5F5'
+                    }]}>
+                    <Text
+                        style={[styleP.txtTab, {
+                            color: x.hasOwnProperty('select') && x.select.id === item.id ?
+                                Colors.white : Colors.txt_444
+                        }]}>{item.name}</Text>
                 </TouchableOpacity>
             })}
         </View>
     };
+
 
     buyQuantity = () => {
         const styleCutDisable = {
@@ -67,13 +89,15 @@ export default class ProductSpecificationInfo extends PureComponent {
 
     optionTypesView = (option_types) => {
         let that = this;
+        console.log(option_types);
         return <ScrollView>
-            {option_types.map((x, index) => {
+            {option_types.map((x, index, array) => {
+
                 return <View
                     key={`option_types${x.id}`}
                     style={styleP.size}>
                     <Text style={[styleP.sizeTxt1, {marginTop: 11}]}>{x.name}</Text>
-                    {that.tabBlank(x.option_values)}
+                    {that.tabBlank(x, array)}
                 </View>
             })}
 
@@ -93,6 +117,8 @@ export default class ProductSpecificationInfo extends PureComponent {
 
         const {icon, master, option_types} = this.props.product;
         const {price, stock} = master;
+        const {optionTypes} = this.state;
+
         return (
             <Animatable.View
                 duration={300}
@@ -101,7 +127,7 @@ export default class ProductSpecificationInfo extends PureComponent {
                 <View style={styleP.specificationInfo}>
 
                     <View style={styleP.specificationInfoTop}>
-                        <Image style={styleP.specificationInfoTopImg} source={Images.home_bg}/>
+                        <Image style={styleP.specificationInfoTopImg} source={{uri: icon}}/>
                         <View style={styleP.specificationInfoTopM}>
                             <Text style={styleP.specificationInfoTopP}>
                                 {price}
@@ -120,7 +146,7 @@ export default class ProductSpecificationInfo extends PureComponent {
                     </TouchableOpacity>
 
 
-                    {this.optionTypesView(option_types)}
+                    {this.optionTypesView(optionTypes)}
 
                 </View>
 
@@ -160,7 +186,8 @@ const styleP = StyleSheet.create({
         height: 120,
         marginLeft: 17,
         position: 'absolute',
-        top: -49
+        top: -49,
+        backgroundColor: Colors._ECE
     },
     specificationInfoTopM: {
         flexDirection: 'column',
