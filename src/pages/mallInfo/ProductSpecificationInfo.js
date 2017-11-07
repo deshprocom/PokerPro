@@ -4,16 +4,27 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import * as Animatable from 'react-native-animatable';
 import I18n from 'react-native-i18n';
 import {showToast} from '../../utils/ComonHelper';
+import _ from 'lodash'
 
 export default class ProductSpecificationInfo extends PureComponent {
     state = {
         number: 1,
-        optionTypes: []
+        optionTypes: [],
+        tempImg: '',
+        tempPrice: '',
+        tempStock: 0
     };
 
     componentDidMount() {
-        const {option_types} = this.props.product;
-        this.setState({optionTypes: option_types})
+
+        const {icon, master, option_types} = this.props.product;
+        const {price, stock} = master;
+        this.setState({
+            optionTypes: option_types,
+            tempImg: icon,
+            tempPrice: price,
+            tempStock: stock
+        })
     }
 
     tabBlank = (x, array) => {
@@ -27,9 +38,8 @@ export default class ProductSpecificationInfo extends PureComponent {
                     onPress={() => {
                         x.select = item;
                         let newOptions = Array.from(array);
-                        that.setState({
-                            optionTypes: newOptions
-                        })
+
+                        that.tempValue(newOptions);
                     }}
                     key={`tab${index}`}
                     style={[styleP.tabSearch, {
@@ -49,15 +59,13 @@ export default class ProductSpecificationInfo extends PureComponent {
 
     buyQuantity = () => {
 
-        const {stock} = this.props.product.master;
-
         const styleCutDisable = {
             backgroundColor: '#FBFAFA'
         };
         const styleCut = {
             backgroundColor: '#F6F5F5'
         };
-        let {number} = this.state;
+        let {number, tempStock} = this.state;
 
 
         return (
@@ -83,7 +91,7 @@ export default class ProductSpecificationInfo extends PureComponent {
                     style={styleP.buyTouch}
                     onPress={() => {
 
-                        if (number < stock) {
+                        if (number < tempStock) {
                             this.setState({
                                 number: ++number
                             })
@@ -124,11 +132,44 @@ export default class ProductSpecificationInfo extends PureComponent {
     };
 
 
+    tempValue = (optionTypes) => {
+
+        const {icon, master, variants} = this.props.product;
+        let obj = {};
+        optionTypes.forEach(item => {
+            if (item.hasOwnProperty('select')) {
+                if (!obj[`${item.id}`]) {
+                    obj[`${item.id}`] = item.select.id
+                }
+            }
+        });
+        console.log('selectOption', obj)
+
+        let tempArr = variants.filter(item => {
+            return _.isEqual(obj, item.sku_option_values)
+
+        });
+
+        console.log('arr', tempArr);
+
+        if (tempArr.length > 0) {
+            const {image, price, stock} = tempArr[0];
+            this.setState({
+                tempStock: stock,
+                tempImg: image,
+                tempPrice: price,
+                optionTypes: optionTypes
+            })
+        } else
+            this.setState({optionTypes})
+
+
+    };
+
     render() {
 
-        const {icon, master, option_types} = this.props.product;
-        const {price, stock} = master;
-        const {optionTypes} = this.state;
+        const {optionTypes, tempImg, tempPrice, tempStock} = this.state;
+
 
         return (
             <Animatable.View
@@ -138,13 +179,13 @@ export default class ProductSpecificationInfo extends PureComponent {
                 <View style={styleP.specificationInfo}>
 
                     <View style={styleP.specificationInfoTop}>
-                        <Image style={styleP.specificationInfoTopImg} source={{uri: icon}}/>
+                        <Image style={styleP.specificationInfoTopImg} source={{uri: tempImg}}/>
                         <View style={styleP.specificationInfoTopM}>
                             <Text style={styleP.specificationInfoTopP}>
-                                {price}
+                                {tempPrice}
                             </Text>
                             <Text style={styleP.specificationInfoTopS}>
-                                {I18n.t('stock') + stock + I18n.t('pieces')}
+                                {I18n.t('stock') + tempStock + I18n.t('pieces')}
                             </Text>
                         </View>
                     </View>
