@@ -71,7 +71,7 @@ class PokerPersonPage extends Component {
         const {player} = this.props;
         if (!isEmptyObject(player) && strNotNull(player.avatar)) {
             let avatar = [{url: player.avatar}];
-            router.toImageGalleryPage(this.props, avatar, 0);
+            router.toImageGalleryPage( avatar, 0);
         }
     }
 
