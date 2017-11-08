@@ -2,6 +2,7 @@ import React, {PureComponent, PropTypes} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import Swipeout from 'react-native-swipeout';
+import I18n from 'react-native-i18n';
 
 const data = [{id: 1}, {id: 2}, {id: 3}, {id: 4}];
 
@@ -40,14 +41,17 @@ export default class ShoppingCart extends PureComponent {
                         }}>
                     <Image style={styleS.radioImg} source={this.state.selectAll ? Images.radioSelected : Images.radio}/>
                 </TouchableOpacity>
-                <Text style={styleS.selectedAll}>全选</Text>
+                <Text style={styleS.selectedAll}>{I18n.t('selectAll')}</Text>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Text style={styleS.total}>合计：</Text>
+                    <Text style={styleS.total}>{I18n.t('ticket_price')}</Text>
                     <Text style={styleS.selectedPrice}>¥23,300.8</Text>
                 </View>
                 <View style={{flex: 1}}/>
-                <TouchableOpacity style={styleS.settlementView}>
-                    <Text style={styleS.settlement}>去结算</Text>
+                <TouchableOpacity style={styleS.settlementView}
+                onPress={()=>{
+                    router.toOrderConfirm();
+                }}>
+                    <Text style={styleS.settlement}>{I18n.t('settlement')}</Text>
                     <Text style={styleS.settlementQuantity}>(3)</Text>
                 </TouchableOpacity>
             </View>
@@ -75,14 +79,14 @@ export default class ShoppingCart extends PureComponent {
                         }}>
                     <Image style={styleS.radioImg} source={this.state.selectAll ? Images.radioSelected : Images.radio}/>
                 </TouchableOpacity>
-                <Text style={styleS.selectedAll}>全选</Text>
+                <Text style={styleS.selectedAll}>{I18n.t('selectAll')}</Text>
                 <View style={{flex: 1}}/>
                 <TouchableOpacity
                     style={styleS.settlementView2}
                     onPress={()=>{
                         this._deleteItem()
                     }}>
-                    <Text style={styleS.settlement2}>删除</Text>
+                    <Text style={styleS.settlement2}>{I18n.t('buy_del')}</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -98,7 +102,7 @@ export default class ShoppingCart extends PureComponent {
                        source={Images.mall_return}/>
             </TouchableOpacity>
             <View style={{flex: 1}}/>
-            <Text style={styleS.cart}>{this.state.showCart ? '购物车' : ""}</Text>
+            <Text style={styleS.cart}>{this.state.showCart ? I18n.t('cart') : ""}</Text>
             <View style={{flex: 1}}/>
             <TouchableOpacity
                 testID="btn_bar_right"
@@ -110,7 +114,7 @@ export default class ShoppingCart extends PureComponent {
                         showBottom: !this.state.showBottom,
                     }),this.refreshAll()
                 }}>
-                <Text style={styleS.rightTxt}>{this.state.showEdit ? '编辑' : '完成'}</Text>
+                <Text style={styleS.rightTxt}>{this.state.showEdit ? I18n.t('buy_editor') : I18n.t('complete') }</Text>
             </TouchableOpacity>
 
 

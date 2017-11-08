@@ -420,5 +420,8 @@
   "leaveMessage":"选填：给商家留言（45字以内）",
   "cost":"运费",
   "payment":"实付款：",
-  "orderSubmit":"提交订单"
+  "orderSubmit":"提交订单",
+  "settlement":"去结算",
+  "selectAll" :"全选",
+  "cart":"购物车"
 }

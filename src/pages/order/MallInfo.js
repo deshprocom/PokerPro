@@ -128,7 +128,7 @@ const styleM = StyleSheet.create({
     originPrice:{
         fontSize: 12,
         color: '#AAAAAA',
-        textDecoration:'line',
+        textDecorationLine:'line-through',
         textDecorationColor:'#979797',
     },
     quantitys:{
