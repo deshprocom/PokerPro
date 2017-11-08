@@ -70,7 +70,8 @@ import ShoppingCart from "../pages/shoppingCart/ShoppingCart";
 import EmptyCart from "../pages/shoppingCart/EmptyCart";
 import EditCartPage from "../pages/shoppingCart/EditCartPage";
 import MallSearchResult from "../pages/malls/MallSearchResult";
-import ConfirmOrder from '../pages/malls/carts/ConfirmOrder'
+import ConfirmOrder from '../pages/malls/carts/ConfirmOrder';
+import OrderConfirm from '../pages/malls/carts/OrderConfirm';
 
 
 export const Stacks = Actions.create(
@@ -143,6 +144,7 @@ export const Stacks = Actions.create(
         <Scene key="EmptyCart" component={EmptyCart} hideNavBar/>
         <Scene key="EditCartPage" component={EditCartPage} hideNavBar/>
         <Scene key="MallSearchResult" component={MallSearchResult} hideNavBar/>
+        <Scene key="OrderConfirm" component={OrderConfirm} hideNavBar/>
 
         <Scene type={ActionConst.RESET}
                initial={true}

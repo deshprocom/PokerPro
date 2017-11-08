@@ -404,6 +404,18 @@
   "mall_resent": "最近搜索",
   "pieces": "件",
   "staring_chips": "Staring Chips",
-  "load_err": "Loading Error"
+  "load_err": "Loading Error",
+  "tips":"温馨提示：订单中含有不支持7天无理由退换的商品，请确认相关商品信息后提交订单",
+  "mallInfo" :"商品信息",
+  "total":"共计",
+  "weight":"重量",
+  "colour":"颜色",
+  "quantity":"数量",
+  "returned":"七天退换",
+  "expandMore":"展开查看更多",
+  "leaveMessage":"选填：给商家留言（45字以内）",
+  "cost":"运费",
+  "payment":"实付款：",
+  "orderSubmit":"提交订单"
 }
 

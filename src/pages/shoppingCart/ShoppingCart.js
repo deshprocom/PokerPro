@@ -193,7 +193,7 @@ export default class ShoppingCart extends PureComponent {
                     <Image style={styleS.mallImg} source={Images.empty_image}/>
                     <View style={styleS.TxtView}>
                         <Text numberOfLines={2} style={styleS.mallTextName}>筹码14克皇冠粘土百家乐德州扑克筹码币</Text>
-                        <Text style={styleS.mallAttributes}>重量：1.62KG 颜色：黑 数量：500</Text>
+                        <Text style={styleS.mallAttributes}>{I18n.t('weight')}：1.62KG {I18n.t('weight')}：黑 {I18n.t('quantity')}：500</Text>
                         <View style={styleS.PriceView}>
                             <Text style={styleS.Price}>¥555555.55</Text>
                             {this.buyQuantity(item)}
