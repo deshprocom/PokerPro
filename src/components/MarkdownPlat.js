@@ -4,7 +4,7 @@
 import React, {Component} from 'react';
 import {
     TouchableOpacity, View, ScrollView,
-    StyleSheet, Text, Platform, Alert, Image
+    StyleSheet, Text, Platform, Alert,
 } from 'react-native';
 import {strNotNull, FontSize, showToast} from '../utils/ComonHelper';
 
@@ -20,7 +20,7 @@ const imageClick = (source) => {
 
         let images = [{url: source}];
 
-        router.toImageGalleryPage( images, index)
+        router.toImageGalleryPage(images, index)
     }
 
 };
@@ -28,10 +28,11 @@ const imageClick = (source) => {
 
 const rules = {
     a: (node, children, parent, styles) => {
+        let content = children[0].props.children;
         return (
             <Text key={node.key} style={styleMark.a}
                   onPress={() => router.toWebViewPage(parent, node.attributes.href)}>
-                {children}
+                {content}
             </Text>
         );
     },
