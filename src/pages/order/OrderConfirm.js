@@ -30,7 +30,7 @@ export default class OrderConfirm extends PureComponent {
 
     render(){
         return(
-            <View style={styleO.orderView}>
+            <ScrollView style={styleO.orderView}>
                 {this.topBar()}
                 <Tips/>
                 <ShipAddress/>
@@ -38,7 +38,7 @@ export default class OrderConfirm extends PureComponent {
                 <LeaveMessage/>
                 <OrderDetails/>
                 <OderBottom/>
-            </View>
+            </ScrollView>
         );
     }
 }

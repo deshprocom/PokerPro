@@ -32,7 +32,7 @@ const styleT = StyleSheet.create({
         height:46,
         backgroundColor:'#F34A4A',
         opacity:0.6,
-        flexDirection:'column',
+        flexDirection:'row',
         alignItems:'center'
     },
     tipsTxt:{

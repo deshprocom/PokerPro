@@ -16,7 +16,7 @@ export default class OderBottom extends PureComponent {
 
                     }}
                     style={styleO.orderSubmit}>
-                    <Text style={styleO.orderSubmitTxt}>{I18.t('orderSubmit')}</Text>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('orderSubmit')}</Text>
                 </TouchableOpacity>
             </View>
         )}

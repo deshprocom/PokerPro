@@ -21,7 +21,7 @@ export default class ShipAddress extends PureComponent {
                             <Text style={styleS.shipAddrTxt1}>www</Text>
                             <Text style={styleS.mobile}>1478569332485</Text>
                         </View>
-                        <Text style={styleS.shipAddrTxt2}>{`${address} ${address_detail}`}</Text>
+                        <Text style={styleS.shipAddrTxt2}>热热我认为让双方是否感受过对方</Text>
                     </View>
                     <View style={{flex: 1}}/>
                     <TouchableOpacity style={styleS.shipAddrTouch}>

@@ -35,6 +35,7 @@ export default class MallInfo extends PureComponent {
                     </View>
                 </View>
             </View>
+
         )
     };
 
