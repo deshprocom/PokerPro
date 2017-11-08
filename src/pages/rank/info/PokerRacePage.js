@@ -39,15 +39,16 @@ export default class PokerRacePage extends Component {
     }
 
     render() {
-        const {race, ranks,parent_race} = this.state;
+        const {race, ranks, parent_race} = this.state;
         return (<View style={ApplicationStyles.bgContainer}>
             {this._topView(race)}
             <ScrollView>
                 <RaceView
                     parent_race={parent_race}
                     race={race}/>
-                <RankListView
-                    ranks={ranks}/>
+                {ranks.length > 0 ? <RankListView
+                    ranks={ranks}/> : null}
+
             </ScrollView>
 
         </View>)
@@ -89,7 +90,7 @@ export default class PokerRacePage extends Component {
                     style={styles.topBtn}
                     activeOpacity={1}
                     onPress={() => {
-                        rankGameShare(race.name, race.begin_date+'\n'+race.location, race.logo, race.race_id)
+                        rankGameShare(race.name, race.begin_date + '\n' + race.location, race.logo, race.race_id)
                     }}>
                     <Image
                         source={Images.share}

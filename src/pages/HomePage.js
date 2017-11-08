@@ -406,7 +406,7 @@ class HomePage extends Component {
 
             if (strNotNull(profile.avatar)) {
                 avatar = [{url: profile.avatar}];
-                router.toImageGalleryPage(this.props, avatar, 0);
+                router.toImageGalleryPage( avatar, 0);
             }
 
 

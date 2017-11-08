@@ -1,44 +1,30 @@
-import React, {PureComponent, PropTypes} from 'react';
-import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView} from 'react-native';
+import React, {Component, PropTypes} from 'react';
+import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
+import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
 import Swipeout from 'react-native-swipeout';
 
-const data = [{id: 1}, {id: 2}, {id: 3}, {id: 4}];
 
-export default class ShoppingCart extends PureComponent {
+export default class ShoppingCart extends Component {
     state = {
-        showCart: true,
-        showEdit: true,
-        showBottom: true,
         selected: false,
         text: "1",
         selectAll: false,
-        dataHosts: [],
-        selectArray: []
-    };
-
-    componentDidMount() {
-
-        data.map(function (x) {
-            x.isSelect = false
-        });
-        this.setState({
-            dataHosts: data
-        })
+        dataHosts: [1, 2, 3, 4, 5, 6],
     }
-
+    static propTypes = {
+        pressItem: PropTypes.func,
+        pressAll: PropTypes.func,
+        selectAll: PropTypes.bool
+    };
 
     toBottom = () => {
         return (
             <View style={styleS.bottomView}>
                 <TouchableOpacity
 
-                    onPress={()=>{
-                            this.setState({
-                                selectAll:!this.state.selectAll
-                            }),this._pressAll()
-                        }}>
-                    <Image style={styleS.radioImg} source={this.state.selectAll ? Images.radioSelected : Images.radio}/>
+                    onPress={this._pressAll}>
+                    <Image style={styleS.radioImg} source={this.props.selectAll ? Images.radioSelected : Images.radio}/>
                 </TouchableOpacity>
                 <Text style={styleS.selectedAll}>全选</Text>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -46,47 +32,17 @@ export default class ShoppingCart extends PureComponent {
                     <Text style={styleS.selectedPrice}>¥23,300.8</Text>
                 </View>
                 <View style={{flex: 1}}/>
-                <TouchableOpacity style={styleS.settlementView}>
+                <TouchableOpacity
+                    onPress={() => {
+                        router.toConfirmOrder()
+                    }}
+                    style={styleS.settlementView}>
                     <Text style={styleS.settlement}>去结算</Text>
                     <Text style={styleS.settlementQuantity}>(3)</Text>
                 </TouchableOpacity>
             </View>
         )
-    };
-
-    _isSelect = (x) => {
-        return (x.isSelect === false);
-    };
-    _deleteItem = () => {
-        const {dataHosts} = this.state;
-        let newSelects = [...dataHosts];
-        newSelects = newSelects.filter(this._isSelect);
-        this.setState({dataHosts:newSelects});
-    };
-    toBottom2 = () => {
-        return (
-            <View style={styleS.bottomView}>
-                <TouchableOpacity
-
-                    onPress={()=>{
-                            this.setState({
-                                selectAll:!this.state.selectAll
-                            }),this._pressAll()
-                        }}>
-                    <Image style={styleS.radioImg} source={this.state.selectAll ? Images.radioSelected : Images.radio}/>
-                </TouchableOpacity>
-                <Text style={styleS.selectedAll}>全选</Text>
-                <View style={{flex: 1}}/>
-                <TouchableOpacity
-                    style={styleS.settlementView2}
-                    onPress={()=>{
-                        this._deleteItem()
-                    }}>
-                    <Text style={styleS.settlement2}>删除</Text>
-                </TouchableOpacity>
-            </View>
-        )
-    };
+    }
 
     topBar = () => {
         return (<View style={styleS.topBar}>
@@ -98,19 +54,15 @@ export default class ShoppingCart extends PureComponent {
                        source={Images.mall_return}/>
             </TouchableOpacity>
             <View style={{flex: 1}}/>
-            <Text style={styleS.cart}>{this.state.showCart ? '购物车' : ""}</Text>
+            <Text style={styleS.cart}>购物车</Text>
             <View style={{flex: 1}}/>
             <TouchableOpacity
                 testID="btn_bar_right"
                 style={styleS.popBtn}
                 onPress={() => {
-                    this.setState({
-                        showEdit: !this.state.showEdit,
-                        showCart: !this.state.showCart,
-                        showBottom: !this.state.showBottom,
-                    }),this.refreshAll()
+                    router.toEditCart()
                 }}>
-                <Text style={styleS.rightTxt}>{this.state.showEdit ? '编辑' : '完成'}</Text>
+                <Text style={styleS.rightTxt}>编辑</Text>
             </TouchableOpacity>
 
 
@@ -122,60 +74,37 @@ export default class ShoppingCart extends PureComponent {
         )
     };
     _pressAll = () => {
-        const {dataHosts} = this.state;
-        let newSelects = [...dataHosts];
-        if (this.state.selectAll === false) {
-            newSelects.map(function (x) {
-                x.isSelect = true
+        const {selectAll} = this.state;
+        this.setState((state) => {
+            const newData = [...state.dataHosts];
+            newData.map(function (element) {
+                element.select = !selectAll;
+                return element;
             });
-        } else {
-            newSelects.map(function (x) {
-                x.isSelect = false
-            });
-        }
 
-
-        this.setState({newSelects})
-    };
-    refreshAll = () => {
-        const {dataHosts} = this.state;
-        let newSelects = [...dataHosts];
-        newSelects.map(function (x) {
-            x.isSelect = false
-        });
-        this.setState({newSelects})
-    };
+            return {
+                dataHosts: newData,
+                selectAll: !selectAll
+            }
+        })
+    }
 
     _pressItem = (item) => {
 
-        const {dataHosts} = this.state;
-        let newSelects = [...dataHosts];
-        newSelects.map(function (x) {
-            if (x.id === item.id) {
-                item.isSelect = !item.isSelect;
-            }
-        });
+        this.setState((state) => {
+            const newData = [...state.dataHosts];
+            newData.map(function (element) {
+                if (item.id === element.id) {
+                    element.select = !item.select;
+                }
+                return element;
+            });
 
-        this.setState({newSelects})
+            return {dataHosts: newData}
+        })
     };
+    _renderItem = (item, index) => {
 
-    renderShowEditView(item, onPress) {
-        let imageURL = Images.radio;
-        if (item.isSelect === true) {
-            imageURL = Images.radioSelected
-        }
-        return (
-            <TouchableOpacity
-                onPress={() => {
-                    onPress(item, item.index)
-                }}>
-                <Image style={styleS.radioImg}
-                       source={imageURL}/>
-            </TouchableOpacity>
-        )
-    };
-
-    _renderItem = ({item}) => {
         let swipeoutBtns = [
             {
                 text: 'Delete',
@@ -186,10 +115,13 @@ export default class ShoppingCart extends PureComponent {
         return (
             <Swipeout right={swipeoutBtns}>
                 <View style={styleS.renderItem}>
-                    {this.renderShowEditView(item, () => {
-                        this._pressItem(item)
-                    })}
-
+                    <TouchableOpacity
+                        onPress={() => {
+                            this._pressItem(item)
+                        }}>
+                        <Image style={styleS.radioImg}
+                               source={item.select ? Images.radioSelected : Images.radio}/>
+                    </TouchableOpacity>
                     <Image style={styleS.mallImg} source={Images.empty_image}/>
                     <View style={styleS.TxtView}>
                         <Text numberOfLines={2} style={styleS.mallTextName}>筹码14克皇冠粘土百家乐德州扑克筹码币</Text>
@@ -244,29 +176,29 @@ export default class ShoppingCart extends PureComponent {
         )
     };
 
+    onFetch = (page = 1, startFetch, abortFetch) => {
+        startFetch([1, 2, 3, 4, 5, 6], 8)
+    };
 
     _separator = () => {
         return <View style={{height: 10, marginLeft: 17, marginRight: 17, backgroundColor: '#ECECEE'}}/>;
     };
-    _keyExtractor = (item, index) => item.id;
 
     render() {
-
-        console.log(this.state.dataHosts)
         return (
             <View style={{flex: 1}}>
                 {this.topBar()}
 
-                <FlatList
+                <UltimateFlatList
                     style={{paddingTop: 6, marginBottom: 50}}
-                    data={this.state.dataHosts}
+                    onFetch={this.onFetch}
                     showsHorizontalScrollIndicator={false}
-                    ItemSeparatorComponent={this._separator}
-                    renderItem={this._renderItem}
-                    keyExtractor={this._keyExtractor}
+                    separator={this._separator}
+                    item={this._renderItem}
+                    keyExtractor={(item, index) => index}
                 />
 
-                {this.state.showBottom ? this.toBottom() : this.toBottom2()}
+                {this.toBottom()}
 
             </View>
         )
@@ -274,7 +206,6 @@ export default class ShoppingCart extends PureComponent {
 }
 
 const styleS = StyleSheet.create({
-
     topBar: {
         height: Metrics.navBarHeight,
         flexDirection: 'row',
@@ -409,19 +340,5 @@ const styleS = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%'
-    },
-    settlementView2: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: 37,
-        width: 89,
-        marginRight: 15,
-        borderWidth: 1,
-        borderColor: '#F34A4A'
-    },
-    settlement2: {
-        fontSize: 18,
-        color: '#F34A4A',
-    },
+    }
 })

@@ -69,7 +69,9 @@ export function postAdrDefault(adr_id, resolve) {
 
 export function getAddressList(resolve) {
     helper.get(Api.addAddress(), (ret) => {
-        resolve(ret.data)
+        console.log('adrList:', ret.data);
+        global.addressList = ret.data.items;
+        resolve(ret.data);
     }, err => {
         showToast(err)
     })
@@ -99,6 +101,7 @@ export function getSelectRaceTicket(body, resolve, reject) {
         resolve(ret.data)
     }, reject)
 }
+
 /*订单列表*/
 export function getOrderList(body, resolve, reject) {
     helper.get(Api.users_orderList(body), (ret) => {

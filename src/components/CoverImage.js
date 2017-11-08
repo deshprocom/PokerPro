@@ -41,22 +41,24 @@ export default class CoverImage extends React.Component {
 
     imageClick = (source) => {
         const images = [{url: source.uri}];
-            router.toImageGalleryPage(this.props, images)
+        router.toImageGalleryPage(images)
     }
 
     render() {
         return (
             <TouchableOpacity
                 activeOpacity={1}
-                style={{ width:this.state.width,
-                height:this.state.height+10,
-                marginTop:10}}
-                onPress={()=>this.imageClick(this.props.source)}>
+                style={{
+                    width: this.state.width,
+                    height: this.state.height + 10,
+                    marginTop: 10
+                }}
+                onPress={() => this.imageClick(this.props.source)}>
                 <Image style={{
-                width:this.state.width,
-                height:this.state.height,
-                backgroundColor:'#eeeeee'
-            }}
+                    width: this.state.width,
+                    height: this.state.height,
+                    backgroundColor: '#eeeeee'
+                }}
                        source={this.props.source}
                        resizeMode="cover">
 

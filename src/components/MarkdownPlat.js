@@ -20,7 +20,7 @@ const imageClick = (source) => {
 
         let images = [{url: source}];
 
-        router.toImageGalleryPage(this.props, images, index)
+        router.toImageGalleryPage( images, index)
     }
 
 };

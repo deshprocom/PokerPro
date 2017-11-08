@@ -9,22 +9,30 @@ import ShipAddress from './ShipAddress';
 import MallIntroduction from './MallIntroduction';
 import MallInfoBottom from './MallInfoBottom';
 import ProductSpecificationInfo from './ProductSpecificationInfo';
+import {getProductDetail} from '../../services/MallDao';
 
 export default class MallInfoPage extends Component {
     state = {
-        banners: [],
         specShow: false,
-        opacity: 0
+        opacity: 0,
+        product: {}
     };
 
     componentDidMount() {
-        this.setState({
-            banners: [1, 2, 3, 4]
+        const {id} = this.props.params;
+        getProductDetail({id: id}, data => {
+
+            this.setState({
+                product: data.product
+            })
+        }, err => {
+
         })
+
     }
 
     topBar = () => {
-        return (<View style={[styleM.topBar,{backgroundColor:'rgba(255,255,255,' + this.state.opacity + ')'}]}>
+        return (<View style={[styleM.topBar, {backgroundColor: 'rgba(255,255,255,' + this.state.opacity + ')'}]}>
             <TouchableOpacity
                 testID="btn_bar_left"
                 style={styleM.popBtn}
@@ -48,20 +56,23 @@ export default class MallInfoPage extends Component {
 
 
     render() {
-        const {specShow} = this.state;
+        const {specShow, product} = this.state;
         return (
-            <View style={{flex: 1}}>
+            <View style={ApplicationStyles.bgContainer}>
 
                 <ScrollView
                     onScroll={this._onScroll}
-                    scrollEventThrottle={16}
-                    style={{backgroundColor: '#EEEEEE'}}>
-                    <MallInfoPageTopBar banners={this.state.banners}/>
+                    scrollEventThrottle={16}>
+
+                    <MallInfoPageTopBar
+                        product={product}/>
+
                     <ProductSpecification
                         showSpecInfo={this.showSpecInfo}
                     />
                     <ShipAddress/>
-                    <MallIntroduction/>
+                    <MallIntroduction
+                        product={product}/>
                     <View style={{height: 50}}/>
                 </ScrollView>
 
@@ -71,7 +82,9 @@ export default class MallInfoPage extends Component {
                 <MallInfoBottom
                     showSpecInfo={this.showSpecInfo}/>
 
-                {specShow ? <ProductSpecificationInfo showSpecInfo={this.showSpecInfo}/> : null}
+                {specShow ? <ProductSpecificationInfo
+                    product={product}
+                    showSpecInfo={this.showSpecInfo}/> : null}
 
 
             </View>

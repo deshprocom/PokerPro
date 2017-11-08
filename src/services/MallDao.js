@@ -1,11 +1,18 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
+//获取商品详情
+export function getProductDetail(body, resolve, reject) {
+    helper.get(Api.product_detail(body), ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
 //获取某个分类下面的商品
-export function catProducts(body, resolve, reject,params) {
+export function catProducts(body, resolve, reject, params) {
     helper.get(Api.cat_products(body), ret => {
         resolve(ret.data)
-    }, reject,params)
+    }, reject, params)
 }
 
 //获取所有商品或搜索商品
