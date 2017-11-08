@@ -53,17 +53,35 @@ export default class ShoppingCart extends PureComponent {
             </View>
         )
     };
+
+    _isSelect = (x) => {
+        return (x.isSelect === false);
+    };
+    _deleteItem = () => {
+        const {dataHosts} = this.state;
+        let newSelects = [...dataHosts];
+        newSelects = newSelects.filter(this._isSelect);
+        this.setState({dataHosts:newSelects});
+    };
     toBottom2 = () => {
         return (
             <View style={styleS.bottomView}>
                 <TouchableOpacity
 
-                    onPress={this.props.pressAll}>
-                    <Image style={styleS.radioImg} source={this.props.selectAll ? Images.radioSelected : Images.radio}/>
+                    onPress={()=>{
+                            this.setState({
+                                selectAll:!this.state.selectAll
+                            }),this._pressAll()
+                        }}>
+                    <Image style={styleS.radioImg} source={this.state.selectAll ? Images.radioSelected : Images.radio}/>
                 </TouchableOpacity>
                 <Text style={styleS.selectedAll}>全选</Text>
                 <View style={{flex: 1}}/>
-                <TouchableOpacity style={styleS.settlementView2}>
+                <TouchableOpacity
+                    style={styleS.settlementView2}
+                    onPress={()=>{
+                        this._deleteItem()
+                    }}>
                     <Text style={styleS.settlement2}>删除</Text>
                 </TouchableOpacity>
             </View>
@@ -89,8 +107,8 @@ export default class ShoppingCart extends PureComponent {
                     this.setState({
                         showEdit: !this.state.showEdit,
                         showCart: !this.state.showCart,
-                        showBottom: !this.state.showBottom
-                    })
+                        showBottom: !this.state.showBottom,
+                    }),this.refreshAll()
                 }}>
                 <Text style={styleS.rightTxt}>{this.state.showEdit ? '编辑' : '完成'}</Text>
             </TouchableOpacity>
@@ -106,19 +124,27 @@ export default class ShoppingCart extends PureComponent {
     _pressAll = () => {
         const {dataHosts} = this.state;
         let newSelects = [...dataHosts];
-        if(this.state.selectAll===false){
+        if (this.state.selectAll === false) {
             newSelects.map(function (x) {
-                x.isSelect=true
+                x.isSelect = true
             });
-        }else{
+        } else {
             newSelects.map(function (x) {
-                x.isSelect=false
+                x.isSelect = false
             });
         }
 
 
-         this.setState({newSelects})
-    }
+        this.setState({newSelects})
+    };
+    refreshAll = () => {
+        const {dataHosts} = this.state;
+        let newSelects = [...dataHosts];
+        newSelects.map(function (x) {
+            x.isSelect = false
+        });
+        this.setState({newSelects})
+    };
 
     _pressItem = (item) => {
 
@@ -226,13 +252,14 @@ export default class ShoppingCart extends PureComponent {
 
     render() {
 
+        console.log(this.state.dataHosts)
         return (
             <View style={{flex: 1}}>
                 {this.topBar()}
 
                 <FlatList
                     style={{paddingTop: 6, marginBottom: 50}}
-                    data={data}
+                    data={this.state.dataHosts}
                     showsHorizontalScrollIndicator={false}
                     ItemSeparatorComponent={this._separator}
                     renderItem={this._renderItem}
