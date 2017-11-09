@@ -79,9 +79,13 @@ export function getCarts() {
 
 /*添加商品到购物车*/
 export function pushProductToCart(product) {
-    console.log(product)
-    global.shoppingCarts.push(product);
 
+    global.shoppingCarts.push(product);
+    storage.save({
+        key: StorageKey.ShoppingCarts,
+        rawData: global.shoppingCarts
+    });
+    console.log(global.shoppingCarts)
 }
 
 /*App更新提示*/
