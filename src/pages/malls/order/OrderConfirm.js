@@ -8,31 +8,23 @@ import MallInfo from './MallInfo';
 import LeaveMessage from './LeaveMessage';
 import OrderDetails from './OrderDetails';
 import OderBottom from './OderBottom';
+import {NavigationBar} from '../../../components';
 
 export default class OrderConfirm extends PureComponent {
 
 
-    topBar = () => {
-        return (<View style={styleO.topBar}>
-            <TouchableOpacity
-                testID="btn_bar_left"
-                style={styleO.popBtn}
-                onPress={() => router.pop()}>
-                <Image style={styleO.backImg}
-                       source={Images.mall_return}/>
-            </TouchableOpacity>
-            <View style={{flex: 1}}/>
-            <Text style={styleO.cart}>{I18n.t('confirm_order')}</Text>
-            <View style={{flex: 1}}/>
-            <View style={styleO.popBtn}/>
-        </View>)
-    };
-
-    render(){
-        return(
+    render() {
+        return (
             <View>
+                <NavigationBar
+                    toolbarStyle={{backgroundColor: 'white'}}
+                    leftBtnIcon={Images.mall_return}
+                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                    leftBtnPress={() => router.pop()}
+                    titleStyle={{color: Colors._161}}
+                    title={I18n.t('confirm_order')}/>
                 <ScrollView style={styleO.orderView}>
-                    {this.topBar()}
+
                     <Tips/>
                     <ShipAddress/>
                     <MallInfo/>
@@ -47,8 +39,8 @@ export default class OrderConfirm extends PureComponent {
     }
 }
 const styleO = StyleSheet.create({
-    orderView:{
-        backgroundColor:'#ECECEE'
+    orderView: {
+        backgroundColor: '#ECECEE'
     },
     topBar: {
         height: Metrics.navBarHeight,
