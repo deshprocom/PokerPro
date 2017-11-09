@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar} from '../../components';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
+import {NavigationBar} from '../../../components';
 import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
 import ListOrderView from './ListOrderView';
 

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, TouchableOpacity, Text, Image} from 'react-native';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
-import {isEmptyObject} from '../../utils/ComonHelper';
+import {isEmptyObject} from '../../../utils/ComonHelper';
 
 export default class ShipAddress extends Component {
 

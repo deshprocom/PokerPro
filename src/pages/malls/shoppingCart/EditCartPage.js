@@ -1,7 +1,7 @@
 import React, {Component,PropTypes} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList} from 'react-native';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
+import UltimateFlatList from '../../../components/ultimate/UltimateFlatList';
 
 export default class EditCartPage extends Component {
     state = {

@@ -1,6 +1,6 @@
 import React, {Component,PropTypes} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList} from 'react-native';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 
 export default class EmptyCart extends Component {
 

@@ -11,16 +11,16 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {isEmptyObject, strNotNull} from '../../utils/ComonHelper';
-import {GET_ORDER_LIST, POST_ORDER_CANCEL} from '../../actions/ActionTypes';
-import {fetchOrderList} from '../../actions/OrderAction';
-import {LoginUser} from '../../services/AccountDao';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
+import {isEmptyObject, strNotNull} from '../../../utils/ComonHelper';
+import {GET_ORDER_LIST, POST_ORDER_CANCEL} from '../../../actions/ActionTypes';
+import {fetchOrderList} from '../../../actions/OrderAction';
+import {LoginUser} from '../../../services/AccountDao';
 import PullToRefreshListView from 'react-native-smart-pull-to-refresh-listview';
 import ItemOrderView from './ItemOrderView';
-import {_renderFooter, _renderHeader} from '../../components/LoadingView';
+import {_renderFooter, _renderHeader} from '../../../components/LoadingView';
 
-import {Verified} from '../../configs/Status';
+import {Verified} from '../../../configs/Status';
 
 class ListOrderView extends Component {
 
