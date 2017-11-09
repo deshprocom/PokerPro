@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
+import {Badge} from '../../components';
 
 
 export default class MallTopBar extends PureComponent {
@@ -23,15 +24,27 @@ export default class MallTopBar extends PureComponent {
                     <Text style={styles.txtSearch}>{I18n.t('mall_search')}</Text>
 
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnCat}>
+                <TouchableOpacity
+                    onPress={() => {
+                        router.toShippingCart()
+                    }}
+                    style={styles.btnCat}>
                     <Image style={styles.imgCat}
                            source={Images.shopping_cart}/>
+                    {this._carts()}
 
                 </TouchableOpacity>
             </View>
 
         </View>)
 
+    }
+
+    _carts = () => {
+        let count = global.shoppingCarts.length;
+        if (count > 0) {
+            return <Badge style={styles.badge}>{count}</Badge>
+        }
     }
 }
 
@@ -69,11 +82,17 @@ const styles = StyleSheet.create({
     btnCat: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        height: 44
     },
     imgCat: {
         height: 20,
         width: 22
+    },
+    badge: {
+        position: 'absolute',
+        top: 5,
+        right: 5
     }
 
 });

@@ -671,9 +671,8 @@ export default class Router {
 
     }
 
-    toShippingCart(props) {
-        this.push(props, {
-
+    toShippingCart() {
+        this.stackPush({
             // name: 'ShoppingCart',
             name: 'ShoppingCart',
 
