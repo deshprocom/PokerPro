@@ -152,10 +152,11 @@ export default class ShoppingCart extends PureComponent {
 
     _pressItem = (item) => {
 
+        const {id} = item.commodity;
         const {dataHosts} = this.state;
         let newSelects = [...dataHosts];
         newSelects.map(function (x) {
-            if (x.id === item.id) {
+            if (x.commodity.id === id) {
                 item.isSelect = !item.isSelect;
             }
         });
@@ -274,6 +275,7 @@ export default class ShoppingCart extends PureComponent {
 
     render() {
 
+        console.log(this.state.dataHosts);
         return (
             <View style={{flex: 1}}>
                 {this.topBar()}
