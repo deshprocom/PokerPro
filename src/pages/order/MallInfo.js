@@ -3,16 +3,82 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, L
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 
-const data = [{id: 1}, {id: 2}, {id: 3}, {id: 4}];
+const data = [{id: 1}, {id: 2}, {id: 3}, {id: 4},{id:5}];
 
 export default class MallInfo extends PureComponent {
     state={
-        dataHosts:[]
+        dataHosts:[],
+        startIndex:1,
+        endIndex:2,
+        showExpand:true,
     };
     componentDidMount() {
+
+        const{startIndex,endIndex,dataHosts,showExpand} = this.state;
+        let newDataHosts = [...dataHosts];
+        let newShowexpand = showExpand;
+
+        data.forEach(function(x){
+
+            if(x.id <= endIndex && endIndex < data.length && x.id >= startIndex){
+                if(endIndex >= data.length){
+                    newShowexpand=false;
+                }else{
+                    newDataHosts.push(x)
+                }
+
+            }
+        });
         this.setState({
-            dataHosts: data
-        })
+            dataHosts:newDataHosts,
+            showExpand:newShowexpand
+        });
+
+    };
+
+    _expandData=()=>{
+        const{startIndex,endIndex,dataHosts,showExpand} = this.state;
+
+        let newDataHosts = [...dataHosts];
+        let newShowexpand = showExpand;
+        let newStartIndex = startIndex;
+        let newEndIndex = endIndex;
+
+        newStartIndex=newStartIndex+2;
+        newEndIndex=newEndIndex+2;
+
+        data.forEach(function(x){
+            console.log("startIndex:",newStartIndex)
+            console.log("endIndex:",newEndIndex)
+            console.log("x.id:",x.id)
+            console.log("startIndexTrue:",x.id <= newEndIndex)
+            console.log("endIndexTrue:",newEndIndex < data.length)
+            console.log("x.idTrue:",x.id >= newStartIndex)
+            if(x.id <= newEndIndex && newEndIndex <= data.length && x.id >= newStartIndex){
+                console.log("x.id:",x.id)
+                if(newEndIndex > data.length){
+                    newShowexpand=false;
+                    newEndIndex=data.length;
+                }else if(newEndIndex === data.length){
+                    newShowexpand=false;
+                    newDataHosts.push(x)
+                }else{
+                    newDataHosts.push(x)
+                }
+
+            }else if(x.id === newStartIndex){
+                newShowexpand=false;
+                newDataHosts.push(x)
+            }
+        });
+        this.setState({
+            dataHosts:newDataHosts,
+            showExpand:newShowexpand,
+            startIndex:newStartIndex,
+            endIndex:newEndIndex
+        });
+
+
     };
 
     _renderItem = ({item}) => {
@@ -62,14 +128,19 @@ export default class MallInfo extends PureComponent {
                         keyExtractor={this._keyExtractor}
                     />
                 </View>
-                <TouchableOpacity style={styleM.expandView}>
-                    <View style={{flexDirection:'row',alignItems:'center'}}>
-                        <Text style={styleM.expandTxt}>{I18n.t('expandMore')}</Text>
-                        <TouchableOpacity style={styleM.expandTouch}>
-                            <Image style={styleM.expandImg} source={Images.expand}/>
-                        </TouchableOpacity>
-                    </View>
-                </TouchableOpacity>
+                {this.state.showExpand?<TouchableOpacity
+                        style={styleM.expandView}
+                        onPress={()=>{
+                            this._expandData()
+                        }}>
+                        <View style={{flexDirection:'row',alignItems:'center'}}>
+                            <Text style={styleM.expandTxt}>{I18n.t('expandMore')}</Text>
+                            <TouchableOpacity style={styleM.expandTouch}>
+                                <Image style={styleM.expandImg} source={Images.expand}/>
+                            </TouchableOpacity>
+                        </View>
+                    </TouchableOpacity>:null}
+
             </View>
         )}
 }
