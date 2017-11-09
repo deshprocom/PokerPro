@@ -3,8 +3,9 @@ import {View, Text, Image, StyleSheet, TouchableOpacity, ScrollView} from 'react
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import * as Animatable from 'react-native-animatable';
 import I18n from 'react-native-i18n';
-import {showToast} from '../../utils/ComonHelper';
-import _ from 'lodash'
+import {showToast, strNotNull, pushProductToCart} from '../../utils/ComonHelper';
+import _ from 'lodash';
+
 
 export default class ProductSpecificationInfo extends PureComponent {
     state = {
@@ -12,7 +13,8 @@ export default class ProductSpecificationInfo extends PureComponent {
         optionTypes: [],
         tempImg: '',
         tempPrice: '',
-        tempStock: 0
+        tempStock: 0,
+        tempProduct: {}
     };
 
     componentDidMount() {
@@ -121,7 +123,7 @@ export default class ProductSpecificationInfo extends PureComponent {
             })}
 
             <View style={styleP.buyQuantity}>
-                <Text style={[styleP.sizeTxt1, {marginTop: 20}]}>购买数量</Text>
+                <Text style={[styleP.sizeTxt1, {marginTop: 20}]}>{I18n.t('buy_count')}</Text>
                 <View style={{flex: 1}}/>
                 {this.buyQuantity()}
             </View>
@@ -156,9 +158,10 @@ export default class ProductSpecificationInfo extends PureComponent {
             const {image, price, stock} = tempArr[0];
             this.setState({
                 tempStock: stock,
-                tempImg: image,
+                tempImg: strNotNull(image) ? image : this.state.tempImg,
                 tempPrice: price,
-                optionTypes: optionTypes
+                optionTypes: optionTypes,
+                tempProduct: tempArr[0]
             })
         } else
             this.setState({optionTypes})
@@ -204,13 +207,26 @@ export default class ProductSpecificationInfo extends PureComponent {
 
 
                 <View style={styleP.confirmView}>
-                    <TouchableOpacity style={styleP.confirm}>
+                    <TouchableOpacity
+                        onPress={this.addCarts}
+                        style={styleP.confirm}>
                         <Text style={styleP.confirmTxt}>{I18n.t('confirm')}</Text>
                     </TouchableOpacity>
                 </View>
             </Animatable.View>
 
         );
+    }
+
+    getTempProduct = () => {
+        return this.state.tempProduct;
+    };
+
+    addCarts = () => {
+        const {number, tempProduct} = this.state;
+        let selectCommodity = {number: number, commodity: tempProduct};
+        pushProductToCart(selectCommodity);
+        this.props.showSpecInfo()
     }
 }
 const styleP = StyleSheet.create({
@@ -255,15 +271,17 @@ const styleP = StyleSheet.create({
         color: '#333333'
     },
     closeView: {
-        width: 25,
-        height: 25,
+        width: 40,
+        height: 40,
         position: 'absolute',
-        top: 10,
-        right: 16
+        top: 0,
+        right: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     closeImg: {
         width: 18,
-        height: 18
+        height: 18,
     },
     size: {
         backgroundColor: '#FFFFFF',

@@ -68,7 +68,19 @@ export function updateApp(data) {
 
 }
 
+/*获取购物车*/
+export function getCarts() {
+    return global.shoppingCarts;
+}
 
+/*添加商品到购物车*/
+export function pushProductToCart(product) {
+    console.log(product)
+    global.shoppingCarts.push(product);
+
+}
+
+/*App更新提示*/
 function updateAlet(data) {
 
     const upgrade = data.force_upgrade ? [{
