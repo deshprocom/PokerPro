@@ -680,11 +680,9 @@ export default class Router {
         })
     }
 
-    toEditCart(props) {
-        this.push(props, {
-
-            name: 'EditCartPage',
-
+    toOrderConfirm() {
+        this.stackPush({
+            name: 'OrderConfirm'
         })
     }
 

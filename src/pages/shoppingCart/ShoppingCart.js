@@ -1,48 +1,96 @@
-import React, {Component, PropTypes} from 'react';
-import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList} from 'react-native';
+import React, {PureComponent, PropTypes} from 'react';
+import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
 import Swipeout from 'react-native-swipeout';
+import I18n from 'react-native-i18n';
 
+const data = [{id: 1}, {id: 2}, {id: 3}, {id: 4}];
 
-export default class ShoppingCart extends Component {
+export default class ShoppingCart extends PureComponent {
     state = {
+        showCart: true,
+        showEdit: true,
+        showBottom: true,
         selected: false,
-        text: "1",
         selectAll: false,
-        dataHosts: [1, 2, 3, 4, 5, 6],
-    }
-    static propTypes = {
-        pressItem: PropTypes.func,
-        pressAll: PropTypes.func,
-        selectAll: PropTypes.bool
+        dataHosts: [],
+        selectArray: []
     };
+
+    componentDidMount() {
+
+        data.map(function (x) {
+            x.isSelect = false
+            x.number =1
+        });
+        this.setState({
+            dataHosts: data
+        })
+    }
+
 
     toBottom = () => {
         return (
             <View style={styleS.bottomView}>
                 <TouchableOpacity
 
-                    onPress={this._pressAll}>
-                    <Image style={styleS.radioImg} source={this.props.selectAll ? Images.radioSelected : Images.radio}/>
+                    onPress={()=>{
+                            this.setState({
+                                selectAll:!this.state.selectAll
+                            }),this._pressAll()
+                        }}>
+                    <Image style={styleS.radioImg} source={this.state.selectAll ? Images.radioSelected : Images.radio}/>
                 </TouchableOpacity>
-                <Text style={styleS.selectedAll}>全选</Text>
+                <Text style={styleS.selectedAll}>{I18n.t('selectAll')}</Text>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Text style={styleS.total}>合计：</Text>
+                    <Text style={styleS.total}>{I18n.t('ticket_price')}</Text>
                     <Text style={styleS.selectedPrice}>¥23,300.8</Text>
                 </View>
                 <View style={{flex: 1}}/>
-                <TouchableOpacity
-                    onPress={() => {
-                        router.toConfirmOrder()
-                    }}
-                    style={styleS.settlementView}>
-                    <Text style={styleS.settlement}>去结算</Text>
+                <TouchableOpacity style={styleS.settlementView}
+                onPress={()=>{
+                    router.toOrderConfirm();
+                }}>
+                    <Text style={styleS.settlement}>{I18n.t('settlement')}</Text>
                     <Text style={styleS.settlementQuantity}>(3)</Text>
                 </TouchableOpacity>
             </View>
         )
-    }
+    };
+
+    _isSelect = (x) => {
+        return (x.isSelect === false);
+    };
+    _deleteItem = () => {
+        const {dataHosts} = this.state;
+        let newSelects = [...dataHosts];
+        newSelects = newSelects.filter(this._isSelect);
+        this.setState({dataHosts:newSelects});
+    };
+    toBottom2 = () => {
+        return (
+            <View style={styleS.bottomView}>
+                <TouchableOpacity
+
+                    onPress={()=>{
+                            this.setState({
+                                selectAll:!this.state.selectAll
+                            }),this._pressAll()
+                        }}>
+                    <Image style={styleS.radioImg} source={this.state.selectAll ? Images.radioSelected : Images.radio}/>
+                </TouchableOpacity>
+                <Text style={styleS.selectedAll}>{I18n.t('selectAll')}</Text>
+                <View style={{flex: 1}}/>
+                <TouchableOpacity
+                    style={styleS.settlementView2}
+                    onPress={()=>{
+                        this._deleteItem()
+                    }}>
+                    <Text style={styleS.settlement2}>{I18n.t('buy_del')}</Text>
+                </TouchableOpacity>
+            </View>
+        )
+    };
 
     topBar = () => {
         return (<View style={styleS.topBar}>
@@ -54,15 +102,19 @@ export default class ShoppingCart extends Component {
                        source={Images.mall_return}/>
             </TouchableOpacity>
             <View style={{flex: 1}}/>
-            <Text style={styleS.cart}>购物车</Text>
+            <Text style={styleS.cart}>{this.state.showCart ? I18n.t('cart') : ""}</Text>
             <View style={{flex: 1}}/>
             <TouchableOpacity
                 testID="btn_bar_right"
                 style={styleS.popBtn}
                 onPress={() => {
-                    router.toEditCart()
+                    this.setState({
+                        showEdit: !this.state.showEdit,
+                        showCart: !this.state.showCart,
+                        showBottom: !this.state.showBottom,
+                    }),this.refreshAll()
                 }}>
-                <Text style={styleS.rightTxt}>编辑</Text>
+                <Text style={styleS.rightTxt}>{this.state.showEdit ? I18n.t('buy_editor') : I18n.t('complete') }</Text>
             </TouchableOpacity>
 
 
@@ -74,37 +126,60 @@ export default class ShoppingCart extends Component {
         )
     };
     _pressAll = () => {
-        const {selectAll} = this.state;
-        this.setState((state) => {
-            const newData = [...state.dataHosts];
-            newData.map(function (element) {
-                element.select = !selectAll;
-                return element;
+        const {dataHosts} = this.state;
+        let newSelects = [...dataHosts];
+        if (this.state.selectAll === false) {
+            newSelects.map(function (x) {
+                x.isSelect = true
             });
+        } else {
+            newSelects.map(function (x) {
+                x.isSelect = false
+            });
+        }
 
-            return {
-                dataHosts: newData,
-                selectAll: !selectAll
-            }
-        })
-    }
+
+        this.setState({newSelects})
+    };
+    refreshAll = () => {
+        const {dataHosts} = this.state;
+        let newSelects = [...dataHosts];
+        newSelects.map(function (x) {
+            x.isSelect = false
+        });
+        this.setState({newSelects})
+    };
 
     _pressItem = (item) => {
 
-        this.setState((state) => {
-            const newData = [...state.dataHosts];
-            newData.map(function (element) {
-                if (item.id === element.id) {
-                    element.select = !item.select;
-                }
-                return element;
-            });
+        const {dataHosts} = this.state;
+        let newSelects = [...dataHosts];
+        newSelects.map(function (x) {
+            if (x.id === item.id) {
+                item.isSelect = !item.isSelect;
+            }
+        });
 
-            return {dataHosts: newData}
-        })
+        this.setState({newSelects})
     };
-    _renderItem = (item, index) => {
 
+    renderShowEditView(item, onPress) {
+        let imageURL = Images.radio;
+        if (item.isSelect === true) {
+            imageURL = Images.radioSelected
+        }
+        return (
+            <TouchableOpacity
+                onPress={() => {
+                    onPress(item, item.index)
+                }}>
+                <Image style={styleS.radioImg}
+                       source={imageURL}/>
+            </TouchableOpacity>
+        )
+    };
+
+    _renderItem = ({item}) => {
         let swipeoutBtns = [
             {
                 text: 'Delete',
@@ -115,42 +190,47 @@ export default class ShoppingCart extends Component {
         return (
             <Swipeout right={swipeoutBtns}>
                 <View style={styleS.renderItem}>
-                    <TouchableOpacity
-                        onPress={() => {
-                            this._pressItem(item)
-                        }}>
-                        <Image style={styleS.radioImg}
-                               source={item.select ? Images.radioSelected : Images.radio}/>
-                    </TouchableOpacity>
+                    {this.renderShowEditView(item, () => {
+                        this._pressItem(item)
+                    })}
+
                     <Image style={styleS.mallImg} source={Images.empty_image}/>
                     <View style={styleS.TxtView}>
                         <Text numberOfLines={2} style={styleS.mallTextName}>筹码14克皇冠粘土百家乐德州扑克筹码币</Text>
-                        <Text style={styleS.mallAttributes}>重量：1.62KG 颜色：黑 数量：500</Text>
+                        <Text style={styleS.mallAttributes}>{I18n.t('weight')}：1.62KG {I18n.t('weight')}：黑 {I18n.t('quantity')}：500</Text>
                         <View style={styleS.PriceView}>
                             <Text style={styleS.Price}>¥555555.55</Text>
-                            {this.buyQuantity()}
+                            {this.buyQuantity(item)}
                         </View>
                     </View>
                 </View>
             </Swipeout>
         )
     };
-    buyQuantity = () => {
+    buyQuantity = (item) => {
+        const{dataHosts} = this.state;
         const styleCutDisable = {
             backgroundColor: '#FBFAFA'
         };
         const styleCut = {
             backgroundColor: '#F6F5F5'
         };
+        let {number} = item;
         return (
             <View style={styleS.quantity}>
                 <TouchableOpacity
-                    style={[styleS.buyTouch, Number(this.state.text) === "1" ? styleCutDisable : styleCut]}
+                    style={[styleS.buyTouch, item.number === 1 ? styleCutDisable : styleCut]}
                     onPress={() => {
-                        let number = Number(this.state.text)
-                        if (number >= 1) {
+                        if (item.number >1) {
+                            --item.number;
+                            let newDataHosts =[...dataHosts];
+                            newDataHosts.map(function(x){
+                                if(item.id == x.id){
+                                    x.number=item.number
+                                }
+                            });
                             this.setState({
-                                text: number - 1
+                                dataHosts:newDataHosts
                             })
                         }
 
@@ -159,16 +239,22 @@ export default class ShoppingCart extends Component {
                 </TouchableOpacity>
 
                 <View style={styleS.buyInput}>
-                    <Text>1</Text>
+                    <Text>{item.number}</Text>
                 </View>
 
                 <TouchableOpacity
                     style={styleS.buyTouch}
                     onPress={() => {
-                        let number = Number(this.state.text)
-                        this.setState({
-                            text: number + 1
-                        })
+                        ++item.number;
+                        let newDataHosts =[...dataHosts];
+                            newDataHosts.map(function(x){
+                                if(item.id == x.id){
+                                    x.number=item.number
+                                }
+                            });
+                            this.setState({
+                                dataHosts:newDataHosts
+                            })
                     }}>
                     <Image style={styleS.buyImgAdd} source={Images.add}/>
                 </TouchableOpacity>
@@ -176,29 +262,29 @@ export default class ShoppingCart extends Component {
         )
     };
 
-    onFetch = (page = 1, startFetch, abortFetch) => {
-        startFetch([1, 2, 3, 4, 5, 6], 8)
-    };
 
     _separator = () => {
         return <View style={{height: 10, marginLeft: 17, marginRight: 17, backgroundColor: '#ECECEE'}}/>;
     };
+    _keyExtractor = (item, index) => item.id;
 
     render() {
+
+        console.log(this.state.dataHosts)
         return (
             <View style={{flex: 1}}>
                 {this.topBar()}
 
-                <UltimateFlatList
+                <FlatList
                     style={{paddingTop: 6, marginBottom: 50}}
-                    onFetch={this.onFetch}
+                    data={this.state.dataHosts}
                     showsHorizontalScrollIndicator={false}
-                    separator={this._separator}
-                    item={this._renderItem}
-                    keyExtractor={(item, index) => index}
+                    ItemSeparatorComponent={this._separator}
+                    renderItem={this._renderItem}
+                    keyExtractor={this._keyExtractor}
                 />
 
-                {this.toBottom()}
+                {this.state.showBottom ? this.toBottom() : this.toBottom2()}
 
             </View>
         )
@@ -206,6 +292,7 @@ export default class ShoppingCart extends Component {
 }
 
 const styleS = StyleSheet.create({
+
     topBar: {
         height: Metrics.navBarHeight,
         flexDirection: 'row',
@@ -340,5 +427,19 @@ const styleS = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%'
-    }
+    },
+    settlementView2: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 37,
+        width: 89,
+        marginRight: 15,
+        borderWidth: 1,
+        borderColor: '#F34A4A'
+    },
+    settlement2: {
+        fontSize: 18,
+        color: '#F34A4A',
+    },
 })
