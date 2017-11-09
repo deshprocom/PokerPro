@@ -4,7 +4,6 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import Swipeout from 'react-native-swipeout';
 import I18n from 'react-native-i18n';
 
-const data = [{id: 1}, {id: 2}, {id: 3}, {id: 4}];
 
 export default class ShoppingCart extends PureComponent {
     state = {
@@ -19,12 +18,13 @@ export default class ShoppingCart extends PureComponent {
 
     componentDidMount() {
 
-        data.map(function (x) {
-            x.isSelect = false
-            x.number =1
+        let commodities = global.shoppingCarts;
+
+        commodities.map(function (x) {
+            x.isSelect = false;
         });
         this.setState({
-            dataHosts: data
+            dataHosts: commodities
         })
     }
 
@@ -34,11 +34,11 @@ export default class ShoppingCart extends PureComponent {
             <View style={styleS.bottomView}>
                 <TouchableOpacity
 
-                    onPress={()=>{
-                            this.setState({
-                                selectAll:!this.state.selectAll
-                            }),this._pressAll()
-                        }}>
+                    onPress={() => {
+                        this.setState({
+                            selectAll: !this.state.selectAll
+                        }), this._pressAll()
+                    }}>
                     <Image style={styleS.radioImg} source={this.state.selectAll ? Images.radioSelected : Images.radio}/>
                 </TouchableOpacity>
                 <Text style={styleS.selectedAll}>{I18n.t('selectAll')}</Text>
@@ -48,9 +48,9 @@ export default class ShoppingCart extends PureComponent {
                 </View>
                 <View style={{flex: 1}}/>
                 <TouchableOpacity style={styleS.settlementView}
-                onPress={()=>{
-                    router.toOrderConfirm();
-                }}>
+                                  onPress={() => {
+                                      router.toOrderConfirm();
+                                  }}>
                     <Text style={styleS.settlement}>{I18n.t('settlement')}</Text>
                     <Text style={styleS.settlementQuantity}>(3)</Text>
                 </TouchableOpacity>
@@ -65,25 +65,25 @@ export default class ShoppingCart extends PureComponent {
         const {dataHosts} = this.state;
         let newSelects = [...dataHosts];
         newSelects = newSelects.filter(this._isSelect);
-        this.setState({dataHosts:newSelects});
+        this.setState({dataHosts: newSelects});
     };
     toBottom2 = () => {
         return (
             <View style={styleS.bottomView}>
                 <TouchableOpacity
 
-                    onPress={()=>{
-                            this.setState({
-                                selectAll:!this.state.selectAll
-                            }),this._pressAll()
-                        }}>
+                    onPress={() => {
+                        this.setState({
+                            selectAll: !this.state.selectAll
+                        }), this._pressAll()
+                    }}>
                     <Image style={styleS.radioImg} source={this.state.selectAll ? Images.radioSelected : Images.radio}/>
                 </TouchableOpacity>
                 <Text style={styleS.selectedAll}>{I18n.t('selectAll')}</Text>
                 <View style={{flex: 1}}/>
                 <TouchableOpacity
                     style={styleS.settlementView2}
-                    onPress={()=>{
+                    onPress={() => {
                         this._deleteItem()
                     }}>
                     <Text style={styleS.settlement2}>{I18n.t('buy_del')}</Text>
@@ -112,9 +112,9 @@ export default class ShoppingCart extends PureComponent {
                         showEdit: !this.state.showEdit,
                         showCart: !this.state.showCart,
                         showBottom: !this.state.showBottom,
-                    }),this.refreshAll()
+                    }), this.refreshAll()
                 }}>
-                <Text style={styleS.rightTxt}>{this.state.showEdit ? I18n.t('buy_editor') : I18n.t('complete') }</Text>
+                <Text style={styleS.rightTxt}>{this.state.showEdit ? I18n.t('buy_editor') : I18n.t('complete')}</Text>
             </TouchableOpacity>
 
 
@@ -187,6 +187,7 @@ export default class ShoppingCart extends PureComponent {
                 onPress: this.closeThisMall
             }
         ];
+        const {price, original_price, id, stock} = item.commodity;
         return (
             <Swipeout right={swipeoutBtns}>
                 <View style={styleS.renderItem}>
@@ -196,10 +197,11 @@ export default class ShoppingCart extends PureComponent {
 
                     <Image style={styleS.mallImg} source={Images.empty_image}/>
                     <View style={styleS.TxtView}>
-                        <Text numberOfLines={2} style={styleS.mallTextName}>筹码14克皇冠粘土百家乐德州扑克筹码币</Text>
-                        <Text style={styleS.mallAttributes}>{I18n.t('weight')}：1.62KG {I18n.t('weight')}：黑 {I18n.t('quantity')}：500</Text>
+                        <Text numberOfLines={2} style={styleS.mallTextName}>筹码14克皇冠粘土百家乐德州扑克筹码币{id}</Text>
+                        <Text
+                            style={styleS.mallAttributes}>{I18n.t('weight')}：1.62KG {I18n.t('weight')}：黑 {I18n.t('quantity')}：500</Text>
                         <View style={styleS.PriceView}>
-                            <Text style={styleS.Price}>¥555555.55</Text>
+                            <Text style={styleS.Price}>¥{price}</Text>
                             {this.buyQuantity(item)}
                         </View>
                     </View>
@@ -208,29 +210,29 @@ export default class ShoppingCart extends PureComponent {
         )
     };
     buyQuantity = (item) => {
-        const{dataHosts} = this.state;
+        const {dataHosts} = this.state;
         const styleCutDisable = {
             backgroundColor: '#FBFAFA'
         };
         const styleCut = {
             backgroundColor: '#F6F5F5'
         };
-        let {number} = item;
+
         return (
             <View style={styleS.quantity}>
                 <TouchableOpacity
                     style={[styleS.buyTouch, item.number === 1 ? styleCutDisable : styleCut]}
                     onPress={() => {
-                        if (item.number >1) {
+                        if (item.number > 1) {
                             --item.number;
-                            let newDataHosts =[...dataHosts];
-                            newDataHosts.map(function(x){
-                                if(item.id == x.id){
-                                    x.number=item.number
+                            let newDataHosts = [...dataHosts];
+                            newDataHosts.map(function (x) {
+                                if (item.id == x.id) {
+                                    x.number = item.number
                                 }
                             });
                             this.setState({
-                                dataHosts:newDataHosts
+                                dataHosts: newDataHosts
                             })
                         }
 
@@ -246,15 +248,15 @@ export default class ShoppingCart extends PureComponent {
                     style={styleS.buyTouch}
                     onPress={() => {
                         ++item.number;
-                        let newDataHosts =[...dataHosts];
-                            newDataHosts.map(function(x){
-                                if(item.id == x.id){
-                                    x.number=item.number
-                                }
-                            });
-                            this.setState({
-                                dataHosts:newDataHosts
-                            })
+                        let newDataHosts = [...dataHosts];
+                        newDataHosts.map(function (x) {
+                            if (item.id == x.id) {
+                                x.number = item.number
+                            }
+                        });
+                        this.setState({
+                            dataHosts: newDataHosts
+                        })
                     }}>
                     <Image style={styleS.buyImgAdd} source={Images.add}/>
                 </TouchableOpacity>
@@ -266,7 +268,7 @@ export default class ShoppingCart extends PureComponent {
     _separator = () => {
         return <View style={{height: 10, marginLeft: 17, marginRight: 17, backgroundColor: '#ECECEE'}}/>;
     };
-    _keyExtractor = (item, index) => item.id;
+
 
     render() {
 
@@ -281,7 +283,7 @@ export default class ShoppingCart extends PureComponent {
                     showsHorizontalScrollIndicator={false}
                     ItemSeparatorComponent={this._separator}
                     renderItem={this._renderItem}
-                    keyExtractor={this._keyExtractor}
+                    keyExtractor={(item, index) => `commodities${index}`}
                 />
 
                 {this.state.showBottom ? this.toBottom() : this.toBottom2()}

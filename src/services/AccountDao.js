@@ -5,7 +5,7 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 import StorageKey from '../configs/StorageKey';
 import JpushHelp from './JpushHelper';
-import {isEmptyObject, showToast} from '../utils/ComonHelper';
+import {isEmptyObject, showToast,getCarts} from '../utils/ComonHelper';
 import {getAddressList} from './OrderDao';
 
 
@@ -240,6 +240,9 @@ export function setLoginUser(ret) {
             listVerified(data => {
             }, err => {
             });
+
+            /*获取购物车*/
+            getCarts();
 
             //获取收货地址
             getAddressList(data=>{

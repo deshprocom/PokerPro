@@ -74,7 +74,12 @@ export function updateApp(data) {
 
 /*获取购物车*/
 export function getCarts() {
-    return global.shoppingCarts;
+    storage.load({key: StorageKey.ShoppingCarts})
+        .then(ret => {
+            console.log('shoppingCarts:', ret);
+            global.shoppingCarts = ret;
+        });
+
 }
 
 /*添加商品到购物车*/
