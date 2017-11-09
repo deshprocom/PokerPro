@@ -6,12 +6,12 @@ import {
     TouchableOpacity, View,
     StyleSheet, Image, Text, ListView, Alert
 } from 'react-native';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {ImageLoad} from '../../../components';
-import {orderStatus, YYYY_MM_DD, convertDate, showToast, isEmptyObject} from '../../../utils/ComonHelper';
-import {postOrderCancel, postOrderComplete} from '../../../services/OrderDao';
-import PayModal from '../../buy/PayModal';
+import {ImageLoad} from '../../components';
+import {orderStatus, YYYY_MM_DD, convertDate, showToast, isEmptyObject} from '../../utils/ComonHelper';
+import {postOrderCancel, postOrderComplete} from '../../services/OrderDao';
+import PayModal from '../buy/PayModal';
 import Communications from 'react-native-communications';
 
 export default class ItemOrderView extends Component {
