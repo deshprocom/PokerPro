@@ -218,6 +218,8 @@ export default class ShoppingCart extends PureComponent {
             backgroundColor: '#F6F5F5'
         };
 
+        const {id} = item.commodity;
+
         return (
             <View style={styleS.quantity}>
                 <TouchableOpacity
@@ -227,7 +229,7 @@ export default class ShoppingCart extends PureComponent {
                             --item.number;
                             let newDataHosts = [...dataHosts];
                             newDataHosts.map(function (x) {
-                                if (item.id == x.id) {
+                                if (id === x.commodity.id) {
                                     x.number = item.number
                                 }
                             });
@@ -250,7 +252,7 @@ export default class ShoppingCart extends PureComponent {
                         ++item.number;
                         let newDataHosts = [...dataHosts];
                         newDataHosts.map(function (x) {
-                            if (item.id == x.id) {
+                            if (id === x.commodity.id) {
                                 x.number = item.number
                             }
                         });
@@ -272,7 +274,6 @@ export default class ShoppingCart extends PureComponent {
 
     render() {
 
-        console.log(this.state.dataHosts)
         return (
             <View style={{flex: 1}}>
                 {this.topBar()}
