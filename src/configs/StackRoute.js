@@ -20,10 +20,10 @@ import EmailRegisterPage from '../pages/account/EmailRegisterPage';
 import ImageGallery from '../components/ImageGallery';
 import ForgetEmailPage from '../pages/account/ForgetEmailPage';
 import BuyTicketPage from '../pages/buy/BuyTicketPage';
-import OrderInfoPage from '../pages/orders/OrderInfoPage';
+import OrderInfoPage from '../pages/malls/orders/OrderInfoPage';
 import BuyKnowPage from '../pages/buy/BuyKnownPage';
 import CertificationPage from '../pages/buy/CertificationPage';
-import OrderListPage from '../pages/orders/OrderListPage';
+import OrderListPage from '../pages/malls/orders/OrderListPage';
 import SecurityPage from '../pages/setting/SecurityPage';
 import ModifyPwdPage from '../pages/setting/ModifyPwdPage';
 import SearchRacesPage from '../pages/races/SearchRacesPage';
@@ -64,14 +64,14 @@ import ActivityInfo from '../pages/message/ActivityInfo';
 import VerifiedPage from '../pages/verifieds/VerifiedPage';
 import AddVerified from '../pages/verifieds/AddVerified';
 import RaceScene from '../pages/races/RaceScene';
-import MallInfoPage from '../pages/mallInfo/MallInfoPage';
+import MallInfoPage from '../pages/malls/mallInfo/MallInfoPage';
 import {Navigation} from '../pages/navigation/Navigation';
-import ShoppingCart from "../pages/shoppingCart/ShoppingCart";
-import EmptyCart from "../pages/shoppingCart/EmptyCart";
-import EditCartPage from "../pages/shoppingCart/EditCartPage";
+import ShoppingCart from "../pages/malls/shoppingCart/ShoppingCart";
+import EmptyCart from "../pages/malls/shoppingCart/EmptyCart";
+import EditCartPage from "../pages/malls/shoppingCart/EditCartPage";
 import MallSearchResult from "../pages/malls/MallSearchResult";
 import ConfirmOrder from '../pages/malls/carts/ConfirmOrder';
-import OrderConfirm from '../pages/order/OrderConfirm';
+import OrderConfirm from '../pages/malls/order/OrderConfirm';
 
 
 export const Stacks = Actions.create(

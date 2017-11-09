@@ -1,6 +1,6 @@
 import React, {PureComponent, PropTypes} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView} from 'react-native';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 
 const data = [{id: 1}, {id: 2}, {id: 3}, {id: 4},{id:5}];

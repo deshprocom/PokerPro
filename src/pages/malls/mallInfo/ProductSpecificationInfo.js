@@ -1,9 +1,9 @@
 import React, {PureComponent} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import * as Animatable from 'react-native-animatable';
 import I18n from 'react-native-i18n';
-import {showToast, strNotNull, pushProductToCart} from '../../utils/ComonHelper';
+import {showToast, strNotNull, pushProductToCart} from '../../../utils/ComonHelper';
 import _ from 'lodash';
 
 

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity} from 'react-native';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 import Swiper from 'react-native-swiper';
-import {isEmptyObject, moneyFormat} from '../../utils/ComonHelper'
+import {isEmptyObject, moneyFormat} from '../../../utils/ComonHelper'
 
 export default class MallInfoPageTopBar extends Component {
 
