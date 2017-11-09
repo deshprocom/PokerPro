@@ -24,31 +24,34 @@ export default class OrderDetails extends PureComponent {
                     </View>
                 </View>
                 <View style={styleO.paymentView}>
-                    <Text style={styleO.payment}>{I18n.t('payment')}</Text>
                     <Text style={styleO.paymentPrice}>787646466</Text>
+                    <Text style={styleO.payment}>{I18n.t('payment')}</Text>
+
                 </View>
             </View>
         )}
 }
 const styleO = StyleSheet.create({
     detailsView:{
-        marginTop:10
+        marginTop:10,
+        marginBottom:50
     },
     detailsName:{
         height:40,
-        backgroundColor:'#FFFFFF'
+        backgroundColor:'#FFFFFF',
+        justifyContent:'center'
     },
     detailsNameTxt:{
         fontSize: 14,
         color: '#333333',
-        marginLeft:17
+        marginLeft:17,
+        fontWeight:'bold'
     },
     details:{
         marginTop:1,
         backgroundColor:'#FFFFFF',
     },
     priceView:{
-        marginLeft:17,
         flexDirection:'row',
         alignItems:'center',
         marginTop:15,
@@ -57,7 +60,8 @@ const styleO = StyleSheet.create({
         marginLeft:17,
         flexDirection:'row',
         alignItems:'center',
-        marginTop:6
+        marginTop:6,
+        marginBottom:13
     },
     priceName:{
         fontSize: 14,
@@ -67,7 +71,7 @@ const styleO = StyleSheet.create({
     costsName:{
         fontSize: 14,
         color: '#333333',
-        marginLeft:17
+
     },
     price:{
         fontSize: 16,
@@ -75,13 +79,16 @@ const styleO = StyleSheet.create({
         marginRight:17
     },
     paymentView:{
+        marginTop:1,
         flexDirection:'row-reverse',
         alignItems:'center',
-        height:44
+        height:44,
+        backgroundColor:'#FFFFFF'
     },
     payment:{
         fontSize: 14,
-        color: '#333333'
+        color: '#333333',
+
     },
     paymentPrice:{
         fontSize: 18,
