@@ -3,7 +3,7 @@
  */
 import StorageKey from '../configs/StorageKey';
 import {setLanguage} from '../I18n/I18n';
-import {getSize, setLang} from '../utils/ComonHelper';
+import {getSize, setLang, getCarts} from '../utils/ComonHelper';
 import {setDpLang} from '../services/RequestHelper';
 import {listVerified} from './AccountDao';
 
@@ -17,12 +17,15 @@ export function init(resolve) {
         switchLang(language);
     });
     getSize();
+    /*获取购物车*/
+    getCarts();
 }
 
 
 export function initLogin() {
-    listVerified(data=>{
-    },err=>{})
+    listVerified(data => {
+    }, err => {
+    })
 }
 
 function switchLang(lang) {
