@@ -20,6 +20,7 @@ export default class ProductSpecificationInfo extends PureComponent {
     componentDidMount() {
 
         const {icon, master, option_types} = this.props.product;
+
         const {price, stock} = master;
         this.setState({
             optionTypes: option_types,
@@ -171,7 +172,7 @@ export default class ProductSpecificationInfo extends PureComponent {
 
     render() {
 
-        const {optionTypes, tempImg, tempPrice, tempStock} = this.state;
+        const {optionTypes, tempImg, tempPrice, tempStock, tempProduct} = this.state;
 
 
         return (
@@ -195,7 +196,7 @@ export default class ProductSpecificationInfo extends PureComponent {
                     <TouchableOpacity
                         style={styleP.closeView}
                         onPress={() => {
-                            this.props.showSpecInfo()
+                            this.props.showSpecInfo(tempProduct)
                         }}>
                         <Image style={styleP.closeImg} source={Images.close}/>
                     </TouchableOpacity>
@@ -218,15 +219,12 @@ export default class ProductSpecificationInfo extends PureComponent {
         );
     }
 
-    getTempProduct = () => {
-        return this.state.tempProduct;
-    };
 
     addCarts = () => {
         const {number, tempProduct} = this.state;
         let selectCommodity = {number: number, commodity: tempProduct};
         pushProductToCart(selectCommodity);
-        this.props.showSpecInfo()
+        this.props.showSpecInfo(tempProduct)
     }
 }
 const styleP = StyleSheet.create({

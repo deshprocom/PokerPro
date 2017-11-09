@@ -15,7 +15,8 @@ export default class MallInfoPage extends Component {
     state = {
         specShow: false,
         opacity: 0,
-        product: {}
+        product: {},
+        selectProduct: {}
     };
 
     componentDidMount() {
@@ -56,7 +57,7 @@ export default class MallInfoPage extends Component {
 
 
     render() {
-        const {specShow, product} = this.state;
+        const {specShow, product, selectProduct} = this.state;
         return (
             <View style={ApplicationStyles.bgContainer}>
 
@@ -106,9 +107,11 @@ export default class MallInfoPage extends Component {
         }
     };
 
-    showSpecInfo = () => {
+    showSpecInfo = (temp) => {
+        console.log(temp);
         this.setState({
-            specShow: !this.state.specShow
+            specShow: !this.state.specShow,
+            selectProduct:temp
         })
     }
 }
