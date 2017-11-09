@@ -9,11 +9,9 @@ export default class ProductSpecification extends Component {
         showSpecInfo: propTypes.func.isRequired
     };
 
-    componentDidMount() {
-
-    }
 
     render() {
+        console.log('selectProduct', this.props.selectProduct)
         return (
             <View>
                 <TouchableOpacity

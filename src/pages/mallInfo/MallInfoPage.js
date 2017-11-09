@@ -69,6 +69,7 @@ export default class MallInfoPage extends Component {
                         product={product}/>
 
                     <ProductSpecification
+                        selectProduct={selectProduct}
                         showSpecInfo={this.showSpecInfo}
                     />
                     <ShipAddress/>
@@ -111,7 +112,7 @@ export default class MallInfoPage extends Component {
         console.log(temp);
         this.setState({
             specShow: !this.state.specShow,
-            selectProduct:temp
+            selectProduct: temp
         })
     }
 }
