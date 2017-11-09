@@ -40,12 +40,6 @@ export default class Router {
 
     }
 
-    toConfirmOrder() {
-        this.stackPush({
-            name: 'ConfirmOrder'
-        })
-    }
-
     toMallResult(categories) {
         this.stackPush({
             name: 'MallSearchResult',
