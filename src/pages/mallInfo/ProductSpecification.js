@@ -10,8 +10,13 @@ export default class ProductSpecification extends Component {
     };
 
 
-    render() {
+    componentDidMount(){
         console.log('selectProduct', this.props.selectProduct)
+    }
+
+
+    render() {
+
         return (
             <View>
                 <TouchableOpacity

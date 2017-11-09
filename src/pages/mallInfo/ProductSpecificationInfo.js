@@ -13,21 +13,23 @@ export default class ProductSpecificationInfo extends PureComponent {
         optionTypes: [],
         tempImg: '',
         tempPrice: '',
-        tempStock: 0,
-        tempProduct: {}
+        tempStock: 0
     };
 
     componentDidMount() {
 
-        const {icon, master, option_types} = this.props.product;
-
+        const {product, selectProduct} = this.props;
+        const {icon, master, option_types} = product;
+        this.tempProduct = selectProduct;
         const {price, stock} = master;
         this.setState({
             optionTypes: option_types,
             tempImg: icon,
             tempPrice: price,
             tempStock: stock
-        })
+        });
+
+
     }
 
     tabBlank = (x, array) => {
@@ -157,12 +159,12 @@ export default class ProductSpecificationInfo extends PureComponent {
 
         if (tempArr.length > 0) {
             const {image, price, stock} = tempArr[0];
+            this.tempProduct = tempArr[0];
             this.setState({
                 tempStock: stock,
                 tempImg: strNotNull(image) ? image : this.state.tempImg,
                 tempPrice: price,
-                optionTypes: optionTypes,
-                tempProduct: tempArr[0]
+                optionTypes: optionTypes
             })
         } else
             this.setState({optionTypes})
@@ -172,7 +174,7 @@ export default class ProductSpecificationInfo extends PureComponent {
 
     render() {
 
-        const {optionTypes, tempImg, tempPrice, tempStock, tempProduct} = this.state;
+        const {optionTypes, tempImg, tempPrice, tempStock} = this.state;
 
 
         return (
@@ -196,7 +198,7 @@ export default class ProductSpecificationInfo extends PureComponent {
                     <TouchableOpacity
                         style={styleP.closeView}
                         onPress={() => {
-                            this.props.showSpecInfo(tempProduct)
+                            this.props.showSpecInfo(this.tempProduct)
                         }}>
                         <Image style={styleP.closeImg} source={Images.close}/>
                     </TouchableOpacity>
@@ -221,15 +223,15 @@ export default class ProductSpecificationInfo extends PureComponent {
 
 
     addCarts = () => {
-        const {number, tempProduct} = this.state;
-        if (_.isEmpty(tempProduct)) {
+        const {number} = this.state;
+        if (_.isEmpty(this.tempProduct)) {
             showToast(I18n.t('ple_select_all'));
             return;
         }
 
-        let selectCommodity = {number: number, commodity: tempProduct};
+        let selectCommodity = {number: number, commodity: this.tempProduct};
         pushProductToCart(selectCommodity);
-        this.props.showSpecInfo(tempProduct)
+        this.props.showSpecInfo(this.tempProduct)
     }
 }
 const styleP = StyleSheet.create({

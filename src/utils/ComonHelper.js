@@ -16,6 +16,8 @@ import UMShare from 'react-native-umshare';
 import *as wechat from 'react-native-wechat'
 import * as Constants from '../configs/Constants';
 import {getApiType} from '../services/RequestHelper';
+import _ from 'lodash';
+
 
 export const YYYY_MM_DD = 'YYYY.MM.DD';
 export const DATA_SS = 'YYYY-MM-DD hh:mm:ss';
@@ -26,6 +28,8 @@ export const MM_DD = 'MM-DD';
 
 const HOST = 'https://h5.deshpro.com/';
 const THOST = 'http://test.h5.deshpro.com/';
+
+export const util = _;
 
 function shareHost() {
     if (getApiType() === 'production')

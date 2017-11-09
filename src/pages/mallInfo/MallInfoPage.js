@@ -10,6 +10,7 @@ import MallIntroduction from './MallIntroduction';
 import MallInfoBottom from './MallInfoBottom';
 import ProductSpecificationInfo from './ProductSpecificationInfo';
 import {getProductDetail} from '../../services/MallDao';
+import {util} from '../../utils/ComonHelper';
 
 export default class MallInfoPage extends Component {
     state = {
@@ -85,6 +86,7 @@ export default class MallInfoPage extends Component {
                     showSpecInfo={this.showSpecInfo}/>
 
                 {specShow ? <ProductSpecificationInfo
+                    selectProduct={selectProduct}
                     product={product}
                     showSpecInfo={this.showSpecInfo}/> : null}
 
@@ -110,10 +112,15 @@ export default class MallInfoPage extends Component {
 
     showSpecInfo = (temp) => {
         console.log(temp);
-        this.setState({
-            specShow: !this.state.specShow,
-            selectProduct: temp
-        })
+        if (util.isEmpty(temp)) {
+            this.setState({
+                specShow: !this.state.specShow
+            })
+        } else
+            this.setState({
+                specShow: !this.state.specShow,
+                selectProduct: temp
+            })
     }
 }
 
