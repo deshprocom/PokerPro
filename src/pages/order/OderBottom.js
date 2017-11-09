@@ -27,7 +27,9 @@ const styleO = StyleSheet.create({
         backgroundColor:"#FFFFFF",
         position:'absolute',
         bottom:0,
-        flexDirection:'row'
+        flexDirection:'row',
+        alignItems: 'center',
+        width: '100%'
     },
     orderSubmit:{
         backgroundColor: '#F34A4A',

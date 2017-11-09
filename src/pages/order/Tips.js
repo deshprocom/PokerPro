@@ -9,15 +9,14 @@ export default class Tips extends PureComponent {
     };
 
     render(){
-        const{showTips}= this.state;
         return(
             <View>
-                {showTips?
+                {this.state.showTips?
                     <View style={styleT.tipsView}>
                         <TouchableOpacity style={styleT.tipsTouch}
                                           onPress={()=>{
                             setTimeout(this.setState({
-                                showTips : !showTips,
+                                showTips : ! this.state.showTips,
                             }),1000)
                         }}>
                             <Image style={styleT.tipsImg} source={Images.close}/>

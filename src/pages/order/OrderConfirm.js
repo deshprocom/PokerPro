@@ -30,15 +30,19 @@ export default class OrderConfirm extends PureComponent {
 
     render(){
         return(
-            <ScrollView style={styleO.orderView}>
-                {this.topBar()}
-                <Tips/>
-                <ShipAddress/>
-                <MallInfo/>
-                <LeaveMessage/>
-                <OrderDetails/>
+            <View>
+                <ScrollView style={styleO.orderView}>
+                    {this.topBar()}
+                    <Tips/>
+                    <ShipAddress/>
+                    <MallInfo/>
+                    <LeaveMessage/>
+                    <OrderDetails/>
+                </ScrollView>
+
                 <OderBottom/>
-            </ScrollView>
+            </View>
+
         );
     }
 }
