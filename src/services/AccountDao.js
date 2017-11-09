@@ -241,8 +241,9 @@ export function setLoginUser(ret) {
             }, err => {
             });
 
+
             //获取收货地址
-            getAddressList(data=>{
+            getAddressList(data => {
             });
 
             //统计登陆用户

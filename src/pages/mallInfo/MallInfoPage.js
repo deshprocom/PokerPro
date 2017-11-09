@@ -10,12 +10,14 @@ import MallIntroduction from './MallIntroduction';
 import MallInfoBottom from './MallInfoBottom';
 import ProductSpecificationInfo from './ProductSpecificationInfo';
 import {getProductDetail} from '../../services/MallDao';
+import {util} from '../../utils/ComonHelper';
 
 export default class MallInfoPage extends Component {
     state = {
         specShow: false,
         opacity: 0,
-        product: {}
+        product: {},
+        selectProduct: {}
     };
 
     componentDidMount() {
@@ -56,7 +58,7 @@ export default class MallInfoPage extends Component {
 
 
     render() {
-        const {specShow, product} = this.state;
+        const {specShow, product, selectProduct} = this.state;
         return (
             <View style={ApplicationStyles.bgContainer}>
 
@@ -68,6 +70,7 @@ export default class MallInfoPage extends Component {
                         product={product}/>
 
                     <ProductSpecification
+                        selectProduct={selectProduct}
                         showSpecInfo={this.showSpecInfo}
                     />
                     <ShipAddress/>
@@ -83,6 +86,7 @@ export default class MallInfoPage extends Component {
                     showSpecInfo={this.showSpecInfo}/>
 
                 {specShow ? <ProductSpecificationInfo
+                    selectProduct={selectProduct}
                     product={product}
                     showSpecInfo={this.showSpecInfo}/> : null}
 
@@ -106,10 +110,17 @@ export default class MallInfoPage extends Component {
         }
     };
 
-    showSpecInfo = () => {
-        this.setState({
-            specShow: !this.state.specShow
-        })
+    showSpecInfo = (temp) => {
+        console.log(temp);
+        if (util.isEmpty(temp)) {
+            this.setState({
+                specShow: !this.state.specShow
+            })
+        } else
+            this.setState({
+                specShow: !this.state.specShow,
+                selectProduct: temp
+            })
     }
 }
 

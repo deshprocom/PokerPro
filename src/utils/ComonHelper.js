@@ -16,6 +16,8 @@ import UMShare from 'react-native-umshare';
 import *as wechat from 'react-native-wechat'
 import * as Constants from '../configs/Constants';
 import {getApiType} from '../services/RequestHelper';
+import _ from 'lodash';
+
 
 export const YYYY_MM_DD = 'YYYY.MM.DD';
 export const DATA_SS = 'YYYY-MM-DD hh:mm:ss';
@@ -26,6 +28,8 @@ export const MM_DD = 'MM-DD';
 
 const HOST = 'https://h5.deshpro.com/';
 const THOST = 'http://test.h5.deshpro.com/';
+
+export const util = _;
 
 function shareHost() {
     if (getApiType() === 'production')
@@ -68,7 +72,28 @@ export function updateApp(data) {
 
 }
 
+/*获取购物车*/
+export function getCarts() {
+    storage.load({key: StorageKey.ShoppingCarts})
+        .then(ret => {
+            console.log('shoppingCarts:', ret);
+            global.shoppingCarts = ret;
+        });
 
+}
+
+/*添加商品到购物车*/
+export function pushProductToCart(product) {
+
+    global.shoppingCarts.push(product);
+    storage.save({
+        key: StorageKey.ShoppingCarts,
+        rawData: global.shoppingCarts
+    });
+    console.log(global.shoppingCarts)
+}
+
+/*App更新提示*/
 function updateAlet(data) {
 
     const upgrade = data.force_upgrade ? [{

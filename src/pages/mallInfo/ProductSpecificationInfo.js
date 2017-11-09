@@ -3,8 +3,9 @@ import {View, Text, Image, StyleSheet, TouchableOpacity, ScrollView} from 'react
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import * as Animatable from 'react-native-animatable';
 import I18n from 'react-native-i18n';
-import {showToast} from '../../utils/ComonHelper';
-import _ from 'lodash'
+import {showToast, strNotNull, pushProductToCart} from '../../utils/ComonHelper';
+import _ from 'lodash';
+
 
 export default class ProductSpecificationInfo extends PureComponent {
     state = {
@@ -17,14 +18,18 @@ export default class ProductSpecificationInfo extends PureComponent {
 
     componentDidMount() {
 
-        const {icon, master, option_types} = this.props.product;
+        const {product, selectProduct} = this.props;
+        const {icon, master, option_types} = product;
+        this.tempProduct = selectProduct;
         const {price, stock} = master;
         this.setState({
             optionTypes: option_types,
             tempImg: icon,
             tempPrice: price,
             tempStock: stock
-        })
+        });
+
+
     }
 
     tabBlank = (x, array) => {
@@ -121,7 +126,7 @@ export default class ProductSpecificationInfo extends PureComponent {
             })}
 
             <View style={styleP.buyQuantity}>
-                <Text style={[styleP.sizeTxt1, {marginTop: 20}]}>购买数量</Text>
+                <Text style={[styleP.sizeTxt1, {marginTop: 20}]}>{I18n.t('buy_count')}</Text>
                 <View style={{flex: 1}}/>
                 {this.buyQuantity()}
             </View>
@@ -154,9 +159,10 @@ export default class ProductSpecificationInfo extends PureComponent {
 
         if (tempArr.length > 0) {
             const {image, price, stock} = tempArr[0];
+            this.tempProduct = tempArr[0];
             this.setState({
                 tempStock: stock,
-                tempImg: image,
+                tempImg: strNotNull(image) ? image : this.state.tempImg,
                 tempPrice: price,
                 optionTypes: optionTypes
             })
@@ -192,7 +198,7 @@ export default class ProductSpecificationInfo extends PureComponent {
                     <TouchableOpacity
                         style={styleP.closeView}
                         onPress={() => {
-                            this.props.showSpecInfo()
+                            this.props.showSpecInfo(this.tempProduct)
                         }}>
                         <Image style={styleP.closeImg} source={Images.close}/>
                     </TouchableOpacity>
@@ -204,13 +210,28 @@ export default class ProductSpecificationInfo extends PureComponent {
 
 
                 <View style={styleP.confirmView}>
-                    <TouchableOpacity style={styleP.confirm}>
+                    <TouchableOpacity
+                        onPress={this.addCarts}
+                        style={styleP.confirm}>
                         <Text style={styleP.confirmTxt}>{I18n.t('confirm')}</Text>
                     </TouchableOpacity>
                 </View>
             </Animatable.View>
 
         );
+    }
+
+
+    addCarts = () => {
+        const {number} = this.state;
+        if (_.isEmpty(this.tempProduct)) {
+            showToast(I18n.t('ple_select_all'));
+            return;
+        }
+
+        let selectCommodity = {number: number, commodity: this.tempProduct};
+        pushProductToCart(selectCommodity);
+        this.props.showSpecInfo(this.tempProduct)
     }
 }
 const styleP = StyleSheet.create({
@@ -255,15 +276,17 @@ const styleP = StyleSheet.create({
         color: '#333333'
     },
     closeView: {
-        width: 25,
-        height: 25,
+        width: 40,
+        height: 40,
         position: 'absolute',
-        top: 10,
-        right: 16
+        top: 0,
+        right: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     closeImg: {
         width: 18,
-        height: 18
+        height: 18,
     },
     size: {
         backgroundColor: '#FFFFFF',

@@ -18,29 +18,32 @@ export default class MallTypeView extends PureComponent {
 
     render() {
         const {categories} = this.props;
-        return <View style={ApplicationStyles.bgContainer}>
-            <ScrollableTabView
-                renderTabBar={() => <ScrollableTabBar
-                    showCatePage={this.props.showCatePage}
-                    backgroundColor={Colors.white}
-                    activeTextColor="#F34A4A"
-                    inactiveTextColor={Colors.txt_444}
-                    textStyle={{fontSize: 15}}
-                    style={{borderColor: Colors._EEE}}
-                    underlineStyle={{backgroundColor: '#F34A4A', height: 2}}
-                />}>
+        if (categories.length > 0)
+            return <View style={ApplicationStyles.bgContainer}>
+                <ScrollableTabView
+                    renderTabBar={() => <ScrollableTabBar
+                        showCatePage={this.props.showCatePage}
+                        backgroundColor={Colors.white}
+                        activeTextColor="#F34A4A"
+                        inactiveTextColor={Colors.txt_444}
+                        textStyle={{fontSize: 15}}
+                        style={{borderColor: Colors._EEE}}
+                        underlineStyle={{backgroundColor: '#F34A4A', height: 2}}
+                    />}>
 
-                {categories.map((item, key) => {
+                    {categories.map((item, key) => {
 
-                    return <MallList
-                        category={item}
-                        tabLabel={item.name}
-                        key={`mallList${key}`}/>
-                })}
+                        return <MallList
+                            category={item}
+                            tabLabel={item.name}
+                            key={`mallList${key}`}/>
+                    })}
 
 
-            </ScrollableTabView>
-        </View>
+                </ScrollableTabView>
+            </View>;
+        else
+            return <View/>
 
     }
 

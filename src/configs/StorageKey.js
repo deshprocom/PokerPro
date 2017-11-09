@@ -13,6 +13,7 @@ export default {
     FontSizeNum: 'FontSizeNum',
     UserAvatar:'UserAvatar',
     Activity:"Activity",
-    MallSearchRecord:'MallSearchRecord'
+    MallSearchRecord:'MallSearchRecord',
+    ShoppingCarts:'ShoppingCarts'
 
 }
