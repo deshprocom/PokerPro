@@ -3,6 +3,7 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity} from 'react
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import PropTypes from 'prop-types';
+import * as Animatable from 'react-native-animatable';
 
 export default class MallInfoBottom extends Component {
 
@@ -16,6 +17,7 @@ export default class MallInfoBottom extends Component {
 
 
     render() {
+
         return (
             <View style={styleB.mallBottom}>
                 <TouchableOpacity
@@ -24,9 +26,8 @@ export default class MallInfoBottom extends Component {
                         router.toShippingCart(this.props)
                     }}>
                     <Image style={styleB.shoppingCarImg} source={Images.shoppingCart}/>
-                    <View style={styleB.shoppingCarView}>
-                        <Text style={styleB.shoppingCarTxt}>1</Text>
-                    </View>
+                    {this.countView()}
+
                 </TouchableOpacity>
                 <View style={{flex: 1}}/>
                 <TouchableOpacity
@@ -38,6 +39,17 @@ export default class MallInfoBottom extends Component {
                 </TouchableOpacity>
             </View>
         );
+    }
+
+    countView = () => {
+        let count = global.shoppingCarts.length;
+        if (count > 0)
+            return <Animatable.View
+                delay={700}
+                animation="zoomInDown"
+                style={styleB.shoppingCarView}>
+                <Text style={styleB.shoppingCarTxt}>{count}</Text>
+            </Animatable.View>
     }
 }
 
