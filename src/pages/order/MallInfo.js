@@ -54,7 +54,7 @@ export default class MallInfo extends PureComponent {
                 </View>
                 <View style={styleM.infoImgView}>
                     <FlatList
-                        style={{paddingTop: 13, marginBottom: 12}}
+
                         data={this.state.dataHosts}
                         showsHorizontalScrollIndicator={false}
                         ItemSeparatorComponent={this._separator}
@@ -62,12 +62,14 @@ export default class MallInfo extends PureComponent {
                         keyExtractor={this._keyExtractor}
                     />
                 </View>
-                <View style={styleM.expandView}>
-                    <Text style={styleM.expandTxt}>{I18n.t('expandMore')}</Text>
-                    <TouchableOpacity style={styleM.expandTouch}>
-                        <Image style={styleM.expandImg} source={Images.expand}/>
-                    </TouchableOpacity>
-                </View>
+                <TouchableOpacity style={styleM.expandView}>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Text style={styleM.expandTxt}>{I18n.t('expandMore')}</Text>
+                        <TouchableOpacity style={styleM.expandTouch}>
+                            <Image style={styleM.expandImg} source={Images.expand}/>
+                        </TouchableOpacity>
+                    </View>
+                </TouchableOpacity>
             </View>
         )}
 }
@@ -96,21 +98,23 @@ const styleM = StyleSheet.create({
         backgroundColor:'#FFFFFF'
     },
     renderItem: {
-        flexDirection: 'row', alignItems: 'center', backgroundColor: '#FFFFFF', paddingTop: 15, paddingBottom: 11
+        flexDirection: 'row', backgroundColor: '#FFFFFF',paddingBottom: 11
     },
     mallImg: {
         width: 100,
         height: 96,
-        marginLeft: 17
+        marginLeft: 17,
+        marginTop:12,
     },
     TxtView: {
         flex: 1,
         marginLeft: 12,
+        marginTop:15,
     },
     mallTextName: {
         fontSize: 14,
         color: '#333333',
-        marginRight: 27
+        marginRight: 17
     },
     mallAttributes: {
         fontSize: 10,
@@ -120,21 +124,25 @@ const styleM = StyleSheet.create({
     },
     PriceView: {
         flexDirection: 'row',
+        marginTop:5,
+        alignItems:'center',
+
     },
     Price: {
         fontSize: 14,
         color: '#F34A4A',
-        marginTop: 19
     },
     originPrice:{
         fontSize: 12,
         color: '#AAAAAA',
         textDecorationLine:'line-through',
         textDecorationColor:'#979797',
+        marginLeft:17
     },
     quantitys:{
         fontSize: 17,
-        color: '#161718'
+        color: '#161718',
+        marginRight:17
     },
     returned:{
         backgroundColor: '#F34A4A',
@@ -142,7 +150,8 @@ const styleM = StyleSheet.create({
         width:48,
         height:18,
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
+        marginTop:2
     },
     returnedTxt:{
         fontSize: 10,
@@ -152,21 +161,19 @@ const styleM = StyleSheet.create({
         height:30,
         marginTop:3,
         backgroundColor:'#FFFFFF',
-        flexDirection:'row',
-        alignItems:'center'
+        alignItems:'center',
+        justifyContent:'center'
     },
     expandTxt:{
         fontSize: 14,
         color:'#333333',
-        flex:1
     },
     expandTouch:{
-        width:25,
-        height:30,
-        flex:1
+
     },
     expandImg:{
         width:19,
-        height:10
+        height:10,
+        marginLeft:6
     }
 })

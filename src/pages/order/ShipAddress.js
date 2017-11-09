@@ -74,9 +74,12 @@ const styleS = StyleSheet.create({
         marginRight: 16,
         width: 30,
         height: 50,
+        alignItems:'center',
+        justifyContent:'center'
     },
     shipAddrImg: {
         width: 8,
         height: 16,
+        marginTop:20
     }
 })

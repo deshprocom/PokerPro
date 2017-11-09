@@ -14,15 +14,15 @@ export default class Tips extends PureComponent {
             <View>
                 {showTips?
                     <View style={styleT.tipsView}>
-                        <Text style={styleT.tipsTxt}>{I18n.t('tips')}</Text>
-                        <TouchableOpacity onPress={()=>{
+                        <TouchableOpacity style={styleT.tipsTouch}
+                                          onPress={()=>{
                             setTimeout(this.setState({
                                 showTips : !showTips,
                             }),1000)
                         }}>
                             <Image style={styleT.tipsImg} source={Images.close}/>
                         </TouchableOpacity>
-
+                        <Text style={styleT.tipsTxt}>{I18n.t('tips')}</Text>
                     </View>:<View/>}
             </View>
         )}
@@ -32,16 +32,24 @@ const styleT = StyleSheet.create({
         height:46,
         backgroundColor:'#F34A4A',
         opacity:0.6,
-        flexDirection:'row',
+        flexDirection:'row-reverse',
         alignItems:'center'
     },
     tipsTxt:{
         fontSize: 12,
         color: '#FFFFFF',
-        marginLeft:41
+        marginLeft:41,
+        marginRight:15
+    },
+    tipsTouch:{
+        width:30,
+        height:30,
+        alignItems:'center',
+        justifyContent:'center'
     },
     tipsImg:{
         width:18,
-        height:18
+        height:18,
+        marginRight:17
     }
 })

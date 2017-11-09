@@ -8,7 +8,9 @@ export default class LeaveMessage extends PureComponent {
     render(){
         return(
             <TextInput style={styleL.messageView}
-                       value={I18n.t('leaveMessage')}>
+                       placeholder={I18n.t('leaveMessage')}
+                       placeholderTextColor="#AAAAAA"
+                       >
 
             </TextInput>
         )}
@@ -16,6 +18,7 @@ export default class LeaveMessage extends PureComponent {
 const styleL = StyleSheet.create({
     messageView:{
         height:85,
-        backgroundColor:"#FFFFFF"
+        backgroundColor:"#FFFFFF",
+        marginTop:11
     }
 })
