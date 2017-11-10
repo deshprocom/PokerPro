@@ -29,7 +29,7 @@ export default class OrderMessage extends PureComponent {
 const styleO = StyleSheet.create({
     detailsView:{
         marginTop:10,
-        marginBottom:50
+
     },
     detailsName:{
         height:40,

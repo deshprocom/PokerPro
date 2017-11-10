@@ -27,10 +27,9 @@ const styleT = StyleSheet.create({
         alignItems:'center'
     },
     tipsTxt:{
-        fontSize: 12,
+        fontSize: 14,
         color: '#FFFFFF',
-        marginLeft:41,
-        marginRight:15
+        marginLeft:17
     },
     tipsTouch:{
         width:30,

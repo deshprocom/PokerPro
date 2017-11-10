@@ -71,7 +71,7 @@ import EmptyCart from "../pages/malls/shoppingCart/EmptyCart";
 import EditCartPage from "../pages/malls/shoppingCart/EditCartPage";
 import MallSearchResult from "../pages/malls/MallSearchResult";
 import OrderConfirmPage from '../pages/malls/order/OrderConfirmPage';
-import CompletedOrderPage from '../pages/malls/order/CompletedOrderPage';
+import CompletedOrderPage from '../pages/malls/orderStatus/CompletedOrderPage';
 
 
 export const Stacks = Actions.create(

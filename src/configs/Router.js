@@ -679,5 +679,11 @@ export default class Router {
         })
     }
 
+    toCompletedOrderPage() {
+        this.stackPush({
+            name: 'CompletedOrderPage'
+        })
+    }
+
 
 }

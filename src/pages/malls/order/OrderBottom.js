@@ -22,7 +22,8 @@ export default class OrderBottom extends PureComponent {
                 <View style={{flex:1}}/>
                 <TouchableOpacity
                     onPress={() => {
-                        this.props.showExpiredInfo()
+                        {/*this.props.showExpiredInfo()*/}
+                        router.toCompletedOrderPage()
                     }}
                     style={styleO.orderSubmit}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('orderSubmit')}</Text>

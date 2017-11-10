@@ -76,7 +76,7 @@ export default class MallInfoPageTopBar extends Component {
 
 
         return (
-            <View style={{backgroundColor: '#FFFFFF'}}>
+            <View style={{backgroundColor: Colors.white}}>
 
                 {this._carouselView()}
                 {this._detailView()}

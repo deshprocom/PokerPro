@@ -13,6 +13,7 @@ export default class Tips extends PureComponent {
             <View>
                 {this.state.showTips?
                     <View style={styleT.tipsView}>
+
                         <TouchableOpacity style={styleT.tipsTouch}
                                           onPress={()=>{
                             setTimeout(this.setState({
@@ -22,6 +23,7 @@ export default class Tips extends PureComponent {
                             <Image style={styleT.tipsImg} source={Images.close}/>
                         </TouchableOpacity>
                         <Text style={styleT.tipsTxt}>{I18n.t('tips')}</Text>
+
                     </View>:<View/>}
             </View>
         )}

@@ -37,7 +37,8 @@ const styleO = StyleSheet.create({
         bottom:0,
         flexDirection:'row-reverse',
         alignItems: 'center',
-        width: '100%'
+        width: '100%',
+        marginTop:80
     },
     returnedBottom:{
         borderWidth:1,

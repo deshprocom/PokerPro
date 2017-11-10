@@ -11,7 +11,10 @@ export default class Positioning extends PureComponent {
     render(){
         return(
             <View style={styleC.addressView}>
-                <Image style={styleC.shipAddrImg} source={Images.positioning}/>
+                <View style={styleC.shipImagView}>
+                    <Image style={styleC.shipAddrImg} source={Images.positioning}/>
+                </View>
+
                 <View style={styleC.shipAddr}>
                     <View style={{flexDirection: 'row',alignItems:'center'}}>
                         <Text style={styleC.shipAddrTxt1}>{I18n.t('buy_person')}:</Text>
@@ -28,7 +31,14 @@ const styleC = StyleSheet.create({
     addressView:{
         flexDirection:'row',
         alignItems:'center',
-        backgroundColor:'#FFFFFF'
+        backgroundColor:'#FFFFFF',
+        paddingBottom:16
+    },
+    shipImagView:{
+        width: 28,
+        height: 28,
+        marginLeft:17,
+        alignItems:'center'
     },
     title:{
         height:40,
@@ -44,19 +54,17 @@ const styleC = StyleSheet.create({
     shipAddr: {
         flexDirection: 'column',
         alignItems: 'center',
-        marginLeft:28,
+        marginLeft:21,
         marginTop:20
     },
     shipAddrTxt1: {
         fontSize: 14,
         color: '#666666',
-        marginLeft: 19
     },
     shipAddrTxt2: {
         fontSize: 14,
         color: '#666666',
-        marginLeft: 17,
-        marginTop: 5
+        marginTop: 10
     },
     mobile:{
         marginLeft:20,
@@ -71,9 +79,7 @@ const styleC = StyleSheet.create({
         justifyContent:'center'
     },
     shipAddrImg: {
-        width: 28,
-        height: 28,
-        marginTop:38,
-        marginLeft:17
+        width: 35,
+        height: 28
     }
 })

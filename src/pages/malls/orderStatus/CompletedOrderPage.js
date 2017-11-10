@@ -3,12 +3,13 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, L
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 import OrderStatus from './OrderStatus';
+import MallInfo from '../order/MallInfo';
 import Positioning from './Positioning';
 import OrderMessage from './OrderMessage';
-import OrderDetails from './OrderDetails';
+import OrderDetails from '../order/OrderDetails';
 import CompletedBottom from './CompletedBottom';
 
-export default class CompletedOrder extends PureComponent {
+export default class CompletedOrderPage extends PureComponent {
 
     state={
 
@@ -41,7 +42,9 @@ export default class CompletedOrder extends PureComponent {
                     <MallInfo/>
                     <OrderMessage/>
                     <OrderDetails/>
+                    <View style={{height:80}}/>
                 </ScrollView>
+
 
                 <CompletedBottom/>
             </View>
