@@ -48,14 +48,7 @@ export default class MallInfo extends PureComponent {
         newEndIndex=newEndIndex+2;
 
         data.forEach(function(x){
-            console.log("startIndex:",newStartIndex)
-            console.log("endIndex:",newEndIndex)
-            console.log("x.id:",x.id)
-            console.log("startIndexTrue:",x.id <= newEndIndex)
-            console.log("endIndexTrue:",newEndIndex < data.length)
-            console.log("x.idTrue:",x.id >= newStartIndex)
             if(x.id <= newEndIndex && newEndIndex <= data.length && x.id >= newStartIndex){
-                console.log("x.id:",x.id)
                 if(newEndIndex > data.length){
                     newShowexpand=false;
                     newEndIndex=data.length;

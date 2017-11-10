@@ -425,5 +425,8 @@
   "orderSubmit": "提交订单",
   "settlement": "去结算",
   "selectAll": "全选",
-  "cart": "购物车"
+  "cart": "购物车",
+  "expiredOrder":"亲，很抱歉！以下商品已失效了！",
+  "continue_payment":"继续付款",
+  "effective_product":"实效商品"
 }

@@ -1,11 +1,18 @@
-import React, {PureComponent, PropTypes} from 'react';
+import React, {PureComponent} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView,TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
+import propTypes from 'prop-types';
 
-export default class OderBottom extends PureComponent {
+export default class OrderBottom extends PureComponent {
+    static propTypes = {
+        showExpiredInfo: propTypes.func.isRequired
+    };
 
 
+    componentDidMount() {
+        // console.log('selectProduct', this.props.selectProduct)
+    }
 
     render(){
         return(
@@ -15,7 +22,7 @@ export default class OderBottom extends PureComponent {
                 <View style={{flex:1}}/>
                 <TouchableOpacity
                     onPress={() => {
-
+                        this.props.showExpiredInfo()
                     }}
                     style={styleO.orderSubmit}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('orderSubmit')}</Text>

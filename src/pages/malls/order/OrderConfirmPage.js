@@ -1,4 +1,4 @@
-import React, {PureComponent, PropTypes} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
@@ -7,10 +7,14 @@ import ShipAddress from './ShipAddress';
 import MallInfo from './MallInfo';
 import LeaveMessage from './LeaveMessage';
 import OrderDetails from './OrderDetails';
-import OderBottom from './OderBottom';
+import OrderBottom from './OrderBottom';
+import ExpiredOrder from './ExpiredOrder';
+import {util} from '../../../utils/ComonHelper';
 
-export default class OrderConfirmPage extends PureComponent {
-
+export default class OrderConfirmPage extends Component {
+    state={
+        isExpired: false,
+    }
 
     topBar = () => {
         return (<View style={styleO.topBar}>
@@ -28,7 +32,19 @@ export default class OrderConfirmPage extends PureComponent {
         </View>)
     };
 
+    showExpiredInfo = (temp) => {
+        if (util.isEmpty(temp)) {
+            this.setState({
+                isExpired: !this.state.isExpired
+            })
+        } else
+            this.setState({
+                isExpired: !this.state.isExpired
+            })
+    };
+
     render(){
+        const{isExpired} = this.state;
         return(
             <View>
                 <ScrollView style={styleO.orderView}>
@@ -40,7 +56,10 @@ export default class OrderConfirmPage extends PureComponent {
                     <OrderDetails/>
                 </ScrollView>
 
-                <OderBottom/>
+                <OrderBottom
+                    showExpiredInfo={this.showExpiredInfo}/>
+                {isExpired ? <ExpiredOrder
+                        showExpiredInfo={this.showExpiredInfo}/> : null}
             </View>
 
         );
