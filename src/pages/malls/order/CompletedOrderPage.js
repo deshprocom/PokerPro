@@ -67,6 +67,11 @@ const styleC = StyleSheet.create({
         width: 50,
         justifyContent: 'center'
     },
+    cart:{
+        fontSize: 17,
+        color: '#161718',
+        fontWeight:'bold'
+    },
     backImg: {
         width: 11,
         height: 20,

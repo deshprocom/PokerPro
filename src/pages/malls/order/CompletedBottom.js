@@ -15,16 +15,17 @@ export default class CompletedBottom extends PureComponent {
                     onPress={() => {
                         this.props.showExpiredInfo()
                     }}
-                    style={styleO.returnedBottom}>
-                    <Text style={styleO.orderSubmitTxt}>{I18n.t('returnedMall')}</Text>
+                    style={styleO.customer}>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
                         this.props.showExpiredInfo()
                     }}
-                    style={styleO.customer}>
-                    <Text style={styleO.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>
+                    style={styleO.returnedBottom}>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('returnedMall')}</Text>
                 </TouchableOpacity>
+
             </View>
         )}
 }
@@ -34,14 +35,25 @@ const styleO = StyleSheet.create({
         backgroundColor:"#FFFFFF",
         position:'absolute',
         bottom:0,
-        flexDirection:'row',
+        flexDirection:'row-reverse',
         alignItems: 'center',
         width: '100%'
     },
-    orderSubmit:{
-        backgroundColor: '#F34A4A',
+    returnedBottom:{
+        borderWidth:1,
+        borderColor:'#333333',
         borderRadius: 4,
-        width: 89,
+        width: 90,
+        height: 37,
+        marginRight: 17,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    customer:{
+        borderWidth:1,
+        borderColor:'#333333',
+        borderRadius: 4,
+        width: 90,
         height: 37,
         marginRight: 17,
         alignItems: 'center',
