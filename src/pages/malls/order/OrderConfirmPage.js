@@ -7,10 +7,10 @@ import ShipAddress from './ShipAddress';
 import MallInfo from './MallInfo';
 import LeaveMessage from './LeaveMessage';
 import OrderDetails from './OrderDetails';
-import OderBottom from './OderBottom';
+import OrderBottom from './OrderBottom';
 import {NavigationBar} from '../../../components';
 
-export default class OrderConfirm extends PureComponent {
+export default class OrderConfirmPage extends PureComponent {
 
 
     render() {
@@ -32,7 +32,7 @@ export default class OrderConfirm extends PureComponent {
                     <OrderDetails/>
                 </ScrollView>
 
-                <OderBottom/>
+                <OrderBottom/>
             </View>
 
         );
