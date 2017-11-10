@@ -22,7 +22,9 @@ export default class Tips extends PureComponent {
                         }}>
                             <Image style={styleT.tipsImg} source={Images.close}/>
                         </TouchableOpacity>
-                        <Text style={styleT.tipsTxt}>{I18n.t('tips')}</Text>
+                        <View style={{marginLeft:41}}>
+                            <Text style={styleT.tipsTxt}>{I18n.t('tips')}</Text>
+                        </View>
 
                     </View>:<View/>}
             </View>
@@ -33,8 +35,8 @@ const styleT = StyleSheet.create({
         height:46,
         backgroundColor:'#F34A4A',
         opacity:0.6,
-        flexDirection:'row',
-        alignItems:'flex-end',
+        flexDirection:'row-reverse',
+        alignItems:'center',
 
     },
     tipsTxt:{
@@ -47,11 +49,12 @@ const styleT = StyleSheet.create({
         width:30,
         height:30,
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
+        marginRight:15
     },
     tipsImg:{
         width:18,
         height:18,
-        marginRight:17
+
     }
 })
