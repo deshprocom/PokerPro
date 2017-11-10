@@ -25,7 +25,7 @@ export default class MallIntroduction extends Component {
         return (
             <View style={styleI.production}>
                 <View style={styleI.productionName}>
-                    <Text style={styleI.productionNameTxt}>商品介绍</Text>
+                    <Text style={styleI.productionNameTxt}>{I18n.t('mallIntroduction')}</Text>
                 </View>
                 <View style={{height: 1, backgroundColor: Colors._ECE, width: '100%'}}/>
                 {this.markdownView()}
@@ -48,6 +48,7 @@ const styleI = StyleSheet.create({
         fontSize: 14,
         color: '#333333',
         marginLeft: 17,
-        marginTop: 11
+        marginTop: 11,
+        fontWeight:'bold'
     }
 })

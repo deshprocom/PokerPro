@@ -2,6 +2,7 @@ import React, {PureComponent, PropTypes} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
+import RenderItem from './RenderItem';
 
 const data = [{id: 1}, {id: 2}, {id: 3}, {id: 4},{id:5}];
 
@@ -48,14 +49,7 @@ export default class MallInfo extends PureComponent {
         newEndIndex=newEndIndex+2;
 
         data.forEach(function(x){
-            console.log("startIndex:",newStartIndex)
-            console.log("endIndex:",newEndIndex)
-            console.log("x.id:",x.id)
-            console.log("startIndexTrue:",x.id <= newEndIndex)
-            console.log("endIndexTrue:",newEndIndex < data.length)
-            console.log("x.idTrue:",x.id >= newStartIndex)
             if(x.id <= newEndIndex && newEndIndex <= data.length && x.id >= newStartIndex){
-                console.log("x.id:",x.id)
                 if(newEndIndex > data.length){
                     newShowexpand=false;
                     newEndIndex=data.length;
@@ -84,23 +78,7 @@ export default class MallInfo extends PureComponent {
     _renderItem = ({item}) => {
 
         return (
-            <View style={styleM.renderItem}>
-
-                <Image style={styleM.mallImg} source={Images.empty_image}/>
-                <View style={styleM.TxtView}>
-                    <Text numberOfLines={2} style={styleM.mallTextName}>筹码14克皇冠粘土百家乐德州扑克筹码币</Text>
-                    <Text style={styleM.mallAttributes}>{I18n.t('weight')}：1.62KG {I18n.t('weight')}：黑 {I18n.t('quantity')}：500</Text>
-                    <View style={styleM.returned}>
-                        <Text style={styleM.returnedTxt}>{I18n.t('returned')}</Text>
-                    </View>
-                    <View style={styleM.PriceView}>
-                        <Text style={styleM.Price}>¥555555.55</Text>
-                        <Text style={styleM.originPrice}>¥999999</Text>
-                        <View style={{flex:1}}/>
-                        <Text style={styleM.quantitys}>X2</Text>
-                    </View>
-                </View>
-            </View>
+            <RenderItem/>
 
         )
     };
@@ -116,7 +94,7 @@ export default class MallInfo extends PureComponent {
                 <View style={styleM.infoName}>
                     <Text style={styleM.infoLeft}>{I18n.t('mallInfo')}</Text>
                     <View style={{flex:1}}/>
-                    <Text style={styleM.infototal}>{I18n.t('total')}:5{I18n.t('pieces')}</Text>
+                    <Text style={styleM.infototal}>{I18n.t('total')}5{I18n.t('pieces')}</Text>
                 </View>
                 <View style={styleM.infoImgView}>
                     <FlatList
@@ -133,12 +111,12 @@ export default class MallInfo extends PureComponent {
                         onPress={()=>{
                             this._expandData()
                         }}>
-                        <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <TouchableOpacity style={{flexDirection:'row',alignItems:'center'}}>
                             <Text style={styleM.expandTxt}>{I18n.t('expandMore')}</Text>
                             <TouchableOpacity style={styleM.expandTouch}>
                                 <Image style={styleM.expandImg} source={Images.expand}/>
                             </TouchableOpacity>
-                        </View>
+                        </TouchableOpacity>
                     </TouchableOpacity>:null}
 
             </View>
@@ -157,7 +135,8 @@ const styleM = StyleSheet.create({
     infoLeft:{
         fontSize: 14,
         color: '#333333',
-        marginLeft:17
+        marginLeft:17,
+        fontWeight:'bold'
     },
     infototal:{
         fontSize: 14,

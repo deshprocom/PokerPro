@@ -148,14 +148,12 @@ export default class ProductSpecificationInfo extends PureComponent {
                 }
             }
         });
-        console.log('selectOption', obj)
 
         let tempArr = variants.filter(item => {
             return _.isEqual(obj, item.sku_option_values)
 
         });
 
-        console.log('arr', tempArr);
 
         if (tempArr.length > 0) {
             const {image, price, stock} = tempArr[0];

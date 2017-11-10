@@ -203,6 +203,7 @@ export default class ShoppingCart extends PureComponent {
                             style={styleS.mallAttributes}>{I18n.t('weight')}：1.62KG {I18n.t('weight')}：黑 {I18n.t('quantity')}：500</Text>
                         <View style={styleS.PriceView}>
                             <Text style={styleS.Price}>¥{price}</Text>
+                            <View style={{flex:1}}/>
                             {this.buyQuantity(item)}
                         </View>
                     </View>
@@ -392,7 +393,7 @@ const styleS = StyleSheet.create({
         flexDirection: 'row', alignItems: 'center', backgroundColor: '#FFFFFF', paddingTop: 15, paddingBottom: 11
     },
     quantity: {
-        marginRight: 17, flexDirection: 'row', alignItems: 'center', marginTop: 9, marginLeft: 15
+        marginRight: 17, flexDirection: 'row', alignItems: 'center', marginTop: 9,
     },
     selectedAll: {
         fontSize: 14,

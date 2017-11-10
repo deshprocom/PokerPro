@@ -95,7 +95,7 @@ const styleS = StyleSheet.create({
         color: '#333333',
         marginLeft: 17,
         marginTop: 11,
-
+        fontWeight:'bold'
     },
     shipAddr: {
         backgroundColor: '#FFFFFF',

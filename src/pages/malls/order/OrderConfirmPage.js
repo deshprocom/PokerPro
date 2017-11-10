@@ -7,16 +7,32 @@ import ShipAddress from './ShipAddress';
 import MallInfo from './MallInfo';
 import LeaveMessage from './LeaveMessage';
 import OrderDetails from './OrderDetails';
-import OderBottom from './OderBottom';
+import OrderBottom from './OrderBottom';
 import {NavigationBar} from '../../../components';
+import ExpiredOrder from './ExpiredOrder';
+import {util} from '../../../utils/ComonHelper';
 
-export default class OrderConfirm extends PureComponent {
-
+export default class OrderConfirmPage extends PureComponent {
+    state = {
+        isExpired: false,
+    };
+    showExpiredInfo = (temp) => {
+        if (util.isEmpty(temp)) {
+            this.setState({
+                isExpired: !this.state.isExpired
+            })
+        } else
+            this.setState({
+                isExpired: !this.state.isExpired
+            })
+    };
 
     render() {
+        const {isExpired} = this.state;
         return (
-            <View>
+            <View style={{flex:1}}>
                 <NavigationBar
+                    barStyle={'dark-content'}
                     toolbarStyle={{backgroundColor: 'white'}}
                     leftBtnIcon={Images.mall_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
@@ -30,9 +46,14 @@ export default class OrderConfirm extends PureComponent {
                     <MallInfo/>
                     <LeaveMessage/>
                     <OrderDetails/>
-                </ScrollView>
+                    <View style={{height:80}}/>
 
-                <OderBottom/>
+                </ScrollView>
+                <OrderBottom
+                    showExpiredInfo={this.showExpiredInfo}/>
+
+                {isExpired ? <ExpiredOrder
+                        showExpiredInfo={this.showExpiredInfo}/> : null}
             </View>
 
         );
@@ -55,6 +76,11 @@ const styleO = StyleSheet.create({
         height: 44,
         width: 50,
         justifyContent: 'center'
+    },
+    cart: {
+        fontSize: 17,
+        color: '#161718',
+        fontWeight: 'bold'
     },
     backImg: {
         width: 11,

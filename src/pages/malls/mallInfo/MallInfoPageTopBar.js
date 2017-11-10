@@ -58,13 +58,13 @@ export default class MallInfoPageTopBar extends Component {
                 <Text style={styleM.mallInfoTopText}>{title}</Text>
             </View>
             <View style={styleM.textPrices}>
-                <Text style={styleM.textPrice}>¥{price}</Text>
+                <Text style={styleM.textPrice1}>¥</Text><Text style={styleM.textPrice}>{price}</Text>
                 <Text style={styleM.textOriginPrice}>¥{original_price}</Text>
                 <Text style={styleM.discount}>2.3折</Text>
             </View>
             <View style={styleM.locations}>
-                <View style={styleM.return7}><Text style={styleM.return7Txt}>7天退换</Text></View>
-                <Text style={styleM.freight}>运费：¥12.00</Text>
+                <View style={styleM.return7}><Text style={styleM.return7Txt}>{I18n.t('returned')}</Text></View>
+                <Text style={styleM.freight}>{I18n.t('cost')}：¥12.00</Text>
                 <View style={{flex: 1}}/>
                 <Text style={styleM.location}>{origin_point}</Text>
             </View>
@@ -76,7 +76,7 @@ export default class MallInfoPageTopBar extends Component {
 
 
         return (
-            <View style={{backgroundColor: '#FFFFFF'}}>
+            <View style={{backgroundColor: Colors.white}}>
 
                 {this._carouselView()}
                 {this._detailView()}
@@ -108,10 +108,14 @@ const styleM = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         marginTop: 3
     },
-    textPrice: {
-        fontSize: 24,
+    textPrice1:{
+        fontSize: 18,
         color: '#F34A4A',
         marginLeft: 17,
+    },
+    textPrice: {
+        fontSize: 24,
+        color: '#F34A4A'
     },
     textOriginPrice: {
         fontSize: 14,

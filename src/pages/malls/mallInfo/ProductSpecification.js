@@ -27,10 +27,10 @@ export default class ProductSpecification extends Component {
                         this.props.showSpecInfo()
 
                     }}>
-                    <Text style={styleP.specificationTxt1}>产品规格</Text>
+                    <Text style={styleP.specificationTxt1}>{I18n.t('specification')}</Text>
 
                     <Text
-                        style={styleP.specificationTxt2}>  {util.isEmpty(this.props.selectProduct) ? '未选' : '已选'}</Text>
+                        style={styleP.specificationTxt2}>  {util.isEmpty(this.props.selectProduct) ? I18n.t('unSelected') : I18n.t('selected')}</Text>
 
                     <Text style={styleP.specificationTxt4}>A套餐{id}</Text>
                     <View style={{flex: 1}}/>
@@ -54,7 +54,8 @@ const styleP = StyleSheet.create({
     specificationTxt1: {
         fontSize: 14,
         color: '#333333',
-        marginLeft: 17
+        marginLeft: 17,
+        fontWeight:'bold'
     },
     specificationTxt2: {
         fontSize: 14,
