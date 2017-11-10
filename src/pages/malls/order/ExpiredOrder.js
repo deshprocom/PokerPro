@@ -3,6 +3,7 @@ import * as Animatable from 'react-native-animatable';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView,TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
+import RenderItem from './RenderItem';
 
 export default class ExpiredOrder extends PureComponent {
 
@@ -76,23 +77,7 @@ export default class ExpiredOrder extends PureComponent {
                             </TouchableOpacity>
                         </View>
 
-                        <View style={styleE.renderItem}>
-
-                            <Image style={styleE.mallImg} source={Images.empty_image}/>
-                            <View style={styleE.TxtView}>
-                                <Text numberOfLines={2} style={styleE.mallTextName}>筹码14克皇冠粘土百家乐德州扑克筹码币</Text>
-                                <Text style={styleE.mallAttributes}>{I18n.t('weight')}：1.62KG {I18n.t('weight')}：黑 {I18n.t('quantity')}：500</Text>
-                                <View style={styleE.returned}>
-                                    <Text style={styleE.returnedTxt}>{I18n.t('returned')}</Text>
-                                </View>
-                                <View style={styleE.PriceView}>
-                                    <Text style={styleE.Price}>¥555555.55</Text>
-                                    <Text style={styleE.originPrice}>¥999999</Text>
-                                    <View style={{flex:1}}/>
-                                    <Text style={styleE.quantitys}>X2</Text>
-                                </View>
-                            </View>
-                        </View>
+                        <RenderItem/>
 
                         {this.orderDetails()}
                         {this.orderBottom(this.props)}

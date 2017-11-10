@@ -2,6 +2,7 @@ import React, {PureComponent, PropTypes} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
+import RenderItem from './RenderItem';
 
 const data = [{id: 1}, {id: 2}, {id: 3}, {id: 4},{id:5}];
 
@@ -77,23 +78,7 @@ export default class MallInfo extends PureComponent {
     _renderItem = ({item}) => {
 
         return (
-            <View style={styleM.renderItem}>
-
-                <Image style={styleM.mallImg} source={Images.empty_image}/>
-                <View style={styleM.TxtView}>
-                    <Text numberOfLines={2} style={styleM.mallTextName}>筹码14克皇冠粘土百家乐德州扑克筹码币</Text>
-                    <Text style={styleM.mallAttributes}>{I18n.t('weight')}：1.62KG {I18n.t('weight')}：黑 {I18n.t('quantity')}：500</Text>
-                    <View style={styleM.returned}>
-                        <Text style={styleM.returnedTxt}>{I18n.t('returned')}</Text>
-                    </View>
-                    <View style={styleM.PriceView}>
-                        <Text style={styleM.Price}>¥555555.55</Text>
-                        <Text style={styleM.originPrice}>¥999999</Text>
-                        <View style={{flex:1}}/>
-                        <Text style={styleM.quantitys}>X2</Text>
-                    </View>
-                </View>
-            </View>
+            <RenderItem/>
 
         )
     };
