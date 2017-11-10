@@ -423,6 +423,10 @@
   "expiredOrder":"亲，很抱歉！以下商品已失效了！",
   "continue_payment":"继续付款",
   "effective_product":"实效商品",
-  "returnedMall":"退货／换货"
+  "returnedMall":"退货／换货",
+  "specification":"产品规格",
+  "unSelected":"未选",
+  "selected":"已选",
+  "mallIntroduction":"商品介绍"
 }
 

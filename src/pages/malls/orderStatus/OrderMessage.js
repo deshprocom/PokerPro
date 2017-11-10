@@ -13,13 +13,13 @@ export default class OrderMessage extends PureComponent {
                 </View>
                 <View style={styleO.details}>
                     <View style={styleO.orderNum}>
-                        <Text style={styleO.numName}>{I18n.t('order_num')}:232323</Text>
+                        <Text style={styleO.numName}>{I18n.t('order_num')}: 232323</Text>
                     </View>
                     <View style={styleO.orderNum}>
-                        <Text style={styleO.numName}>{I18n.t('order_time')}:2323</Text>
+                        <Text style={styleO.numName}>{I18n.t('order_time')}: 2323</Text>
                     </View>
                     <View style={styleO.orderStatus}>
-                        <Text style={styleO.numName}>{I18n.t('order_status')}:</Text>
+                        <Text style={styleO.numName}>{I18n.t('order_status')}: </Text>
                         <Text style={styleO.status}>12</Text>
                     </View>
                 </View>

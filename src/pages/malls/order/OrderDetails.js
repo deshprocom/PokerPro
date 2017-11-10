@@ -15,16 +15,16 @@ export default class OrderDetails extends PureComponent {
                     <View style={styleO.priceView}>
                         <Text style={styleO.priceName}>{I18n.t('order_price')}</Text>
                         <View style={{flex:1}}/>
-                        <Text style={styleO.price}>7878</Text>
+                        <Text style={styleO.price}>¥7878</Text>
                     </View>
                     <View style={styleO.costsView}>
                         <Text style={styleO.costsName}>{I18n.t('cost')}</Text>
                         <View style={{flex:1}}/>
-                        <Text style={styleO.price}>12</Text>
+                        <Text style={styleO.price}>¥12</Text>
                     </View>
                 </View>
                 <View style={styleO.paymentView}>
-                    <Text style={styleO.paymentPrice}>787646466</Text>
+                    <Text style={styleO.paymentPrice}>¥787646466</Text>
                     <Text style={styleO.payment}>{I18n.t('payment')}</Text>
 
                 </View>

@@ -20,7 +20,7 @@ export default class RenderItem extends PureComponent {
                         <Text style={styleR.Price}>¥555555.55</Text>
                         <Text style={styleR.originPrice}>¥999999</Text>
                         <View style={{flex:1}}/>
-                        <Text style={styleR.quantitys}>X2</Text>
+                        <Text style={styleR.quantitys}>x2</Text>
                     </View>
                 </View>
             </View>

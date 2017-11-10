@@ -94,7 +94,7 @@ export default class MallInfo extends PureComponent {
                 <View style={styleM.infoName}>
                     <Text style={styleM.infoLeft}>{I18n.t('mallInfo')}</Text>
                     <View style={{flex:1}}/>
-                    <Text style={styleM.infototal}>{I18n.t('total')}:5{I18n.t('pieces')}</Text>
+                    <Text style={styleM.infototal}>{I18n.t('total')}5{I18n.t('pieces')}</Text>
                 </View>
                 <View style={styleM.infoImgView}>
                     <FlatList
@@ -111,12 +111,12 @@ export default class MallInfo extends PureComponent {
                         onPress={()=>{
                             this._expandData()
                         }}>
-                        <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <TouchableOpacity style={{flexDirection:'row',alignItems:'center'}}>
                             <Text style={styleM.expandTxt}>{I18n.t('expandMore')}</Text>
                             <TouchableOpacity style={styleM.expandTouch}>
                                 <Image style={styleM.expandImg} source={Images.expand}/>
                             </TouchableOpacity>
-                        </View>
+                        </TouchableOpacity>
                     </TouchableOpacity>:null}
 
             </View>
@@ -135,7 +135,8 @@ const styleM = StyleSheet.create({
     infoLeft:{
         fontSize: 14,
         color: '#333333',
-        marginLeft:17
+        marginLeft:17,
+        fontWeight:'bold'
     },
     infototal:{
         fontSize: 14,
