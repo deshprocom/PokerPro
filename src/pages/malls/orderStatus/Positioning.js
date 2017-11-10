@@ -17,7 +17,7 @@ export default class Positioning extends PureComponent {
 
                 <View style={styleC.shipAddr}>
                     <View style={{flexDirection: 'row',alignItems:'center'}}>
-                        <Text style={styleC.shipAddrTxt1}>{I18n.t('buy_person')}:</Text>
+                        <Text style={styleC.shipAddrTxt1}>{I18n.t('buy_person')}</Text>
                         <Text style={styleC.shipAddrTxt1}>www</Text>
                         <Text style={styleC.mobile}>1478569332485</Text>
                     </View>
@@ -79,7 +79,7 @@ const styleC = StyleSheet.create({
         justifyContent:'center'
     },
     shipAddrImg: {
-        width: 35,
-        height: 28
+        width: 28,
+        height: 35
     }
 })
