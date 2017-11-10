@@ -682,7 +682,7 @@ export default class Router {
 
     toOrderConfirm() {
         this.stackPush({
-            name: 'OrderConfirm'
+            name: 'OrderConfirmPage'
         })
     }
 

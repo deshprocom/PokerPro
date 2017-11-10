@@ -5,6 +5,8 @@ import I18n from 'react-native-i18n';
 
 export default class OderBottom extends PureComponent {
 
+
+
     render(){
         return(
             <View style={styleO.bottomView}>
