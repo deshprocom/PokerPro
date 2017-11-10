@@ -54,7 +54,7 @@ export default class NavigationBar extends Component {
                     <View style={styles.centerCell}>
                         <Text
                             numberOfLines={1}
-                            style={this.props.titleStyle ? this.props.titleStyle : styles.title}>{title}</Text>
+                            style={[styles.title, this.props.titleStyle ? this.props.titleStyle : {}]}>{title}</Text>
                         <TestRouter
                             refreshPage={this.props.refreshPage}/>
                     </View>

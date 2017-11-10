@@ -40,12 +40,6 @@ export default class Router {
 
     }
 
-    toConfirmOrder() {
-        this.stackPush({
-            name: 'ConfirmOrder'
-        })
-    }
-
     toMallResult(categories) {
         this.stackPush({
             name: 'MallSearchResult',
@@ -671,9 +665,8 @@ export default class Router {
 
     }
 
-    toShippingCart(props) {
-        this.push(props, {
-
+    toShippingCart() {
+        this.stackPush({
             // name: 'ShoppingCart',
             name: 'ShoppingCart',
 

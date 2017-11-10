@@ -216,7 +216,7 @@ export default class AddVerified extends Component {
             <Text style={styles.lbImage2}>{I18n.t('verified_example')}:</Text>
 
             <Image style={styles.img2}
-                   source={Images.verified_exmple}/>
+                   source={this.getCertType() ? Images.verifed_passport : Images.verified_exmple}/>
 
 
             <Text style={styles.lbImage3}>*{I18n.t('verified_desc')}</Text>
@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
     showImg: {
         height: 128,
         width: 206,
-        resizeMode:'contain'
+        resizeMode: 'contain'
 
     },
     btnSelectImg: {
@@ -323,7 +323,8 @@ const styles = StyleSheet.create({
     img2: {
         height: 128,
         width: 206,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        resizeMode:'cover'
     },
     lbImage3: {
         fontSize: 11,

@@ -197,6 +197,7 @@ const images = {
     verified_select: require('../../source/verified/select.png'),
     verified_selected: require('../../source/verified/selected.png'),
     verified_exmple: require('../../source/verified/exmple.png'),
+    verifed_passport:require('../../source/verified/passport.png'),
 
     pukes: require('../../source/navigation/pukes.png'),
     raceBegin: require('../../source/navigation/raceBegin.png'),

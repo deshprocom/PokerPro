@@ -23,7 +23,7 @@ export default class MallInfoBottom extends Component {
                 <TouchableOpacity
                     style={styleB.shoppingCar}
                     onPress={() => {
-                        router.toShippingCart(this.props)
+                        router.toShippingCart()
                     }}>
                     <Image style={styleB.shoppingCarImg} source={Images.shoppingCart}/>
                     {this.countView()}
