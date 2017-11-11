@@ -111,12 +111,12 @@ export default class MallInfo extends PureComponent {
                         onPress={()=>{
                             this._expandData()
                         }}>
-                        <TouchableOpacity style={{flexDirection:'row',alignItems:'center'}}>
+                        <View style={{flexDirection:'row',alignItems:'center'}}>
                             <Text style={styleM.expandTxt}>{I18n.t('expandMore')}</Text>
-                            <TouchableOpacity style={styleM.expandTouch}>
+                            <View style={styleM.expandTouch}>
                                 <Image style={styleM.expandImg} source={Images.expand}/>
-                            </TouchableOpacity>
-                        </TouchableOpacity>
+                            </View>
+                        </View>
                     </TouchableOpacity>:null}
 
             </View>
