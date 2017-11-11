@@ -4,7 +4,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
 
-export default class CompletedBottom extends PureComponent {
+export default class ReturnBottom extends PureComponent {
 
 
 
@@ -17,13 +17,6 @@ export default class CompletedBottom extends PureComponent {
                     }}
                     style={styleO.customer}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => {
-                       router.toReturnPage()
-                    }}
-                    style={styleO.returnedBottom}>
-                    <Text style={styleO.orderSubmitTxt}>{I18n.t('returnedMall')}</Text>
                 </TouchableOpacity>
 
             </View>

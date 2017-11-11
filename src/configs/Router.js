@@ -685,5 +685,11 @@ export default class Router {
         })
     }
 
+    toReturnPage() {
+        this.stackPush({
+            name: 'ReturnPage'
+        })
+    }
+
 
 }

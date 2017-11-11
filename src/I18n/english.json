@@ -427,6 +427,14 @@
   "specification":"产品规格",
   "unSelected":"未选",
   "selected":"已选",
-  "mallIntroduction":"商品介绍"
+  "mallIntroduction":"商品介绍",
+  "apply_returned":"申请退换货",
+  "refund_success":"退款受理成功",
+  "refund_amount":"退款金额",
+  "refund_type":"退款类型",
+  "application_time":"申请时间",
+  "refund_num":"退款编号",
+  "refund_reason":"退款原因",
+  "refund_description":"退款描述"
 }
 
