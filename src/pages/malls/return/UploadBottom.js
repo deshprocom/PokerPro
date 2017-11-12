@@ -4,26 +4,17 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
 
-export default class CompletedBottom extends PureComponent {
-
-
+export default class UploadBottom extends PureComponent {
 
     render(){
         return(
             <View style={styleO.bottomView}>
                 <TouchableOpacity
                     onPress={() => {
-                        this.props.showExpiredInfo()
+                        router.toReturnSucceedPage();
                     }}
                     style={styleO.customer}>
-                    <Text style={styleO.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => {
-                       router.toReturnPage()
-                    }}
-                    style={styleO.returnedBottom}>
-                    <Text style={styleO.orderSubmitTxt}>{I18n.t('returnedMall')}</Text>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('confirm')}</Text>
                 </TouchableOpacity>
 
             </View>
@@ -38,7 +29,6 @@ const styleO = StyleSheet.create({
         flexDirection:'row-reverse',
         alignItems: 'center',
         width: '100%',
-        zIndex:999
     },
     returnedBottom:{
         borderWidth:1,
@@ -51,8 +41,7 @@ const styleO = StyleSheet.create({
         justifyContent: 'center'
     },
     customer:{
-        borderWidth:1,
-        borderColor:'#333333',
+        backgroundColor:'#F34A4A',
         borderRadius: 4,
         width: 90,
         height: 37,

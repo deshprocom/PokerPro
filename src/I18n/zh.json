@@ -441,5 +441,13 @@
   "application_time":"申请时间",
   "refund_num":"退款编号",
   "refund_reason":"退款原因",
-  "refund_description":"退款描述"
+  "refund_description":"退款描述",
+  "cancel_order":"取消订单",
+  "application_type":"申请类型",
+  "refund_instruction":"退／换货说明",
+  "upload_document":"上传凭证",
+  "type_close":"关闭",
+  "select_type":"选择类型",
+  "refund_mall_amount":"退货／退款",
+  "change_mall":"换货"
 }

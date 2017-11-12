@@ -2,44 +2,52 @@ import React, {PureComponent, PropTypes} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView,TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
-import OrderStatus from './OrderStatus';
-import MallInfo from '../order/MallInfo';
-import Positioning from './Positioning';
-import OrderMessage from './OrderMessage';
-import OrderDetails from '../order/OrderDetails';
-import ConfirmBottom from './ConfirmBottom';
-import {NavigationBar} from '../../../components';
+import ReturnStatus from './ReturnStatus';
+import RefundAmount from './RefundAmount';
+import RefundInfo from './RefundInfo';
+import ReturnBottom from './ReturnBottom';
+import RenderItem from '../order/RenderItem';
 
-export default class ConfirmOrderPage extends PureComponent {
+export default class ReturnSucceed extends PureComponent {
 
     state={
 
     };
 
+    topBar = () => {
+        return (<View style={styleC.topBar}>
+            <TouchableOpacity
+                testID="btn_bar_left"
+                style={styleC.popBtn}
+                onPress={() => router.pop()}>
+                <Image style={styleC.backImg}
+                       source={Images.mall_return}/>
+            </TouchableOpacity>
+            <View style={{flex: 1}}/>
+            <Text style={styleC.cart}>{I18n.t('apply_returned')}</Text>
+            <View style={{flex: 1}}/>
+            <View style={styleC.popBtn}/>
+        </View>)
+    };
+
 
     render(){
         return(
-            <View style={{flex:1}}>
-                <NavigationBar
-                    barStyle={'dark-content'}
-                    toolbarStyle={{backgroundColor: 'white'}}
-                    leftBtnIcon={Images.mall_return}
-                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                    leftBtnPress={() => router.pop()}
-                    titleStyle={{color: Colors._161}}
-                    title={I18n.t('confirm_order')}/>
-
+            <View>
                 <ScrollView style={styleC.orderView}>
-                    <OrderStatus/>
-                    <Positioning/>
-                    <MallInfo/>
-                    <OrderMessage/>
-                    <OrderDetails/>
+                    {this.topBar()}
+                    <ReturnStatus/>
+
+                    <RefundAmount/>
+                    <RenderItem/>
+
+                    <RefundInfo/>
+
                     <View style={{height:80}}/>
                 </ScrollView>
 
 
-                <ConfirmBottom/>
+                <ReturnBottom/>
             </View>
 
         );

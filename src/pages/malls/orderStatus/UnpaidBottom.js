@@ -4,7 +4,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
 
-export default class CompletedBottom extends PureComponent {
+export default class UnpaidBottom extends PureComponent {
 
 
 
@@ -16,14 +16,14 @@ export default class CompletedBottom extends PureComponent {
                         this.props.showExpiredInfo()
                     }}
                     style={styleO.customer}>
-                    <Text style={styleO.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('pay')}:16</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                       router.toReturnPage()
+                        router.toReturnPage()
                     }}
                     style={styleO.returnedBottom}>
-                    <Text style={styleO.orderSubmitTxt}>{I18n.t('returnedMall')}</Text>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('cancel_order')}</Text>
                 </TouchableOpacity>
 
             </View>
@@ -38,13 +38,13 @@ const styleO = StyleSheet.create({
         flexDirection:'row-reverse',
         alignItems: 'center',
         width: '100%',
-        zIndex:999
+        marginTop:80
     },
     returnedBottom:{
         borderWidth:1,
-        borderColor:'#333333',
+        borderColor:'#FFFFFF',
         borderRadius: 4,
-        width: 90,
+        width: 120,
         height: 37,
         marginRight: 17,
         alignItems: 'center',
@@ -52,9 +52,9 @@ const styleO = StyleSheet.create({
     },
     customer:{
         borderWidth:1,
-        borderColor:'#333333',
+        borderColor:'#F34A4A',
         borderRadius: 4,
-        width: 90,
+        width: 120,
         height: 37,
         marginRight: 17,
         alignItems: 'center',
@@ -62,7 +62,7 @@ const styleO = StyleSheet.create({
     },
     orderSubmitTxt:{
         fontSize: 14,
-        color: '#333333'
+        color: '#FFFFFF'
     },
     payment:{
         fontSize: 14,

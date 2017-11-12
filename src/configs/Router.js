@@ -691,5 +691,11 @@ export default class Router {
         })
     }
 
+    toReturnSucceedPage(){
+        this.stackPush({
+            name: 'ReturnSucceedPage'
+        })
+    }
+
 
 }
