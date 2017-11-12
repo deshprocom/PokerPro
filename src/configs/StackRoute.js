@@ -71,7 +71,7 @@ import EmptyCart from "../pages/malls/shoppingCart/EmptyCart";
 import EditCartPage from "../pages/malls/shoppingCart/EditCartPage";
 import MallSearchResult from "../pages/malls/MallSearchResult";
 import OrderSubmitPage from '../pages/malls/order/OrderSubmitPage';
-import CompletedOrderPage from '../pages/malls/orderStatus/CompletedOrderPage';
+import ConfirmOrderPage from '../pages/malls/orderStatus/ConfirmOrderPage';
 import ReturnPage from '../pages/malls/return/ReturnPage';
 
 
@@ -79,7 +79,7 @@ export const Stacks = Actions.create(
     <Scene key="root">
 
             <Scene key="ReturnPage" component={ReturnPage} hideNavBar/>
-        <Scene key="CompletedOrderPage" component={CompletedOrderPage} hideNavBar/>
+        <Scene key="ConfirmOrderPage" component={ConfirmOrderPage} hideNavBar/>
         <Scene key="SearchMallPage" component={SearchMallPage} hideNavBar/>
         <Scene key="SearchVideo" component={SearchVideo} hideNavBar/>
         <Scene key="RaceScene" component={RaceScene} hideNavBar/>

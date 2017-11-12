@@ -7,9 +7,9 @@ import MallInfo from '../order/MallInfo';
 import Positioning from './Positioning';
 import OrderMessage from './OrderMessage';
 import OrderDetails from '../order/OrderDetails';
-import CompletedBottom from './CompletedBottom';
+import CompletedBottom from './ConfirmBottom';
 
-export default class CompletedOrderPage extends PureComponent {
+export default class ConfirmOrderPage extends PureComponent {
 
     state={
 
