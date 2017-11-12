@@ -675,7 +675,7 @@ export default class Router {
 
     toOrderConfirm() {
         this.stackPush({
-            name: 'OrderConfirmPage'
+            name: 'OrderSubmitPage'
         })
     }
 

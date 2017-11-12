@@ -20,6 +20,10 @@ const styleL = StyleSheet.create({
         height:85,
         backgroundColor:"#FFFFFF",
         marginTop:11,
-        fontSize:14
+        fontSize:14,
+        textAlign:'left',
+        paddingLeft:17,
+        paddingTop:12,
+        paddingBottom:50
     }
 })
