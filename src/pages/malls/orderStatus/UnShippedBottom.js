@@ -4,7 +4,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
 
-export default class CompletedBottom extends PureComponent {
+export default class UnShippedBottom extends PureComponent {
 
 
 

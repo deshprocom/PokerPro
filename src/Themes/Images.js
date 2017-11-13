@@ -247,7 +247,8 @@ const images = {
     expand: require('../../source/order/expand.png'),
     positioning: require('../../source/order/positioning.png'),
     return_radio: require('../../source/mall/return_radio.png'),
-    return_radio_selected: require('../../source/mall/return_radio_selected.png')
+    return_radio_selected: require('../../source/mall/return_radio_selected.png'),
+    logistics: require('../../source/mall/logistics.png')
 
 
 

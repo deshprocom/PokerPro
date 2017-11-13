@@ -443,6 +443,9 @@
   "type_close":"关闭",
   "select_type":"选择类型",
   "refund_mall_amount":"退货／退款",
-  "change_mall":"换货"
+  "change_mall":"换货",
+  "buy_again":"再次购买",
+  "order_del":"删除订单",
+  "logistics_view":"查看物流"
 }
 

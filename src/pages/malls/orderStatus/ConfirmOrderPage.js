@@ -7,7 +7,7 @@ import MallInfo from '../order/MallInfo';
 import Positioning from './Positioning';
 import OrderMessage from './OrderMessage';
 import OrderDetails from '../order/OrderDetails';
-import ConfirmBottom from './ConfirmBottom';
+import UnShippedBottom from './UnShippedBottom';
 import {NavigationBar} from '../../../components';
 
 export default class ConfirmOrderPage extends PureComponent {
@@ -39,7 +39,7 @@ export default class ConfirmOrderPage extends PureComponent {
                 </ScrollView>
 
 
-                <ConfirmBottom/>
+                <UnShippedBottom/>
             </View>
 
         );
