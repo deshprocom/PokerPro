@@ -120,10 +120,9 @@ export default class ShoppingCart extends PureComponent {
 
         </View>)
     };
-    closeThisMall = () => {
-        return (
-            alert("确认删除该商品吗？")
-        )
+    closeThisMall = (item) => {
+        console.log(item)
+        alert("确认删除该商品吗？")
     };
     _pressAll = () => {
         const {dataHosts} = this.state;
@@ -185,7 +184,7 @@ export default class ShoppingCart extends PureComponent {
             {
                 text: 'Delete',
                 backgroundColor: '#F34A4A',
-                onPress: this.closeThisMall
+                onPress: () => this.closeThisMall(item)
             }
         ];
         const {price, original_price, id, stock} = item.commodity;
@@ -203,7 +202,7 @@ export default class ShoppingCart extends PureComponent {
                             style={styleS.mallAttributes}>{I18n.t('weight')}：1.62KG {I18n.t('weight')}：黑 {I18n.t('quantity')}：500</Text>
                         <View style={styleS.PriceView}>
                             <Text style={styleS.Price}>¥{price}</Text>
-                            <View style={{flex:1}}/>
+                            <View style={{flex: 1}}/>
                             {this.buyQuantity(item)}
                         </View>
                     </View>
