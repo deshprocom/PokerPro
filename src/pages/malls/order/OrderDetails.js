@@ -15,16 +15,18 @@ export default class OrderDetails extends PureComponent {
                     <View style={styleO.priceView}>
                         <Text style={styleO.priceName}>{I18n.t('order_price')}</Text>
                         <View style={{flex:1}}/>
-                        <Text style={styleO.price}>¥7878</Text>
+                        <Text style={styleO.price}>¥</Text><Text style={[styleO.price,{marginLeft:1,marginRight:17}]}>2323</Text>
                     </View>
                     <View style={styleO.costsView}>
                         <Text style={styleO.costsName}>{I18n.t('cost')}</Text>
                         <View style={{flex:1}}/>
-                        <Text style={styleO.price}>¥12</Text>
+                        <Text style={styleO.price}>¥</Text><Text style={[styleO.price,{marginLeft:1,marginRight:17}]}>12</Text>
                     </View>
                 </View>
                 <View style={styleO.paymentView}>
-                    <Text style={styleO.paymentPrice}>¥787646466</Text>
+                    <View style={styleO.paymentPrice}>
+                        <Text style={styleO.paymentPriceTxt}>¥</Text><Text style={[styleO.paymentPriceTxt,{marginLeft:1}]}>787646466</Text>
+                    </View>
                     <Text style={styleO.payment}>{I18n.t('payment')}</Text>
 
                 </View>
@@ -76,7 +78,7 @@ const styleO = StyleSheet.create({
     price:{
         fontSize: 16,
         color: '#F34A4A',
-        marginRight:17
+
     },
     paymentView:{
         marginTop:1,
@@ -91,8 +93,12 @@ const styleO = StyleSheet.create({
 
     },
     paymentPrice:{
+        flexDirection:'row',
+        alignItems:'center',
+        marginRight:17
+    },
+    paymentPriceTxt:{
         fontSize: 18,
         color: '#F34A4A',
-        marginRight:17
     }
 })

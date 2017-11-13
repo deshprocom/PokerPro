@@ -4,30 +4,28 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
 
-export default class OrderBottom extends PureComponent {
-    static propTypes = {
-        showExpiredInfo: propTypes.func.isRequired
-    };
+export default class UnShippedBottom extends PureComponent {
 
 
-    componentDidMount() {
-        // console.log('selectProduct', this.props.selectProduct)
-    }
 
     render(){
         return(
             <View style={styleO.bottomView}>
-                <Text style={styleO.payment}>{I18n.t('payment')}</Text>
-                <Text style={styleO.paymentPrice}>¥</Text><Text style={[styleO.paymentPrice,{marginLeft:1}]}>80890890</Text>
-                <View style={{flex:1}}/>
                 <TouchableOpacity
                     onPress={() => {
-                        {/*this.props.showExpiredInfo()*/}
-                        router.toCompletedOrderPage()
+                        this.props.showExpiredInfo()
                     }}
-                    style={styleO.orderSubmit}>
-                    <Text style={styleO.orderSubmitTxt}>{I18n.t('orderSubmit')}</Text>
+                    style={styleO.customer}>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>
                 </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => {
+                       router.toReturnPage()
+                    }}
+                    style={styleO.returnedBottom}>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('returnedMall')}</Text>
+                </TouchableOpacity>
+
             </View>
         )}
 }
@@ -37,14 +35,26 @@ const styleO = StyleSheet.create({
         backgroundColor:"#FFFFFF",
         position:'absolute',
         bottom:0,
-        flexDirection:'row',
+        flexDirection:'row-reverse',
         alignItems: 'center',
-        width: '100%'
+        width: '100%',
+        zIndex:999
     },
-    orderSubmit:{
-        backgroundColor: '#F34A4A',
+    returnedBottom:{
+        borderWidth:1,
+        borderColor:'#333333',
         borderRadius: 4,
-        width: 89,
+        width: 90,
+        height: 37,
+        marginRight: 17,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    customer:{
+        borderWidth:1,
+        borderColor:'#333333',
+        borderRadius: 4,
+        width: 90,
         height: 37,
         marginRight: 17,
         alignItems: 'center',
@@ -52,7 +62,7 @@ const styleO = StyleSheet.create({
     },
     orderSubmitTxt:{
         fontSize: 14,
-        color: '#FFFFFF'
+        color: '#333333'
     },
     payment:{
         fontSize: 14,

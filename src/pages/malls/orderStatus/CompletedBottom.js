@@ -16,14 +16,13 @@ export default class CompletedBottom extends PureComponent {
                         this.props.showExpiredInfo()
                     }}
                     style={styleO.customer}>
-                    <Text style={styleO.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('order_del')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                       router.toReturnPage()
                     }}
                     style={styleO.returnedBottom}>
-                    <Text style={styleO.orderSubmitTxt}>{I18n.t('returnedMall')}</Text>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('logistics_view')}</Text>
                 </TouchableOpacity>
 
             </View>
@@ -38,7 +37,7 @@ const styleO = StyleSheet.create({
         flexDirection:'row-reverse',
         alignItems: 'center',
         width: '100%',
-        marginTop:80
+        zIndex:999
     },
     returnedBottom:{
         borderWidth:1,
@@ -56,7 +55,7 @@ const styleO = StyleSheet.create({
         borderRadius: 4,
         width: 90,
         height: 37,
-        marginRight: 17,
+        marginRight: 10,
         alignItems: 'center',
         justifyContent: 'center'
     },

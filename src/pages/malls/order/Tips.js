@@ -42,7 +42,7 @@ const styleT = StyleSheet.create({
     tipsTxt:{
         fontSize: 12,
         color: '#FFFFFF',
-        marginLeft:41,
+        marginLeft:38,
         marginRight:15
     },
     tipsTouch:{

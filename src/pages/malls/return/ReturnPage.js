@@ -1,53 +1,83 @@
-import React, {PureComponent, PropTypes} from 'react';
+//退换货申请页面
+import React, {Component, PropTypes} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView,TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
-import ReturnStatus from './ReturnStatus';
+import ApplicationType from './ApplicationType';
+import ApplicationTypeInfo from './ApplicationTypeInfo';
 import RefundAmount from './RefundAmount';
-import RefundInfo from './RefundInfo';
-import ReturnBottom from './ReturnBottom';
+import RefundInstruction from './RefundInstruction';
+import UploadDocument from './UploadDocument';
+import UploadBottom from './UploadBottom';
 import RenderItem from '../order/RenderItem';
+import {NavigationBar} from '../../../components';
 
-export default class ReturnPage extends PureComponent {
+
+export default class ReturnPage extends Component {
 
     state={
-
+        typeShow: false,
+        refund_mall_amount:false,
+        change_mall:false
     };
 
-    topBar = () => {
-        return (<View style={styleC.topBar}>
-            <TouchableOpacity
-                testID="btn_bar_left"
-                style={styleC.popBtn}
-                onPress={() => router.pop()}>
-                <Image style={styleC.backImg}
-                       source={Images.mall_return}/>
-            </TouchableOpacity>
-            <View style={{flex: 1}}/>
-            <Text style={styleC.cart}>{I18n.t('apply_returned')}</Text>
-            <View style={{flex: 1}}/>
-            <View style={styleC.popBtn}/>
-        </View>)
+    showTypeInfo = () => {
+        this.setState({
+            typeShow: !this.state.typeShow
+        })
     };
-
+    _refund_mall_amount=()=>{
+        this.setState({
+            refund_mall_amount: !this.state.refund_mall_amount,
+            change_mall:false
+        })
+    };
+    _change_mall=()=>{
+        this.setState({
+            change_mall: !this.state.change_mall,
+            refund_mall_amount:false
+        })
+    };
 
     render(){
         return(
-            <View>
+            <View style={{flex:1}}>
+                <NavigationBar
+                    barStyle={'dark-content'}
+                    toolbarStyle={{backgroundColor: 'white'}}
+                    leftBtnIcon={Images.mall_return}
+                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                    leftBtnPress={() => router.pop()}
+                    titleStyle={{color: Colors._161}}
+                    title={I18n.t('apply_returned')}/>
                 <ScrollView style={styleC.orderView}>
-                    {this.topBar()}
-                    <ReturnStatus/>
-
-                    <RefundAmount/>
                     <RenderItem/>
 
-                    <RefundInfo/>
+                    <ApplicationType
+                        showTypeInfo={this.showTypeInfo}
+                        refund_mall_amount={this.state.refund_mall_amount}
+                        change_mall={this.state.change_mall}/>
+
+                    <RefundAmount/>
+
+
+                    <RefundInstruction/>
+
+                    <UploadDocument/>
 
                     <View style={{height:80}}/>
                 </ScrollView>
 
 
-                <ReturnBottom/>
+                <UploadBottom
+                    showTypeInfo={this.showTypeInfo}/>
+
+                {this.state.typeShow ? <ApplicationTypeInfo
+                    showTypeInfo={this.showTypeInfo}
+                    _refund_mall_amount={this._refund_mall_amount}
+                    _change_mall={this._change_mall}
+                    refund_mall_amount={this.state.refund_mall_amount}
+                    change_mall={this.state.change_mall}/> : null}
             </View>
 
         );

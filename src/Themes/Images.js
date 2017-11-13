@@ -244,7 +244,11 @@ const images = {
     radio: require('../../source/cart/radio.png'),
     emptyCart: require('../../source/cart/emptyCart.png'),
     poker_key: require('../../source/navigation/poker_key.png'),
-    expand: require('../../source/order/expand.png')
+    expand: require('../../source/order/expand.png'),
+    positioning: require('../../source/order/positioning.png'),
+    return_radio: require('../../source/mall/return_radio.png'),
+    return_radio_selected: require('../../source/mall/return_radio_selected.png'),
+    logistics: require('../../source/mall/logistics.png')
 
 
 
