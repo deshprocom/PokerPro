@@ -17,8 +17,8 @@ export default class RenderItem extends PureComponent {
                         <Text style={styleR.returnedTxt}>{I18n.t('returned')}</Text>
                     </View>
                     <View style={styleR.PriceView}>
-                        <Text style={styleR.Price}>¥555555.55</Text>
-                        <Text style={styleR.originPrice}>¥999999</Text>
+                        <Text style={styleR.Price}>¥</Text><Text style={[styleR.Price,{marginLeft:1}]}>555555.55</Text>
+                        <Text style={styleR.originPrice}>¥</Text><Text style={[styleR.originPrice,{marginLeft:1}]}>99999</Text>
                         <View style={{flex:1}}/>
                         <Text style={styleR.quantitys}>x2</Text>
                     </View>
@@ -38,13 +38,13 @@ const styleR = StyleSheet.create({
     },
     TxtView: {
         flex: 1,
-        marginLeft: 12,
+        marginLeft: 14,
         marginTop:15,
     },
     mallTextName: {
         fontSize: 14,
         color: '#333333',
-        marginRight: 17
+        marginRight: 12
     },
     mallAttributes: {
         fontSize: 10,
@@ -59,7 +59,7 @@ const styleR = StyleSheet.create({
         height:18,
         alignItems:'center',
         justifyContent:'center',
-        marginTop:2
+        marginTop:3
     },
     returnedTxt:{
         fontSize: 10,

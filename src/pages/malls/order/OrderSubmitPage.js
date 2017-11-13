@@ -12,7 +12,7 @@ import {NavigationBar} from '../../../components';
 import ExpiredOrder from './ExpiredOrder';
 import {util} from '../../../utils/ComonHelper';
 
-export default class OrderConfirmPage extends PureComponent {
+export default class OrderSubmitPage extends PureComponent {
     state = {
         isExpired: false,
     };

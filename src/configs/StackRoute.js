@@ -70,16 +70,18 @@ import ShoppingCart from "../pages/malls/shoppingCart/ShoppingCart";
 import EmptyCart from "../pages/malls/shoppingCart/EmptyCart";
 import EditCartPage from "../pages/malls/shoppingCart/EditCartPage";
 import MallSearchResult from "../pages/malls/MallSearchResult";
-import OrderConfirmPage from '../pages/malls/order/OrderConfirmPage';
-import CompletedOrderPage from '../pages/malls/orderStatus/CompletedOrderPage';
+import OrderSubmitPage from '../pages/malls/order/OrderSubmitPage';
+import ConfirmOrderPage from '../pages/malls/orderStatus/ConfirmOrderPage';
 import ReturnPage from '../pages/malls/return/ReturnPage';
+import ReturnSucceedPage from '../pages/malls/return/ReturnSucceedPage';
 
 
 export const Stacks = Actions.create(
     <Scene key="root">
 
+            <Scene key="ReturnSucceedPage" component={ReturnSucceedPage} hideNavBar/>
             <Scene key="ReturnPage" component={ReturnPage} hideNavBar/>
-        <Scene key="CompletedOrderPage" component={CompletedOrderPage} hideNavBar/>
+        <Scene key="ConfirmOrderPage" component={ConfirmOrderPage} hideNavBar/>
         <Scene key="SearchMallPage" component={SearchMallPage} hideNavBar/>
         <Scene key="SearchVideo" component={SearchVideo} hideNavBar/>
         <Scene key="RaceScene" component={RaceScene} hideNavBar/>
@@ -145,7 +147,7 @@ export const Stacks = Actions.create(
         <Scene key="EmptyCart" component={EmptyCart} hideNavBar/>
         <Scene key="EditCartPage" component={EditCartPage} hideNavBar/>
         <Scene key="MallSearchResult" component={MallSearchResult} hideNavBar/>
-        <Scene key="OrderConfirmPage" component={OrderConfirmPage} hideNavBar/>
+        <Scene key="OrderSubmitPage" component={OrderSubmitPage} hideNavBar/>
 
         <Scene type={ActionConst.RESET}
                initial={true}

@@ -7,36 +7,29 @@ import MallInfo from '../order/MallInfo';
 import Positioning from './Positioning';
 import OrderMessage from './OrderMessage';
 import OrderDetails from '../order/OrderDetails';
-import CompletedBottom from './CompletedBottom';
+import UnShippedBottom from './UnShippedBottom';
+import {NavigationBar} from '../../../components';
 
-export default class CompletedOrderPage extends PureComponent {
+export default class ConfirmOrderPage extends PureComponent {
 
     state={
 
     };
 
-    topBar = () => {
-        return (<View style={styleC.topBar}>
-            <TouchableOpacity
-                testID="btn_bar_left"
-                style={styleC.popBtn}
-                onPress={() => router.pop()}>
-                <Image style={styleC.backImg}
-                       source={Images.mall_return}/>
-            </TouchableOpacity>
-            <View style={{flex: 1}}/>
-            <Text style={styleC.cart}>{I18n.t('confirm_order')}</Text>
-            <View style={{flex: 1}}/>
-            <View style={styleC.popBtn}/>
-        </View>)
-    };
-
 
     render(){
         return(
-            <View>
+            <View style={{flex:1}}>
+                <NavigationBar
+                    barStyle={'dark-content'}
+                    toolbarStyle={{backgroundColor: 'white'}}
+                    leftBtnIcon={Images.mall_return}
+                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                    leftBtnPress={() => router.pop()}
+                    titleStyle={{color: Colors._161}}
+                    title={I18n.t('confirm_order')}/>
+
                 <ScrollView style={styleC.orderView}>
-                    {this.topBar()}
                     <OrderStatus/>
                     <Positioning/>
                     <MallInfo/>
@@ -46,7 +39,7 @@ export default class CompletedOrderPage extends PureComponent {
                 </ScrollView>
 
 
-                <CompletedBottom/>
+                <UnShippedBottom/>
             </View>
 
         );
