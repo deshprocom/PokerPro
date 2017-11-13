@@ -1,3 +1,4 @@
+//退换货申请页面
 import React, {Component, PropTypes} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView,TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
@@ -16,11 +17,25 @@ export default class ReturnPage extends Component {
 
     state={
         typeShow: false,
+        refund_mall_amount:false,
+        change_mall:false
     };
 
     showTypeInfo = () => {
         this.setState({
             typeShow: !this.state.typeShow
+        })
+    };
+    _refund_mall_amount=()=>{
+        this.setState({
+            refund_mall_amount: !this.state.refund_mall_amount,
+            change_mall:false
+        })
+    };
+    _change_mall=()=>{
+        this.setState({
+            change_mall: !this.state.change_mall,
+            refund_mall_amount:false
         })
     };
 
@@ -39,7 +54,9 @@ export default class ReturnPage extends Component {
                     <RenderItem/>
 
                     <ApplicationType
-                        showTypeInfo={this.showTypeInfo}/>
+                        showTypeInfo={this.showTypeInfo}
+                        refund_mall_amount={this.state.refund_mall_amount}
+                        change_mall={this.state.change_mall}/>
 
                     <RefundAmount/>
 
@@ -56,7 +73,11 @@ export default class ReturnPage extends Component {
                     showTypeInfo={this.showTypeInfo}/>
 
                 {this.state.typeShow ? <ApplicationTypeInfo
-                    showTypeInfo={this.showTypeInfo}/> : null}
+                    showTypeInfo={this.showTypeInfo}
+                    _refund_mall_amount={this._refund_mall_amount}
+                    _change_mall={this._change_mall}
+                    refund_mall_amount={this.state.refund_mall_amount}
+                    change_mall={this.state.change_mall}/> : null}
             </View>
 
         );

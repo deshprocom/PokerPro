@@ -3,12 +3,17 @@ import {View, Text, Image, StyleSheet, TouchableOpacity, ScrollView} from 'react
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import * as Animatable from 'react-native-animatable';
 import I18n from 'react-native-i18n';
-import {showToast, strNotNull, pushProductToCart} from '../../../utils/ComonHelper';
-import _ from 'lodash';
-
+import propTypes from 'prop-types';
 
 export default class ApplicationTypeInfo extends PureComponent {
-    state = {};
+    state = {
+
+    };
+    static propTypes = {
+        showTypeInfo: propTypes.func.isRequired,
+        _refund_mall_amount:propTypes.func.isRequired,
+        _change_mall:propTypes.func.isRequired
+    };
 
     componentDidMount() {
 
@@ -16,39 +21,43 @@ export default class ApplicationTypeInfo extends PureComponent {
 
 
     render() {
-
+        const{refund_mall_amount,change_mall}=this.props;
         return (
             <Animatable.View
-                duration={300}
-                animation={'fadeInUp'}
                 style={styleP.pageALl}>
                 <Animatable.View
                     duration={300}
                     animation={'fadeInUp'}
                     style={styleP.page}>
-                    <View style={styleP.top}>
-                        <Text style={styleP.topTxt}>{I18n.t('select_type')}</Text>
-                    </View>
-                    <View style={styleP.content}>
-                        <Text style={styleP.text}>{I18n.t('refund_mall_amount')}</Text>
-                        <View style={{flex:1}}/>
-                        <Image style={styleP.img} source={Images.return_radio}/>
-                    </View>
-                    <View style={styleP.content}>
-                        <Text style={styleP.text}>{I18n.t('change_mall')}</Text>
-                        <View style={{flex:1}}/>
-                        <Image style={styleP.img} source={Images.return_radio}/>
-                    </View>
-
-                    <View style={styleP.confirmView}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                this.props.showSpecInfo(this.tempProduct)
-                            }}
-                            style={styleP.confirm}>
+                    <View style={{height:280}}>
+                        <View style={styleP.top}>
+                            <Text style={styleP.topTxt}>{I18n.t('select_type')}</Text>
+                        </View>
+                        <TouchableOpacity style={styleP.content}
+                        onPress={()=>{
+                            this.props._refund_mall_amount()
+                        }}>
+                            <Text style={styleP.text}>{I18n.t('refund_mall_amount')}</Text>
+                            <View style={{flex:1}}/>
+                            <Image style={styleP.img} source={refund_mall_amount?Images.return_radio_selected:Images.return_radio}/>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styleP.content}
+                                          onPress={()=>{
+                            this.props._change_mall()
+                        }}>
+                            <Text style={styleP.text}>{I18n.t('change_mall')}</Text>
+                            <View style={{flex:1}}/>
+                            <Image style={styleP.img} source={change_mall?Images.return_radio_selected:Images.return_radio}/>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styleP.confirmView}
+                                onPress={() => {
+                                this.props.showTypeInfo()
+                            }}>
                             <Text style={styleP.confirmTxt}>{I18n.t('type_close')}</Text>
                         </TouchableOpacity>
+
                     </View>
+
                 </Animatable.View>
             </Animatable.View>
 
@@ -60,7 +69,6 @@ export default class ApplicationTypeInfo extends PureComponent {
 }
 const styleP = StyleSheet.create({
     pageALl:{
-        flex:1,
         backgroundColor: 'rgba(0,0,0,0.5)',
         position: 'absolute',
         top: 0,
@@ -72,9 +80,10 @@ const styleP = StyleSheet.create({
     page: {
         backgroundColor: '#ECECEE',
         position: 'absolute',
+        left: 0,
+        right: 0,
         bottom: 0,
-        zIndex: 999,
-        width:'100%'
+        zIndex: 999
     },
     top: {
         height: 50,
@@ -104,20 +113,14 @@ const styleP = StyleSheet.create({
         marginRight:17
     },
     confirmView: {
-        backgroundColor: '#FFFFFF',
-        position: 'absolute',
-        bottom: 0,
-        height: 50,
-        width: '100%'
-    },
-    confirm: {
-        height: 40,
-
-        backgroundColor: '#F34A4A',
-        borderRadius: 3,
-        justifyContent: 'center',
+        height:50,
+        backgroundColor:"#F34A4A",
+        position:'absolute',
+        bottom:0,
+        flexDirection:'row',
         alignItems: 'center',
-        marginTop: 133
+        justifyContent:'center',
+        width: '100%'
     },
     confirmTxt: {
         fontSize: 18,
