@@ -1,24 +1,24 @@
-import React, {PureComponent, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import Swipeout from 'react-native-swipeout';
 import I18n from 'react-native-i18n';
+import {deleteProductFromCart, util} from '../../../utils/ComonHelper';
 
 
-export default class ShoppingCart extends PureComponent {
+export default class ShoppingCart extends Component {
     state = {
         showCart: true,
         showEdit: true,
         showBottom: true,
         selected: false,
         selectAll: false,
-        dataHosts: [],
-        selectArray: []
+        dataHosts: []
     };
 
     componentDidMount() {
 
-        let commodities = global.shoppingCarts;
+        let commodities = [...global.shoppingCarts];
 
         commodities.map(function (x) {
             x.isSelect = false;
@@ -37,7 +37,8 @@ export default class ShoppingCart extends PureComponent {
                     onPress={() => {
                         this.setState({
                             selectAll: !this.state.selectAll
-                        }), this._pressAll()
+                        });
+                        this._pressAll()
                     }}>
                     <Image style={styleS.radioImg} source={this.state.selectAll ? Images.radioSelected : Images.radio}/>
                 </TouchableOpacity>
@@ -65,7 +66,9 @@ export default class ShoppingCart extends PureComponent {
         const {dataHosts} = this.state;
         let newSelects = [...dataHosts];
         newSelects = newSelects.filter(this._isSelect);
+        deleteProductFromCart();
         this.setState({dataHosts: newSelects});
+
     };
     toBottom2 = () => {
         return (
@@ -75,7 +78,8 @@ export default class ShoppingCart extends PureComponent {
                     onPress={() => {
                         this.setState({
                             selectAll: !this.state.selectAll
-                        }), this._pressAll()
+                        });
+                        this._pressAll()
                     }}>
                     <Image style={styleS.radioImg} source={this.state.selectAll ? Images.radioSelected : Images.radio}/>
                 </TouchableOpacity>
@@ -112,7 +116,8 @@ export default class ShoppingCart extends PureComponent {
                         showEdit: !this.state.showEdit,
                         showCart: !this.state.showCart,
                         showBottom: !this.state.showBottom,
-                    }), this.refreshAll()
+                    });
+                    this.refreshAll()
                 }}>
                 <Text style={styleS.rightTxt}>{this.state.showEdit ? I18n.t('buy_editor') : I18n.t('complete')}</Text>
             </TouchableOpacity>
@@ -121,8 +126,16 @@ export default class ShoppingCart extends PureComponent {
         </View>)
     };
     closeThisMall = (item) => {
-        console.log(item)
-        alert("确认删除该商品吗？")
+        const {dataHosts} = this.state;
+        const {commodity} = item;
+        let index = dataHosts.findIndex(function (x) {
+            return util.isEqual(commodity, x.commodity);
+        });
+        dataHosts.splice(index, 1);
+        deleteProductFromCart(dataHosts)
+
+        this.setState({dataHosts: [...dataHosts]});
+
     };
     _pressAll = () => {
         const {dataHosts} = this.state;
@@ -184,12 +197,16 @@ export default class ShoppingCart extends PureComponent {
             {
                 text: 'Delete',
                 backgroundColor: '#F34A4A',
-                onPress: () => this.closeThisMall(item)
+                onPress: () => {
+                    this.closeThisMall(item)
+                }
             }
         ];
         const {price, original_price, id, stock} = item.commodity;
         return (
-            <Swipeout right={swipeoutBtns}>
+            <Swipeout
+                autoClose={true}
+                right={swipeoutBtns}>
                 <View style={styleS.renderItem}>
                     {this.renderShowEditView(item, () => {
                         this._pressItem(item)

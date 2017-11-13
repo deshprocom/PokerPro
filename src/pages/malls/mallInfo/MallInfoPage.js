@@ -57,6 +57,7 @@ export default class MallInfoPage extends Component {
     };
 
 
+
     render() {
         const {specShow, product, selectProduct} = this.state;
         return (
@@ -111,7 +112,7 @@ export default class MallInfoPage extends Component {
     };
 
     showSpecInfo = (temp) => {
-        console.log(temp);
+
         if (util.isEmpty(temp)) {
             this.setState({
                 specShow: !this.state.specShow

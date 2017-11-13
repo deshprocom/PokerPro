@@ -82,6 +82,17 @@ export function getCarts() {
 
 }
 
+export function deleteProductFromCart(carts) {
+    global.shoppingCarts = carts;
+    storage.save({
+        key: StorageKey.ShoppingCarts,
+        rawData: carts
+    });
+    getDispatchAction()['DELETE_CART']();
+
+}
+
+
 /*添加商品到购物车*/
 export function pushProductToCart(product) {
 
@@ -90,7 +101,7 @@ export function pushProductToCart(product) {
         key: StorageKey.ShoppingCarts,
         rawData: global.shoppingCarts
     });
-    console.log(global.shoppingCarts)
+    getDispatchAction()['ADD_CART']();
 }
 
 /*App更新提示*/
