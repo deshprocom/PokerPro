@@ -43,7 +43,7 @@
     "react-native-tabular-grid": "^1.1.0",
     "react-native-umshare": "git+https://github.com/dongodngtang/react-native-umshare.git",
     "react-native-vector-icons": "^4.4.2",
-    "react-native-video": "git+https://github.com/react-native-community/react-native-video#master",
+    "react-native-video": "git+https://github.com/react-native-community/react-native-video.git#master",
     "react-native-wechat": "^1.9.9",
     "react-redux": "^5.0.4",
     "react-timer-mixin": "^0.13.3",
