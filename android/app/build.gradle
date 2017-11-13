@@ -157,6 +157,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-vector-icons')
     compile project(':rn-umeng')
     compile project(':react-native-wechat')
     compile project(':react-native-umshare')

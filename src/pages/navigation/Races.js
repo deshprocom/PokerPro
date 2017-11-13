@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    View, Text, Button, Alert, DatePickIOS,
+    View, Text, Alert, DatePickIOS,
     Image, StyleSheet, ActivityIndicator,
     TouchableOpacity, ScrollView, Dimensions,
     ListView, Animated, Easing, FlatList, Platform
@@ -13,6 +13,7 @@ import {
 } from '../../utils/ComonHelper';
 import I18n from 'react-native-i18n';
 import {umengEvent} from '../../utils/UmengEvent';
+import {Button} from 'react-native-material-ui';
 
 export default class Races extends Component {
 
@@ -46,22 +47,32 @@ export default class Races extends Component {
                             <Image style={{width: 11, height: 11, marginRight: 7}} source={Images.time}/>
                             <Text style={styles.ovalText}>{this.races_time(item)}</Text>
                         </View>
+
                         <View style={[styleB.ovalInner, {marginTop: 15}]}>
                             <Text style={styles.ovalPrice}>￥{item.min_price}</Text>
                         </View>
-                        <TouchableOpacity
-                            onPress={() => router.toChoiseTicketPage(this.props, item.race_id)}
-                            activeOpacity={1}
-                            style={Platform.OS == 'ios' ? styleB.buyButtonPosition : styleB.buyButtonPosition2}>
-                            <Image
-                                style={styles.button}
-                                source={Images.button}
-                            >
-                                <Text
-                                    style={styleB.buyText}>{I18n.t('home_buy')}</Text>
-                            </Image>
 
-                        </TouchableOpacity>
+                        <Button
+                            onPress={() => router.toChoiseTicketPage(this.props, item.race_id)}
+                            raised
+                            primary
+                            text={I18n.t('home_buy')}
+                            style={{
+                                container: {
+                                    width: 68,
+                                    height: 28,
+                                    backgroundColor: 'red',
+                                    position: 'absolute',
+                                    bottom: 18,
+                                    right: 0,
+                                    borderRadius: 14,
+
+                                },
+                                text: {
+                                    color: 'white'
+                                }
+                            }}/>
+
                     </View>
                 </Image>
             </TouchableOpacity>
@@ -125,7 +136,7 @@ const styleB = StyleSheet.create({
         marginBottom: 5
     },
     ovalImg: {
-        width: 116, height: 158,  marginTop: 1
+        width: 116, height: 158, marginTop: 1
     },
     ovalInner: {
         flexDirection: 'row', alignItems: 'center'
