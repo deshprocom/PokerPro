@@ -32,10 +32,8 @@ class MallPage extends PureComponent {
 
     componentWillReceiveProps(newProps) {
 
-        console.log('MallPage', newProps)
         if (newProps.hasData && (newProps.actionType === ADD_CART
                 || newProps.actionType === DELETE_CART)) {
-            console.log('MallPage12',global.shoppingCarts)
 
             this.setState({
                 cartNum: global.shoppingCarts.length

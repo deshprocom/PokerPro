@@ -66,7 +66,7 @@ export default class ShoppingCart extends Component {
         const {dataHosts} = this.state;
         let newSelects = [...dataHosts];
         newSelects = newSelects.filter(this._isSelect);
-        deleteProductFromCart();
+        deleteProductFromCart(newSelects);
         this.setState({dataHosts: newSelects});
 
     };
