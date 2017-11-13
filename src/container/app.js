@@ -20,6 +20,7 @@ import {
 import Orientation from 'react-native-orientation';
 import UMShare from 'react-native-umshare';
 import * as WeChat from 'react-native-wechat';
+import {COLOR, ThemeProvider} from 'react-native-material-ui';
 
 
 console.disableYellowBox = true;
@@ -38,13 +39,28 @@ if (!__DEV__) {
         },
     };
 }
+const uiTheme = {
+    palette: {
+        primaryColor: COLOR.green500,
+    },
+    toolbar: {
+        container: {
+            height: 44,
+        },
+    },
+};
+
 
 export default class App extends Component {
 
     render() {
         return (
+
             <Provider store={store}>
-                <PuKe/>
+                <ThemeProvider uiTheme={uiTheme}>
+                    <PuKe/>
+                </ThemeProvider>
+
             </Provider>
         )
     }
