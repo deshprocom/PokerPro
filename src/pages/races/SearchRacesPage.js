@@ -20,7 +20,6 @@ import RaceRowView from '../../components/listitem/RaceRowView';
 import {_renderFooter, _renderHeader} from '../../components/LoadingView';
 import TimerMixin from 'react-timer-mixin';
 
-
 const Forward = 'forward',
     Backward = 'backward';
 
@@ -63,6 +62,8 @@ class SearchRacesPage extends Component {
 
                 {this.listView()}
 
+                {this._renderFloatBtn()}
+
                 {this._showCalendar()}
 
                 {this._raceTypeView()}
@@ -71,6 +72,42 @@ class SearchRacesPage extends Component {
             </View>
         )
     }
+
+
+    _renderFloatBtn = () => {
+
+        return <TouchableOpacity
+            onPress={this._backToMonth}
+            style={{
+                height: 40,
+                width: 40,
+                backgroundColor: 'yellow',
+                position: 'absolute',
+                bottom: 30,
+                right: 20,
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: 20
+            }}
+
+        >
+            <Text style={{color: 'white'}}>本月</Text>
+        </TouchableOpacity>
+
+    };
+
+
+    _backToMonth = () => {
+
+        this.setState({
+            first_id: 0,
+            dataRaces: [],
+            componentDataSource: this._dataSource.cloneWithRowsAndSections({}),
+        });
+
+        setTimeout(this._onRefresh, 300);
+
+    };
 
 
     listView = () => {
@@ -161,7 +198,7 @@ class SearchRacesPage extends Component {
     _onRefresh = () => {
         const {first_id} = this.state;
 
-        if (first_id != 0) {
+        if (first_id !== 0) {
             let body = {
                 seq_id: first_id,
                 operator: Backward,
@@ -409,6 +446,20 @@ class SearchRacesPage extends Component {
     }
 
 }
+
+const btnFloat = {
+    container: {
+        height: 25,
+        width: 50,
+        backgroundColor: 'red',
+        position: 'absolute',
+        bottom: 30,
+        right: 20
+    },
+    text: {
+        color: 'white'
+    }
+};
 
 const headerStyle = {height: 34, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.bg_ec};
 
