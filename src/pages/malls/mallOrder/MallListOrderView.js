@@ -1,189 +1,204 @@
-/**
- * Created by lorne on 2017/2/23.
- */
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
-    TouchableOpacity, View, TextInput,
-    StyleSheet, Image, Text, ListView, Platform,
-    ActivityIndicator,
-    ProgressBarAndroid,
-    ActivityIndicatorIOS,
+    StyleSheet, Text, View, Image,
+    TouchableOpacity, Platform
 } from 'react-native';
-import {connect} from 'react-redux';
-import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
-import {isEmptyObject, strNotNull} from '../../../utils/ComonHelper';
-import {GET_ORDER_LIST, POST_ORDER_CANCEL} from '../../../actions/ActionTypes';
-import {fetchOrderList} from '../../../actions/OrderAction';
-import {LoginUser} from '../../../services/AccountDao';
-import PullToRefreshListView from 'react-native-smart-pull-to-refresh-listview';
-import ItemOrderView from './ItemOrderView';
-import {_renderFooter, _renderHeader} from '../../../components/LoadingView';
+import I18n from 'react-native-i18n';
+import UltimateFlatList from '../../../components/ultimate/UltimateFlatList';
+import propTypes from 'prop-types';
+import {catProducts, searchProducts} from '../../../services/MallDao';
+import {isEmptyObject} from '../../../utils/ComonHelper';
 
-import {Verified} from '../../../configs/Status';
 
-class MallListOrderView extends Component {
+export default class MallListOrderView extends Component {
 
     static propTypes = {
-        testViewID: PropTypes.string,
-        status: PropTypes.string
+        category: propTypes.object,
+        isSearch: propTypes.bool
     };
 
-    componentDidMount() {
-        this._pullToRefreshListView.beginRefresh()
+    componentWillMount() {
+        this.searchKey = '';
     }
-
-
-    constructor(props) {
-        super(props);
-        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
-        this.initData();
-
-    }
-
-    initData = () => {
-        let dataList = [];
-        this.state = {
-            dataList: dataList,
-            dataSource: this.ds.cloneWithRows(dataList),
-            next_id: '0'
-        };
-    }
-
-
-    componentWillReceiveProps(newProps) {
-        const {orderStatus, hasData, orderList, loading, actionType} = newProps;
-
-        if (hasData && this.props.loading !== loading)
-            if (orderStatus === GET_ORDER_LIST + this.props.status
-                && actionType === GET_ORDER_LIST) {
-
-                if (this.state.next_id === '0') {
-                    this.state.dataList.splice(0, this.state.dataList.length);
-                    this._pullToRefreshListView.endRefresh()
-                } else {
-                    this._pullToRefreshListView.endLoadMore(false)
-                }
-
-
-                const {items, next_id} = orderList;
-                let newDataList = this.state.dataList.concat(items)
-
-                this.setState({
-                    dataList: newDataList,
-                    dataSource: this.ds.cloneWithRows(newDataList),
-                    next_id: next_id
-                });
-            }
-    }
-
-
-    _loadList = (next_id) => {
-        if (!isEmptyObject(LoginUser) && strNotNull(LoginUser.user_id)) {
-
-            const body = {
-                user_id: LoginUser.user_id,
-                page_size: 10,
-                status: this.props.status,
-                next_id: next_id
-            };
-
-            this.props._getOrderList(body);
-        }
-
-    }
-
-    _onLoadMore = () => {
-        const {next_id} = this.state;
-        if (strNotNull(next_id)) {
-            this._loadList(next_id);
-        } else {
-            this._pullToRefreshListView.endLoadMore(false)
-        }
-    }
-    _onRefresh = () => {
-        this.setState({
-            next_id: '0'
-        });
-
-        this._loadList('0')
-    };
-
-    _beginRefresh = () => {
-        this._pullToRefreshListView.beginRefresh();
-    };
-
-    _lookOrderDetail = (order_id, price) => {
-        if (user_extra.status !== Verified.PASSED)
-
-            router.toOrderInfoPage(this.props, order_id, price,
-                this._beginRefresh)
-    };
-
-
-    _renderRow = (rowData, sectionID, rowID) => {
-
-        const {order_info, race_info, ticket} = rowData;
-        return (<TouchableOpacity
-            onPress={() => this._lookOrderDetail(order_info.order_id, order_info.price)}
-            activeOpacity={1}
-            testID={'btn_orders_' + rowID}
-            style={{marginBottom: 5}}>
-
-            <View style={{height: 6}}/>
-            {/*赛事简介*/}
-            <ItemOrderView
-                refresh={this._beginRefresh}
-                ticket={ticket}
-                orderInfo={order_info}
-                raceInfo={race_info}/>
-
-
-        </TouchableOpacity>)
-    }
-
 
     render() {
+        return (<View style={{flex: 1}}>
 
-        const {testViewID} = this.props;
+            {/*{this.renderSort()}*/}
 
-        return (<View
-            testID={testViewID}
-            style={ApplicationStyles.bgContainer}>
-            <PullToRefreshListView
-                dataSource={this.state.dataSource}
-                renderRow={this._renderRow}
-                onLoadMore={this._onLoadMore}
-                onRefresh={this._onRefresh}
-                renderHeader={(viewState) => _renderHeader(viewState, headerStyle)}
-                renderFooter={(viewState) => _renderFooter(viewState, headerStyle)}
-                enableEmptySections={true}
-                ref={(component) => this._pullToRefreshListView = component}
-                viewType={PullToRefreshListView.constants.viewType.listView}
-            />
-
-
+            {this.renderFlatList()}
         </View>)
+
     }
+
+    renderFlatList = () => {
+        return <UltimateFlatList
+            firstLoader={!this.props.isSearch}
+            ref={(ref) => this.listView = ref}
+            onFetch={this.onFetch}
+            keyExtractor={(item, index) => `mallList${index}`}  //this is required when you are using FlatList
+            item={this.renderItem}  //this takes two params (item, index)
+            numColumns={2}
+        />
+
+
+    };
+
+    search = (keywords) => {
+        this.searchKey = keywords;
+        this.listView.refresh()
+    };
+
+    onFetch = (page = 1, startFetch, abortFetch) => {
+        try {
+
+            if (page === 1) {
+                if (this.props.isSearch)
+                    this.searchRefresh(startFetch, abortFetch);
+                else
+                    this.refresh(startFetch, abortFetch)
+            } else {
+                if (this.props.isSearch)
+                    this.searchLoad(page, startFetch, abortFetch);
+                else
+                    this.loadmore(page, startFetch, abortFetch);
+            }
+        } catch (err) {
+            abortFetch();
+        }
+    };
+
+
+    searchRefresh = (startFetch, abortFetch) => {
+        searchProducts({
+            page: 1,
+            page_size: 20,
+            keyword: this.searchKey
+        }, data => {
+            startFetch(data.products, 6)
+        }, err => {
+            abortFetch()
+        })
+
+    };
+
+
+    searchLoad = (page, startFetch, abortFetch) => {
+        searchProducts({
+            page: page,
+            page_size: 20,
+            keyword: this.searchKey
+        }, data => {
+            startFetch(data.products, 6)
+        }, err => {
+            abortFetch()
+        })
+    };
+
+    refresh = (startFetch, abortFetch) => {
+        const {id} = this.props.category;
+        catProducts({id}, data => {
+            startFetch(data.products, 6)
+        }, err => {
+            abortFetch()
+        }, {
+            page: 1,
+            page_size: 20
+        })
+    };
+
+    loadmore = (page, startFetch, abortFetch) => {
+        const {id} = this.props.category;
+        catProducts({id}, data => {
+            startFetch(data.products, 6)
+        }, err => {
+            abortFetch()
+        }, {
+            page: page,
+            page_size: 20
+        })
+    };
+
+    renderItem = (item, index, separator) => {
+        const {title, price, all_stock, icon} = item;
+        return <TouchableOpacity style={[styles.listItem, index % 2 === 0 ? {} : {marginLeft: 8}]}
+                                 onPress={() => {
+                                     router.toMallInfoPage(item)
+                                 }}>
+            <Image
+                resizeMode={'cover'}
+                style={styles.imgThem}
+                source={{uri: icon}}/>
+
+            <Text style={styles.txtName}>{title}</Text>
+            <View style={{flex: 1}}/>
+            <View style={styles.viewPrice}>
+
+                <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
+                    <Text style={{fontSize: 14, color: Colors._DF1}}>¥</Text>
+                    <Text style={{fontSize: 18, color: Colors._DF1}}>{price}</Text>
+                </View>
+
+                <View style={{flex: 1}}/>
+                {all_stock > 0 ?
+                    <Text style={styles.txtNum}>{I18n.t('surplus') + all_stock + I18n.t('pieces')}</Text> : null}
+
+
+            </View>
+
+        </TouchableOpacity>
+    };
 
 
 }
 
-const headerStyle = {height: 35, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.bg_f5};
-
-
-const bindAction = dispatch => ({
-    _getOrderList: (body) => dispatch(fetchOrderList(body))
+const styles = StyleSheet.create({
+    sort: {
+        height: 40,
+        backgroundColor: 'white',
+        flexDirection: 'row'
+    },
+    listItem: {
+        height: 264,
+        width: 184,
+        backgroundColor: 'white',
+        marginTop: 8
+    },
+    imgThem: {
+        height: 178,
+        width: '100%'
+    },
+    txtName: {
+        fontSize: 14,
+        color: Colors.txt_444,
+        marginTop: 7,
+        marginLeft: 15
+    },
+    rowAlign: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1
+    },
+    txtSort: {
+        color: Colors._AAA,
+        fontSize: 15,
+        marginRight: 7
+    },
+    imgSort: {
+        height: 12,
+        width: 12
+    },
+    viewPrice: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: 15,
+        marginBottom: 8
+    },
+    txtNum: {
+        fontSize: 12,
+        color: Colors._AAA,
+        marginRight: 15
+    }
 });
-
-const mapStateToProps = state => ({
-    loading: state.OrderState.loading,
-    error: state.OrderState.error,
-    hasData: state.OrderState.hasData,
-    actionType: state.OrderState.actionType,
-    orderList: state.OrderState.orderList,
-    orderStatus: state.OrderState.orderStatus
-});
-
-export default connect(mapStateToProps, bindAction)(MallListOrderView);

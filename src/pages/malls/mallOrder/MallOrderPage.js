@@ -13,16 +13,19 @@ import {NavigationBar} from '../../../components';
 import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
 import MallListOrderView from './MallListOrderView';
 
-
+const  categories = [{id:1,name:"全部"},{id:2,name:"代收款"},{id:3,name:"代发货"},{id:4,name:"已完成"}];
 
 export default class MallOrderPage extends Component {
 
     state = {
+        categories:[],
         user_id: '',
         status: ''
     };
 
-
+    componentDidMount() {
+        this.setState({categories:categories})
+    }
 
 
     render() {
@@ -36,40 +39,22 @@ export default class MallOrderPage extends Component {
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}/>
 
-            <ScrollableTabView
-                renderTabBar={() => <DefaultTabBar
-                    backgroundColor={Colors.white}
-                    activeTextColor="#F34A4A"
-                    inactiveTextColor={Colors._AAA}
-                    textStyle={{fontSize: 17}}
-                    style={{borderColor: Colors.bg_ec}}
-                    tabStyle={{paddingBottom: 0}}
-                    underlineStyle={{backgroundColor: '#F34A4A', width: '12%', height: 2, marginLeft: '4.6%'}}/>}>
+            {/*<View*/}
+                {/*renderTabBar={() => <DefaultTabBar*/}
+                    {/*backgroundColor={Colors.white}*/}
+                    {/*activeTextColor="#F34A4A"*/}
+                    {/*inactiveTextColor={Colors._AAA}*/}
+                    {/*textStyle={{fontSize: 15}}*/}
+                    {/*style={{borderColor: Colors.bg_ec,marginTop:1}}*/}
+                    {/*tabStyle={{paddingBottom: 0}}*/}
+                    {/*underlineStyle={{backgroundColor: '#F34A4A', width: '12%', height: 2, marginLeft: '4.6%'}}/>}>*/}
 
+                {/**/}
+            {/*</View>*/}
 
-                <MallListOrderView
-                    status="all"
-                    testViewID="page_all_order"
-                    tabLabel={I18n.t('all')}
+            <MallListOrderView
+                categories={categories}
                 />
-                <MallListOrderView
-                    status="unpaid"
-                    testViewID="page_payment"
-                    tabLabel={I18n.t('unpaid')}
-                />
-                <MallListOrderView
-                    status="paid"
-                    testViewID="page_ship"
-                    tabLabel={I18n.t('order_receive')}
-                />
-                <MallListOrderView
-                    status="completed"
-                    testViewID="page_complete"
-                    tabLabel={I18n.t('completed')}
-                />
-
-
-            </ScrollableTabView>
 
         </View>)
     }
