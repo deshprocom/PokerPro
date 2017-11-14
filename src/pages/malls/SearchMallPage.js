@@ -163,6 +163,7 @@ export default class SearchMallPage extends PureComponent {
                         clearButtonMode='always'
                         placeholderColor={Colors._AAA}
                         onSubmitEditing={this.submitSearch}
+                        returnKeyType={'search'}
                         placeholder={I18n.t('mall_search')}/>
 
                 </View>
