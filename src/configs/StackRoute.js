@@ -74,11 +74,13 @@ import OrderSubmitPage from '../pages/malls/order/OrderSubmitPage';
 import ConfirmOrderPage from '../pages/malls/orderStatus/ConfirmOrderPage';
 import ReturnPage from '../pages/malls/return/ReturnPage';
 import ReturnSucceedPage from '../pages/malls/return/ReturnSucceedPage';
+import MallOrderPage from '../pages/malls/mallOrder/MallOrderPage';
 
 
 export const Stacks = Actions.create(
     <Scene key="root">
 
+            <Scene key="MallOrderPage" component={MallOrderPage} hideNavBar/>
             <Scene key="ReturnSucceedPage" component={ReturnSucceedPage} hideNavBar/>
             <Scene key="ReturnPage" component={ReturnPage} hideNavBar/>
         <Scene key="ConfirmOrderPage" component={ConfirmOrderPage} hideNavBar/>

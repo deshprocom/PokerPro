@@ -13,7 +13,7 @@ export default class UnShippedBottom extends PureComponent {
             <View style={styleO.bottomView}>
                 <TouchableOpacity
                     onPress={() => {
-                        this.props.showExpiredInfo()
+                        router.toMallOrderPage()
                     }}
                     style={styleO.customer}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>
