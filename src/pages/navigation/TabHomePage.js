@@ -58,6 +58,9 @@ class TabHomePage extends Component {
     }
 
     componentDidMount() {
+        this.setState({
+            isLoading: true
+        });
         setTimeout(this._getData, 300)
     }
 
@@ -178,7 +181,7 @@ class TabHomePage extends Component {
 
         return (
 
-            <View>
+            <View style={{flex: 1}}>
 
                 <ScrollView
                     ref={ref => this.mainScroll = ref}
