@@ -79,15 +79,15 @@ class SearchRacesPage extends Component {
         return <TouchableOpacity
             onPress={this._backToMonth}
             style={{
-                height: 40,
-                width: 40,
-                backgroundColor: 'yellow',
+                height: 24,
+                width: 50,
+                backgroundColor: 'red',
                 position: 'absolute',
                 bottom: 30,
-                right: 20,
                 alignItems: 'center',
                 justifyContent: 'center',
-                borderRadius: 20
+                borderRadius: 12,
+                alignSelf: 'center'
             }}
 
         >
@@ -226,7 +226,7 @@ class SearchRacesPage extends Component {
                 <Text style={{color: '#4b515a', fontSize: 17, marginTop: 10}}>{sectionID}</Text>
             </View>
         )
-    }
+    };
 
     _renderRow = (rowData, sectionID, rowID) => {
         return (

@@ -181,7 +181,7 @@ class TabHomePage extends Component {
 
         return (
 
-            <View>
+            <View style={{flex: 1}}>
 
                 <ScrollView
                     ref={ref => this.mainScroll = ref}
