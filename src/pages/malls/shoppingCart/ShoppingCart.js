@@ -3,7 +3,7 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, L
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import Swipeout from 'react-native-swipeout';
 import I18n from 'react-native-i18n';
-import {deleteProductFromCart, util} from '../../../utils/ComonHelper';
+import {deleteProductFromCart, util, showToast} from '../../../utils/ComonHelper';
 import {ImageLoad} from '../../../components';
 
 
@@ -35,7 +35,7 @@ export default class ShoppingCart extends Component {
         let total_prices = Number.parseFloat('0');
         dataHosts.forEach(item => {
             if (item.isSelect)
-                total_prices += Number.parseFloat(item.commodity.price);
+                total_prices += Number.parseFloat(item.commodity.price) * item.number;
         });
 
         return total_prices;
@@ -262,7 +262,7 @@ export default class ShoppingCart extends Component {
             backgroundColor: '#F6F5F5'
         };
 
-        const {id} = item.commodity;
+        const {id, stock} = item.commodity;
 
         return (
             <View style={styleS.quantity}>
@@ -293,6 +293,10 @@ export default class ShoppingCart extends Component {
                 <TouchableOpacity
                     style={styleS.buyTouch}
                     onPress={() => {
+                        if (item.number >= stock) {
+                            showToast(I18n.t('max_stock'));
+                            return;
+                        }
                         ++item.number;
                         let newDataHosts = [...dataHosts];
                         newDataHosts.map(function (x) {
