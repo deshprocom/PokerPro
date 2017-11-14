@@ -25,7 +25,7 @@ export default class MallList extends Component {
     render() {
         return (<View style={{flex: 1}}>
 
-            {this.renderSort()}
+            {/*{this.renderSort()}*/}
 
             {this.renderFlatList()}
         </View>)

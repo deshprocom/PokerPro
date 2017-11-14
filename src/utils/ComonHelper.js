@@ -82,15 +82,38 @@ export function getCarts() {
 
 }
 
+export function deleteProductFromCart(carts) {
+    global.shoppingCarts = carts;
+    storage.save({
+        key: StorageKey.ShoppingCarts,
+        rawData: carts
+    });
+    getDispatchAction()['DELETE_CART']();
+
+}
+
+
 /*添加商品到购物车*/
 export function pushProductToCart(product) {
 
-    global.shoppingCarts.push(product);
+    const {commodity, number} = product;
+    let hasContain = false;
+    /*去重商品数量相加*/
+    global.shoppingCarts.map(item => {
+        if (commodity.id === item.commodity.id) {
+            hasContain = true;
+            return item.number = number + item.number;
+        }
+        else
+            return item;
+    });
+    if (!hasContain)
+        global.shoppingCarts.push(product);
     storage.save({
         key: StorageKey.ShoppingCarts,
         rawData: global.shoppingCarts
     });
-    console.log(global.shoppingCarts)
+    getDispatchAction()['ADD_CART']();
 }
 
 /*App更新提示*/

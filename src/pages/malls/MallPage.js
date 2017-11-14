@@ -8,29 +8,46 @@ import TopBar from './MallTopBar';
 import MallTypeView from './MallTypeView';
 import MallCategories from './MallCategories';
 import {getCategories} from '../../services/MallDao';
+import {connect} from 'react-redux';
+import {ADD_CART, DELETE_CART} from '../../actions/ActionTypes';
 
 
-export default class MallPage extends PureComponent {
+class MallPage extends PureComponent {
 
     state = {
         showCategories: false,
-        categories: []
+        categories: [],
+        cartNum: global.shoppingCarts.length
     };
 
     componentDidMount() {
         getCategories(data => {
-            console.log('categories', data)
+
             const {categories} = data;
+            categories.unshift({id: -1, name: '推荐'});
+            console.log('categories', categories);
             this.setState({categories})
         }, err => {
 
         })
     }
 
+    componentWillReceiveProps(newProps) {
+
+        if (newProps.hasData && (newProps.actionType === ADD_CART
+                || newProps.actionType === DELETE_CART)) {
+
+            this.setState({
+                cartNum: global.shoppingCarts.length
+            })
+        }
+    }
+
     render() {
-        const {categories} = this.state;
+        const {categories, cartNum} = this.state;
         return (<View style={{flex: 1}}>
-            <TopBar/>
+            <TopBar
+                cartNum={cartNum}/>
             <MallTypeView
                 categories={categories}
                 showCatePage={this.toggle}/>
@@ -47,3 +64,12 @@ export default class MallPage extends PureComponent {
         })
     }
 }
+
+const bindAction = dispatch => ({});
+
+const mapStateToProps = state => ({
+    actionType: state.MallState.actionType,
+    hasData: state.MallState.hasData
+});
+
+export default connect(mapStateToProps, bindAction)(MallPage);

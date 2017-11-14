@@ -16,6 +16,9 @@ import {SearchPage} from './SearchPage';
 import {SHOW_BACK_TOP, HIDE_BACK_TOP, BACK_TOP} from '../../actions/ActionTypes';
 import {getDispatchAction, alertRefresh} from '../../utils/ComonHelper';
 import {Loading} from '../../components';
+import ActivityModel from '../message/ActivityModel';
+import {getActivityPush} from '../../services/AccountDao';
+import StorageKey from '../../configs/StorageKey';
 
 class TabHomePage extends Component {
     state = {
@@ -58,7 +61,41 @@ class TabHomePage extends Component {
         setTimeout(this._getData, 300)
     }
 
+    _getPushActivity = () => {
+        storage.load({key: StorageKey.Activity})
+            .then(ret => {
+                getActivityPush(data => {
+                    const {activity} = data;
+                    if (ret.id === activity.id && ret.updated_time === activity.updated_time)
+                        return;
+                    if (this.activityModel)
+                        this.activityModel.setData(data.activity);
+                    storage.save({
+                        key: StorageKey.Activity,
+                        rawData: data.activity
+                    })
+                }, err => {
+
+                })
+
+            }).catch(err => {
+            getActivityPush(data => {
+                if (this.activityModel)
+                    this.activityModel.setData(data.activity)
+                storage.save({
+                    key: StorageKey.Activity,
+                    rawData: data.activity
+                })
+            }, err => {
+
+            })
+        })
+
+    };
+
     _getData = () => {
+
+        this._getPushActivity();
         getMainBanners(data => {
             this.setState({
                 banners: data.banners,
@@ -99,9 +136,9 @@ class TabHomePage extends Component {
             })
 
         }, err => {
-            setTimeout(()=>{
+            setTimeout(() => {
                 alertRefresh(this._getData)
-            },2000)
+            }, 2000)
 
         })
     };
@@ -171,6 +208,8 @@ class TabHomePage extends Component {
                     unread={this.props.unread}
                     ref={ref => this.searchBar = ref}/>
 
+                <ActivityModel
+                    ref={ref => this.activityModel = ref}/>
 
                 <Loading visible={this.state.isLoading}/>
             </View>

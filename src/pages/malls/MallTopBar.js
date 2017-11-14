@@ -41,9 +41,9 @@ export default class MallTopBar extends PureComponent {
     }
 
     _carts = () => {
-        let count = global.shoppingCarts.length;
-        if (count > 0) {
-            return <Badge style={styles.badge}>{count}</Badge>
+        const {cartNum} = this.props;
+        if (cartNum > 0) {
+            return <Badge style={styles.badge}>{cartNum}</Badge>
         }
     }
 }

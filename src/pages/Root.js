@@ -15,7 +15,9 @@ import {
     GET_PROFILE,
     GET_UNREAND_MSG,
     SWITCH_LANGUAGE,
-    VIDEO_PAUSE
+    VIDEO_PAUSE,
+    ADD_CART,
+    DELETE_CART
 } from '../actions/ActionTypes';
 import JpushHelp from '../services/JpushHelper';
 import {fetchGetProfile} from '../actions/PersonAction';
@@ -23,6 +25,7 @@ import {fetchGetRecentRaces} from '../actions/RacesAction';
 import {fetchGetCertification, switchLanguage, videoPause} from '../actions/AccountAction';
 import {connect} from 'react-redux';
 import {fetchUnreadMsg} from '../actions/AccountAction';
+import {addCart, deleteCart} from '../actions/MallAction';
 
 class Root extends Component {
 
@@ -31,12 +34,17 @@ class Root extends Component {
     };
 
     componentDidMount() {
+
         setDispatchAction(GET_CERTIFICATION, this.props._getRealName);
         setDispatchAction(GET_RECENT_RACES, this.props._getRecentRaces);
         setDispatchAction(GET_PROFILE, this.props._getProfile);
         setDispatchAction(GET_UNREAND_MSG, this.props._fetchUnreadMsg);
         setDispatchAction(SWITCH_LANGUAGE, this.props._switchLanguage);
         setDispatchAction(VIDEO_PAUSE, this.props._videoPause);
+        setDispatchAction(DELETE_CART, this.props._deleteCart);
+        setDispatchAction(ADD_CART, this.props._addCart);
+
+
         init(() => {
             this.setState({
                 languageChange: true
@@ -106,7 +114,9 @@ const bindAction = dispatch => ({
     _getRecentRaces: (body) => dispatch(fetchGetRecentRaces(body)),
     _fetchUnreadMsg: () => dispatch(fetchUnreadMsg()),
     _switchLanguage: () => dispatch(switchLanguage()),
-    _videoPause: () => dispatch(videoPause())
+    _videoPause: () => dispatch(videoPause()),
+    _addCart: () => dispatch(addCart()),
+    _deleteCart: () => dispatch(deleteCart())
 });
 
 const mapStateToProps = state => ({

@@ -47,6 +47,10 @@ export default class Router {
         })
     }
 
+    replaceShoppingCart() {
+        Actions.replace('ShoppingCart')
+    }
+
     toSearchMallPage() {
         this.stackPush({
             name: 'SearchMallPage'
@@ -667,9 +671,7 @@ export default class Router {
 
     toShippingCart() {
         this.stackPush({
-            // name: 'ShoppingCart',
             name: 'ShoppingCart',
-
         })
     }
 
@@ -691,7 +693,7 @@ export default class Router {
         })
     }
 
-    toReturnSucceedPage(){
+    toReturnSucceedPage() {
         this.stackPush({
             name: 'ReturnSucceedPage'
         })

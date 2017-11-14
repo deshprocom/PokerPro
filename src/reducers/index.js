@@ -15,6 +15,7 @@ import TicketOrderState from './TicketOrderState';
 import OrderState from './OrderState';
 import NewsState from './NewsState';
 import RankState from './RankState';
+import MallState from './MallState';
 
 const rootReducer = combineReducers({
     RegisterRedux,
@@ -28,7 +29,8 @@ const rootReducer = combineReducers({
     TicketOrderState,
     OrderState,
     NewsState,
-    RankState
+    RankState,
+    MallState
 
 });
 

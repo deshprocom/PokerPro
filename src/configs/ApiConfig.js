@@ -121,7 +121,10 @@ export function product_detail(body) {
 
 export function cat_products(body) {
     const {id} = body;
-    return `categories/${id}/products`
+    if (id === -1)
+        return 'recommended_products';//推荐
+    else
+        return `categories/${id}/products`
 }
 
 export function categories_child(body) {
