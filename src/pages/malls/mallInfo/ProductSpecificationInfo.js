@@ -139,12 +139,16 @@ export default class ProductSpecificationInfo extends PureComponent {
 
     tempValue = (optionTypes) => {
 
-        const {icon, master, variants} = this.props.product;
+        const {icon, master, variants, title} = this.props.product;
+
         let obj = {};
+        let arr_type = [];
         optionTypes.forEach(item => {
             if (item.hasOwnProperty('select')) {
                 if (!obj[`${item.id}`]) {
-                    obj[`${item.id}`] = item.select.id
+                    obj[`${item.id}`] = item.select.id;
+
+                    arr_type.push({name: item.name, value: item.select.name})
                 }
             }
         });
@@ -158,6 +162,9 @@ export default class ProductSpecificationInfo extends PureComponent {
         if (tempArr.length > 0) {
             const {image, price, stock} = tempArr[0];
             this.tempProduct = tempArr[0];
+            this.tempProduct.arr_type = arr_type;
+            this.tempProduct.title = title;
+
             this.setState({
                 tempStock: stock,
                 tempImg: strNotNull(image) ? image : this.state.tempImg,

@@ -202,7 +202,12 @@ export default class ShoppingCart extends Component {
                 }
             }
         ];
-        const {price, original_price, id, stock} = item.commodity;
+        const {price, original_price, stock, arr_type, title} = item.commodity;
+        let type_value = '';
+        arr_type.forEach(x => {
+            type_value += x.name + ':';
+            type_value += x.value+'  ';
+        });
         return (
             <Swipeout
                 autoClose={true}
@@ -214,9 +219,9 @@ export default class ShoppingCart extends Component {
 
                     <Image style={styleS.mallImg} source={Images.empty_image}/>
                     <View style={styleS.TxtView}>
-                        <Text numberOfLines={2} style={styleS.mallTextName}>筹码14克皇冠粘土百家乐德州扑克筹码币{id}</Text>
+                        <Text numberOfLines={2} style={styleS.mallTextName}>{title}</Text>
                         <Text
-                            style={styleS.mallAttributes}>{I18n.t('weight')}：1.62KG {I18n.t('weight')}：黑 {I18n.t('quantity')}：500</Text>
+                            style={styleS.mallAttributes}>{type_value}</Text>
                         <View style={styleS.PriceView}>
                             <Text style={styleS.Price}>¥{price}</Text>
                             <View style={{flex: 1}}/>
