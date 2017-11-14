@@ -10,7 +10,7 @@ export default class ShipAddress extends PureComponent {
 
     render(){
         return(
-            <View style={styleS.addressView}>
+            <TouchableOpacity style={styleS.addressView}>
                 <View style={styleS.title}>
                     <Text style={styleS.titleName}>{I18n.t('shopping_addr')}</Text>
                 </View>
@@ -24,15 +24,20 @@ export default class ShipAddress extends PureComponent {
                         <Text style={styleS.shipAddrTxt2}>fdsobfsoyrfnskfhsdfnslkfsalfnas;phgdknls;f</Text>
                     </View>
                     <View style={{flex: 1}}/>
-                    <TouchableOpacity style={styleS.shipAddrTouch}>
+                    <View style={styleS.shipAddrTouch}>
                         <Image style={styleS.shipAddrImg} source={Images.is}/>
-                    </TouchableOpacity>
+                    </View>
                 </View>
+                <Image style={styleS.lineImg} source={Images.order_line}/>
 
-            </View>
+            </TouchableOpacity>
         )}
 }
 const styleS = StyleSheet.create({
+    lineImg:{
+        width:'100%',
+        height:4
+    },
     addressView:{
 
     },
