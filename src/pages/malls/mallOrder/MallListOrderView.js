@@ -4,7 +4,7 @@ import {
     TouchableOpacity, Platform
 } from 'react-native';
 import propTypes from 'prop-types';
-import AllStatus from './AllStatus';
+import AllStatus from './OrderListStatus';
 import UnReceived from './UnReceived';
 
 

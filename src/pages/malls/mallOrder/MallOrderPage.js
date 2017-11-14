@@ -10,25 +10,26 @@ import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import {NavigationBar} from '../../../components';
-import {DefaultTabBar} from 'react-native-scrollable-tab-view';
-import MallTypeView from './MallTypeView';
+import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
+import OrderListStatus from './OrderListStatus';
 
-const  categories = [{id:1,name:"待收款"},{id:2,name:"待发货"},{id:3,name:"已完成"}];
+const categories = [{id: 1, name: "待收款"}, {id: 2, name: "待发货"}, {id: 3, name: "已完成"}];
 
 export default class MallOrderPage extends Component {
 
     state = {
-        categories:[],
+        categories: [],
         user_id: '',
         status: ''
     };
 
     componentDidMount() {
-        this.setState({categories:categories})
+        this.setState({categories: categories})
     }
 
 
     render() {
+        let menu = ['全部', '待付款', '待收获', '已完成'];
         return (<View style={[ApplicationStyles.bgContainer,{backgroundColor:'#ECECEE'}]}
                       testID="page_order_list">
             <NavigationBar
@@ -39,9 +40,22 @@ export default class MallOrderPage extends Component {
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}/>
 
-            <MallTypeView
-                categories={this.state.categories}
-                />
+            <ScrollableTabView
+                renderTabBar={() => <DefaultTabBar
+                    backgroundColor={Colors.white}
+                        activeTextColor="#F34A4A"
+                        inactiveTextColor={Colors._AAA}
+                        textStyle={{fontSize: 15}}
+                        style={{borderColor: Colors._EEE,marginTop:1}}
+                        underlineStyle={{backgroundColor: '#F34A4A', height: 2}}/>}>
+                {menu.map((item, index) => {
+                    return <OrderListStatus
+                        key={`mall_order_${index}`}
+                        tabLabel={item}/>
+                })}
+
+            </ScrollableTabView>
+
 
         </View>)
     }
