@@ -96,7 +96,18 @@ export function deleteProductFromCart(carts) {
 /*添加商品到购物车*/
 export function pushProductToCart(product) {
 
-    global.shoppingCarts.push(product);
+    const {commodity, number} = product;
+    let hasContain = false;
+    global.shoppingCarts.map(item => {
+        if (commodity.id === item.commodity.id) {
+            hasContain = true;
+            return item.number = number + item.number;
+        }
+        else
+            return item;
+    });
+    if (!hasContain)
+        global.shoppingCarts.push(product);
     storage.save({
         key: StorageKey.ShoppingCarts,
         rawData: global.shoppingCarts
