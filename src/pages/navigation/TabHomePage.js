@@ -58,6 +58,9 @@ class TabHomePage extends Component {
     }
 
     componentDidMount() {
+        this.setState({
+            isLoading: true
+        });
         setTimeout(this._getData, 300)
     }
 
