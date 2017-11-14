@@ -98,6 +98,7 @@ export function pushProductToCart(product) {
 
     const {commodity, number} = product;
     let hasContain = false;
+    /*去重商品数量相加*/
     global.shoppingCarts.map(item => {
         if (commodity.id === item.commodity.id) {
             hasContain = true;
