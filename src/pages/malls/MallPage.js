@@ -22,8 +22,10 @@ class MallPage extends PureComponent {
 
     componentDidMount() {
         getCategories(data => {
-            console.log('categories', data)
+
             const {categories} = data;
+            categories.unshift({id: -1, name: '推荐'});
+            console.log('categories', categories);
             this.setState({categories})
         }, err => {
 
