@@ -195,18 +195,20 @@ const ScrollableTabBar = React.createClass({
                         return renderTab(name, page, isTabActive, this.props.goToPage, this.measureTab.bind(this, page));
                     })}
 
-                    <TouchableOpacity
-                        onPress={()=>{
-                            this.props.showCatePage()
-                        }}
-                        style={styles.btnFilter}>
-                        <Image style={styles.imgFilter}
-                               source={Images.mall_filter}/>
-
-                    </TouchableOpacity>
+                    <View style={{width: 58}}/>
                     <Animated.View style={[tabUnderlineStyle, dynamicTabUnderline, this.props.underlineStyle,]}/>
                 </View>
             </ScrollView>
+
+            <TouchableOpacity
+                onPress={() => {
+                    this.props.showCatePage()
+                }}
+                style={styles.btnFilter}>
+                <Image style={styles.imgFilter}
+                       source={Images.mall_filter}/>
+
+            </TouchableOpacity>
         </View>;
     },
 
@@ -258,7 +260,11 @@ const styles = StyleSheet.create({
         height: 39,
         width: 58,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        position: 'absolute',
+        right: 0,
+        backgroundColor: 'white',
+        opacity: 0.7
     },
     imgFilter: {
         height: 20,
