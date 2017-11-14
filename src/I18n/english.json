@@ -446,6 +446,7 @@
   "change_mall":"换货",
   "buy_again":"再次购买",
   "order_del":"删除订单",
-  "logistics_view":"查看物流"
+  "logistics_view":"查看物流",
+  "mall_order":"商品订单"
 }
 

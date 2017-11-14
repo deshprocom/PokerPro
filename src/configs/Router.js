@@ -696,6 +696,11 @@ export default class Router {
             name: 'ReturnSucceedPage'
         })
     }
+    toMallOrderPage(){
+        this.stackPush({
+            name: 'MallOrderPage'
+        })
+    }
 
 
 }
