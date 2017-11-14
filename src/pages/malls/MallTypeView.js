@@ -16,9 +16,13 @@ export default class MallTypeView extends PureComponent {
         showCatePage: propTypes.func.isRequired
     };
 
+
     render() {
         const {categories} = this.props;
-        if (categories.length > 0)
+
+        if (categories.length > 0) {
+            this.arrayMenu = [...categories];
+            this.arrayMenu.unshift({id: -1, name: '推荐'});
             return <View style={ApplicationStyles.bgContainer}>
                 <ScrollableTabView
                     renderTabBar={() => <ScrollableTabBar
@@ -31,7 +35,7 @@ export default class MallTypeView extends PureComponent {
                         underlineStyle={{backgroundColor: '#F34A4A', height: 2}}
                     />}>
 
-                    {categories.map((item, key) => {
+                    {this.arrayMenu.map((item, key) => {
 
                         return <MallList
                             category={item}
@@ -42,6 +46,7 @@ export default class MallTypeView extends PureComponent {
 
                 </ScrollableTabView>
             </View>;
+        }
         else
             return <View/>
 

@@ -3,7 +3,8 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, L
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import Swipeout from 'react-native-swipeout';
 import I18n from 'react-native-i18n';
-import {deleteProductFromCart, util} from '../../../utils/ComonHelper';
+import {deleteProductFromCart, util, showToast} from '../../../utils/ComonHelper';
+import {ImageLoad} from '../../../components';
 
 
 export default class ShoppingCart extends Component {
@@ -29,6 +30,28 @@ export default class ShoppingCart extends Component {
     }
 
 
+    total_price = () => {
+        const {dataHosts} = this.state;
+        let total_prices = Number.parseFloat('0');
+        dataHosts.forEach(item => {
+            if (item.isSelect)
+                total_prices += Number.parseFloat(item.commodity.price) * item.number;
+        });
+
+        return total_prices;
+    };
+
+    count = () => {
+        const {dataHosts} = this.state;
+        let count = 0;
+        dataHosts.forEach(item => {
+            if (item.isSelect)
+                ++count;
+        });
+
+        return `(${count})`;
+    };
+
     toBottom = () => {
         return (
             <View style={styleS.bottomView}>
@@ -45,7 +68,7 @@ export default class ShoppingCart extends Component {
                 <Text style={styleS.selectedAll}>{I18n.t('selectAll')}</Text>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <Text style={styleS.total}>{I18n.t('ticket_price')}</Text>
-                    <Text style={styleS.selectedPrice}>¥23,300.8</Text>
+                    <Text style={styleS.selectedPrice}>{this.total_price()}</Text>
                 </View>
                 <View style={{flex: 1}}/>
                 <TouchableOpacity style={styleS.settlementView}
@@ -53,7 +76,7 @@ export default class ShoppingCart extends Component {
                                       router.toOrderConfirm();
                                   }}>
                     <Text style={styleS.settlement}>{I18n.t('settlement')}</Text>
-                    <Text style={styleS.settlementQuantity}>(3)</Text>
+                    <Text style={styleS.settlementQuantity}>{this.count()}</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -132,7 +155,7 @@ export default class ShoppingCart extends Component {
             return util.isEqual(commodity, x.commodity);
         });
         dataHosts.splice(index, 1);
-        deleteProductFromCart(dataHosts)
+        deleteProductFromCart(dataHosts);
 
         this.setState({dataHosts: [...dataHosts]});
 
@@ -176,7 +199,7 @@ export default class ShoppingCart extends Component {
         this.setState({newSelects})
     };
 
-    renderShowEditView(item, onPress) {
+    renderShowEditView(item) {
         let imageURL = Images.radio;
         if (item.isSelect === true) {
             imageURL = Images.radioSelected
@@ -184,7 +207,7 @@ export default class ShoppingCart extends Component {
         return (
             <TouchableOpacity
                 onPress={() => {
-                    onPress(item, item.index)
+                    this._pressItem(item)
                 }}>
                 <Image style={styleS.radioImg}
                        source={imageURL}/>
@@ -202,21 +225,24 @@ export default class ShoppingCart extends Component {
                 }
             }
         ];
-        const {price, original_price, id, stock} = item.commodity;
+        const {price, original_price, stock, arr_type, title, image} = item.commodity;
+        let type_value = '';
+        arr_type.forEach(x => {
+            type_value += x.name + ':';
+            type_value += x.value + '  ';
+        });
         return (
             <Swipeout
                 autoClose={true}
                 right={swipeoutBtns}>
                 <View style={styleS.renderItem}>
-                    {this.renderShowEditView(item, () => {
-                        this._pressItem(item)
-                    })}
+                    {this.renderShowEditView(item)}
 
-                    <Image style={styleS.mallImg} source={Images.empty_image}/>
+                    <ImageLoad style={styleS.mallImg} source={{uri: image}}/>
                     <View style={styleS.TxtView}>
-                        <Text numberOfLines={2} style={styleS.mallTextName}>筹码14克皇冠粘土百家乐德州扑克筹码币{id}</Text>
+                        <Text numberOfLines={2} style={styleS.mallTextName}>{title}</Text>
                         <Text
-                            style={styleS.mallAttributes}>{I18n.t('weight')}：1.62KG {I18n.t('weight')}：黑 {I18n.t('quantity')}：500</Text>
+                            style={styleS.mallAttributes}>{type_value}</Text>
                         <View style={styleS.PriceView}>
                             <Text style={styleS.Price}>¥{price}</Text>
                             <View style={{flex: 1}}/>
@@ -236,7 +262,7 @@ export default class ShoppingCart extends Component {
             backgroundColor: '#F6F5F5'
         };
 
-        const {id} = item.commodity;
+        const {id, stock} = item.commodity;
 
         return (
             <View style={styleS.quantity}>
@@ -267,6 +293,10 @@ export default class ShoppingCart extends Component {
                 <TouchableOpacity
                     style={styleS.buyTouch}
                     onPress={() => {
+                        if (item.number >= stock) {
+                            showToast(I18n.t('max_stock'));
+                            return;
+                        }
                         ++item.number;
                         let newDataHosts = [...dataHosts];
                         newDataHosts.map(function (x) {
