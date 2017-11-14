@@ -31,14 +31,8 @@ export default class UnShippedBottom extends PureComponent {
 }
 const styleO = StyleSheet.create({
     bottomView:{
-        height:50,
-        backgroundColor:"#FFFFFF",
-        position:'absolute',
-        bottom:0,
         flexDirection:'row-reverse',
         alignItems: 'center',
-        width: '100%',
-        zIndex:999
     },
     returnedBottom:{
         borderWidth:1,

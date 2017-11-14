@@ -39,13 +39,25 @@ export default class ConfirmOrderPage extends PureComponent {
                 </ScrollView>
 
 
-                <UnShippedBottom/>
+                <View style={styleC.bottom}>
+                    <UnShippedBottom/>
+                </View>
             </View>
 
         );
     }
 }
 const styleC = StyleSheet.create({
+    bottom:{
+        height:50,
+        backgroundColor:"#FFFFFF",
+        position:'absolute',
+        bottom:0,
+        flexDirection:'row-reverse',
+        alignItems:'center',
+        width: '100%',
+        zIndex:999
+    },
     orderView:{
         backgroundColor:'#ECECEE'
     },
@@ -78,4 +90,4 @@ const styleC = StyleSheet.create({
         color: '#161718'
     },
 
-})
+});
