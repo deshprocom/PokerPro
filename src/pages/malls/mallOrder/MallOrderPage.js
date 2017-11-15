@@ -13,7 +13,6 @@ import {NavigationBar} from '../../../components';
 import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
 import OrderListStatus from './OrderListStatus';
 
-const categories = [{id: 1, name: "待收款"}, {id: 2, name: "待发货"}, {id: 3, name: "已完成"}];
 
 export default class MallOrderPage extends Component {
 
@@ -22,10 +21,6 @@ export default class MallOrderPage extends Component {
         user_id: '',
         status: ''
     };
-
-    componentDidMount() {
-        this.setState({categories: categories})
-    }
 
 
     render() {
