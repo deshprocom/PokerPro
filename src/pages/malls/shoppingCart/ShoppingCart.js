@@ -139,6 +139,7 @@ export default class ShoppingCart extends Component {
                         showEdit: !this.state.showEdit,
                         showCart: !this.state.showCart,
                         showBottom: !this.state.showBottom,
+                        selectAll: false
                     });
                     this.refreshAll()
                 }}>
