@@ -43,7 +43,7 @@ export default class MallInfo extends PureComponent {
     _separator = () => {
         return <View style={{height: 1, marginLeft: 17, marginRight: 17, backgroundColor: '#ECECEE'}}/>;
     };
-    _keyExtractor = (item, index) => item.id;
+    _keyExtractor = (item, index) => `mallInfo${index}`;
 
     render() {
         return (
