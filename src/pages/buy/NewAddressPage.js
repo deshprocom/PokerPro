@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/7/6.
  */
-import React, {Component, PropTypes}from 'react';
+import React, {Component, PropTypes} from 'react';
 import {
     TouchableOpacity, View, TextInput, Keyboard,
     StyleSheet, Image, Text, ScrollView, Platform
@@ -147,13 +147,10 @@ export default class NewAddress extends Component {
                 transparent
                 animationType={'fade'}
                 isVisible={this.state.regionVisible} //true展示，false不展示
-                selectedProvince={'广东'}
-                selectedCity={'深圳'}
-                selectedArea={'福田区'}
                 onSubmit={(params) => {
-
+                    console.log(params)
                     const {province, city, area} = params;
-                    this.receiverAdr1 = province + ' ' + city + ' ' + area;
+                    this.receiverAdr1 = province.name + ' ' + city.name + ' ' + area.name;
                     this.setState({
                         regionVisible: false,
                         regionTxt: this.receiverAdr1
@@ -266,7 +263,7 @@ const styles = StyleSheet.create({
         marginLeft: 17,
         marginTop: 21
     },
-     btnSwitch: {
+    btnSwitch: {
         height: 32,
         width: 53,
         position: 'absolute',
