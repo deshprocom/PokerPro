@@ -61,8 +61,11 @@ export default class ChinaRegionWheelPicker extends BaseComponent {
     }
 
     componentDidMount() {
+        const {selectedProvince, selectedCity, selectedArea} = this.state;
         const provinces = PROVINCE_LIST;
-
+        const obj = PROVINCE_LIST.filter(item => item.province_id === selectedProvince);
+        const cityObj = CITY_LIST.filter(item => item.city_id === selectedCity);
+        const areaObj = AREA_LIST.filter(item => item.area_id === selectedArea);
 
         const citys = this._filterCitys(this.state.selectedProvince);
 
@@ -73,6 +76,9 @@ export default class ChinaRegionWheelPicker extends BaseComponent {
             provinces,
             citys,
             areas,
+            provinceObj: obj[0],
+            cityObj: cityObj[0],
+            areaObj: areaObj[0]
         });
     }
 

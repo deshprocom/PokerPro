@@ -21,7 +21,10 @@ export default class NewAddress extends Component {
         isDefault: false,
         regionVisible: false,
         regionTxt: '',
-        addressEdit: {}
+        addressEdit: {},
+        province: '',
+        city: '',
+        area: ''
     };
 
     componentDidMount() {
@@ -153,7 +156,10 @@ export default class NewAddress extends Component {
                     this.receiverAdr1 = province.name + ' ' + city.name + ' ' + area.name;
                     this.setState({
                         regionVisible: false,
-                        regionTxt: this.receiverAdr1
+                        regionTxt: this.receiverAdr1,
+                        province: province.name,
+                        city: city.name,
+                        area: area.name
                     })
                 }}
                 onCancel={() => {
@@ -178,6 +184,10 @@ export default class NewAddress extends Component {
                 address: this.receiverAdr1,
                 address_detail: this.receiverAdr2,
                 default: this.state.isDefault,
+                province: this.state.province,
+                city: this.state.city,
+                area: this.state.area
+
             };
 
 
