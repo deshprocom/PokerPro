@@ -227,10 +227,13 @@ export default class ShoppingCart extends Component {
         ];
         const {price, original_price, stock, arr_type, title, image} = item.commodity;
         let type_value = '';
-        arr_type.forEach(x => {
-            type_value += x.name + ':';
-            type_value += x.value + '  ';
-        });
+        if(!util.isEmpty(arr_type)){
+            arr_type.forEach(x => {
+                type_value += x.name + ':';
+                type_value += x.value + '  ';
+            });
+        }
+
         return (
             <Swipeout
                 autoClose={true}
