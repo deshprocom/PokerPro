@@ -16,9 +16,9 @@ export default class Tips extends PureComponent {
 
                         <TouchableOpacity style={styleT.tipsTouch}
                                           onPress={()=>{
-                            setTimeout(this.setState({
+                            this.setState({
                                 showTips : ! this.state.showTips,
-                            }),1000)
+                            })
                         }}>
                             <Image style={styleT.tipsImg} source={Images.close}/>
                         </TouchableOpacity>

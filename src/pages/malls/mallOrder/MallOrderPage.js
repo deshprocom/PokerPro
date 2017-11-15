@@ -11,21 +11,20 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import {NavigationBar} from '../../../components';
 import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
-import MallListOrderView from './MallListOrderView';
-
+import OrderListStatus from './OrderListStatus';
 
 
 export default class MallOrderPage extends Component {
 
     state = {
+        categories: [],
         user_id: '',
         status: ''
     };
 
 
-
-
     render() {
+        let menu = ['全部', '待付款', '待收获', '已完成'];
         return (<View style={[ApplicationStyles.bgContainer,{backgroundColor:'#ECECEE'}]}
                       testID="page_order_list">
             <NavigationBar
@@ -39,37 +38,19 @@ export default class MallOrderPage extends Component {
             <ScrollableTabView
                 renderTabBar={() => <DefaultTabBar
                     backgroundColor={Colors.white}
-                    activeTextColor="#F34A4A"
-                    inactiveTextColor={Colors._AAA}
-                    textStyle={{fontSize: 17}}
-                    style={{borderColor: Colors.bg_ec}}
-                    tabStyle={{paddingBottom: 0}}
-                    underlineStyle={{backgroundColor: '#F34A4A', width: '12%', height: 2, marginLeft: '4.6%'}}/>}>
-
-
-                <MallListOrderView
-                    status="all"
-                    testViewID="page_all_order"
-                    tabLabel={I18n.t('all')}
-                />
-                <MallListOrderView
-                    status="unpaid"
-                    testViewID="page_payment"
-                    tabLabel={I18n.t('unpaid')}
-                />
-                <MallListOrderView
-                    status="paid"
-                    testViewID="page_ship"
-                    tabLabel={I18n.t('order_receive')}
-                />
-                <MallListOrderView
-                    status="completed"
-                    testViewID="page_complete"
-                    tabLabel={I18n.t('completed')}
-                />
-
+                        activeTextColor="#F34A4A"
+                        inactiveTextColor={Colors._AAA}
+                        textStyle={{fontSize: 15}}
+                        style={{borderColor: Colors._EEE,marginTop:1}}
+                        underlineStyle={{backgroundColor: '#F34A4A', height: 2}}/>}>
+                {menu.map((item, index) => {
+                    return <OrderListStatus
+                        key={`mall_order_${index}`}
+                        tabLabel={item}/>
+                })}
 
             </ScrollableTabView>
+
 
         </View>)
     }

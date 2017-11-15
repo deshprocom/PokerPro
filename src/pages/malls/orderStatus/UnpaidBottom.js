@@ -31,14 +31,15 @@ export default class UnpaidBottom extends PureComponent {
 }
 const styleO = StyleSheet.create({
     bottomView:{
-        height:50,
-        backgroundColor:"#FFFFFF",
-        position:'absolute',
-        bottom:0,
         flexDirection:'row-reverse',
         alignItems: 'center',
-        width: '100%',
-        marginTop:80
+        // height:50,
+        // backgroundColor:"#FFFFFF",
+        // position:'absolute',
+        // bottom:0,
+        //
+        // width: '100%',
+        // marginTop:80
     },
     returnedBottom:{
         borderWidth:1,
