@@ -4,72 +4,29 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import I18n from 'react-native-i18n';
 import RenderItem from './RenderItem';
 
-const data = [{id: 1}, {id: 2}, {id: 3}, {id: 4},{id:5}];
+let lists = [1, 2,3,4,5];
 
 export default class MallInfo extends PureComponent {
-    state={
-        dataHosts:[],
-        startIndex:1,
-        endIndex:2,
-        showExpand:true,
+    state = {
+        dataHosts: [],
+        showExpand: true,
     };
+
     componentDidMount() {
 
-        const{startIndex,endIndex,dataHosts,showExpand} = this.state;
-        let newDataHosts = [...dataHosts];
-        let newShowexpand = showExpand;
 
-        data.forEach(function(x){
-
-            if(x.id <= endIndex && endIndex < data.length && x.id >= startIndex){
-                if(endIndex >= data.length){
-                    newShowexpand=false;
-                }else{
-                    newDataHosts.push(x)
-                }
-
-            }
-        });
         this.setState({
-            dataHosts:newDataHosts,
-            showExpand:newShowexpand
+            dataHosts: lists.length > 2 ? lists.slice(0, 2) : lists,
+            showExpand: lists.length > 2
         });
 
     };
 
-    _expandData=()=>{
-        const{startIndex,endIndex,dataHosts,showExpand} = this.state;
+    _expandData = () => {
 
-        let newDataHosts = [...dataHosts];
-        let newShowexpand = showExpand;
-        let newStartIndex = startIndex;
-        let newEndIndex = endIndex;
-
-        newStartIndex=newStartIndex+2;
-        newEndIndex=newEndIndex+2;
-
-        data.forEach(function(x){
-            if(x.id <= newEndIndex && newEndIndex <= data.length && x.id >= newStartIndex){
-                if(newEndIndex > data.length){
-                    newShowexpand=false;
-                    newEndIndex=data.length;
-                }else if(newEndIndex === data.length){
-                    newShowexpand=false;
-                    newDataHosts.push(x)
-                }else{
-                    newDataHosts.push(x)
-                }
-
-            }else if(x.id === newStartIndex){
-                newShowexpand=false;
-                newDataHosts.push(x)
-            }
-        });
         this.setState({
-            dataHosts:newDataHosts,
-            showExpand:newShowexpand,
-            startIndex:newStartIndex,
-            endIndex:newEndIndex
+            dataHosts: lists,
+            showExpand: false
         });
 
 
@@ -88,12 +45,12 @@ export default class MallInfo extends PureComponent {
     };
     _keyExtractor = (item, index) => item.id;
 
-    render(){
-        return(
+    render() {
+        return (
             <View style={styleM.infoView}>
                 <View style={styleM.infoName}>
                     <Text style={styleM.infoLeft}>{I18n.t('mallInfo')}</Text>
-                    <View style={{flex:1}}/>
+                    <View style={{flex: 1}}/>
                     <Text style={styleM.infototal}>{I18n.t('total')}5{I18n.t('pieces')}</Text>
                 </View>
                 <View style={styleM.infoImgView}>
@@ -106,60 +63,61 @@ export default class MallInfo extends PureComponent {
                         keyExtractor={this._keyExtractor}
                     />
                 </View>
-                {this.state.showExpand?<TouchableOpacity
-                        style={styleM.expandView}
-                        onPress={()=>{
-                            this._expandData()
-                        }}>
-                        <View style={{flexDirection:'row',alignItems:'center'}}>
-                            <Text style={styleM.expandTxt}>{I18n.t('expandMore')}</Text>
-                            <View style={styleM.expandTouch}>
-                                <Image style={styleM.expandImg} source={Images.expand}/>
-                            </View>
+                {this.state.showExpand ? <TouchableOpacity
+                    style={styleM.expandView}
+                    onPress={() => {
+                        this._expandData()
+                    }}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <Text style={styleM.expandTxt}>{I18n.t('expandMore')}</Text>
+                        <View style={styleM.expandTouch}>
+                            <Image style={styleM.expandImg} source={Images.expand}/>
                         </View>
-                    </TouchableOpacity>:null}
+                    </View>
+                </TouchableOpacity> : null}
 
             </View>
-        )}
+        )
+    }
 }
 const styleM = StyleSheet.create({
-    infoView:{
-        marginTop:10
+    infoView: {
+        marginTop: 10
     },
-    infoName:{
-        height:40,
-        backgroundColor:'#FFFFFF',
-        flexDirection:'row',
-        alignItems:'center'
+    infoName: {
+        height: 40,
+        backgroundColor: '#FFFFFF',
+        flexDirection: 'row',
+        alignItems: 'center'
     },
-    infoLeft:{
+    infoLeft: {
         fontSize: 14,
         color: '#333333',
-        marginLeft:17,
-        fontWeight:'bold'
+        marginLeft: 17,
+        fontWeight: 'bold'
     },
-    infototal:{
+    infototal: {
         fontSize: 14,
         color: '#333333',
-        marginRight:17
+        marginRight: 17
     },
-    infoImgView:{
-        marginTop:1,
-        backgroundColor:'#FFFFFF'
+    infoImgView: {
+        marginTop: 1,
+        backgroundColor: '#FFFFFF'
     },
     renderItem: {
-        flexDirection: 'row', backgroundColor: '#FFFFFF',paddingBottom: 11
+        flexDirection: 'row', backgroundColor: '#FFFFFF', paddingBottom: 11
     },
     mallImg: {
         width: 100,
         height: 96,
         marginLeft: 17,
-        marginTop:12,
+        marginTop: 12,
     },
     TxtView: {
         flex: 1,
         marginLeft: 12,
-        marginTop:15,
+        marginTop: 15,
     },
     mallTextName: {
         fontSize: 14,
@@ -174,56 +132,54 @@ const styleM = StyleSheet.create({
     },
     PriceView: {
         flexDirection: 'row',
-        marginTop:5,
-        alignItems:'center',
+        marginTop: 5,
+        alignItems: 'center',
 
     },
     Price: {
         fontSize: 14,
         color: '#F34A4A',
     },
-    originPrice:{
+    originPrice: {
         fontSize: 12,
         color: '#AAAAAA',
-        textDecorationLine:'line-through',
-        textDecorationColor:'#979797',
-        marginLeft:17
+        textDecorationLine: 'line-through',
+        textDecorationColor: '#979797',
+        marginLeft: 17
     },
-    quantitys:{
+    quantitys: {
         fontSize: 17,
         color: '#161718',
-        marginRight:17
+        marginRight: 17
     },
-    returned:{
+    returned: {
         backgroundColor: '#F34A4A',
         borderRadius: 2,
-        width:48,
-        height:18,
-        alignItems:'center',
-        justifyContent:'center',
-        marginTop:2
+        width: 48,
+        height: 18,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 2
     },
-    returnedTxt:{
+    returnedTxt: {
         fontSize: 10,
-        color:'#FFFFFF'
+        color: '#FFFFFF'
     },
-    expandView:{
-        height:30,
-        marginTop:3,
-        backgroundColor:'#FFFFFF',
-        alignItems:'center',
-        justifyContent:'center'
+    expandView: {
+        height: 30,
+        marginTop: 3,
+        backgroundColor: '#FFFFFF',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
-    expandTxt:{
+    expandTxt: {
         fontSize: 14,
-        color:'#333333',
+        color: '#333333',
     },
-    expandTouch:{
-
-    },
-    expandImg:{
-        width:19,
-        height:10,
-        marginLeft:6
+    expandTouch: {},
+    expandImg: {
+        width: 19,
+        height: 10,
+        marginLeft: 6
     }
 })
