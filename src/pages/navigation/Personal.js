@@ -12,8 +12,9 @@ import I18n from 'react-native-i18n';
 import JpushHelp from '../../services/JpushHelper';
 import {connect} from 'react-redux';
 import {BlurView} from 'react-native-blur';
-import {Badge} from '../../components';
+import {Badge, NavigationBar} from '../../components';
 import {FETCH_SUCCESS, GET_PROFILE, GET_UNREAND_MSG} from '../../actions/ActionTypes';
+
 
 class Personal extends Component {
 
@@ -43,7 +44,7 @@ class Personal extends Component {
 
         return (
             <View>
-                {this.renderPerson()}
+                {this.readerMe()}
 
                 {this.renderItem()}
             </View>
@@ -161,6 +162,41 @@ class Personal extends Component {
 
     imageLoaded = () => {
         this.setState({viewRef: findNodeHandle(this.refs.backgroundImage)})
+    };
+
+    readerMe = () => {
+        const {profile} = this.props;
+        return <View style={stylesP.meView}>
+            <NavigationBar
+                onPress={this.toMessagePage}
+                rightImageStyle={stylesP.msgImg}
+                rightBtnIcon={this._imgNotice()}/>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <TouchableOpacity
+                    onPress={() => {
+                        if (!isEmptyObject(login_user))
+                            router.toPersonPage();
+                        else
+                            router.toLoginFirstPage()
+
+                    }}
+                    style={stylesP.personRadius2}>
+                    <Image style={{width: 72, height: 72, borderRadius: 36}} source={this._avatar()}/>
+                </TouchableOpacity>
+
+                <View style={{marginLeft: 20}}>
+
+                    <Text
+                        style={stylesP.personSignature2}>{profile.nick_name ? profile.nick_name : ''}</Text>
+                    <Text style={stylesP.personSignature}>{this._signature()}</Text>
+
+
+                </View>
+            </View>
+
+
+        </View>
+
     };
 
     renderPerson = () => {
@@ -294,12 +330,13 @@ const stylesP = StyleSheet.create({
         justifyContent: 'center'
     },
     personRadius2: {
-        width: 77,
-        height: 77,
-        borderRadius: 39,
+        width: 74,
+        height: 74,
+        borderRadius: 37,
         backgroundColor: '#FFE9AD',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginLeft: 25
     },
     personID: {
         fontSize: 12,
@@ -329,7 +366,12 @@ const stylesP = StyleSheet.create({
     },
     msgImg: {
         height: 22,
-        width: 21
+        width: 21,
+        marginLeft: 20
+    },
+    meView: {
+        backgroundColor: '#090909',
+        height: 180
     }
 
 
