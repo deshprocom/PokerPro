@@ -22,7 +22,14 @@ export default class ShipAddress extends Component {
     _adrView = () => {
         const {address, address_detail, consignee, mobile} = this.state.adrDefault;
 
-        return <View style={styleS.shipAddr}>
+        return <TouchableOpacity
+            onPress={() => {
+                if (isEmptyObject(global.login_user))
+                    router.toLoginFirstPage();
+                else
+                    router.toAdrListPage(this.props, this._selectAdr, {});
+            }}
+            style={styleS.shipAddr}>
             <View style={{marginTop: 12}}>
                 <View style={{flexDirection: 'row'}}>
                     <Text style={styleS.shipAddrTxt1}>{consignee}</Text>
@@ -32,13 +39,15 @@ export default class ShipAddress extends Component {
             </View>
             <View style={{flex: 1}}/>
             <Image style={styleS.shipAddrImg} source={Images.is}/>
-        </View>
+        </TouchableOpacity>
 
     };
 
 
     _selectAdr = (address) => {
-        console.log('select', address)
+        this.setState({
+            adrDefault: address
+        })
     };
 
     _emptyAdr = () => {
@@ -95,7 +104,7 @@ const styleS = StyleSheet.create({
         color: '#333333',
         marginLeft: 17,
         marginTop: 11,
-        fontWeight:'bold'
+        fontWeight: 'bold'
     },
     shipAddr: {
         backgroundColor: '#FFFFFF',

@@ -12,8 +12,9 @@ import I18n from 'react-native-i18n';
 import JpushHelp from '../../services/JpushHelper';
 import {connect} from 'react-redux';
 import {BlurView} from 'react-native-blur';
-import {Badge} from '../../components';
+import {Badge, NavigationBar} from '../../components';
 import {FETCH_SUCCESS, GET_PROFILE, GET_UNREAND_MSG} from '../../actions/ActionTypes';
+
 
 class Personal extends Component {
 
@@ -43,7 +44,7 @@ class Personal extends Component {
 
         return (
             <View>
-                {this.renderPerson()}
+                {this.readerMe()}
 
                 {this.renderItem()}
             </View>
@@ -53,26 +54,6 @@ class Personal extends Component {
 
     renderItem = () => {
         return <View>
-            <TouchableOpacity style={stylesP.personalView} onPress={() => {
-                umengEvent('more_order');
-                if (strNotNull(getLoginUser().user_id))
-                    router.toOrderListPage();
-                else
-                    router.toLoginFirstPage()
-            }}>
-
-                <View style={stylesP.personalView2}>
-                    <Image style={stylesP.personalView2Img} source={Images.order}/>
-
-                    <Text style={stylesP.personalText}>{I18n.t('order')}</Text>
-                    <View style={{flex: 1}}/>
-                    <Image style={stylesP.personalImg} source={Images.is}/>
-
-
-                </View>
-            </TouchableOpacity>
-
-            <View style={stylesP.textLine}/>
 
 
             <TouchableOpacity style={stylesP.personalView} onPress={() => {
@@ -161,6 +142,71 @@ class Personal extends Component {
 
     imageLoaded = () => {
         this.setState({viewRef: findNodeHandle(this.refs.backgroundImage)})
+    };
+
+    readerMe = () => {
+        const {profile} = this.props;
+        return <View style={{marginBottom: 10}}>
+            <View style={stylesP.meView}>
+                <NavigationBar
+                    onPress={this.toMessagePage}
+                    rightImageStyle={{
+                        height: 22,
+                        width: 21,
+                        marginRight: 20
+                    }}
+                    rightBtnIcon={this._imgNotice()}/>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            if (!isEmptyObject(login_user))
+                                router.toPersonPage();
+                            else
+                                router.toLoginFirstPage()
+
+                        }}
+                        style={stylesP.personRadius2}>
+                        <Image style={{width: 72, height: 72, borderRadius: 36}} source={this._avatar()}/>
+                    </TouchableOpacity>
+
+                    <View style={{marginLeft: 20}}>
+
+                        <Text
+                            style={stylesP.personSignature2}>{profile.nick_name ? profile.nick_name : ''}</Text>
+                        <Text style={stylesP.personSignature}>{this._signature()}</Text>
+
+
+                    </View>
+                </View>
+
+
+            </View>
+
+            <View style={stylesP.orderView}>
+                <TouchableOpacity
+                    onPress={() => {
+                        umengEvent('more_order');
+                        if (strNotNull(getLoginUser().user_id))
+                            router.toOrderListPage();
+                        else
+                            router.toLoginFirstPage()
+                    }}
+                    style={stylesP.btnOrder}>
+                    <Image style={stylesP.imgOrder1}
+                           source={Images.ticket_order}/>
+                    <Text style={stylesP.txtProfile1}>票务订单</Text>
+                </TouchableOpacity>
+                <View style={{width: 1, backgroundColor: Colors._ECE, marginBottom: 5, marginTop: 5}}/>
+                <TouchableOpacity style={stylesP.btnOrder}>
+                    <Image style={stylesP.imgOrder2}
+                           source={Images.mall_order}/>
+                    <Text style={stylesP.txtProfile1}>商品订单</Text>
+                </TouchableOpacity>
+
+            </View>
+        </View>
+
+
     };
 
     renderPerson = () => {
@@ -294,12 +340,13 @@ const stylesP = StyleSheet.create({
         justifyContent: 'center'
     },
     personRadius2: {
-        width: 77,
-        height: 77,
-        borderRadius: 39,
+        width: 74,
+        height: 74,
+        borderRadius: 37,
         backgroundColor: '#FFE9AD',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginLeft: 25
     },
     personID: {
         fontSize: 12,
@@ -329,7 +376,21 @@ const stylesP = StyleSheet.create({
     },
     msgImg: {
         height: 22,
-        width: 21
+        width: 21,
+        marginLeft: 20
+    },
+    meView: {
+        backgroundColor: '#090909',
+        height: 180
+    },
+    orderView: {flexDirection: 'row', height: 82, width: '100%', backgroundColor: 'white'},
+    btnOrder: {flex: 1, justifyContent: 'center', alignItems: 'center'},
+    imgOrder1: {height: 33, width: 32},
+    imgOrder2: {height: 33, width: 36},
+    txtProfile1: {
+        fontSize: 14,
+        color: Colors.txt_444,
+        marginTop: 5
     }
 
 
