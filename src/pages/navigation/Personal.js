@@ -153,7 +153,7 @@ class Personal extends Component {
                     rightImageStyle={{
                         height: 22,
                         width: 21,
-                        marginLeft: 20
+                        marginRight: 20
                     }}
                     rightBtnIcon={this._imgNotice()}/>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
