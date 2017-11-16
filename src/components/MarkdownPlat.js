@@ -104,6 +104,7 @@ const styleMark = StyleSheet.create({
     table: {
         borderWidth: 0.5,
         borderColor: '#000000',
+        backgroundColor: 'white'
     },
     tableHeaderCell: {
         flex: 1,
@@ -115,11 +116,13 @@ const styleMark = StyleSheet.create({
         flex: 1,
         padding: 5,
         borderRightColor: '#000000',
-        borderRightWidth: 0.5
+        borderRightWidth: 0.5,
+        backgroundColor: 'white'
     },
     tableRow: {
         borderBottomWidth: 0.5,
         borderColor: '#000000',
         flexDirection: 'row',
+        backgroundColor: 'white'
     },
 });
