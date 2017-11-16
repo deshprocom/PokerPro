@@ -8,6 +8,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import StorageKey from '../../configs/StorageKey';
 import MallList from './MallList';
+import SearchEmpty from './SearchEmpty';
 
 const styles = StyleSheet.create({
     navBar: {
@@ -129,10 +130,7 @@ export default class SearchMallPage extends PureComponent {
                 <MallList
                     ref={ref => this.mallList = ref}
                     isSearch={true}/>
-                {this.state.submit ? null : <View style={styles.viewSearch}>
-                    {this.resentBlank()}
-                    {this.tabBlank()}
-                </View>}
+                {this.state.submit ? null : <SearchEmpty/>}
 
 
             </View>
