@@ -249,7 +249,9 @@ const images = {
     return_radio: require('../../source/mall/return_radio.png'),
     return_radio_selected: require('../../source/mall/return_radio_selected.png'),
     logistics: require('../../source/mall/logistics.png'),
-    order_line: require('../../source/order/order_line.png')
+    order_line: require('../../source/order/order_line.png'),
+    mall_order:require('../../source/mall/mall_order.png'),
+    ticket_order:require('../../source/mall/ticket_order.png')
 
 
 };
