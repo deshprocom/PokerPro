@@ -98,9 +98,7 @@ const styleMark = StyleSheet.create({
         alignSelf: 'center',
         fontSize: FontSize.h15,
     },
-    tableHeader: {
-
-    },
+    tableHeader: {},
     table: {
         borderWidth: 0.5,
         borderColor: '#000000',
@@ -123,4 +121,13 @@ const styleMark = StyleSheet.create({
         borderColor: '#000000',
         flexDirection: 'row',
     },
+    list: {
+        backgroundColor: 'white'
+    },
+    listOrdered: {
+        backgroundColor: 'white'
+    },
+    listUnordered: {
+        backgroundColor: 'white'
+    }
 });
