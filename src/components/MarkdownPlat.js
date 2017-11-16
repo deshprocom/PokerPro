@@ -99,7 +99,7 @@ const styleMark = StyleSheet.create({
         fontSize: FontSize.h15,
     },
     tableHeader: {
-        backgroundColor: 'yellow'
+
     },
     table: {
         borderWidth: 0.5,
@@ -117,12 +117,10 @@ const styleMark = StyleSheet.create({
         padding: 5,
         borderRightColor: '#000000',
         borderRightWidth: 0.5,
-        backgroundColor: 'white'
     },
     tableRow: {
         borderBottomWidth: 0.5,
         borderColor: '#000000',
         flexDirection: 'row',
-        backgroundColor: 'white'
     },
 });
