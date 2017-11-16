@@ -51,6 +51,7 @@ export default class ReturnPage extends Component {
                     titleStyle={{color: Colors._161}}
                     title={I18n.t('apply_returned')}/>
                 <ScrollView style={styleC.orderView}>
+                    <View style={{height:1}}/>
                     <RenderItem/>
 
                     <ApplicationType

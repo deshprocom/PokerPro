@@ -5,7 +5,7 @@ import Swipeout from 'react-native-swipeout';
 import I18n from 'react-native-i18n';
 import {deleteProductFromCart, util, showToast} from '../../../utils/ComonHelper';
 import {ImageLoad} from '../../../components';
-
+import EmptyCart from './EmptyCart';
 
 export default class ShoppingCart extends Component {
     state = {
@@ -139,6 +139,7 @@ export default class ShoppingCart extends Component {
                         showEdit: !this.state.showEdit,
                         showCart: !this.state.showCart,
                         showBottom: !this.state.showBottom,
+                        selectAll: false
                     });
                     this.refreshAll()
                 }}>
@@ -326,6 +327,9 @@ export default class ShoppingCart extends Component {
     render() {
 
         console.log(this.state.dataHosts);
+        if(util.isEmpty(this.state.dataHosts)){
+            return <EmptyCart/>
+        }
         return (
             <View style={{flex: 1}}>
                 {this.topBar()}

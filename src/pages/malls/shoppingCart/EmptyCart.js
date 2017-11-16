@@ -29,7 +29,7 @@ export default class EmptyCart extends Component {
                     <TouchableOpacity
                         style={styleE.cartViewTxt}
                     onPress={()=>{
-
+                        global.router.pop();
                     }}>
                         <Text style={styleE.cartTxt}>马上抢购</Text>
                     </TouchableOpacity>
