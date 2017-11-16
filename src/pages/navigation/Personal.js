@@ -194,13 +194,13 @@ class Personal extends Component {
                     style={stylesP.btnOrder}>
                     <Image style={stylesP.imgOrder1}
                            source={Images.ticket_order}/>
-                    <Text>票务订单</Text>
+                    <Text style={stylesP.txtProfile1}>票务订单</Text>
                 </TouchableOpacity>
                 <View style={{width: 1, backgroundColor: Colors._ECE, marginBottom: 5, marginTop: 5}}/>
                 <TouchableOpacity style={stylesP.btnOrder}>
                     <Image style={stylesP.imgOrder2}
                            source={Images.mall_order}/>
-                    <Text>商品订单</Text>
+                    <Text style={stylesP.txtProfile1}>商品订单</Text>
                 </TouchableOpacity>
 
             </View>
@@ -386,7 +386,12 @@ const stylesP = StyleSheet.create({
     orderView: {flexDirection: 'row', height: 82, width: '100%', backgroundColor: 'white'},
     btnOrder: {flex: 1, justifyContent: 'center', alignItems: 'center'},
     imgOrder1: {height: 33, width: 32},
-    imgOrder2: {height: 33, width: 36}
+    imgOrder2: {height: 33, width: 36},
+    txtProfile1: {
+        fontSize: 14,
+        color: Colors.txt_444,
+        marginTop: 5
+    }
 
 
 });
