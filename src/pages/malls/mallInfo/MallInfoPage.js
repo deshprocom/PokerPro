@@ -12,6 +12,7 @@ import ProductSpecificationInfo from './ProductSpecificationInfo';
 import {getProductDetail} from '../../../services/MallDao';
 import {util} from '../../../utils/ComonHelper';
 
+
 export default class MallInfoPage extends Component {
     state = {
         specShow: false,
