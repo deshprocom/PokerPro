@@ -16,7 +16,8 @@ import {getProductOrders, postMallOrder} from '../../../services/MallDao';
 export default class OrderSubmitPage extends PureComponent {
     state = {
         isExpired: false,
-        productOrders: []
+        productOrders: [],
+        order_number:""
     };
     showExpiredInfo = (temp) => {
         if (util.isEmpty(temp)) {
