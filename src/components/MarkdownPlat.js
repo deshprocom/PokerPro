@@ -36,6 +36,11 @@ EasyMarkdown.renderer.image = props => {
     )
 };
 
+EasyMarkdown.renderer.table = props => {
+    console.log('list', props)
+    const {markdown} = props;
+    const {href} = markdown;
+}
 
 
 export default class MarkdownPlat extends Component {
@@ -46,7 +51,9 @@ export default class MarkdownPlat extends Component {
         try {
             if (strNotNull(markdownStr))
                 return (
-                    <EasyMarkdown contentContainerStyle={styles.container} markdownStyles={markdownStyles}>
+                    <EasyMarkdown
+                        contentContainerStyle={styles.container}
+                        markdownStyles={markdownStyles}>
                         {markdownStr}
                     </EasyMarkdown>
 

@@ -4,7 +4,6 @@
 import React, {Component} from 'react';
 import {ActivityIndicator, TouchableOpacity, View, Image} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes/index';
-import FitImage from 'react-native-fit-image';
 import PropTypes from 'prop-types';
 import {util} from '../utils/ComonHelper';
 
