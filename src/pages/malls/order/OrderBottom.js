@@ -18,12 +18,11 @@ export default class OrderBottom extends PureComponent {
         return(
             <View style={styleO.bottomView}>
                 <Text style={styleO.payment}>{I18n.t('payment')}</Text>
-                <Text style={styleO.paymentPrice}>¥</Text><Text style={[styleO.paymentPrice,{marginLeft:1}]}>80890890</Text>
+                <Text style={styleO.paymentPrice}>¥</Text><Text style={[styleO.paymentPrice,{marginLeft:1}]}>{this.props.sumMoney}</Text>
                 <View style={{flex:1}}/>
                 <TouchableOpacity
                     onPress={() => {
-                        {/*this.props.showExpiredInfo()*/}
-                        router.toCompletedOrderPage()
+                       this.props.submitBtn();
                     }}
                     style={styleO.orderSubmit}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('orderSubmit')}</Text>

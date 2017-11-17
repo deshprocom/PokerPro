@@ -11,18 +11,23 @@ export default class ShipAddress extends PureComponent {
 
     componentDidMount() {
         let adrDefault = global.addressList.filter(item => item.default);
+        console.log('Address', adrDefault)
         if (adrDefault.length > 0)
             this.setState({adrDefault: adrDefault[0]})
 
+    };
+
+    getAddress = () => {
+        return this.state.adrDefault;
     };
     _emptyAdr = () => {
         return <TouchableOpacity
             activeOpacity={1}
             onPress={() => {
                 if (isEmptyObject(global.login_user))
-                    router.toLoginFirstPage();
+                    global.router.toLoginFirstPage();
                 else
-                    router.toAdrListPage(this.props, this._selectAdr, {});
+                    global.router.toAdrListPage(this.props, this._selectAdr, {});
             }}
             style={{height: 45, width: '100%', backgroundColor: Colors.white}}>
             <View style={{height: 1, backgroundColor: Colors._ECE, width: '100%'}}/>
@@ -42,12 +47,13 @@ export default class ShipAddress extends PureComponent {
         })
     };
 
-    render(){
-        if(isEmptyObject(this.state.adrDefault)){
+    render() {
+        if (isEmptyObject(this.state.adrDefault)) {
             return this._emptyAdr()
-        };
+        }
+        ;
         const {address, address_detail, consignee, mobile} = this.state.adrDefault;
-        return(
+        return (
             <View style={styleS.addressView}>
                 <View style={styleS.title}>
                     <Text style={styleS.titleName}>{I18n.t('shopping_addr')}</Text>
@@ -55,9 +61,9 @@ export default class ShipAddress extends PureComponent {
                 <TouchableOpacity style={styleS.shipAddr}
                                   onPress={() => {
                         if (isEmptyObject(global.login_user))
-                            router.toLoginFirstPage();
+                            global.router.toLoginFirstPage();
                         else
-                            router.toAdrListPage(this.props, this._selectAdr, {});
+                            global.router.toAdrListPage(this.props, this._selectAdr, {});
                     }}>
                     <View style={{marginTop: 12}}>
                         <View style={{flexDirection: 'row'}}>
@@ -75,27 +81,26 @@ export default class ShipAddress extends PureComponent {
                 <Image style={styleS.lineImg} source={Images.order_line}/>
 
             </View>
-        )}
+        )
+    }
 }
 const styleS = StyleSheet.create({
-    lineImg:{
-        width:'100%',
-        height:4
+    lineImg: {
+        width: '100%',
+        height: 4
     },
-    addressView:{
-
+    addressView: {},
+    title: {
+        height: 40,
+        backgroundColor: '#FFFFFF'
     },
-    title:{
-        height:40,
-        backgroundColor:'#FFFFFF'
-    },
-    titleName:{
-        marginLeft:17,
-        marginTop:11,
-        marginBottom:9,
+    titleName: {
+        marginLeft: 17,
+        marginTop: 11,
+        marginBottom: 9,
         fontSize: 14,
         color: '#333333',
-        fontWeight:'bold'
+        fontWeight: 'bold'
     },
     shipAddr: {
         backgroundColor: '#FFFFFF',
@@ -115,21 +120,21 @@ const styleS = StyleSheet.create({
         marginLeft: 17,
         marginTop: 10
     },
-    mobile:{
-        marginLeft:20,
+    mobile: {
+        marginLeft: 20,
         fontSize: 14,
         color: '#666666',
     },
-    shipAddrTouch:{
+    shipAddrTouch: {
         marginRight: 16,
         width: 30,
         height: 50,
-        alignItems:'center',
-        justifyContent:'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     shipAddrImg: {
         width: 8,
         height: 16,
-        marginTop:20
+        marginTop: 20
     }
 })

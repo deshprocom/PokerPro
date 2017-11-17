@@ -675,9 +675,10 @@ export default class Router {
         })
     }
 
-    toOrderConfirm() {
+    toOrderConfirm(selectedData) {
         this.stackPush({
-            name: 'OrderSubmitPage'
+            name: 'OrderSubmitPage',
+            params:selectedData
         })
     }
 

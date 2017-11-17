@@ -2,25 +2,37 @@ import React, {PureComponent, PropTypes} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView,TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
+import {deleteProductFromCart, util, showToast} from '../../../utils/ComonHelper';
 
 export default class RenderItem extends PureComponent {
 
+    selectType=(arr_type)=>{
+        let type_value = '';
+        if(!util.isEmpty(arr_type)){
+            arr_type.forEach(x => {
+                type_value += x.name + ':';
+                type_value += x.value + '  ';
+            });
+        }
+    };
+
     render(){
+        const{commodity} = this.props.item;
         return(
             <View style={styleR.renderItem}>
 
                 <Image style={styleR.mallImg} source={Images.empty_image}/>
                 <View style={styleR.TxtView}>
-                    <Text numberOfLines={2} style={styleR.mallTextName}>筹码14克皇冠粘土百家乐德州扑克筹码币</Text>
-                    <Text style={styleR.mallAttributes}>{I18n.t('weight')}：1.62KG {I18n.t('weight')}：黑 {I18n.t('quantity')}：500</Text>
+                    <Text numberOfLines={2} style={styleR.mallTextName}>{commodity.title}</Text>
+                    <Text style={styleR.mallAttributes}>{I18n.t('weight')}：{commodity.weight}KG  {I18n.t('colour')}：{this.selectType(commodity.arr_type)} {I18n.t('quantity')}：{commodity.stock}</Text>
                     <View style={styleR.returned}>
                         <Text style={styleR.returnedTxt}>{I18n.t('returned')}</Text>
                     </View>
                     <View style={styleR.PriceView}>
-                        <Text style={styleR.Price}>¥</Text><Text style={[styleR.Price,{marginLeft:1}]}>555555.55</Text>
-                        <Text style={styleR.originPrice}>¥</Text><Text style={[styleR.originPrice,{marginLeft:1}]}>99999</Text>
+                        <Text style={styleR.Price}>¥</Text><Text style={[styleR.Price,{marginLeft:1}]}>{commodity.price}</Text>
+                        <Text style={styleR.originPrice}>¥</Text><Text style={[styleR.originPrice,{marginLeft:1}]}>{commodity.original_price}</Text>
                         <View style={{flex:1}}/>
-                        <Text style={styleR.quantitys}>x2</Text>
+                        <Text style={styleR.quantitys}>x{this.props.item.number}</Text>
                     </View>
                 </View>
             </View>

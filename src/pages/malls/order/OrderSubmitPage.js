@@ -14,7 +14,7 @@ import {util} from '../../../utils/ComonHelper';
 
 export default class OrderSubmitPage extends PureComponent {
     state = {
-        isExpired: false,
+        isExpired: false
     };
     showExpiredInfo = (temp) => {
         if (util.isEmpty(temp)) {
@@ -27,8 +27,57 @@ export default class OrderSubmitPage extends PureComponent {
             })
     };
 
+    money = () => {
+        const {params} = this.props;
+
+        let count = 0;
+        params.forEach(item => {
+            if (item.isSelect)
+                count = count + (item.number * item.commodity.price);
+        });
+
+        return `${count}`;
+    };
+    sumMoney = (money, costs) => {
+        return (Number(money) + costs);
+    };
+
+    submitBtn = () => {
+        const {params} = this.props;
+        console.log('commodity:', params)
+        let adr = this.shipAddress.getAddress();
+        console.log('address:', adr)
+
+
+        let variants = [];
+        if (!util.isEmpty(params))
+            params.forEach(item => {
+                let obj = {};
+                obj.count = item.number;
+                obj.id = item.commodity.id;
+                variants.push(obj)
+            });
+
+        let shipping_info = {};
+        if (!util.isEmpty(adr)) {
+            shipping_info.name = adr.consignee;
+            shipping_info.mobile = adr.mobile;
+            shipping_info.address = {
+                province: adr.province,
+                city: adr.city,
+                area: adr.area,
+                detail: adr.address_detail
+            }
+        }
+
+        console.log({variants, shipping_info})
+
+    };
+
     render() {
+        console.log("item:", this.props.params)
         const {isExpired} = this.state;
+        let money = this.money();
         return (
             <View style={{flex:1}}>
                 <NavigationBar
@@ -42,15 +91,18 @@ export default class OrderSubmitPage extends PureComponent {
                 <ScrollView style={styleO.orderView}>
 
                     <Tips/>
-                    <ShipAddress/>
-                    <MallInfo/>
+                    <ShipAddress
+                        ref={ref =>this.shipAddress = ref}/>
+                    <MallInfo selectedData={this.props.params}/>
                     <LeaveMessage/>
-                    <OrderDetails/>
+                    <OrderDetails money={money} sumMoney={this.sumMoney(money,12)}/>
                     <View style={{height:80}}/>
 
                 </ScrollView>
                 <OrderBottom
-                    showExpiredInfo={this.showExpiredInfo}/>
+                    submitBtn={this.submitBtn}
+                    showExpiredInfo={this.showExpiredInfo}
+                    sumMoney={this.sumMoney(money,12)}/>
 
                 {isExpired ? <ExpiredOrder
                         showExpiredInfo={this.showExpiredInfo}/> : null}
