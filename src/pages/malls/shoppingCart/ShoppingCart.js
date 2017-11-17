@@ -241,7 +241,7 @@ export default class ShoppingCart extends Component {
                 <TouchableOpacity
                     activeOpacity={0.5}
                     onPress={() => {
-                        global.router.toMallInfoPage({id: item.parentId})
+                        global.router.replaceProductInfo({id: item.parentId})
                     }}
                     style={styleS.renderItem}>
                     {this.renderShowEditView(item)}
