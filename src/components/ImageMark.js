@@ -2,10 +2,11 @@
  * Created by lorne on 2017/4/21.
  */
 import React, {Component} from 'react';
-import { ActivityIndicator, View} from 'react-native';
+import {ActivityIndicator, TouchableOpacity, View, Image} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes/index';
 import FitImage from 'react-native-fit-image';
 import PropTypes from 'prop-types';
+import {util} from '../utils/ComonHelper';
 
 export default class ImageMark extends Component {
     static propTypes = {
@@ -14,7 +15,29 @@ export default class ImageMark extends Component {
 
 
     state = {
-        success: false
+        success: false,
+        width: 320,
+        height: 320
+    };
+
+    componentDidMount() {
+        Image.getSize(this.props.src, (width, height) => {
+            let screenWidth = Metrics.screenWidth - 40;
+            height = screenWidth * height / width; //按照屏幕宽度进行等比缩放
+            this.setState({width: screenWidth, height});
+        });
+    }
+
+    imageClick = (source) => {
+
+        if (!util.isEmpty(source)) {
+            let index = 0;
+
+            let images = [{url: source}];
+
+            router.toImageGalleryPage(images, index)
+        }
+
     };
 
 
@@ -23,24 +46,28 @@ export default class ImageMark extends Component {
 
         const {src} = this.props;
         return (
-            <View>
-                <FitImage
+            <TouchableOpacity
+                activeOpacity={0.5}
+                onPress={() => this.imageClick(src)}
+                style={{backgroundColor: Colors._ECE}}>
+                <Image
+                    style={{
+                        width: this.state.width,
+                        height: this.state.height,
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}
                     onLoad={() => {
                         this.setState({
                             success: true
                         })
                     }}
-                    source={{uri: src}}/>
-                {success ? null : <View style={{
-                    height: 300, width: '100%', backgroundColor: Colors._ECE, alignItems: 'center',
-                    justifyContent: 'center'
-                }}>
+                    source={{uri: src}}>
+                    {success ? null : <ActivityIndicator/>}
+                </Image>
 
-                    <ActivityIndicator/>
 
-                </View>}
-
-            </View>
+            </TouchableOpacity>
 
 
         );

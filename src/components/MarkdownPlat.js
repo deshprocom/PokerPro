@@ -8,44 +8,35 @@ import {
 } from 'react-native';
 import {strNotNull, FontSize, showToast} from '../utils/ComonHelper';
 
-
-import Markdown, {getUniqueID} from 'react-native-markdown-renderer';
 import FitImage from './ImageMark';
+import createMarkdownRenderer from 'rn-markdown'
+// pass in `marked` opts, e.g. gfm: true for Github Flavored Markdown
+const EasyMarkdown = createMarkdownRenderer({gfm: false});
 
+// define a custom renderer for links
+EasyMarkdown.renderer.link = props => {
+    const {markdown} = props;
+    const {href} = markdown;
+    return (
+        <TouchableOpacity onPress={() => global.router.toWebViewPage(props, href)}>
+            <View>
+                {props.children}
+            </View>
+        </TouchableOpacity>
+    )
+};
 
-const imageClick = (source) => {
+EasyMarkdown.renderer.image = props => {
+    const {markdown} = props;
+    const {href} = markdown;
 
-    if (strNotNull(source)) {
-        let index = 0;
-
-        let images = [{url: source}];
-
-        router.toImageGalleryPage(images, index)
-    }
-
+    return (
+        <FitImage
+            src={href}/>
+    )
 };
 
 
-const rules = {
-    a: (node, children, parent, styles) => {
-        let content = children[0].props.children;
-        return (
-            <Text key={node.key} style={styleMark.a}
-                  onPress={() => router.toWebViewPage(parent, node.attributes.href)}>
-                {content}
-            </Text>
-        );
-    },
-    img: (node, children, parent, styles) => {
-
-        return <TouchableOpacity key={node.key} style={{flex: 1}}
-                                 activeOpacity={1}
-                                 onPress={() => imageClick(node.attributes.src)}>
-            <FitImage
-                src={node.attributes.src}/>
-        </TouchableOpacity>;
-    },
-};
 
 export default class MarkdownPlat extends Component {
 
@@ -55,11 +46,9 @@ export default class MarkdownPlat extends Component {
         try {
             if (strNotNull(markdownStr))
                 return (
-                    <View style={{padding: 20}}>
-                        <Markdown style={styleMark} rules={rules}>
-                            {markdownStr}
-                        </Markdown>
-                    </View>
+                    <EasyMarkdown contentContainerStyle={styles.container} markdownStyles={markdownStyles}>
+                        {markdownStr}
+                    </EasyMarkdown>
 
                 );
             else
@@ -73,15 +62,15 @@ export default class MarkdownPlat extends Component {
 }
 
 
-const styleMark = StyleSheet.create({
-    view: {
+const markdownStyles = {
+    container: {
         padding: 20
     },
     heading1: {
         fontSize: 24,
         color: 'purple',
     },
-    a: {
+    link: {
         color: 'blue',
         textDecorationLine: 'underline',
     },
@@ -97,37 +86,13 @@ const styleMark = StyleSheet.create({
     heading5: {
         alignSelf: 'center',
         fontSize: FontSize.h15,
-    },
-    tableHeader: {},
-    table: {
-        borderWidth: 0.5,
-        borderColor: '#000000',
-        backgroundColor: 'white'
-    },
-    tableHeaderCell: {
-        flex: 1,
-        padding: 5,
-        borderRightColor: '#000000',
-        borderRightWidth: 0.5
-    },
-    tableRowCell: {
-        flex: 1,
-        padding: 5,
-        borderRightColor: '#000000',
-        borderRightWidth: 0.5,
-    },
-    tableRow: {
-        borderBottomWidth: 0.5,
-        borderColor: '#000000',
-        flexDirection: 'row',
-    },
-    list: {
-        backgroundColor: 'white'
-    },
-    listOrdered: {
-        backgroundColor: 'white'
-    },
-    listUnordered: {
-        backgroundColor: 'white'
+    }
+};
+
+const styles = StyleSheet.create({
+    container: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white',
     }
 });
