@@ -1,6 +1,19 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
+
+export function postMallOrder(body, resolve, reject) {
+    helper.post(Api.mall_order, body, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+//获取新建订单页面
+export function getProductOrders(body, resolve, reject) {
+    helper.post(Api.product_orders(), body, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
 //获取商品详情
 export function getProductDetail(body, resolve, reject) {
     helper.get(Api.product_detail(body), ret => {

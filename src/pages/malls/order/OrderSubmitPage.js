@@ -11,10 +11,12 @@ import OrderBottom from './OrderBottom';
 import {NavigationBar} from '../../../components';
 import ExpiredOrder from './ExpiredOrder';
 import {util} from '../../../utils/ComonHelper';
+import {getProductOrders, postMallOrder} from '../../../services/MallDao';
 
 export default class OrderSubmitPage extends PureComponent {
     state = {
-        isExpired: false
+        isExpired: false,
+        productOrders: []
     };
     showExpiredInfo = (temp) => {
         if (util.isEmpty(temp)) {
@@ -42,18 +44,26 @@ export default class OrderSubmitPage extends PureComponent {
         return (Number(money) + costs);
     };
 
-    submitBtn = () => {
-        const {params} = this.props;
-        console.log('commodity:', params)
-        let adr = this.shipAddress.getAddress();
-        console.log('address:', adr)
+    componentDidMount() {
+        let body = this.postParam();
+        getProductOrders(body, data => {
+            console.log('product_orders', data);
 
+        }, err => {
+
+        });
+    }
+
+    postParam = () => {
+        const {params} = this.props;
+        let adr = this.shipAddress.getAddress();
+        let leaveMessage = this.leaveMessage.getLeaveMessage();
 
         let variants = [];
         if (!util.isEmpty(params))
             params.forEach(item => {
                 let obj = {};
-                obj.count = item.number;
+                obj.number = item.number;
                 obj.id = item.commodity.id;
                 variants.push(obj)
             });
@@ -69,8 +79,24 @@ export default class OrderSubmitPage extends PureComponent {
                 detail: adr.address_detail
             }
         }
+        let memo = "";
+        if (!util.isEmpty(leaveMessage)) {
+            memo = leaveMessage
+        }
 
-        console.log({variants, shipping_info})
+        return {variants, shipping_info, memo};
+
+    };
+
+
+    submitBtn = () => {
+        let body = this.postParam();
+        postMallOrder(body, data => {
+            console.log('product_orders', data);
+
+        }, err => {
+
+        });
 
     };
 
@@ -94,7 +120,8 @@ export default class OrderSubmitPage extends PureComponent {
                     <ShipAddress
                         ref={ref =>this.shipAddress = ref}/>
                     <MallInfo selectedData={this.props.params}/>
-                    <LeaveMessage/>
+                    <LeaveMessage
+                        ref={ref =>this.leaveMessage = ref}/>
                     <OrderDetails money={money} sumMoney={this.sumMoney(money,12)}/>
                     <View style={{height:80}}/>
 
