@@ -137,6 +137,7 @@ export default class VideoInfoPage extends Component {
 
             <View style={{flex: 1}}/>
             <TouchableOpacity
+
                 onPress={() => {
                     uVideoShare(name, title_desc, cover_link, id)
                 }}>
@@ -194,7 +195,6 @@ const styles = StyleSheet.create({
     },
     viewTitle: {
         height: 80,
-        width: '100%',
         backgroundColor: 'white',
         flexDirection: 'row'
 
@@ -203,7 +203,8 @@ const styles = StyleSheet.create({
         fontSize: 17,
         color: Colors._333,
         marginTop: 15,
-        marginLeft: 17
+        marginLeft: 17,
+        width:'80%'
     },
     txtTime: {
         fontSize: 12,

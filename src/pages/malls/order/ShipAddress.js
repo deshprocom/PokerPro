@@ -2,26 +2,70 @@ import React, {PureComponent, PropTypes} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
+import {isEmptyObject} from '../../../utils/ComonHelper';
 
 export default class ShipAddress extends PureComponent {
-    state={
+    state = {
+        adrDefault: {}
+    };
 
+    componentDidMount() {
+        let adrDefault = global.addressList.filter(item => item.default);
+        if (adrDefault.length > 0)
+            this.setState({adrDefault: adrDefault[0]})
+
+    };
+    _emptyAdr = () => {
+        return <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => {
+                if (isEmptyObject(global.login_user))
+                    router.toLoginFirstPage();
+                else
+                    router.toAdrListPage(this.props, this._selectAdr, {});
+            }}
+            style={{height: 45, width: '100%', backgroundColor: Colors.white}}>
+            <View style={{height: 1, backgroundColor: Colors._ECE, width: '100%'}}/>
+            <View style={{
+                height: 44, flex: 1, alignItems: 'center', flexDirection: 'row',
+                justifyContent: 'space-between', marginLeft: 18
+            }}>
+                <Text style={{fontSize: 12, color: Colors._AAA}}>{I18n.t('no_addr_tip')}</Text>
+                <Image style={{width: 11, height: 20, marginRight: 17}}
+                       source={Images.ticket_arrow}/>
+            </View>
+        </TouchableOpacity>
+    };
+    _selectAdr = (address) => {
+        this.setState({
+            adrDefault: address
+        })
     };
 
     render(){
+        if(isEmptyObject(this.state.adrDefault)){
+            return this._emptyAdr()
+        };
+        const {address, address_detail, consignee, mobile} = this.state.adrDefault;
         return(
             <View style={styleS.addressView}>
                 <View style={styleS.title}>
                     <Text style={styleS.titleName}>{I18n.t('shopping_addr')}</Text>
                 </View>
-                <TouchableOpacity style={styleS.shipAddr}>
+                <TouchableOpacity style={styleS.shipAddr}
+                                  onPress={() => {
+                        if (isEmptyObject(global.login_user))
+                            router.toLoginFirstPage();
+                        else
+                            router.toAdrListPage(this.props, this._selectAdr, {});
+                    }}>
                     <View style={{marginTop: 12}}>
                         <View style={{flexDirection: 'row'}}>
                             <Text style={styleS.shipAddrTxt1}>{I18n.t('buy_person')}</Text>
-                            <Text style={styleS.shipAddrTxt1}>www</Text>
-                            <Text style={styleS.mobile}>1478569332485</Text>
+                            <Text style={styleS.shipAddrTxt1}>{consignee}</Text>
+                            <Text style={styleS.mobile}>{mobile}</Text>
                         </View>
-                        <Text style={styleS.shipAddrTxt2}>fdsobfsoyrfnskfhsdfnslkfsalfnas;phgdknls;f</Text>
+                        <Text style={styleS.shipAddrTxt2}>{`${address} ${address_detail}`}</Text>
                     </View>
                     <View style={{flex: 1}}/>
                     <View style={styleS.shipAddrTouch}>
