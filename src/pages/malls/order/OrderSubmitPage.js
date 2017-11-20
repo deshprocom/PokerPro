@@ -16,9 +16,11 @@ import {getProductOrders, postMallOrder} from '../../../services/MallDao';
 export default class OrderSubmitPage extends PureComponent {
     state = {
         isExpired: false,
-        productOrders: [],
+        productOrders: {},
         order_number: "",
-        orderData: {}
+        orderData: {},
+        oderNumbers:[],
+        orderSuccess:false
     };
     showExpiredInfo = (temp) => {
         if (util.isEmpty(temp)) {
@@ -35,7 +37,7 @@ export default class OrderSubmitPage extends PureComponent {
     componentDidMount() {
         let body = this.postParam();
         getProductOrders(body, data => {
-            console.log('product_orders', data);
+            console.log('orderData', data);
             this.setState({
                 orderData: data
             })
@@ -75,7 +77,6 @@ export default class OrderSubmitPage extends PureComponent {
         }
 
         return {variants, shipping_info, memo};
-
     };
 
 
@@ -83,10 +84,21 @@ export default class OrderSubmitPage extends PureComponent {
         let body = this.postParam();
         postMallOrder(body, data => {
             console.log('product_orders', data);
+            this.state.oderNumbers.forEach(item => {
+                if (item !== data.order_number){
+                    this.setState({
+                        oderNumbers:this.state.oderNumbers.push(data.order_number),
+                        orderSuccess:true
+                    });
+                    global.router.toCompletedOrderPage()
+                }
+
+            });
 
         }, err => {
 
         });
+
 
     };
 
@@ -110,7 +122,8 @@ export default class OrderSubmitPage extends PureComponent {
                     <Tips/>
                     <ShipAddress
                         ref={ref =>this.shipAddress = ref}/>
-                    <MallInfo selectedData={this.props.params}/>
+                    {util.isEmpty(items)?null: <MallInfo selectedData={items}/>}
+
 
                     <LeaveMessage
                         ref={ref =>this.leaveMessage = ref}/>
