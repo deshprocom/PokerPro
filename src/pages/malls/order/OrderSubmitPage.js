@@ -8,7 +8,7 @@ import MallInfo from './MallInfo';
 import LeaveMessage from './LeaveMessage';
 import OrderDetails from './OrderDetails';
 import OrderBottom from './OrderBottom';
-import {NavigationBar} from '../../../components';
+import {NavigationBar, BaseComponent} from '../../../components';
 import ExpiredOrder from './ExpiredOrder';
 import {util, payWx} from '../../../utils/ComonHelper';
 import {getProductOrders, postMallOrder, postWxPay} from '../../../services/MallDao';
@@ -121,7 +121,8 @@ export default class OrderSubmitPage extends PureComponent {
                     <Tips/>
                     <ShipAddress
                         ref={ref => this.shipAddress = ref}/>
-                    <MallInfo selectedData={this.props.params}/>
+                    {util.isEmpty(items) ? null : <MallInfo selectedData={items}/>}
+
 
                     <LeaveMessage
                         ref={ref => this.leaveMessage = ref}/>
