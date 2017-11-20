@@ -12,6 +12,7 @@ import {
     Modal,
     ActivityIndicator
 } from 'react-native';
+import I18n from 'react-native-i18n';
 
 const styles = StyleSheet.create({
     container: {
@@ -105,7 +106,8 @@ export default class Loading extends Component {
                     style={{flex: 1}}
                 />
                 <View style={styles.textContainer}>
-                    <Text style={[styles.textContent, this.props.textStyle]}>{this.state.textContent}</Text>
+                    <Text
+                        style={[styles.textContent, this.props.textStyle]}>{I18n.t('loading')}</Text>
                 </View>
             </View>);
     }

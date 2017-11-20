@@ -34,7 +34,9 @@ export default class OrderSubmitPage extends PureComponent {
 
     componentDidMount() {
         let body = this.postParam();
+
         getProductOrders(body, data => {
+
             console.log('product_orders', data);
             this.setState({
                 orderData: data
@@ -42,6 +44,7 @@ export default class OrderSubmitPage extends PureComponent {
         }, err => {
 
         });
+
     }
 
     postParam = () => {
@@ -107,7 +110,8 @@ export default class OrderSubmitPage extends PureComponent {
         const {total_price, total_product_price, shipping_price, items} = this.state.orderData;
 
         return (
-            <View style={{flex: 1}}>
+            <BaseComponent
+                ref={ref => this.container = ref}>
                 <NavigationBar
                     barStyle={'dark-content'}
                     toolbarStyle={{backgroundColor: 'white'}}
@@ -140,7 +144,7 @@ export default class OrderSubmitPage extends PureComponent {
 
                 {isExpired ? <ExpiredOrder
                     showExpiredInfo={this.showExpiredInfo}/> : null}
-            </View>
+            </BaseComponent>
 
         );
     }

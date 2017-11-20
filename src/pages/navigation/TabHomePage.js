@@ -147,8 +147,6 @@ class TabHomePage extends Component {
     };
 
     _onScroll = (event) => {
-        if (this.searchBar)
-            this.searchBar.onScroll(event);
 
         this.onTopScroll(event);
     };
@@ -182,7 +180,8 @@ class TabHomePage extends Component {
         return (
 
             <View style={{flex: 1}}>
-
+                <SearchPage
+                    unread={this.props.unread}/>
                 <ScrollView
                     ref={ref => this.mainScroll = ref}
                     scrollEventThrottle={16}
@@ -207,9 +206,7 @@ class TabHomePage extends Component {
                     <View style={{height: 48}}/>
 
                 </ScrollView>
-                <SearchPage
-                    unread={this.props.unread}
-                    ref={ref => this.searchBar = ref}/>
+
 
                 <ActivityModel
                     ref={ref => this.activityModel = ref}/>
