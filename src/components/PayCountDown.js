@@ -76,7 +76,7 @@ export default class CountDownBtn extends Component {
                     let detalTime = Math.round(liveTime / 1000);
                     let content = changeWithCount(obj.deathCount - detalTime);
                     this.setState({
-                        btnTitle: content
+                        btnTitle: this._formatTime(content)
                     });
                     //手动调用倒计时
                     this.startCountDownWithCount(obj.startTime)
@@ -98,6 +98,18 @@ export default class CountDownBtn extends Component {
     }
 
 
+    _formatTime = (diff) => {
+
+        if (diff >= 60) {
+            timeLeft.min = Math.floor(diff / 60);
+            diff -= timeLeft.min * 60;
+
+        }
+        timeLeft.sec = diff;
+
+        return `${I18n.t('pay')} ${timeLeft.min}:${timeLeft.sec}`
+    };
+
     startCountDownWithCount(startTime) {
         this.buttonState = LCCountDownButtonState.LCCountDownButtonDisable;
         const {changeWithCount, endText, count, end} = this.props;
@@ -107,14 +119,7 @@ export default class CountDownBtn extends Component {
             let detalTime = Math.round((Date.now() - this.startTime) / 1000);
 
 
-            let content = count - detalTime;
-            let diff = content;
-            if (diff >= 60) {
-                timeLeft.min = Math.floor(diff / 60);
-                diff -= timeLeft.min * 60;
-
-            }
-            timeLeft.sec = diff;
+            let content = changeWithCount(count - detalTime);
 
 
             if (detalTime >= count) {
@@ -125,7 +130,7 @@ export default class CountDownBtn extends Component {
             }
             if (this.shouldSetState) {
                 this.setState({
-                    btnTitle: `${I18n.t('pay')} ${timeLeft.min}:${timeLeft.sec}`
+                    btnTitle: this._formatTime(content)
                 })
             }
         }, 1000)
