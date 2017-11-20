@@ -19,7 +19,7 @@ export default class AllStatus extends Component{
                     <Text style={styles.txtRight}>状态</Text>
                 </View>
                 <View style={{height:1}}/>
-                <RenderItem/>
+                {/*<RenderItem/>*/}
                 <CompletedBottom/>
             </View>
         )}

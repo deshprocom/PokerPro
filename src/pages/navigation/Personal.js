@@ -3,7 +3,7 @@ import {
     TouchableOpacity,
     StyleSheet, Platform,
     Text, Image,
-    View, Animated, findNodeHandle,Linking
+    View, Animated, findNodeHandle, Linking
 } from 'react-native';
 import {Images, Colors, Metrics} from '../../Themes';
 import {strNotNull, isEmptyObject, getLoginUser, getUserData, getDispatchAction} from '../../utils/ComonHelper';
@@ -168,12 +168,12 @@ class Personal extends Component {
                     rightBtnIcon={this._imgNotice()}/>
                 <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}}
                                   onPress={() => {
-                            if (!isEmptyObject(login_user))
-                                router.toPersonPage();
-                            else
-                                router.toLoginFirstPage()
+                                      if (!isEmptyObject(login_user))
+                                          router.toPersonPage();
+                                      else
+                                          router.toLoginFirstPage()
 
-                        }}>
+                                  }}>
                     <View
                         style={stylesP.personRadius2}>
                         <Image style={{width: 72, height: 72, borderRadius: 36}} source={this._avatar()}/>
@@ -187,8 +187,8 @@ class Personal extends Component {
 
 
                     </View>
-                    <View style={{flex:1}}/>
-                    <Image style={{marginRight:17,width:8,height:15}} source={Images.rightImg}/>
+                    <View style={{flex: 1}}/>
+                    <Image style={{marginRight: 17, width: 8, height: 15}} source={Images.rightImg}/>
                 </TouchableOpacity>
 
 
@@ -199,9 +199,9 @@ class Personal extends Component {
                     onPress={() => {
                         umengEvent('more_order');
                         if (strNotNull(getLoginUser().user_id))
-                            router.toOrderListPage();
+                            global.router.toOrderListPage();
                         else
-                            router.toLoginFirstPage()
+                            global.router.toLoginFirstPage()
                     }}
                     style={stylesP.btnOrder}>
                     <Image style={stylesP.imgOrder1}
@@ -210,12 +210,12 @@ class Personal extends Component {
                 </TouchableOpacity>
                 <View style={{width: 1, backgroundColor: Colors._ECE, marginBottom: 5, marginTop: 5}}/>
                 <TouchableOpacity style={stylesP.btnOrder}
-                onPress={()=>{
-                    if(strNotNull(getLoginUser().user_id))
-                        router.toOrderListPage();
-                    else
-                        router.toMallOrderPage();
-                }}>
+                                  onPress={() => {
+                                      if (strNotNull(getLoginUser().user_id))
+                                          global.router.toMallOrderPage();
+                                      else
+                                          global.router.toLoginFirstPage();
+                                  }}>
                     <Image style={stylesP.imgOrder2}
                            source={Images.mall_order}/>
                     <Text style={stylesP.txtProfile1}>商品订单</Text>
@@ -229,13 +229,13 @@ class Personal extends Component {
 
     renderPerson = () => {
         let props = Platform.OS === 'ios' ? {
-                // blurType: "light",
-                // blurAmount: 18
-            } : {
-                viewRef: this.state.viewRef,
-                downsampleFactor: 10,
-                overlayColor: 'rgba(255,255,255,.4)'
-            };
+            // blurType: "light",
+            // blurAmount: 18
+        } : {
+            viewRef: this.state.viewRef,
+            downsampleFactor: 10,
+            overlayColor: 'rgba(255,255,255,.4)'
+        };
 
         const {profile} = this.props;
         return (<Animated.Image
