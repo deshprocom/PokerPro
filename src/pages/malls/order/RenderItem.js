@@ -17,29 +17,33 @@ export default class RenderItem extends PureComponent {
     };
 
     render() {
-        const {commodity} = this.props.item;
+        const {title,seven_days_return,number,variant} = this.props.item;
+        const {image,original_price,price,text_sku_values} = variant;
+
 
         return (
             <TouchableOpacity style={styleR.renderItem}
                               onPress={() => {
-                                     global.router.toMallInfoPage(commodity)
+                                     global.router.toMallInfoPage(this.props.item)
                                  }}>
 
                 <Image style={styleR.mallImg} source={Images.empty_image}/>
                 <View style={styleR.TxtView}>
-                    <Text numberOfLines={2} style={styleR.mallTextName}>{commodity.title}</Text>
+                    <Text numberOfLines={2} style={styleR.mallTextName}>{title}</Text>
                     <Text
-                        style={styleR.mallAttributes}>{I18n.t('weight')}：{commodity.weight}KG {I18n.t('colour')}：{this.selectType(commodity.arr_type)} {I18n.t('quantity')}：{commodity.stock}</Text>
-                    <View style={styleR.returned}>
-                        <Text style={styleR.returnedTxt}>{I18n.t('returned')}</Text>
-                    </View>
+                        style={styleR.mallAttributes}>{I18n.t('weight')}</Text>
+
+                    {seven_days_return?<View style={styleR.returned}>
+                            <Text style={styleR.returnedTxt}>{I18n.t('returned')}</Text>
+                        </View>:null}
+
                     <View style={styleR.PriceView}>
                         <Text style={styleR.Price}>¥</Text><Text
-                        style={[styleR.Price,{marginLeft:1}]}>{commodity.price}</Text>
+                        style={[styleR.Price,{marginLeft:1}]}>{price}</Text>
                         <Text style={styleR.originPrice}>¥</Text><Text
-                        style={[styleR.originPrice,{marginLeft:1}]}>{commodity.original_price}</Text>
+                        style={[styleR.originPrice,{marginLeft:1}]}>{original_price}</Text>
                         <View style={{flex:1}}/>
-                        <Text style={styleR.quantitys}>x{this.props.item.number}</Text>
+                        <Text style={styleR.quantitys}>x{number}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
