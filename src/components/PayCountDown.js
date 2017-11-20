@@ -15,6 +15,7 @@ import {
     TextInput,
     TouchableOpacity
 } from 'react-native';
+import I18n from 'react-native-i18n';
 
 const LCCountDownButtonState = {
     LCCountDownButtonActive: 0,
@@ -106,7 +107,7 @@ export default class CountDownBtn extends Component {
             let detalTime = Math.round((Date.now() - this.startTime) / 1000);
 
 
-            let content = changeWithCount(count - detalTime);
+            let content = count - detalTime;
             let diff = content;
             if (diff >= 60) {
                 timeLeft.min = Math.floor(diff / 60);
@@ -114,6 +115,7 @@ export default class CountDownBtn extends Component {
 
             }
             timeLeft.sec = diff;
+
 
             if (detalTime >= count) {
                 content = endText;
@@ -123,7 +125,7 @@ export default class CountDownBtn extends Component {
             }
             if (this.shouldSetState) {
                 this.setState({
-                    btnTitle: `${timeLeft.min}:${timeLeft.sec}`
+                    btnTitle: `${I18n.t('pay')} ${timeLeft.min}:${timeLeft.sec}`
                 })
             }
         }, 1000)
@@ -200,10 +202,10 @@ const styles = StyleSheet.create({
     },
     //禁用时候的Text样式
     disableTxtStyle: {
-        color: '#747474',
+        color: 'white',
     },
     //可以点击时候的Text样式
     activeTxtStyle: {
-        color: '#E0C675',
+        color: 'white',
     }
 });

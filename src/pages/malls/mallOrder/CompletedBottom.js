@@ -21,17 +21,12 @@ export default class CompletedBottom extends Component {
 const renderPay = () => {
     return (
         <View style={styleO.bottomView}>
-            <View style={{flex: 1}}/>
-
-            <Text style={styleO.payment}>{I18n.t('cancel_order')}</Text>
-            <View style={{height: 24, width: 1}}/>
             <PayCountDown
-                frameStyle={{height: 60, width: 135, borderRadius: 0}}
-                beginText='获取验证码'
+                frameStyle={styleO.payCount}
+                beginText='倒计时'
                 endText='付款失效'
                 count={60 * 15}
                 pressAction={() => {
-                    console.log('PayCountDown')
                     this.countDownButton.startCountDown()
                 }}
                 changeWithCount={(count) => count}
@@ -40,6 +35,10 @@ const renderPay = () => {
                     this.countDownButton = e
                 }}/>
 
+
+            <View style={{height: 24, width: 1, backgroundColor: Colors._ECE}}/>
+
+            <Text style={[styleO.payment, {padding: 14}]}>{I18n.t('cancel_order')}</Text>
         </View>
     )
 };
@@ -106,5 +105,10 @@ const styleO = StyleSheet.create({
     paymentPrice: {
         fontSize: 18,
         color: '#F34A4A'
+    },
+    payCount: {
+        height: 37, width: 120, borderRadius: 4,
+        backgroundColor: '#F34A4A',
+        marginRight: 17, marginLeft: 14
     }
 })
