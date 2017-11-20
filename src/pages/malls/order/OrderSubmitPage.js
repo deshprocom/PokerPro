@@ -17,7 +17,7 @@ export default class OrderSubmitPage extends PureComponent {
     state = {
         isExpired: false,
         productOrders: [],
-        order_number: "",
+        order_number: {},
         orderData: {}
     };
     showExpiredInfo = (temp) => {
@@ -81,7 +81,12 @@ export default class OrderSubmitPage extends PureComponent {
 
     submitBtn = () => {
         let body = this.postParam();
+        if (!util.isEmpty(this.state.order_number))
+            return;
         postMallOrder(body, data => {
+            this.setState({
+                order_number: data
+            });
             postWxPay(data, ret => {
                 payWx(ret, () => {
                     alert('支付成功')
