@@ -159,8 +159,8 @@ export default class CountDownBtn extends Component {
     }
 
     render() {
-        let isDisable = this.buttonState == LCCountDownButtonState.LCCountDownButtonDisable;
-        const {frameStyle} = this.props
+        let isDisable = this.buttonState === LCCountDownButtonState.LCCountDownButtonDisable;
+        const {frameStyle} = this.props;
         return (
             <TouchableOpacity disabled={isDisable}
                               onPress={() => {
