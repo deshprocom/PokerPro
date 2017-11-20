@@ -6,7 +6,7 @@ import I18n from 'react-native-i18n';
 export default class OrderDetails extends PureComponent {
 
     render(){
-        const{money,sumMoney} = this.props;
+        const{money,sumMoney,shipping_price} = this.props;
         return(
             <View style={styleO.detailsView}>
                 <View style={styleO.detailsName}>
@@ -21,7 +21,7 @@ export default class OrderDetails extends PureComponent {
                     <View style={styleO.costsView}>
                         <Text style={styleO.costsName}>{I18n.t('cost')}</Text>
                         <View style={{flex:1}}/>
-                        <Text style={styleO.price}>¥</Text><Text style={[styleO.price,{marginLeft:1,marginRight:17}]}>12</Text>
+                        <Text style={styleO.price}>¥</Text><Text style={[styleO.price,{marginLeft:1,marginRight:17}]}>{shipping_price}</Text>
                     </View>
                 </View>
                 <View style={styleO.paymentView}>

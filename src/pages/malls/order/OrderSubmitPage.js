@@ -17,7 +17,8 @@ export default class OrderSubmitPage extends PureComponent {
     state = {
         isExpired: false,
         productOrders: [],
-        order_number:""
+        order_number: "",
+        orderData: {}
     };
     showExpiredInfo = (temp) => {
         if (util.isEmpty(temp)) {
@@ -30,26 +31,14 @@ export default class OrderSubmitPage extends PureComponent {
             })
     };
 
-    money = () => {
-        const {params} = this.props;
-
-        let count = 0;
-        params.forEach(item => {
-            if (item.isSelect)
-                count = count + (item.number * item.commodity.price);
-        });
-
-        return `${count}`;
-    };
-    sumMoney = (money, costs) => {
-        return (Number(money) + costs);
-    };
 
     componentDidMount() {
         let body = this.postParam();
         getProductOrders(body, data => {
             console.log('product_orders', data);
-
+            this.setState({
+                orderData: data
+            })
         }, err => {
 
         });
@@ -102,9 +91,10 @@ export default class OrderSubmitPage extends PureComponent {
     };
 
     render() {
-        console.log("item:", this.props.params)
+
         const {isExpired} = this.state;
-        let money = this.money();
+        const {total_price, total_product_price, shipping_price, items} = this.state.orderData;
+
         return (
             <View style={{flex:1}}>
                 <NavigationBar
@@ -121,16 +111,20 @@ export default class OrderSubmitPage extends PureComponent {
                     <ShipAddress
                         ref={ref =>this.shipAddress = ref}/>
                     <MallInfo selectedData={this.props.params}/>
+
                     <LeaveMessage
                         ref={ref =>this.leaveMessage = ref}/>
-                    <OrderDetails money={money} sumMoney={this.sumMoney(money,12)}/>
+                    <OrderDetails
+                        shipping_price={shipping_price}
+                        money={total_product_price}
+                        sumMoney={total_price}/>
                     <View style={{height:80}}/>
 
                 </ScrollView>
                 <OrderBottom
                     submitBtn={this.submitBtn}
                     showExpiredInfo={this.showExpiredInfo}
-                    sumMoney={this.sumMoney(money,12)}/>
+                    sumMoney={total_price}/>
 
                 {isExpired ? <ExpiredOrder
                         showExpiredInfo={this.showExpiredInfo}/> : null}
