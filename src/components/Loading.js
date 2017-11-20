@@ -3,7 +3,7 @@
  */
 
 
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {
     StyleSheet,
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
 
 const SIZES = ['small', 'normal', 'large'];
 
-export default class Loading extends React.Component {
+export default class Loading extends Component {
 
     constructor(props) {
         super(props);

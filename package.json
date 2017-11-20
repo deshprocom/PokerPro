@@ -22,7 +22,6 @@
     "react-native-image-crop-picker": "^0.12.9",
     "react-native-image-zoom-viewer": "^2.0.5",
     "react-native-keyboard-aware-scroll-view": "^0.2.9",
-    "react-native-markdown-renderer": "^2.0.5",
     "react-native-md5": "^1.0.0",
     "react-native-network-info": "^2.2.0",
     "react-native-orientation": "git+https://github.com/yamill/react-native-orientation.git",
@@ -49,6 +48,7 @@
     "redux": "^3.6.0",
     "redux-actions": "^2.0.1",
     "redux-thunk": "^2.2.0",
+    "rn-markdown": "^1.1.1",
     "rn-umeng": "^1.0.6"
   },
   "devDependencies": {

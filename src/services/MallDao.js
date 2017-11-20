@@ -2,6 +2,13 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 
+//微信支付
+export function postWxPay(body, resolve, reject) {
+    helper.post(Api.mall_wxPay(body), {}, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
 export function postMallOrder(body, resolve, reject) {
     helper.post(Api.mall_order, body, ret => {
         resolve(ret.data)
