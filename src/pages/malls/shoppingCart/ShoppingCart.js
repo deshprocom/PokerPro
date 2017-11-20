@@ -84,7 +84,7 @@ export default class ShoppingCart extends Component {
                                   onPress={() => {
                                       let datas=this.dataFilter()
                                       if(datas.length>0){
-                                          router.toOrderConfirm(datas);
+                                          global.router.toOrderConfirm(datas);
                                       }else{
                                           showToast("请选择商品")
                                       }

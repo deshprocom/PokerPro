@@ -11,7 +11,7 @@ export default class UploadBottom extends PureComponent {
             <View style={styleO.bottomView}>
                 <TouchableOpacity
                     onPress={() => {
-                        router.toReturnSucceedPage();
+                        global.router.toReturnSucceedPage();
                     }}
                     style={styleO.customer}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('confirm')}</Text>
