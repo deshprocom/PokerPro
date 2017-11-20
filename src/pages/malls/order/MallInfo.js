@@ -3,8 +3,8 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, L
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 import RenderItem from './RenderItem';
+import {util} from '../../../utils/ComonHelper'
 
-let lists = [1, 2,3,4,5];
 
 export default class MallInfo extends PureComponent {
     state = {
@@ -14,6 +14,7 @@ export default class MallInfo extends PureComponent {
 
     componentDidMount() {
 
+        let lists = this.props.selectedData;
 
         this.setState({
             dataHosts: lists.length > 2 ? lists.slice(0, 2) : lists,
@@ -25,7 +26,7 @@ export default class MallInfo extends PureComponent {
     _expandData = () => {
 
         this.setState({
-            dataHosts: lists,
+            dataHosts: this.props.selectedData,
             showExpand: false
         });
 
@@ -33,9 +34,8 @@ export default class MallInfo extends PureComponent {
     };
 
     _renderItem = ({item}) => {
-
         return (
-            <RenderItem/>
+            <RenderItem item={item}/>
 
         )
     };
@@ -45,13 +45,28 @@ export default class MallInfo extends PureComponent {
     };
     _keyExtractor = (item, index) => `mallInfo${index}`;
 
+    count = () => {
+        const {selectedData} = this.props;
+
+        let count = 0;
+
+        if (util.isEmpty(selectedData))
+            return;
+        selectedData.forEach(item => {
+            if (item.isSelect)
+                ++count;
+        });
+
+        return `${count}`;
+    };
+
     render() {
         return (
             <View style={styleM.infoView}>
                 <View style={styleM.infoName}>
                     <Text style={styleM.infoLeft}>{I18n.t('mallInfo')}</Text>
                     <View style={{flex: 1}}/>
-                    <Text style={styleM.infototal}>{I18n.t('total')}5{I18n.t('pieces')}</Text>
+                    <Text style={styleM.infototal}>{I18n.t('total')}{this.count()}{I18n.t('pieces')}</Text>
                 </View>
                 <View style={styleM.infoImgView}>
                     <FlatList
@@ -64,17 +79,17 @@ export default class MallInfo extends PureComponent {
                     />
                 </View>
                 {this.state.showExpand ? <TouchableOpacity
-                    style={styleM.expandView}
-                    onPress={() => {
+                        style={styleM.expandView}
+                        onPress={() => {
                         this._expandData()
                     }}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Text style={styleM.expandTxt}>{I18n.t('expandMore')}</Text>
-                        <View style={styleM.expandTouch}>
-                            <Image style={styleM.expandImg} source={Images.expand}/>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <Text style={styleM.expandTxt}>{I18n.t('expandMore')}</Text>
+                            <View style={styleM.expandTouch}>
+                                <Image style={styleM.expandImg} source={Images.expand}/>
+                            </View>
                         </View>
-                    </View>
-                </TouchableOpacity> : null}
+                    </TouchableOpacity> : null}
 
             </View>
         )

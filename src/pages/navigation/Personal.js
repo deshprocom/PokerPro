@@ -3,7 +3,7 @@ import {
     TouchableOpacity,
     StyleSheet, Platform,
     Text, Image,
-    View, Animated, findNodeHandle
+    View, Animated, findNodeHandle,Linking
 } from 'react-native';
 import {Images, Colors, Metrics} from '../../Themes';
 import {strNotNull, isEmptyObject, getLoginUser, getUserData, getDispatchAction} from '../../utils/ComonHelper';
@@ -68,7 +68,7 @@ class Personal extends Component {
                     <Image style={stylesP.personalImg} source={Images.is}/>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity style={[stylesP.personalView, {marginTop: 10}]} onPress={() => {
+            <TouchableOpacity style={[stylesP.personalView, {marginTop: 1}]} onPress={() => {
                 router.toSettingPage()
             }}>
                 <View style={stylesP.personalView2}>
@@ -77,6 +77,16 @@ class Personal extends Component {
                     <View style={{flex: 1}}/>
 
                     <Image style={stylesP.personalImg} source={Images.is}/>
+                </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={[stylesP.personalView, {marginTop: 20}]} onPress={() => {
+                Linking.openURL('tel:0755-23919844');
+
+            }}>
+                <View style={stylesP.personalView2}>
+                    <Image style={{width: 21, height: 22, marginLeft: 20}} source={Images.customer_service_tel}/>
+                    <Text style={stylesP.personalText}>{I18n.t('customer_service_tel')}：0755-23919844</Text>
                 </View>
             </TouchableOpacity>
         </View>
@@ -156,18 +166,18 @@ class Personal extends Component {
                         marginRight: 20
                     }}
                     rightBtnIcon={this._imgNotice()}/>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <TouchableOpacity
-                        onPress={() => {
+                <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}}
+                                  onPress={() => {
                             if (!isEmptyObject(login_user))
                                 router.toPersonPage();
                             else
                                 router.toLoginFirstPage()
 
-                        }}
+                        }}>
+                    <View
                         style={stylesP.personRadius2}>
                         <Image style={{width: 72, height: 72, borderRadius: 36}} source={this._avatar()}/>
-                    </TouchableOpacity>
+                    </View>
 
                     <View style={{marginLeft: 20}}>
 
@@ -177,7 +187,9 @@ class Personal extends Component {
 
 
                     </View>
-                </View>
+                    <View style={{flex:1}}/>
+                    <Image style={{marginRight:17,width:8,height:15}} source={Images.rightImg}/>
+                </TouchableOpacity>
 
 
             </View>
@@ -197,7 +209,13 @@ class Personal extends Component {
                     <Text style={stylesP.txtProfile1}>票务订单</Text>
                 </TouchableOpacity>
                 <View style={{width: 1, backgroundColor: Colors._ECE, marginBottom: 5, marginTop: 5}}/>
-                <TouchableOpacity style={stylesP.btnOrder}>
+                <TouchableOpacity style={stylesP.btnOrder}
+                onPress={()=>{
+                    if(strNotNull(getLoginUser().user_id))
+                        router.toOrderListPage();
+                    else
+                        router.toMallOrderPage();
+                }}>
                     <Image style={stylesP.imgOrder2}
                            source={Images.mall_order}/>
                     <Text style={stylesP.txtProfile1}>商品订单</Text>
@@ -211,13 +229,13 @@ class Personal extends Component {
 
     renderPerson = () => {
         let props = Platform.OS === 'ios' ? {
-            // blurType: "light",
-            // blurAmount: 18
-        } : {
-            viewRef: this.state.viewRef,
-            downsampleFactor: 10,
-            overlayColor: 'rgba(255,255,255,.4)'
-        };
+                // blurType: "light",
+                // blurAmount: 18
+            } : {
+                viewRef: this.state.viewRef,
+                downsampleFactor: 10,
+                overlayColor: 'rgba(255,255,255,.4)'
+            };
 
         const {profile} = this.props;
         return (<Animated.Image
@@ -390,7 +408,7 @@ const stylesP = StyleSheet.create({
     txtProfile1: {
         fontSize: 14,
         color: Colors.txt_444,
-        marginTop: 5
+        marginTop: 8
     }
 
 

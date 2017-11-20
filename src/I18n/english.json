@@ -447,6 +447,8 @@
   "buy_again":"再次购买",
   "order_del":"删除订单",
   "logistics_view":"查看物流",
-  "mall_order":"商品订单"
+  "mall_order":"商品订单",
+  "search_empty":"没有找到相关商品",
+  "customer_service_tel":"客服电话"
 }
 

@@ -124,7 +124,7 @@ export default class MallList extends Component {
         const {title, price, all_stock, icon} = item;
         return <TouchableOpacity style={[styles.listItem, index % 2 === 0 ? {} : {marginLeft: 8}]}
                                  onPress={() => {
-                                     router.toMallInfoPage(item)
+                                     global.router.toMallInfoPage(item)
                                  }}>
             <Image
                 resizeMode={'cover'}

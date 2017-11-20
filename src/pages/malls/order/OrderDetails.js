@@ -6,6 +6,7 @@ import I18n from 'react-native-i18n';
 export default class OrderDetails extends PureComponent {
 
     render(){
+        const{money,sumMoney,shipping_price} = this.props;
         return(
             <View style={styleO.detailsView}>
                 <View style={styleO.detailsName}>
@@ -15,17 +16,17 @@ export default class OrderDetails extends PureComponent {
                     <View style={styleO.priceView}>
                         <Text style={styleO.priceName}>{I18n.t('order_price')}</Text>
                         <View style={{flex:1}}/>
-                        <Text style={styleO.price}>¥</Text><Text style={[styleO.price,{marginLeft:1,marginRight:17}]}>2323</Text>
+                        <Text style={styleO.price}>¥</Text><Text style={[styleO.price,{marginLeft:1,marginRight:17}]}>{money}</Text>
                     </View>
                     <View style={styleO.costsView}>
                         <Text style={styleO.costsName}>{I18n.t('cost')}</Text>
                         <View style={{flex:1}}/>
-                        <Text style={styleO.price}>¥</Text><Text style={[styleO.price,{marginLeft:1,marginRight:17}]}>12</Text>
+                        <Text style={styleO.price}>¥</Text><Text style={[styleO.price,{marginLeft:1,marginRight:17}]}>{shipping_price}</Text>
                     </View>
                 </View>
                 <View style={styleO.paymentView}>
                     <View style={styleO.paymentPrice}>
-                        <Text style={styleO.paymentPriceTxt}>¥</Text><Text style={[styleO.paymentPriceTxt,{marginLeft:1}]}>787646466</Text>
+                        <Text style={styleO.paymentPriceTxt}>¥</Text><Text style={[styleO.paymentPriceTxt,{marginLeft:1}]}>{sumMoney}</Text>
                     </View>
                     <Text style={styleO.payment}>{I18n.t('payment')}</Text>
 
