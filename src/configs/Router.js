@@ -47,6 +47,12 @@ export default class Router {
         })
     }
 
+    replaceProductInfo(product){
+        Actions.replace('MallInfoPage',{
+            params:product
+        })
+    }
+
     replaceShoppingCart() {
         Actions.replace('ShoppingCart')
     }

@@ -228,13 +228,14 @@ export default class ProductSpecificationInfo extends PureComponent {
 
 
     addCarts = () => {
+        const {id} = this.props.product;
         const {number} = this.state;
         if (_.isEmpty(this.tempProduct)) {
             showToast(I18n.t('ple_select_all'));
             return;
         }
 
-        let selectCommodity = {number: number, commodity: this.tempProduct};
+        let selectCommodity = {number: number, commodity: this.tempProduct, parentId: id};
         pushProductToCart(selectCommodity);
         this.props.showSpecInfo(this.tempProduct)
     }

@@ -8,19 +8,17 @@ import MallInfo from './MallInfo';
 import LeaveMessage from './LeaveMessage';
 import OrderDetails from './OrderDetails';
 import OrderBottom from './OrderBottom';
-import {NavigationBar} from '../../../components';
+import {NavigationBar, BaseComponent} from '../../../components';
 import ExpiredOrder from './ExpiredOrder';
-import {util} from '../../../utils/ComonHelper';
-import {getProductOrders, postMallOrder} from '../../../services/MallDao';
+import {util, payWx} from '../../../utils/ComonHelper';
+import {getProductOrders, postMallOrder, postWxPay} from '../../../services/MallDao';
 
 export default class OrderSubmitPage extends PureComponent {
     state = {
         isExpired: false,
-        productOrders: {},
-        order_number: "",
-        orderData: {},
-        oderNumbers:[],
-        orderSuccess:false
+        productOrders: [],
+        order_number: {},
+        orderData: {}
     };
     showExpiredInfo = (temp) => {
         if (util.isEmpty(temp)) {
@@ -37,7 +35,7 @@ export default class OrderSubmitPage extends PureComponent {
     componentDidMount() {
         let body = this.postParam();
         getProductOrders(body, data => {
-            console.log('orderData', data);
+            console.log('product_orders', data);
             this.setState({
                 orderData: data
             })
@@ -77,28 +75,29 @@ export default class OrderSubmitPage extends PureComponent {
         }
 
         return {variants, shipping_info, memo};
+
     };
 
 
     submitBtn = () => {
         let body = this.postParam();
+        if (!util.isEmpty(this.state.order_number))
+            return;
         postMallOrder(body, data => {
-            console.log('product_orders', data);
-            this.state.oderNumbers.forEach(item => {
-                if (item !== data.order_number){
-                    this.setState({
-                        oderNumbers:this.state.oderNumbers.push(data.order_number),
-                        orderSuccess:true
-                    });
-                    global.router.toCompletedOrderPage()
-                }
-
+            this.setState({
+                order_number: data
             });
+            postWxPay(data, ret => {
+                payWx(ret, () => {
+                    alert('支付成功')
+                })
+            }, err => {
+
+            })
 
         }, err => {
 
         });
-
 
     };
 
@@ -108,7 +107,7 @@ export default class OrderSubmitPage extends PureComponent {
         const {total_price, total_product_price, shipping_price, items} = this.state.orderData;
 
         return (
-            <View style={{flex:1}}>
+            <View style={{flex: 1}}>
                 <NavigationBar
                     barStyle={'dark-content'}
                     toolbarStyle={{backgroundColor: 'white'}}
@@ -121,17 +120,17 @@ export default class OrderSubmitPage extends PureComponent {
 
                     <Tips/>
                     <ShipAddress
-                        ref={ref =>this.shipAddress = ref}/>
-                    {util.isEmpty(items)?null: <MallInfo selectedData={items}/>}
+                        ref={ref => this.shipAddress = ref}/>
+                    {util.isEmpty(items) ? null : <MallInfo selectedData={items}/>}
 
 
                     <LeaveMessage
-                        ref={ref =>this.leaveMessage = ref}/>
+                        ref={ref => this.leaveMessage = ref}/>
                     <OrderDetails
                         shipping_price={shipping_price}
                         money={total_product_price}
                         sumMoney={total_price}/>
-                    <View style={{height:80}}/>
+                    <View style={{height: 80}}/>
 
                 </ScrollView>
                 <OrderBottom
@@ -140,7 +139,7 @@ export default class OrderSubmitPage extends PureComponent {
                     sumMoney={total_price}/>
 
                 {isExpired ? <ExpiredOrder
-                        showExpiredInfo={this.showExpiredInfo}/> : null}
+                    showExpiredInfo={this.showExpiredInfo}/> : null}
             </View>
 
         );

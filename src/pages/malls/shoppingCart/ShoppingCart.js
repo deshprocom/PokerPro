@@ -242,7 +242,7 @@ export default class ShoppingCart extends Component {
         ];
         const {price, original_price, stock, arr_type, title, image} = item.commodity;
         let type_value = '';
-        if(!util.isEmpty(arr_type)){
+        if (!util.isEmpty(arr_type)) {
             arr_type.forEach(x => {
                 type_value += x.name + ':';
                 type_value += x.value + '  ';
@@ -253,7 +253,12 @@ export default class ShoppingCart extends Component {
             <Swipeout
                 autoClose={true}
                 right={swipeoutBtns}>
-                <View style={styleS.renderItem}>
+                <TouchableOpacity
+                    activeOpacity={0.5}
+                    onPress={() => {
+                        global.router.replaceProductInfo({id: item.parentId})
+                    }}
+                    style={styleS.renderItem}>
                     {this.renderShowEditView(item)}
 
                     <ImageLoad style={styleS.mallImg} source={{uri: image}}/>
@@ -267,7 +272,7 @@ export default class ShoppingCart extends Component {
                             {this.buyQuantity(item)}
                         </View>
                     </View>
-                </View>
+                </TouchableOpacity>
             </Swipeout>
         )
     };

@@ -188,7 +188,7 @@ export default class RankList extends Component {
         const body = {
             page_size: page_size ? page_size : 100,
             page_index: this.state.page,
-            region: region ? region : 'global',
+            region: region ? region : this._region(),
             begin_year: begin_year ? begin_year : '',
             end_year: end_year ? end_year : '',
         };
