@@ -27,7 +27,7 @@ export default class ConfirmOrderPage extends PureComponent {
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}
                     titleStyle={{color: Colors._161}}
-                    title={I18n.t('confirm_order')}/>
+                    title={I18n.t('order_info')}/>
 
                 <ScrollView style={styleC.orderView}>
                     <OrderStatus/>

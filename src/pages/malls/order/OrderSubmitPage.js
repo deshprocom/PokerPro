@@ -11,10 +11,14 @@ import OrderBottom from './OrderBottom';
 import {NavigationBar} from '../../../components';
 import ExpiredOrder from './ExpiredOrder';
 import {util} from '../../../utils/ComonHelper';
+import {getProductOrders, postMallOrder} from '../../../services/MallDao';
 
 export default class OrderSubmitPage extends PureComponent {
     state = {
         isExpired: false,
+        productOrders: [],
+        order_number: "",
+        orderData: {}
     };
     showExpiredInfo = (temp) => {
         if (util.isEmpty(temp)) {
@@ -27,8 +31,70 @@ export default class OrderSubmitPage extends PureComponent {
             })
     };
 
+
+    componentDidMount() {
+        let body = this.postParam();
+        getProductOrders(body, data => {
+            console.log('product_orders', data);
+            this.setState({
+                orderData: data
+            })
+        }, err => {
+
+        });
+    }
+
+    postParam = () => {
+        const {params} = this.props;
+        let adr = this.shipAddress.getAddress();
+        let leaveMessage = this.leaveMessage.getLeaveMessage();
+
+        let variants = [];
+        if (!util.isEmpty(params))
+            params.forEach(item => {
+                let obj = {};
+                obj.number = item.number;
+                obj.id = item.commodity.id;
+                variants.push(obj)
+            });
+
+        let shipping_info = {};
+        if (!util.isEmpty(adr)) {
+            shipping_info.name = adr.consignee;
+            shipping_info.mobile = adr.mobile;
+            shipping_info.address = {
+                province: adr.province,
+                city: adr.city,
+                area: adr.area,
+                detail: adr.address_detail
+            }
+        }
+        let memo = "";
+        if (!util.isEmpty(leaveMessage)) {
+            memo = leaveMessage
+        }
+
+        return {variants, shipping_info, memo};
+
+    };
+
+
+    submitBtn = () => {
+        let body = this.postParam();
+        postMallOrder(body, data => {
+            console.log('product_orders', data);
+
+        }, err => {
+
+        });
+
+    };
+
     render() {
+
         const {isExpired} = this.state;
+        const {total_price, total_product_price, shipping_price, items} = this.state.orderData;
+
         return (
             <View style={{flex:1}}>
                 <NavigationBar
@@ -42,15 +108,23 @@ export default class OrderSubmitPage extends PureComponent {
                 <ScrollView style={styleO.orderView}>
 
                     <Tips/>
-                    <ShipAddress/>
-                    <MallInfo/>
-                    <LeaveMessage/>
-                    <OrderDetails/>
+                    <ShipAddress
+                        ref={ref =>this.shipAddress = ref}/>
+                    <MallInfo selectedData={this.props.params}/>
+
+                    <LeaveMessage
+                        ref={ref =>this.leaveMessage = ref}/>
+                    <OrderDetails
+                        shipping_price={shipping_price}
+                        money={total_product_price}
+                        sumMoney={total_price}/>
                     <View style={{height:80}}/>
 
                 </ScrollView>
                 <OrderBottom
-                    showExpiredInfo={this.showExpiredInfo}/>
+                    submitBtn={this.submitBtn}
+                    showExpiredInfo={this.showExpiredInfo}
+                    sumMoney={total_price}/>
 
                 {isExpired ? <ExpiredOrder
                         showExpiredInfo={this.showExpiredInfo}/> : null}

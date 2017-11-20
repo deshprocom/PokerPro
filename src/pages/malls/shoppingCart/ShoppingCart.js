@@ -5,7 +5,7 @@ import Swipeout from 'react-native-swipeout';
 import I18n from 'react-native-i18n';
 import {deleteProductFromCart, util, showToast} from '../../../utils/ComonHelper';
 import {ImageLoad} from '../../../components';
-
+import EmptyCart from './EmptyCart';
 
 export default class ShoppingCart extends Component {
     state = {
@@ -14,7 +14,8 @@ export default class ShoppingCart extends Component {
         showBottom: true,
         selected: false,
         selectAll: false,
-        dataHosts: []
+        dataHosts: [],
+        selectedData:[]
     };
 
     componentDidMount() {
@@ -52,6 +53,14 @@ export default class ShoppingCart extends Component {
         return `(${count})`;
     };
 
+    dataFilter=()=>{
+        return this.state.dataHosts.filter(
+            function (value) {
+                return value.isSelect
+            }
+        )
+    };
+
     toBottom = () => {
         return (
             <View style={styleS.bottomView}>
@@ -73,7 +82,12 @@ export default class ShoppingCart extends Component {
                 <View style={{flex: 1}}/>
                 <TouchableOpacity style={styleS.settlementView}
                                   onPress={() => {
-                                      router.toOrderConfirm();
+                                      let datas=this.dataFilter()
+                                      if(datas.length>0){
+                                          router.toOrderConfirm(datas);
+                                      }else{
+                                          showToast("请选择商品")
+                                      }
                                   }}>
                     <Text style={styleS.settlement}>{I18n.t('settlement')}</Text>
                     <Text style={styleS.settlementQuantity}>{this.count()}</Text>
@@ -139,6 +153,7 @@ export default class ShoppingCart extends Component {
                         showEdit: !this.state.showEdit,
                         showCart: !this.state.showCart,
                         showBottom: !this.state.showBottom,
+                        selectAll: false
                     });
                     this.refreshAll()
                 }}>
@@ -331,6 +346,9 @@ export default class ShoppingCart extends Component {
     render() {
 
         console.log(this.state.dataHosts);
+        if(util.isEmpty(this.state.dataHosts)){
+            return <EmptyCart/>
+        }
         return (
             <View style={{flex: 1}}>
                 {this.topBar()}

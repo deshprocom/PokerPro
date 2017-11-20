@@ -100,7 +100,9 @@ export default {
     categories_child: categories_child,
     cat_products: cat_products,
     products: 'products',
-    product_detail: product_detail
+    product_detail: product_detail,
+    product_orders: product_orders,
+    mall_order:'product_orders'
 }
 
 
@@ -116,6 +118,11 @@ const page_size = 10;
 
 export function product_detail(body) {
     return `products/${body.id}`
+
+}
+
+export function product_orders() {
+    return `product_orders/new`
 
 }
 
