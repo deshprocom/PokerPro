@@ -10,8 +10,8 @@ import OrderDetails from './OrderDetails';
 import OrderBottom from './OrderBottom';
 import {NavigationBar} from '../../../components';
 import ExpiredOrder from './ExpiredOrder';
-import {util} from '../../../utils/ComonHelper';
-import {getProductOrders, postMallOrder} from '../../../services/MallDao';
+import {util, payWx} from '../../../utils/ComonHelper';
+import {getProductOrders, postMallOrder, postWxPay} from '../../../services/MallDao';
 
 export default class OrderSubmitPage extends PureComponent {
     state = {
@@ -82,7 +82,13 @@ export default class OrderSubmitPage extends PureComponent {
     submitBtn = () => {
         let body = this.postParam();
         postMallOrder(body, data => {
-            console.log('product_orders', data);
+            postWxPay(data, ret => {
+                payWx(ret, () => {
+                    alert('支付成功')
+                })
+            }, err => {
+
+            })
 
         }, err => {
 
@@ -96,7 +102,7 @@ export default class OrderSubmitPage extends PureComponent {
         const {total_price, total_product_price, shipping_price, items} = this.state.orderData;
 
         return (
-            <View style={{flex:1}}>
+            <View style={{flex: 1}}>
                 <NavigationBar
                     barStyle={'dark-content'}
                     toolbarStyle={{backgroundColor: 'white'}}
@@ -109,16 +115,16 @@ export default class OrderSubmitPage extends PureComponent {
 
                     <Tips/>
                     <ShipAddress
-                        ref={ref =>this.shipAddress = ref}/>
+                        ref={ref => this.shipAddress = ref}/>
                     <MallInfo selectedData={this.props.params}/>
 
                     <LeaveMessage
-                        ref={ref =>this.leaveMessage = ref}/>
+                        ref={ref => this.leaveMessage = ref}/>
                     <OrderDetails
                         shipping_price={shipping_price}
                         money={total_product_price}
                         sumMoney={total_price}/>
-                    <View style={{height:80}}/>
+                    <View style={{height: 80}}/>
 
                 </ScrollView>
                 <OrderBottom
@@ -127,7 +133,7 @@ export default class OrderSubmitPage extends PureComponent {
                     sumMoney={total_price}/>
 
                 {isExpired ? <ExpiredOrder
-                        showExpiredInfo={this.showExpiredInfo}/> : null}
+                    showExpiredInfo={this.showExpiredInfo}/> : null}
             </View>
 
         );
