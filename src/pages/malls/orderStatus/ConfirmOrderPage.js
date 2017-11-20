@@ -9,11 +9,12 @@ import OrderMessage from './OrderMessage';
 import OrderDetails from '../order/OrderDetails';
 import UnShippedBottom from './UnShippedBottom';
 import {NavigationBar} from '../../../components';
+import {util} from '../../../utils/ComonHelper';
 
 export default class ConfirmOrderPage extends PureComponent {
 
-    state={
-
+    state = {
+        orderData: {}
     };
 
 
@@ -32,7 +33,7 @@ export default class ConfirmOrderPage extends PureComponent {
                 <ScrollView style={styleC.orderView}>
                     <OrderStatus/>
                     <Positioning/>
-                    <MallInfo/>
+                    {util.isEmpty(this.state.orderData.items) ? null : <MallInfo selectedData={this.state.orderData.items}/>}
                     <OrderMessage/>
                     <OrderDetails/>
                     <View style={{height:80}}/>
