@@ -1,6 +1,7 @@
 import React, {Component,PropTypes} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
+import I18n from 'react-native-i18n';
 
 export default class EmptyCart extends Component {
 
@@ -14,7 +15,7 @@ export default class EmptyCart extends Component {
                        source={Images.mall_return}/>
             </TouchableOpacity>
             <View style={{flex: 1}}/>
-            <Text style={styleE.cart}>购物车</Text>
+            <Text style={styleE.cart}>{I18n.t('cart')}</Text>
             <View style={{flex: 1}}/>
             <View style={styleE.popBtn}/>
         </View>)
@@ -31,7 +32,7 @@ export default class EmptyCart extends Component {
                     onPress={()=>{
                         global.router.pop();
                     }}>
-                        <Text style={styleE.cartTxt}>马上抢购</Text>
+                        <Text style={styleE.cartTxt}>{I18n.t('rush_immediately')}</Text>
                     </TouchableOpacity>
                 </View>
 

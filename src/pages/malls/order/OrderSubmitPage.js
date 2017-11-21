@@ -101,6 +101,7 @@ export default class OrderSubmitPage extends PureComponent {
         }, err => {
 
         });
+        global.router.toCompletedOrderPage();
 
     };
 

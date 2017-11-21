@@ -20,7 +20,7 @@ export default class UnShippedBottom extends PureComponent {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                       router.toReturnPage()
+                       global.router.toReturnPage()
                     }}
                     style={styleO.returnedBottom}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('returnedMall')}</Text>

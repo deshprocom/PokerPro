@@ -37,7 +37,7 @@ export default class ReturnSucceed extends PureComponent {
                 <ScrollView style={styleC.orderView}>
                     {this.topBar()}
                     <ReturnStatus/>
-
+ 
                     <RefundAmount/>
                     <RenderItem/>
 
