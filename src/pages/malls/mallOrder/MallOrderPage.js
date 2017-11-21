@@ -12,6 +12,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import {NavigationBar} from '../../../components';
 import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
 import OrderListStatus from './OrderListStatus';
+import {getMallOrders} from '../../../services/MallDao';
 
 
 export default class MallOrderPage extends Component {
@@ -19,7 +20,22 @@ export default class MallOrderPage extends Component {
     state = {
         categories: [],
         user_id: '',
-        status: ''
+        status: '',
+        mall_orders:[]
+    };
+
+    componentDidMount(){
+        const body = {
+            next_id: '0'
+        };
+        getMallOrders(body, data => {
+            console.log('mall_orders', data);
+            this.setState({
+                mall_orders: data
+            })
+        }, err => {
+
+        });
     };
 
 
@@ -46,7 +62,7 @@ export default class MallOrderPage extends Component {
                 {menu.map((item, index) => {
                     return <OrderListStatus
                         key={`mall_order_${index}`}
-                        tabLabel={item}/>
+                        item={item}/>
                 })}
 
             </ScrollableTabView>

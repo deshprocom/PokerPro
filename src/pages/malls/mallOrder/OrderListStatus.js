@@ -8,9 +8,15 @@ import CompletedBottom from './CompletedBottom';
 
 export default class AllStatus extends Component{
 
+    state={
+
+    };
+
 
 
     render(){
+        const {item} = this.props;
+
         return(
             <View style={{flex: 1,marginTop:9}}>
                 <View style={styles.top}>
