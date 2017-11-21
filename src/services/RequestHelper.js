@@ -94,10 +94,10 @@ export function removeToken() {
 
 if (__DEV__) {
 
-    const naviMonitor = (response) => console.log(TAG, response)
+    const naviMonitor = (response) => console.log('HttpResponse', response)
     client.addMonitor(naviMonitor);
     client.addRequestTransform(request => {
-        console.log(TAG, request)
+        console.log('HttpRequest', request)
     })
 }
 

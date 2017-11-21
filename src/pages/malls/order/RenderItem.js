@@ -1,48 +1,53 @@
-import React, {PureComponent, PropTypes} from 'react';
+import React, {PureComponent} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView, TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 import {deleteProductFromCart, util, showToast} from '../../../utils/ComonHelper';
+import PropTypes from 'prop-types';
 
 export default class RenderItem extends PureComponent {
+
+    static propTypes = {
+        item: PropTypes.object
+    };
 
     selectType = (arr_type) => {
         let type_value = '';
         if (!util.isEmpty(arr_type)) {
             arr_type.forEach(x => {
-                type_value += x.name + ':';
-                type_value += x.value + '  ';
+                type_value += x + ' ';
             });
         }
+        return type_value;
     };
 
     render() {
-        const {title,seven_days_return,number,variant} = this.props.item;
-        const {image,original_price,price,text_sku_values} = variant;
+        const {title, seven_days_return, number, variant} = this.props.item;
+        const {image, original_price, price, text_sku_values} = variant;
 
 
         return (
             <TouchableOpacity style={styleR.renderItem}
                               onPress={() => {
-                                     global.router.toMallInfoPage(this.props.item)
-                                 }}>
+                                  global.router.toMallInfoPage(this.props.item)
+                              }}>
 
                 <Image style={styleR.mallImg} source={Images.empty_image}/>
                 <View style={styleR.TxtView}>
                     <Text numberOfLines={2} style={styleR.mallTextName}>{title}</Text>
                     <Text
-                        style={styleR.mallAttributes}>{I18n.t('weight')}</Text>
+                        style={styleR.mallAttributes}>{this.selectType(text_sku_values)}</Text>
 
-                    {seven_days_return?<View style={styleR.returned}>
-                            <Text style={styleR.returnedTxt}>{I18n.t('returned')}</Text>
-                        </View>:null}
+                    {seven_days_return ? <View style={styleR.returned}>
+                        <Text style={styleR.returnedTxt}>{I18n.t('returned')}</Text>
+                    </View> : null}
 
                     <View style={styleR.PriceView}>
                         <Text style={styleR.Price}>¥</Text><Text
-                        style={[styleR.Price,{marginLeft:1}]}>{price}</Text>
+                        style={[styleR.Price, {marginLeft: 1}]}>{price}</Text>
                         <Text style={styleR.originPrice}>¥</Text><Text
-                        style={[styleR.originPrice,{marginLeft:1}]}>{original_price}</Text>
-                        <View style={{flex:1}}/>
+                        style={[styleR.originPrice, {marginLeft: 1}]}>{original_price}</Text>
+                        <View style={{flex: 1}}/>
                         <Text style={styleR.quantitys}>x{number}</Text>
                     </View>
                 </View>
