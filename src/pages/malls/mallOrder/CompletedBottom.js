@@ -8,9 +8,10 @@ export default class CompletedBottom extends Component {
 
 
     render() {
+
         return (
             <View style={styleO.bottomView}>
-                {renderPay()}
+                {renderPay(this.props.orderItem)}
 
 
             </View>
@@ -18,19 +19,21 @@ export default class CompletedBottom extends Component {
     }
 }
 
-const renderPay = () => {
+const renderPay = (item) => {
+    const {order_number} = item;
     return (
         <View style={styleO.bottomView}>
             <PayCountDown
                 frameStyle={styleO.payCount}
                 beginText='倒计时'
                 endText='付款失效'
-                count={60 * 15}
+                count={10}
                 pressAction={() => {
+
                     this.countDownButton.startCountDown()
                 }}
                 changeWithCount={(count) => count}
-                id='pay_time'
+                id={`time${order_number}`}
                 ref={(e) => {
                     this.countDownButton = e
                 }}/>

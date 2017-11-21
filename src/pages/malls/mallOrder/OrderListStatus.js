@@ -32,7 +32,8 @@ export default class OrderListStatus extends Component {
                     <Text style={styles.txtTotal2}>{total_price}</Text>
                     <Text style={styles.txtTotal1}>{I18n.t('order_total')}：¥</Text>
                 </View>
-                <CompletedBottom/>
+                <CompletedBottom
+                    orderItem={item}/>
             </View>
         )
     };
@@ -60,7 +61,7 @@ export default class OrderListStatus extends Component {
 
     refresh = (body, postRefresh, endFetch) => {
         getMallOrders(body, data => {
-            console.log('mall_orders', data);
+
             postRefresh(data.items, 6)
 
         }, err => {

@@ -50,7 +50,7 @@ export default class ProductItem extends PureComponent {
     };
 
     render() {
-        console.log(this.props.lists)
+
 
         return <FlatList
             data={this.props.lists}
