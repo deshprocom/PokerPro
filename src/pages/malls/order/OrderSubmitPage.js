@@ -97,12 +97,13 @@ export default class OrderSubmitPage extends PureComponent {
 
 
     submitBtn = () => {
-        let body = this.postParam();
+
         const {invalid_items} = this.state.orderData;
         if (!util.isEmpty(this.state.order_number))
             return;
 
-        if (util.isEmpty(invalid_items)) {
+        if (this.state.isExpired || util.isEmpty(invalid_items)) {
+            let body = this.postParam();
             postMallOrder(body, data => {
                 this.setState({
                     order_number: data
@@ -121,7 +122,7 @@ export default class OrderSubmitPage extends PureComponent {
             global.router.toCompletedOrderPage();
         } else {
             this.setState({
-                isExpired: true
+                isExpired: !this.state.isExpired
             })
         }
 
@@ -167,6 +168,7 @@ export default class OrderSubmitPage extends PureComponent {
                     sumMoney={total_price}/>
 
                 {isExpired ? <ExpiredOrder
+                    submitBtn={this.submitBtn}
                     invalidProducts={invalidProducts}
                     orderData={this.state.orderData}
                     showExpiredInfo={this.showExpiredInfo}/> : null}

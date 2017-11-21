@@ -9,7 +9,7 @@ import _ from 'lodash';
 
 export default class ProductSpecificationInfo extends PureComponent {
     state = {
-        number: 1,
+        number: 0,
         optionTypes: [],
         tempImg: '',
         tempPrice: '',
@@ -22,6 +22,7 @@ export default class ProductSpecificationInfo extends PureComponent {
         const {icon, master, option_types} = product;
         this.tempProduct = selectProduct;
         const {price, stock} = master;
+
         this.setState({
             optionTypes: option_types,
             tempImg: icon,
@@ -77,10 +78,9 @@ export default class ProductSpecificationInfo extends PureComponent {
 
             <View style={{marginRight: 29, flexDirection: 'row', alignItems: 'center', marginTop: 14}}>
                 <TouchableOpacity
-                    style={[styleP.buyTouch, number === 1 ? styleCutDisable : styleCut]}
+                    style={[styleP.buyTouch, number === 0 ? styleCutDisable : styleCut]}
                     onPress={() => {
-                        if (number > 1) {
-
+                        if (number > 0) {
                             this.setState({number: --number})
                         }
 
@@ -229,7 +229,7 @@ export default class ProductSpecificationInfo extends PureComponent {
     addCarts = () => {
         const {id} = this.props.product;
         const {number} = this.state;
-        if (_.isEmpty(this.tempProduct)) {
+        if (_.isEmpty(this.tempProduct) || number < 1) {
             showToast(I18n.t('ple_select_all'));
             return;
         }

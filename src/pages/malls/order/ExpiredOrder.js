@@ -9,18 +9,21 @@ import PropTypes from 'prop-types';
 export default class ExpiredOrder extends PureComponent {
 
     static propTypes = {
-        invalidProducts: PropTypes.array
+        invalidProducts: PropTypes.array,
+        orderData: PropTypes.object
     };
 
-    orderBottom = (item) => {
+    orderBottom = () => {
+        const {total_price} = this.props.orderData;
         return (
             <View style={styleE.bottomView}>
                 <Text style={styleE.payment}>{I18n.t('payment')}</Text>
-                <Text style={styleE.paymentPrice}>80890890</Text>
+                <Text style={styleE.paymentPrice}>{total_price}</Text>
                 <View style={{flex: 1}}/>
                 <TouchableOpacity
                     onPress={() => {
-                        item.showExpiredInfo(this)
+                        this.props.submitBtn();
+                        this.props.showExpiredInfo()
                     }}
                     style={styleE.orderSubmit}>
                     <Text style={styleE.orderSubmitTxt}>{I18n.t('continue_payment')}</Text>
@@ -29,6 +32,7 @@ export default class ExpiredOrder extends PureComponent {
         )
     };
     orderDetails = () => {
+        const {total_price, shipping_price, total_product_price} = this.props.orderData;
         return (
             <View style={styleE.detailsView}>
                 <View style={styleE.detailsName}>
@@ -38,21 +42,17 @@ export default class ExpiredOrder extends PureComponent {
                     <View style={styleE.priceView}>
                         <Text style={styleE.priceName}>{I18n.t('order_price')}</Text>
                         <View style={{flex: 1}}/>
-                        <Text style={styleE.price}>7878</Text>
+                        <Text style={styleE.price}>{total_product_price}</Text>
                     </View>
-                    <View style={styleE.effective}>
-                        <Text style={styleE.effectiveName}>{I18n.t('effective_product')}</Text>
-                        <View style={{flex: 1}}/>
-                        <Text style={styleE.effectivePrice}>-21</Text>
-                    </View>
+
                     <View style={styleE.costsView}>
                         <Text style={styleE.costsName}>{I18n.t('cost')}</Text>
                         <View style={{flex: 1}}/>
-                        <Text style={styleE.price}>12</Text>
+                        <Text style={styleE.price}>{shipping_price}</Text>
                     </View>
                 </View>
                 <View style={styleE.paymentView}>
-                    <Text style={styleE.paymentPrice1}>787646466</Text>
+                    <Text style={styleE.paymentPrice1}>{total_price}</Text>
                     <Text style={styleE.payment1}>{I18n.t('payment')}</Text>
 
                 </View>
@@ -88,7 +88,7 @@ export default class ExpiredOrder extends PureComponent {
 
 
                         {this.orderDetails()}
-                        {this.orderBottom(this.props)}
+                        {this.orderBottom()}
 
                     </View>
                 </Animatable.View>
