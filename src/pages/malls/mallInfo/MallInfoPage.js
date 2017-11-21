@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
-import {NavigationBar} from '../../../components';
+import {BaseComponent} from '../../../components';
 import MallInfoPageTopBar from './MallInfoPageTopBar';
 import ProductSpecification from './ProductSpecification';
 import ShipAddress from './ShipAddress';
@@ -22,6 +22,7 @@ export default class MallInfoPage extends Component {
     };
 
     componentDidMount() {
+        this.container.open();
         const {id} = this.props.params;
         getProductDetail({id: id}, data => {
 
@@ -58,11 +59,11 @@ export default class MallInfoPage extends Component {
     };
 
 
-
     render() {
         const {specShow, product, selectProduct} = this.state;
         return (
-            <View style={ApplicationStyles.bgContainer}>
+            <BaseComponent
+                ref={ref => this.container = ref}>
 
                 <ScrollView
                     onScroll={this._onScroll}
@@ -93,7 +94,7 @@ export default class MallInfoPage extends Component {
                     showSpecInfo={this.showSpecInfo}/> : null}
 
 
-            </View>
+            </BaseComponent>
 
         );
     }

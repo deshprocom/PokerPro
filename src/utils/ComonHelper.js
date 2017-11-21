@@ -96,16 +96,16 @@ export function deleteProductFromCart(carts) {
 /*添加商品到购物车*/
 export function pushProductToCart(product) {
 
-    const {commodity, number} = product;
+    const {variant, number} = product;
     let hasContain = false;
     /*去重商品数量相加*/
     global.shoppingCarts.map(item => {
-        if (commodity.id === item.commodity.id) {
+        if (variant.id === item.variant.id) {
             hasContain = true;
-            return item.number = number + item.number;
+            item.number += number;
+
         }
-        else
-            return item;
+        return item;
     });
     if (!hasContain)
         global.shoppingCarts.push(product);

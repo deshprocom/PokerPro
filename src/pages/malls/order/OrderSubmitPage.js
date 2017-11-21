@@ -16,9 +16,9 @@ import {getProductOrders, postMallOrder, postWxPay} from '../../../services/Mall
 export default class OrderSubmitPage extends PureComponent {
     state = {
         isExpired: false,
-        productOrders: [],
         order_number: {},
-        orderData: {}
+        orderData: {},
+        invalidProducts: []
     };
     showExpiredInfo = (temp) => {
         if (util.isEmpty(temp)) {
@@ -34,14 +34,31 @@ export default class OrderSubmitPage extends PureComponent {
 
     componentDidMount() {
         let body = this.postParam();
+
         getProductOrders(body, data => {
-            console.log('product_orders', data);
+
+
+            const {invalid_items} = data;
+            let carts = this.props.params;
+
+
+            let invalidProducts = [];
+
+            invalid_items.forEach(invalid => {
+                invalidProducts = carts.filter(item => {
+                    return invalid === item.variant.id;
+                });
+            });
+            console.log('invalidProducts', invalidProducts);
+
             this.setState({
-                orderData: data
+                orderData: data,
+                invalidProducts
             })
         }, err => {
 
         });
+
     }
 
     postParam = () => {
@@ -54,7 +71,7 @@ export default class OrderSubmitPage extends PureComponent {
             params.forEach(item => {
                 let obj = {};
                 obj.number = item.number;
-                obj.id = item.commodity.id;
+                obj.id = item.variant.id;
                 variants.push(obj)
             });
 
@@ -80,35 +97,46 @@ export default class OrderSubmitPage extends PureComponent {
 
 
     submitBtn = () => {
-        let body = this.postParam();
+
+        const {invalid_items} = this.state.orderData;
         if (!util.isEmpty(this.state.order_number))
             return;
-        postMallOrder(body, data => {
-            this.setState({
-                order_number: data
-            });
-            postWxPay(data, ret => {
-                payWx(ret, () => {
-                    alert('支付成功')
+
+        if (this.state.isExpired || util.isEmpty(invalid_items)) {
+            let body = this.postParam();
+            postMallOrder(body, data => {
+                this.setState({
+                    order_number: data
+                });
+                postWxPay(data, ret => {
+                    payWx(ret, () => {
+                        alert('支付成功')
+                    })
+                }, err => {
+
                 })
+
             }, err => {
 
+            });
+            global.router.toCompletedOrderPage();
+        } else {
+            this.setState({
+                isExpired: !this.state.isExpired
             })
+        }
 
-        }, err => {
-
-        });
-        global.router.toCompletedOrderPage();
 
     };
 
     render() {
 
-        const {isExpired} = this.state;
+        const {isExpired, invalidProducts} = this.state;
         const {total_price, total_product_price, shipping_price, items} = this.state.orderData;
 
         return (
-            <View style={{flex: 1}}>
+            <BaseComponent
+                ref={ref => this.container = ref}>
                 <NavigationBar
                     barStyle={'dark-content'}
                     toolbarStyle={{backgroundColor: 'white'}}
@@ -140,8 +168,11 @@ export default class OrderSubmitPage extends PureComponent {
                     sumMoney={total_price}/>
 
                 {isExpired ? <ExpiredOrder
+                    submitBtn={this.submitBtn}
+                    invalidProducts={invalidProducts}
+                    orderData={this.state.orderData}
                     showExpiredInfo={this.showExpiredInfo}/> : null}
-            </View>
+            </BaseComponent>
 
         );
     }
