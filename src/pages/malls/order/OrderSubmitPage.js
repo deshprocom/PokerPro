@@ -11,7 +11,7 @@ import OrderBottom from './OrderBottom';
 import {NavigationBar, BaseComponent} from '../../../components';
 import ExpiredOrder from './ExpiredOrder';
 import {util, payWx} from '../../../utils/ComonHelper';
-import {getProductOrders, postMallOrder, postWxPay} from '../../../services/MallDao';
+import {getProductOrders, postMallOrder, postWxPay, getWxPaidResult} from '../../../services/MallDao';
 
 export default class OrderSubmitPage extends PureComponent {
     state = {
@@ -33,6 +33,7 @@ export default class OrderSubmitPage extends PureComponent {
 
 
     componentDidMount() {
+        this.container.open();
         let body = this.postParam();
 
         getProductOrders(body, data => {
@@ -110,7 +111,12 @@ export default class OrderSubmitPage extends PureComponent {
                 });
                 postWxPay(data, ret => {
                     payWx(ret, () => {
-                        alert('支付成功')
+                        getWxPaidResult(data, result => {
+                            alert('支付成功')
+                        }, err => {
+                            alert('支付成功，系统正在处理')
+                        })
+
                     })
                 }, err => {
 
@@ -119,7 +125,7 @@ export default class OrderSubmitPage extends PureComponent {
             }, err => {
 
             });
-            global.router.toCompletedOrderPage();
+
         } else {
             this.setState({
                 isExpired: !this.state.isExpired
@@ -131,8 +137,8 @@ export default class OrderSubmitPage extends PureComponent {
 
     render() {
 
-        const {isExpired, invalidProducts} = this.state;
-        const {total_price, total_product_price, shipping_price, items} = this.state.orderData;
+        const {isExpired, invalidProducts, orderData} = this.state;
+        const {total_price, total_product_price, shipping_price, items} = orderData;
 
         return (
             <BaseComponent
@@ -156,9 +162,7 @@ export default class OrderSubmitPage extends PureComponent {
                     <LeaveMessage
                         ref={ref => this.leaveMessage = ref}/>
                     <OrderDetails
-                        shipping_price={shipping_price}
-                        money={total_product_price}
-                        sumMoney={total_price}/>
+                        orderDetail={orderData}/>
                     <View style={{height: 80}}/>
 
                 </ScrollView>

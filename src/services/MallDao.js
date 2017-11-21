@@ -1,6 +1,13 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
+
+export function getWxPaidResult(body, resolve, reject) {
+    helper.get(Api.wx_paid_result(body), (ret) => {
+        resolve(ret.data)
+    }, reject)
+}
+
 //取消订单
 export function cancelMallOrder(body, resolve, reject) {
     helper.post(Api.mall_order_cancel(body), {}, ret => {
