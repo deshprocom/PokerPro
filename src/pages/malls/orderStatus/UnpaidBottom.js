@@ -20,7 +20,7 @@ export default class UnpaidBottom extends PureComponent {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                        router.toReturnPage()
+                        global.router.toReturnPage()
                     }}
                     style={styleO.returnedBottom}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('cancel_order')}</Text>
