@@ -10,16 +10,13 @@ import UltimateFlatList from '../../../components/ultimate';
 
 export default class OrderListStatus extends Component {
 
-    state = {
-        items: []
-    };
-
 
     renderItem = (item, index) => {
 
         const {order_number, status, total_price, order_items} = item;
         return (
             <TouchableOpacity
+                activeOpacity={1}
                 onPress={() => {
                     global.router.toCompletedOrderPage(item)
                 }}
@@ -56,17 +53,24 @@ export default class OrderListStatus extends Component {
     onFetch = (page, postRefresh, endFetch) => {
         if (page === 1) {
 
-            this.refresh({next_id: '0'}, postRefresh, endFetch)
+            this.load({
+                next_id: '0',
+                status: this.props.status
+            }, postRefresh, endFetch)
         } else {
-
+            this.load({
+                next_id: this.next_id,
+                status: this.props.status
+            }, postRefresh, endFetch)
         }
 
     };
 
-    refresh = (body, postRefresh, endFetch) => {
-        getMallOrders(body, data => {
 
-            postRefresh(data.items, 6)
+    load = (body, postRefresh, endFetch) => {
+        getMallOrders(body, data => {
+            this.next_id = data.next_id;
+            postRefresh(data.items, 6);
 
         }, err => {
             endFetch();

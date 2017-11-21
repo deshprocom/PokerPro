@@ -15,7 +15,7 @@ import {
     TextInput,
     TouchableOpacity
 } from 'react-native';
-import I18n from 'react-native-i18n';
+
 
 const LCCountDownButtonState = {
     LCCountDownButtonActive: 0,
@@ -59,7 +59,9 @@ export default class CountDownBtn extends Component {
 
     componentDidMount() {
         const {id, changeWithCount} = this.props;
-        for (var i = 0; i < timeRecodes.length; i++) {
+        console.log(id, timeRecodes)
+
+        for (let i = 0; i < timeRecodes.length; i++) {
             let obj = timeRecodes[i];
             if (obj.id === id) {
                 let liveTime = Date.now() - obj.startTime;
@@ -75,6 +77,12 @@ export default class CountDownBtn extends Component {
                 }
             }
         }
+        let recodes = timeRecodes.filter(item => item.id === id);
+
+        if (recodes.length === 0) {
+            this.startCountDown();
+        }
+
 
     }
 
@@ -139,6 +147,7 @@ export default class CountDownBtn extends Component {
 
     //外界调用
     startCountDown() {
+
         this.startCountDownWithCount(Date.now());
         this.recordButtonInfo();
     }

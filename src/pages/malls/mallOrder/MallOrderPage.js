@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/2/22.
  */
-import React, {Component}from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text, ScrollView, Platform
@@ -12,6 +12,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import {NavigationBar} from '../../../components';
 import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
 import OrderListStatus from './OrderListStatus';
+import {MallStatus} from "../../../configs/Status";
 
 
 export default class MallOrderPage extends Component {
@@ -24,11 +25,9 @@ export default class MallOrderPage extends Component {
     };
 
 
-
-
     render() {
-        let menu = ['全部', '待付款', '待收获', '已完成'];
-        return (<View style={[ApplicationStyles.bgContainer,{backgroundColor:'#ECECEE'}]}
+        let menu = ['all', MallStatus.unpaid, MallStatus.paid, MallStatus.completed];
+        return (<View style={[ApplicationStyles.bgContainer, {backgroundColor: '#ECECEE'}]}
                       testID="page_order_list">
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors.white}}
@@ -41,16 +40,16 @@ export default class MallOrderPage extends Component {
             <ScrollableTabView
                 renderTabBar={() => <DefaultTabBar
                     backgroundColor={Colors.white}
-                        activeTextColor="#F34A4A"
-                        inactiveTextColor={Colors._AAA}
-                        textStyle={{fontSize: 15}}
-                        style={{borderColor: Colors._EEE,marginTop:1}}
-                        underlineStyle={{backgroundColor: '#F34A4A', height: 2}}/>}>
+                    activeTextColor="#F34A4A"
+                    inactiveTextColor={Colors._AAA}
+                    textStyle={{fontSize: 15}}
+                    style={{borderColor: Colors._EEE, marginTop: 1}}
+                    underlineStyle={{backgroundColor: '#F34A4A', height: 2}}/>}>
                 {menu.map((item, index) => {
                     return <OrderListStatus
                         key={`mallStatus${index}`}
                         status={item}
-                        tabLabel={item}/>
+                        tabLabel={I18n.t(`${item}`)}/>
                 })}
 
             </ScrollableTabView>

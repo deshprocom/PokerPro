@@ -31,6 +31,7 @@ export default class CompletedBottom extends Component {
     };
 
 
+
     _formatTime = (diff) => {
 
         let min = 0;
@@ -44,6 +45,7 @@ export default class CompletedBottom extends Component {
         return `${I18n.t('pay')} ${min}:${diff}`
     };
 
+
     renderPay = (item) => {
         const {order_number} = item;
         return (
@@ -54,10 +56,10 @@ export default class CompletedBottom extends Component {
                     endText='付款失效'
                     count={60 * 15}
                     pressAction={() => {
-                        this.countDownButton.startCountDown()
+
                     }}
                     changeWithCount={(count) => `${this._formatTime(count)}`}
-                    id={`time${order_number}`}
+                    id={order_number}
                     ref={(e) => {
                         this.countDownButton = e
                     }}/>
