@@ -112,7 +112,7 @@ export default class OrderSubmitPage extends PureComponent {
                 postWxPay(data, ret => {
                     payWx(ret, () => {
                         getWxPaidResult(data, result => {
-                            alert('支付成功')
+                            global.router.toCompletedOrderPage(data)
                         }, err => {
                             alert('支付成功，系统正在处理')
                         })
