@@ -33,7 +33,6 @@ export default class OrderSubmitPage extends PureComponent {
 
 
     componentDidMount() {
-        this.container.open();
         let body = this.postParam();
 
         getProductOrders(body, data => {
