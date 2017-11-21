@@ -6,7 +6,7 @@ import propTypes from 'prop-types';
 import RenderItem from '../order/RenderItem';
 import CompletedBottom from './CompletedBottom';
 
-export default class AllStatus extends Component{
+export default class OrderListStatus extends Component{
 
     state={
 
