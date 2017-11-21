@@ -59,7 +59,6 @@ export default class CountDownBtn extends Component {
 
     componentDidMount() {
         const {id, changeWithCount} = this.props;
-        console.log(id, timeRecodes)
 
         for (let i = 0; i < timeRecodes.length; i++) {
             let obj = timeRecodes[i];

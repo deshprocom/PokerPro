@@ -2,6 +2,13 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 
+export function getMallDetail(body, resolve, reject) {
+    helper.get(Api.product_order_detail(body), (ret) => {
+        resolve(ret.data)
+    }, reject)
+}
+
+//微信支付是否成功
 export function getWxPaidResult(body, resolve, reject) {
     helper.get(Api.wx_paid_result(body), (ret) => {
         resolve(ret.data)
