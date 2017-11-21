@@ -5,12 +5,34 @@ import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
 import RenderItem from '../order/RenderItem';
 import CompletedBottom from './CompletedBottom';
+import {getMallOrders} from '../../../services/MallDao';
 
-export default class AllStatus extends Component{
+export default class OrderListStatus extends Component{
+
+    state={
+
+    };
+
+    componentDidMount(){
+        const body = {
+            next_id: '0'
+        };
+        getMallOrders(body, data => {
+            console.log('mall_orders', data);
+            this.setState({
+                mall_orders: data
+            })
+        }, err => {
+
+        });
+    }
 
 
 
     render(){
+        const {items} = this.props.tabLabel;
+
+
         return(
             <View style={{flex: 1,marginTop:9}}>
                 <View style={styles.top}>

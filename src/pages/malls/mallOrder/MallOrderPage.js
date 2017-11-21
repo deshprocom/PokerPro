@@ -19,8 +19,11 @@ export default class MallOrderPage extends Component {
     state = {
         categories: [],
         user_id: '',
-        status: ''
+        status: '',
+        mall_orders: []
     };
+
+
 
 
     render() {
@@ -45,7 +48,8 @@ export default class MallOrderPage extends Component {
                         underlineStyle={{backgroundColor: '#F34A4A', height: 2}}/>}>
                 {menu.map((item, index) => {
                     return <OrderListStatus
-                        key={`mall_order_${index}`}
+                        key={`mallStatus${index}`}
+                        status={item}
                         tabLabel={item}/>
                 })}
 
