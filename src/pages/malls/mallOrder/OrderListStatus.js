@@ -27,7 +27,7 @@ export default class OrderListStatus extends Component {
                 <View style={styles.top}>
                     <Text style={styles.txtLeft}>{I18n.t('order_num')}：{order_number}</Text>
                     <View style={{flex: 1}}/>
-                    <Text style={styles.txtRight}>{status}</Text>
+                    <Text style={styles.txtRight}>{I18n.t(`${status}`)}</Text>
                 </View>
                 <View style={{height: 1}}/>
                 <ProductItem

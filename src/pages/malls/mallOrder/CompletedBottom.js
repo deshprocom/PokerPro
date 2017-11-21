@@ -3,21 +3,32 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, L
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 import PayCountDown from '../../../components/PayCountDown';
+import {cancelMallOrder} from "../../../services/MallDao";
+import {MallStatus} from "../../../configs/Status";
 
 export default class CompletedBottom extends Component {
 
 
     render() {
         const {orderItem} = this.props;
-        return (
-            <View style={styleO.bottomView}>
-
-                {this.renderPay(orderItem)}
-
-
-            </View>
-        )
+        return this.switchOrder(orderItem);
     }
+
+    switchOrder = (orderItem) => {
+        const {status} = orderItem;
+        switch (status) {
+            case MallStatus.canceled:
+                return <View/>;
+            case MallStatus.unpaid:
+                return this.renderPay(orderItem);
+            case MallStatus.paid:
+                return this.paidOrder();
+            case MallStatus.completed:
+                return <View/>;
+            case MallStatus.delivered:
+                return this.deliveredOrder(orderItem);
+        }
+    };
 
 
     _formatTime = (diff) => {
@@ -54,27 +65,45 @@ export default class CompletedBottom extends Component {
 
                 <View style={{height: 24, width: 1, backgroundColor: Colors._ECE}}/>
 
-                <Text style={[styleO.payment, {padding: 14}]}>{I18n.t('cancel_order')}</Text>
+                <Text
+                    onPress={() => {
+                        cancelMallOrder({order_number: order_number}, ret => {
+                            console.log(ret)
+                        }, err => {
+                        })
+                    }}
+                    style={[styleO.payment, {padding: 14}]}>{I18n.t('cancel_order')}</Text>
             </View>
         )
     };
 
+    paidOrder = () => {
+        return <View style={styleO.bottomView}>
+            <TouchableOpacity
+                onPress={() => {
+                }}
+                style={styleO.returnedBottom}>
+                <Text style={styleO.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>
+            </TouchableOpacity>
+        </View>
+    };
 
-    mallOrderCompleted = () => {
+
+    deliveredOrder = () => {
         return (
             <View style={styleO.bottomView}>
                 <TouchableOpacity
                     onPress={() => {
                     }}
                     style={styleO.returnedBottom}>
-                    <Text style={styleO.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('order_receipt')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
 
                     }}
                     style={styleO.customer}>
-                    <Text style={styleO.orderSubmitTxt}>{I18n.t('order_del')}</Text>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>
                 </TouchableOpacity>
 
 

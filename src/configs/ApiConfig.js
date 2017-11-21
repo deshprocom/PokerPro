@@ -104,7 +104,8 @@ export default {
     product_orders: product_orders,
     mall_order: 'product_orders',
     mall_wxPay: mall_wxPay,
-    order_lists:order_lists
+    order_lists:order_lists,
+    mall_order_cancel:mall_order_cancel
 }
 
 
@@ -116,6 +117,12 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+
+export function mall_order_cancel(body) {
+    const {order_number} = body;
+    return `product_orders/${order_number}/cancel`
+}
 
 export function order_lists(body) {
     const {next_id} = body;

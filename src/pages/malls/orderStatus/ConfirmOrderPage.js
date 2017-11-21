@@ -6,7 +6,7 @@ import OrderStatus from './OrderStatus';
 import Positioning from './Positioning';
 import OrderMessage from './OrderMessage';
 import OrderDetails from '../order/OrderDetails';
-import UnShippedBottom from './UnShippedBottom';
+import CompletedBottom from '../mallOrder/CompletedBottom';
 import {NavigationBar} from '../../../components';
 import {util} from '../../../utils/ComonHelper';
 import ProductItem from '../mallOrder/ProductItem';
@@ -17,7 +17,7 @@ export default class ConfirmOrderPage extends PureComponent {
     render() {
         const {orderDetail} = this.props.params;
 
-        const {address, order_items} = orderDetail;
+        const {address, order_items, status} = orderDetail;
 
         return (
             <View style={{flex: 1}}>
@@ -31,7 +31,8 @@ export default class ConfirmOrderPage extends PureComponent {
                     title={I18n.t('order_info')}/>
 
                 <ScrollView style={styleC.orderView}>
-                    <OrderStatus/>
+                    <OrderStatus
+                        status={I18n.t(`${status}`)}/>
                     <Positioning
                         address={address}/>
                     <View style={styleC.detailView}>
@@ -48,9 +49,8 @@ export default class ConfirmOrderPage extends PureComponent {
                 </ScrollView>
 
 
-                <View style={styleC.bottom}>
-                    <UnShippedBottom/>
-                </View>
+                <CompletedBottom
+                    orderItem={orderDetail}/>
             </View>
 
         );

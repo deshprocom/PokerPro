@@ -1,6 +1,13 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
+//取消订单
+export function cancelMallOrder(body, resolve, reject) {
+    helper.post(Api.mall_order_cancel(body), {}, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
 //商品订单页面
 export function getMallOrders(body, resolve, reject) {
     helper.get(Api.order_lists(body), (ret) => {
@@ -20,6 +27,7 @@ export function postMallOrder(body, resolve, reject) {
         resolve(ret.data)
     }, reject)
 }
+
 //获取新建订单页面
 export function getProductOrders(body, resolve, reject) {
     helper.post(Api.product_orders(), body, ret => {
