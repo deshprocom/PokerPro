@@ -1,6 +1,12 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
+//商品订单页面
+export function getMallOrders(body, resolve, reject) {
+    helper.get(Api.order_lists(body), (ret) => {
+        resolve(ret.data)
+    }, reject)
+}
 
 //微信支付
 export function postWxPay(body, resolve, reject) {
@@ -20,6 +26,7 @@ export function getProductOrders(body, resolve, reject) {
         resolve(ret.data)
     }, reject)
 }
+
 
 //获取商品详情
 export function getProductDetail(body, resolve, reject) {
