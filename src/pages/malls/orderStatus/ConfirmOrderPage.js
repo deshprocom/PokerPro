@@ -1,26 +1,26 @@
 import React, {PureComponent, PropTypes} from 'react';
-import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView,TextInput} from 'react-native';
+import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView, TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 import OrderStatus from './OrderStatus';
-import MallInfo from '../order/MallInfo';
 import Positioning from './Positioning';
 import OrderMessage from './OrderMessage';
 import OrderDetails from '../order/OrderDetails';
 import UnShippedBottom from './UnShippedBottom';
 import {NavigationBar} from '../../../components';
 import {util} from '../../../utils/ComonHelper';
+import ProductItem from '../mallOrder/ProductItem';
 
 export default class ConfirmOrderPage extends PureComponent {
 
-    state = {
-        orderData: {}
-    };
 
+    render() {
+        const {orderDetail} = this.props.params;
 
-    render(){
-        return(
-            <View style={{flex:1}}>
+        const { address, order_items} = orderDetail;
+
+        return (
+            <View style={{flex: 1}}>
                 <NavigationBar
                     barStyle={'dark-content'}
                     toolbarStyle={{backgroundColor: 'white'}}
@@ -32,11 +32,19 @@ export default class ConfirmOrderPage extends PureComponent {
 
                 <ScrollView style={styleC.orderView}>
                     <OrderStatus/>
-                    <Positioning/>
-                    {util.isEmpty(this.state.orderData.items) ? null : <MallInfo selectedData={this.state.orderData.items}/>}
-                    <OrderMessage/>
-                    <OrderDetails/>
-                    <View style={{height:80}}/>
+                    <Positioning
+                        address={address}/>
+                    <View style={styleC.detailView}>
+                        <Text style={styleC.txtDetail}>{I18n.t('mallInfo')}</Text>
+
+                    </View>
+                    {util.isEmpty(order_items) ? null :
+                        <ProductItem lists={order_items}/>}
+                    <OrderMessage
+                        orderDetail={orderDetail}/>
+                    <OrderDetails
+                        orderDetail={orderDetail}/>
+                    <View style={{height: 80}}/>
                 </ScrollView>
 
 
@@ -49,18 +57,18 @@ export default class ConfirmOrderPage extends PureComponent {
     }
 }
 const styleC = StyleSheet.create({
-    bottom:{
-        height:50,
-        backgroundColor:"#FFFFFF",
-        position:'absolute',
-        bottom:0,
-        flexDirection:'row-reverse',
-        alignItems:'center',
+    bottom: {
+        height: 50,
+        backgroundColor: "#FFFFFF",
+        position: 'absolute',
+        bottom: 0,
+        flexDirection: 'row-reverse',
+        alignItems: 'center',
         width: '100%',
-        zIndex:999
+        zIndex: 999
     },
-    orderView:{
-        backgroundColor:'#ECECEE'
+    orderView: {
+        backgroundColor: '#ECECEE'
     },
     topBar: {
         height: Metrics.navBarHeight,
@@ -76,10 +84,10 @@ const styleC = StyleSheet.create({
         width: 50,
         justifyContent: 'center'
     },
-    cart:{
+    cart: {
         fontSize: 17,
         color: '#161718',
-        fontWeight:'bold'
+        fontWeight: 'bold'
     },
     backImg: {
         width: 11,
@@ -90,5 +98,16 @@ const styleC = StyleSheet.create({
         fontSize: 15,
         color: '#161718'
     },
+    detailView: {
+        height: 40,
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%'
+    },
+    txtDetail: {
+        color: '#333333',
+        fontSize: 14,
+        marginLeft: 17
+    }
 
 });

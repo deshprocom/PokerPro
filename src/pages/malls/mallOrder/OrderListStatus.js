@@ -19,7 +19,11 @@ export default class OrderListStatus extends Component {
 
         const {order_number, status, total_price, order_items} = item;
         return (
-            <View style={{flex: 1, marginTop: 9}}>
+            <TouchableOpacity
+                onPress={() => {
+                    global.router.toCompletedOrderPage(item)
+                }}
+                style={{flex: 1, marginTop: 9}}>
                 <View style={styles.top}>
                     <Text style={styles.txtLeft}>{I18n.t('order_num')}：{order_number}</Text>
                     <View style={{flex: 1}}/>
@@ -34,7 +38,7 @@ export default class OrderListStatus extends Component {
                 </View>
                 <CompletedBottom
                     orderItem={item}/>
-            </View>
+            </TouchableOpacity>
         )
     };
 

@@ -24,10 +24,7 @@ export default class ProductItem extends PureComponent {
 
     renderItem = ({item}) => {
         const {title, original_price, price, number, sku_value, image, refunded} = item;
-        return <TouchableOpacity
-            onPress={()=>{
-            global.router.toCompletedOrderPage()
-            }}
+        return <View
             style={styleR.renderItem}>
 
             <ImageLoad style={styleR.mallImg} source={{uri: image}}/>
@@ -49,7 +46,7 @@ export default class ProductItem extends PureComponent {
                     <Text style={styleR.quantitys}>x{number}</Text>
                 </View>
             </View>
-        </TouchableOpacity>
+        </View>
     };
 
     render() {
