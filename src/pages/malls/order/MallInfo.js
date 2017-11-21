@@ -34,7 +34,7 @@ export default class MallInfo extends PureComponent {
     };
 
     _renderItem = ({item}) => {
-        console.log('mallInfo',item)
+        
         return (
             <RenderItem item={item}/>
 

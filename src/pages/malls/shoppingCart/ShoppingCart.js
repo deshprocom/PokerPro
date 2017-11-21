@@ -36,7 +36,7 @@ export default class ShoppingCart extends Component {
         let total_prices = Number.parseFloat('0');
         dataHosts.forEach(item => {
             if (item.isSelect)
-                total_prices += Number.parseFloat(item.commodity.price) * item.number;
+                total_prices += Number.parseFloat(item.variant.price) * item.number;
         });
 
         return total_prices;
@@ -167,7 +167,7 @@ export default class ShoppingCart extends Component {
         const {dataHosts} = this.state;
         const {commodity} = item;
         let index = dataHosts.findIndex(function (x) {
-            return util.isEqual(commodity, x.commodity);
+            return util.isEqual(commodity, x.variant);
         });
         dataHosts.splice(index, 1);
         deleteProductFromCart(dataHosts);
@@ -202,11 +202,11 @@ export default class ShoppingCart extends Component {
 
     _pressItem = (item) => {
 
-        const {id} = item.commodity;
+        const {id} = item.variant;
         const {dataHosts} = this.state;
         let newSelects = [...dataHosts];
         newSelects.map(function (x) {
-            if (x.commodity.id === id) {
+            if (x.variant.id === id) {
                 item.isSelect = !item.isSelect;
             }
         });
@@ -240,12 +240,11 @@ export default class ShoppingCart extends Component {
                 }
             }
         ];
-        const {price, original_price, stock, arr_type, title, image} = item.commodity;
+        const {price, original_price, text_sku_values, title, image,product_id} = item.variant;
         let type_value = '';
-        if (!util.isEmpty(arr_type)) {
-            arr_type.forEach(x => {
-                type_value += x.name + ':';
-                type_value += x.value + '  ';
+        if (!util.isEmpty(text_sku_values)) {
+            text_sku_values.forEach(x => {
+                type_value += x+' ';
             });
         }
 
@@ -256,7 +255,7 @@ export default class ShoppingCart extends Component {
                 <TouchableOpacity
                     activeOpacity={0.5}
                     onPress={() => {
-                        global.router.replaceProductInfo({id: item.parentId})
+                        global.router.replaceProductInfo({id: product_id})
                     }}
                     style={styleS.renderItem}>
                     {this.renderShowEditView(item)}
@@ -285,7 +284,7 @@ export default class ShoppingCart extends Component {
             backgroundColor: '#F6F5F5'
         };
 
-        const {id, stock} = item.commodity;
+        const {id, stock} = item.variant;
 
         return (
             <View style={styleS.quantity}>
@@ -296,7 +295,7 @@ export default class ShoppingCart extends Component {
                             --item.number;
                             let newDataHosts = [...dataHosts];
                             newDataHosts.map(function (x) {
-                                if (id === x.commodity.id) {
+                                if (id === x.variant.id) {
                                     x.number = item.number
                                 }
                             });
@@ -323,7 +322,7 @@ export default class ShoppingCart extends Component {
                         ++item.number;
                         let newDataHosts = [...dataHosts];
                         newDataHosts.map(function (x) {
-                            if (id === x.commodity.id) {
+                            if (id === x.variant.id) {
                                 x.number = item.number
                             }
                         });

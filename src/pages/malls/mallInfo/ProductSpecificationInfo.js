@@ -9,7 +9,7 @@ import _ from 'lodash';
 
 export default class ProductSpecificationInfo extends PureComponent {
     state = {
-        number: 1,
+        number: 0,
         optionTypes: [],
         tempImg: '',
         tempPrice: '',
@@ -22,6 +22,7 @@ export default class ProductSpecificationInfo extends PureComponent {
         const {icon, master, option_types} = product;
         this.tempProduct = selectProduct;
         const {price, stock} = master;
+
         this.setState({
             optionTypes: option_types,
             tempImg: icon,
@@ -77,10 +78,9 @@ export default class ProductSpecificationInfo extends PureComponent {
 
             <View style={{marginRight: 29, flexDirection: 'row', alignItems: 'center', marginTop: 14}}>
                 <TouchableOpacity
-                    style={[styleP.buyTouch, number === 1 ? styleCutDisable : styleCut]}
+                    style={[styleP.buyTouch, number === 0 ? styleCutDisable : styleCut]}
                     onPress={() => {
-                        if (number > 1) {
-
+                        if (number > 0) {
                             this.setState({number: --number})
                         }
 
@@ -142,13 +142,13 @@ export default class ProductSpecificationInfo extends PureComponent {
         const {icon, master, variants, title} = this.props.product;
 
         let obj = {};
-        let arr_type = [];
+
         optionTypes.forEach(item => {
             if (item.hasOwnProperty('select')) {
                 if (!obj[`${item.id}`]) {
                     obj[`${item.id}`] = item.select.id;
 
-                    arr_type.push({name: item.name, value: item.select.name})
+
                 }
             }
         });
@@ -162,7 +162,6 @@ export default class ProductSpecificationInfo extends PureComponent {
         if (tempArr.length > 0) {
             const {image, price, stock} = tempArr[0];
             this.tempProduct = tempArr[0];
-            this.tempProduct.arr_type = arr_type;
             this.tempProduct.title = title;
 
             this.setState({
@@ -230,12 +229,12 @@ export default class ProductSpecificationInfo extends PureComponent {
     addCarts = () => {
         const {id} = this.props.product;
         const {number} = this.state;
-        if (_.isEmpty(this.tempProduct)) {
+        if (_.isEmpty(this.tempProduct) || number < 1) {
             showToast(I18n.t('ple_select_all'));
             return;
         }
 
-        let selectCommodity = {number: number, commodity: this.tempProduct, parentId: id};
+        let selectCommodity = {number: number, variant: this.tempProduct, title: this.tempProduct.title};
         pushProductToCart(selectCommodity);
         this.props.showSpecInfo(this.tempProduct)
     }
