@@ -61,8 +61,8 @@ export default class CountDownBtn extends Component {
         const {id, changeWithCount} = this.props;
         for (var i = 0; i < timeRecodes.length; i++) {
             let obj = timeRecodes[i];
-            if (obj.id == id) {
-                let liveTime = Date.now() - obj.startTime
+            if (obj.id === id) {
+                let liveTime = Date.now() - obj.startTime;
                 if (liveTime < obj.deathCount * 1000) {
                     //避免闪动
                     let detalTime = Math.round(liveTime / 1000);
@@ -121,7 +121,7 @@ export default class CountDownBtn extends Component {
         var hasRecord = false;
         for (var i = 0; i < timeRecodes.length; i++) {
             let obj = timeRecodes[i];
-            if (obj.id == id) {
+            if (obj.id === id) {
                 obj.startTime = Date.now();
                 hasRecord = true;
                 break;

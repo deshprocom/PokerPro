@@ -17,7 +17,7 @@ export default class ConfirmOrderPage extends PureComponent {
     render() {
         const {orderDetail} = this.props.params;
 
-        const { address, order_items} = orderDetail;
+        const {address, order_items} = orderDetail;
 
         return (
             <View style={{flex: 1}}>
@@ -102,7 +102,8 @@ const styleC = StyleSheet.create({
         height: 40,
         flexDirection: 'row',
         alignItems: 'center',
-        width: '100%'
+        width: '100%',
+        backgroundColor: 'white'
     },
     txtDetail: {
         color: '#333333',
