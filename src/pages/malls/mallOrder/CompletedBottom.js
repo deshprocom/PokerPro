@@ -8,15 +8,17 @@ export default class CompletedBottom extends Component {
 
 
     render() {
-
+        const {orderItem} = this.props;
         return (
             <View style={styleO.bottomView}>
-                {this.renderPay(this.props.orderItem)}
+
+                {this.renderPay(orderItem)}
 
 
             </View>
         )
     }
+
 
     _formatTime = (diff) => {
 
@@ -41,7 +43,6 @@ export default class CompletedBottom extends Component {
                     endText='付款失效'
                     count={60 * 15}
                     pressAction={() => {
-
                         this.countDownButton.startCountDown()
                     }}
                     changeWithCount={(count) => `${this._formatTime(count)}`}
@@ -66,7 +67,7 @@ export default class CompletedBottom extends Component {
                     onPress={() => {
                     }}
                     style={styleO.returnedBottom}>
-                    <Text style={styleO.orderSubmitTxt}>{I18n.t('logistics_view')}</Text>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
