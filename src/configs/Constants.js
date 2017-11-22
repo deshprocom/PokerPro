@@ -31,4 +31,6 @@ export const ANDROIDLOAD = 'http://sj.qq.com/myapp/detail.htm?apkName=com.deshpr
 
 export const VERSION = '2.7';
 
+export const DeShangPhone = '0755-23919844';
+
 

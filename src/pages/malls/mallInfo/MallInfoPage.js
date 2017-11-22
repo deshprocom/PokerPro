@@ -11,6 +11,7 @@ import MallInfoBottom from './MallInfoBottom';
 import ProductSpecificationInfo from './ProductSpecificationInfo';
 import {getProductDetail} from '../../../services/MallDao';
 import {util} from '../../../utils/ComonHelper';
+import {uShareMallInfo} from '../../../utils/ComonHelper';
 
 
 export default class MallInfoPage extends Component {
@@ -25,7 +26,7 @@ export default class MallInfoPage extends Component {
         this.container.open();
         const {id} = this.props.params;
         getProductDetail({id: id}, data => {
-
+            console.log("product:",data)
             this.setState({
                 product: data.product
             })
@@ -49,6 +50,8 @@ export default class MallInfoPage extends Component {
                 testID="btn_bar_right"
                 style={styleM.popBtn}
                 onPress={() => {
+                    const{title,icon,description,id} = this.state.product;
+                    uShareMallInfo(title, description, icon,id)
                 }}>
                 <Image style={styleM.imgShare}
                        source={Images.mall_share}/>

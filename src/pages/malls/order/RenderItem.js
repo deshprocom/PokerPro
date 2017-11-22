@@ -4,6 +4,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import I18n from 'react-native-i18n';
 import {deleteProductFromCart, util, showToast} from '../../../utils/ComonHelper';
 import PropTypes from 'prop-types';
+import {ImageLoad} from '../../../components';
 
 export default class RenderItem extends PureComponent {
 
@@ -32,7 +33,7 @@ export default class RenderItem extends PureComponent {
                                   global.router.toMallInfoPage(this.props.item)
                               }}>
 
-                <Image style={styleR.mallImg} source={Images.empty_image}/>
+                <ImageLoad style={styleR.mallImg} source={{uri: image}}/>
                 <View style={styleR.TxtView}>
                     <Text numberOfLines={2} style={styleR.mallTextName}>{title}</Text>
                     <Text

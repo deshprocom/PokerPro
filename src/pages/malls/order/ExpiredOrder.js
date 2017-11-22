@@ -45,6 +45,12 @@ export default class ExpiredOrder extends PureComponent {
                         <Text style={styleE.price}>{total_product_price}</Text>
                     </View>
 
+                    <View style={styleE.expiredView}>
+                        <Text style={styleE.expiredName}>{I18n.t('effective_product')}</Text>
+                        <View style={{flex: 1}}/>
+                        <Text style={styleE.price}>{}</Text>
+                    </View>
+
                     <View style={styleE.costsView}>
                         <Text style={styleE.costsName}>{I18n.t('cost')}</Text>
                         <View style={{flex: 1}}/>
@@ -54,8 +60,8 @@ export default class ExpiredOrder extends PureComponent {
                 <View style={styleE.paymentView}>
                     <Text style={styleE.paymentPrice1}>{total_price}</Text>
                     <Text style={styleE.payment1}>{I18n.t('payment')}</Text>
-
                 </View>
+                <View style={{height:60,backgroundColor:'#FFFFFF'}}/>
             </View>
         )
     }
@@ -81,13 +87,14 @@ export default class ExpiredOrder extends PureComponent {
                                 <Image style={styleE.closeImg} source={Images.close}/>
                             </TouchableOpacity>
                         </View>
-
+                        <View style={{height:1}}/>
                         {this.props.invalidProducts.map((item, index) => {
                             return <RenderItem key={`expired${index}`} item={item}/>
                         })}
 
 
                         {this.orderDetails()}
+                        <View style={{height:60,backgroundColor:'#FFFFFF'}}/>
                         {this.orderBottom()}
 
                     </View>
@@ -221,8 +228,7 @@ const styleE = StyleSheet.create({
         justifyContent: 'center'
     },
     detailsView: {
-        marginTop: 10,
-        marginBottom: 50
+
     },
     detailsName: {
         height: 40,
@@ -236,7 +242,6 @@ const styleE = StyleSheet.create({
         fontWeight: 'bold'
     },
     details: {
-        marginTop: 1,
         backgroundColor: '#FFFFFF',
     },
     priceView: {
@@ -259,12 +264,22 @@ const styleE = StyleSheet.create({
         color: '#F34A4A',
         marginRight: 17
     },
+    expiredView:{
+        marginLeft: 17,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 6,
+    },
     costsView: {
         marginLeft: 17,
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: 6,
         marginBottom: 13
+    },
+    expiredName:{
+        fontSize: 14,
+        color: '#333333',
     },
     priceName: {
         fontSize: 14,

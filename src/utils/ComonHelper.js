@@ -50,6 +50,15 @@ export const picker = {
     compressImageQuality: 0.5,
 };
 
+export function uShareMallInfo(title, desc, icon, id) {
+
+    UMShare.share(title, shareTxt(desc), getShareIcon(icon), shareHost() + "products/" + id + "/" + Lang)
+        .then(() => {
+            showToast(`${I18n.t('show_success')}`)
+        }, (error) => {
+            showToast(error)
+        })
+}
 
 
 export function getFileName(o) {
@@ -83,6 +92,7 @@ export function getCarts() {
 
 }
 
+/*删除购物车*/
 export function deleteProductFromCart(carts) {
     global.shoppingCarts = carts;
     storage.save({
@@ -185,6 +195,7 @@ export function setLang(lang) {
     // console.log('分享页语言'+Lang);
 }
 
+/*时间 1小时前*/
 export function getDateDiff(dateTimeStamp) {
 
     var minute = 1000 * 60;
