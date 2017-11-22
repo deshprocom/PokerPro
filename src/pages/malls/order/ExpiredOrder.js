@@ -60,8 +60,8 @@ export default class ExpiredOrder extends PureComponent {
                 <View style={styleE.paymentView}>
                     <Text style={styleE.paymentPrice1}>{total_price}</Text>
                     <Text style={styleE.payment1}>{I18n.t('payment')}</Text>
-
                 </View>
+                <View style={{height:60,backgroundColor:'#FFFFFF'}}/>
             </View>
         )
     }
@@ -228,8 +228,7 @@ const styleE = StyleSheet.create({
         justifyContent: 'center'
     },
     detailsView: {
-        marginTop: 1,
-        paddingBottom: 50,
+
     },
     detailsName: {
         height: 40,
