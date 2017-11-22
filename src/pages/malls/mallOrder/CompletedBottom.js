@@ -137,7 +137,7 @@ export default class CompletedBottom extends Component {
                 <TouchableOpacity
                     onPress={() => {
                     }}
-                    style={styleO.returnedBottom}>
+                    style={styleO.returnedBottom2}>
                     <Text style={styleO.orderSubmitTxt1}>{I18n.t('order_receipt')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -192,6 +192,16 @@ const styleO = StyleSheet.create({
         width: '100%',
     },
     returnedBottom: {
+        borderWidth: 1,
+        borderColor: '#333333',
+        borderRadius: 4,
+        width: 90,
+        height: 37,
+        marginRight: 17,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    returnedBottom2: {
         borderWidth: 1,
         borderColor: '#F34A4A',
         borderRadius: 4,
