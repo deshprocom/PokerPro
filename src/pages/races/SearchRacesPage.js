@@ -91,7 +91,8 @@ class SearchRacesPage extends Component {
             }}
 
         >
-            <Text style={{color: 'white'}}>本月</Text>
+
+            <Image style={styles.currentImg} source={global.language === 'zh'?Images.month:Images.monthE}/>
         </TouchableOpacity>
 
     };
@@ -499,6 +500,10 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.bg_ec,
         flex: 1
     },
+    currentImg:{
+        width:70,
+        height:27
+    }
 
 });
 
