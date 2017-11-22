@@ -12,6 +12,7 @@ import {NavigationBar, BaseComponent} from '../../../components';
 import ExpiredOrder from './ExpiredOrder';
 import {util, payWx, isWXAppInstalled} from '../../../utils/ComonHelper';
 import {getProductOrders, postMallOrder, postWxPay, getWxPaidResult} from '../../../services/MallDao';
+import {addTimeRecode} from "../../../components/PayCountDown";
 
 export default class OrderSubmitPage extends PureComponent {
     state = {
@@ -114,11 +115,12 @@ export default class OrderSubmitPage extends PureComponent {
                 this.setState({
                     order_number: data
                 });
+                addTimeRecode(data.order_number);
                 if (this.state.isInstall)
                     postWxPay(data, ret => {
                         payWx(ret, () => {
                             getWxPaidResult(data, result => {
-                                global.router.toCompletedOrderPage(data)
+                                global.router.toMallOrderInfo(data)
                             }, err => {
                                 alert('支付成功，系统正在处理')
                             })

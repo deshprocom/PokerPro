@@ -688,9 +688,9 @@ export default class Router {
         })
     }
 
-    toCompletedOrderPage(item) {
+    toMallOrderInfo(item) {
         this.stackPush({
-            name: 'ConfirmOrderPage',
+            name: 'MallOrderInfo',
             params: {orderDetail: item}
         })
     }

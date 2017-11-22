@@ -665,6 +665,11 @@ export function getUserData() {
     storage.load({key: StorageKey.UserData})
         .then((ret) => {
             userData = ret
+        });
+    storage.load({key: StorageKey.PayCountDown})
+        .then(time => {
+            console.log("payRecodes", time)
+            global.timeRecodes = time;
         })
 }
 
