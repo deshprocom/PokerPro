@@ -3,7 +3,7 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, L
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import Swipeout from 'react-native-swipeout';
 import I18n from 'react-native-i18n';
-import {deleteProductFromCart, util, showToast,alertOrder} from '../../../utils/ComonHelper';
+import {deleteProductFromCart, util, showToast, alertOrder} from '../../../utils/ComonHelper';
 import {ImageLoad} from '../../../components';
 import EmptyCart from './EmptyCart';
 import {connect} from 'react-redux';
@@ -35,7 +35,7 @@ class ShoppingCart extends Component {
     componentWillReceiveProps(newProps) {
 
         if (newProps.hasData && (newProps.actionType === ADD_CART
-                || newProps.actionType === DELETE_CART)) {
+            || newProps.actionType === DELETE_CART)) {
 
             let commodities = [...global.shoppingCarts];
 
@@ -100,12 +100,17 @@ class ShoppingCart extends Component {
                 <View style={{flex: 1}}/>
                 <TouchableOpacity style={styleS.settlementView}
                                   onPress={() => {
-                                      let datas = this.dataFilter()
+                                      if(util.isEmpty(global.login_user)){
+                                            global.router.toLoginFirstPage();
+                                      }else{
+                                           let datas = this.dataFilter();
                                       if (datas.length > 0) {
                                           global.router.toOrderConfirm(datas);
                                       } else {
                                           showToast("请选择商品")
                                       }
+                                      }
+
                                   }}>
                     <Text style={styleS.settlement}>{I18n.t('settlement')}</Text>
                     <Text style={styleS.settlementQuantity}>{this.count()}</Text>
@@ -255,7 +260,7 @@ class ShoppingCart extends Component {
                 text: 'Delete',
                 backgroundColor: '#F34A4A',
                 onPress: () => {
-                    alertOrder('confirm_delete',()=>{
+                    alertOrder('confirm_delete', () => {
                         this.closeThisMall(item)
                     });
 
