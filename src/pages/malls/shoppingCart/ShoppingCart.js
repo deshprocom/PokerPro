@@ -188,9 +188,9 @@ class ShoppingCart extends Component {
     };
     closeThisMall = (item) => {
         const {dataHosts} = this.state;
-        const {commodity} = item;
+        const {variant} = item;
         let index = dataHosts.findIndex(function (x) {
-            return util.isEqual(commodity, x.variant);
+            return util.isEqual(variant, x.variant);
         });
         dataHosts.splice(index, 1);
         deleteProductFromCart(dataHosts);
