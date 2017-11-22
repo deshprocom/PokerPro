@@ -153,11 +153,12 @@ export default class CompletedBottom extends Component {
             <View style={styleO.bottomView}>
                 <TouchableOpacity
                     onPress={() => {
-                        postOrderConfirm({order_number: order_number}, data => {
+                        alertOrder('confirm_receipt',()=>{
+                            postOrderConfirm({order_number: order_number}, data => {
                             if (this.props.refresh)
                                 this.props.refresh();
-                        }, err => {
                         })
+                        });
                     }}
                     style={styleO.returnedBottom2}>
                     <Text style={styleO.orderSubmitTxt1}>{I18n.t('order_receipt')}</Text>

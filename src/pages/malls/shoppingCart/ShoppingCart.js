@@ -3,7 +3,7 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, L
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import Swipeout from 'react-native-swipeout';
 import I18n from 'react-native-i18n';
-import {deleteProductFromCart, util, showToast} from '../../../utils/ComonHelper';
+import {deleteProductFromCart, util, showToast,alertOrder} from '../../../utils/ComonHelper';
 import {ImageLoad} from '../../../components';
 import EmptyCart from './EmptyCart';
 import {connect} from 'react-redux';
@@ -255,7 +255,10 @@ class ShoppingCart extends Component {
                 text: 'Delete',
                 backgroundColor: '#F34A4A',
                 onPress: () => {
-                    this.closeThisMall(item)
+                    alertOrder('confirm_delete',()=>{
+                        this.closeThisMall(item)
+                    });
+
                 }
             }
         ];
