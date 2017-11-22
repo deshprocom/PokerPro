@@ -3,11 +3,24 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, L
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 import PayCountDown from '../../../components/PayCountDown';
-import {cancelMallOrder} from "../../../services/MallDao";
+import {cancelMallOrder, postWxPay, getWxPaidResult} from "../../../services/MallDao";
 import {MallStatus} from "../../../configs/Status";
+import {util, payWx, isWXAppInstalled} from '../../../utils/ComonHelper';
 
 export default class CompletedBottom extends Component {
 
+
+    state = {
+        isInstall: false
+    };
+
+    componentDidMount() {
+        isWXAppInstalled(isInstall => {
+            this.setState({
+                isInstall: isInstall
+            })
+        });
+    }
 
     render() {
         const {orderItem} = this.props;
@@ -28,6 +41,27 @@ export default class CompletedBottom extends Component {
             case MallStatus.delivered:
                 return this.deliveredOrder(orderItem);
         }
+    };
+
+
+    wxPay = (order_number) => {
+        if (this.state.isInstall) {
+            let data = {order_number: order_number};
+            postWxPay(data, ret => {
+                payWx(ret, () => {
+                    getWxPaidResult(data, result => {
+                        global.router.toMallOrderInfo(data)
+                    }, err => {
+                        alert('支付成功，系统正在处理')
+                    })
+
+                })
+            }, err => {
+
+            });
+        }
+        else
+            alert('商城支付需要安装微信')
     };
 
 
@@ -55,7 +89,8 @@ export default class CompletedBottom extends Component {
                     endText='付款失效'
                     count={60 * 30}
                     pressAction={() => {
-
+                        console.log('234234')
+                     this.wxPay(order_number);
                     }}
                     changeWithCount={(count) => `${this._formatTime(count)}`}
                     id={order_number}

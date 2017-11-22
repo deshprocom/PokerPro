@@ -25,7 +25,7 @@ const LCCountDownButtonState = {
 };
 
 // {id , startTime, deathCount}
- //timeRecodes根据id来记录LCCountDownButton的信息
+//timeRecodes根据id来记录LCCountDownButton的信息
 
 export function addTimeRecode(id) {
     let hasRecord = false;
@@ -52,7 +52,7 @@ export function addTimeRecode(id) {
 }
 
 
-export default class CountDownBtn extends Component {
+export default class PayCountDown extends Component {
 
     // 构造
     constructor(props) {
@@ -180,13 +180,14 @@ export default class CountDownBtn extends Component {
 
     render() {
         let isDisable = this.buttonState === LCCountDownButtonState.LCCountDownButtonDisable;
+
         const {frameStyle} = this.props;
         return (
-            <TouchableOpacity disabled={isDisable}
-                              onPress={() => {
+            <TouchableOpacity
+                onPress={() => {
                                   this.props.pressAction && this.props.pressAction()
                               }}
-                              style={[styles.buttonCommonStyle, isDisable ? styles.disableButtonStyle : styles.activeButtonStyle, frameStyle]}
+                style={[styles.buttonCommonStyle, isDisable ? styles.disableButtonStyle : styles.activeButtonStyle, frameStyle]}
             >
                 <Text style={[styles.txtCommonStyle, isDisable ? styles.disableTxtStyle : styles.activeTxtStyle]}>
                     {this.state.btnTitle}
