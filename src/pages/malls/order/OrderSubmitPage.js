@@ -10,7 +10,7 @@ import OrderDetails from './OrderDetails';
 import OrderBottom from './OrderBottom';
 import {NavigationBar, BaseComponent} from '../../../components';
 import ExpiredOrder from './ExpiredOrder';
-import {util, payWx, isWXAppInstalled, deleteProductFromCart} from '../../../utils/ComonHelper';
+import {util, payWx, isWXAppInstalled, deleteProductFromCart, showToast} from '../../../utils/ComonHelper';
 import {getProductOrders, postMallOrder, postWxPay, getWxPaidResult} from '../../../services/MallDao';
 import {addTimeRecode} from "../../../components/PayCountDown";
 
@@ -105,9 +105,15 @@ export default class OrderSubmitPage extends PureComponent {
 
     submitBtn = () => {
 
+        let adr = this.shipAddress.getAddress();
         const {invalid_items} = this.state.orderData;
+
         if (!util.isEmpty(this.state.order_number))
             return;
+        if (util.isEmpty(adr)) {
+            showToast(I18n.t('adr_empty'));
+            return;
+        }
 
         if (this.state.isExpired || util.isEmpty(invalid_items)) {
             let body = this.postParam();
