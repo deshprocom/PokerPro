@@ -23,6 +23,7 @@ export default class LeaveMessage extends PureComponent {
                        placeholderTextColor="#AAAAAA"
                        multiline={true}
                        textAlignVertical='top'
+                       returnKeyType={'done'}
                        underlineColorAndroid="transparent"
                        onChangeText={(text) => {
                           this.setState({text});

@@ -3,7 +3,7 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, L
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import Swipeout from 'react-native-swipeout';
 import I18n from 'react-native-i18n';
-import {deleteProductFromCart, util, showToast} from '../../../utils/ComonHelper';
+import {deleteProductFromCart, util, showToast, alertOrder} from '../../../utils/ComonHelper';
 import {ImageLoad} from '../../../components';
 import EmptyCart from './EmptyCart';
 import {connect} from 'react-redux';
@@ -35,7 +35,7 @@ class ShoppingCart extends Component {
     componentWillReceiveProps(newProps) {
 
         if (newProps.hasData && (newProps.actionType === ADD_CART
-                || newProps.actionType === DELETE_CART)) {
+            || newProps.actionType === DELETE_CART)) {
 
             let commodities = [...global.shoppingCarts];
 
@@ -100,12 +100,17 @@ class ShoppingCart extends Component {
                 <View style={{flex: 1}}/>
                 <TouchableOpacity style={styleS.settlementView}
                                   onPress={() => {
-                                      let datas = this.dataFilter()
+                                      if(util.isEmpty(global.login_user)){
+                                            global.router.toLoginFirstPage();
+                                      }else{
+                                           let datas = this.dataFilter();
                                       if (datas.length > 0) {
                                           global.router.toOrderConfirm(datas);
                                       } else {
                                           showToast("请选择商品")
                                       }
+                                      }
+
                                   }}>
                     <Text style={styleS.settlement}>{I18n.t('settlement')}</Text>
                     <Text style={styleS.settlementQuantity}>{this.count()}</Text>
@@ -183,9 +188,9 @@ class ShoppingCart extends Component {
     };
     closeThisMall = (item) => {
         const {dataHosts} = this.state;
-        const {commodity} = item;
+        const {variant} = item;
         let index = dataHosts.findIndex(function (x) {
-            return util.isEqual(commodity, x.variant);
+            return util.isEqual(variant, x.variant);
         });
         dataHosts.splice(index, 1);
         deleteProductFromCart(dataHosts);
@@ -255,7 +260,10 @@ class ShoppingCart extends Component {
                 text: 'Delete',
                 backgroundColor: '#F34A4A',
                 onPress: () => {
-                    this.closeThisMall(item)
+                    alertOrder('confirm_delete', () => {
+                        this.closeThisMall(item)
+                    });
+
                 }
             }
         ];
@@ -271,15 +279,19 @@ class ShoppingCart extends Component {
             <Swipeout
                 autoClose={true}
                 right={swipeoutBtns}>
-                <TouchableOpacity
-                    activeOpacity={0.5}
-                    onPress={() => {
-                        global.router.replaceProductInfo({id: product_id})
-                    }}
+                <View
+
                     style={styleS.renderItem}>
                     {this.renderShowEditView(item)}
 
-                    <ImageLoad style={styleS.mallImg} source={{uri: image}}/>
+                    <TouchableOpacity
+                        activeOpacity={0.5}
+                        onPress={() => {
+                        global.router.replaceProductInfo({id: product_id})
+                    }}>
+                        <ImageLoad style={styleS.mallImg} source={{uri: image}}/>
+                    </TouchableOpacity>
+
                     <View style={styleS.TxtView}>
                         <Text numberOfLines={2} style={styleS.mallTextName}>{title}</Text>
                         <Text
@@ -290,7 +302,7 @@ class ShoppingCart extends Component {
                             {this.buyQuantity(item)}
                         </View>
                     </View>
-                </TouchableOpacity>
+                </View>
             </Swipeout>
         )
     };

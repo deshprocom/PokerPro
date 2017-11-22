@@ -856,6 +856,18 @@ export function setDispatchAction(key, func) {
 export function getDispatchAction() {
     return Actions;
 }
+//正在开发提示
+export function alertOrder(str,callback) {
+    Alert.alert(I18n.t(str),'',[{
+        text: `${I18n.t('cancel')}`, onPress: () => {
+
+        }
+    }, {
+        text: `${I18n.t('confirm')}`, onPress: () => {
+            callback()
+        }
+    }])
+}
 
 //正在开发提示
 export function alertRefresh(callback) {

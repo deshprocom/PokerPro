@@ -27,6 +27,10 @@ export default class Router {
 
     }
 
+    replace(route){
+        Actions.replace(route.name,{params:route.params})
+    }
+
 
     pop() {
         Actions.pop();
@@ -698,6 +702,13 @@ export default class Router {
 
     toMallOrderInfo(item) {
         this.stackPush({
+            name: 'MallOrderInfo',
+            params: {orderDetail: item}
+        })
+    }
+
+    replaceMallOrderInfo(item){
+        this.replace({
             name: 'MallOrderInfo',
             params: {orderDetail: item}
         })
