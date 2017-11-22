@@ -69,7 +69,7 @@ export default class CompletedBottom extends Component {
                 <Text
                     onPress={() => {
                         cancelMallOrder({order_number: order_number}, ret => {
-                            console.log(ret)
+                           this.props.refresh();
                         }, err => {
                         })
                     }}

@@ -20,6 +20,11 @@ export default class MallOrderInfo extends PureComponent {
     };
 
     componentDidMount() {
+        this.refresh();
+    }
+
+
+    refresh = () => {
         this.container.open();
         const {orderDetail} = this.props.params;
         getMallDetail({order_number: orderDetail.order_number}, data => {
@@ -28,7 +33,7 @@ export default class MallOrderInfo extends PureComponent {
             })
         }, err => {
         })
-    }
+    };
 
 
     render() {
@@ -78,6 +83,7 @@ export default class MallOrderInfo extends PureComponent {
 
 
             <CompletedBottom
+                refresh={this.refresh}
                 orderItem={detail}/>
         </View>
     }

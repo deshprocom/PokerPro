@@ -34,15 +34,22 @@ export default class OrderListStatus extends Component {
                     <Text style={styles.txtTotal1}>{I18n.t('order_total')}：¥</Text>
                 </View>
                 <CompletedBottom
+                    refresh={this.refresh}
                     orderItem={item}/>
             </TouchableOpacity>
         )
+    };
+
+    refresh = () => {
+        if (this.ultimate)
+            this.ultimate.refresh();
     };
 
 
     render() {
 
         return <UltimateFlatList
+            ref={ref =>this.ultimate = ref}
             onFetch={this.onFetch}
             keyExtractor={(item, index) => `${this.props.status}${index}`}
             item={this.renderItem}
