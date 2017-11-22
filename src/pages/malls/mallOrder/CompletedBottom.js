@@ -52,7 +52,8 @@ export default class CompletedBottom extends Component {
             postWxPay(data, ret => {
                 payWx(ret, () => {
                     getWxPaidResult(data, result => {
-                        global.router.toMallOrderInfo(data)
+                        if (this.props.refresh)
+                            this.props.refresh();
                     }, err => {
                         alert('支付成功，系统正在处理')
                     })
@@ -106,7 +107,8 @@ export default class CompletedBottom extends Component {
                 <Text
                     onPress={() => {
                         cancelMallOrder({order_number: order_number}, ret => {
-                            this.props.refresh();
+                            if (this.props.refresh)
+                                this.props.refresh();
                         }, err => {
                         })
                     }}
