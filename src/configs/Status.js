@@ -70,7 +70,9 @@ export class RaceStatus {
 export class MallStatus {
     static unpaid = 'unpaid';
     static paid = 'paid';
+    static receive = 'order_receive';
     static delivered = 'delivered';
+    static undelivered = 'undelivered';
     static completed = 'completed';
     static canceled = 'canceled';
 }

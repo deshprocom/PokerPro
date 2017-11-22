@@ -41,6 +41,10 @@ export default class CompletedBottom extends Component {
                 return <View/>;
             case MallStatus.delivered:
                 return this.deliveredOrder(orderItem);
+            case MallStatus.undelivered:
+                return this.undeliveredOrder(orderItem);
+            // case MallStatus.receive:
+            //     return this.receiveOrder(orderItem);
         }
     };
 
@@ -134,7 +138,7 @@ export default class CompletedBottom extends Component {
                     onPress={() => {
                     }}
                     style={styleO.returnedBottom}>
-                    <Text style={styleO.orderSubmitTxt}>{I18n.t('order_receipt')}</Text>
+                    <Text style={styleO.orderSubmitTxt1}>{I18n.t('order_receipt')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
@@ -142,6 +146,33 @@ export default class CompletedBottom extends Component {
                     }}
                     style={styleO.customer}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => {
+
+                    }}
+                    style={styleO.returnedMall}>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('returnedMall')}</Text>
+                </TouchableOpacity>
+
+            </View>
+        )
+    };
+    undeliveredOrder = () => {
+        return (
+            <View style={styleO.bottomView}>
+                <TouchableOpacity
+                    onPress={() => {
+                    }}
+                    style={styleO.returnedBottom}>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => {
+
+                    }}
+                    style={styleO.customer}>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('returnedMall')}</Text>
                 </TouchableOpacity>
 
 
@@ -162,7 +193,7 @@ const styleO = StyleSheet.create({
     },
     returnedBottom: {
         borderWidth: 1,
-        borderColor: '#333333',
+        borderColor: '#F34A4A',
         borderRadius: 4,
         width: 90,
         height: 37,
@@ -180,9 +211,23 @@ const styleO = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
+    returnedMall: {
+        borderWidth: 1,
+        borderColor: '#333333',
+        borderRadius: 4,
+        width: 90,
+        height: 37,
+        marginRight: 10,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
     orderSubmitTxt: {
         fontSize: 14,
         color: '#333333'
+    },
+    orderSubmitTxt1: {
+        fontSize: 14,
+        color: '#F34A4A'
     },
     payment: {
         fontSize: 14,
