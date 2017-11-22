@@ -107,7 +107,8 @@ export default {
     order_lists: order_lists,
     mall_order_cancel: mall_order_cancel,
     wx_paid_result: wx_paid_result,
-    product_order_detail: product_order_detail
+    product_order_detail: product_order_detail,
+    product_order_confirm: product_order_confirm
 }
 
 
@@ -120,6 +121,11 @@ function getUserId() {
 
 const page_size = 10;
 
+
+export function product_order_confirm(body) {
+    const {order_number} = body;
+    return `product_orders/${order_number}/confirm`
+}
 
 export function product_order_detail(body) {
     const {order_number} = body;

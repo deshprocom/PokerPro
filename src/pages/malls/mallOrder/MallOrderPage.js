@@ -49,7 +49,7 @@ export default class MallOrderPage extends Component {
                     return <OrderListStatus
                         key={`mallStatus${index}`}
                         status={item}
-                        tabLabel={I18n.t(`${item}`)}/>
+                        tabLabel={item === MallStatus.paid ? I18n.t('unshipped') : I18n.t(`${item}`)}/>
                 })}
 
             </ScrollableTabView>
