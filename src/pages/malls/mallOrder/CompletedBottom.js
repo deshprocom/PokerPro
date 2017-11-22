@@ -41,10 +41,6 @@ export default class CompletedBottom extends Component {
                 return <View/>;
             case MallStatus.delivered:
                 return this.deliveredOrder(orderItem);
-            case MallStatus.undelivered:
-                return this.undeliveredOrder(orderItem);
-            // case MallStatus.receive:
-            //     return this.receiveOrder(orderItem);
         }
     };
 
@@ -147,34 +143,6 @@ export default class CompletedBottom extends Component {
                     style={styleO.customer}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => {
-
-                    }}
-                    style={styleO.returnedMall}>
-                    <Text style={styleO.orderSubmitTxt}>{I18n.t('returnedMall')}</Text>
-                </TouchableOpacity>
-
-            </View>
-        )
-    };
-    undeliveredOrder = () => {
-        return (
-            <View style={styleO.bottomView}>
-                <TouchableOpacity
-                    onPress={() => {
-                    }}
-                    style={styleO.returnedBottom}>
-                    <Text style={styleO.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => {
-
-                    }}
-                    style={styleO.customer}>
-                    <Text style={styleO.orderSubmitTxt}>{I18n.t('returnedMall')}</Text>
-                </TouchableOpacity>
-
 
             </View>
         )
