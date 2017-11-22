@@ -221,6 +221,7 @@ export default class ShoppingCart extends Component {
         }
         return (
             <TouchableOpacity
+                style={{height:120,alignItems:'center',justifyContent:'center'}}
                 onPress={() => {
                     this._pressItem(item)
                 }}>

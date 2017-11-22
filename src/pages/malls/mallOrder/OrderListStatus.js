@@ -14,6 +14,7 @@ export default class OrderListStatus extends Component {
     renderItem = (item, index) => {
 
         const {order_number, status, total_price, order_items} = item;
+        console.log("item:",item)
         return (
             <TouchableOpacity
                 activeOpacity={1}
@@ -31,7 +32,7 @@ export default class OrderListStatus extends Component {
                     lists={order_items}/>
                 <View style={styles.viewTotal}>
                     <Text style={styles.txtTotal2}>{total_price}</Text>
-                    <Text style={styles.txtTotal1}>{I18n.t('order_total')}：¥</Text>
+                    <Text style={styles.txtTotal1}>共{order_items.length}{I18n.t('pieces')}{I18n.t('malls')}  {I18n.t('order_total')}：¥</Text>
                 </View>
                 <CompletedBottom
                     refresh={this.refresh}

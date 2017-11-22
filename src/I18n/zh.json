@@ -457,6 +457,8 @@
   "search_empty":"没有找到相关商品",
   "customer_service_tel":"客服电话",
   "rush_immediately":"马上抢购",
-  "wx_install":"本机上没有安装微信"
+  "wx_install":"本机上没有安装微信",
+  "undelivered": "未发货",
+  "malls":"商品"
 
 }
