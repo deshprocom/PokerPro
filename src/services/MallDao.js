@@ -2,6 +2,15 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 
+//完成订单
+export function postOrderConfirm(body, resolve, reject) {
+    helper.post(Api.product_order_confirm(body), {}, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+
+//获取订单详情
 export function getMallDetail(body, resolve, reject) {
     helper.get(Api.product_order_detail(body), (ret) => {
         resolve(ret.data)

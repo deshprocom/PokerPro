@@ -40,6 +40,14 @@ export default class Router {
 
     }
 
+    /*物流查看*/
+    toLogisticsWeb(shipments) {
+        this.stackPush({
+            name: 'LogisticsWeb',
+            params:{shipments:shipments}
+        })
+    }
+
     toMallResult(categories) {
         this.stackPush({
             name: 'MallSearchResult',

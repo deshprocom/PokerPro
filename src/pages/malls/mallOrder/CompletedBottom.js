@@ -3,10 +3,11 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, L
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 import PayCountDown from '../../../components/PayCountDown';
-import {cancelMallOrder, postWxPay, getWxPaidResult} from "../../../services/MallDao";
+import {cancelMallOrder, postWxPay, getWxPaidResult, postOrderConfirm} from "../../../services/MallDao";
 import {MallStatus} from "../../../configs/Status";
-import {util, payWx, isWXAppInstalled,call} from '../../../utils/ComonHelper';
+import {util, payWx, isWXAppInstalled, call} from '../../../utils/ComonHelper';
 import {DeShangPhone} from '../../../configs/Constants';
+
 
 export default class CompletedBottom extends Component {
 
@@ -38,7 +39,7 @@ export default class CompletedBottom extends Component {
             case MallStatus.paid:
                 return this.paidOrder();
             case MallStatus.completed:
-                return <View/>;
+                return this.completedOrder(orderItem);
             case MallStatus.delivered:
                 return this.deliveredOrder(orderItem);
         }
@@ -51,7 +52,8 @@ export default class CompletedBottom extends Component {
             postWxPay(data, ret => {
                 payWx(ret, () => {
                     getWxPaidResult(data, result => {
-                        global.router.toMallOrderInfo(data)
+                        if (this.props.refresh)
+                            this.props.refresh();
                     }, err => {
                         alert('支付成功，系统正在处理')
                     })
@@ -91,7 +93,7 @@ export default class CompletedBottom extends Component {
                     count={60 * 30}
                     pressAction={() => {
 
-                     this.wxPay(order_number);
+                        this.wxPay(order_number);
                     }}
                     changeWithCount={(count) => `${this._formatTime(count)}`}
                     id={order_number}
@@ -105,7 +107,8 @@ export default class CompletedBottom extends Component {
                 <Text
                     onPress={() => {
                         cancelMallOrder({order_number: order_number}, ret => {
-                           this.props.refresh();
+                            if (this.props.refresh)
+                                this.props.refresh();
                         }, err => {
                         })
                     }}
@@ -118,7 +121,7 @@ export default class CompletedBottom extends Component {
         return <View style={styleO.bottomView}>
             <TouchableOpacity
                 onPress={() => {
-                   call(DeShangPhone)
+                    call(DeShangPhone)
                 }}
                 style={styleO.returnedBottom}>
                 <Text style={styleO.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>
@@ -126,19 +129,41 @@ export default class CompletedBottom extends Component {
         </View>
     };
 
+    completedOrder = (orderItem) => {
+        const {shipments, order_number} = orderItem;
+        return (
+            <View style={styleO.bottomView}>
 
-    deliveredOrder = () => {
+                <TouchableOpacity
+                    onPress={() => {
+                        global.router.toLogisticsWeb(shipments)
+                    }}
+                    style={styleO.customer}>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>
+                </TouchableOpacity>
+
+            </View>)
+    };
+
+
+    deliveredOrder = (orderItem) => {
+        const {shipments, order_number} = orderItem;
         return (
             <View style={styleO.bottomView}>
                 <TouchableOpacity
                     onPress={() => {
+                        postOrderConfirm({order_number: order_number}, data => {
+                            if (this.props.refresh)
+                                this.props.refresh();
+                        }, err => {
+                        })
                     }}
                     style={styleO.returnedBottom2}>
                     <Text style={styleO.orderSubmitTxt1}>{I18n.t('order_receipt')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-
+                        global.router.toLogisticsWeb(shipments)
                     }}
                     style={styleO.customer}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>
