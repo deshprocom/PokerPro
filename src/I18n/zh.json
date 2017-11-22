@@ -459,5 +459,6 @@
   "rush_immediately":"马上抢购",
   "wx_install":"本机上没有安装微信",
   "undelivered": "未发货",
-  "malls":"商品"
+  "malls":"商品",
+  "confirm_cancel":"确认取消？"
 }

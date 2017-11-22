@@ -5,7 +5,7 @@ import I18n from 'react-native-i18n';
 import PayCountDown from '../../../components/PayCountDown';
 import {cancelMallOrder, postWxPay, getWxPaidResult, postOrderConfirm} from "../../../services/MallDao";
 import {MallStatus} from "../../../configs/Status";
-import {util, payWx, isWXAppInstalled, call} from '../../../utils/ComonHelper';
+import {util, payWx, isWXAppInstalled, call, alertOrder} from '../../../utils/ComonHelper';
 import {DeShangPhone} from '../../../configs/Constants';
 
 
@@ -105,12 +105,13 @@ export default class CompletedBottom extends Component {
                 <View style={{height: 24, width: 1, backgroundColor: Colors._ECE}}/>
 
                 <Text
-                    onPress={() => {
-                        cancelMallOrder({order_number: order_number}, ret => {
+                    onPress={() => {//`${I18n.t('confirm_cancel')}`
+                        alertOrder('confirm_cancel',()=>{
+                            cancelMallOrder({order_number: order_number}, ret => {
                             if (this.props.refresh)
                                 this.props.refresh();
-                        }, err => {
                         })
+                        });
                     }}
                     style={[styleO.payment, {padding: 14}]}>{I18n.t('cancel_order')}</Text>
             </View>

@@ -36,10 +36,12 @@ export default class MainRaceResultView extends Component {
         return (<View
             style={styles.page}
             testID="page_race_result">
-
             {this._tabView()}
+            <ScrollView>
+                {this._tabPage()}
+            </ScrollView>
 
-            {this._tabPage()}
+
         </View>)
     }
 
