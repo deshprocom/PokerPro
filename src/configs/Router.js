@@ -40,9 +40,10 @@ export default class Router {
 
     }
 
-    toLogisticsWeb() {
+    toLogisticsWeb(shipments) {
         this.stackPush({
-            name: 'LogisticsWeb'
+            name: 'LogisticsWeb',
+            params:{shipments:shipments}
         })
     }
 

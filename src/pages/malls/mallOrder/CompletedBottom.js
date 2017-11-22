@@ -5,7 +5,7 @@ import I18n from 'react-native-i18n';
 import PayCountDown from '../../../components/PayCountDown';
 import {cancelMallOrder, postWxPay, getWxPaidResult} from "../../../services/MallDao";
 import {MallStatus} from "../../../configs/Status";
-import {util, payWx, isWXAppInstalled,call} from '../../../utils/ComonHelper';
+import {util, payWx, isWXAppInstalled, call} from '../../../utils/ComonHelper';
 import {DeShangPhone} from '../../../configs/Constants';
 
 
@@ -92,7 +92,7 @@ export default class CompletedBottom extends Component {
                     count={60 * 30}
                     pressAction={() => {
 
-                     this.wxPay(order_number);
+                        this.wxPay(order_number);
                     }}
                     changeWithCount={(count) => `${this._formatTime(count)}`}
                     id={order_number}
@@ -106,7 +106,7 @@ export default class CompletedBottom extends Component {
                 <Text
                     onPress={() => {
                         cancelMallOrder({order_number: order_number}, ret => {
-                           this.props.refresh();
+                            this.props.refresh();
                         }, err => {
                         })
                     }}
@@ -119,7 +119,7 @@ export default class CompletedBottom extends Component {
         return <View style={styleO.bottomView}>
             <TouchableOpacity
                 onPress={() => {
-                   call(DeShangPhone)
+                    call(DeShangPhone)
                 }}
                 style={styleO.returnedBottom}>
                 <Text style={styleO.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>
@@ -128,7 +128,8 @@ export default class CompletedBottom extends Component {
     };
 
 
-    deliveredOrder = () => {
+    deliveredOrder = (orderItem) => {
+        const {shipments} = orderItem;
         return (
             <View style={styleO.bottomView}>
                 <TouchableOpacity
@@ -139,7 +140,7 @@ export default class CompletedBottom extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                        global.router.toLogisticsWeb()
+                        global.router.toLogisticsWeb(shipments)
                     }}
                     style={styleO.customer}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>

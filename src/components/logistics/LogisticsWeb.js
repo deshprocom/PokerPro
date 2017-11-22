@@ -49,10 +49,12 @@ export default class LogisticsWeb extends Component {
     };
 
     bootstrapJS() {
+        const {shipments} = this.props.params;
+        console.log(shipments);
         const data = {
             serviceType: "A",
-            expCode: "YTO",
-            expNo: "2323232323",
+            expCode: shipments.express_code,
+            expNo: shipments.shipping_number,
         };
         return `init(${JSON.stringify(data)})`
     }
