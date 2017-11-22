@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {
     StyleSheet, Text, View, Image,
-    TouchableOpacity, TextInput
+    TouchableOpacity, TextInput,StatusBar
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
@@ -126,6 +126,7 @@ export default class SearchMallPage extends PureComponent {
     render() {
         return (
             <View style={ApplicationStyles.bgContainer}>
+                <StatusBar barStyle={"dark-content"}/>
                 {this.TopBar()}
                 <MallList
                     ref={ref => this.mallList = ref}
