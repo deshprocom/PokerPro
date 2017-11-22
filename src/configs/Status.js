@@ -5,7 +5,7 @@ import I18n from 'react-native-i18n';
 
 
 //邀请码折扣类型
-export class CouponType{
+export class CouponType {
     static no_discount = 'no_discount';
     static rebate = 'rebate';
     static reduce = 'reduce';
@@ -57,11 +57,21 @@ export class SellStatus {
     static end = 'end';
     static sold_out = 'sold_out';
 }
+
 //赛事状态
 export class RaceStatus {
     static unbegin = 'unbegin';
     static go_ahead = 'go_ahead';
     static ended = 'ended';
     static closed = 'closed';
+}
+
+//商城订单状态
+export class MallStatus {
+    static unpaid = 'unpaid';
+    static paid = 'paid';
+    static delivered = 'delivered';
+    static completed = 'completed';
+    static canceled = 'canceled';
 }
 

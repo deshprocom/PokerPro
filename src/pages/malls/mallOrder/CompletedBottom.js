@@ -3,67 +3,118 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, L
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 import PayCountDown from '../../../components/PayCountDown';
+import {cancelMallOrder} from "../../../services/MallDao";
+import {MallStatus} from "../../../configs/Status";
 
 export default class CompletedBottom extends Component {
 
 
     render() {
+        const {orderItem} = this.props;
+        return this.switchOrder(orderItem);
+    }
+
+    switchOrder = (orderItem) => {
+        const {status} = orderItem;
+        switch (status) {
+            case MallStatus.canceled:
+                return <View/>;
+            case MallStatus.unpaid:
+                return this.renderPay(orderItem);
+            case MallStatus.paid:
+                return this.paidOrder();
+            case MallStatus.completed:
+                return <View/>;
+            case MallStatus.delivered:
+                return this.deliveredOrder(orderItem);
+        }
+    };
+
+
+
+    _formatTime = (diff) => {
+
+        let min = 0;
+
+        if (diff >= 60) {
+            min = Math.floor(diff / 60);
+            diff -= min * 60;
+
+        }
+
+        return `${I18n.t('pay')} ${min}:${diff}`
+    };
+
+
+    renderPay = (item) => {
+        const {order_number} = item;
         return (
             <View style={styleO.bottomView}>
-                {renderPay()}
+                <PayCountDown
+                    frameStyle={styleO.payCount}
+                    beginText='倒计时'
+                    endText='付款失效'
+                    count={60 * 15}
+                    pressAction={() => {
+
+                    }}
+                    changeWithCount={(count) => `${this._formatTime(count)}`}
+                    id={order_number}
+                    ref={(e) => {
+                        this.countDownButton = e
+                    }}/>
 
 
+                <View style={{height: 24, width: 1, backgroundColor: Colors._ECE}}/>
+
+                <Text
+                    onPress={() => {
+                        cancelMallOrder({order_number: order_number}, ret => {
+                            console.log(ret)
+                        }, err => {
+                        })
+                    }}
+                    style={[styleO.payment, {padding: 14}]}>{I18n.t('cancel_order')}</Text>
             </View>
         )
-    }
-}
+    };
 
-const renderPay = () => {
-    return (
-        <View style={styleO.bottomView}>
-            <PayCountDown
-                frameStyle={styleO.payCount}
-                beginText='倒计时'
-                endText='付款失效'
-                count={60 * 15}
-                pressAction={() => {
-                    this.countDownButton.startCountDown()
-                }}
-                changeWithCount={(count) => count}
-                id='pay_time'
-                ref={(e) => {
-                    this.countDownButton = e
-                }}/>
-
-
-            <View style={{height: 24, width: 1, backgroundColor: Colors._ECE}}/>
-
-            <Text style={[styleO.payment, {padding: 14}]}>{I18n.t('cancel_order')}</Text>
-        </View>
-    )
-};
-
-const mallOrderCompleted = () => {
-    return (
-        <View style={styleO.bottomView}>
+    paidOrder = () => {
+        return <View style={styleO.bottomView}>
             <TouchableOpacity
                 onPress={() => {
                 }}
                 style={styleO.returnedBottom}>
-                <Text style={styleO.orderSubmitTxt}>{I18n.t('logistics_view')}</Text>
+                <Text style={styleO.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-                onPress={() => {
-
-                }}
-                style={styleO.customer}>
-                <Text style={styleO.orderSubmitTxt}>{I18n.t('order_del')}</Text>
-            </TouchableOpacity>
-
-
         </View>
-    )
-};
+    };
+
+
+    deliveredOrder = () => {
+        return (
+            <View style={styleO.bottomView}>
+                <TouchableOpacity
+                    onPress={() => {
+                    }}
+                    style={styleO.returnedBottom}>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('order_receipt')}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => {
+
+                    }}
+                    style={styleO.customer}>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>
+                </TouchableOpacity>
+
+
+            </View>
+        )
+    };
+}
+
+
 const styleO = StyleSheet.create({
     bottomView: {
         height: 50,

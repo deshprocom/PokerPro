@@ -15,7 +15,7 @@ import {
     TextInput,
     TouchableOpacity
 } from 'react-native';
-import I18n from 'react-native-i18n';
+
 
 const LCCountDownButtonState = {
     LCCountDownButtonActive: 0,
@@ -25,14 +25,6 @@ const LCCountDownButtonState = {
 // {id , startTime, deathCount}
 var timeRecodes = [];  //根据id来记录LCCountDownButton的信息
 
-const timeLeft = {
-    years: 0,
-    days: 0,
-    hours: 0,
-    min: 0,
-    sec: 0,
-    millisec: 0,
-};
 
 export default class CountDownBtn extends Component {
 
@@ -67,22 +59,29 @@ export default class CountDownBtn extends Component {
 
     componentDidMount() {
         const {id, changeWithCount} = this.props;
-        for (var i = 0; i < timeRecodes.length; i++) {
+
+        for (let i = 0; i < timeRecodes.length; i++) {
             let obj = timeRecodes[i];
-            if (obj.id == id) {
-                let liveTime = Date.now() - obj.startTime
+            if (obj.id === id) {
+                let liveTime = Date.now() - obj.startTime;
                 if (liveTime < obj.deathCount * 1000) {
                     //避免闪动
                     let detalTime = Math.round(liveTime / 1000);
                     let content = changeWithCount(obj.deathCount - detalTime);
                     this.setState({
-                        btnTitle: this._formatTime(content)
+                        btnTitle: content
                     });
                     //手动调用倒计时
                     this.startCountDownWithCount(obj.startTime)
                 }
             }
         }
+        let recodes = timeRecodes.filter(item => item.id === id);
+
+        if (recodes.length === 0) {
+            this.startCountDown();
+        }
+
 
     }
 
@@ -97,18 +96,6 @@ export default class CountDownBtn extends Component {
         this.clearTime();
     }
 
-
-    _formatTime = (diff) => {
-
-        if (diff >= 60) {
-            timeLeft.min = Math.floor(diff / 60);
-            diff -= timeLeft.min * 60;
-
-        }
-        timeLeft.sec = diff;
-
-        return `${I18n.t('pay')} ${timeLeft.min}:${timeLeft.sec}`
-    };
 
     startCountDownWithCount(startTime) {
         this.buttonState = LCCountDownButtonState.LCCountDownButtonDisable;
@@ -130,7 +117,7 @@ export default class CountDownBtn extends Component {
             }
             if (this.shouldSetState) {
                 this.setState({
-                    btnTitle: this._formatTime(content)
+                    btnTitle: content
                 })
             }
         }, 1000)
@@ -141,7 +128,7 @@ export default class CountDownBtn extends Component {
         var hasRecord = false;
         for (var i = 0; i < timeRecodes.length; i++) {
             let obj = timeRecodes[i];
-            if (obj.id == id) {
+            if (obj.id === id) {
                 obj.startTime = Date.now();
                 hasRecord = true;
                 break;
@@ -159,6 +146,7 @@ export default class CountDownBtn extends Component {
 
     //外界调用
     startCountDown() {
+
         this.startCountDownWithCount(Date.now());
         this.recordButtonInfo();
     }
