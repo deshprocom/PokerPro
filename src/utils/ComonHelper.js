@@ -233,7 +233,7 @@ export function getDateDiff(dateTimeStamp) {
     return result;
 }
 
-export function payWx(data, callback) {
+export function payWx(data, callback,cancelBack) {
     const body = {
         partnerId: data.partnerid,  // 商家向财付通申请的商家id
         prepayId: data.prepayid,   // 预支付订单
@@ -247,7 +247,7 @@ export function payWx(data, callback) {
     wechat.pay(body).then(ret => {
         callback();
     }).catch(err => {
-
+        cancelBack();
     })
 }
 

@@ -229,7 +229,7 @@ export default class PayModal extends Component {
                     this.orderRefresh();
                 else
                     router.replaceOrder(order_number, price)
-            })
+            },()=>{})
     };
 
     _webPay = () => {

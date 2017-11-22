@@ -30,6 +30,7 @@ export default class MallOrderPage extends Component {
         return (<View style={[ApplicationStyles.bgContainer, {backgroundColor: '#ECECEE'}]}
                       testID="page_order_list">
             <NavigationBar
+                barStyle={'dark-content'}
                 toolbarStyle={{backgroundColor: Colors.white}}
                 title={I18n.t('mall_order')}
                 titleStyle={{color: Colors._161}}
