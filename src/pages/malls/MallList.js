@@ -34,6 +34,7 @@ export default class MallList extends Component {
 
     renderFlatList = () => {
         return <UltimateFlatList
+            enableEmptySections={true}
             firstLoader={!this.props.isSearch}
             ref={(ref) => this.listView = ref}
             onFetch={this.onFetch}

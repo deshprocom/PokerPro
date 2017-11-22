@@ -57,7 +57,7 @@ export default class MallCategories extends Component {
                 <View style={speciesId === item.id ?styles.selected:styles.select}/>
 
 
-                <Text style={styles.categoriesOneText}>{`${item.name}  (${item.products_count})`}</Text>
+                <Text style={styles.categoriesOneText}>{`${item.name}`}</Text>
 
             </TouchableOpacity>
         )
@@ -76,7 +76,7 @@ export default class MallCategories extends Component {
                         style={styles.imgCate}
                         source={{uri: item.image}}/>
                 </TouchableOpacity>
-                <Text style={styles.categoriesTwoText}>{`${item.name}  (${item.products_count})`}</Text>
+                <Text style={styles.categoriesTwoText}>{`${item.name}`}</Text>
 
             </View>
 
