@@ -131,8 +131,11 @@ export default class OrderSubmitPage extends PureComponent {
                                 global.router.toMallOrderInfo(data)
                             }, err => {
                                 alert('支付成功，系统正在处理')
+                            }, () => {
                             })
 
+                        }, () => {
+                            global.router.toMallOrderInfo(data)
                         })
                     }, err => {
 

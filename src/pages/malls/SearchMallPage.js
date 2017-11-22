@@ -131,7 +131,8 @@ export default class SearchMallPage extends PureComponent {
                 <MallList
                     ref={ref => this.mallList = ref}
                     isSearch={true}/>
-                {this.state.submit ? null : <SearchEmpty/>}
+                {this.resentBlank()}
+                {this.tabBlank()}
 
 
             </View>

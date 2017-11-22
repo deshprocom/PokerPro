@@ -58,6 +58,8 @@ export default class CompletedBottom extends Component {
                         alert('支付成功，系统正在处理')
                     })
 
+                },()=>{
+
                 })
             }, err => {
 
