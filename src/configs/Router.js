@@ -40,6 +40,12 @@ export default class Router {
 
     }
 
+    toLogisticsWeb() {
+        this.stackPush({
+            name: 'LogisticsWeb'
+        })
+    }
+
     toMallResult(categories) {
         this.stackPush({
             name: 'MallSearchResult',

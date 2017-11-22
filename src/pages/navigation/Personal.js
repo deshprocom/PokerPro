@@ -212,7 +212,8 @@ class Personal extends Component {
                 <TouchableOpacity style={stylesP.btnOrder}
                                   onPress={() => {
                                       if (strNotNull(getLoginUser().user_id))
-                                          global.router.toMallOrderPage();
+                                          global.router.toLogisticsWeb();
+                                      // global.router.toMallOrderPage();
                                       else
                                           global.router.toLoginFirstPage();
                                   }}>

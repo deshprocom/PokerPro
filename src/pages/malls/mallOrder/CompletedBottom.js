@@ -8,6 +8,7 @@ import {MallStatus} from "../../../configs/Status";
 import {util, payWx, isWXAppInstalled,call} from '../../../utils/ComonHelper';
 import {DeShangPhone} from '../../../configs/Constants';
 
+
 export default class CompletedBottom extends Component {
 
 
@@ -138,7 +139,7 @@ export default class CompletedBottom extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-
+                        global.router.toLogisticsWeb()
                     }}
                     style={styleO.customer}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>
