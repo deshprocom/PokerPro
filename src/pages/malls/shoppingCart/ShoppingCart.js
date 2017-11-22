@@ -279,15 +279,19 @@ class ShoppingCart extends Component {
             <Swipeout
                 autoClose={true}
                 right={swipeoutBtns}>
-                <TouchableOpacity
-                    activeOpacity={0.5}
-                    onPress={() => {
-                        global.router.replaceProductInfo({id: product_id})
-                    }}
+                <View
+
                     style={styleS.renderItem}>
                     {this.renderShowEditView(item)}
 
-                    <ImageLoad style={styleS.mallImg} source={{uri: image}}/>
+                    <TouchableOpacity
+                        activeOpacity={0.5}
+                        onPress={() => {
+                        global.router.replaceProductInfo({id: product_id})
+                    }}>
+                        <ImageLoad style={styleS.mallImg} source={{uri: image}}/>
+                    </TouchableOpacity>
+
                     <View style={styleS.TxtView}>
                         <Text numberOfLines={2} style={styleS.mallTextName}>{title}</Text>
                         <Text
@@ -298,7 +302,7 @@ class ShoppingCart extends Component {
                             {this.buyQuantity(item)}
                         </View>
                     </View>
-                </TouchableOpacity>
+                </View>
             </Swipeout>
         )
     };
