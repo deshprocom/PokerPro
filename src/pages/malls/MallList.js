@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     },
     listItem: {
         height: 264,
-        width: 184,
+        width: '49%',
         backgroundColor: 'white',
         marginTop: 8
     },
