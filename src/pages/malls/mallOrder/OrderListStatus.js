@@ -18,7 +18,7 @@ export default class OrderListStatus extends Component {
             <TouchableOpacity
                 activeOpacity={1}
                 onPress={() => {
-                    global.router.toCompletedOrderPage(item)
+                    global.router.toMallOrderInfo(item)
                 }}
                 style={{flex: 1, marginTop: 9}}>
                 <View style={styles.top}>

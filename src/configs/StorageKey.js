@@ -14,6 +14,6 @@ export default {
     UserAvatar:'UserAvatar',
     Activity:"Activity",
     MallSearchRecord:'MallSearchRecord',
-    ShoppingCarts:'ShoppingCarts'
-
+    ShoppingCarts:'ShoppingCarts',
+    PayCountDown:'PayCountDown'
 }

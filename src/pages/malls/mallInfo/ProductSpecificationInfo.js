@@ -9,7 +9,7 @@ import _ from 'lodash';
 
 export default class ProductSpecificationInfo extends PureComponent {
     state = {
-        number: 0,
+        number: 1,
         optionTypes: [],
         tempImg: '',
         tempPrice: '',
