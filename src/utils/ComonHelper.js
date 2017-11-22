@@ -51,8 +51,9 @@ export const picker = {
 };
 
 
+
 export function getFileName(o) {
-    var pos = o.lastIndexOf("/");
+    let pos = o.lastIndexOf("/");
     return o.substring(pos + 1);
 }
 
@@ -662,6 +663,11 @@ export function getUserData() {
     storage.load({key: StorageKey.UserData})
         .then((ret) => {
             userData = ret
+        });
+    storage.load({key: StorageKey.PayCountDown})
+        .then(time => {
+            console.log("payRecodes", time)
+            global.timeRecodes = time;
         })
 }
 

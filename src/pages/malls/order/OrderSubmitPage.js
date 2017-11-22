@@ -10,15 +10,17 @@ import OrderDetails from './OrderDetails';
 import OrderBottom from './OrderBottom';
 import {NavigationBar, BaseComponent} from '../../../components';
 import ExpiredOrder from './ExpiredOrder';
-import {util, payWx} from '../../../utils/ComonHelper';
+import {util, payWx, isWXAppInstalled} from '../../../utils/ComonHelper';
 import {getProductOrders, postMallOrder, postWxPay, getWxPaidResult} from '../../../services/MallDao';
+import {addTimeRecode} from "../../../components/PayCountDown";
 
 export default class OrderSubmitPage extends PureComponent {
     state = {
         isExpired: false,
         order_number: {},
         orderData: {},
-        invalidProducts: []
+        invalidProducts: [],
+        isInstall: false
     };
     showExpiredInfo = (temp) => {
         if (util.isEmpty(temp)) {
@@ -34,6 +36,11 @@ export default class OrderSubmitPage extends PureComponent {
 
     componentDidMount() {
         let body = this.postParam();
+        isWXAppInstalled(isInstall => {
+            this.setState({
+                isInstall: isInstall
+            })
+        });
 
         getProductOrders(body, data => {
 
@@ -108,18 +115,22 @@ export default class OrderSubmitPage extends PureComponent {
                 this.setState({
                     order_number: data
                 });
-                postWxPay(data, ret => {
-                    payWx(ret, () => {
-                        getWxPaidResult(data, result => {
-                            global.router.toCompletedOrderPage(data)
-                        }, err => {
-                            alert('支付成功，系统正在处理')
+                addTimeRecode(data.order_number);
+                if (this.state.isInstall)
+                    postWxPay(data, ret => {
+                        payWx(ret, () => {
+                            getWxPaidResult(data, result => {
+                                global.router.toMallOrderInfo(data)
+                            }, err => {
+                                alert('支付成功，系统正在处理')
+                            })
+
                         })
+                    }, err => {
 
-                    })
-                }, err => {
-
-                })
+                    });
+                else
+                    alert('商城支付需要安装微信')
 
             }, err => {
 

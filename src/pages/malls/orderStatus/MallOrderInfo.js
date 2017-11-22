@@ -12,7 +12,7 @@ import {util} from '../../../utils/ComonHelper';
 import ProductItem from '../mallOrder/ProductItem';
 import {getMallDetail} from "../../../services/MallDao";
 
-export default class ConfirmOrderPage extends PureComponent {
+export default class MallOrderInfo extends PureComponent {
 
 
     state = {
@@ -57,7 +57,7 @@ export default class ConfirmOrderPage extends PureComponent {
         const {detail} = this.state;
 
         const {address, order_items, status} = detail;
-        return <View>
+        return <View style={{flex: 1}}>
             <ScrollView style={styleC.orderView}>
                 <OrderStatus
                     status={I18n.t(`${status}`)}/>

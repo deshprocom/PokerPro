@@ -31,7 +31,6 @@ export default class CompletedBottom extends Component {
     };
 
 
-
     _formatTime = (diff) => {
 
         let min = 0;
@@ -54,7 +53,7 @@ export default class CompletedBottom extends Component {
                     frameStyle={styleO.payCount}
                     beginText='倒计时'
                     endText='付款失效'
-                    count={60 * 15}
+                    count={60 * 30}
                     pressAction={() => {
 
                     }}

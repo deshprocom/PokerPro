@@ -6,7 +6,7 @@
  */
 
 
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
     AppRegistry,
     StyleSheet,
@@ -15,15 +15,41 @@ import {
     TextInput,
     TouchableOpacity
 } from 'react-native';
+import PropTypes from 'prop-types';
+import StorageKey from '../configs/StorageKey';
 
 
 const LCCountDownButtonState = {
     LCCountDownButtonActive: 0,
     LCCountDownButtonDisable: 1,
-}
+};
 
 // {id , startTime, deathCount}
-var timeRecodes = [];  //根据id来记录LCCountDownButton的信息
+ //timeRecodes根据id来记录LCCountDownButton的信息
+
+export function addTimeRecode(id) {
+    let hasRecord = false;
+    for (let i = 0; i < timeRecodes.length; i++) {
+        let obj = timeRecodes[i];
+        if (obj.id === id) {
+            obj.startTime = Date.now();
+            hasRecord = true;
+            break;
+        }
+    }
+    if (!hasRecord) {
+        let buttonInfo = {
+            id: id,
+            deathCount: 60 * 30,
+            startTime: Date.now()
+        };
+        timeRecodes.push(buttonInfo);
+        global.storage.save({
+            key: StorageKey.PayCountDown,
+            rawData: timeRecodes
+        })
+    }
+}
 
 
 export default class CountDownBtn extends Component {
@@ -38,13 +64,13 @@ export default class CountDownBtn extends Component {
     }
 
     static propTypes = {
-        id: React.PropTypes.string,          //按钮的身份标识,同一个页面的按钮是同一个id
-        beginText: React.PropTypes.string,   //初始状态按钮title
-        endText: React.PropTypes.string,     //读秒结束后按钮的title
-        count: React.PropTypes.number,       //计时数
-        pressAction: React.PropTypes.func,   //按下按钮的事件,但是触发倒数需要你自己来调用方法
-        changeWithCount: React.PropTypes.func,   //读秒变化的函数,该函数带有一个参数count,表示当前的剩余事件
-        end: React.PropTypes.func,           //读秒完毕后的函数
+        id: PropTypes.string,          //按钮的身份标识,同一个页面的按钮是同一个id
+        beginText: PropTypes.string,   //初始状态按钮title
+        endText: PropTypes.string,     //读秒结束后按钮的title
+        count: PropTypes.number,       //计时数
+        pressAction: PropTypes.func,   //按下按钮的事件,但是触发倒数需要你自己来调用方法
+        changeWithCount: PropTypes.func,   //读秒变化的函数,该函数带有一个参数count,表示当前的剩余事件
+        end: PropTypes.func,           //读秒完毕后的函数
         frameStyle: View.propTypes.style    //初始化的位置大小
     }
 
@@ -77,6 +103,7 @@ export default class CountDownBtn extends Component {
             }
         }
         let recodes = timeRecodes.filter(item => item.id === id);
+        console.log('startCountDown', recodes)
 
         if (recodes.length === 0) {
             this.startCountDown();
@@ -146,9 +173,9 @@ export default class CountDownBtn extends Component {
 
     //外界调用
     startCountDown() {
-
+        const {id, count} = this.props;
         this.startCountDownWithCount(Date.now());
-        this.recordButtonInfo();
+        addTimeRecode(id)
     }
 
     render() {
