@@ -50,6 +50,15 @@ export const picker = {
     compressImageQuality: 0.5,
 };
 
+export function uShareMallInfo(title, desc, icon, id) {
+
+    UMShare.share(title, shareTxt(desc), getShareIcon(icon), shareHost() + "products/" + id + "/" + Lang)
+        .then(() => {
+            showToast(`${I18n.t('show_success')}`)
+        }, (error) => {
+            showToast(error)
+        })
+}
 
 export function getFileName(o) {
     var pos = o.lastIndexOf("/");
