@@ -5,7 +5,8 @@ import I18n from 'react-native-i18n';
 import PayCountDown from '../../../components/PayCountDown';
 import {cancelMallOrder, postWxPay, getWxPaidResult} from "../../../services/MallDao";
 import {MallStatus} from "../../../configs/Status";
-import {util, payWx, isWXAppInstalled} from '../../../utils/ComonHelper';
+import {util, payWx, isWXAppInstalled,call} from '../../../utils/ComonHelper';
+import {DeShangPhone} from '../../../configs/Constants';
 
 export default class CompletedBottom extends Component {
 
@@ -89,7 +90,7 @@ export default class CompletedBottom extends Component {
                     endText='付款失效'
                     count={60 * 30}
                     pressAction={() => {
-                        console.log('234234')
+
                      this.wxPay(order_number);
                     }}
                     changeWithCount={(count) => `${this._formatTime(count)}`}
@@ -117,6 +118,7 @@ export default class CompletedBottom extends Component {
         return <View style={styleO.bottomView}>
             <TouchableOpacity
                 onPress={() => {
+                   call(DeShangPhone)
                 }}
                 style={styleO.returnedBottom}>
                 <Text style={styleO.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>

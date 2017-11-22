@@ -92,6 +92,7 @@ export function getCarts() {
 
 }
 
+/*删除购物车*/
 export function deleteProductFromCart(carts) {
     global.shoppingCarts = carts;
     storage.save({
@@ -194,6 +195,7 @@ export function setLang(lang) {
     // console.log('分享页语言'+Lang);
 }
 
+/*时间 1小时前*/
 export function getDateDiff(dateTimeStamp) {
 
     var minute = 1000 * 60;
