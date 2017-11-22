@@ -3,7 +3,7 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, L
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 import PayCountDown from '../../../components/PayCountDown';
-import {cancelMallOrder, postWxPay, getWxPaidResult} from "../../../services/MallDao";
+import {cancelMallOrder, postWxPay, getWxPaidResult, postOrderConfirm} from "../../../services/MallDao";
 import {MallStatus} from "../../../configs/Status";
 import {util, payWx, isWXAppInstalled, call} from '../../../utils/ComonHelper';
 import {DeShangPhone} from '../../../configs/Constants';
@@ -39,7 +39,7 @@ export default class CompletedBottom extends Component {
             case MallStatus.paid:
                 return this.paidOrder();
             case MallStatus.completed:
-                return <View/>;
+                return this.completedOrder(orderItem);
             case MallStatus.delivered:
                 return this.deliveredOrder(orderItem);
         }
@@ -129,13 +129,34 @@ export default class CompletedBottom extends Component {
         </View>
     };
 
+    completedOrder = (orderItem) => {
+        const {shipments, order_number} = orderItem;
+        return (
+            <View style={styleO.bottomView}>
+
+                <TouchableOpacity
+                    onPress={() => {
+                        global.router.toLogisticsWeb(shipments)
+                    }}
+                    style={styleO.customer}>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>
+                </TouchableOpacity>
+
+            </View>)
+    };
+
 
     deliveredOrder = (orderItem) => {
-        const {shipments} = orderItem;
+        const {shipments, order_number} = orderItem;
         return (
             <View style={styleO.bottomView}>
                 <TouchableOpacity
                     onPress={() => {
+                        postOrderConfirm({order_number: order_number}, data => {
+                            if (this.props.refresh)
+                                this.props.refresh();
+                        }, err => {
+                        })
                     }}
                     style={styleO.returnedBottom2}>
                     <Text style={styleO.orderSubmitTxt1}>{I18n.t('order_receipt')}</Text>
