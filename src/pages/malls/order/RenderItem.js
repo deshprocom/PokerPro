@@ -38,9 +38,9 @@ export default class RenderItem extends PureComponent {
                     <Text
                         style={styleR.mallAttributes}>{this.selectType(text_sku_values)}</Text>
 
-                    {seven_days_return ? <View style={styleR.returned}>
-                        <Text style={styleR.returnedTxt}>{I18n.t('returned')}</Text>
-                    </View> : null}
+                    {/*{seven_days_return ? <View style={styleR.returned}>*/}
+                        {/*<Text style={styleR.returnedTxt}>{I18n.t('returned')}</Text>*/}
+                    {/*</View> : null}*/}
 
                     <View style={styleR.PriceView}>
                         <Text style={styleR.Price}>¥</Text><Text
