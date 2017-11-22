@@ -234,6 +234,7 @@ export default class ProductSpecificationInfo extends PureComponent {
             return;
         }
 
+        showToast(I18n.t('add_cart_ok'));
         let selectCommodity = {number: number, variant: this.tempProduct, title: this.tempProduct.title};
         pushProductToCart(selectCommodity);
         this.props.showSpecInfo(this.tempProduct)
