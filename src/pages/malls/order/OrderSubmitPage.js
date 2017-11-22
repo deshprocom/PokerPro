@@ -15,7 +15,7 @@ import {getProductOrders, postMallOrder, postWxPay} from '../../../services/Mall
 
 export default class OrderSubmitPage extends PureComponent {
     state = {
-        isExpired: false,
+        isExpired: true,
         order_number: {},
         orderData: {},
         invalidProducts: []
