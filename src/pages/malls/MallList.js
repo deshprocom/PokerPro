@@ -9,7 +9,7 @@ import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
 import propTypes from 'prop-types';
 import {catProducts, searchProducts} from '../../services/MallDao';
 import {isEmptyObject} from '../../utils/ComonHelper';
-
+import SearchEmpty from './SearchEmpty';
 
 export default class MallList extends Component {
 
@@ -40,6 +40,7 @@ export default class MallList extends Component {
             keyExtractor={(item, index) => `mallList${index}`}  //this is required when you are using FlatList
             item={this.renderItem}  //this takes two params (item, index)
             numColumns={2}
+            emptyView={()=><SearchEmpty/>}
         />
 
 
