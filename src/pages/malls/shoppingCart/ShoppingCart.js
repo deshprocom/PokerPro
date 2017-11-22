@@ -363,22 +363,24 @@ class ShoppingCart extends Component {
 
     render() {
 
-        console.log(this.state.dataHosts);
         if (util.isEmpty(this.state.dataHosts)) {
             return <EmptyCart/>
         }
         return (
             <View style={{flex: 1}}>
                 {this.topBar()}
+                <ScrollView>
+                    <FlatList
+                        style={{paddingTop: 6}}
+                        data={this.state.dataHosts}
+                        showsHorizontalScrollIndicator={false}
+                        ItemSeparatorComponent={this._separator}
+                        renderItem={this._renderItem}
+                        keyExtractor={(item, index) => `commodities${index}`}
+                    />
 
-                <FlatList
-                    style={{paddingTop: 6, marginBottom: 50}}
-                    data={this.state.dataHosts}
-                    showsHorizontalScrollIndicator={false}
-                    ItemSeparatorComponent={this._separator}
-                    renderItem={this._renderItem}
-                    keyExtractor={(item, index) => `commodities${index}`}
-                />
+                    <View style={{paddingTop:160}}/>
+                </ScrollView>
 
                 {this.state.showBottom ? this.toBottom() : this.toBottom2()}
 
@@ -531,7 +533,7 @@ const styleS = StyleSheet.create({
         bottom: 0,
         flexDirection: 'row',
         alignItems: 'center',
-        width: '100%'
+        width: '100%',
     },
     settlementView2: {
         flexDirection: 'row',

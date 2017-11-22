@@ -14,7 +14,6 @@ export default class OrderListStatus extends Component {
     renderItem = (item, index) => {
 
         const {order_number, status, total_price, order_items} = item;
-        console.log("item:",item)
         return (
             <TouchableOpacity
                 activeOpacity={1}
