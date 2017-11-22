@@ -25,7 +25,7 @@ const LCCountDownButtonState = {
 };
 
 // {id , startTime, deathCount}
-var timeRecodes = global.timeRecodes;  //根据id来记录LCCountDownButton的信息
+ //timeRecodes根据id来记录LCCountDownButton的信息
 
 export function addTimeRecode(id) {
     let hasRecord = false;

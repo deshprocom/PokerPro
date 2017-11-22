@@ -50,9 +50,7 @@ export const picker = {
     compressImageQuality: 0.5,
 };
 
-export function wxNotInstall() {
-    Alert.alert();
-}
+
 
 export function getFileName(o) {
     let pos = o.lastIndexOf("/");
