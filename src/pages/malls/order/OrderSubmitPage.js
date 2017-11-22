@@ -148,8 +148,8 @@ export default class OrderSubmitPage extends PureComponent {
     };
 
     removeCarts = () => {
-        let carts = global.shoppingCarts.filter(item => !item.isSelect)
-        console.log(carts)
+        let carts = global.shoppingCarts.filter(item => !item.isSelect);
+
         deleteProductFromCart(carts)
     };
 

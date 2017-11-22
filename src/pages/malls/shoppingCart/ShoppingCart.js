@@ -6,8 +6,10 @@ import I18n from 'react-native-i18n';
 import {deleteProductFromCart, util, showToast} from '../../../utils/ComonHelper';
 import {ImageLoad} from '../../../components';
 import EmptyCart from './EmptyCart';
+import {connect} from 'react-redux';
+import {ADD_CART, DELETE_CART} from '../../../actions/ActionTypes';
 
-export default class ShoppingCart extends Component {
+class ShoppingCart extends Component {
     state = {
         showCart: true,
         showEdit: true,
@@ -15,7 +17,7 @@ export default class ShoppingCart extends Component {
         selected: false,
         selectAll: false,
         dataHosts: [],
-        selectedData:[]
+        selectedData: []
     };
 
     componentDidMount() {
@@ -28,6 +30,22 @@ export default class ShoppingCart extends Component {
         this.setState({
             dataHosts: commodities
         })
+    }
+
+    componentWillReceiveProps(newProps) {
+
+        if (newProps.hasData && (newProps.actionType === ADD_CART
+                || newProps.actionType === DELETE_CART)) {
+
+            let commodities = [...global.shoppingCarts];
+
+            commodities.map(function (x) {
+                x.isSelect = false;
+            });
+            this.setState({
+                dataHosts: commodities
+            })
+        }
     }
 
 
@@ -53,7 +71,7 @@ export default class ShoppingCart extends Component {
         return `(${count})`;
     };
 
-    dataFilter=()=>{
+    dataFilter = () => {
         return this.state.dataHosts.filter(
             function (value) {
                 return value.isSelect
@@ -82,10 +100,10 @@ export default class ShoppingCart extends Component {
                 <View style={{flex: 1}}/>
                 <TouchableOpacity style={styleS.settlementView}
                                   onPress={() => {
-                                      let datas=this.dataFilter()
-                                      if(datas.length>0){
+                                      let datas = this.dataFilter()
+                                      if (datas.length > 0) {
                                           global.router.toOrderConfirm(datas);
-                                      }else{
+                                      } else {
                                           showToast("请选择商品")
                                       }
                                   }}>
@@ -221,7 +239,7 @@ export default class ShoppingCart extends Component {
         }
         return (
             <TouchableOpacity
-                style={{height:120,alignItems:'center',justifyContent:'center'}}
+                style={{height: 120, alignItems: 'center', justifyContent: 'center'}}
                 onPress={() => {
                     this._pressItem(item)
                 }}>
@@ -241,11 +259,11 @@ export default class ShoppingCart extends Component {
                 }
             }
         ];
-        const {price, original_price, text_sku_values, title, image,product_id} = item.variant;
+        const {price, original_price, text_sku_values, title, image, product_id} = item.variant;
         let type_value = '';
         if (!util.isEmpty(text_sku_values)) {
             text_sku_values.forEach(x => {
-                type_value += x+' ';
+                type_value += x + ' ';
             });
         }
 
@@ -346,7 +364,7 @@ export default class ShoppingCart extends Component {
     render() {
 
         console.log(this.state.dataHosts);
-        if(util.isEmpty(this.state.dataHosts)){
+        if (util.isEmpty(this.state.dataHosts)) {
             return <EmptyCart/>
         }
         return (
@@ -368,6 +386,15 @@ export default class ShoppingCart extends Component {
         )
     }
 }
+
+const bindAction = dispatch => ({});
+
+const mapStateToProps = state => ({
+    actionType: state.MallState.actionType,
+    hasData: state.MallState.hasData
+});
+
+export default connect(mapStateToProps, bindAction)(ShoppingCart);
 
 const styleS = StyleSheet.create({
 
