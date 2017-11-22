@@ -36,7 +36,7 @@ export default class ShipAddress extends PureComponent {
                 justifyContent: 'space-between', marginLeft: 18
             }}>
                 <Text style={{fontSize: 12, color: Colors._AAA}}>{I18n.t('no_addr_tip')}</Text>
-                <Image style={{width: 11, height: 20, marginRight: 17}}
+                <Image style={{width: 11, height: 20, marginRight: 16}}
                        source={Images.ticket_arrow}/>
             </View>
         </TouchableOpacity>
@@ -50,8 +50,7 @@ export default class ShipAddress extends PureComponent {
     render() {
         if (isEmptyObject(this.state.adrDefault)) {
             return this._emptyAdr()
-        }
-        ;
+        };
         const {address, address_detail, consignee, mobile} = this.state.adrDefault;
         return (
             <View style={styleS.addressView}>
@@ -127,7 +126,7 @@ const styleS = StyleSheet.create({
     },
     shipAddrTouch: {
         marginRight: 16,
-        width: 30,
+        paddingLeft:20,
         height: 50,
         alignItems: 'center',
         justifyContent: 'center'

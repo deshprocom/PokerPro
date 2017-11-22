@@ -141,7 +141,8 @@ const styleM = StyleSheet.create({
         paddingTop: Metrics.statusBarHeight,
         position: 'absolute',
         top: 0,
-        width: '100%'
+        width: '100%',
+        zIndex:999
     },
     popBtn: {
         height: 44,

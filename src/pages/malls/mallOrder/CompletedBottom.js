@@ -133,8 +133,8 @@ export default class CompletedBottom extends Component {
                 <TouchableOpacity
                     onPress={() => {
                     }}
-                    style={styleO.returnedBottom}>
-                    <Text style={styleO.orderSubmitTxt}>{I18n.t('order_receipt')}</Text>
+                    style={styleO.returnedBottom2}>
+                    <Text style={styleO.orderSubmitTxt1}>{I18n.t('order_receipt')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
@@ -143,7 +143,6 @@ export default class CompletedBottom extends Component {
                     style={styleO.customer}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>
                 </TouchableOpacity>
-
 
             </View>
         )
@@ -170,7 +169,27 @@ const styleO = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
+    returnedBottom2: {
+        borderWidth: 1,
+        borderColor: '#F34A4A',
+        borderRadius: 4,
+        width: 90,
+        height: 37,
+        marginRight: 17,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
     customer: {
+        borderWidth: 1,
+        borderColor: '#333333',
+        borderRadius: 4,
+        width: 90,
+        height: 37,
+        marginRight: 10,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    returnedMall: {
         borderWidth: 1,
         borderColor: '#333333',
         borderRadius: 4,
@@ -183,6 +202,10 @@ const styleO = StyleSheet.create({
     orderSubmitTxt: {
         fontSize: 14,
         color: '#333333'
+    },
+    orderSubmitTxt1: {
+        fontSize: 14,
+        color: '#F34A4A'
     },
     payment: {
         fontSize: 14,
