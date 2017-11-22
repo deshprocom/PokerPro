@@ -158,14 +158,32 @@ class Personal extends Component {
         const {profile} = this.props;
         return <View style={{marginBottom: 10}}>
             <View style={stylesP.meView}>
-                <NavigationBar
-                    onPress={this.toMessagePage}
-                    rightImageStyle={{
-                        height: 22,
-                        width: 21,
-                        marginRight: 20
-                    }}
-                    rightBtnIcon={this._imgNotice()}/>
+
+
+                <View style={{
+                    height: Metrics.navBarHeight,
+                    width: '100%',
+                    paddingTop: Metrics.statusBarHeight,
+                    flexDirection: 'row-reverse'
+                }}>
+                    <TouchableOpacity
+                        style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            height: 44
+                        }}
+                        onPress={this.toMessagePage}>
+                        <Image
+                            source={this._imgNotice()}
+                            style={{
+                                height: 22,
+                                width: 21,
+                                marginRight: 20
+                            }}/>
+
+                    </TouchableOpacity>
+
+                </View>
                 <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}}
                                   onPress={() => {
                                       if (!isEmptyObject(login_user))

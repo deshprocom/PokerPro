@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, ScrollView, StatusBar, Image, TouchableOpacity} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 import {BaseComponent} from '../../../components';
@@ -67,7 +67,7 @@ export default class MallInfoPage extends Component {
         return (
             <BaseComponent
                 ref={ref => this.container = ref}>
-
+                <StatusBar barStyle={"dark-content"}/>
                 <ScrollView
                     onScroll={this._onScroll}
                     scrollEventThrottle={16}>
