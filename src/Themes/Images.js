@@ -1,6 +1,8 @@
 import {China} from '../configs/Constants';
 
 const images = {
+    month: require('../../source/month.png'),
+    monthE: require('../../source/monthE.png'),
     nav_close: require('../../source/nav_Close@2x.png'),
     icon_biyan: require('../../source/icon_biyan@2x.png'),
     icon_guanbi: require('../../source/icon_guanbi@2x.png'),

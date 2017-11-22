@@ -101,7 +101,7 @@ class SearchRacesListView extends Component {
             activeOpacity={1}
             testID="btn_time_race"
             style={styles.currentDate}>
-            <Text style={styles.currentText}>本月</Text>
+            <Image style={styles.currentImg} source={global.language === 'zh'?Images.month:Images.monthE}/>
         </TouchableOpacity>)
     }
 
@@ -239,8 +239,12 @@ const styles = StyleSheet.create({
         borderRadius: 2, justifyContent: 'center'
     },
     currentText: {
-        fontSize: 15,
-        color: '#000000'
+        width:70,
+        height:27
+    },
+    currentImg:{
+        width:70,
+        height:27
     }
 })
 
