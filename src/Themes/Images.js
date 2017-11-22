@@ -237,6 +237,7 @@ const images = {
     mall_del: require('../../source/mall/mall_del.png'),
     shoppingCart: require('../../source/mall/shoppingCart.png'),
     close: require('../../source/mall/close.png'),
+    closeWhite: require('../../source/mall/closeWhite.png'),
     cut: require('../../source/mall/cut.png'),
     add: require('../../source/mall/add.png'),
     mall_return: require('../../source/mall/mall_return.png'),
