@@ -1,66 +1,100 @@
 import React, {PureComponent, PropTypes} from 'react';
-import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView,TextInput} from 'react-native';
+import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView, TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 import OrderStatus from './OrderStatus';
-import MallInfo from '../order/MallInfo';
 import Positioning from './Positioning';
 import OrderMessage from './OrderMessage';
 import OrderDetails from '../order/OrderDetails';
-import UnShippedBottom from './UnShippedBottom';
-import {NavigationBar} from '../../../components';
+import CompletedBottom from '../mallOrder/CompletedBottom';
+import {NavigationBar, BaseComponent} from '../../../components';
 import {util} from '../../../utils/ComonHelper';
+import ProductItem from '../mallOrder/ProductItem';
+import {getMallDetail} from "../../../services/MallDao";
 
 export default class ConfirmOrderPage extends PureComponent {
 
+
     state = {
-        orderData: {}
+        detail: {}
     };
 
+    componentDidMount() {
+        this.container.open();
+        const {orderDetail} = this.props.params;
+        getMallDetail({order_number: orderDetail.order_number}, data => {
+            this.setState({
+                detail: data
+            })
+        }, err => {
+        })
+    }
 
-    render(){
-        return(
-            <View style={{flex:1}}>
+
+    render() {
+        const {detail} = this.state;
+
+
+        return (
+            <BaseComponent
+                ref={ref => this.container = ref}>
                 <NavigationBar
                     barStyle={'dark-content'}
                     toolbarStyle={{backgroundColor: 'white'}}
                     leftBtnIcon={Images.mall_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                    leftBtnPress={() => router.pop()}
+                    leftBtnPress={() => global.router.pop()}
                     titleStyle={{color: Colors._161}}
                     title={I18n.t('order_info')}/>
 
-                <ScrollView style={styleC.orderView}>
-                    <OrderStatus/>
-                    <Positioning/>
-                    {util.isEmpty(this.state.orderData.items) ? null : <MallInfo selectedData={this.state.orderData.items}/>}
-                    <OrderMessage/>
-                    <OrderDetails/>
-                    <View style={{height:80}}/>
-                </ScrollView>
-
-
-                <View style={styleC.bottom}>
-                    <UnShippedBottom/>
-                </View>
-            </View>
+                {util.isEmpty(detail) ? null : this.renderContent()}
+            </BaseComponent>
 
         );
     }
+
+    renderContent = () => {
+        const {detail} = this.state;
+
+        const {address, order_items, status} = detail;
+        return <View>
+            <ScrollView style={styleC.orderView}>
+                <OrderStatus
+                    status={I18n.t(`${status}`)}/>
+                <Positioning
+                    address={address}/>
+                <View style={styleC.detailView}>
+                    <Text style={styleC.txtDetail}>{I18n.t('mallInfo')}</Text>
+
+                </View>
+                {util.isEmpty(order_items) ? null :
+                    <ProductItem lists={order_items}/>}
+                <OrderMessage
+                    orderDetail={detail}/>
+                <OrderDetails
+                    orderDetail={detail}/>
+                <View style={{height: 80}}/>
+            </ScrollView>
+
+
+            <CompletedBottom
+                orderItem={detail}/>
+        </View>
+    }
 }
 const styleC = StyleSheet.create({
-    bottom:{
-        height:50,
-        backgroundColor:"#FFFFFF",
-        position:'absolute',
-        bottom:0,
-        flexDirection:'row-reverse',
-        alignItems:'center',
+    bottom: {
+        height: 50,
+        backgroundColor: "#FFFFFF",
+        position: 'absolute',
+        bottom: 0,
+        flexDirection: 'row-reverse',
+        alignItems: 'center',
         width: '100%',
-        zIndex:999
+        zIndex: 999
     },
-    orderView:{
-        backgroundColor:'#ECECEE'
+    orderView: {
+        backgroundColor: '#ECECEE'
     },
     topBar: {
         height: Metrics.navBarHeight,
@@ -76,10 +110,10 @@ const styleC = StyleSheet.create({
         width: 50,
         justifyContent: 'center'
     },
-    cart:{
+    cart: {
         fontSize: 17,
         color: '#161718',
-        fontWeight:'bold'
+        fontWeight: 'bold'
     },
     backImg: {
         width: 11,
@@ -90,5 +124,17 @@ const styleC = StyleSheet.create({
         fontSize: 15,
         color: '#161718'
     },
+    detailView: {
+        height: 40,
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%',
+        backgroundColor: 'white'
+    },
+    txtDetail: {
+        color: '#333333',
+        fontSize: 14,
+        marginLeft: 17
+    }
 
 });

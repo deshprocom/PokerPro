@@ -104,7 +104,10 @@ export default {
     product_orders: product_orders,
     mall_order: 'product_orders',
     mall_wxPay: mall_wxPay,
-    order_lists:order_lists
+    order_lists: order_lists,
+    mall_order_cancel: mall_order_cancel,
+    wx_paid_result: wx_paid_result,
+    product_order_detail: product_order_detail
 }
 
 
@@ -117,9 +120,25 @@ function getUserId() {
 
 const page_size = 10;
 
+
+export function product_order_detail(body) {
+    const {order_number} = body;
+    return `product_orders/${order_number}`
+}
+
+export function wx_paid_result(body) {
+    const {order_number} = body;
+    return `product_orders/${order_number}/wx_paid_result`
+}
+
+export function mall_order_cancel(body) {
+    const {order_number} = body;
+    return `product_orders/${order_number}/cancel`
+}
+
 export function order_lists(body) {
-    const {next_id} = body;
-    return `product_orders?page_size=${page_size}&next_id=${next_id}`
+    const {next_id, status} = body;
+    return `product_orders?page_size=${page_size}&next_id=${next_id}&status=${status}`
 }
 
 export function mall_wxPay(body) {

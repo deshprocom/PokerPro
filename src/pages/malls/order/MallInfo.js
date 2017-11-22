@@ -34,7 +34,7 @@ export default class MallInfo extends PureComponent {
     };
 
     _renderItem = ({item}) => {
-        
+
         return (
             <RenderItem item={item}/>
 
@@ -54,8 +54,7 @@ export default class MallInfo extends PureComponent {
         if (util.isEmpty(selectedData))
             return;
         selectedData.forEach(item => {
-            if (item.isSelect)
-                ++count;
+            count += item.number;
         });
 
         return `${count}`;
@@ -80,17 +79,17 @@ export default class MallInfo extends PureComponent {
                     />
                 </View>
                 {this.state.showExpand ? <TouchableOpacity
-                        style={styleM.expandView}
-                        onPress={() => {
+                    style={styleM.expandView}
+                    onPress={() => {
                         this._expandData()
                     }}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text style={styleM.expandTxt}>{I18n.t('expandMore')}</Text>
-                            <View style={styleM.expandTouch}>
-                                <Image style={styleM.expandImg} source={Images.expand}/>
-                            </View>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <Text style={styleM.expandTxt}>{I18n.t('expandMore')}</Text>
+                        <View style={styleM.expandTouch}>
+                            <Image style={styleM.expandImg} source={Images.expand}/>
                         </View>
-                    </TouchableOpacity> : null}
+                    </View>
+                </TouchableOpacity> : null}
 
             </View>
         )

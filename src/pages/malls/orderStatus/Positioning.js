@@ -4,68 +4,66 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import I18n from 'react-native-i18n';
 
 export default class Positioning extends PureComponent {
-    state={
 
-    };
 
-    render(){
-        return(
-            <View style={{backgroundColor:'#FFFFFF'}}>
+    render() {
+        const {province, city, area, address, mobile, name} = this.props.address;
+        return (
+            <View style={{backgroundColor: '#FFFFFF'}}>
                 <View style={styleC.addressView}>
                     <View style={styleC.shipImagView}>
                         <Image style={styleC.shipAddrImg} source={Images.positioning}/>
                     </View>
 
                     <View style={styleC.shipAddr}>
-                        <View style={{flexDirection: 'row',alignItems:'center'}}>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <Text style={styleC.shipAddrTxt1}>{I18n.t('buy_person')}</Text>
-                            <Text style={styleC.shipAddrTxt1}>www</Text>
-                            <Text style={styleC.mobile}>1478569332485</Text>
+                            <Text style={styleC.shipAddrTxt1}>{name}</Text>
+                            <Text style={styleC.mobile}>{mobile}</Text>
                         </View>
-                        <Text style={styleC.shipAddrTxt2}>热热我认为让双方是否感受过对方</Text>
+                        <Text style={styleC.shipAddrTxt2}>{`${province}${city}${area}${address}`}</Text>
                     </View>
 
                 </View>
                 <Image style={styleC.lineImg} source={Images.order_line}/>
             </View>
 
-        )}
+        )
+    }
 }
 const styleC = StyleSheet.create({
-    lineImg:{
-        width:'100%',
-        height:4,
-        marginTop:16,
+    lineImg: {
+        width: '100%',
+        height: 4,
+        marginTop: 16,
 
     },
-    addressView:{
-        flexDirection:'row',
-        alignItems:'center',
-        backgroundColor:'#FFFFFF',
+    addressView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
 
     },
-    shipImagView:{
+    shipImagView: {
         width: 28,
         height: 28,
-        marginLeft:17,
-        alignItems:'center'
+        marginLeft: 17,
+        alignItems: 'center'
     },
-    title:{
-        height:40,
-        backgroundColor:'#FFFFFF'
+    title: {
+        height: 40,
+        backgroundColor: '#FFFFFF'
     },
-    titleName:{
-        marginLeft:17,
-        marginTop:11,
-        marginBottom:9,
+    titleName: {
+        marginLeft: 17,
+        marginTop: 11,
+        marginBottom: 9,
         fontSize: 14,
         color: '#333333'
     },
     shipAddr: {
-        flexDirection: 'column',
-        alignItems: 'center',
-        marginLeft:21,
-        marginTop:20
+        marginLeft: 21,
+        marginTop: 20
     },
     shipAddrTxt1: {
         fontSize: 14,
@@ -76,17 +74,17 @@ const styleC = StyleSheet.create({
         color: '#666666',
         marginTop: 10
     },
-    mobile:{
-        marginLeft:20,
+    mobile: {
+        marginLeft: 20,
         fontSize: 14,
         color: '#666666',
     },
-    shipAddrTouch:{
+    shipAddrTouch: {
         marginRight: 16,
         width: 30,
         height: 50,
-        alignItems:'center',
-        justifyContent:'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     shipAddrImg: {
         width: 28,

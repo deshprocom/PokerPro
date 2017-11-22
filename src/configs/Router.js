@@ -47,9 +47,9 @@ export default class Router {
         })
     }
 
-    replaceProductInfo(product){
-        Actions.replace('MallInfoPage',{
-            params:product
+    replaceProductInfo(product) {
+        Actions.replace('MallInfoPage', {
+            params: product
         })
     }
 
@@ -684,13 +684,14 @@ export default class Router {
     toOrderConfirm(selectedData) {
         this.stackPush({
             name: 'OrderSubmitPage',
-            params:selectedData
+            params: selectedData
         })
     }
 
-    toCompletedOrderPage() {
+    toCompletedOrderPage(item) {
         this.stackPush({
-            name: 'ConfirmOrderPage'
+            name: 'ConfirmOrderPage',
+            params: {orderDetail: item}
         })
     }
 
@@ -705,7 +706,8 @@ export default class Router {
             name: 'ReturnSucceedPage'
         })
     }
-    toMallOrderPage(){
+
+    toMallOrderPage() {
         this.stackPush({
             name: 'MallOrderPage'
         })

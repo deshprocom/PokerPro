@@ -11,14 +11,14 @@ export default class ProductSpecification extends Component {
     };
 
 
-    componentDidMount() {
-        console.log('selectProduct', this.props.selectProduct)
-    }
-
-
     render() {
 
-        const {id} = this.props.selectProduct;
+        const {text_sku_values} = this.props.selectProduct;
+        let sku_values = '';
+        if (!util.isEmpty(text_sku_values))
+            text_sku_values.forEach(item => {
+                sku_values += item + ' '
+            });
         return (
             <View>
                 <TouchableOpacity
@@ -32,7 +32,7 @@ export default class ProductSpecification extends Component {
                     <Text
                         style={styleP.specificationTxt2}>  {util.isEmpty(this.props.selectProduct) ? I18n.t('unSelected') : I18n.t('selected')}</Text>
 
-                    <Text style={styleP.specificationTxt4}>A套餐{id}</Text>
+                    <Text style={styleP.specificationTxt4}>{sku_values}</Text>
                     <View style={{flex: 1}}/>
                     <Image style={styleP.specificationImg} source={Images.is}/>
                 </TouchableOpacity>
@@ -55,7 +55,7 @@ const styleP = StyleSheet.create({
         fontSize: 14,
         color: '#333333',
         marginLeft: 17,
-        fontWeight:'bold'
+        fontWeight: 'bold'
     },
     specificationTxt2: {
         fontSize: 14,
