@@ -10,7 +10,7 @@ import OrderDetails from './OrderDetails';
 import OrderBottom from './OrderBottom';
 import {NavigationBar, BaseComponent} from '../../../components';
 import ExpiredOrder from './ExpiredOrder';
-import {util, payWx, isWXAppInstalled} from '../../../utils/ComonHelper';
+import {util, payWx, isWXAppInstalled, deleteProductFromCart} from '../../../utils/ComonHelper';
 import {getProductOrders, postMallOrder, postWxPay, getWxPaidResult} from '../../../services/MallDao';
 import {addTimeRecode} from "../../../components/PayCountDown";
 
@@ -56,7 +56,7 @@ export default class OrderSubmitPage extends PureComponent {
                     return invalid === item.variant.id;
                 });
             });
-            console.log('invalidProducts', invalidProducts);
+
 
             this.setState({
                 orderData: data,
@@ -112,6 +112,7 @@ export default class OrderSubmitPage extends PureComponent {
         if (this.state.isExpired || util.isEmpty(invalid_items)) {
             let body = this.postParam();
             postMallOrder(body, data => {
+                this.removeCarts();
                 this.setState({
                     order_number: data
                 });
@@ -120,6 +121,7 @@ export default class OrderSubmitPage extends PureComponent {
                     postWxPay(data, ret => {
                         payWx(ret, () => {
                             getWxPaidResult(data, result => {
+
                                 global.router.toMallOrderInfo(data)
                             }, err => {
                                 alert('支付成功，系统正在处理')
@@ -143,6 +145,12 @@ export default class OrderSubmitPage extends PureComponent {
         }
 
 
+    };
+
+    removeCarts = () => {
+        let carts = global.shoppingCarts.filter(item => !item.isSelect)
+        console.log(carts)
+        deleteProductFromCart(carts)
     };
 
     render() {
