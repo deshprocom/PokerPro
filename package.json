@@ -18,6 +18,7 @@
     "react-native-blur": "^2.0.0",
     "react-native-communications": "^2.2.1",
     "react-native-drawer": "^2.3.0",
+    "react-native-fit-image": "^1.5.4",
     "react-native-i18n": "^0.1.1",
     "react-native-image-crop-picker": "^0.12.9",
     "react-native-image-zoom-viewer": "^2.0.5",

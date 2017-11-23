@@ -23,22 +23,25 @@ export default class ProductItem extends PureComponent {
     };
 
     renderItem = ({item}) => {
-        const {title, original_price, price, number, sku_value, image, refunded,product_id} = item;
+        const {title, original_price, price, number, sku_value, image, refunded, product_id} = item;
         return <TouchableOpacity
             style={styleR.renderItem}
-            onPress={()=>{
-                global.router.toMallInfoPage({id:product_id})
+            onPress={() => {
+                global.router.toMallInfoPage({id: product_id})
             }}>
 
-            <ImageLoad style={styleR.mallImg} source={{uri: image}}/>
+            <ImageLoad
+                resizeMode={'cover'}
+                style={styleR.mallImg}
+                source={{uri: image}}/>
             <View style={styleR.TxtView}>
                 <Text numberOfLines={2} style={styleR.mallTextName}>{title}</Text>
                 <Text
                     style={styleR.mallAttributes}>{this.selectType(sku_value)}</Text>
 
                 {refunded ? <View style={styleR.returned}>
-                        <Text style={styleR.returnedTxt}>{I18n.t('returned')}</Text>
-                    </View> : null}
+                    <Text style={styleR.returnedTxt}>{I18n.t('returned')}</Text>
+                </View> : null}
 
                 <View style={styleR.PriceView}>
                     <Text style={styleR.Price}>¥</Text><Text

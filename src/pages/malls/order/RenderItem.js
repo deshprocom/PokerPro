@@ -24,17 +24,19 @@ export default class RenderItem extends PureComponent {
 
     render() {
         const {title, seven_days_return, number, variant} = this.props.item;
-        const {image, original_price, price, text_sku_values,product_id} = variant;
-
+        const {image, original_price, price, text_sku_values, product_id} = variant;
 
 
         return (
             <TouchableOpacity style={styleR.renderItem}
                               onPress={() => {
-                                  global.router.toMallInfoPage({id:product_id})
+                                  global.router.toMallInfoPage({id: product_id})
                               }}>
 
-                <ImageLoad style={styleR.mallImg} source={{uri: image}}/>
+                <ImageLoad
+                    resizeMode={'cover'}
+                    style={styleR.mallImg}
+                    source={{uri: image}}/>
                 <View style={styleR.TxtView}>
                     <Text numberOfLines={2} style={styleR.mallTextName}>{title}</Text>
                     <Text
