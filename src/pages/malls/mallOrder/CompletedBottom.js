@@ -58,7 +58,7 @@ export default class CompletedBottom extends Component {
                         alert('支付成功，系统正在处理')
                     })
 
-                },()=>{
+                }, () => {
 
                 })
             }, err => {
@@ -89,12 +89,15 @@ export default class CompletedBottom extends Component {
         return (
             <View style={styleO.bottomView}>
                 <PayCountDown
+                    end={() => {
+                        if (this.props.refresh)
+                            this.props.refresh();
+                    }}
                     frameStyle={styleO.payCount}
                     beginText='倒计时'
                     endText='付款失效'
                     count={60 * 30}
                     pressAction={() => {
-
                         this.wxPay(order_number);
                     }}
                     changeWithCount={(count) => `${this._formatTime(count)}`}
@@ -108,11 +111,11 @@ export default class CompletedBottom extends Component {
 
                 <Text
                     onPress={() => {//`${I18n.t('confirm_cancel')}`
-                        alertOrder('confirm_cancel',()=>{
+                        alertOrder('confirm_cancel', () => {
                             cancelMallOrder({order_number: order_number}, ret => {
-                            if (this.props.refresh)
-                                this.props.refresh();
-                        })
+                                if (this.props.refresh)
+                                    this.props.refresh();
+                            })
                         });
                     }}
                     style={[styleO.payment, {padding: 14}]}>{I18n.t('cancel_order')}</Text>
@@ -155,11 +158,11 @@ export default class CompletedBottom extends Component {
             <View style={styleO.bottomView}>
                 <TouchableOpacity
                     onPress={() => {
-                        alertOrder('confirm_receipt',()=>{
+                        alertOrder('confirm_receipt', () => {
                             postOrderConfirm({order_number: order_number}, data => {
-                            if (this.props.refresh)
-                                this.props.refresh();
-                        })
+                                if (this.props.refresh)
+                                    this.props.refresh();
+                            })
                         });
                     }}
                     style={styleO.returnedBottom2}>

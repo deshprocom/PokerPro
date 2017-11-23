@@ -103,7 +103,7 @@ export default class PayCountDown extends Component {
             }
         }
         let recodes = timeRecodes.filter(item => item.id === id);
-        console.log('startCountDown', recodes)
+
 
         if (recodes.length === 0) {
             this.startCountDown();
@@ -185,8 +185,8 @@ export default class PayCountDown extends Component {
         return (
             <TouchableOpacity
                 onPress={() => {
-                                  this.props.pressAction && this.props.pressAction()
-                              }}
+                    this.props.pressAction && this.props.pressAction()
+                }}
                 style={[styles.buttonCommonStyle, isDisable ? styles.disableButtonStyle : styles.activeButtonStyle, frameStyle]}
             >
                 <Text style={[styles.txtCommonStyle, isDisable ? styles.disableTxtStyle : styles.activeTxtStyle]}>
