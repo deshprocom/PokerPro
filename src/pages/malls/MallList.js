@@ -34,13 +34,17 @@ export default class MallList extends Component {
 
     renderFlatList = () => {
         return <UltimateFlatList
-            enableEmptySections={true}
             firstLoader={!this.props.isSearch}
             ref={(ref) => this.listView = ref}
             onFetch={this.onFetch}
             keyExtractor={(item, index) => `mallList${index}`}  //this is required when you are using FlatList
             item={this.renderItem}  //this takes two params (item, index)
             numColumns={2}
+            refreshableTitlePull={I18n.t('pull_refresh')}
+            refreshableTitleRelease={I18n.t('release_refresh')}
+            dateTitle={I18n.t('last_refresh')}
+            allLoadedText={I18n.t('no_more')}
+            waitingSpinnerText={I18n.t('loading')}
             emptyView={()=><SearchEmpty/>}
         />
 
