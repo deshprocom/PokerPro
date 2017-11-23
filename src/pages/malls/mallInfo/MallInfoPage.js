@@ -67,7 +67,7 @@ export default class MallInfoPage extends Component {
         return (
             <BaseComponent
                 ref={ref => this.container = ref}>
-                <StatusBar barStyle={"dark-content"}/>
+
                 <ScrollView
                     onScroll={this._onScroll}
                     scrollEventThrottle={16}>

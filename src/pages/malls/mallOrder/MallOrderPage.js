@@ -3,8 +3,7 @@
  */
 import React, {Component} from 'react';
 import {
-    TouchableOpacity, View, TextInput,
-    StyleSheet, Image, Text, ScrollView, Platform
+    TouchableOpacity, View, Platform
 } from 'react-native';
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
@@ -30,7 +29,7 @@ export default class MallOrderPage extends Component {
         return (<View style={[ApplicationStyles.bgContainer, {backgroundColor: '#ECECEE'}]}
                       testID="page_order_list">
             <NavigationBar
-                barStyle={'dark-content'}
+                barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
                 toolbarStyle={{backgroundColor: Colors.white}}
                 title={I18n.t('mall_order')}
                 titleStyle={{color: Colors._161}}
