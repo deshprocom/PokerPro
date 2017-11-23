@@ -71,7 +71,7 @@ export default class Loading extends Component {
 
     static defaultProps = {
         visible: false,
-        cancelable: false,
+        cancelable: true,
         textContent: '',
         color: 'white',
         size: 'large', // 'normal',
