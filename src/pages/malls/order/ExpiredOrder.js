@@ -45,12 +45,6 @@ export default class ExpiredOrder extends PureComponent {
                         <Text style={styleE.price}>{total_product_price}</Text>
                     </View>
 
-                    <View style={styleE.expiredView}>
-                        <Text style={styleE.expiredName}>{I18n.t('effective_product')}</Text>
-                        <View style={{flex: 1}}/>
-                        <Text style={styleE.price}>{}</Text>
-                    </View>
-
                     <View style={styleE.costsView}>
                         <Text style={styleE.costsName}>{I18n.t('cost')}</Text>
                         <View style={{flex: 1}}/>

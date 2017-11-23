@@ -58,7 +58,7 @@ export default class CompletedBottom extends Component {
                         alert('支付成功，系统正在处理')
                     })
 
-                }, () => {
+                },()=>{
 
                 })
             }, err => {
@@ -73,49 +73,54 @@ export default class CompletedBottom extends Component {
     _formatTime = (diff) => {
 
         let min = 0;
-
+        if(min < 10){
+            min = '0'+ min;
+        }
         if (diff >= 60) {
             min = Math.floor(diff / 60);
             diff -= min * 60;
-
+        }
+        if(diff < 10){
+            diff = '0'+ diff;
         }
 
-        return `${I18n.t('pay')} ${min}:${diff}`
+        return `${min}:${diff}`
     };
 
 
     renderPay = (item) => {
         const {order_number} = item;
-        return (
+        return (//${I18n.t('pay')}
             <View style={styleO.bottomView}>
-                <PayCountDown
-                    end={() => {
-                        if (this.props.refresh)
-                            this.props.refresh();
-                    }}
-                    frameStyle={styleO.payCount}
-                    beginText='倒计时'
-                    endText='付款失效'
-                    count={60 * 30}
-                    pressAction={() => {
+                <View style={styleO.payView}>
+                    <View style={{alignItems:'flex-end'}}>
+                        <Text style={{fontSize:14,color:'#FFFFFF',zIndex:999}}>{I18n.t('pay')}</Text>
+                    </View>
+                    <PayCountDown
+                        frameStyle={styleO.payCount}
+                        beginText='倒计时'
+                        count={60 * 30}
+                        pressAction={() => {
                         this.wxPay(order_number);
                     }}
-                    changeWithCount={(count) => `${this._formatTime(count)}`}
-                    id={order_number}
-                    ref={(e) => {
+                        changeWithCount={(count) => `${this._formatTime(count)}`}
+                        id={order_number}
+                        ref={(e) => {
                         this.countDownButton = e
                     }}/>
+                </View>
+
 
 
                 <View style={{height: 24, width: 1, backgroundColor: Colors._ECE}}/>
 
                 <Text
                     onPress={() => {//`${I18n.t('confirm_cancel')}`
-                        alertOrder('confirm_cancel', () => {
+                        alertOrder('confirm_cancel',()=>{
                             cancelMallOrder({order_number: order_number}, ret => {
-                                if (this.props.refresh)
-                                    this.props.refresh();
-                            })
+                            if (this.props.refresh)
+                                this.props.refresh();
+                        })
                         });
                     }}
                     style={[styleO.payment, {padding: 14}]}>{I18n.t('cancel_order')}</Text>
@@ -158,11 +163,11 @@ export default class CompletedBottom extends Component {
             <View style={styleO.bottomView}>
                 <TouchableOpacity
                     onPress={() => {
-                        alertOrder('confirm_receipt', () => {
+                        alertOrder('confirm_receipt',()=>{
                             postOrderConfirm({order_number: order_number}, data => {
-                                if (this.props.refresh)
-                                    this.props.refresh();
-                            })
+                            if (this.props.refresh)
+                                this.props.refresh();
+                        })
                         });
                     }}
                     style={styleO.returnedBottom2}>
@@ -248,9 +253,19 @@ const styleO = StyleSheet.create({
         fontSize: 18,
         color: '#F34A4A'
     },
-    payCount: {
-        height: 37, width: 120, borderRadius: 4,
+    payView:{
+        height: 37,
+        width: 120,
+        borderRadius: 4,
         backgroundColor: '#F34A4A',
-        marginRight: 17, marginLeft: 14
+        marginRight: 17, marginLeft: 14,
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    payCount: {
+        height: 37,
+        backgroundColor: '#F34A4A',
+        alignItems:'flex-start'
     }
 })

@@ -257,7 +257,7 @@ class ShoppingCart extends Component {
     _renderItem = ({item}) => {
         let swipeoutBtns = [
             {
-                text: 'Delete',
+                text: I18n.t('buy_del'),
                 backgroundColor: '#F34A4A',
                 onPress: () => {
                     alertOrder('confirm_delete', () => {
