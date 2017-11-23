@@ -32,7 +32,7 @@ export default class OrderListStatus extends Component {
                 <View style={styles.viewTotal}>
                     <Text style={styles.txtTotal2}>{total_price}</Text>
                     <Text
-                        style={styles.txtTotal1}>共{order_items.length}{I18n.t('pieces')}{I18n.t('malls')} {I18n.t('order_total')}：¥</Text>
+                        style={styles.txtTotal1}>{order_items.length}{I18n.t('pieces')}{I18n.t('malls')} {I18n.t('order_total')}：¥</Text>
                 </View>
                 <CompletedBottom
                     refresh={this.refresh}
