@@ -18,7 +18,7 @@ export default class OrderListStatus extends Component {
             <TouchableOpacity
                 activeOpacity={1}
                 onPress={() => {
-                    global.router.toMallOrderInfo(item)
+                    global.router.toMallOrderInfo(item, this.refresh)
                 }}
                 style={{flex: 1, marginTop: 9}}>
                 <View style={styles.top}>
@@ -31,7 +31,8 @@ export default class OrderListStatus extends Component {
                     lists={order_items}/>
                 <View style={styles.viewTotal}>
                     <Text style={styles.txtTotal2}>{total_price}</Text>
-                    <Text style={styles.txtTotal1}>共{order_items.length}{I18n.t('pieces')}{I18n.t('malls')}  {I18n.t('order_total')}：¥</Text>
+                    <Text
+                        style={styles.txtTotal1}>共{order_items.length}{I18n.t('pieces')}{I18n.t('malls')} {I18n.t('order_total')}：¥</Text>
                 </View>
                 <CompletedBottom
                     refresh={this.refresh}
@@ -49,7 +50,7 @@ export default class OrderListStatus extends Component {
     render() {
 
         return <UltimateFlatList
-            ref={ref =>this.ultimate = ref}
+            ref={ref => this.ultimate = ref}
             onFetch={this.onFetch}
             keyExtractor={(item, index) => `${this.props.status}${index}`}
             item={this.renderItem}
