@@ -10,7 +10,8 @@ import {
     View,
     Text,
     Modal,
-    ActivityIndicator
+    ActivityIndicator,
+    TouchableOpacity
 } from 'react-native';
 import I18n from 'react-native-i18n';
 
@@ -71,7 +72,7 @@ export default class Loading extends Component {
 
     static defaultProps = {
         visible: false,
-        cancelable: true,
+        cancelable: false,
         textContent: '',
         color: 'white',
         size: 'large', // 'normal',
@@ -121,12 +122,16 @@ export default class Loading extends Component {
             );
 
         const spinner = (
-            <View style={[
-                styles.container,
-                {backgroundColor: this.props.overlayColor}
-            ]} key={`spinner_${Date.now()}`}>
+            <TouchableOpacity
+                onPress={() => {
+                    this.close();
+                }}
+                style={[
+                    styles.container,
+                    {backgroundColor: this.props.overlayColor}
+                ]} key={`spinner_${Date.now()}`}>
                 {this.props.children ? this.props.children : this._renderDefaultContent()}
-            </View>
+            </TouchableOpacity>
         );
 
         return (
