@@ -32,7 +32,6 @@ import ImagePicker from 'react-native-image-crop-picker';
 import Badge from './Badge';
 import BaseComponent from './BaseComponent';
 import LogisticsWeb from './logistics/LogisticsWeb';
-import FitImage from 'react-native-fit-image';
 
 export {
     BtnLong, BtnSoild, NavigationBar,
@@ -60,6 +59,5 @@ export {
     ImagePicker,
     Badge,
     BaseComponent,
-    LogisticsWeb,
-    FitImage
+    LogisticsWeb
 }
