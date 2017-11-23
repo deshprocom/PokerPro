@@ -23,11 +23,11 @@ export default class ProductItem extends PureComponent {
     };
 
     renderItem = ({item}) => {
-        const {title, original_price, price, number, sku_value, image, refunded} = item;
+        const {title, original_price, price, number, sku_value, image, refunded,product_id} = item;
         return <TouchableOpacity
             style={styleR.renderItem}
             onPress={()=>{
-                {/*global.router.toMallInfoPage({id:product_id})*/}
+                global.router.toMallInfoPage({id:product_id})
             }}>
 
             <ImageLoad style={styleR.mallImg} source={{uri: image}}/>

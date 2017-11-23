@@ -83,7 +83,7 @@ class ShoppingCart extends Component {
         return (
             <View style={styleS.bottomView}>
                 <TouchableOpacity
-
+                    style={{flexDirection:'row',alignItems:'center'}}
                     onPress={() => {
                         this.setState({
                             selectAll: !this.state.selectAll
@@ -91,12 +91,13 @@ class ShoppingCart extends Component {
                         this._pressAll()
                     }}>
                     <Image style={styleS.radioImg} source={this.state.selectAll ? Images.radioSelected : Images.radio}/>
+                    <Text style={styleS.selectedAll}>{I18n.t('selectAll')}</Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <Text style={styleS.total}>{I18n.t('ticket_price')}</Text>
+                        <Text style={styleS.selectedPrice}>{this.total_price()}</Text>
+                    </View>
                 </TouchableOpacity>
-                <Text style={styleS.selectedAll}>{I18n.t('selectAll')}</Text>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Text style={styleS.total}>{I18n.t('ticket_price')}</Text>
-                    <Text style={styleS.selectedPrice}>{this.total_price()}</Text>
-                </View>
+
                 <View style={{flex: 1}}/>
                 <TouchableOpacity style={styleS.settlementView}
                                   onPress={() => {
@@ -134,7 +135,7 @@ class ShoppingCart extends Component {
         return (
             <View style={styleS.bottomView}>
                 <TouchableOpacity
-
+                    style={{flexDirection:'row',alignItems:'center'}}
                     onPress={() => {
                         this.setState({
                             selectAll: !this.state.selectAll
@@ -142,8 +143,8 @@ class ShoppingCart extends Component {
                         this._pressAll()
                     }}>
                     <Image style={styleS.radioImg} source={this.state.selectAll ? Images.radioSelected : Images.radio}/>
+                    <Text style={styleS.selectedAll}>{I18n.t('selectAll')}</Text>
                 </TouchableOpacity>
-                <Text style={styleS.selectedAll}>{I18n.t('selectAll')}</Text>
                 <View style={{flex: 1}}/>
                 <TouchableOpacity
                     style={styleS.settlementView2}
