@@ -37,7 +37,7 @@ export default class MallInfoPage extends Component {
     }
 
     topBar = () => {
-        return (<View style={[styleM.topBar, {backgroundColor: 'rgba(255,255,255,' + this.state.opacity + ')',zIndex:999}]}>
+        return (<View style={[styleM.topBar, {backgroundColor: 'rgba(255,255,255,' + this.state.opacity + ')'}]}>
             <TouchableOpacity
                 testID="btn_bar_left"
                 style={styleM.popBtn}
