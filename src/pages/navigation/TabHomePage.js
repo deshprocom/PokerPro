@@ -15,10 +15,11 @@ import {connect} from 'react-redux';
 import {SearchPage} from './SearchPage';
 import {SHOW_BACK_TOP, HIDE_BACK_TOP, BACK_TOP} from '../../actions/ActionTypes';
 import {getDispatchAction, alertRefresh} from '../../utils/ComonHelper';
-import {Loading} from '../../components';
+import {BaseComponent} from '../../components';
 import ActivityModel from '../message/ActivityModel';
 import {getActivityPush} from '../../services/AccountDao';
 import StorageKey from '../../configs/StorageKey';
+
 
 class TabHomePage extends Component {
     state = {
@@ -32,7 +33,6 @@ class TabHomePage extends Component {
         next_id: '0',
         keyword: '',
         informationY: 0,
-        isLoading: false,
         isRefreshing: false
     };
 
@@ -44,9 +44,7 @@ class TabHomePage extends Component {
         }
 
         if (newProps.actionType === 'SWITCH_LANGUAGE') {
-            this.setState({
-                isLoading: true
-            });
+
             setTimeout(this._getData, 300)
         }
     }
@@ -58,9 +56,7 @@ class TabHomePage extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            isLoading: true
-        });
+
         setTimeout(this._getData, 300)
     }
 
@@ -97,12 +93,11 @@ class TabHomePage extends Component {
     };
 
     _getData = () => {
-
+        this.container.open();
         this._getPushActivity();
         getMainBanners(data => {
             this.setState({
-                banners: data.banners,
-                isLoading: false
+                banners: data.banners
             });
 
         }, err => {
@@ -179,7 +174,8 @@ class TabHomePage extends Component {
 
         return (
 
-            <View style={{flex: 1}}>
+            <BaseComponent
+                ref={ref => this.container = ref}>
                 <SearchPage
                     unread={this.props.unread}/>
                 <ScrollView
@@ -211,8 +207,7 @@ class TabHomePage extends Component {
                 <ActivityModel
                     ref={ref => this.activityModel = ref}/>
 
-                <Loading visible={this.state.isLoading}/>
-            </View>
+            </BaseComponent>
 
         );
     }
