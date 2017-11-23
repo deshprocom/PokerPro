@@ -361,7 +361,7 @@ class ShoppingCart extends Component {
                             dataHosts: newDataHosts
                         })
                     }}>
-                    <Image style={styleS.buyImgAdd} source={Images.add}/>
+                    <Image style={styleS.buyImgAdd} source={item.number >= stock?Images.back:Images.add}/>
                 </TouchableOpacity>
             </View>
         )

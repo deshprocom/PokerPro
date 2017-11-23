@@ -248,7 +248,7 @@ const styleP = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
-        zIndex: 99
+        zIndex: 999
     },
     specificationInfo: {
         height: '100%',
