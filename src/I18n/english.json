@@ -422,7 +422,7 @@
   "cost": "Delivery fee",
   "payment": "Payment：",
   "orderSubmit": "Submit Order",
-  "settlement": "Place your Order",
+  "settlement": "Checkout",
   "selectAll": "Select All",
   "cart": "Cart",
   "expiredOrder":"Sorry,products are invalid！",

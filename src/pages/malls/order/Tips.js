@@ -32,7 +32,8 @@ export default class Tips extends PureComponent {
 }
 const styleT = StyleSheet.create({
     tipsView:{
-        height:46,
+        paddingTop:6,
+        paddingBottom:6,
         backgroundColor:'#F34A4A',
         opacity:0.6,
         flexDirection:'row-reverse',
