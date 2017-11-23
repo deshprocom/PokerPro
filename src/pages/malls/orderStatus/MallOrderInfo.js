@@ -48,7 +48,11 @@ export default class MallOrderInfo extends PureComponent {
                     toolbarStyle={{backgroundColor: 'white'}}
                     leftBtnIcon={Images.mall_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                    leftBtnPress={() => global.router.pop()}
+                    leftBtnPress={() => {
+                        global.router.pop();
+                        const {listRefresh} = this.props.params;
+                        listRefresh && listRefresh();
+                    }}
                     titleStyle={{color: Colors._161}}
                     title={I18n.t('order_info')}/>
 

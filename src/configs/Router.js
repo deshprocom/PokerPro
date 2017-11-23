@@ -27,8 +27,8 @@ export default class Router {
 
     }
 
-    replace(route){
-        Actions.replace(route.name,{params:route.params})
+    replace(route) {
+        Actions.replace(route.name, {params: route.params})
     }
 
 
@@ -48,7 +48,7 @@ export default class Router {
     toLogisticsWeb(shipments) {
         this.stackPush({
             name: 'LogisticsWeb',
-            params:{shipments:shipments}
+            params: {shipments: shipments}
         })
     }
 
@@ -700,14 +700,17 @@ export default class Router {
         })
     }
 
-    toMallOrderInfo(item) {
+    toMallOrderInfo(item, listRefresh) {
         this.stackPush({
             name: 'MallOrderInfo',
-            params: {orderDetail: item}
+            params: {
+                orderDetail: item,
+                listRefresh: listRefresh
+            }
         })
     }
 
-    replaceMallOrderInfo(item){
+    replaceMallOrderInfo(item) {
         this.replace({
             name: 'MallOrderInfo',
             params: {orderDetail: item}
