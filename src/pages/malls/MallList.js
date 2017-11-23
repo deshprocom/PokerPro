@@ -133,7 +133,7 @@ export default class MallList extends Component {
                                      global.router.toMallInfoPage(item)
                                  }}>
             <Image
-                resizeMode={'cover'}
+                resizeMode={'contain'}
                 style={styles.imgThem}
                 source={{uri: icon}}/>
 

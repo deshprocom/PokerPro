@@ -5,6 +5,7 @@ import I18n from 'react-native-i18n';
 import Swiper from 'react-native-swiper';
 import {isEmptyObject, moneyFormat} from '../../../utils/ComonHelper'
 
+
 export default class MallInfoPageTopBar extends Component {
 
 
@@ -37,8 +38,10 @@ export default class MallInfoPageTopBar extends Component {
                         key={`banner${index}`}
                         onPress={() => this._clickBanner(index)}
                         activeOpacity={1}>
-                        <Image style={{height: 362, width: '100%'}}
-                               source={{uri: item.preview}}/>
+                        <Image
+                            resizeMode={'contain'}
+                            style={{height: 362, width: '100%'}}
+                            source={{uri: item.large}}/>
                     </TouchableOpacity>
 
                 })}
@@ -108,7 +111,7 @@ const styleM = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         marginTop: 3
     },
-    textPrice1:{
+    textPrice1: {
         fontSize: 18,
         color: '#F34A4A',
         marginLeft: 17,

@@ -186,7 +186,10 @@ export default class ProductSpecificationInfo extends PureComponent {
                 duration={300}
                 animation={'fadeInUp'}
                 style={styleP.page}>
-                <Image style={styleP.specificationInfoTopImg} source={{uri: tempImg}}/>
+                <Image
+                    resizeMode={'contain'}
+                    style={styleP.specificationInfoTopImg}
+                    source={{uri: tempImg}}/>
                 <View style={styleP.specificationInfo}>
 
                     <View style={styleP.specificationInfoTop}>
@@ -267,8 +270,8 @@ const styleP = StyleSheet.create({
         marginLeft: 17,
         position: 'absolute',
         marginTop: 115,
-        backgroundColor: Colors._ECE,
-        zIndex:9999
+        backgroundColor: 'white',
+        zIndex: 9999
     },
     specificationInfoTopM: {
         flexDirection: 'column',
