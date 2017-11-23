@@ -70,7 +70,10 @@ export default class ShipAddress extends PureComponent {
                             <Text style={styleS.shipAddrTxt1}>{consignee}</Text>
                             <Text style={styleS.mobile}>{mobile}</Text>
                         </View>
-                        <Text style={styleS.shipAddrTxt2}>{`${address} ${address_detail}`}</Text>
+                        <View style={{width:290}}>
+                            <Text style={styleS.shipAddrTxt2}>{`${address} ${address_detail}`}</Text>
+                        </View>
+
                     </View>
                     <View style={{flex: 1}}/>
                     <View style={styleS.shipAddrTouch}>

@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         width: 270,
         backgroundColor: Colors._ECE,
         borderRadius: 3,
-        marginLeft: 47,
+        marginLeft: 17,
         flexDirection: 'row',
         alignItems: 'center'
     },
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     badge: {
         position: 'absolute',
         top: 5,
-        right: 5
+        right:'20%'
     }
 
 });

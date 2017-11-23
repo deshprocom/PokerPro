@@ -54,6 +54,11 @@ export default class OrderListStatus extends Component {
             onFetch={this.onFetch}
             keyExtractor={(item, index) => `${this.props.status}${index}`}
             item={this.renderItem}
+            refreshableTitlePull={I18n.t('pull_refresh')}
+            refreshableTitleRelease={I18n.t('release_refresh')}
+            dateTitle={I18n.t('last_refresh')}
+            allLoadedText={I18n.t('no_more')}
+            waitingSpinnerText={I18n.t('loading')}
         />
 
     }
