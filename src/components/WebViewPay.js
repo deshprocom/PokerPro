@@ -128,7 +128,7 @@ export default class WebViewPay extends Component {
     };
 
 
-    _renderLoading() {
+    _renderLoading =()=> {
         return (
             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                 <ActivityIndicator color={Colors._CCC} size="large"/>
@@ -137,11 +137,11 @@ export default class WebViewPay extends Component {
         );
     }
 
-    _renderError() {
+    _renderError =()=> {
         return (
             <TouchableOpacity
                 onPress={() => {
-                    this.webView.reload()
+                    this.webView.reload();
                 }}
                 style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                 <Text> 出错了, 重新刷新下吧～</Text>
