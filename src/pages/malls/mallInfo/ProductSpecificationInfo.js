@@ -114,7 +114,7 @@ export default class ProductSpecificationInfo extends PureComponent {
     optionTypesView = (option_types) => {
         let that = this;
 
-        return <ScrollView>
+        return <View>
             {option_types.map((x, index, array) => {
 
                 return <View
@@ -131,9 +131,7 @@ export default class ProductSpecificationInfo extends PureComponent {
                 {this.buyQuantity()}
             </View>
 
-            <View style={{height: 50}}/>
-
-        </ScrollView>
+        </View>
     };
 
 
@@ -211,11 +209,12 @@ export default class ProductSpecificationInfo extends PureComponent {
                         <Image style={styleP.closeImg} source={Images.close}/>
                     </TouchableOpacity>
 
-
-                    {this.optionTypesView(optionTypes)}
+                    <ScrollView>
+                        {this.optionTypesView(optionTypes)}
+                        <View style={{height:80}}/>
+                    </ScrollView>
 
                 </View>
-
 
                 <View style={styleP.confirmView}>
                     <TouchableOpacity
@@ -255,7 +254,7 @@ const styleP = StyleSheet.create({
         zIndex: 999
     },
     specificationInfo: {
-        height: '100%',
+        marginBottom:80,
         marginTop: 160,
         backgroundColor: '#EEEEEE'
     },
