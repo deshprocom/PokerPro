@@ -450,7 +450,7 @@ const styleS = StyleSheet.create({
         width: 100,
         height: 96,
         marginLeft: 11,
-        resizeMode:'contain'
+        resizeMode:'contain',
     },
     TxtView: {
         flex: 1,
