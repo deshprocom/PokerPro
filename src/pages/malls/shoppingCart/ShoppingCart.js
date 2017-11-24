@@ -385,7 +385,7 @@ class ShoppingCart extends Component {
                 <ScrollView>
                     <FlatList
                         style={{paddingTop: 6}}
-                        data={this.state.dataHosts}
+                        data={this.state.dataHosts.reverse()}
                         showsHorizontalScrollIndicator={false}
                         ItemSeparatorComponent={this._separator}
                         renderItem={this._renderItem}
