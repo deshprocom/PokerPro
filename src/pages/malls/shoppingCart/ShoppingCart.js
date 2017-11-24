@@ -28,7 +28,7 @@ class ShoppingCart extends Component {
             x.isSelect = false;
         });
         this.setState({
-            dataHosts: commodities
+            dataHosts: commodities.reverse()
         })
     }
 
@@ -385,7 +385,7 @@ class ShoppingCart extends Component {
                 <ScrollView>
                     <FlatList
                         style={{paddingTop: 6}}
-                        data={this.state.dataHosts.reverse()}
+                        data={this.state.dataHosts}
                         showsHorizontalScrollIndicator={false}
                         ItemSeparatorComponent={this._separator}
                         renderItem={this._renderItem}
