@@ -3,7 +3,7 @@
  */
 import {create, SERVER_ERROR, TIMEOUT_ERROR, NETWORK_ERROR} from 'apisauce';
 import Api from '../configs/ApiConfig';
-import {clearLoginUser} from '../utils/ComonHelper';
+import {clearLoginUser, showToast} from '../utils/ComonHelper';
 import StorageKey from '../configs/StorageKey';
 import {NetworkInfo} from 'react-native-network-info';
 import {Platform} from 'react-native';
@@ -121,6 +121,7 @@ export function post(url, body, resolve, reject) {
 
         }).catch((error) => {
         router.log(TAG, error);
+        showToast(error);
         reject('Network response was not ok.');
     });
 }
@@ -142,7 +143,7 @@ export function del(url, body, resolve, reject) {
             }
 
         }).catch((error) => {
-
+        showToast(error);
         router.log(TAG, error);
         reject('Network response was not ok.');
     });
@@ -186,6 +187,7 @@ export function get(url, resolve, reject, params = {}) {
             }
 
         }).catch((error) => {
+        showToast(error);
         router.log(TAG, error);
         reject('Network response was not ok.');
     });
@@ -201,14 +203,19 @@ function netError(response, reject) {
         router.popToLoginFirstPage();
     }
 
+    let msgErr = '';
     if (response.status === 809)
-        reject(I18n.t('net_809'));
+        msgErr = I18n.t('net_809');
     else if (response.problem === SERVER_ERROR)
-        reject(I18n.t('SERVER_ERROR'));
+        msgErr = I18n.t('SERVER_ERROR');
     else if (response.problem === TIMEOUT_ERROR)
-        reject(I18n.t('TIMEOUT_ERROR'));
+        msgErr = I18n.t('TIMEOUT_ERROR');
     else if (response.problem === NETWORK_ERROR)
-        reject(I18n.t('NETWORK_ERROR'));
+        msgErr = I18n.t('NETWORK_ERROR');
+
+    showToast(msgErr);
+    reject(msgErr);
+
 }
 
 
