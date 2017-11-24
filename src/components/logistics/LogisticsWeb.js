@@ -4,7 +4,7 @@
 import React, {Component} from 'react';
 import {
     View, WebView, StyleSheet, Text, ActivityIndicator,
-    Platform
+    Platform, TouchableOpacity
 } from 'react-native';
 import {NavigationBar} from '../../components';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
@@ -59,24 +59,24 @@ export default class LogisticsWeb extends Component {
         return `init(${JSON.stringify(data)})`
     }
 
-    _renderLoading() {
+    _renderLoading = () => {
         return (
             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                <ActivityIndicator color={'#cccccc'} size="large"/>
+                <ActivityIndicator color={Colors._CCC} size="large"/>
 
             </View>
         );
     }
 
-    _renderError() {
+    _renderError = () => {
         return (
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                <Text
-                    style={{padding: 10}}
-                    onPress={() => {
-                        this.webView.reload();
-                    }}> 出错了, 重新刷新下吧～</Text>
-            </View>
+            <TouchableOpacity
+                onPress={() => {
+                    this.webView.reload();
+                }}
+                style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                <Text> 出错了, 重新刷新下吧～</Text>
+            </TouchableOpacity>
         );
     }
 }

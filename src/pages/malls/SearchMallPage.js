@@ -2,7 +2,8 @@ import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {
     StyleSheet, Text, View, Image,
-    TouchableOpacity, TextInput,StatusBar
+    TouchableOpacity, TextInput, StatusBar,
+    Platform
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     txtSearch: {
         color: Colors._161,
         fontSize: 12,
-        height: 30,
+        height: Platform.OS === 'ios' ? 30 : 40,
         width: 210
     },
     btnCat: {
@@ -132,9 +133,9 @@ export default class SearchMallPage extends PureComponent {
                     ref={ref => this.mallList = ref}
                     isSearch={true}/>
                 {this.state.submit ? null : <View style={styles.viewSearch}>
-                        {this.resentBlank()}
-                        {this.tabBlank()}
-                    </View>}
+                    {this.resentBlank()}
+                    {this.tabBlank()}
+                </View>}
 
 
             </View>
