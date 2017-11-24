@@ -65,39 +65,37 @@ export default class MallInfoPage extends Component {
     render() {
         const {specShow, product, selectProduct} = this.state;
         return (
-            <BaseComponent
-                ref={ref => this.container = ref}>
+            <View style={{flex:1}}>
+                <BaseComponent
+                    ref={ref => this.container = ref}>
 
-                <ScrollView
-                    onScroll={this._onScroll}
-                    scrollEventThrottle={16}>
+                    <ScrollView
+                        onScroll={this._onScroll}
+                        scrollEventThrottle={16}>
 
-                    <MallInfoPageTopBar
-                        product={product}/>
+                        <MallInfoPageTopBar
+                            product={product}/>
 
-                    <ProductSpecification
-                        selectProduct={selectProduct}
-                        showSpecInfo={this.showSpecInfo}
-                    />
-                    <ShipAddress/>
-                    <MallIntroduction
-                        product={product}/>
-                    <View style={{height: 50}}/>
-                </ScrollView>
+                        <ProductSpecification
+                            selectProduct={selectProduct}
+                            showSpecInfo={this.showSpecInfo}
+                        />
+                        <ShipAddress/>
+                        <MallIntroduction
+                            product={product}/>
+                        <View style={{height: 50}}/>
+                    </ScrollView>
 
-
+                </BaseComponent>
                 {this.topBar()}
-
                 <MallInfoBottom
                     showSpecInfo={this.showSpecInfo}/>
 
                 {specShow ? <ProductSpecificationInfo
-                    selectProduct={selectProduct}
-                    product={product}
-                    showSpecInfo={this.showSpecInfo}/> : null}
-
-
-            </BaseComponent>
+                        selectProduct={selectProduct}
+                        product={product}
+                        showSpecInfo={this.showSpecInfo}/> : null}
+            </View>
 
         );
     }
