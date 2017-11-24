@@ -79,15 +79,16 @@ class SearchRacesPage extends Component {
         return <TouchableOpacity
             onPress={this._backToMonth}
             style={{
-                height: 24,
-                width: 50,
+                height: 27,
+                width: 70,
                 backgroundColor: 'red',
                 position: 'absolute',
                 bottom: 30,
                 alignItems: 'center',
                 justifyContent: 'center',
                 borderRadius: 12,
-                alignSelf: 'center'
+                alignSelf: 'center',
+                opacity:0.8,
             }}
 
         >
@@ -502,7 +503,8 @@ const styles = StyleSheet.create({
     },
     currentImg:{
         width:70,
-        height:27
+        height:27,
+        resizeMode:'contain'
     }
 
 });
