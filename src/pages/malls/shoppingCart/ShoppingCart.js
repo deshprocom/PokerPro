@@ -28,7 +28,7 @@ class ShoppingCart extends Component {
             x.isSelect = false;
         });
         this.setState({
-            dataHosts: commodities
+            dataHosts: commodities.reverse()
         })
     }
 

@@ -56,6 +56,7 @@ export default class MallInfoPageTopBar extends Component {
             return;
         const {title, master} = this.props.product;
         const {price, original_price, origin_point} = master;
+        console.log("product:",this.props.product);
         return <View>
             <View style={styleM.mallInfoTop}>
                 <Text style={styleM.mallInfoTopText}>{title}</Text>
@@ -63,11 +64,11 @@ export default class MallInfoPageTopBar extends Component {
             <View style={styleM.textPrices}>
                 <Text style={styleM.textPrice1}>¥</Text><Text style={styleM.textPrice}>{price}</Text>
                 <Text style={styleM.textOriginPrice}>¥{original_price}</Text>
-                <Text style={styleM.discount}>2.3折</Text>
+                {/*<Text style={styleM.discount}>2.3折</Text>*/}
             </View>
             <View style={styleM.locations}>
                 {/*<View style={styleM.return7}><Text style={styleM.return7Txt}>{I18n.t('returned')}</Text></View>*/}
-                <Text style={styleM.freight}>{I18n.t('cost')}：¥12.00</Text>
+                {/*<Text style={styleM.freight}>{I18n.t('cost')}：¥12.00</Text>*/}
                 <View style={{flex: 1}}/>
                 <Text style={styleM.location}>{origin_point}</Text>
             </View>

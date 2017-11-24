@@ -30,7 +30,7 @@ export default class ShipAddress extends Component {
                     router.toAdrListPage(this.props, this._selectAdr, {});
             }}
             style={styleS.shipAddr}>
-            <View style={{marginTop: 12}}>
+            <View style={{marginTop: 12,width:320}}>
                 <View style={{flexDirection: 'row'}}>
                     <Text style={styleS.shipAddrTxt1}>{consignee}</Text>
                     <Text style={styleS.shipAddrTxt1}>{mobile}</Text>
