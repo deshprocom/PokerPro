@@ -10,6 +10,7 @@ import {styles} from './Styles';
 import {Images} from '../../Themes';
 import Swiper from 'react-native-swiper';
 import {BannerStatus} from '../../configs/Status';
+import MarqueeText from 'react-native-marquee';
 
 export default class Headlines extends Component {
     render() {
@@ -45,14 +46,19 @@ export default class Headlines extends Component {
                         key={key}
                         onPress={() => this._clickBanner(item)}
                         activeOpacity={1}>
-                        <Text
-                            numberOfLines={1}
+                        <MarqueeText
+
                             style={{
                                 marginLeft: 15,
                                 fontSize: 13,
                                 color: '#666666'
                             }}
-                        >{item.title}</Text>
+                            duration={3000}
+                            marqueeOnStart
+                            loop
+                            marqueeDelay={1000}
+                            marqueeResetDelay={1000}
+                        >{item.title}</MarqueeText>
                     </TouchableOpacity>
 
                 })}
