@@ -108,7 +108,8 @@ export default {
     mall_order_cancel: mall_order_cancel,
     wx_paid_result: wx_paid_result,
     product_order_detail: product_order_detail,
-    product_order_confirm: product_order_confirm
+    product_order_confirm: product_order_confirm,
+    logistics_info:logistics_info
 }
 
 
@@ -121,6 +122,10 @@ function getUserId() {
 
 const page_size = 10;
 
+export function logistics_info(body) {
+    const {shipping_number,express_code,order_number} = body;
+    return `shipments/search?shipping_number=${shipping_number}&express_code=${express_code}&order_number=${order_number}`;
+}
 
 export function product_order_confirm(body) {
     const {order_number} = body;
