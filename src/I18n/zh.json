@@ -464,5 +464,6 @@
   "confirm_receipt":"确认收货？",
   "confirm_delete":"确认删除？",
   "adr_empty":"请填写收货地址",
-  "add_cart_ok":"加入购物车成功"
+  "add_cart_ok":"加入购物车成功",
+  "add_cart":"加入购物车"
 }

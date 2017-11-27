@@ -463,6 +463,7 @@
   "confirm_receipt":"Delivery Confirmation?",
   "confirm_delete":"Delete Confirmation?",
   "adr_empty":"Please add your delivery address",
-  "add_cart_ok":"Added to Cart"
+  "add_cart_ok":"Added to Cart",
+  "add_cart":"Add to Cart"
 }
 

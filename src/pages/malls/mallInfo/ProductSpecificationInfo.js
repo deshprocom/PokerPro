@@ -3,7 +3,7 @@ import {View, Text, Image, StyleSheet, TouchableOpacity, ScrollView} from 'react
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import * as Animatable from 'react-native-animatable';
 import I18n from 'react-native-i18n';
-import {showToast, strNotNull, pushProductToCart} from '../../../utils/ComonHelper';
+import {showToast, strNotNull, pushProductToCart,isEmptyObject} from '../../../utils/ComonHelper';
 import _ from 'lodash';
 
 
@@ -218,7 +218,12 @@ export default class ProductSpecificationInfo extends PureComponent {
 
                 <View style={styleP.confirmView}>
                     <TouchableOpacity
-                        onPress={this.addCarts}
+                        onPress={()=>{
+                            if (isEmptyObject(global.login_user))
+                                global.router.toLoginFirstPage();
+                             else
+                                 this.addCarts()
+                        }}
                         style={styleP.confirm}>
                         <Text style={styleP.confirmTxt}>{I18n.t('confirm')}</Text>
                     </TouchableOpacity>
