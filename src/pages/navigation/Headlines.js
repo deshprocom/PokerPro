@@ -13,6 +13,9 @@ import {BannerStatus} from '../../configs/Status';
 import MarqueeText from 'react-native-marquee';
 
 export default class Headlines extends Component {
+    state={
+      time:5
+    };
     render() {
 
         return (
@@ -33,7 +36,7 @@ export default class Headlines extends Component {
             flex: 1, height: 30, paddingRight: 17
         }}>
             {this.props.headlines.length > 0 ? <Swiper
-                autoplayTimeout={4}
+                autoplayTimeout={this.state.time}
                 renderPagination={() => null}
                 horizontal={false}
                 autoplay>
@@ -53,11 +56,9 @@ export default class Headlines extends Component {
                                 fontSize: 13,
                                 color: '#666666'
                             }}
-                            duration={3000}
+                            duration={5000}
                             marqueeOnStart
                             loop
-                            marqueeDelay={1000}
-                            marqueeResetDelay={1000}
                         >{item.title}</MarqueeText>
                     </TouchableOpacity>
 
