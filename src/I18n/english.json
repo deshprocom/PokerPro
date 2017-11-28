@@ -468,6 +468,10 @@
   "logistics_info":"物流详情",
   "online_service":"在线客服",
   "official_phone":"官方电话",
-  "carrier_source":"承运来源"
+  "carrier_source":"承运来源",
+  "0":"无轨迹",
+  "2":"在途中",
+  "3":"签收",
+  "4":"问题件"
 }
 
