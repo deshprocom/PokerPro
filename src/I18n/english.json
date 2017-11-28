@@ -464,6 +464,10 @@
   "confirm_delete":"Delete Confirmation?",
   "adr_empty":"Please add your delivery address",
   "add_cart_ok":"Added to Cart",
-  "add_cart":"Add to Cart"
+  "add_cart":"Add to Cart",
+  "logistics_info":"物流详情",
+  "online_service":"在线客服",
+  "official_phone":"官方电话",
+  "carrier_source":"承运来源"
 }
 
