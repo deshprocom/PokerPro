@@ -5,6 +5,16 @@ import I18n from 'react-native-i18n';
 import {NavigationBar, ActionSheet, ImagePicker} from '../../../components';
 import {strNotNull, isEmptyObject} from '../../../utils/ComonHelper';
 
+const picker = {
+    width: 500,
+    height: 500,
+    compressImageMaxWidth: 800,
+    compressImageMaxHeight: 800,
+    compressImageQuality: 0.5,
+    cropping: false,
+    multiple: true
+};
+
 export default class UploadDocument extends PureComponent {
     state={
         localImg: {},
