@@ -60,7 +60,7 @@ export default class Headlines extends Component {
                                    backgroundColor:'white'
                             }}
                                 scrollDuration={5.0}
-                                isRepeat={false}
+                                isRepeat={true}
                             >{item.title}</MarqueeLabel>
                         </TouchableOpacity>
 
