@@ -233,7 +233,7 @@ export function getDateDiff(dateTimeStamp) {
     return result;
 }
 
-export function payWx(data, callback,cancelBack) {
+export function payWx(data, callback, cancelBack) {
     const body = {
         partnerId: data.partnerid,  // 商家向财付通申请的商家id
         prepayId: data.prepayid,   // 预支付订单
@@ -464,12 +464,14 @@ export function isEmptyObject(e) {
 
 export function showToast(msg) {
 
-    const toast = Toast.show(msg, {
-        testID: 'deshproToast', position: 200, duration: Toast.durations.SHORT,
-        onHidden: (siblingManager) => {
-            Toast.hide(toast)
-        }
-    });
+    if (strNotNull(msg)) {
+        const toast = Toast.show(msg, {
+            testID: 'deshproToast', position: 200, duration: Toast.durations.SHORT,
+            onHidden: (siblingManager) => {
+                Toast.hide(toast)
+            }
+        });
+    }
 
 }
 
@@ -856,9 +858,10 @@ export function setDispatchAction(key, func) {
 export function getDispatchAction() {
     return Actions;
 }
+
 //正在开发提示
-export function alertOrder(str,callback) {
-    Alert.alert(I18n.t(str),'',[{
+export function alertOrder(str, callback) {
+    Alert.alert(I18n.t(str), '', [{
         text: `${I18n.t('cancel')}`, onPress: () => {
 
         }
