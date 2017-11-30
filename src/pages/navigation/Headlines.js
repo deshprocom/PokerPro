@@ -10,12 +10,13 @@ import {styles} from './Styles';
 import {Images} from '../../Themes';
 import Swiper from 'react-native-swiper';
 import {BannerStatus} from '../../configs/Status';
-import MarqueeText from 'react-native-marquee';
+import MarqueeLabel from '@remobile/react-native-marquee-label';
 
 export default class Headlines extends Component {
-    state={
-      time:5
+    state = {
+        time: 5
     };
+
     render() {
 
         return (
@@ -36,35 +37,36 @@ export default class Headlines extends Component {
             flex: 1, height: 30, paddingRight: 17
         }}>
             {this.props.headlines.length > 0 ? <Swiper
-                autoplayTimeout={this.state.time}
-                renderPagination={() => null}
-                horizontal={false}
-                autoplay>
-                {this.props.headlines.map((item, key) => {
-                    return <TouchableOpacity
-                        style={{
+                    autoplayTimeout={this.state.time}
+                    renderPagination={() => null}
+                    horizontal={false}
+                    autoplay>
+                    {this.props.headlines.map((item, key) => {
+                        return <TouchableOpacity
+                            style={{
                             height: 30,
                             justifyContent: 'center'
                         }}
-                        key={key}
-                        onPress={() => this._clickBanner(item)}
-                        activeOpacity={1}>
-                        <MarqueeText
+                            key={key}
+                            onPress={() => this._clickBanner(item)}
+                            activeOpacity={1}>
+                            <MarqueeLabel
 
-                            style={{
+                                style={{
                                 marginLeft: 15,
                                 fontSize: 13,
-                                color: '#666666'
+                                color: '#666666',
+                                   flex:1,
+                                   backgroundColor:'white'
                             }}
-                            duration={5000}
-                            marqueeOnStart
-                            loop
-                        >{item.title}</MarqueeText>
-                    </TouchableOpacity>
+                                scrollDuration={5.0}
+                                isRepeat={false}
+                            >{item.title}</MarqueeLabel>
+                        </TouchableOpacity>
 
-                })}
+                    })}
 
-            </Swiper> : null}
+                </Swiper> : null}
         </View>
     }
 

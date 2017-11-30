@@ -146,6 +146,7 @@ export default class CompletedBottom extends Component {
                 style={styleO.returnedBottom}>
                 <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>
             </TouchableOpacity>
+
         </View>
     };
 
@@ -188,6 +189,14 @@ export default class CompletedBottom extends Component {
                     }}
                     style={styleO.customer}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+
+                    onPress={() => {
+                    global.router.toReturnPage(orderItem)
+                }}
+                    style={styleO.returnedBottom}>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('refund_mall_amount')}</Text>
                 </TouchableOpacity>
 
             </View>
