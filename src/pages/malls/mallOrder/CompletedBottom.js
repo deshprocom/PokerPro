@@ -90,7 +90,7 @@ export default class CompletedBottom extends Component {
 
     renderPay = (item) => {
         const {order_number} = item;
-        return (//${I18n.t('pay')}
+        return (
             <View style={styleO.bottomView}>
                 <View style={styleO.payView}>
                     <View style={{alignItems:'flex-end'}}>
@@ -129,7 +129,6 @@ export default class CompletedBottom extends Component {
     };
 
     paidOrder = (orderItem) => {
-        let body = {shipping_number:"2323232323",express_code:"YTO",order_number:"2171127170600001"}
         return <View style={styleO.bottomView}>
             <TouchableOpacity
                 onPress={() => {
@@ -141,7 +140,7 @@ export default class CompletedBottom extends Component {
             <TouchableOpacity
 
                 onPress={() => {
-                    global.router.toLogisticsWeb(body)
+                    global.router.toLogisticsPage(orderItem)
                 }}
                 style={styleO.returnedBottom}>
                 <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>
@@ -151,13 +150,12 @@ export default class CompletedBottom extends Component {
     };
 
     completedOrder = (orderItem) => {
-        const {shipments, order_number} = orderItem;
         return (
             <View style={styleO.bottomView}>
 
                 <TouchableOpacity
                     onPress={() => {
-                        global.router.toLogisticsWeb(shipments)
+                        global.router.toLogisticsPage(orderItem)
                     }}
                     style={styleO.customer}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>
@@ -168,7 +166,6 @@ export default class CompletedBottom extends Component {
 
 
     deliveredOrder = (orderItem) => {
-        const {shipments, order_number} = orderItem;
         return (
             <View style={styleO.bottomView}>
                 <TouchableOpacity
@@ -185,7 +182,7 @@ export default class CompletedBottom extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                        global.router.toLogisticsWeb(shipments)
+                        global.router.toLogisticsPage(orderItem)
                     }}
                     style={styleO.customer}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>

@@ -13,11 +13,12 @@ export default class LogisticsPage extends Component {
     };
 
     componentDidMount() {
-        const {shipping_number, express_code, order_number} = this.props.params;
+        const {orderItem} = this.props.params;
+        const{shipments,order_number} = orderItem;
         const body = {
-            shipping_number: shipping_number,
-            express_code: express_code,
-            order_number: order_number
+            shipping_number: shipments.shipping_number,
+            express_code: shipments.express_code,
+            order_number: order_number,
         };
         getLogisticsInfo(body, data => {
             console.log('LogisticsInfo', data);
@@ -40,7 +41,8 @@ export default class LogisticsPage extends Component {
 
     render() {
         const {logisticsInfo} = this.state;
-        const {traces,phone,express_code,order_number,state,shipping_number} = logisticsInfo;
+        const {traces,phone,state,shipping_number} = logisticsInfo;
+        const{order_items,shipments} = this.props.params.orderItem;
 
         if(util.isEmpty(logisticsInfo)){
             return <View/>
@@ -59,7 +61,7 @@ export default class LogisticsPage extends Component {
                     title={I18n.t('logistics_info')}/>
 
                 <View style={styles.top}>
-                    <Image style={styles.topImg} source={Images.business}>
+                    <Image style={styles.topImg} source={{uri:order_items[0].image}}>
                         <View style={{flex:1}}/>
                         <View style={styles.topView}>
                             <Text style={styles.topLeftTxt}>{state}{I18n.t('pieces')}{I18n.t('malls')}</Text>
@@ -67,7 +69,7 @@ export default class LogisticsPage extends Component {
                     </Image>
                     <View style={styles.topRight}>
                         <Text style={styles.topRightTxt1}>{I18n.t(state)}</Text>
-                        <Text style={styles.topRightTxt2}>{I18n.t('carrier_source')}：{express_code}</Text>
+                        <Text style={styles.topRightTxt2}>{I18n.t('carrier_source')}：{shipments.shipping_company}</Text>
                         <Text style={styles.topRightTxt2}>{I18n.t('tracking_no')}：{shipping_number}</Text>
                         <View style={styles.topRightView}>
                             <Text style={styles.topRightTxt2}>{I18n.t('official_phone')}：</Text>
@@ -165,7 +167,7 @@ const styles = {
         width: 94,
         height: 15,
         backgroundColor: '#000000',
-        opacity: 0.5,
+
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -182,12 +184,14 @@ const styles = {
     topRightTxt1: {
         fontSize: 14,
         color: '#F34A4A',
-        marginTop:3
+        marginTop:3,
+        marginBottom:3
     },
     topRightTxt2: {
         fontSize: 14,
         color: '#333333',
-        marginTop:3
+        marginTop:3,
+        marginBottom:3
     },
     topRightView: {
         flexDirection: 'row',
