@@ -44,9 +44,16 @@ export default class Router {
 
     }
 
+    toMallSelectPage(params) {
+        this.stackPush({
+            name: 'MallSelectPage',
+            params: params
+        })
+    }
+
     /*物流查看*/
     toLogisticsWeb(body) {
-        const {shipping_number,express_code,order_number} = body;
+        const {shipping_number, express_code, order_number} = body;
         this.stackPush({
             name: 'LogisticsPage',
             params: {

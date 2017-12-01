@@ -9,7 +9,8 @@ import {ImageLoad} from '../../../components';
 export default class ProductItem extends PureComponent {
 
     static propTypes = {
-        lists: PropTypes.array
+        lists: PropTypes.array,
+        disabled: PropTypes.bool
     };
 
     selectType = (arr_type) => {
@@ -26,6 +27,7 @@ export default class ProductItem extends PureComponent {
         const {title, original_price, price, number, sku_value, image, refunded, product_id} = item;
         return <TouchableOpacity
             style={styleR.renderItem}
+            disabled={this.props.disabled}
             onPress={() => {
                 global.router.toMallInfoPage({id: product_id})
             }}>
@@ -75,7 +77,7 @@ const styleR = StyleSheet.create({
         height: 96,
         marginLeft: 17,
         marginTop: 12,
-        resizeMode:'contain',
+        resizeMode: 'contain',
     },
     TxtView: {
         flex: 1,

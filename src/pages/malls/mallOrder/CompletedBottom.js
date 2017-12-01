@@ -141,7 +141,7 @@ export default class CompletedBottom extends Component {
             <TouchableOpacity
 
                 onPress={() => {
-                    global.router.toReturnPage(orderItem)
+                    global.router.toMallSelectPage(orderItem)
                 }}
                 style={styleO.returnedBottom}>
                 <Text style={styleO.orderSubmitTxt}>{I18n.t('refund_mall_amount')}</Text>
@@ -193,7 +193,7 @@ export default class CompletedBottom extends Component {
                 <TouchableOpacity
 
                     onPress={() => {
-                    global.router.toReturnPage(orderItem)
+                    global.router.toMallSelectPage(orderItem)
                 }}
                     style={styleO.returnedBottom}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('refund_mall_amount')}</Text>
