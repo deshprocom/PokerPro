@@ -95,8 +95,8 @@ export default class UploadDocument extends PureComponent {
                                 {util.isEmpty(this.state.uploadImg) && index === 0 ?
                                     <View style={{width:55,alignItems:'center'}}>
                                         <Image
-                                            style={{width:27,height:27}}
-                                            source={Images.close}/>
+                                            style={{width:29,height:27}}
+                                            source={Images.camera}/>
                                         <Text
                                             style={{fontSize:12,color:'#CCCCCC',marginTop:5}}>{I18n.t('upload_image')}</Text>
                                     </View>
@@ -113,7 +113,7 @@ export default class UploadDocument extends PureComponent {
                                             this.deleteImg(index)
 
                                     }}>
-                                    <Image style={{width:10,height:3}} source={Images.camera}/>
+                                    <Image style={{width:10,height:3}} source={Images.cut}/>
                                 </TouchableOpacity>}
 
                             </TouchableOpacity>
