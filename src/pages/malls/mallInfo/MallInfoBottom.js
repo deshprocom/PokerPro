@@ -4,6 +4,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import I18n from 'react-native-i18n';
 import PropTypes from 'prop-types';
 import * as Animatable from 'react-native-animatable';
+import {isEmptyObject} from '../../../utils/ComonHelper';
 
 export default class MallInfoBottom extends Component {
 
@@ -32,10 +33,14 @@ export default class MallInfoBottom extends Component {
                 <View style={{flex: 1}}/>
                 <TouchableOpacity
                     onPress={() => {
-                        this.props.showSpecInfo()
+                        if (isEmptyObject(global.login_user))
+                            global.router.toLoginFirstPage();
+                        else
+                             this.props.showSpecInfo();
+
                     }}
                     style={styleB.joinShoppingCar}>
-                    <Text style={styleB.joinShoppingCarTxt}>加入购物车</Text>
+                    <Text style={styleB.joinShoppingCarTxt}>{I18n.t('add_cart')}</Text>
                 </TouchableOpacity>
             </View>
         );

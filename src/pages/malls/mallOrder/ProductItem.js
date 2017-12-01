@@ -75,6 +75,7 @@ const styleR = StyleSheet.create({
         height: 96,
         marginLeft: 17,
         marginTop: 12,
+        resizeMode:'contain',
     },
     TxtView: {
         flex: 1,

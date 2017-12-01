@@ -449,7 +449,8 @@ const styleS = StyleSheet.create({
     mallImg: {
         width: 100,
         height: 96,
-        marginLeft: 11
+        marginLeft: 11,
+        resizeMode:'contain',
     },
     TxtView: {
         flex: 1,

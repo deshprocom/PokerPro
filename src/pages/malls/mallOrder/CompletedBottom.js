@@ -37,7 +37,7 @@ export default class CompletedBottom extends Component {
             case MallStatus.unpaid:
                 return this.renderPay(orderItem);
             case MallStatus.paid:
-                return this.paidOrder();
+                return this.paidOrder(orderItem);
             case MallStatus.completed:
                 return this.completedOrder(orderItem);
             case MallStatus.delivered:
@@ -128,7 +128,8 @@ export default class CompletedBottom extends Component {
         )
     };
 
-    paidOrder = () => {
+    paidOrder = (orderItem) => {
+        let body = {shipping_number:"2323232323",express_code:"YTO",order_number:"2171127170600001"}
         return <View style={styleO.bottomView}>
             <TouchableOpacity
                 onPress={() => {
@@ -137,6 +138,15 @@ export default class CompletedBottom extends Component {
                 style={styleO.returnedBottom}>
                 <Text style={styleO.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+
+                onPress={() => {
+                    global.router.toLogisticsWeb(body)
+                }}
+                style={styleO.returnedBottom}>
+                <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>
+            </TouchableOpacity>
+
         </View>
     };
 
@@ -179,6 +189,14 @@ export default class CompletedBottom extends Component {
                     }}
                     style={styleO.customer}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+
+                    onPress={() => {
+                    global.router.toReturnPage(orderItem)
+                }}
+                    style={styleO.returnedBottom}>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('refund_mall_amount')}</Text>
                 </TouchableOpacity>
 
             </View>
