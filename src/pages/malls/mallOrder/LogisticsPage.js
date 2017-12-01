@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView, TextInput} from 'react-native';
 import {getLogisticsInfo} from '../../../services/MallDao';
-import {convertDate, util} from '../../../utils/ComonHelper';
+import {convertDate, util,call} from '../../../utils/ComonHelper';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import {NavigationBar} from '../../../components';
 import I18n from 'react-native-i18n';
+import {DeShangPhone} from '../../../configs/Constants';
 
 export default class LogisticsPage extends Component {
     state = {
@@ -60,43 +61,50 @@ export default class LogisticsPage extends Component {
                     titleStyle={{color: Colors._161}}
                     title={I18n.t('logistics_info')}/>
 
-                <View style={styles.top}>
-                    <Image style={styles.topImg} source={{uri:order_items[0].image}}>
-                        <View style={{flex:1}}/>
-                        <View style={styles.topView}>
-                            <Text style={styles.topLeftTxt}>{state}{I18n.t('pieces')}{I18n.t('malls')}</Text>
+                <ScrollView>
+                    <View style={styles.top}>
+                        <Image style={styles.topImg} source={{uri:order_items[0].image}}>
+                            <View style={{flex:1}}/>
+                            <View style={styles.topView}>
+                                <Text style={styles.topLeftTxt}>{state}{I18n.t('pieces')}{I18n.t('malls')}</Text>
+                            </View>
+                        </Image>
+                        <View style={styles.topRight}>
+                            <Text style={styles.topRightTxt1}>{I18n.t(state)}</Text>
+                            <Text style={styles.topRightTxt2}>{I18n.t('carrier_source')}：{shipments.shipping_company}</Text>
+                            <Text style={styles.topRightTxt2}>{I18n.t('tracking_no')}：{shipping_number}</Text>
+                            <View style={styles.topRightView}>
+                                <Text style={styles.topRightTxt2}>{I18n.t('official_phone')}：</Text>
+                                <Text style={styles.topRightTxt3}>{phone}</Text>
+                            </View>
                         </View>
-                    </Image>
-                    <View style={styles.topRight}>
-                        <Text style={styles.topRightTxt1}>{I18n.t(state)}</Text>
-                        <Text style={styles.topRightTxt2}>{I18n.t('carrier_source')}：{shipments.shipping_company}</Text>
-                        <Text style={styles.topRightTxt2}>{I18n.t('tracking_no')}：{shipping_number}</Text>
-                        <View style={styles.topRightView}>
-                            <Text style={styles.topRightTxt2}>{I18n.t('official_phone')}：</Text>
-                            <Text style={styles.topRightTxt3}>{phone}</Text>
-                        </View>
+
+
+
                     </View>
+                    <View style={styles.content}>
+                        <View style={styles.contentTop}/>
+                        {traces.map((item, i) => {
 
-                </View>
-                <ScrollView style={styles.content}>
-                    <View style={styles.contentTop}/>
-                    {traces.map((item, i) => {
-
-                        return <RenderItem
-                            itemId={i}
-                            key={`key${i}`}
-                            item={item}
-                        />
-                    })}
-                    <View style={{height:50}}/>
-                    <View style={{height:50,backgroundColor:'#ECECEE'}}/>
+                            return <RenderItem
+                                itemId={i}
+                                key={`key${i}`}
+                                item={item}
+                            />
+                        })}
+                        <View style={{height:50}}/>
+                        <View style={{height:50,backgroundColor:'#ECECEE'}}/>
+                    </View>
                 </ScrollView>
 
 
                 <View style={styles.bottomView}>
-                    <View style={styles.bottom}>
+                    <TouchableOpacity style={styles.bottom}
+                    onPress={()=>{
+                        call(DeShangPhone)
+                    }}>
                         <Text style={styles.bottomTxt}>{I18n.t('online_service')}</Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
             </View>
 
@@ -149,7 +157,6 @@ const styles = {
     top: {
         marginTop: 1,
         backgroundColor: '#FFFFFF',
-        display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         paddingBottom:19,
