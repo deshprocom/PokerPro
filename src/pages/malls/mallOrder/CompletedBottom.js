@@ -129,7 +129,7 @@ export default class CompletedBottom extends Component {
     };
 
     paidOrder = (orderItem) => {
-        let body = {shipping_number:"2323232323",express_code:"YTO",order_number:"2171127170600001"}
+
         return <View style={styleO.bottomView}>
             <TouchableOpacity
                 onPress={() => {
@@ -141,10 +141,10 @@ export default class CompletedBottom extends Component {
             <TouchableOpacity
 
                 onPress={() => {
-                    global.router.toLogisticsWeb(body)
+                    global.router.toReturnPage(orderItem)
                 }}
                 style={styleO.returnedBottom}>
-                <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>
+                <Text style={styleO.orderSubmitTxt}>{I18n.t('refund_mall_amount')}</Text>
             </TouchableOpacity>
 
         </View>
