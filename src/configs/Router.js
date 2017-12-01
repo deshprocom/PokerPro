@@ -54,13 +54,9 @@ export default class Router {
 
     /*物流查看*/
     toLogisticsPage(orderItem) {
-        // const {shipping_number,express_code,order_number,} = orderItem;
         this.stackPush({
             name: 'LogisticsPage',
             params: {
-                // shipping_number: shipping_number,
-                // express_code: express_code,
-                // order_number: order_number,
                 orderItem:orderItem
             }
         })

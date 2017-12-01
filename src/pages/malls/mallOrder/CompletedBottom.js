@@ -140,10 +140,10 @@ export default class CompletedBottom extends Component {
             <TouchableOpacity
 
                 onPress={() => {
-                    global.router.toLogisticsPage(orderItem)
+                    global.router.toReturnPage(orderItem)
                 }}
                 style={styleO.returnedBottom}>
-                <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>
+                <Text style={styleO.orderSubmitTxt}>{I18n.t('refund_mall_amount')}</Text>
             </TouchableOpacity>
 
         </View>
