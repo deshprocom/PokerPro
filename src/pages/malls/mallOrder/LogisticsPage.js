@@ -6,6 +6,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import {NavigationBar} from '../../../components';
 import I18n from 'react-native-i18n';
 import {DeShangPhone} from '../../../configs/Constants';
+import {LogisticsStatus} from "../../../configs/Status";
 
 export default class LogisticsPage extends Component {
     state = {
@@ -44,7 +45,8 @@ export default class LogisticsPage extends Component {
         const {logisticsInfo} = this.state;
         const {traces,phone,state,shipping_number} = logisticsInfo;
         const{order_items,shipments} = this.props.params.orderItem;
-
+        let menu = [LogisticsStatus.no_track, '', LogisticsStatus.on_the_way, LogisticsStatus.have_been_received, LogisticsStatus.question_piece];
+        console.log("orderItem:",this.props.params.orderItem);
         if(util.isEmpty(logisticsInfo)){
             return <View/>
         }
@@ -61,6 +63,8 @@ export default class LogisticsPage extends Component {
                     titleStyle={{color: Colors._161}}
                     title={I18n.t('logistics_info')}/>
 
+
+
                 <ScrollView>
                     <View style={styles.top}>
                         <Image style={styles.topImg} source={{uri:order_items[0].image}}>
@@ -70,7 +74,7 @@ export default class LogisticsPage extends Component {
                             </View>
                         </Image>
                         <View style={styles.topRight}>
-                            <Text style={styles.topRightTxt1}>{I18n.t(state)}</Text>
+                            <Text style={styles.topRightTxt1}>{I18n.t(menu[state])}</Text>
                             <Text style={styles.topRightTxt2}>{I18n.t('carrier_source')}：{shipments.shipping_company}</Text>
                             <Text style={styles.topRightTxt2}>{I18n.t('tracking_no')}：{shipping_number}</Text>
                             <View style={styles.topRightView}>
@@ -82,19 +86,23 @@ export default class LogisticsPage extends Component {
 
 
                     </View>
-                    <View style={styles.content}>
-                        <View style={styles.contentTop}/>
-                        {traces.map((item, i) => {
+                    {state === LogisticsStatus.have_been_received ? <View style={styles.contentEmpty}>
+                            <View style={{height:400,width:2,backgroundColor:'#CCCCCC',marginLeft:26,marginTop:30}}/>
+                            <Text style={{fontSize:14,color:'#333333',marginLeft:83,marginTop:350}}>{I18n.t('order_success')}</Text>
+                        </View> : <View style={styles.content}>
+                            <View style={styles.contentTop}/>
+                            {traces.map((item, i) => {
 
-                            return <RenderItem
-                                itemId={i}
-                                key={`key${i}`}
-                                item={item}
-                            />
-                        })}
-                        <View style={{height:50}}/>
-                        <View style={{height:50,backgroundColor:'#ECECEE'}}/>
-                    </View>
+                                return <RenderItem
+                                    itemId={i}
+                                    key={`key${i}`}
+                                    item={item}
+                                />
+                            })}
+
+                        </View>}
+                    <View style={{height:50}}/>
+                    <View style={{height:50,backgroundColor:'#ECECEE'}}/>
                 </ScrollView>
 
 
@@ -212,6 +220,14 @@ const styles = {
     content: {
         marginTop: 4,
         backgroundColor: '#FFFFFF',
+        paddingBottom:19
+    },
+    contentEmpty:{
+        marginTop: 4,
+        backgroundColor: '#FFFFFF',
+        flexDirection:'row',
+        alignItems:'center',
+        paddingBottom:19
     },
     contentTop: {
         height: 20,
