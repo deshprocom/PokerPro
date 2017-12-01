@@ -113,7 +113,7 @@ export default class UploadDocument extends PureComponent {
                                             this.deleteImg(index)
 
                                     }}>
-                                    <Image style={{width:10,height:3}} source={Images.cut}/>
+                                    <Image style={{width:10,height:3}} source={Images.camera}/>
                                 </TouchableOpacity>}
 
                             </TouchableOpacity>
