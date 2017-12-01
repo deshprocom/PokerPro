@@ -54,7 +54,7 @@ export default class MallCategories extends Component {
                     alignItems: 'center'
                 }]}>
 
-                <View style={speciesId === item.id ?styles.selected:styles.select}/>
+                <View style={speciesId === item.id ? styles.selected : styles.select}/>
 
 
                 <Text style={styles.categoriesOneText}>{`${item.name}`}</Text>
@@ -69,9 +69,9 @@ export default class MallCategories extends Component {
             <View style={styles.categoriesTwos}>
                 <TouchableOpacity
                     style={styles.categoriesTwo}
-                onPress={()=>{
-                    router.toMallResult(item)
-                }}>
+                    onPress={() => {
+                        router.toMallResult(item)
+                    }}>
                     <Image
                         style={styles.imgCate}
                         source={{uri: item.image}}/>
@@ -88,7 +88,8 @@ export default class MallCategories extends Component {
         const {speciesId, childMap} = this.state;
         const {categories} = this.props;
 
-        return <Animatable.View animation={'bounceIn'}
+        return <Animatable.View animation={'fadeInDown'}
+                                duration={500}
                                 style={styles.page}>
             <View style={styles.content}>
                 <View style={styles.categories}>
@@ -167,11 +168,11 @@ const styles = StyleSheet.create({
         flex: 1, backgroundColor: 'white', marginTop: 10,
         marginLeft: 17
     },
-    select:{
-        height: 24, width: 4, backgroundColor: Colors._ECE,marginRight:13
+    select: {
+        height: 24, width: 4, backgroundColor: Colors._ECE, marginRight: 13
     },
-    selected:{
-        height: 24, width: 4, backgroundColor: Colors._DF1,marginRight:13
+    selected: {
+        height: 24, width: 4, backgroundColor: Colors._DF1, marginRight: 13
     }
 
 });
