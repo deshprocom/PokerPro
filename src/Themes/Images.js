@@ -245,6 +245,7 @@ const images = {
     mall_return: require('../../source/mall/mall_return.png'),
     mall_share: require('../../source/mall/mall_share.png'),
     search_empty: require('../../source/mall/search_empty.png'),
+    camera: require('../../source/mall/camera.png'),
 
     radioSelected: require('../../source/cart/radioSelected.png'),
     radio: require('../../source/cart/radio.png'),
