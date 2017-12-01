@@ -51,7 +51,6 @@ export default class UploadDocument extends PureComponent {
                             return (value != false);
                         })
                     });
-                    console.log("uploadImg:",this.state.uploadImg)
                 }).catch(e => {
                     alert(e.message ? e.message : e);
                 });
@@ -76,7 +75,7 @@ export default class UploadDocument extends PureComponent {
                 })
             })
         )
-    }
+    };
 
     render() {
         return (
@@ -109,12 +108,11 @@ export default class UploadDocument extends PureComponent {
 
                                 }
                                 {item.path && <TouchableOpacity
-                                    style={{position:'absolute',left:65,top:3,width:30,height:30,alignItems:'center',justifyContent:'center',zIndex:99,backgroundColor:'red'}}
+                                    style={{position:'absolute',left:65,top:3,width:30,height:30,alignItems:'center',justifyContent:'center',zIndex:99}}
                                     onPress={()=>{
                                             this.deleteImg(index)
 
                                     }}>
-                                    {/*<Text>djiwdhdsdsd</Text>*/}
                                     <Image style={{width:10,height:3}} source={Images.cut}/>
                                 </TouchableOpacity>}
 
