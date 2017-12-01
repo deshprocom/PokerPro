@@ -116,10 +116,6 @@ export default class Loading extends Component {
     _renderSpinner() {
         const {visible} = this.state;
 
-        if (!visible)
-            return (
-                <View display="none"/>
-            );
 
         const spinner = (
             <TouchableOpacity
@@ -130,14 +126,13 @@ export default class Loading extends Component {
                     styles.container,
                     {backgroundColor: this.props.overlayColor}
                 ]} key={`spinner_${Date.now()}`}>
-                {this.props.children ? this.props.children : this._renderDefaultContent()}
+                { this._renderDefaultContent()}
             </TouchableOpacity>
         );
 
         return (
             <Modal
                 onRequestClose={() => this._handleOnRequestClose()}
-                supportedOrientations={['landscape', 'portrait']}
                 transparent
                 visible={visible}>
                 {spinner}

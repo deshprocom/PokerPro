@@ -15,7 +15,7 @@ export default class ImageMark extends Component {
 
     state = {
         success: false,
-        width: 320,
+        width: Metrics.screenWidth - 40,
         height: 320
     };
 
