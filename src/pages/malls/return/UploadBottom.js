@@ -50,8 +50,8 @@ const styleO = StyleSheet.create({
         justifyContent: 'center'
     },
     orderSubmitTxt:{
-        fontSize: 14,
-        color: '#333333'
+        fontSize: 18,
+        color: '#FFFFFF'
     },
     payment:{
         fontSize: 14,
