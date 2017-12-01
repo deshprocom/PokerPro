@@ -475,5 +475,6 @@
   "3": "签收",
   "4": "问题件",
   "upload_image": "上传凭证最多三张",
-  "login_success": "登录成功"
+  "login_success": "登录成功",
+  "mall_select":"选择商品列表"
 }
