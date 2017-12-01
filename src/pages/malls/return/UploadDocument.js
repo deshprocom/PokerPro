@@ -3,26 +3,54 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, L
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 import {NavigationBar, ActionSheet, ImagePicker} from '../../../components';
-import {strNotNull, isEmptyObject} from '../../../utils/ComonHelper';
+import {util, isEmptyObject, alertOrder,showToast} from '../../../utils/ComonHelper';
+
+const picker = {
+    compressImageQuality: 0.5,
+    multiple: true
+};
 
 export default class UploadDocument extends PureComponent {
-    state={
-        localImg: {},
-        showImg: ''
+    state = {
+        localImg: [false, false, false],
+        spliceIndex: 0,
+        uploadImg: []
     };
 
     handlePress = (i) => {
         switch (i) {
             case 1:
                 ImagePicker.openCamera(picker).then(localImg => {
-                    this.setState({localImg, showImg: localImg.path})
+
+                    this.setState({
+                        localImg
+                    })
                 }).catch(e => {
                     alert(e.message ? e.message : e);
                 });
                 break;
             case 2: {
-                ImagePicker.openPicker(picker).then(localImg => {
-                    this.setState({localImg, showImg: localImg.path})
+                ImagePicker.openPicker(picker).then(images => {
+
+                    if (images.length <= 0) {
+                        return
+                    }
+                    if(images.length>3 || (this.state.uploadImg.length+images.length)>3){
+                        showToast(I18n.t('upload_image'));
+                        return
+                    }
+                    const {localImg, spliceIndex} = this.state;
+                    let imgs = [...localImg];
+                    imgs.splice(spliceIndex, images.length, ...images);
+                    let num = spliceIndex + images.length;
+
+                    this.setState({
+                        localImg: imgs,
+                        spliceIndex: num,
+                        uploadImg: imgs.filter(function (value) {
+                            return (value != false);
+                        })
+                    });
                 }).catch(e => {
                     alert(e.message ? e.message : e);
                 });
@@ -30,19 +58,68 @@ export default class UploadDocument extends PureComponent {
         }
     };
 
+    deleteImg = (index) => {
+        return (
+            alertOrder('confirm_delete', () => {
+                let imgs = [...this.state.localImg];
 
-    render(){
-        return(
+                imgs.splice(index, 1);
+                let img2 = imgs;
+                imgs.push(false);
+                this.setState({
+                    localImg: imgs,
+                    uploadImg: img2.filter(function (value) {
+                        return (value != false);
+                    }),
+                    spliceIndex: --this.state.spliceIndex
+                })
+            })
+        )
+    };
+
+    render() {
+        return (
             <View style={styles.page}>
                 <Text style={styles.amountTxt}>{I18n.t('upload_document')}：</Text>
                 <View style={styles.uploadImg}>
-                    <TouchableOpacity
-                        onPress={() => {
-                            this.ActionSheet.show();
-                        }}
-                        style={styles.btnSelectImg}>
+                    {this.state.localImg.map((item, index) => {
+                        return (
+                            <TouchableOpacity
+                                key={`mall_image${index}`}
+                                onPress={() => {
+                                    this.ActionSheet.show();
 
-                    </TouchableOpacity>
+                                }}
+                                style={styles.btnSelectImg2}>
+
+                                {util.isEmpty(this.state.uploadImg) && index === 0 ?
+                                    <View style={{width:55,alignItems:'center'}}>
+                                        <Image
+                                            style={{width:27,height:27}}
+                                            source={Images.close}/>
+                                        <Text
+                                            style={{fontSize:12,color:'#CCCCCC',marginTop:5}}>{I18n.t('upload_image')}</Text>
+                                    </View>
+                                    : null}
+
+                                {item.path && <Image
+                                    source={{uri:item.path}}
+                                    style={{height: 100,width: 100,justifyContent:'flex-end'}}/>
+
+                                }
+                                {item.path && <TouchableOpacity
+                                    style={{position:'absolute',left:65,top:3,width:30,height:30,alignItems:'center',justifyContent:'center',zIndex:99}}
+                                    onPress={()=>{
+                                            this.deleteImg(index)
+
+                                    }}>
+                                    <Image style={{width:10,height:3}} source={Images.cut}/>
+                                </TouchableOpacity>}
+
+                            </TouchableOpacity>
+                        )
+                    })}
+
                 </View>
 
                 <ActionSheet
@@ -54,36 +131,52 @@ export default class UploadDocument extends PureComponent {
                     onPress={this.handlePress}
                 />
             </View>
-        )}
+        )
+    }
 }
 const styles = StyleSheet.create({
-    page:{
-        height:165,
-        backgroundColor:'#FFFFFF',
-        marginTop:10,
-        flexDirection:'column',
-        alignItems:'center',
-        paddingBottom:20
+    page: {
+        height: 165,
+        backgroundColor: '#FFFFFF',
+        marginTop: 10,
+        flexDirection: 'column',
+        alignItems: 'center',
+        paddingBottom: 20
     },
-    amountTxt:{
+    amountTxt: {
         fontSize: 14,
-        color:'#333333',
-        marginLeft:17,
-        marginTop:14
+        color: '#333333',
+        marginLeft: 17,
+        marginTop: 14
     },
-    uploadImg:{
-        marginLeft:17,
-        flexDirection:'row',
-        alignItems:"center",
-        marginTop:14
+    uploadImg: {
+
+        marginRight: 17,
+        flexDirection: 'row',
+        alignItems: "center",
+        marginTop: 14,
+
     },
     btnSelectImg: {
         alignSelf: 'center',
-        height: 128,
-        width: 206,
+        height: 100,
+        width: 100,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#BBBBBB'
+        borderWidth: 1,
+        borderColor: '#CCCCCC',
+        borderStyle: 'dashed'
+    },
+    btnSelectImg2: {
+        alignSelf: 'center',
+        height: 100,
+        width: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: '#CCCCCC',
+        borderStyle: 'dashed',
+        marginLeft: 21
     },
     showImg: {
         height: 128,

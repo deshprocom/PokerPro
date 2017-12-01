@@ -40,6 +40,8 @@ export default class ReturnPage extends Component {
     };
 
     render(){
+        const{orderItem} = this.props.params;
+        console.log("item:",orderItem.order_items)
         return(
             <View style={{flex:1}}>
                 <NavigationBar
@@ -52,7 +54,7 @@ export default class ReturnPage extends Component {
                     title={I18n.t('apply_returned')}/>
                 <ScrollView style={styleC.orderView}>
                     <View style={{height:1}}/>
-                    <RenderItem/>
+                    {/*<RenderItem item={orderItem.order_items}/>*/}
 
                     <ApplicationType
                         showTypeInfo={this.showTypeInfo}

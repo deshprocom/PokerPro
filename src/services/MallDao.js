@@ -8,6 +8,12 @@ export function postOrderConfirm(body, resolve, reject) {
         resolve(ret.data)
     }, reject)
 }
+//物流信息
+export function getLogisticsInfo(body, resolve, reject) {
+    helper.get(Api.logistics_info(body), ret => {
+        resolve(ret.data)
+    }, reject)
+}
 
 
 //获取订单详情

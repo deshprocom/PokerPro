@@ -21,7 +21,10 @@ export default class Positioning extends PureComponent {
                             <Text style={styleC.shipAddrTxt1}>{name}</Text>
                             <Text style={styleC.mobile}>{mobile}</Text>
                         </View>
-                        <Text style={styleC.shipAddrTxt2}>{`${province}${city}${area}${address}`}</Text>
+                        <View style={styleC.shipAddrView}>
+                            <Text style={styleC.shipAddrTxt2}>{`${province}${city}${area}${address}`}</Text>
+                        </View>
+
                     </View>
 
                 </View>
@@ -63,16 +66,19 @@ const styleC = StyleSheet.create({
     },
     shipAddr: {
         marginLeft: 21,
-        marginTop: 20
+        marginTop: 20,
     },
     shipAddrTxt1: {
         fontSize: 14,
         color: '#666666',
     },
+    shipAddrView:{
+        marginTop: 10,
+        marginRight:20
+    },
     shipAddrTxt2: {
         fontSize: 14,
         color: '#666666',
-        marginTop: 10
     },
     mobile: {
         marginLeft: 20,

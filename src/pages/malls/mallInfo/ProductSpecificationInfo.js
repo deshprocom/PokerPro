@@ -3,7 +3,7 @@ import {View, Text, Image, StyleSheet, TouchableOpacity, ScrollView} from 'react
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import * as Animatable from 'react-native-animatable';
 import I18n from 'react-native-i18n';
-import {showToast, strNotNull, pushProductToCart} from '../../../utils/ComonHelper';
+import {showToast, strNotNull, pushProductToCart,isEmptyObject} from '../../../utils/ComonHelper';
 import _ from 'lodash';
 
 
@@ -114,7 +114,7 @@ export default class ProductSpecificationInfo extends PureComponent {
     optionTypesView = (option_types) => {
         let that = this;
 
-        return <ScrollView>
+        return <View>
             {option_types.map((x, index, array) => {
 
                 return <View
@@ -131,9 +131,7 @@ export default class ProductSpecificationInfo extends PureComponent {
                 {this.buyQuantity()}
             </View>
 
-            <View style={{height: 50}}/>
-
-        </ScrollView>
+        </View>
     };
 
 
@@ -211,15 +209,21 @@ export default class ProductSpecificationInfo extends PureComponent {
                         <Image style={styleP.closeImg} source={Images.close}/>
                     </TouchableOpacity>
 
-
-                    {this.optionTypesView(optionTypes)}
+                    <ScrollView>
+                        {this.optionTypesView(optionTypes)}
+                        <View style={{height:80}}/>
+                    </ScrollView>
 
                 </View>
 
-
                 <View style={styleP.confirmView}>
                     <TouchableOpacity
-                        onPress={this.addCarts}
+                        onPress={()=>{
+                            if (isEmptyObject(global.login_user))
+                                global.router.toLoginFirstPage();
+                             else
+                                 this.addCarts()
+                        }}
                         style={styleP.confirm}>
                         <Text style={styleP.confirmTxt}>{I18n.t('confirm')}</Text>
                     </TouchableOpacity>
@@ -255,7 +259,7 @@ const styleP = StyleSheet.create({
         zIndex: 999
     },
     specificationInfo: {
-        height: '100%',
+        paddingBottom:80,
         marginTop: 160,
         backgroundColor: '#EEEEEE'
     },
