@@ -20,7 +20,10 @@ export default class ReturnPage extends Component {
         typeShow: false,
         refund_mall_amount: false,
         change_mall: false,
-        return_price: 0
+        return_price: 0,
+        order_item_ids: [],
+        product_refund_type_id: 1,
+        memo: ''
     };
 
     showTypeInfo = () => {
@@ -44,11 +47,14 @@ export default class ReturnPage extends Component {
     componentDidMount() {
         const {order_items} = this.props.params;
         let price = 0;
+        let order_item_ids = [];
         order_items.forEach(item => {
+            order_item_ids.push(item.id);
             price += Number.parseFloat(item.price) * Number.parseFloat(item.number)
         });
         this.setState({
-            return_price: price
+            return_price: price,
+            order_item_ids
         })
     }
 
@@ -137,7 +143,18 @@ export default class ReturnPage extends Component {
                     uploadeds.push(data);
                     if (uploadeds.length === locals.length) {
                         this.contain.close();
-                        console.log('上传完成：', uploadeds)
+                        console.log('上传完成：', uploadeds);
+                        const {return_price, product_refund_type_id, order_item_ids, memo} = this.state;
+                        let body = {
+                            return_price,
+                            product_refund_type_id,
+                            order_item_ids,
+                            memo,
+                            refund_images: uploadeds
+                        };
+
+                        console.log(body)
+
 
                     }
                 }, err => {
