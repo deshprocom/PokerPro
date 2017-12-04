@@ -74,8 +74,15 @@ export default class MallSelectPage extends PureComponent {
                 <View style={{flex: 1}}/>
                 <TouchableOpacity style={styleS.settlementView}
                                   onPress={() => {
-
-
+                                      const {order_items} = this.state;
+                                      let items = order_items.filter(x => {
+                                          return x.isSelect;
+                                      });
+                                      if (util.isEmpty(items)) {
+                                          showToast(I18n.t('ple_select_mall'))
+                                          return;
+                                      }
+                                      global.router.toReturnPage(items)
                                   }}>
                     <Text style={styleS.settlement}>{I18n.t('confirm')}</Text>
 
@@ -118,7 +125,7 @@ export default class MallSelectPage extends PureComponent {
         const {order_items} = this.state;
         let array = [...order_items];
         array.map(x => {
-            x.isSelect = true;
+            x.isSelect = !this.state.selectAll;
         });
 
         this.setState({
@@ -347,9 +354,11 @@ const styleS = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        height: 50,
-        width: 120,
-        backgroundColor: '#F34A4A'
+        height: 37,
+        width: 89,
+        backgroundColor: '#F34A4A',
+        marginRight: 15,
+        borderRadius: 4
     },
     settlement: {
         fontSize: 18,
