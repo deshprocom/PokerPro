@@ -63,10 +63,8 @@ export default class MallSelectPage extends PureComponent {
                 <TouchableOpacity
                     style={{flexDirection: 'row', alignItems: 'center'}}
                     onPress={() => {
-                        this.setState({
-                            selectAll: !this.state.selectAll
-                        });
-                        this._pressAll()
+
+                        this.allRadio()
                     }}>
                     <Image style={styleS.radioImg} source={this.state.selectAll ? Images.radioSelected : Images.radio}/>
                     <Text style={styleS.selectedAll}>{I18n.t('selectAll')}</Text>
@@ -113,6 +111,19 @@ export default class MallSelectPage extends PureComponent {
 
         this.setState({
             order_items: array
+        })
+    };
+
+    allRadio = () => {
+        const {order_items} = this.state;
+        let array = [...order_items];
+        array.map(x => {
+            x.isSelect = true;
+        });
+
+        this.setState({
+            order_items: array,
+            selectAll: !this.state.selectAll
         })
     };
 
