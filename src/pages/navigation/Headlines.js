@@ -51,7 +51,7 @@ export default class Headlines extends Component {
                             onPress={() => this._clickBanner(item)}
                             activeOpacity={1}>
                             <MarqueeLabel
-
+                                text={item.title}
                                 style={{
                                 marginLeft: 15,
                                 fontSize: 13,

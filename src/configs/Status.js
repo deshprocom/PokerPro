@@ -75,3 +75,11 @@ export class MallStatus {
     static canceled = 'canceled';
 }
 
+//商城订单状态
+export class LogisticsStatus {
+    static no_track = 'no_track';
+    static on_the_way = 'on_the_way';
+    static have_been_received = 'have_been_received';
+    static question_piece = 'question_piece';
+}
+

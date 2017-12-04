@@ -108,7 +108,7 @@ class ShoppingCart extends Component {
                                       if (datas.length > 0) {
                                           global.router.toOrderConfirm(datas);
                                       } else {
-                                          showToast("请选择商品")
+                                          showToast(I18n.t('please_select_malls'))
                                       }
                                       }
 
