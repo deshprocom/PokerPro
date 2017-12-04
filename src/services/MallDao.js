@@ -2,13 +2,20 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 
+export function postMallRefund(body, resolve, reject) {
+    helper.post(Api.mall_refund(body), body, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+//退款上传凭证接口
 export function postTempImg(body, resolve, reject) {
     helper.post(Api.upload_temp_img, body, ret => {
         resolve(ret.data)
     }, reject)
 }
 
-
+//查看退款的类型
 export function getReturnType(resolve, reject) {
     helper.get(Api.refund_types, ret => {
         resolve(ret.data)

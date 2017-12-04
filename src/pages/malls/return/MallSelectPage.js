@@ -14,20 +14,22 @@ import {showToast, util} from '../../../utils/ComonHelper';
 export default class MallSelectPage extends PureComponent {
 
     state = {
-        order_items: []
+        order_items: [],
+        order_number: ''
     };
 
     componentDidMount() {
-        const {order_items} = this.props.params;
+        const {order_items, order_number} = this.props.params;
         if (util.isEmpty(order_items))
             return;
         order_items.map(item => {
             item.stock = item.number;
             item.isSelect = false;
         });
-        console.log(order_items)
+        console.log(this.props.params)
         this.setState({
-            order_items
+            order_items,
+            order_number
         })
     }
 
@@ -74,7 +76,7 @@ export default class MallSelectPage extends PureComponent {
                 <View style={{flex: 1}}/>
                 <TouchableOpacity style={styleS.settlementView}
                                   onPress={() => {
-                                      const {order_items} = this.state;
+                                      const {order_items,order_number} = this.state;
                                       let items = order_items.filter(x => {
                                           return x.isSelect;
                                       });
@@ -82,7 +84,7 @@ export default class MallSelectPage extends PureComponent {
                                           showToast(I18n.t('please_select_malls'))
                                           return;
                                       }
-                                      global.router.toReturnPage(items)
+                                      global.router.toReturnPage(items,order_number)
                                   }}>
                     <Text style={styleS.settlement}>{I18n.t('confirm')}</Text>
 

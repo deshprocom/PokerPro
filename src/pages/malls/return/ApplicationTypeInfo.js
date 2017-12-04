@@ -4,26 +4,19 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import * as Animatable from 'react-native-animatable';
 import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
-import {getReturnType} from '../../../services/MallDao';
 
 export default class ApplicationTypeInfo extends PureComponent {
-    state = {};
+
     static propTypes = {
         showTypeInfo: propTypes.func.isRequired,
         _refund_mall_amount: propTypes.func.isRequired,
         _change_mall: propTypes.func.isRequired
     };
 
-    componentDidMount() {
-        getReturnType(data => {
-            console.log(data)
-        }, err => {
-        })
-    }
-
 
     render() {
-        const {refund_mall_amount, change_mall} = this.props;
+
+        const {refund_mall_amount, change_mall, refund_types} = this.props;
         return (
             <Animatable.View
                 style={styleP.pageALl}>
@@ -35,24 +28,21 @@ export default class ApplicationTypeInfo extends PureComponent {
                         <View style={styleP.top}>
                             <Text style={styleP.topTxt}>{I18n.t('select_type')}</Text>
                         </View>
-                        <TouchableOpacity style={styleP.content}
-                                          onPress={() => {
-                                              this.props._refund_mall_amount()
-                                          }}>
-                            <Text style={styleP.text}>{I18n.t('refund_mall_amount')}</Text>
-                            <View style={{flex: 1}}/>
-                            <Image style={styleP.img}
-                                   source={refund_mall_amount ? Images.return_radio_selected : Images.return_radio}/>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styleP.content}
-                                          onPress={() => {
-                                              this.props._change_mall()
-                                          }}>
-                            <Text style={styleP.text}>{I18n.t('change_mall')}</Text>
-                            <View style={{flex: 1}}/>
-                            <Image style={styleP.img}
-                                   source={change_mall ? Images.return_radio_selected : Images.return_radio}/>
-                        </TouchableOpacity>
+                        {refund_types.map(item => {
+                            return <TouchableOpacity
+                                key={`refund_type${item.id}`}
+                                style={styleP.content}
+                                onPress={() => {
+                                    this.props._refund_mall_amount(item)
+                                }}>
+                                <Text style={styleP.text}>{item.name}</Text>
+                                <View style={{flex: 1}}/>
+                                <Image style={styleP.img}
+                                       source={item.isSelect ? Images.return_radio_selected : Images.return_radio}/>
+                            </TouchableOpacity>
+                        })}
+
+
                         <TouchableOpacity style={styleP.confirmView}
                                           onPress={() => {
                                               this.props.showTypeInfo()

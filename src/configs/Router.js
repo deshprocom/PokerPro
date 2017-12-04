@@ -64,7 +64,7 @@ export default class Router {
         this.stackPush({
             name: 'LogisticsPage',
             params: {
-                orderItem:orderItem
+                orderItem: orderItem
             }
         })
     }
@@ -735,11 +735,12 @@ export default class Router {
         })
     }
 
-    toReturnPage(orderItems) {
+    toReturnPage(orderItems, order_number) {
         this.stackPush({
             name: 'ReturnPage',
             params: {
-                order_items: orderItems
+                order_items: orderItems,
+                order_number: order_number
             }
         })
     }

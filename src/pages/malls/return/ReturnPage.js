@@ -10,7 +10,7 @@ import RefundInstruction from './RefundInstruction';
 import UploadDocument from './UploadDocument';
 import {NavigationBar, BaseComponent} from '../../../components';
 import ReturnItem from './ReturnItem';
-import {postTempImg} from '../../../services/MallDao';
+import {postTempImg, postMallRefund, getReturnType} from '../../../services/MallDao';
 import {strNotNull, getCurrentDate, getFileName} from '../../../utils/ComonHelper';
 
 
@@ -22,8 +22,10 @@ export default class ReturnPage extends Component {
         change_mall: false,
         return_price: 0,
         order_item_ids: [],
-        product_refund_type_id: 1,
-        memo: ''
+        product_refund_type: {},
+        memo: '',
+        order_number: '',
+        refund_types: []
     };
 
     showTypeInfo = () => {
@@ -31,10 +33,15 @@ export default class ReturnPage extends Component {
             typeShow: !this.state.typeShow
         })
     };
-    _refund_mall_amount = () => {
+    _refund_mall_amount = (item) => {
+        let refund_types = [...this.state.refund_types];
+        refund_types.map(x => {
+            x.isSelect = x.id === item.id;
+        });
+
         this.setState({
-            refund_mall_amount: !this.state.refund_mall_amount,
-            change_mall: false
+            refund_types,
+            product_refund_type: item
         })
     };
     _change_mall = () => {
@@ -45,7 +52,17 @@ export default class ReturnPage extends Component {
     };
 
     componentDidMount() {
-        const {order_items} = this.props.params;
+        getReturnType(data => {
+            data.map(x => {
+                x.isSelect = false;
+            });
+            this.setState({
+                refund_types: data
+            })
+        }, err => {
+        });
+
+        const {order_items, order_number} = this.props.params;
         let price = 0;
         let order_item_ids = [];
         order_items.forEach(item => {
@@ -54,7 +71,8 @@ export default class ReturnPage extends Component {
         });
         this.setState({
             return_price: price,
-            order_item_ids
+            order_item_ids,
+            order_number
         })
     }
 
@@ -83,8 +101,7 @@ export default class ReturnPage extends Component {
 
                     <ApplicationType
                         showTypeInfo={this.showTypeInfo}
-                        refund_mall_amount={this.state.refund_mall_amount}
-                        change_mall={this.state.change_mall}/>
+                        product_refund_type={this.state.product_refund_type}/>
 
                     <RefundAmount
                         return_price={this.state.return_price}/>
@@ -111,6 +128,7 @@ export default class ReturnPage extends Component {
                 </View>
 
                 {this.state.typeShow ? <ApplicationTypeInfo
+                    refund_types={this.state.refund_types}
                     showTypeInfo={this.showTypeInfo}
                     _refund_mall_amount={this._refund_mall_amount}
                     _change_mall={this._change_mall}
@@ -142,18 +160,26 @@ export default class ReturnPage extends Component {
 
                     uploadeds.push(data);
                     if (uploadeds.length === locals.length) {
-                        this.contain.close();
+
                         console.log('上传完成：', uploadeds);
-                        const {return_price, product_refund_type_id, order_item_ids, memo} = this.state;
+                        const {return_price, product_refund_type, order_item_ids, memo, order_number} = this.state;
                         let body = {
                             return_price,
-                            product_refund_type_id,
+                            product_refund_type_id: product_refund_type.id,
                             order_item_ids,
                             memo,
-                            refund_images: uploadeds
+                            refund_images: uploadeds,
+                            order_number
                         };
 
                         console.log(body)
+
+                        postMallRefund(body, data => {
+                            console.log(data)
+                            this.contain.close();
+                        }, err => {
+                            this.contain.close();
+                        })
 
 
                     }
