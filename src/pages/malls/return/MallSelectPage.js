@@ -19,6 +19,12 @@ export default class MallSelectPage extends PureComponent {
 
     componentDidMount() {
         const {order_items} = this.props.params;
+        if (util.isEmpty(order_items))
+            return;
+        order_items.map(item => {
+            item.stock = item.number;
+            item.isSelect = false;
+        });
         console.log(order_items)
         this.setState({
             order_items
@@ -46,10 +52,41 @@ export default class MallSelectPage extends PureComponent {
                 keyExtractor={(item, index) => `commodities${index}`}
             />
 
+            {this.renderBottom()}
+
         </BaseComponent>
     }
 
-    renderShowEditView(item) {
+    renderBottom = () => {
+        return (
+            <View style={styleS.bottomView}>
+                <TouchableOpacity
+                    style={{flexDirection: 'row', alignItems: 'center'}}
+                    onPress={() => {
+                        this.setState({
+                            selectAll: !this.state.selectAll
+                        });
+                        this._pressAll()
+                    }}>
+                    <Image style={styleS.radioImg} source={this.state.selectAll ? Images.radioSelected : Images.radio}/>
+                    <Text style={styleS.selectedAll}>{I18n.t('selectAll')}</Text>
+
+                </TouchableOpacity>
+
+                <View style={{flex: 1}}/>
+                <TouchableOpacity style={styleS.settlementView}
+                                  onPress={() => {
+
+
+                                  }}>
+                    <Text style={styleS.settlement}>{I18n.t('confirm')}</Text>
+
+                </TouchableOpacity>
+            </View>
+        )
+    };
+
+    renderShowEditView = (item) => {
         let imageURL = Images.radio;
         if (item.isSelect === true) {
             imageURL = Images.radioSelected
@@ -58,12 +95,25 @@ export default class MallSelectPage extends PureComponent {
             <TouchableOpacity
                 style={{height: 120, alignItems: 'center', justifyContent: 'center'}}
                 onPress={() => {
-                    this._pressItem(item)
+                    this.onPressRadio(item)
                 }}>
                 <Image style={styleS.radioImg}
                        source={imageURL}/>
             </TouchableOpacity>
         )
+    };
+
+    onPressRadio = (item) => {
+        const {order_items} = this.state;
+        let array = [...order_items];
+        array.map(x => {
+            if (x.id === item.id)
+                x.isSelect = !x.isSelect;
+        });
+
+        this.setState({
+            order_items: array
+        })
     };
 
     _renderItem = ({item}) => {
@@ -321,4 +371,11 @@ const styleS = StyleSheet.create({
         fontSize: 18,
         color: '#F34A4A',
     },
+    positionBtn: {
+        position: 'absolute',
+        height: 50,
+        width: '100%',
+        backgroundColor: 'white',
+        bottom: 0
+    }
 })
