@@ -109,7 +109,8 @@ export default {
     wx_paid_result: wx_paid_result,
     product_order_detail: product_order_detail,
     product_order_confirm: product_order_confirm,
-    logistics_info:logistics_info
+    logistics_info: logistics_info,
+    refund_types: 'refund_types'
 }
 
 
@@ -123,7 +124,7 @@ function getUserId() {
 const page_size = 10;
 
 export function logistics_info(body) {
-    const {shipping_number,express_code,order_number} = body;
+    const {shipping_number, express_code, order_number} = body;
     return `shipments/search?shipping_number=${shipping_number}&express_code=${express_code}&order_number=${order_number}`;
 }
 

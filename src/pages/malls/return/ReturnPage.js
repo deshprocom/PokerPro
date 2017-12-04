@@ -41,7 +41,7 @@ export default class ReturnPage extends Component {
 
     render() {
         const {order_items} = this.props.params;
-        console.log("items:", order_items)
+
         return (
             <View style={{flex: 1}}>
                 <NavigationBar

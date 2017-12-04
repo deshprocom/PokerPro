@@ -2,12 +2,19 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 
+export function getReturnType(resolve, reject) {
+    helper.get(Api.refund_types, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
 //完成订单
 export function postOrderConfirm(body, resolve, reject) {
     helper.post(Api.product_order_confirm(body), {}, ret => {
         resolve(ret.data)
     }, reject)
 }
+
 //物流信息
 export function getLogisticsInfo(body, resolve, reject) {
     helper.get(Api.logistics_info(body), ret => {
