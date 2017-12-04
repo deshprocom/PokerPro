@@ -157,7 +157,7 @@ export default class CompletedBottom extends Component {
 
                 <TouchableOpacity
                     onPress={() => {
-                        global.router.toLogisticsWeb(shipments)
+                        global.router.toLogisticsPage(orderItem)
                     }}
                     style={styleO.customer}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>
@@ -185,7 +185,7 @@ export default class CompletedBottom extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                        global.router.toLogisticsWeb(shipments)
+                        global.router.toLogisticsPage(orderItem)
                     }}
                     style={styleO.customer}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>

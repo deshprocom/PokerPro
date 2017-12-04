@@ -20,7 +20,7 @@ export default class ReturnPage extends Component {
         typeShow: false,
         refund_mall_amount: false,
         change_mall: false,
-        return_price: 0,
+        refund_price: 0,
         order_item_ids: [],
         product_refund_type: {},
         memo: '',
@@ -70,7 +70,7 @@ export default class ReturnPage extends Component {
             price += Number.parseFloat(item.price) * Number.parseFloat(item.number)
         });
         this.setState({
-            return_price: price,
+            refund_price: price,
             order_item_ids,
             order_number
         })
@@ -104,7 +104,7 @@ export default class ReturnPage extends Component {
                         product_refund_type={this.state.product_refund_type}/>
 
                     <RefundAmount
-                        return_price={this.state.return_price}/>
+                        return_price={this.state.refund_price}/>
 
 
                     <RefundInstruction/>
@@ -151,7 +151,7 @@ export default class ReturnPage extends Component {
         let locals = this.upFiles.getImages();
         this.contain.open();
         let uploadeds = [];
-        if (util.isEmpty(uploadeds)) {
+        if (util.isEmpty(locals)) {
             this.postRefundReq(uploadeds)
         } else
             locals.forEach(item => {
@@ -183,10 +183,10 @@ export default class ReturnPage extends Component {
 
 
     postRefundReq = (uploadeds) => {
-        const {return_price, product_refund_type, order_item_ids, memo, order_number} = this.state;
+        const {refund_price, product_refund_type, order_item_ids, memo, order_number} = this.state;
 
         let body = {
-            return_price,
+            refund_price,
             product_refund_type_id: product_refund_type.id,
             order_item_ids,
             memo,

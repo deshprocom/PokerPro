@@ -158,7 +158,7 @@ export default class MallSelectPage extends PureComponent {
                     <TouchableOpacity
                         activeOpacity={0.5}
                         onPress={() => {
-                            global.router.replaceProductInfo({id: product_id})
+                            global.router.toMallInfoPage({id: product_id})
                         }}>
                         <ImageLoad style={styleS.mallImg} source={{uri: image}}/>
                     </TouchableOpacity>
