@@ -72,7 +72,7 @@ const styleB = StyleSheet.create({
     },
     shoppingCar: {
         borderRadius: 3,
-        width: 118,
+        width: '31%',
         height: 40,
         marginLeft: 17,
         borderWidth: 1,
@@ -83,7 +83,7 @@ const styleB = StyleSheet.create({
     joinShoppingCar: {
         backgroundColor: '#F34A4A',
         borderRadius: 3,
-        width: 208,
+        width: '55%',
         height: 40,
         marginRight: 16,
         alignItems: 'center',

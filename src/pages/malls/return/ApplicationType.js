@@ -14,12 +14,13 @@ export default class ApplicationType extends PureComponent {
         }else if(change_mall){
             return I18n.t('change_mall')
         }else{
-            return I18n.t('application_type')
+            return I18n.t('buy_ple_choice')
         }
     };
     render(){
         const{refund_mall_amount,change_mall}= this.props;
         let text=this.getText(refund_mall_amount,change_mall);
+        console.log("text:",text)
         return(
             <TouchableOpacity style={styleS.page}
             onPress={()=>{

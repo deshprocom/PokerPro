@@ -33,7 +33,7 @@
   "change_pwd_by_phone": "通过手机验证方式",
   "change_pwd_by_pwd": "通过旧密码方式",
   "old_pwd": "旧密码",
-  "log_register": "登陆/注册",
+  "log_register": "登录/注册",
   "ple_sign": "还未填写个性签名，介绍下自己吧",
   "home_ticket": "票务",
   "home_video": "视频",
@@ -470,10 +470,12 @@
   "online_service": "在线客服",
   "official_phone": "官方电话",
   "carrier_source": "承运来源",
-  "0": "无轨迹",
-  "2": "在途中",
-  "3": "签收",
-  "4": "问题件",
+  "no_track": "无轨迹",
+  "on_the_way": "在途中",
+  "have_been_received": "已签收",
+  "question_piece": "问题件",
   "upload_image": "上传凭证最多三张",
-  "login_success": "登录成功"
+  "login_success": "登录成功",
+  "order_success":"订单提交成功！",
+  "please_select_malls":"请选择商品"
 }

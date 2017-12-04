@@ -9,7 +9,7 @@ import RefundAmount from './RefundAmount';
 import RefundInstruction from './RefundInstruction';
 import UploadDocument from './UploadDocument';
 import UploadBottom from './UploadBottom';
-import RenderItem from '../order/RenderItem';
+import ProductItem from '../mallOrder/ProductItem';
 import {NavigationBar} from '../../../components';
 
 
@@ -54,7 +54,7 @@ export default class ReturnPage extends Component {
                     title={I18n.t('apply_returned')}/>
                 <ScrollView style={styleC.orderView}>
                     <View style={{height:1}}/>
-                    {/*<RenderItem item={orderItem.order_items}/>*/}
+                    <ProductItem lists={orderItem.order_items}/>
 
                     <ApplicationType
                         showTypeInfo={this.showTypeInfo}
