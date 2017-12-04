@@ -478,5 +478,6 @@
   "login_success": "登录成功",
   "mall_select": "选择商品列表",
   "order_success":"订单提交成功！",
-  "please_select_malls":"请选择商品"
+  "please_select_malls":"请选择商品",
+  "ple_select_refund_type":"请选择申请退换"
 }
