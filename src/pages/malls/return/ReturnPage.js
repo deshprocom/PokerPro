@@ -1,6 +1,6 @@
 //退换货申请页面
 import React, {Component, PropTypes} from 'react';
-import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView,TextInput} from 'react-native';
+import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView, TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 import ApplicationType from './ApplicationType';
@@ -9,16 +9,16 @@ import RefundAmount from './RefundAmount';
 import RefundInstruction from './RefundInstruction';
 import UploadDocument from './UploadDocument';
 import UploadBottom from './UploadBottom';
-import RenderItem from '../order/RenderItem';
 import {NavigationBar} from '../../../components';
+import ReturnItem from './ReturnItem';
 
 
 export default class ReturnPage extends Component {
 
-    state={
+    state = {
         typeShow: false,
-        refund_mall_amount:false,
-        change_mall:false
+        refund_mall_amount: false,
+        change_mall: false
     };
 
     showTypeInfo = () => {
@@ -26,24 +26,24 @@ export default class ReturnPage extends Component {
             typeShow: !this.state.typeShow
         })
     };
-    _refund_mall_amount=()=>{
+    _refund_mall_amount = () => {
         this.setState({
             refund_mall_amount: !this.state.refund_mall_amount,
-            change_mall:false
+            change_mall: false
         })
     };
-    _change_mall=()=>{
+    _change_mall = () => {
         this.setState({
             change_mall: !this.state.change_mall,
-            refund_mall_amount:false
+            refund_mall_amount: false
         })
     };
 
-    render(){
-        const{orderItem} = this.props.params;
-        console.log("item:",orderItem.order_items)
-        return(
-            <View style={{flex:1}}>
+    render() {
+        const {order_items} = this.props.params;
+        console.log("items:", order_items)
+        return (
+            <View style={{flex: 1}}>
                 <NavigationBar
                     barStyle={'dark-content'}
                     toolbarStyle={{backgroundColor: 'white'}}
@@ -53,8 +53,13 @@ export default class ReturnPage extends Component {
                     titleStyle={{color: Colors._161}}
                     title={I18n.t('apply_returned')}/>
                 <ScrollView style={styleC.orderView}>
-                    <View style={{height:1}}/>
-                    {/*<RenderItem item={orderItem.order_items}/>*/}
+                    <View style={{height: 1}}/>
+                    {order_items.map(x => {
+                        return <ReturnItem
+                            key={x.id}
+                            item={x}/>;
+                    })}
+
 
                     <ApplicationType
                         showTypeInfo={this.showTypeInfo}
@@ -68,7 +73,7 @@ export default class ReturnPage extends Component {
 
                     <UploadDocument/>
 
-                    <View style={{height:80}}/>
+                    <View style={{height: 80}}/>
                 </ScrollView>
 
 
@@ -87,8 +92,8 @@ export default class ReturnPage extends Component {
     }
 }
 const styleC = StyleSheet.create({
-    orderView:{
-        backgroundColor:'#ECECEE'
+    orderView: {
+        backgroundColor: '#ECECEE'
     },
     topBar: {
         height: Metrics.navBarHeight,
@@ -104,10 +109,10 @@ const styleC = StyleSheet.create({
         width: 50,
         justifyContent: 'center'
     },
-    cart:{
+    cart: {
         fontSize: 17,
         color: '#161718',
-        fontWeight:'bold'
+        fontWeight: 'bold'
     },
     backImg: {
         width: 11,
