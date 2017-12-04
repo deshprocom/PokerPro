@@ -2,6 +2,13 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 
+export function postTempImg(body, resolve, reject) {
+    helper.post(Api.upload_temp_img, body, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+
 export function getReturnType(resolve, reject) {
     helper.get(Api.refund_types, ret => {
         resolve(ret.data)

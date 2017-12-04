@@ -110,7 +110,9 @@ export default {
     product_order_detail: product_order_detail,
     product_order_confirm: product_order_confirm,
     logistics_info: logistics_info,
-    refund_types: 'refund_types'
+    refund_types: 'refund_types',
+    upload_temp_img: 'uploaders/tmp_image',
+
 }
 
 

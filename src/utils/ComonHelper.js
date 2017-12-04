@@ -60,12 +60,24 @@ export function uShareMallInfo(title, desc, icon, id) {
         })
 }
 
+//根据路径获取后缀名
+export function getFileMine(filePath) {
+    //获取最后一个.的位置
+    let index = filePath.lastIndexOf(".");
+//获取后缀
+    let ext = filePath.substr(index + 1);
+    console.log(ext)
+    return ext;
+}
 
+
+//根据路径获取文件名
 export function getFileName(o) {
     let pos = o.lastIndexOf("/");
     return o.substring(pos + 1);
 }
 
+//App更新
 export function updateApp(data) {
     const {android_platform, ios_platform} = data;
     console.log(data)

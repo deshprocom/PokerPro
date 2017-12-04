@@ -8,9 +8,10 @@ import ApplicationTypeInfo from './ApplicationTypeInfo';
 import RefundAmount from './RefundAmount';
 import RefundInstruction from './RefundInstruction';
 import UploadDocument from './UploadDocument';
-import UploadBottom from './UploadBottom';
-import {NavigationBar} from '../../../components';
+import {NavigationBar, BaseComponent} from '../../../components';
 import ReturnItem from './ReturnItem';
+import {postTempImg} from '../../../services/MallDao';
+import {strNotNull, getCurrentDate, getFileName} from '../../../utils/ComonHelper';
 
 
 export default class ReturnPage extends Component {
@@ -55,7 +56,8 @@ export default class ReturnPage extends Component {
         const {order_items} = this.props.params;
 
         return (
-            <View style={{flex: 1}}>
+            <BaseComponent
+                ref={ref => this.contain = ref}>
                 <NavigationBar
                     barStyle={'dark-content'}
                     toolbarStyle={{backgroundColor: 'white'}}
@@ -84,14 +86,23 @@ export default class ReturnPage extends Component {
 
                     <RefundInstruction/>
 
-                    <UploadDocument/>
+                    <UploadDocument
+                        ref={ref => this.upFiles = ref}/>
 
                     <View style={{height: 80}}/>
                 </ScrollView>
 
 
-                <UploadBottom
-                    showTypeInfo={this.showTypeInfo}/>
+                <View style={styleC.bottomView}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            this._upload()
+                        }}
+                        style={styleC.customer}>
+                        <Text style={styleC.orderSubmitTxt}>{I18n.t('confirm')}</Text>
+                    </TouchableOpacity>
+
+                </View>
 
                 {this.state.typeShow ? <ApplicationTypeInfo
                     showTypeInfo={this.showTypeInfo}
@@ -99,9 +110,43 @@ export default class ReturnPage extends Component {
                     _change_mall={this._change_mall}
                     refund_mall_amount={this.state.refund_mall_amount}
                     change_mall={this.state.change_mall}/> : null}
-            </View>
+            </BaseComponent>
 
         );
+    }
+
+    _fileName = (filePath) => {
+        return getFileName(filePath)
+    };
+
+    _upload = async () => {
+        let locals = this.upFiles.getImages();
+        this.contain.open();
+        let uploadeds = [];
+
+        locals.forEach(item => {
+            setTimeout(() => {
+                let formData = new FormData();
+                let file = {
+                    uri: item.path, type: 'multipart/form-data',
+                    name: this._fileName(item.path)
+                };
+                formData.append("image", file);
+                postTempImg(formData, data => {
+
+                    uploadeds.push(data);
+                    if (uploadeds.length === locals.length) {
+                        this.contain.close();
+                        console.log('上传完成')
+
+                    }
+                }, err => {
+                    console.log(err)
+                })
+            }, 500)
+        });
+
+
     }
 }
 const styleC = StyleSheet.create({
@@ -136,5 +181,46 @@ const styleC = StyleSheet.create({
         fontSize: 15,
         color: '#161718'
     },
+    bottomView: {
+        height: 50,
+        backgroundColor: "#FFFFFF",
+        position: 'absolute',
+        bottom: 0,
+        flexDirection: 'row-reverse',
+        alignItems: 'center',
+        width: '100%',
+    },
+    returnedBottom: {
+        borderWidth: 1,
+        borderColor: '#333333',
+        borderRadius: 4,
+        width: 90,
+        height: 37,
+        marginRight: 17,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    customer: {
+        backgroundColor: '#F34A4A',
+        borderRadius: 4,
+        width: 90,
+        height: 37,
+        marginRight: 17,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    orderSubmitTxt: {
+        fontSize: 18,
+        color: '#FFFFFF'
+    },
+    payment: {
+        fontSize: 14,
+        color: '#333333',
+        marginLeft: 17
+    },
+    paymentPrice: {
+        fontSize: 18,
+        color: '#F34A4A'
+    }
 
 })

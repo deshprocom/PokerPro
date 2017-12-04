@@ -79,7 +79,7 @@ export default class MallSelectPage extends PureComponent {
                                           return x.isSelect;
                                       });
                                       if (util.isEmpty(items)) {
-                                          showToast(I18n.t('ple_select_mall'))
+                                          showToast(I18n.t('please_select_malls'))
                                           return;
                                       }
                                       global.router.toReturnPage(items)

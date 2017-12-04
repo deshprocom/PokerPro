@@ -16,7 +16,7 @@ export default class BaseComponent extends Component {
 
 
     close() {
-        this.loading.clone()
+        this.loading.close()
     };
 
     open = () => {

@@ -20,9 +20,9 @@ export default class UploadDocument extends PureComponent {
 
     handlePress = (i) => {
         let picker = {
-            compressImageQuality: 0.5,
+            compressImageQuality: 0.3,
             multiple: true,
-            maxFiles: 3 - this.state.uploadImg.length
+            maxFiles: 3 - this.state.uploadImg.length,
         };
         switch (i) {
             case 1:
@@ -84,6 +84,8 @@ export default class UploadDocument extends PureComponent {
     };
 
     render() {
+
+        console.log(this.state.uploadImg)
 
         return (
             <View style={styles.page}>
