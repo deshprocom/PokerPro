@@ -16,11 +16,11 @@ export default class BaseComponent extends Component {
 
 
     close() {
-        this.loading.close()
+        this.loading && this.loading.close()
     };
 
     open = () => {
-        this.loading.open()
+        this.loading && this.loading.open()
     };
 
     _renderChildren() {

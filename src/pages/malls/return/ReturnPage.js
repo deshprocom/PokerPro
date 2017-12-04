@@ -137,11 +137,11 @@ export default class ReturnPage extends Component {
                     uploadeds.push(data);
                     if (uploadeds.length === locals.length) {
                         this.contain.close();
-                        console.log('上传完成')
+                        console.log('上传完成：', uploadeds)
 
                     }
                 }, err => {
-                    console.log(err)
+                    this.contain.close();
                 })
             }, 500)
         });
