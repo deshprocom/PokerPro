@@ -13,6 +13,11 @@ export default class UploadDocument extends PureComponent {
         uploadImg: []
     };
 
+
+    getImages = () => {
+        return this.state.uploadImg;
+    };
+
     handlePress = (i) => {
         let picker = {
             compressImageQuality: 0.5,
@@ -27,7 +32,7 @@ export default class UploadDocument extends PureComponent {
                         localImg
                     })
                 }).catch(e => {
-                    alert(e.message ? e.message : e);
+                    // alert(e.message ? e.message : e);
                 });
                 break;
             case 2: {
@@ -49,11 +54,11 @@ export default class UploadDocument extends PureComponent {
                         localImg: imgs,
                         spliceIndex: num,
                         uploadImg: imgs.filter(function (value) {
-                            return (value != false);
+                            return (value !== false);
                         })
                     });
                 }).catch(e => {
-                    alert(e.message ? e.message : e);
+                    // alert(e.message ? e.message : e);
                 });
             }
         }
@@ -79,6 +84,7 @@ export default class UploadDocument extends PureComponent {
     };
 
     render() {
+
         return (
             <View style={styles.page}>
                 <Text style={styles.amountTxt}>{I18n.t('upload_document')}：</Text>

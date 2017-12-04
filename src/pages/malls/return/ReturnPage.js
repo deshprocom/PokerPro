@@ -18,7 +18,8 @@ export default class ReturnPage extends Component {
     state = {
         typeShow: false,
         refund_mall_amount: false,
-        change_mall: false
+        change_mall: false,
+        return_price: 0
     };
 
     showTypeInfo = () => {
@@ -38,6 +39,17 @@ export default class ReturnPage extends Component {
             refund_mall_amount: false
         })
     };
+
+    componentDidMount() {
+        const {order_items} = this.props.params;
+        let price = 0;
+        order_items.forEach(item => {
+            price += Number.parseFloat(item.price) * Number.parseFloat(item.number)
+        });
+        this.setState({
+            return_price: price
+        })
+    }
 
     render() {
         const {order_items} = this.props.params;
@@ -66,7 +78,8 @@ export default class ReturnPage extends Component {
                         refund_mall_amount={this.state.refund_mall_amount}
                         change_mall={this.state.change_mall}/>
 
-                    <RefundAmount/>
+                    <RefundAmount
+                        return_price={this.state.return_price}/>
 
 
                     <RefundInstruction/>
