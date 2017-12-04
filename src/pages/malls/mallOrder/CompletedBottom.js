@@ -90,7 +90,7 @@ export default class CompletedBottom extends Component {
 
     renderPay = (item) => {
         const {order_number} = item;
-        return (
+        return (//${I18n.t('pay')}
             <View style={styleO.bottomView}>
                 <View style={styleO.payView}>
                     <View style={{alignItems:'flex-end'}}>
@@ -129,6 +129,7 @@ export default class CompletedBottom extends Component {
     };
 
     paidOrder = (orderItem) => {
+
         return <View style={styleO.bottomView}>
             <TouchableOpacity
                 onPress={() => {
@@ -140,7 +141,7 @@ export default class CompletedBottom extends Component {
             <TouchableOpacity
 
                 onPress={() => {
-                    global.router.toReturnPage(orderItem)
+                    global.router.toMallSelectPage(orderItem)
                 }}
                 style={styleO.returnedBottom}>
                 <Text style={styleO.orderSubmitTxt}>{I18n.t('refund_mall_amount')}</Text>
@@ -150,6 +151,7 @@ export default class CompletedBottom extends Component {
     };
 
     completedOrder = (orderItem) => {
+        const {shipments, order_number} = orderItem;
         return (
             <View style={styleO.bottomView}>
 
@@ -166,6 +168,7 @@ export default class CompletedBottom extends Component {
 
 
     deliveredOrder = (orderItem) => {
+        const {shipments, order_number} = orderItem;
         return (
             <View style={styleO.bottomView}>
                 <TouchableOpacity
@@ -190,7 +193,7 @@ export default class CompletedBottom extends Component {
                 <TouchableOpacity
 
                     onPress={() => {
-                    global.router.toReturnPage(orderItem)
+                    global.router.toMallSelectPage(orderItem)
                 }}
                     style={styleO.returnedBottom}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('refund_mall_amount')}</Text>

@@ -28,6 +28,7 @@ export default class OrderListStatus extends Component {
                 </View>
                 <View style={{height: 1}}/>
                 <ProductItem
+                    disabled={true}
                     lists={order_items}/>
                 <View style={styles.viewTotal}>
                     <Text style={styles.txtTotal2}>{total_price}</Text>

@@ -26,7 +26,7 @@ export default class MallInfoPage extends Component {
         this.container.open();
         const {id} = this.props.params;
         getProductDetail({id: id}, data => {
-            console.log("product:",data)
+
             this.setState({
                 product: data.product
             })

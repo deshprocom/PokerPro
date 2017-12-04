@@ -1,3 +1,9 @@
+/**
+ * Created by lorne on 2017/12/4
+ * Function:
+ * Desc:
+ */
+
 import React, {PureComponent} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView, TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
@@ -6,7 +12,7 @@ import {deleteProductFromCart, util, showToast} from '../../../utils/ComonHelper
 import PropTypes from 'prop-types';
 import {ImageLoad} from '../../../components';
 
-export default class RenderItem extends PureComponent {
+export default class ReturnItem extends PureComponent {
 
     static propTypes = {
         item: PropTypes.object
@@ -23,8 +29,8 @@ export default class RenderItem extends PureComponent {
     };
 
     render() {
-        const {title, seven_days_return, number, variant} = this.props.item;
-        const {image, original_price, price, text_sku_values, product_id} = variant;
+
+        const {image, original_price, price, sku_value, product_id, title, number, seven_days_return} = this.props.item;
 
 
         return (
@@ -40,10 +46,10 @@ export default class RenderItem extends PureComponent {
                 <View style={styleR.TxtView}>
                     <Text numberOfLines={2} style={styleR.mallTextName}>{title}</Text>
                     <Text
-                        style={styleR.mallAttributes}>{this.selectType(text_sku_values)}</Text>
+                        style={styleR.mallAttributes}>{this.selectType(sku_value)}</Text>
 
                     {seven_days_return ? <View style={styleR.returned}>
-                    <Text style={styleR.returnedTxt}>{I18n.t('returned')}</Text>
+                        <Text style={styleR.returnedTxt}>{I18n.t('returned')}</Text>
                     </View> : null}
 
                     <View style={styleR.PriceView}>
@@ -68,7 +74,7 @@ const styleR = StyleSheet.create({
         height: 96,
         marginLeft: 17,
         marginTop: 12,
-        resizeMode:'contain',
+        resizeMode: 'contain',
     },
     TxtView: {
         flex: 1,

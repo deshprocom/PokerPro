@@ -56,7 +56,7 @@ export default class MallInfoPageTopBar extends Component {
             return;
         const {title, master,freight_fee} = this.props.product;
         const {price, original_price, origin_point} = master;
-        console.log("product:",this.props.product);
+
         return <View>
             <View style={styleM.mallInfoTop}>
                 <Text style={styleM.mallInfoTopText}>{title}</Text>
