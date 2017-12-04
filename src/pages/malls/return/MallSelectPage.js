@@ -76,7 +76,7 @@ export default class MallSelectPage extends PureComponent {
                 <View style={{flex: 1}}/>
                 <TouchableOpacity style={styleS.settlementView}
                                   onPress={() => {
-                                      const {order_items,order_number} = this.state;
+                                      const {order_items, order_number} = this.state;
                                       let items = order_items.filter(x => {
                                           return x.isSelect;
                                       });
@@ -84,7 +84,7 @@ export default class MallSelectPage extends PureComponent {
                                           showToast(I18n.t('please_select_malls'))
                                           return;
                                       }
-                                      global.router.toReturnPage(items,order_number)
+                                      global.router.toReturnPage(items, order_number)
                                   }}>
                     <Text style={styleS.settlement}>{I18n.t('confirm')}</Text>
 
@@ -138,7 +138,7 @@ export default class MallSelectPage extends PureComponent {
 
     _renderItem = ({item}) => {
 
-        const {price, original_price, sku_value, title, image, product_id} = item;
+        const {price, original_price, sku_value, title, image, product_id, refund_status} = item;
         let type_value = '';
         if (!util.isEmpty(sku_value)) {
             sku_value.forEach(x => {
@@ -174,6 +174,9 @@ export default class MallSelectPage extends PureComponent {
                         </View>
                     </View>
                 </View>
+
+                {refund_status === 'open' ? <Text style={styleS.refund}>退款中</Text> : null}
+
             </Swipeout>
         )
     };
@@ -399,5 +402,12 @@ const styleS = StyleSheet.create({
         width: '100%',
         backgroundColor: 'white',
         bottom: 0
+    },
+    refund: {
+        position: 'absolute',
+        top: 10,
+        left: 10,
+        color: 'red',
+        fontSize: 16
     }
 })
