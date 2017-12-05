@@ -9,7 +9,8 @@ import {ImageLoad} from '../../../components';
 export default class ProductItem extends PureComponent {
 
     static propTypes = {
-        lists: PropTypes.array
+        lists: PropTypes.array,
+        disabled: PropTypes.bool
     };
 
     selectType = (arr_type) => {
@@ -23,9 +24,10 @@ export default class ProductItem extends PureComponent {
     };
 
     renderItem = ({item}) => {
-        const {title, original_price, price, number, sku_value, image, refunded, product_id} = item;
+        const {title, original_price, price, number, sku_value, image, seven_days_return, product_id} = item;
         return <TouchableOpacity
             style={styleR.renderItem}
+            disabled={this.props.disabled}
             onPress={() => {
                 global.router.toMallInfoPage({id: product_id})
             }}>
@@ -39,7 +41,7 @@ export default class ProductItem extends PureComponent {
                 <Text
                     style={styleR.mallAttributes}>{this.selectType(sku_value)}</Text>
 
-                {refunded ? <View style={styleR.returned}>
+                {seven_days_return ? <View style={styleR.returned}>
                     <Text style={styleR.returnedTxt}>{I18n.t('returned')}</Text>
                 </View> : null}
 
@@ -75,7 +77,7 @@ const styleR = StyleSheet.create({
         height: 96,
         marginLeft: 17,
         marginTop: 12,
-        resizeMode:'contain',
+        resizeMode: 'contain',
     },
     TxtView: {
         flex: 1,

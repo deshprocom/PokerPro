@@ -51,7 +51,7 @@ export default class LogisticsPage extends Component {
             return <View/>
         }
         return (
-            <View style={styles.page}>
+            <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
                     barStyle={'dark-content'}
                     toolbarStyle={{backgroundColor: 'white'}}
@@ -152,8 +152,7 @@ class RenderItem extends Component {
 
 const styles = {
     page: {
-        flex: 1,
-        backgroundColor: '#ECECEE'
+        flex: 1
     },
     line: {
         width: 3,

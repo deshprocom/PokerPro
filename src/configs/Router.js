@@ -44,7 +44,14 @@ export default class Router {
 
     }
 
-    /*物流查看*/
+    toMallSelectPage(params) {
+        this.stackPush({
+            name: 'MallSelectPage',
+            params: params
+        })
+    }
+
+
     toLogisticsWeb(shipments) {
         this.stackPush({
             name: 'LogisticsWeb',
@@ -57,7 +64,7 @@ export default class Router {
         this.stackPush({
             name: 'LogisticsPage',
             params: {
-                orderItem:orderItem
+                orderItem: orderItem
             }
         })
     }
@@ -728,11 +735,12 @@ export default class Router {
         })
     }
 
-    toReturnPage(orderItem) {
+    toReturnPage(orderItems, order_number) {
         this.stackPush({
             name: 'ReturnPage',
             params: {
-                orderItem: orderItem
+                order_items: orderItems,
+                order_number: order_number
             }
         })
     }

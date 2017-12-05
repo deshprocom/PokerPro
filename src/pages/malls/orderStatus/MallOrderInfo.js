@@ -77,7 +77,8 @@ export default class MallOrderInfo extends PureComponent {
 
                 </View>
                 {util.isEmpty(order_items) ? null :
-                    <ProductItem lists={order_items}/>}
+                    <ProductItem lists={order_items}
+                                 disabled={false}/>}
                 <OrderMessage
                     orderDetail={detail}/>
                 <OrderDetails

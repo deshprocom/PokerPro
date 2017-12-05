@@ -39,7 +39,7 @@ export default class ReturnSucceed extends PureComponent {
                     <ReturnStatus/>
  
                     <RefundAmount/>
-                    <RenderItem/>
+                    {/*<RenderItem/>*/}
 
                     <RefundInfo/>
 

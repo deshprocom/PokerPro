@@ -3,12 +3,8 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, L
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 import {NavigationBar, ActionSheet, ImagePicker} from '../../../components';
-import {util, isEmptyObject, alertOrder,showToast} from '../../../utils/ComonHelper';
+import {util, isEmptyObject, alertOrder, showToast} from '../../../utils/ComonHelper';
 
-const picker = {
-    compressImageQuality: 0.5,
-    multiple: true
-};
 
 export default class UploadDocument extends PureComponent {
     state = {
@@ -17,7 +13,17 @@ export default class UploadDocument extends PureComponent {
         uploadImg: []
     };
 
+
+    getImages = () => {
+        return this.state.uploadImg;
+    };
+
     handlePress = (i) => {
+        let picker = {
+            compressImageQuality: 0.3,
+            multiple: true,
+            maxFiles: 3 - this.state.uploadImg.length,
+        };
         switch (i) {
             case 1:
                 ImagePicker.openCamera(picker).then(localImg => {
@@ -26,7 +32,7 @@ export default class UploadDocument extends PureComponent {
                         localImg
                     })
                 }).catch(e => {
-                    alert(e.message ? e.message : e);
+                    // alert(e.message ? e.message : e);
                 });
                 break;
             case 2: {
@@ -35,7 +41,7 @@ export default class UploadDocument extends PureComponent {
                     if (images.length <= 0) {
                         return
                     }
-                    if(images.length>3 || (this.state.uploadImg.length+images.length)>3){
+                    if (images.length > 3 || (this.state.uploadImg.length + images.length) > 3) {
                         showToast(I18n.t('upload_image'));
                         return
                     }
@@ -48,11 +54,11 @@ export default class UploadDocument extends PureComponent {
                         localImg: imgs,
                         spliceIndex: num,
                         uploadImg: imgs.filter(function (value) {
-                            return (value != false);
+                            return (value !== false);
                         })
                     });
                 }).catch(e => {
-                    alert(e.message ? e.message : e);
+                    // alert(e.message ? e.message : e);
                 });
             }
         }
@@ -78,6 +84,9 @@ export default class UploadDocument extends PureComponent {
     };
 
     render() {
+
+        console.log(this.state.uploadImg)
+
         return (
             <View style={styles.page}>
                 <Text style={styles.amountTxt}>{I18n.t('upload_document')}：</Text>
@@ -93,27 +102,40 @@ export default class UploadDocument extends PureComponent {
                                 style={styles.btnSelectImg2}>
 
                                 {util.isEmpty(this.state.uploadImg) && index === 0 ?
-                                    <View style={{width:55,alignItems:'center'}}>
+                                    <View style={{width: 55, alignItems: 'center'}}>
                                         <Image
-                                            style={{width:29,height:27}}
+                                            style={{width: 29, height: 27}}
                                             source={Images.camera}/>
                                         <Text
-                                            style={{fontSize:12,color:'#CCCCCC',marginTop:5}}>{I18n.t('upload_image')}</Text>
+                                            style={{
+                                                fontSize: 12,
+                                                color: '#CCCCCC',
+                                                marginTop: 5
+                                            }}>{I18n.t('upload_image')}</Text>
                                     </View>
                                     : null}
 
                                 {item.path && <Image
-                                    source={{uri:item.path}}
-                                    style={{height: 100,width: 100,justifyContent:'flex-end'}}/>
+                                    source={{uri: item.path}}
+                                    style={{height: 100, width: 100, justifyContent: 'flex-end'}}/>
 
                                 }
                                 {item.path && <TouchableOpacity
-                                    style={{position:'absolute',left:65,top:3,width:30,height:30,alignItems:'center',justifyContent:'center',zIndex:99}}
-                                    onPress={()=>{
-                                            this.deleteImg(index)
+                                    style={{
+                                        position: 'absolute',
+                                        left: 65,
+                                        top: 3,
+                                        width: 30,
+                                        height: 30,
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        zIndex: 99
+                                    }}
+                                    onPress={() => {
+                                        this.deleteImg(index)
 
                                     }}>
-                                    <Image style={{width:10,height:3}} source={Images.cut}/>
+                                    <Image style={{width: 10, height: 3}} source={Images.cut}/>
                                 </TouchableOpacity>}
 
                             </TouchableOpacity>

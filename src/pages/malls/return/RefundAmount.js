@@ -6,30 +6,31 @@ import I18n from 'react-native-i18n';
 export default class RefundAmount extends PureComponent {
 
 
-    render(){
-        return(
+    render() {
+        return (
             <View style={styles.page}>
                 <Text style={styles.amountTxt}>{I18n.t('refund_amount')}：</Text>
-                <Text style={styles.amount}>¥555</Text>
+                <Text style={styles.amount}>¥{this.props.return_price}</Text>
             </View>
-        )}
+        )
+    }
 }
 const styles = StyleSheet.create({
-    page:{
-       height:48,
-        backgroundColor:'#FFFFFF',
-        marginTop:10,
-        flexDirection:'row',
-        alignItems:'center',
-        marginBottom:6
+    page: {
+        height: 48,
+        backgroundColor: '#FFFFFF',
+        marginTop: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 6
     },
-    amountTxt:{
+    amountTxt: {
         fontSize: 14,
-        color:'#333333',
-        marginLeft:17
+        color: '#333333',
+        marginLeft: 17
     },
-    amount:{
+    amount: {
         fontSize: 18,
-        color:'#F34A4A'
+        color: '#F34A4A'
     }
 })
