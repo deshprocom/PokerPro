@@ -3,6 +3,8 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, L
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
+import {DeShangPhone} from '../../../configs/Constants';
+import {util, payWx, isWXAppInstalled, call, alertOrder} from '../../../utils/ComonHelper';
 
 export default class ReturnBottom extends PureComponent {
 
@@ -13,7 +15,7 @@ export default class ReturnBottom extends PureComponent {
             <View style={styleO.bottomView}>
                 <TouchableOpacity
                     onPress={() => {
-                        this.props.showExpiredInfo()
+                        call(DeShangPhone)
                     }}
                     style={styleO.customer}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('contact_customer_service')}</Text>

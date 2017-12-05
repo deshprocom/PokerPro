@@ -1,6 +1,13 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
+//退换货详情
+export function getRefundInfo(body, resolve, reject) {
+    helper.get(Api.refund_info(body),ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
 
 export function postMallRefund(body, resolve, reject) {
     helper.post(Api.mall_refund(body), body, ret => {

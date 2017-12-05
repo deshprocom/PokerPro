@@ -10,6 +10,7 @@ import I18n from 'react-native-i18n';
 import {NavigationBar, BaseComponent, ImageLoad} from '../../../components';
 import Swipeout from 'react-native-swipeout';
 import {showToast, util} from '../../../utils/ComonHelper';
+import {RefundStatus} from '../../../configs/Status';
 
 export default class MallSelectPage extends PureComponent {
 
@@ -26,7 +27,6 @@ export default class MallSelectPage extends PureComponent {
             item.stock = item.number;
             item.isSelect = false;
         });
-        console.log(this.props.params)
         this.setState({
             order_items,
             order_number
@@ -135,10 +135,18 @@ export default class MallSelectPage extends PureComponent {
             selectAll: !this.state.selectAll
         })
     };
+    refundTxt = (status) => {
+        let menu = [RefundStatus.none, RefundStatus.open, RefundStatus.close, RefundStatus.completed];
+        if (status === menu[0]) {
+            return null;
+        } else {
+            return <Text style={[styleS[`txt${status}`]]}>{I18n.t(`mall_${status}`)}</Text>
+        }
+    };
 
     _renderItem = ({item}) => {
 
-        const {price, original_price, sku_value, title, image, product_id, refund_status} = item;
+        const {price, original_price, sku_value, title, image, product_id, refund_number,refund_status,number,seven_days_return} = item;
         let type_value = '';
         if (!util.isEmpty(sku_value)) {
             sku_value.forEach(x => {
@@ -150,15 +158,21 @@ export default class MallSelectPage extends PureComponent {
             <Swipeout
                 disabled={true}
             >
-                <View
+                <TouchableOpacity
 
-                    style={styleS.renderItem}>
+                    style={styleS.renderItem}
+                onPress={()=>{
+                    if(refund_status != RefundStatus.none){
+                        global.router.toReturnSucceedPage(refund_number);
+                    }
+
+                }}>
                     {this.renderShowEditView(item)}
 
                     <TouchableOpacity
                         activeOpacity={0.5}
                         onPress={() => {
-                            global.router.toMallInfoPage({id: product_id})
+                            {/*global.router.toMallInfoPage({id: product_id})*/}
                         }}>
                         <ImageLoad style={styleS.mallImg} source={{uri: image}}/>
                     </TouchableOpacity>
@@ -167,83 +181,38 @@ export default class MallSelectPage extends PureComponent {
                         <Text numberOfLines={2} style={styleS.mallTextName}>{title}</Text>
                         <Text
                             style={styleS.mallAttributes}>{type_value}</Text>
+
+                        <View style={styleS.returnedView}>
+                            {seven_days_return ? <View style={styleS.returned}>
+                                    <Text style={styleS.returnedTxt}>{I18n.t('returned')}</Text>
+                                </View> : null}
+                            <View style={{flex:1}}/>
+                            {this.refundTxt(refund_status)}
+                        </View>
+
                         <View style={styleS.PriceView}>
                             <Text style={styleS.Price}>¥{price}</Text>
+                            <Text style={styleS.originPrice}>¥</Text><Text
+                            style={[styleS.originPrice, {marginLeft: 1}]}>{original_price}</Text>
                             <View style={{flex: 1}}/>
-                            {this.buyQuantity(item)}
+                            <Text style={styleS.quantitys}>x{number}</Text>
                         </View>
                     </View>
-                </View>
+                </TouchableOpacity>
 
-                {refund_status === 'open' ? <Text style={styleS.refund}>退款中</Text> : null}
 
             </Swipeout>
-        )
-    };
-    buyQuantity = (item) => {
-        const {order_items} = this.state;
-        const styleCutDisable = {
-            backgroundColor: '#FBFAFA'
-        };
-        const styleCut = {
-            backgroundColor: '#F6F5F5'
-        };
-
-        const {id, stock} = item;
-
-        return (
-            <View style={styleS.quantity}>
-                <TouchableOpacity
-                    style={[styleS.buyTouch, item.number === 1 ? styleCutDisable : styleCut]}
-                    onPress={() => {
-                        if (item.number > 1) {
-                            --item.number;
-                            let newDataHosts = [...order_items];
-                            newDataHosts.map(function (x) {
-                                if (id === x.id) {
-                                    x.number = item.number
-                                }
-                            });
-                            this.setState({
-                                order_items: newDataHosts
-                            })
-                        }
-
-                    }}>
-                    <Image style={styleS.buyImgCut} source={Images.cut}/>
-                </TouchableOpacity>
-
-                <View style={styleS.buyInput}>
-                    <Text>{item.number}</Text>
-                </View>
-
-                <TouchableOpacity
-                    style={styleS.buyTouch}
-                    onPress={() => {
-                        if (item.number >= stock) {
-                            showToast(I18n.t('max_stock'));
-                            return;
-                        }
-                        ++item.number;
-                        let newDataHosts = [...order_items];
-                        newDataHosts.map(function (x) {
-                            if (id === x.id) {
-                                x.number = item.number
-                            }
-                        });
-                        this.setState({
-                            order_items: newDataHosts
-                        })
-                    }}>
-                    <Image style={styleS.buyImgAdd} source={Images.add}/>
-                </TouchableOpacity>
-            </View>
         )
     };
 }
 
 const styleS = StyleSheet.create({
-
+    quantitys: {
+        fontSize: 17,
+        color: '#161718',
+        marginRight: 17,
+        marginTop: 19
+    },
     topBar: {
         height: Metrics.navBarHeight,
         flexDirection: 'row',
@@ -409,5 +378,45 @@ const styleS = StyleSheet.create({
         left: 10,
         color: 'red',
         fontSize: 16
-    }
+    },
+    returnedView: {
+        flexDirection: 'row',
+        marginTop: 3,
+        alignItems: 'center',
+    },
+    returned: {
+        backgroundColor: '#F34A4A',
+        borderRadius: 2,
+        width: 48,
+        height: 18,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    returnedTxt: {
+        fontSize: 10,
+        color: '#FFFFFF'
+    },
+    txtopen: {
+        fontSize: 14,
+        color: '#4990E2',
+        marginRight: 17
+    },
+    txtclose: {
+        fontSize: 14,
+        marginRight: 17,
+        color: '#F34A4A',
+    },
+    txtcompleted: {
+        color: '#34BA3C',
+        fontSize: 14,
+        marginRight: 17
+    },
+    originPrice: {
+        fontSize: 12,
+        color: '#AAAAAA',
+        textDecorationLine: 'line-through',
+        textDecorationColor: '#979797',
+        marginLeft: 17,
+        marginTop: 21
+    },
 })

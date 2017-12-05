@@ -82,4 +82,11 @@ export class LogisticsStatus {
     static have_been_received = 'have_been_received';
     static question_piece = 'question_piece';
 }
+//商城订单状态
+export class RefundStatus {
+    static none = 'none';
+    static open = 'open';
+    static close = 'close';
+    static completed = 'completed';
+}
 

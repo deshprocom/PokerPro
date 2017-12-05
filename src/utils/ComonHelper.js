@@ -595,6 +595,7 @@ export function convertDate(date, formate) {
         return moment(legalValue(date)).format(formate)
 }
 
+//UTC 时间转化
 export function utcDate(utc, formate) {
     return moment.unix(utc).format(formate)
 }

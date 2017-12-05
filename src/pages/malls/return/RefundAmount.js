@@ -10,7 +10,7 @@ export default class RefundAmount extends PureComponent {
         return (
             <View style={styles.page}>
                 <Text style={styles.amountTxt}>{I18n.t('refund_amount')}：</Text>
-                <Text style={styles.amount}>¥{this.props.return_price}</Text>
+                <Text style={styles.amount}>¥{this.props.refund_price}</Text>
             </View>
         )
     }
