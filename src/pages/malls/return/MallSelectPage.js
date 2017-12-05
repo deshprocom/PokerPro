@@ -175,7 +175,7 @@ export default class MallSelectPage extends PureComponent {
                     </View>
                 </View>
 
-                {refund_status === 'open' ? <Text style={styleS.refund}>退款中</Text> : null}
+                {/*{refund_status === 'open' ? <Text style={styleS.refund}>退款中</Text> : null}*/}
 
             </Swipeout>
         )

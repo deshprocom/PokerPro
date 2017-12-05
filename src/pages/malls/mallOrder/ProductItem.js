@@ -5,6 +5,7 @@ import I18n from 'react-native-i18n';
 import {util, showToast} from '../../../utils/ComonHelper';
 import PropTypes from 'prop-types';
 import {ImageLoad} from '../../../components';
+import {RefundStatus} from "../../../configs/Status";
 
 export default class ProductItem extends PureComponent {
 
@@ -22,9 +23,18 @@ export default class ProductItem extends PureComponent {
         }
         return type_value;
     };
+    refundTxt = (status) => {
+        let menu = [RefundStatus.none, RefundStatus.open, RefundStatus.close, RefundStatus.completed];
+        if (status === menu[0]) {
+            return null;
+        } else {
+            return <Text style={[styleR[`txt${status}`]]}>{I18n.t(`mall_${status}`)}</Text>
+        }
+    };
 
     renderItem = ({item}) => {
-        const {title, original_price, price, number, sku_value, image, seven_days_return, product_id} = item;
+        const {title, original_price, price, number, sku_value, image, seven_days_return, product_id, refund_status} = item;
+
         return <TouchableOpacity
             style={styleR.renderItem}
             disabled={this.props.disabled}
@@ -41,9 +51,13 @@ export default class ProductItem extends PureComponent {
                 <Text
                     style={styleR.mallAttributes}>{this.selectType(sku_value)}</Text>
 
-                {seven_days_return ? <View style={styleR.returned}>
-                    <Text style={styleR.returnedTxt}>{I18n.t('returned')}</Text>
-                </View> : null}
+                <View style={styleR.returnedView}>
+                    {seven_days_return ? <View style={styleR.returned}>
+                            <Text style={styleR.returnedTxt}>{I18n.t('returned')}</Text>
+                        </View> : null}
+                    <View style={{flex:1}}/>
+                    {this.refundTxt(refund_status)}
+                </View>
 
                 <View style={styleR.PriceView}>
                     <Text style={styleR.Price}>¥</Text><Text
@@ -95,6 +109,11 @@ const styleR = StyleSheet.create({
         marginRight: 27,
         marginTop: 5
     },
+    returnedView: {
+        flexDirection: 'row',
+        marginTop: 3,
+        alignItems: 'center',
+    },
     returned: {
         backgroundColor: '#F34A4A',
         borderRadius: 2,
@@ -102,7 +121,6 @@ const styleR = StyleSheet.create({
         height: 18,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 3
     },
     returnedTxt: {
         fontSize: 10,
@@ -130,4 +148,20 @@ const styleR = StyleSheet.create({
         color: '#161718',
         marginRight: 17
     },
+    txtopen: {
+        fontSize: 14,
+        color: '#4990E2',
+        marginRight: 17
+    },
+    txtclose: {
+        fontSize: 14,
+        marginRight: 17,
+        color: '#F34A4A',
+    },
+    txtcompleted: {
+        color: '#34BA3C',
+        fontSize: 14,
+        marginRight: 17
+    },
+
 })
