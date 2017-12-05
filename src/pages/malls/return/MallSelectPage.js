@@ -10,6 +10,7 @@ import I18n from 'react-native-i18n';
 import {NavigationBar, BaseComponent, ImageLoad} from '../../../components';
 import Swipeout from 'react-native-swipeout';
 import {showToast, util} from '../../../utils/ComonHelper';
+import {RefundStatus} from '../../../configs/Status';
 
 export default class MallSelectPage extends PureComponent {
 
@@ -26,7 +27,6 @@ export default class MallSelectPage extends PureComponent {
             item.stock = item.number;
             item.isSelect = false;
         });
-        console.log(this.props.params)
         this.setState({
             order_items,
             order_number
@@ -138,7 +138,7 @@ export default class MallSelectPage extends PureComponent {
 
     _renderItem = ({item}) => {
 
-        const {price, original_price, sku_value, title, image, product_id, refund_status} = item;
+        const {price, original_price, sku_value, title, image, product_id, refund_number,refund_status} = item;
         let type_value = '';
         if (!util.isEmpty(sku_value)) {
             sku_value.forEach(x => {
@@ -150,15 +150,21 @@ export default class MallSelectPage extends PureComponent {
             <Swipeout
                 disabled={true}
             >
-                <View
+                <TouchableOpacity
 
-                    style={styleS.renderItem}>
+                    style={styleS.renderItem}
+                onPress={()=>{
+                    if(refund_status != RefundStatus.none){
+                        global.router.toReturnSucceedPage(refund_number);
+                    }
+
+                }}>
                     {this.renderShowEditView(item)}
 
                     <TouchableOpacity
                         activeOpacity={0.5}
                         onPress={() => {
-                            global.router.toMallInfoPage({id: product_id})
+                            {/*global.router.toMallInfoPage({id: product_id})*/}
                         }}>
                         <ImageLoad style={styleS.mallImg} source={{uri: image}}/>
                     </TouchableOpacity>
@@ -173,9 +179,8 @@ export default class MallSelectPage extends PureComponent {
                             {this.buyQuantity(item)}
                         </View>
                     </View>
-                </View>
+                </TouchableOpacity>
 
-                {/*{refund_status === 'open' ? <Text style={styleS.refund}>退款中</Text> : null}*/}
 
             </Swipeout>
         )

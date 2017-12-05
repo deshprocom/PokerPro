@@ -2,18 +2,20 @@ import React, {PureComponent, PropTypes} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
+import {utcDate} from '../../../utils/ComonHelper';
 
 export default class RefundInfo extends PureComponent {
 
     render(){
+        const {refund_number,refund_type,refund_price,memo,admin_memo,status,created_at} = this.props.refundInfo;
        return(
            <View style={styles.page}>
-                <Text style={styles.txt}>{I18n.t('refund_type')}：全额退款</Text>
-               <Text style={styles.txt}>{I18n.t('refund_amount')}：¥2189</Text>
-               <Text style={styles.txt}>{I18n.t('application_time')}：2017年8月19日  18:56</Text>
-               <Text style={styles.txt}>{I18n.t('refund_num')}：234324235325</Text>
-               <Text style={styles.txt}>{I18n.t('refund_reason')}：货物损坏</Text>
-               <Text style={styles.txt}>{I18n.t('refund_description')}：</Text>
+                <Text style={styles.txt}>{I18n.t('refund_type')}：{refund_type}</Text>
+               <Text style={styles.txt}>{I18n.t('refund_amount')}：¥{refund_price}</Text>
+               <Text style={styles.txt}>{I18n.t('application_time')}：{utcDate(created_at,"YYYY.MM.DD hh:mm")}</Text>
+               <Text style={styles.txt}>{I18n.t('refund_num')}：{refund_number}</Text>
+               <Text style={styles.txt}>{I18n.t('refund_reason')}：{memo}</Text>
+               <Text style={styles.txt}>{I18n.t('refund_description')}：{memo}</Text>
                <Image style={styles.img} source={Images.empty_image}/>
            </View>
 

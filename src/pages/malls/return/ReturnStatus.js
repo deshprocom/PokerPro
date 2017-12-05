@@ -1,22 +1,24 @@
-import React, {PureComponent, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
+import {utcDate} from '../../../utils/ComonHelper'
 
-export default class ReturnStatus extends PureComponent {
+export default class ReturnStatus extends Component {
     state={
         showStatus:true
     };
 
     render(){
+        const {created_at} = this.props.refundInfo;
         return(
             <View>
                 <View style={styleT.tipsView}>
                     <Text style={styleT.tipsTxt}>{I18n.t('refund_success')}</Text>
-                    <Text style={styleT.date}>2017年   18:00</Text>
+                    <Text style={styleT.date}>{utcDate(created_at,"YYYY.MM.DD hh:mm")}</Text>
                 </View>
                 <View style={styleT.status}>
-                    <Text style={styleT.statusTxt}>同意本次交易支持退款</Text>
+                    <Text style={styleT.statusTxt}>{I18n.t('agree_transaction_refund')}</Text>
                 </View>
             </View>
         )}

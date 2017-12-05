@@ -1,61 +1,85 @@
 import React, {PureComponent, PropTypes} from 'react';
-import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView,TextInput} from 'react-native';
+import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView, TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 import ReturnStatus from './ReturnStatus';
 import RefundAmount from './RefundAmount';
 import RefundInfo from './RefundInfo';
 import ReturnBottom from './ReturnBottom';
-import RenderItem from '../order/RenderItem';
+import ProductItem from '../mallOrder/ProductItem';
+import {showToast, util} from '../../../utils/ComonHelper';
+import {getRefundInfo} from '../../../services/MallDao';
+import {NavigationBar, BaseComponent} from '../../../components'
 
-export default class ReturnSucceed extends PureComponent {
+export default class ReturnSucceedPage extends PureComponent {
 
-    state={
-
+    state = {
+        refundInfo: {}
     };
 
-    topBar = () => {
-        return (<View style={styleC.topBar}>
-            <TouchableOpacity
-                testID="btn_bar_left"
-                style={styleC.popBtn}
-                onPress={() => router.pop()}>
-                <Image style={styleC.backImg}
-                       source={Images.mall_return}/>
-            </TouchableOpacity>
-            <View style={{flex: 1}}/>
-            <Text style={styleC.cart}>{I18n.t('apply_returned')}</Text>
-            <View style={{flex: 1}}/>
-            <View style={styleC.popBtn}/>
-        </View>)
-    };
+    componentDidMount() {
+        const {refund_number} = this.props.params;
+        console.log("refund_number:", refund_number)
+        if (util.isEmpty(refund_number))
+            return;
+        this.contain.open();
+        getRefundInfo({refund_number: refund_number}, data => {
+            this.contain.close();
+            console.log("refundInfo:", data);
+            this.setState({
+                refundInfo: data
+            })
+        }, err => {
+
+        });
+
+    }
+
+    content = () => {
+        const {refundInfo} = this.state;
+        const {refund_number, refund_type, refund_price, memo, admin_memo, status, created_at, refund_order_items} = refundInfo;
+        return (
+            <ScrollView style={styleC.orderView}>
+
+                <ReturnStatus refundInfo={refundInfo}/>
+
+                <RefundAmount refund_price={refund_price}/>
+
+                <ProductItem lists={refund_order_items}/>
+
+                <RefundInfo refundInfo={refundInfo}/>
+
+                <View style={{height:80}}/>
+            </ScrollView>
+        )
+
+    }
 
 
-    render(){
-        return(
-            <View>
-                <ScrollView style={styleC.orderView}>
-                    {this.topBar()}
-                    <ReturnStatus/>
- 
-                    <RefundAmount/>
-                    {/*<RenderItem/>*/}
+    render() {
+        const {refundInfo} = this.state;
 
-                    <RefundInfo/>
-
-                    <View style={{height:80}}/>
-                </ScrollView>
-
-
+        return (
+            <BaseComponent
+                ref={ref => this.contain = ref}>
+                <NavigationBar
+                    barStyle={'dark-content'}
+                    toolbarStyle={{backgroundColor: 'white'}}
+                    leftBtnIcon={Images.mall_return}
+                    leftImageStyle={{height: 19, width: 11, marginLeft: 17, marginRight: 20}}
+                    leftBtnPress={() => router.pop()}
+                    titleStyle={{color: Colors._161}}
+                    title={I18n.t('apply_returned')}/>
+                {util.isEmpty(refundInfo) ? null : this.content()}
                 <ReturnBottom/>
-            </View>
+            </BaseComponent>
 
         );
     }
 }
 const styleC = StyleSheet.create({
-    orderView:{
-        backgroundColor:'#ECECEE'
+    orderView: {
+        backgroundColor: '#ECECEE'
     },
     topBar: {
         height: Metrics.navBarHeight,
@@ -71,10 +95,10 @@ const styleC = StyleSheet.create({
         width: 50,
         justifyContent: 'center'
     },
-    cart:{
+    cart: {
         fontSize: 17,
         color: '#161718',
-        fontWeight:'bold'
+        fontWeight: 'bold'
     },
     backImg: {
         width: 11,
