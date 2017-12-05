@@ -9,6 +9,10 @@ export default class RefundInstruction extends PureComponent {
         memo: ''
     };
 
+    getMemo = ()=>{
+        return this.state.memo;
+    };
+
     render() {
         return (
             <View style={styles.page}>

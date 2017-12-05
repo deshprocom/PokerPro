@@ -7,7 +7,7 @@ import {utcDate} from '../../../utils/ComonHelper';
 export default class RefundInfo extends PureComponent {
 
     render(){
-        const {refund_number,refund_type,refund_price,memo,admin_memo,status,created_at} = this.props.refundInfo;
+        const {images,refund_number,refund_type,refund_price,memo,admin_memo,status,created_at} = this.props.refundInfo;
        return(
            <View style={styles.page}>
                 <Text style={styles.txt}>{I18n.t('refund_type')}：{refund_type}</Text>
@@ -15,8 +15,13 @@ export default class RefundInfo extends PureComponent {
                <Text style={styles.txt}>{I18n.t('application_time')}：{utcDate(created_at,"YYYY.MM.DD hh:mm")}</Text>
                <Text style={styles.txt}>{I18n.t('refund_num')}：{refund_number}</Text>
                <Text style={styles.txt}>{I18n.t('refund_reason')}：{memo}</Text>
-               <Text style={styles.txt}>{I18n.t('refund_description')}：{memo}</Text>
-               <Image style={styles.img} source={Images.empty_image}/>
+               <View style={styles.imgView}>
+                   {images.map((item,index)=>{
+                       return <Image key={`refund_${index}`} style={styles.img} source={{uri:item.image_url}}/>
+                   })}
+
+               </View>
+
            </View>
 
        );
@@ -33,10 +38,16 @@ const styles = StyleSheet.create({
         marginLeft:17,
         marginTop:6
     },
+    imgView:{
+        marginLeft:7,
+        marginTop:10,
+        marginRight:17,
+        flexDirection:'row',
+        alignItems:'center',
+    },
     img:{
         width:100,
         height:100,
-        marginLeft:17,
-        marginTop:10
+        marginLeft:10
     }
 })
