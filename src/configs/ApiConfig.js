@@ -112,7 +112,8 @@ export default {
     logistics_info: logistics_info,
     refund_types: 'refund_types',
     upload_temp_img: 'uploaders/tmp_image',
-    mall_refund: mall_refund
+    mall_refund: mall_refund,
+    refund_info:refund_info
 
 }
 
@@ -125,6 +126,11 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+export function refund_info(body) {
+    const {refund_number} = body;
+    return `refund/${refund_number}/refund_record`
+}
 
 
 export function mall_refund(body) {

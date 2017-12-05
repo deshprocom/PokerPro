@@ -104,10 +104,11 @@ export default class ReturnPage extends Component {
                         product_refund_type={this.state.product_refund_type}/>
 
                     <RefundAmount
-                        return_price={this.state.refund_price}/>
+                        refund_price={this.state.refund_price}/>
 
 
-                    <RefundInstruction/>
+                    <RefundInstruction
+                        ref={ref =>this.refundMemo = ref}/>
 
                     <UploadDocument
                         ref={ref => this.upFiles = ref}/>
@@ -128,12 +129,12 @@ export default class ReturnPage extends Component {
                 </View>
 
                 {this.state.typeShow ? <ApplicationTypeInfo
-                    refund_types={this.state.refund_types}
-                    showTypeInfo={this.showTypeInfo}
-                    _refund_mall_amount={this._refund_mall_amount}
-                    _change_mall={this._change_mall}
-                    refund_mall_amount={this.state.refund_mall_amount}
-                    change_mall={this.state.change_mall}/> : null}
+                        refund_types={this.state.refund_types}
+                        showTypeInfo={this.showTypeInfo}
+                        _refund_mall_amount={this._refund_mall_amount}
+                        _change_mall={this._change_mall}
+                        refund_mall_amount={this.state.refund_mall_amount}
+                        change_mall={this.state.change_mall}/> : null}
             </BaseComponent>
 
         );
@@ -143,7 +144,7 @@ export default class ReturnPage extends Component {
         return getFileName(filePath)
     };
 
-    _upload = async () => {
+    _upload = async() => {
         if (util.isEmpty(this.state.product_refund_type)) {
             showToast(I18n.t('ple_select_refund_type'));
             return;
@@ -179,7 +180,7 @@ export default class ReturnPage extends Component {
             });
 
 
-    }
+    };
 
 
     postRefundReq = (uploadeds) => {
@@ -189,7 +190,7 @@ export default class ReturnPage extends Component {
             refund_price,
             product_refund_type_id: product_refund_type.id,
             order_item_ids,
-            memo,
+            memo: this.refundMemo.getMemo(),
             refund_images: uploadeds,
             order_number
         };
@@ -199,7 +200,7 @@ export default class ReturnPage extends Component {
         postMallRefund(body, data => {
             console.log(data)
             this.contain.close();
-            global.router.toReturnSucceedPage();
+            global.router.toReturnSucceedPage(data.refund_number);
         }, err => {
             this.contain.close();
             showToast(err)

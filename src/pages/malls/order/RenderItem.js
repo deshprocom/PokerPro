@@ -26,7 +26,6 @@ export default class RenderItem extends PureComponent {
         const {title, seven_days_return, number, variant} = this.props.item;
         const {image, original_price, price, text_sku_values, product_id} = variant;
 
-
         return (
             <TouchableOpacity style={styleR.renderItem}
                               onPress={() => {
