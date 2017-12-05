@@ -11,7 +11,7 @@ import {LogisticsStatus} from "../../../configs/Status";
 
 export default class LogisticsPage extends Component {
     state = {
-        logisticsInfo: [],
+        logisticsInfo: {},
         height: 50
     };
 
@@ -42,6 +42,10 @@ export default class LogisticsPage extends Component {
         })
     };
     content=()=>{
+        const {logisticsInfo} = this.state;
+        const {traces,phone,state,shipping_number} = logisticsInfo;
+        const{order_items,shipments} = this.props.params.orderItem;
+        let menu = [LogisticsStatus.no_track, '', LogisticsStatus.on_the_way, LogisticsStatus.have_been_received, LogisticsStatus.question_piece];
         return(
             <ScrollView>
                 <View style={styles.top}>
@@ -90,12 +94,11 @@ export default class LogisticsPage extends Component {
         const {traces,phone,state,shipping_number} = logisticsInfo;
         const{order_items,shipments} = this.props.params.orderItem;
         let menu = [LogisticsStatus.no_track, '', LogisticsStatus.on_the_way, LogisticsStatus.have_been_received, LogisticsStatus.question_piece];
-        console.log("orderItem:",this.props.params.orderItem);
+
 
         return (
             <BaseComponent
-                ref={ref => this.contain = ref}
-                style={ApplicationStyles.bgContainer}>
+                ref={ref => this.contain = ref}>
                 <NavigationBar
                     barStyle={'dark-content'}
                     toolbarStyle={{backgroundColor: 'white'}}
