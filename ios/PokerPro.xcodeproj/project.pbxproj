@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -69,7 +68,6 @@
 		4C7E94564F514643A32FB0D6 /* libRCTOrientation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B3DFB4A75043F5A7D8217C /* libRCTOrientation.a */; };
 		56C1DC682CB841879ED8D777 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 980BE5C75F974BEDB9D1518C /* SystemConfiguration.framework */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
-		66E74BF4526D40CE9558A517 /* libRCTMarqueeLabel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 092BC510791B410EB55B10AA /* libRCTMarqueeLabel.a */; };
 		76128AFA787E4263A60EF731 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CF1E5A278FA46619498F711 /* Entypo.ttf */; };
 		77F06FC258C64B0E818D85B4 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5AB4CEF9009E4F3A8E08F952 /* MaterialIcons.ttf */; };
 		829F5F420D6A41D39A1AAD85 /* libRNI18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB4024AE644343769EFDB725 /* libRNI18n.a */; };
@@ -260,13 +258,6 @@
 			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
 			remoteInfo = RNVectorIcons;
 		};
-		480B6A411FCFE3CE009C4DDD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6A1B6CE99E4C4275BC91F7F6 /* RCTMarqueeLabel.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3287E9201BE9CC0E0064C14F;
-			remoteInfo = RCTMarqueeLabel;
-		};
 		480FDC111EFD129200546599 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8AD4C4C1345B46E5918244B7 /* RCTUMShareModule.xcodeproj */;
@@ -427,7 +418,6 @@
 		00E356EE1AD99517003FC87E /* PokerProTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PokerProTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* PokerProTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PokerProTests.m; sourceTree = "<group>"; };
-		092BC510791B410EB55B10AA /* libRCTMarqueeLabel.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTMarqueeLabel.a; sourceTree = "<group>"; };
 		12B557BD4809450A88C627B2 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
@@ -480,7 +470,6 @@
 		6369B220D42A4D3BBE0DB0D8 /* CoreFoundation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		6399DCFEAEF04A9EAB2F3551 /* libRCTUMShareModule.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTUMShareModule.a; sourceTree = "<group>"; };
 		63B3DFB4A75043F5A7D8217C /* libRCTOrientation.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTOrientation.a; sourceTree = "<group>"; };
-		6A1B6CE99E4C4275BC91F7F6 /* RCTMarqueeLabel.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTMarqueeLabel.xcodeproj; path = "../node_modules/@remobile/react-native-marquee-label/ios/RCTMarqueeLabel.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7FEDDB21E4754C3C99CE5715 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		80342B232DB64EDFBF5CD65B /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
@@ -567,7 +556,6 @@
 				EF8A90764FBC4F5AA1563F0D /* libRNNetworkInfo.a in Frameworks */,
 				E3CA5AE1AB284277B70EED79 /* libRCTUMShareModule.a in Frameworks */,
 				22F5565E6E6E41AD8590D1CA /* libRCTUmeng.a in Frameworks */,
-				66E74BF4526D40CE9558A517 /* libRCTMarqueeLabel.a in Frameworks */,
 				16E2EB672C7F43CCA52070F8 /* libRNVectorIcons.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -708,14 +696,6 @@
 			isa = PBXGroup;
 			children = (
 				480B6A3D1FCFE3CE009C4DDD /* libRNVectorIcons.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		480B6A3E1FCFE3CE009C4DDD /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				480B6A421FCFE3CE009C4DDD /* libRCTMarqueeLabel.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -935,7 +915,6 @@
 				2F07E880DE9F41E99935900A /* RNNetworkInfo.xcodeproj */,
 				8AD4C4C1345B46E5918244B7 /* RCTUMShareModule.xcodeproj */,
 				408FA7CB7F7E4ECDAE1575C4 /* RCTUmeng.xcodeproj */,
-				6A1B6CE99E4C4275BC91F7F6 /* RCTMarqueeLabel.xcodeproj */,
 				80342B232DB64EDFBF5CD65B /* RNVectorIcons.xcodeproj */,
 			);
 			name = Libraries;
@@ -1158,10 +1137,6 @@
 				{
 					ProductGroup = 78C398B11ACF4ADC00677621 /* Products */;
 					ProjectRef = 78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */;
-				},
-				{
-					ProductGroup = 480B6A3E1FCFE3CE009C4DDD /* Products */;
-					ProjectRef = 6A1B6CE99E4C4275BC91F7F6 /* RCTMarqueeLabel.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302D41ABCB9D200DB3ED1 /* Products */;
@@ -1391,13 +1366,6 @@
 			fileType = archive.ar;
 			path = libRNVectorIcons.a;
 			remoteRef = 480B6A3C1FCFE3CE009C4DDD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		480B6A421FCFE3CE009C4DDD /* libRCTMarqueeLabel.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTMarqueeLabel.a;
-			remoteRef = 480B6A411FCFE3CE009C4DDD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		480FDC121EFD129200546599 /* libRCTUMShareModule.a */ = {
@@ -1701,7 +1669,6 @@
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
 					"$(SRCROOT)/../node_modules/react-native-umshare/ios/RCTUMShareModule/RCTUMShareModule/**",
 					"$(SRCROOT)/../node_modules/rn-umeng/ios/RCTUmeng/RCTUmeng/**",
-					"$(SRCROOT)/../node_modules/@remobile/react-native-marquee-label/ios/RCTMarqueeLabel",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 				);
 				INFOPLIST_FILE = PokerProTests/Info.plist;
@@ -1709,8 +1676,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1739,7 +1704,6 @@
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
 					"$(SRCROOT)/../node_modules/react-native-umshare/ios/RCTUMShareModule/RCTUMShareModule/**",
 					"$(SRCROOT)/../node_modules/rn-umeng/ios/RCTUmeng/RCTUmeng/**",
-					"$(SRCROOT)/../node_modules/@remobile/react-native-marquee-label/ios/RCTMarqueeLabel",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 				);
 				INFOPLIST_FILE = PokerProTests/Info.plist;
@@ -1747,8 +1711,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1781,7 +1743,6 @@
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
 					"$(SRCROOT)/../node_modules/react-native-umshare/ios/RCTUMShareModule/RCTUMShareModule/**",
 					"$(SRCROOT)/../node_modules/rn-umeng/ios/RCTUmeng/RCTUmeng/**",
-					"$(SRCROOT)/../node_modules/@remobile/react-native-marquee-label/ios/RCTMarqueeLabel",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 				);
 				INFOPLIST_FILE = PokerPro/Info.plist;
@@ -1819,7 +1780,6 @@
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
 					"$(SRCROOT)/../node_modules/react-native-umshare/ios/RCTUMShareModule/RCTUMShareModule/**",
 					"$(SRCROOT)/../node_modules/rn-umeng/ios/RCTUmeng/RCTUmeng/**",
-					"$(SRCROOT)/../node_modules/@remobile/react-native-marquee-label/ios/RCTMarqueeLabel",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 				);
 				INFOPLIST_FILE = PokerPro/Info.plist;
@@ -1861,15 +1821,12 @@
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
 					"$(SRCROOT)/../node_modules/react-native-umshare/ios/RCTUMShareModule/RCTUMShareModule/**",
 					"$(SRCROOT)/../node_modules/rn-umeng/ios/RCTUmeng/RCTUmeng/**",
-					"$(SRCROOT)/../node_modules/@remobile/react-native-marquee-label/ios/RCTMarqueeLabel",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 				);
 				INFOPLIST_FILE = "PokerPro-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1908,15 +1865,12 @@
 					"$(SRCROOT)/../node_modules/react-native-network-info/ios",
 					"$(SRCROOT)/../node_modules/react-native-umshare/ios/RCTUMShareModule/RCTUMShareModule/**",
 					"$(SRCROOT)/../node_modules/rn-umeng/ios/RCTUmeng/RCTUmeng/**",
-					"$(SRCROOT)/../node_modules/@remobile/react-native-marquee-label/ios/RCTMarqueeLabel",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 				);
 				INFOPLIST_FILE = "PokerPro-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1945,8 +1899,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.PokerPro-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1971,8 +1923,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.PokerPro-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2017,7 +1967,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -2053,7 +2003,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
