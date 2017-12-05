@@ -324,7 +324,7 @@ class RaceScene extends Component {
                     marginBottom: noBottomBar ? 0 : 50,
                 }}>
                 <Animated.View style={{
-                    paddingBottom: headHeight
+                    paddingBottom: 200
                 }}>
                     <MainRaceResultView
                         raceInfo={raceInfo}
@@ -361,7 +361,7 @@ class RaceScene extends Component {
                     marginBottom: noBottomBar ? 0 : 50
                 }}>
                 <Animated.View style={{
-                    paddingBottom: headHeight
+                    paddingBottom: 200
                 }}>
                     <RaceSideView
                         raceId={this.props.params.race_id}
