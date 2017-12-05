@@ -3,10 +3,11 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, L
 import {getLogisticsInfo} from '../../../services/MallDao';
 import {convertDate, util,call} from '../../../utils/ComonHelper';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
-import {NavigationBar} from '../../../components';
+import {NavigationBar,BaseComponent} from '../../../components';
 import I18n from 'react-native-i18n';
 import {DeShangPhone} from '../../../configs/Constants';
 import {LogisticsStatus} from "../../../configs/Status";
+
 
 export default class LogisticsPage extends Component {
     state = {
@@ -15,6 +16,7 @@ export default class LogisticsPage extends Component {
     };
 
     componentDidMount() {
+        this.contain.open();
         const {orderItem} = this.props.params;
         const{shipments,order_number} = orderItem;
         const body = {
@@ -39,7 +41,49 @@ export default class LogisticsPage extends Component {
             height: height
         })
     };
+    content=()=>{
+        return(
+            <ScrollView>
+                <View style={styles.top}>
+                    <Image style={styles.topImg} source={{uri:order_items[0].image}}>
+                        <View style={{flex:1}}/>
+                        <View style={styles.topView}>
+                            <Text style={styles.topLeftTxt}>{state}{I18n.t('pieces')}{I18n.t('malls')}</Text>
+                        </View>
+                    </Image>
+                    <View style={styles.topRight}>
+                        <Text style={styles.topRightTxt1}>{I18n.t(menu[state])}</Text>
+                        <Text style={styles.topRightTxt2}>{I18n.t('carrier_source')}：{shipments.shipping_company}</Text>
+                        <Text style={styles.topRightTxt2}>{I18n.t('tracking_no')}：{shipping_number}</Text>
+                        <View style={styles.topRightView}>
+                            <Text style={styles.topRightTxt2}>{I18n.t('official_phone')}：</Text>
+                            <Text style={styles.topRightTxt3}>{phone}</Text>
+                        </View>
+                    </View>
 
+
+
+                </View>
+                {state === LogisticsStatus.have_been_received ? <View style={styles.contentEmpty}>
+                        <View style={{height:400,width:2,backgroundColor:'#CCCCCC',marginLeft:26,marginTop:30}}/>
+                        <Text style={{fontSize:14,color:'#333333',marginLeft:83,marginTop:350}}>{I18n.t('order_success')}</Text>
+                    </View> : <View style={styles.content}>
+                        <View style={styles.contentTop}/>
+                        {traces.map((item, i) => {
+
+                            return <RenderItem
+                                itemId={i}
+                                key={`key${i}`}
+                                item={item}
+                            />
+                        })}
+
+                    </View>}
+                <View style={{height:50}}/>
+                <View style={{height:50,backgroundColor:'#ECECEE'}}/>
+            </ScrollView>
+        )
+    }
 
     render() {
         const {logisticsInfo} = this.state;
@@ -47,11 +91,11 @@ export default class LogisticsPage extends Component {
         const{order_items,shipments} = this.props.params.orderItem;
         let menu = [LogisticsStatus.no_track, '', LogisticsStatus.on_the_way, LogisticsStatus.have_been_received, LogisticsStatus.question_piece];
         console.log("orderItem:",this.props.params.orderItem);
-        if(util.isEmpty(logisticsInfo)){
-            return <View/>
-        }
+
         return (
-            <View style={ApplicationStyles.bgContainer}>
+            <BaseComponent
+                ref={ref => this.contain = ref}
+                style={ApplicationStyles.bgContainer}>
                 <NavigationBar
                     barStyle={'dark-content'}
                     toolbarStyle={{backgroundColor: 'white'}}
@@ -63,47 +107,7 @@ export default class LogisticsPage extends Component {
                     titleStyle={{color: Colors._161}}
                     title={I18n.t('logistics_info')}/>
 
-
-
-                <ScrollView>
-                    <View style={styles.top}>
-                        <Image style={styles.topImg} source={{uri:order_items[0].image}}>
-                            <View style={{flex:1}}/>
-                            <View style={styles.topView}>
-                                <Text style={styles.topLeftTxt}>{state}{I18n.t('pieces')}{I18n.t('malls')}</Text>
-                            </View>
-                        </Image>
-                        <View style={styles.topRight}>
-                            <Text style={styles.topRightTxt1}>{I18n.t(menu[state])}</Text>
-                            <Text style={styles.topRightTxt2}>{I18n.t('carrier_source')}：{shipments.shipping_company}</Text>
-                            <Text style={styles.topRightTxt2}>{I18n.t('tracking_no')}：{shipping_number}</Text>
-                            <View style={styles.topRightView}>
-                                <Text style={styles.topRightTxt2}>{I18n.t('official_phone')}：</Text>
-                                <Text style={styles.topRightTxt3}>{phone}</Text>
-                            </View>
-                        </View>
-
-
-
-                    </View>
-                    {state === LogisticsStatus.have_been_received ? <View style={styles.contentEmpty}>
-                            <View style={{height:400,width:2,backgroundColor:'#CCCCCC',marginLeft:26,marginTop:30}}/>
-                            <Text style={{fontSize:14,color:'#333333',marginLeft:83,marginTop:350}}>{I18n.t('order_success')}</Text>
-                        </View> : <View style={styles.content}>
-                            <View style={styles.contentTop}/>
-                            {traces.map((item, i) => {
-
-                                return <RenderItem
-                                    itemId={i}
-                                    key={`key${i}`}
-                                    item={item}
-                                />
-                            })}
-
-                        </View>}
-                    <View style={{height:50}}/>
-                    <View style={{height:50,backgroundColor:'#ECECEE'}}/>
-                </ScrollView>
+                {util.isEmpty(logisticsInfo) ? null :this.content()}
 
 
                 <View style={styles.bottomView}>
@@ -114,7 +118,7 @@ export default class LogisticsPage extends Component {
                         <Text style={styles.bottomTxt}>{I18n.t('online_service')}</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </BaseComponent>
 
         )
     }
