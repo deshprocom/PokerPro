@@ -120,10 +120,8 @@ const styleR = StyleSheet.create({
         height: 18,
         alignItems: 'center',
         justifyContent: 'center',
-        width: 60,
-        paddingLeft: 5,
-        paddingRight: 5,
-        flexWrap: 'nowrap'
+        width:65,
+        flexWrap:'nowrap'
     },
     returnedTxt: {
         fontSize: 10,
