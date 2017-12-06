@@ -484,5 +484,6 @@
   "mall_close": "退换失败",
   "mall_completed": "退换成功",
   "agree_transaction_refund": "同意本次交易支持退款",
-  "img_load_fail": "图片上传失败"
+  "img_load_fail": "图片上传失败",
+  "ticket_order":"票务订单"
 }
