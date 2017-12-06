@@ -29,10 +29,14 @@ export default class NewAddress extends Component {
 
     componentDidMount() {
         const {address} = this.props.params;
+        console.log(address)
         this.setState({
             addressEdit: address,
             regionTxt: isEmptyObject(address) ? '' : address.address,
-            isDefault: isEmptyObject(address) ? false : address.default
+            isDefault: isEmptyObject(address) ? false : address.default,
+            province: address.province,
+            city: address.city,
+            area: address.area
         });
         if (!isEmptyObject(address)) {
             this.receiver = address.consignee;
