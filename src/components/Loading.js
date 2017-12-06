@@ -106,10 +106,10 @@ export default class Loading extends Component {
                     size={this.props.size}
                     style={{flex: 1}}
                 />
-                <View style={styles.textContainer}>
-                    <Text
-                        style={[styles.textContent, this.props.textStyle]}>{I18n.t('loading')}</Text>
-                </View>
+                {/*<View style={styles.textContainer}>*/}
+                    {/*<Text*/}
+                        {/*style={[styles.textContent, this.props.textStyle]}>{I18n.t('loading')}</Text>*/}
+                {/*</View>*/}
             </View>);
     }
 
