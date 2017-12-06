@@ -259,7 +259,7 @@ const styleP = StyleSheet.create({
         zIndex: 999
     },
     specificationInfo: {
-        paddingBottom:80,
+        paddingBottom:160,
         marginTop: 160,
         backgroundColor: '#EEEEEE'
     },
