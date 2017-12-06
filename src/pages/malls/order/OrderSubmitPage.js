@@ -123,7 +123,7 @@ export default class OrderSubmitPage extends PureComponent {
                     order_number: data
                 });
                 addTimeRecode(data.order_number);
-                if (this.state.isInstall){
+                if (this.state.isInstall) {
                     postWxPay(data, ret => {
                         payWx(ret, () => {
                             getWxPaidResult(data, result => {
@@ -140,10 +140,11 @@ export default class OrderSubmitPage extends PureComponent {
                     }, err => {
 
                     });
-                }else{
+                } else {
                     alert('商城支付需要安装微信')
                 }
             }, err => {
+                showToast(err)
             });
 
         } else {

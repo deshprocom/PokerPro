@@ -146,7 +146,7 @@ export default class MallSelectPage extends PureComponent {
 
     _renderItem = ({item}) => {
 
-        const {price, original_price, sku_value, title, image, product_id, refund_number,refund_status,number,seven_days_return} = item;
+        const {price, original_price, sku_value, title, image, product_id, refund_number, refund_status, number, seven_days_return} = item;
         let type_value = '';
         if (!util.isEmpty(sku_value)) {
             sku_value.forEach(x => {
@@ -161,18 +161,19 @@ export default class MallSelectPage extends PureComponent {
                 <TouchableOpacity
 
                     style={styleS.renderItem}
-                onPress={()=>{
-                    if(refund_status != RefundStatus.none){
-                        global.router.toReturnSucceedPage(refund_number);
-                    }
+                    onPress={() => {
+                        if (refund_status !== RefundStatus.none) {
+                            global.router.toReturnSucceedPage(refund_number);
+                        }
 
-                }}>
+                    }}>
                     {this.renderShowEditView(item)}
 
                     <TouchableOpacity
                         activeOpacity={0.5}
                         onPress={() => {
-                            {/*global.router.toMallInfoPage({id: product_id})*/}
+                            {/*global.router.toMallInfoPage({id: product_id})*/
+                            }
                         }}>
                         <ImageLoad style={styleS.mallImg} source={{uri: image}}/>
                     </TouchableOpacity>
@@ -184,9 +185,9 @@ export default class MallSelectPage extends PureComponent {
 
                         <View style={styleS.returnedView}>
                             {seven_days_return ? <View style={styleS.returned}>
-                                    <Text style={styleS.returnedTxt} numberOfLines={1}>{I18n.t('returned')}</Text>
-                                </View> : null}
-                            <View style={{flex:1}}/>
+                                <Text style={styleS.returnedTxt} numberOfLines={1}>{I18n.t('returned')}</Text>
+                            </View> : null}
+                            <View style={{flex: 1}}/>
                             {this.refundTxt(refund_status)}
                         </View>
 
@@ -387,9 +388,9 @@ const styleS = StyleSheet.create({
     returned: {
         backgroundColor: '#F34A4A',
         borderRadius: 2,
-        width:65,
+        width: 65,
         height: 18,
-        flexWrap:'nowrap',
+        flexWrap: 'nowrap',
         alignItems: 'center',
         justifyContent: 'center',
     },
