@@ -171,7 +171,7 @@ const styleE = StyleSheet.create({
     returned: {
         backgroundColor: '#F34A4A',
         borderRadius: 2,
-        width: 48,
+        width:60,
         height: 18,
         alignItems: 'center',
         justifyContent: 'center',

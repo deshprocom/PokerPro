@@ -184,7 +184,7 @@ export default class MallSelectPage extends PureComponent {
 
                         <View style={styleS.returnedView}>
                             {seven_days_return ? <View style={styleS.returned}>
-                                    <Text style={styleS.returnedTxt}>{I18n.t('returned')}</Text>
+                                    <Text style={styleS.returnedTxt} numberOfLines={1}>{I18n.t('returned')}</Text>
                                 </View> : null}
                             <View style={{flex:1}}/>
                             {this.refundTxt(refund_status)}
@@ -387,8 +387,9 @@ const styleS = StyleSheet.create({
     returned: {
         backgroundColor: '#F34A4A',
         borderRadius: 2,
-        width: 48,
+        width:60,
         height: 18,
+        flexWrap:'nowrap',
         alignItems: 'center',
         justifyContent: 'center',
     },

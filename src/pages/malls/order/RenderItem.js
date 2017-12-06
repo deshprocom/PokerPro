@@ -42,7 +42,7 @@ export default class RenderItem extends PureComponent {
                         style={styleR.mallAttributes}>{this.selectType(text_sku_values)}</Text>
 
                     {seven_days_return ? <View style={styleR.returned}>
-                    <Text style={styleR.returnedTxt}>{I18n.t('returned')}</Text>
+                    <Text style={styleR.returnedTxt} numberOfLines={1}>{I18n.t('returned')}</Text>
                     </View> : null}
 
                     <View style={styleR.PriceView}>
@@ -88,10 +88,11 @@ const styleR = StyleSheet.create({
     returned: {
         backgroundColor: '#F34A4A',
         borderRadius: 2,
-        width: 48,
+        width:60,
         height: 18,
         alignItems: 'center',
         justifyContent: 'center',
+        flexWrap:'nowrap',
         marginTop: 3
     },
     returnedTxt: {

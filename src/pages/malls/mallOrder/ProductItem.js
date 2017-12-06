@@ -117,10 +117,13 @@ const styleR = StyleSheet.create({
     returned: {
         backgroundColor: '#F34A4A',
         borderRadius: 2,
-        width: 48,
         height: 18,
         alignItems: 'center',
         justifyContent: 'center',
+        width:60,
+        paddingLeft:5,
+        paddingRight:5,
+        flexWrap:'nowrap'
     },
     returnedTxt: {
         fontSize: 10,
