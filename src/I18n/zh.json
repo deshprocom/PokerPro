@@ -485,5 +485,7 @@
   "mall_completed": "退换成功",
   "agree_transaction_refund": "同意本次交易支持退款",
   "img_load_fail": "图片上传失败",
-  "ticket_order":"票务订单"
+  "ticket_order":"票务订单",
+  "logistics_status1":"快件已从",
+  "logistics_status2":"中心发出，准备发往"
 }

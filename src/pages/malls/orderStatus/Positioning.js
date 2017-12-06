@@ -2,14 +2,26 @@ import React, {PureComponent, PropTypes} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
+import {utcDate} from '../../../utils/ComonHelper';
 
 export default class Positioning extends PureComponent {
 
 
     render() {
-        const {province, city, area, address, mobile, name} = this.props.address;
+        const {created_at} = this.props.detail;
+        const{province, city, area, address, mobile, name} = this.props.address;
         return (
-            <View style={{backgroundColor: '#FFFFFF'}}>
+            <View style={{backgroundColor: '#FFFFFF',alignItems:'center'}}>
+                <View style={styleC.logistiscView}>
+                    <View style={styleC.shipImagView}>
+                        <Image style={styleC.shipAddrImg} source={Images.positioning}/>
+                    </View>
+                    <View style={{ alignItems: 'center',marginLeft:21,width:300}}>
+                        <Text style={styleC.Txt1}>【{city}】{I18n.t('logistics_status1')}{I18n.t('logistics_status2')}</Text>
+                        <Text style={styleC.Txt2}>{I18n.t('order_time')}: {utcDate(created_at, 'YYYY/MM/DD  HH:mm')}</Text>
+                    </View>
+                    <Image style={styleC.specificationImg} source={Images.is}/>
+                </View>
                 <View style={styleC.addressView}>
                     <View style={styleC.shipImagView}>
                         <Image style={styleC.shipAddrImg} source={Images.positioning}/>
@@ -46,6 +58,13 @@ const styleC = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#FFFFFF',
 
+    },
+    logistiscView:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+        paddingTop:20,
+        paddingBottom:20
     },
     shipImagView: {
         width: 28,
@@ -95,5 +114,20 @@ const styleC = StyleSheet.create({
     shipAddrImg: {
         width: 28,
         height: 35
+    },
+    Txt1:{
+        fontSize: 14,
+        color: '#34BA3C',
+    },
+    Txt2:{
+        fontSize: 14,
+        color: '#666666',
+        marginTop:4
+    },
+    specificationImg: {
+        width: 8,
+        height: 16,
+        marginRight: 16
     }
+
 })

@@ -258,7 +258,8 @@ const images = {
     logistics: require('../../source/mall/logistics.png'),
     order_line: require('../../source/order/order_line.png'),
     mall_order:require('../../source/mall/mall_order.png'),
-    ticket_order:require('../../source/mall/ticket_order.png')
+    ticket_order:require('../../source/mall/ticket_order.png'),
+    delivery:require('../../source/mall/delivery.png')
 
 
 };

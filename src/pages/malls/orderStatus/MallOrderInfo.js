@@ -71,7 +71,9 @@ export default class MallOrderInfo extends PureComponent {
                 <OrderStatus
                     status={I18n.t(`${status}`)}/>
                 <Positioning
-                    address={address}/>
+                    orderDetail={detail}
+                    address={address}
+                />
                 <View style={styleC.detailView}>
                     <Text style={styleC.txtDetail}>{I18n.t('mallInfo')}</Text>
 
