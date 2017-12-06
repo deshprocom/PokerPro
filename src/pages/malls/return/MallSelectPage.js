@@ -387,7 +387,7 @@ const styleS = StyleSheet.create({
     returned: {
         backgroundColor: '#F34A4A',
         borderRadius: 2,
-        width:60,
+        width:65,
         height: 18,
         flexWrap:'nowrap',
         alignItems: 'center',

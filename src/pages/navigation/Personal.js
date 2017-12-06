@@ -224,7 +224,7 @@ class Personal extends Component {
                     style={stylesP.btnOrder}>
                     <Image style={stylesP.imgOrder1}
                            source={Images.ticket_order}/>
-                    <Text style={stylesP.txtProfile1}>票务订单</Text>
+                    <Text style={stylesP.txtProfile1}>{I18n.t('ticket_order')}</Text>
                 </TouchableOpacity>
                 <View style={{width: 1, backgroundColor: Colors._ECE, marginBottom: 5, marginTop: 5}}/>
                 <TouchableOpacity style={stylesP.btnOrder}
@@ -236,7 +236,7 @@ class Personal extends Component {
                                   }}>
                     <Image style={stylesP.imgOrder2}
                            source={Images.mall_order}/>
-                    <Text style={stylesP.txtProfile1}>商品订单</Text>
+                    <Text style={stylesP.txtProfile1}>{I18n.t('mall_order')}</Text>
                 </TouchableOpacity>
 
             </View>

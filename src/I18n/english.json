@@ -480,6 +480,7 @@
   "mall_open":"退款/退货中",
   "mall_close":"退货/退款失败",
   "mall_completed":"退货/退款成功",
-  "agree_transaction_refund":"同意本次交易支持退款"
+  "agree_transaction_refund":"同意本次交易支持退款",
+  "ticket_order":"票务订单"
 }
 
