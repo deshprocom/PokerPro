@@ -477,11 +477,13 @@
   "upload_image": "上传凭证最多三张",
   "login_success": "登录成功",
   "mall_select": "选择商品列表",
-  "order_success":"订单提交成功！",
-  "please_select_malls":"请选择商品",
-  "ple_select_refund_type":"请选择申请退换",
-  "mall_open":"退款/退货中",
-  "mall_close":"退货/退款失败",
-  "mall_completed":"退货/退款成功",
-  "agree_transaction_refund":"同意本次交易支持退款"
+  "order_success": "订单提交成功！",
+  "please_select_malls": "请选择商品",
+  "ple_select_refund_type": "请选择申请退换",
+  "mall_open": "退换中",
+  "mall_close": "退换失败",
+  "mall_completed": "退换成功",
+  "agree_transaction_refund": "同意本次交易支持退款",
+  "img_load_fail": "图片上传失败",
+  "ticket_order":"票务订单"
 }

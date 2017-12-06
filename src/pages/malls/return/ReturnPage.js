@@ -174,7 +174,7 @@ export default class ReturnPage extends Component {
 
                         }
                     }, err => {
-                        this.contain.close();
+                        showToast(I18n.t('img_load_fail'))
                     })
                 }, 500)
             });
