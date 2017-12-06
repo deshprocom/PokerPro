@@ -10,7 +10,6 @@ import {styles} from './Styles';
 import {Images} from '../../Themes';
 import Swiper from 'react-native-swiper';
 import {BannerStatus} from '../../configs/Status';
-import MarqueeLabel from '@remobile/react-native-marquee-label';
 
 export default class Headlines extends Component {
     state = {
@@ -50,18 +49,13 @@ export default class Headlines extends Component {
                             key={key}
                             onPress={() => this._clickBanner(item)}
                             activeOpacity={1}>
-                            <MarqueeLabel
-                                text={item.title}
+                            <Text
                                 style={{
                                 marginLeft: 15,
                                 fontSize: 13,
-                                color: '#666666',
-                                   flex:1,
-                                   backgroundColor:'white'
+                                color: '#666666'
                             }}
-                                scrollDuration={5.0}
-                                isRepeat={true}
-                            >{item.title}</MarqueeLabel>
+                            >{item.title}</Text>
                         </TouchableOpacity>
 
                     })}
