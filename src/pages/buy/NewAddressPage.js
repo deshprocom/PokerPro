@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
         height: 80,
     },
     view2: {
-        height: 85,
+        height: 90,
         backgroundColor: 'white'
     },
     lbDefault: {

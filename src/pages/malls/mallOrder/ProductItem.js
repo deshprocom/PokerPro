@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
-import {util, showToast} from '../../../utils/ComonHelper';
+import {util, showToast, isEmptyObject} from '../../../utils/ComonHelper';
 import PropTypes from 'prop-types';
 import {ImageLoad} from '../../../components';
 import {RefundStatus} from "../../../configs/Status";
@@ -25,7 +25,7 @@ export default class ProductItem extends PureComponent {
     };
     refundTxt = (status) => {
         let menu = [RefundStatus.none, RefundStatus.open, RefundStatus.close, RefundStatus.completed];
-        if (status === menu[0]) {
+        if (status === undefined || status === menu[0]) {
             return null;
         } else {
             return <Text style={[styleR[`txt${status}`]]}>{I18n.t(`mall_${status}`)}</Text>
@@ -53,9 +53,9 @@ export default class ProductItem extends PureComponent {
 
                 <View style={styleR.returnedView}>
                     {seven_days_return ? <View style={styleR.returned}>
-                            <Text style={styleR.returnedTxt}>{I18n.t('returned')}</Text>
-                        </View> : null}
-                    <View style={{flex:1}}/>
+                        <Text style={styleR.returnedTxt}>{I18n.t('returned')}</Text>
+                    </View> : null}
+                    <View style={{flex: 1}}/>
                     {this.refundTxt(refund_status)}
                 </View>
 
