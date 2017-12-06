@@ -162,7 +162,7 @@ export default class MallSelectPage extends PureComponent {
 
                     style={styleS.renderItem}
                 onPress={()=>{
-                    if(refund_status != RefundStatus.none){
+                    if(refund_status === RefundStatus.open){
                         global.router.toReturnSucceedPage(refund_number);
                     }
 
