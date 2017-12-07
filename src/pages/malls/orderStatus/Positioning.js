@@ -9,6 +9,9 @@ import {getLogisticsInfo} from '../../../services/MallDao';
 export default class Positioning extends PureComponent {
     state = {
         logisticsInfo: {},
+        accept_station:'',
+        accept_time:''
+
     };
 
     componentDidMount() {
@@ -21,35 +24,28 @@ export default class Positioning extends PureComponent {
         };
         getLogisticsInfo(body, data => {
             console.log('LogisticsInfo', data);
-            this.setState({
-                logisticsInfo: data
-            });
+
+            if (util.isEmpty(data.traces)){
+                this.setState({
+                    logisticsInfo: data
+                });
+            }else{
+                this.setState({
+                    logisticsInfo: data,
+                    accept_station:data.traces[0].accept_station,
+                    accept_time:data.traces[0].accept_time
+                });
+            }
+
         }, err => {
 
-        })
+        });
     }
-
-    tracesTation = () => {
-        const {traces} = this.state.logisticsInfo;
-        if (util.isEmpty(traces))
-            return '';
-        else
-            return traces[0].accept_station
-    };
-
-    acceptTime = () => {
-        const {traces} = this.state.logisticsInfo;
-        if (util.isEmpty(traces))
-            return '';
-        else
-            return traces[0].accept_time
-    };
 
 
     render() {
         const {traces} = this.state.logisticsInfo;
         const {province, city, area, address, mobile, name} = this.props.address;
-
         return (
             <View style={{backgroundColor: '#ECECEE',alignItems:'center'}}>
                 {util.isEmpty(traces)?null:<TouchableOpacity style={styleC.logistiscView}
@@ -58,8 +54,8 @@ export default class Positioning extends PureComponent {
                 }}>
                         <Image style={styleC.shipImagView} source={Images.delivery}/>
                         <View style={{ alignItems: 'flex-start',marginLeft:21}}>
-                            <Text style={styleC.Txt1}>{this.tracesTation()}</Text>
-                            <Text style={styleC.Txt2}> {this.acceptTime()}</Text>
+                            <Text style={styleC.Txt1}>{this.state.accept_station}</Text>
+                            <Text style={styleC.Txt2}>{this.state.accept_time}</Text>
                         </View>
                         <View style={{flex:1}}/>
                         <Image style={styleC.specificationImg} source={Images.is}/>
