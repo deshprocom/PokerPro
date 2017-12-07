@@ -11,11 +11,11 @@ import {
     Text,
     Modal,
     ActivityIndicator,
-    TouchableOpacity,
-    Image
+    TouchableOpacity
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
+import FastImage from 'react-native-fast-image'
 
 const styles = StyleSheet.create({
     container: {
@@ -103,7 +103,7 @@ export default class Loading extends Component {
     _renderDefaultContent() {
         return (
             <View style={styles.background}>
-                <Image
+                <FastImage
                     source={Images.loading}
                     style={{height: 115, width: 115}}/>
                 {/*<ActivityIndicator*/}

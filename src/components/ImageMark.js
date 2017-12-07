@@ -6,6 +6,7 @@ import {ActivityIndicator, TouchableOpacity, View, Image} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes/index';
 import PropTypes from 'prop-types';
 import {util} from '../utils/ComonHelper';
+import FastImage from 'react-native-fast-image'
 
 export default class ImageMark extends Component {
     static propTypes = {
@@ -49,22 +50,14 @@ export default class ImageMark extends Component {
                 activeOpacity={0.5}
                 onPress={() => this.imageClick(src)}
                 style={{backgroundColor: Colors._ECE}}>
-                <Image
+                <FastImage
                     style={{
                         width: this.state.width,
                         height: this.state.height,
                         alignItems: 'center',
                         justifyContent: 'center'
                     }}
-                    onLoad={() => {
-                        this.setState({
-                            success: true
-                        })
-                    }}
-                    source={{uri: src}}>
-                    {success ? null : <ActivityIndicator/>}
-                </Image>
-
+                    source={{uri: src}}/>
 
             </TouchableOpacity>
 
