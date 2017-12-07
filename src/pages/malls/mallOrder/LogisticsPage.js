@@ -96,7 +96,7 @@ export default class LogisticsPage extends Component {
                             <View style={{height:250,backgroundColor:'#CCCCCC',width:1}}/>
                             <View style={styles.radio3}/>
                         </View>
-                        <Text style={{fontSize:14,color:'#F34A4A',marginLeft:83,marginTop:200}}>{I18n.t('order_success')}</Text>
+                        <Text style={{fontSize:14,color:'#F34A4A',marginLeft:83,marginTop:220}}>{I18n.t('order_success')}</Text>
                     </View> : <View style={styles.content}>
                         <View style={styles.contentTop}/>
                         {traces.map((item, i) => {
