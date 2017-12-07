@@ -42,13 +42,14 @@ const styleI = StyleSheet.create({
     },
     productionName: {
         height: 40,
-        backgroundColor: '#FFFFFF'
+        backgroundColor: '#FFFFFF',
+        justifyContent:'center'
     },
     productionNameTxt: {
         fontSize: 14,
         color: '#333333',
         marginLeft: 17,
-        marginTop: 11,
+
         fontWeight:'bold'
     }
 })

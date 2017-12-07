@@ -30,15 +30,16 @@ const styles = StyleSheet.create({
         width: 270,
         backgroundColor: Colors._ECE,
         borderRadius: 3,
-        marginLeft: 47,
+        marginLeft: 17,
         flexDirection: 'row',
         alignItems: 'center'
     },
     searchImg: {
         height: 17,
         width: 17,
-        marginLeft: 20,
-        marginRight: 9
+        marginLeft: 14,
+        marginRight: 9,
+        opacity:0.8
     },
     txtSearch: {
         color: Colors._161,

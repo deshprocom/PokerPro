@@ -29,14 +29,14 @@ const styleE = StyleSheet.create({
         alignItems: 'center'
     },
     cartImg: {
-        width: 88,
-        height: 88,
-        overflow: 'visible'
+        width: 63,
+        height: 66,
+        overflow: 'visible',
+        opacity:0.8
     },
     cartTxt: {
         fontSize: 15,
-        color: '#AAAAAA',
-        marginTop: 19,
-        fontWeight: 'bold'
+        color: '#CCCCCC',
+        marginTop: 19
     }
 })

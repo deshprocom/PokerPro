@@ -1,15 +1,66 @@
-import React, {PureComponent, PropTypes} from 'react';
+import React, {PureComponent} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
+import {utcDate, util} from '../../../utils/ComonHelper';
+import {getLogisticsInfo} from '../../../services/MallDao';
+
 
 export default class Positioning extends PureComponent {
+    state = {
+        logisticsInfo: {},
+        accept_station:'',
+        accept_time:''
+
+    };
+
+    componentDidMount() {
+        const {shipments, order_number} = this.props.orderDetail;
+        console.log('LogisticsInfo', this.props.orderDetail)
+        const body = {
+            shipping_number: shipments.shipping_number,
+            express_code: shipments.express_code,
+            order_number: order_number,
+        };
+        getLogisticsInfo(body, data => {
+            console.log('LogisticsInfo', data);
+
+            if (util.isEmpty(data.traces)){
+                this.setState({
+                    logisticsInfo: data
+                });
+            }else{
+                this.setState({
+                    logisticsInfo: data,
+                    accept_station:data.traces[0].accept_station,
+                    accept_time:data.traces[0].accept_time
+                });
+            }
+
+        }, err => {
+
+        });
+    }
 
 
     render() {
+        const {traces} = this.state.logisticsInfo;
         const {province, city, area, address, mobile, name} = this.props.address;
         return (
-            <View style={{backgroundColor: '#FFFFFF'}}>
+            <View style={{backgroundColor: '#ECECEE',alignItems:'center'}}>
+                {util.isEmpty(traces)?null:<TouchableOpacity style={styleC.logistiscView}
+                                                             onPress={()=>{
+                    global.router.toLogisticsPage(this.props.orderDetail);
+                }}>
+                        <Image style={styleC.shipImagView} source={Images.delivery}/>
+                        <View style={{ alignItems: 'flex-start',marginLeft:21}}>
+                            <Text style={styleC.Txt1}>{this.state.accept_station}</Text>
+                            <Text style={styleC.Txt2}>{this.state.accept_time}</Text>
+                        </View>
+                        <View style={{flex:1}}/>
+                        <Image style={styleC.specificationImg} source={Images.is}/>
+                    </TouchableOpacity>}
+
                 <View style={styleC.addressView}>
                     <View style={styleC.shipImagView}>
                         <Image style={styleC.shipAddrImg} source={Images.positioning}/>
@@ -38,17 +89,28 @@ const styleC = StyleSheet.create({
     lineImg: {
         width: '100%',
         height: 4,
-        marginTop: 16,
+
 
     },
     addressView: {
+        width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#FFFFFF',
+        marginTop: 1,
+        paddingBottom: 16,
 
     },
+    logistiscView: {
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+        paddingTop: 20,
+        paddingBottom: 15,
+    },
     shipImagView: {
-        width: 28,
+        width: 40,
         height: 28,
         marginLeft: 17,
         alignItems: 'center'
@@ -72,9 +134,9 @@ const styleC = StyleSheet.create({
         fontSize: 14,
         color: '#666666',
     },
-    shipAddrView:{
+    shipAddrView: {
         marginTop: 10,
-        marginRight:20
+        marginRight: 20
     },
     shipAddrTxt2: {
         fontSize: 14,
@@ -95,5 +157,20 @@ const styleC = StyleSheet.create({
     shipAddrImg: {
         width: 28,
         height: 35
+    },
+    Txt1: {
+        fontSize: 14,
+        color: '#34BA3C',
+    },
+    Txt2: {
+        fontSize: 14,
+        color: '#666666',
+        marginTop: 5
+    },
+    specificationImg: {
+        width: 8,
+        height: 16,
+        marginRight: 16
     }
+
 })

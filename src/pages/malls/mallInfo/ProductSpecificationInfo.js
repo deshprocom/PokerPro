@@ -259,7 +259,7 @@ const styleP = StyleSheet.create({
         zIndex: 999
     },
     specificationInfo: {
-        paddingBottom:80,
+        paddingBottom:160,
         marginTop: 160,
         backgroundColor: '#EEEEEE'
     },
@@ -376,7 +376,8 @@ const styleP = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         height: 50,
-        width: '100%'
+        width: '100%',
+        justifyContent: 'center',
     },
     confirm: {
         height: 40,

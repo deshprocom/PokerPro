@@ -289,7 +289,7 @@
   "buy_set_success": "设置默认成功",
   "buy_del_success": "删除成功",
   "buy_editor_adr": "编辑收货地址",
-  "buy_person": "收货人: ",
+  "buy_person": "收货人",
   "buy_adr": "所在地",
   "buy_ple_choice": "请选择",
   "buy_adr_name": "请输入详细地址，不少于5个字",
@@ -419,7 +419,7 @@
   "quantity": "数量",
   "returned": "七天退换",
   "expandMore": "展开查看更多",
-  "leaveMessage": "选填：给商家留言（45字以内）",
+  "leaveMessage": "（45字以内）",
   "cost": "运费",
   "payment": "实付款：",
   "orderSubmit": "提交订单",
@@ -487,5 +487,6 @@
   "img_load_fail": "图片上传失败",
   "ticket_order": "票务订单",
   "refund_price": "请输入退款金额",
-  "refund_explain": "请输入退换说明"
+  "refund_explain": "请输入退换说明",
+  "leaveMessage1":"给商家留言："
 }
