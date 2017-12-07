@@ -38,7 +38,9 @@ const styleO = StyleSheet.create({
         bottom:0,
         flexDirection:'row',
         alignItems: 'center',
-        width: '100%'
+        width: '100%',
+        borderWidth:0.5,
+        borderColor:'#EEEEEE'
     },
     orderSubmit:{
         backgroundColor: '#F34A4A',
