@@ -63,7 +63,7 @@ export default class OrderSubmitPage extends PureComponent {
                 invalidProducts
             })
         }, err => {
-
+            showToast(err)
         });
 
     }
