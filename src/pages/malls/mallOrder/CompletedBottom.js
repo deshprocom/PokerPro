@@ -3,7 +3,7 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, L
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 import PayCountDown from '../../../components/PayCountDown';
-import {cancelMallOrder, postWxPay, getWxPaidResult, postOrderConfirm} from "../../../services/MallDao";
+import {cancelMallOrder, postWxPay, getWxPaidResult, postOrderConfirm, deleteMall} from "../../../services/MallDao";
 import {MallStatus} from "../../../configs/Status";
 import {util, payWx, isWXAppInstalled, call, alertOrder} from '../../../utils/ComonHelper';
 import {DeShangPhone} from '../../../configs/Constants';
@@ -33,7 +33,7 @@ export default class CompletedBottom extends Component {
         const {status} = orderItem;
         switch (status) {
             case MallStatus.canceled:
-                return <View/>;
+                return this.cancelOrder(orderItem);
             case MallStatus.unpaid:
                 return this.renderPay(orderItem);
             case MallStatus.paid:
@@ -141,7 +141,7 @@ export default class CompletedBottom extends Component {
             <TouchableOpacity
 
                 onPress={() => {
-                    global.router.toMallSelectPage(orderItem,this.props.refresh)
+                    global.router.toMallSelectPage(orderItem, this.props.refresh)
                 }}
                 style={styleO.returnedBottom}>
                 <Text style={styleO.orderSubmitTxt}>{I18n.t('refund_mall_amount')}</Text>
@@ -150,8 +150,29 @@ export default class CompletedBottom extends Component {
         </View>
     };
 
+
+    cancelOrder = (orderItem) => {
+        const {order_number} = orderItem;
+        return (
+            <View style={styleO.bottomView}>
+
+                <TouchableOpacity
+                    onPress={() => {
+                        deleteMall({order_number: order_number}, ret => {
+                            if (this.props.refresh)
+                                this.props.refresh();
+                        }, err => {
+                        })
+                    }}
+                    style={styleO.customer}>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('order_del')}</Text>
+                </TouchableOpacity>
+
+            </View>)
+    };
+
     completedOrder = (orderItem) => {
-        const {shipments, order_number} = orderItem;
+        const {order_number} = orderItem;
         return (
             <View style={styleO.bottomView}>
 
@@ -161,6 +182,18 @@ export default class CompletedBottom extends Component {
                     }}
                     style={styleO.customer}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('order_logistics')}</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={() => {
+                        deleteMall({order_number: order_number}, ret => {
+                            if (this.props.refresh)
+                                this.props.refresh();
+                        }, err => {
+                        })
+                    }}
+                    style={styleO.customer}>
+                    <Text style={styleO.orderSubmitTxt}>{I18n.t('order_del')}</Text>
                 </TouchableOpacity>
 
             </View>)

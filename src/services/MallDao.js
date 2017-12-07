@@ -3,12 +3,12 @@ import Api from '../configs/ApiConfig';
 
 //退换货详情
 export function getRefundInfo(body, resolve, reject) {
-    helper.get(Api.refund_info(body),ret => {
+    helper.get(Api.refund_info(body), ret => {
         resolve(ret.data)
     }, reject)
 }
 
-
+//体检退换信息
 export function postMallRefund(body, resolve, reject) {
     helper.post(Api.mall_refund(body), body, ret => {
         resolve(ret.data)
@@ -43,6 +43,12 @@ export function getLogisticsInfo(body, resolve, reject) {
     }, reject)
 }
 
+//删除订单
+export function deleteMall(body, resolve, reject) {
+    helper.del(Api.product_order_detail(body), {}, (ret) => {
+        resolve(ret.data)
+    }, reject)
+}
 
 //获取订单详情
 export function getMallDetail(body, resolve, reject) {
