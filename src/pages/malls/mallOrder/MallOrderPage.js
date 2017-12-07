@@ -38,13 +38,13 @@ export default class MallOrderPage extends Component {
                 leftBtnPress={() => router.pop()}/>
 
             <ScrollableTabView
-                style={{marginLeft:1,marginRight:1,height:44,justifyContent:'center'}}
                 renderTabBar={() => <DefaultTabBar
                     backgroundColor={Colors.white}
                     activeTextColor="#F34A4A"
                     inactiveTextColor={Colors._AAA}
                     textStyle={{fontSize: 15}}
-                    style={{borderColor: Colors._EEE, marginTop: 1}}
+                    tabStyle={{paddingBottom: 0}}
+                    style={{borderColor: Colors._EEE, marginTop: 1,height:44,alignItems:'center'}}
                     underlineStyle={{backgroundColor: '#F34A4A', height: 2}}/>}>
                 {menu.map((item, index) => {
                     return <OrderListStatus
