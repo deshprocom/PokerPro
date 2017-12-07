@@ -110,6 +110,12 @@ export default class MallCategories extends Component {
 
             </View>
 
+            <TouchableOpacity
+                onPress={() => {
+                    this.props.showCatePage && this.props.showCatePage()
+                }}
+                style={{flex: 1}}/>
+
 
         </Animatable.View>
     }
