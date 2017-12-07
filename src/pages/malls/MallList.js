@@ -10,7 +10,6 @@ import propTypes from 'prop-types';
 import {catProducts, searchProducts} from '../../services/MallDao';
 import {isEmptyObject} from '../../utils/ComonHelper';
 import SearchEmpty from './SearchEmpty';
-import {utcDate, util} from '../../utils/ComonHelper';
 
 export default class MallList extends Component {
 
@@ -28,19 +27,13 @@ export default class MallList extends Component {
 
             {/*{this.renderSort()}*/}
 
-            {/*{util.isEmpty(this.props.isSearch) ? this.empty() : this.renderFlatList()}*/}
             {this.renderFlatList()}
         </View>)
 
-    };
-
-    empty = () => {
-        return <SearchEmpty/>
-    };
+    }
 
     renderFlatList = () => {
         return <UltimateFlatList
-            arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
             firstLoader={!this.props.isSearch}
             ref={(ref) => this.listView = ref}
             onFetch={this.onFetch}
@@ -52,7 +45,7 @@ export default class MallList extends Component {
             dateTitle={I18n.t('last_refresh')}
             allLoadedText={I18n.t('no_more')}
             waitingSpinnerText={I18n.t('loading')}
-            emptyView={() => <SearchEmpty/>}
+            emptyView={()=><SearchEmpty/>}
         />
 
 
@@ -60,10 +53,7 @@ export default class MallList extends Component {
 
     search = (keywords) => {
         this.searchKey = keywords;
-        if (!util.isEmpty(this.props.isSearch)) {
-            this.listView.refresh()
-        }
-
+        this.listView.refresh()
     };
 
     onFetch = (page = 1, startFetch, abortFetch) => {
