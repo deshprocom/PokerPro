@@ -24,6 +24,7 @@ export default class RefundInstruction extends PureComponent {
                             memo: text
                         })
                     }}
+                    placeholder={I18n.t('refund_explain')}
                     underlineColorAndroid='transparent'
                     numberOfLines={1}
                 />
@@ -48,6 +49,6 @@ const styles = StyleSheet.create({
         height: 40,
         fontSize: 14,
         flex: 1,
-        marginTop: 3
+        marginTop: 5
     }
 })

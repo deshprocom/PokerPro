@@ -35,7 +35,7 @@ class ShoppingCart extends Component {
     componentWillReceiveProps(newProps) {
 
         if (newProps.hasData && (newProps.actionType === ADD_CART
-            || newProps.actionType === DELETE_CART)) {
+                || newProps.actionType === DELETE_CART)) {
 
             let commodities = [...global.shoppingCarts];
 
@@ -83,7 +83,7 @@ class ShoppingCart extends Component {
         return (
             <View style={styleS.bottomView}>
                 <TouchableOpacity
-                    style={{flexDirection:'row',alignItems:'center'}}
+                    style={{flexDirection: 'row', alignItems: 'center'}}
                     onPress={() => {
                         this.setState({
                             selectAll: !this.state.selectAll
@@ -101,15 +101,15 @@ class ShoppingCart extends Component {
                 <View style={{flex: 1}}/>
                 <TouchableOpacity style={styleS.settlementView}
                                   onPress={() => {
-                                      if(util.isEmpty(global.login_user)){
-                                            global.router.toLoginFirstPage();
-                                      }else{
-                                           let datas = this.dataFilter();
-                                      if (datas.length > 0) {
-                                          global.router.toOrderConfirm(datas);
+                                      if (util.isEmpty(global.login_user)) {
+                                          global.router.toLoginFirstPage();
                                       } else {
-                                          showToast(I18n.t('please_select_malls'))
-                                      }
+                                          let datas = this.dataFilter();
+                                          if (datas.length > 0) {
+                                              global.router.toOrderConfirm(datas);
+                                          } else {
+                                              showToast(I18n.t('please_select_malls'))
+                                          }
                                       }
 
                                   }}>
@@ -135,7 +135,7 @@ class ShoppingCart extends Component {
         return (
             <View style={styleS.bottomView}>
                 <TouchableOpacity
-                    style={{flexDirection:'row',alignItems:'center'}}
+                    style={{flexDirection: 'row', alignItems: 'center'}}
                     onPress={() => {
                         this.setState({
                             selectAll: !this.state.selectAll
@@ -285,13 +285,13 @@ class ShoppingCart extends Component {
                     style={styleS.renderItem}>
                     {this.renderShowEditView(item)}
 
-                    <TouchableOpacity
+                    <View
                         activeOpacity={0.5}
                         onPress={() => {
-                        global.router.replaceProductInfo({id: product_id})
-                    }}>
+                            global.router.replaceProductInfo({id: product_id})
+                        }}>
                         <ImageLoad style={styleS.mallImg} source={{uri: image}}/>
-                    </TouchableOpacity>
+                    </View>
 
                     <View style={styleS.TxtView}>
                         <Text numberOfLines={2} style={styleS.mallTextName}>{title}</Text>
@@ -392,7 +392,7 @@ class ShoppingCart extends Component {
                         keyExtractor={(item, index) => `commodities${index}`}
                     />
 
-                    <View style={{paddingTop:160}}/>
+                    <View style={{paddingTop: 160}}/>
                 </ScrollView>
 
                 {this.state.showBottom ? this.toBottom() : this.toBottom2()}
@@ -450,7 +450,7 @@ const styleS = StyleSheet.create({
         width: 100,
         height: 96,
         marginLeft: 11,
-        resizeMode:'contain',
+        resizeMode: 'contain',
     },
     TxtView: {
         flex: 1,

@@ -7,6 +7,7 @@ import ProductItem from './ProductItem';
 import CompletedBottom from './CompletedBottom';
 import {getMallOrders} from '../../../services/MallDao';
 import UltimateFlatList from '../../../components/ultimate';
+import {BaseComponent} from '../../../components';
 
 export default class OrderListStatus extends Component {
 
@@ -43,24 +44,28 @@ export default class OrderListStatus extends Component {
     };
 
     refresh = () => {
-        if (this.ultimate)
-            this.ultimate.refresh();
+        this.contain && this.contain.open();
+        this.ultimate && this.ultimate.refresh();
     };
 
 
     render() {
 
-        return <UltimateFlatList
-            ref={ref => this.ultimate = ref}
-            onFetch={this.onFetch}
-            keyExtractor={(item, index) => `${this.props.status}${index}`}
-            item={this.renderItem}
-            refreshableTitlePull={I18n.t('pull_refresh')}
-            refreshableTitleRelease={I18n.t('release_refresh')}
-            dateTitle={I18n.t('last_refresh')}
-            allLoadedText={I18n.t('no_more')}
-            waitingSpinnerText={I18n.t('loading')}
-        />
+        return <BaseComponent
+            ref={ref => this.contain = ref}>
+            <UltimateFlatList
+                ref={ref => this.ultimate = ref}
+                onFetch={this.onFetch}
+                keyExtractor={(item, index) => `${this.props.status}${index}`}
+                item={this.renderItem}
+                refreshableTitlePull={I18n.t('pull_refresh')}
+                refreshableTitleRelease={I18n.t('release_refresh')}
+                dateTitle={I18n.t('last_refresh')}
+                allLoadedText={I18n.t('no_more')}
+                waitingSpinnerText={I18n.t('loading')}
+            />
+        </BaseComponent>
+
 
     }
 
@@ -83,10 +88,12 @@ export default class OrderListStatus extends Component {
 
     load = (body, postRefresh, endFetch) => {
         getMallOrders(body, data => {
+            this.contain && this.contain.close();
             this.next_id = data.next_id;
             postRefresh(data.items, 6);
 
         }, err => {
+            this.contain && this.contain.close();
             endFetch();
         });
     }

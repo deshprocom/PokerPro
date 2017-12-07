@@ -52,6 +52,7 @@ class MallPage extends PureComponent {
                 categories={categories}
                 showCatePage={this.toggle}/>
             {this.state.showCategories ? <MallCategories
+                showCatePage={this.toggle}
                 categories={categories}/> : null}
 
 

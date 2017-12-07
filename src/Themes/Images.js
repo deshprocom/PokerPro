@@ -199,7 +199,7 @@ const images = {
     verified_select: require('../../source/verified/select.png'),
     verified_selected: require('../../source/verified/selected.png'),
     verified_exmple: require('../../source/verified/exmple.png'),
-    verifed_passport:require('../../source/verified/passport.png'),
+    verifed_passport: require('../../source/verified/passport.png'),
 
     pukes: require('../../source/navigation/pukes.png'),
     raceBegin: require('../../source/navigation/raceBegin.png'),
@@ -259,7 +259,9 @@ const images = {
     order_line: require('../../source/order/order_line.png'),
     mall_order:require('../../source/mall/mall_order.png'),
     ticket_order:require('../../source/mall/ticket_order.png'),
-    delivery:require('../../source/mall/delivery.png')
+    delivery:require('../../source/mall/delivery.png'),
+    mall_up: require('../../source/mall/mall_up.png')
+
 
 
 };
