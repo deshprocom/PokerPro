@@ -19,36 +19,50 @@ export default class LeaveMessage extends PureComponent {
 
     render() {
         return (
-            <TextInput
-                ref={ref => this.remark = ref}
-                style={styleL.messageView}
-                placeholder={I18n.t('leaveMessage')}
-                placeholderTextColor="#AAAAAA"
-                multiline={true}
-                textAlignVertical='top'
-                returnKeyType={'done'}
-                underlineColorAndroid="transparent"
-                onChangeText={(text) => {
-                    this.setState({text});
-                }}
-                onSubmitEditing={() => {
-                    this.forceUpdate();
-                }}
-            />
+            <View style={styleL.page}>
+                <Text style={styleL.txt}>{I18n.t('leaveMessage1')}</Text>
+                <TextInput
+                    numberOfLines={1}
+                    maxLength={45}
+                    onChangeText={(text) => {
+                        this.setState({text});
+                    }}
+                    ref={ref => this.remark = ref}
+                    style={styleL.messageView}
+                    placeholder={I18n.t('leaveMessage')}
+                    placeholderTextColor="#AAAAAA"
+                    multiline={false}
+                    textAlignVertical='top'
+                    returnKeyType={'done'}
+                    underlineColorAndroid="transparent"
+                    onSubmitEditing={() => {
+                        this.forceUpdate();
+                    }}/>
+
+            </View>
 
         )
     }
 }
 const styleL = StyleSheet.create({
-    messageView: {
-        height: 85,
-        backgroundColor: "#FFFFFF",
+    page:{
+        height: 48,
+        backgroundColor: '#FFFFFF',
         marginTop: 11,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    txt:{
+        fontSize:14,
+        color:'#000000',
+        marginLeft:17
+    },
+    messageView: {
         fontSize: 14,
-        textAlign: 'left',
-        paddingLeft: 17,
-        paddingTop: 12,
-        paddingBottom: 50,
-        paddingRight: 17
+        color: '#F34A4A',
+        height: 40,
+        flex: 1,
+        marginTop: 5,
+
     }
 })
