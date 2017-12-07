@@ -8,7 +8,8 @@ import {
     ScrollView,
     StyleSheet,
     Text,
-    View
+    View,
+    TouchableOpacity
 } from 'react-native'
 import RefreshableScrollView from './refreshableScrollView'
 
@@ -437,9 +438,11 @@ export default class UltimateListView extends Component {
     render() {
         const {numColumns} = this.props
         if (this.state.dataSource.length <= 0 && this.props.emptyView)
-            return <View>
+            return <TouchableOpacity
+                onPress={this.refresh}
+            >
                 {this.props.emptyView()}
-            </View>;
+            </TouchableOpacity>;
         return (
             <FlatList
                 renderScrollComponent={this.renderScrollComponent}
