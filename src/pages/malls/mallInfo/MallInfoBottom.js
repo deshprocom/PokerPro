@@ -65,7 +65,7 @@ const styleB = StyleSheet.create({
         borderColor: '#EEEEEE',
         flexDirection: 'row',
         alignItems: 'center',
-        position: 'absolute',
+        justifyContent: 'center',
         bottom: 0,
         zIndex: 99
     },

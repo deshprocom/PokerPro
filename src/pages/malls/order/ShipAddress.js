@@ -65,13 +65,13 @@ export default class ShipAddress extends PureComponent {
                             global.router.toAdrListPage(this.props, this._selectAdr, {});
                     }}>
                     <View style={{marginTop: 12}}>
-                        <View style={{flexDirection: 'row'}}>
-                            <Text style={styleS.shipAddrTxt1}>{I18n.t('buy_person')}</Text>
-                            <Text style={styleS.shipAddrTxt1}>{consignee}</Text>
+                        <View style={{flexDirection: 'row',marginLeft:17}}>
+                            <Text style={styleS.shipAddrTxt1}>{I18n.t('buy_person')}：</Text>
+                            <Text style={styleS.shipAddrTxt1}>{consignee.trim()}</Text>
                             <Text style={styleS.mobile}>{mobile}</Text>
                         </View>
                         <View style={{width:290}}>
-                            <Text style={styleS.shipAddrTxt2}>{`${address} ${address_detail}`}</Text>
+                            <Text style={styleS.shipAddrTxt2} numberOfLines={2}>{`${address} ${address_detail}`}</Text>
                         </View>
 
                     </View>
@@ -94,7 +94,8 @@ const styleS = StyleSheet.create({
     addressView: {},
     title: {
         height: 40,
-        backgroundColor: '#FFFFFF'
+        backgroundColor: '#FFFFFF',
+        justifyContent:'center'
     },
     titleName: {
         marginLeft: 17,
@@ -114,7 +115,7 @@ const styleS = StyleSheet.create({
     shipAddrTxt1: {
         fontSize: 14,
         color: '#666666',
-        marginLeft: 19
+
     },
     shipAddrTxt2: {
         fontSize: 14,

@@ -10,6 +10,7 @@ import propTypes from 'prop-types';
 import {catProducts, searchProducts} from '../../services/MallDao';
 import {isEmptyObject} from '../../utils/ComonHelper';
 import SearchEmpty from './SearchEmpty';
+import {utcDate, util} from '../../utils/ComonHelper';
 
 export default class MallList extends Component {
 
@@ -27,10 +28,15 @@ export default class MallList extends Component {
 
             {/*{this.renderSort()}*/}
 
+            {/*{util.isEmpty(this.props.isSearch) ? this.empty() : this.renderFlatList()}*/}
             {this.renderFlatList()}
         </View>)
 
-    }
+    };
+
+    empty=()=>{
+        return <SearchEmpty/>
+    };
 
     renderFlatList = () => {
         return <UltimateFlatList
@@ -53,7 +59,10 @@ export default class MallList extends Component {
 
     search = (keywords) => {
         this.searchKey = keywords;
-        this.listView.refresh()
+        if(!util.isEmpty(this.props.isSearch)){
+            this.listView.refresh()
+        }
+
     };
 
     onFetch = (page = 1, startFetch, abortFetch) => {
