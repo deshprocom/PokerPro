@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
         height: 264,
         width: '49%',
         backgroundColor: 'white',
-        marginTop: 8
+        marginTop: 5
     },
     imgThem: {
         height: 178,

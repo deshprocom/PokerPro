@@ -155,8 +155,8 @@ const styleC = StyleSheet.create({
         justifyContent: 'center'
     },
     shipAddrImg: {
-        width: 28,
-        height: 35
+        width: 27,
+        height: 27
     },
     Txt1: {
         fontSize: 14,

@@ -252,6 +252,8 @@ const styleO = StyleSheet.create({
         flexDirection: 'row-reverse',
         alignItems: 'center',
         width: '100%',
+        borderWidth:0.5,
+        borderColor:'#EEEEEE'
     },
     returnedBottom: {
         borderWidth: 1,

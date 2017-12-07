@@ -38,6 +38,7 @@ export default class MallOrderPage extends Component {
                 leftBtnPress={() => router.pop()}/>
 
             <ScrollableTabView
+                style={{marginLeft:1,marginRight:1,height:44,justifyContent:'center'}}
                 renderTabBar={() => <DefaultTabBar
                     backgroundColor={Colors.white}
                     activeTextColor="#F34A4A"

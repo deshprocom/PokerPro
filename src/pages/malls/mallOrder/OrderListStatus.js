@@ -21,7 +21,7 @@ export default class OrderListStatus extends Component {
                 onPress={() => {
                     global.router.toMallOrderInfo(item, this.refresh)
                 }}
-                style={{flex: 1, marginTop: 9}}>
+                style={{flex: 1, marginTop: 5}}>
                 <View style={styles.top}>
                     <Text style={styles.txtLeft}>{I18n.t('order_num')}：{order_number}</Text>
                     <View style={{flex: 1}}/>
