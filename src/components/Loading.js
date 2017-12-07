@@ -14,6 +14,8 @@ import {
     TouchableOpacity
 } from 'react-native';
 import I18n from 'react-native-i18n';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
+import FastImage from 'react-native-fast-image'
 
 const styles = StyleSheet.create({
     container: {
@@ -76,7 +78,7 @@ export default class Loading extends Component {
         textContent: '',
         color: 'white',
         size: 'large', // 'normal',
-        overlayColor: 'rgba(0, 0, 0, 0.25)'
+        overlayColor: 'rgba(0, 0, 0, 0.38)'
     };
 
     close() {
@@ -101,14 +103,17 @@ export default class Loading extends Component {
     _renderDefaultContent() {
         return (
             <View style={styles.background}>
-                <ActivityIndicator
-                    color={this.props.color}
-                    size={this.props.size}
-                    style={{flex: 1}}
-                />
+                <FastImage
+                    source={Images.loading}
+                    style={{height: 115, width: 115}}/>
+                {/*<ActivityIndicator*/}
+                {/*color={this.props.color}*/}
+                {/*size={this.props.size}*/}
+                {/*style={{flex: 1}}*/}
+                {/*/>*/}
                 {/*<View style={styles.textContainer}>*/}
-                    {/*<Text*/}
-                        {/*style={[styles.textContent, this.props.textStyle]}>{I18n.t('loading')}</Text>*/}
+                {/*<Text*/}
+                {/*style={[styles.textContent, this.props.textStyle]}>{I18n.t('loading')}</Text>*/}
                 {/*</View>*/}
             </View>);
     }
@@ -126,7 +131,7 @@ export default class Loading extends Component {
                     styles.container,
                     {backgroundColor: this.props.overlayColor}
                 ]} key={`spinner_${Date.now()}`}>
-                { this._renderDefaultContent()}
+                {this._renderDefaultContent()}
             </TouchableOpacity>
         );
 

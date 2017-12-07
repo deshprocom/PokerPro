@@ -257,12 +257,12 @@ const images = {
     return_radio_selected: require('../../source/mall/return_radio_selected.png'),
     logistics: require('../../source/mall/logistics.png'),
     order_line: require('../../source/order/order_line.png'),
-    mall_order:require('../../source/mall/mall_order.png'),
-    ticket_order:require('../../source/mall/ticket_order.png'),
-    delivery:require('../../source/mall/delivery.png'),
+    mall_order: require('../../source/mall/mall_order.png'),
+    ticket_order: require('../../source/mall/ticket_order.png'),
+    delivery: require('../../source/mall/delivery.png'),
     mall_up: require('../../source/mall/mall_up.png'),
+    loading: require('../../source/setting/loading.gif'),
     imgDel: require('../../source/mall/imgDel.png')
-
 
 
 };
