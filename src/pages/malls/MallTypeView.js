@@ -24,6 +24,7 @@ export default class MallTypeView extends PureComponent {
             this.arrayMenu = [...categories];
             this.arrayMenu.unshift({id: -1, name: '推荐'});
             return <View style={ApplicationStyles.bgContainer}>
+
                 <ScrollableTabView
                     renderTabBar={() => <ScrollableTabBar
                         showCatePage={this.props.showCatePage}
