@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {
     ActivityIndicator,
@@ -13,7 +13,7 @@ import {
 import RefreshableScrollView from './refreshableScrollView'
 
 
-const { width, height } = Dimensions.get('window')
+const {width, height} = Dimensions.get('window')
 const PaginationStatus = {
     firstLoad: 0,
     waiting: 1,
@@ -183,7 +183,7 @@ export default class UltimateListView extends Component {
     onPaginate = () => {
         if (this.state.paginationStatus !== PaginationStatus.allLoaded && !this.state.isRefreshing) {
             console.log('onPaginate()')
-            this.setState({ paginationStatus: PaginationStatus.waiting })
+            this.setState({paginationStatus: PaginationStatus.waiting})
             this.props.onFetch(this.getPage() + 1, this.postPaginate, this.endFetch)
         }
     }
@@ -226,6 +226,7 @@ export default class UltimateListView extends Component {
     }
 
     postRefresh = (rows = [], pageLimit) => {
+
         if (this.mounted) {
             let paginationStatus = PaginationStatus.waiting
             if (rows.length < pageLimit) {
@@ -238,7 +239,7 @@ export default class UltimateListView extends Component {
     endFetch = () => {
         // console.log('endRefresh()');
         if (this.mounted) {
-            this.setState({ isRefreshing: false })
+            this.setState({isRefreshing: false})
             if (this.props.refreshableMode === 'advanced' && this._flatList._listRef._scrollRef.onRefreshEnd) {
                 this._flatList._listRef._scrollRef.onRefreshEnd()
             }
@@ -246,6 +247,7 @@ export default class UltimateListView extends Component {
     }
 
     postPaginate = (rows = [], pageLimit) => {
+
         this.setPage(this.getPage() + 1)
         let mergedRows
         let paginationStatus
@@ -326,9 +328,9 @@ export default class UltimateListView extends Component {
 
                 return (
                     <View style={styles.paginationView}>
-                        <ActivityIndicator color={this.props.spinnerColor} size={this.props.waitingSpinnerSize} />
+                        <ActivityIndicator color={this.props.spinnerColor} size={this.props.waitingSpinnerSize}/>
                         <Text
-                            style={[styles.paginationViewText, { marginLeft: 5 }]}
+                            style={[styles.paginationViewText, {marginLeft: 5}]}
                         >{this.props.waitingSpinnerText}
                         </Text>
                     </View>
@@ -347,7 +349,7 @@ export default class UltimateListView extends Component {
         return null
     }
 
-    renderItem = ({ item, index, separators }) => {
+    renderItem = ({item, index, separators}) => {
         if (this.props.item) {
             return this.props.item(item, index, separators)
         }
@@ -433,7 +435,11 @@ export default class UltimateListView extends Component {
     }
 
     render() {
-        const { numColumns } = this.props
+        const {numColumns} = this.props
+        if (this.state.dataSource.length <= 0 && this.props.emptyView)
+            return <View>
+                {this.props.emptyView()}
+            </View>;
         return (
             <FlatList
                 renderScrollComponent={this.renderScrollComponent}
