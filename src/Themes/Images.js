@@ -260,7 +260,8 @@ const images = {
     mall_order:require('../../source/mall/mall_order.png'),
     ticket_order:require('../../source/mall/ticket_order.png'),
     delivery:require('../../source/mall/delivery.png'),
-    mall_up: require('../../source/mall/mall_up.png')
+    mall_up: require('../../source/mall/mall_up.png'),
+    imgDel: require('../../source/mall/imgDel.png')
 
 
 
