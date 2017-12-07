@@ -1,27 +1,70 @@
-import React, {PureComponent, PropTypes} from 'react';
+import React, {PureComponent} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
-import {utcDate} from '../../../utils/ComonHelper';
+import {utcDate, util} from '../../../utils/ComonHelper';
+import {getLogisticsInfo} from '../../../services/MallDao';
+
 
 export default class Positioning extends PureComponent {
+    state = {
+        logisticsInfo: {},
+    };
+
+    componentDidMount() {
+        const {shipments, order_number} = this.props.orderDetail;
+        console.log('LogisticsInfo', this.props.orderDetail)
+        const body = {
+            shipping_number: shipments.shipping_number,
+            express_code: shipments.express_code,
+            order_number: order_number,
+        };
+        getLogisticsInfo(body, data => {
+            console.log('LogisticsInfo', data);
+            this.setState({
+                logisticsInfo: data
+            });
+        }, err => {
+
+        })
+    }
+
+    tracesTation = () => {
+        const {traces} = this.state.logisticsInfo;
+        if (util.isEmpty(traces))
+            return '';
+        else
+            return traces[0].accept_station
+    };
+
+    acceptTime = () => {
+        const {traces} = this.state.logisticsInfo;
+        if (util.isEmpty(traces))
+            return '';
+        else
+            return traces[0].accept_time
+    };
 
 
     render() {
-        const {created_at} = this.props.detail;
-        const{province, city, area, address, mobile, name} = this.props.address;
+        const {traces} = this.state.logisticsInfo;
+        const {province, city, area, address, mobile, name} = this.props.address;
+
         return (
-            <View style={{backgroundColor: '#FFFFFF',alignItems:'center'}}>
-                <View style={styleC.logistiscView}>
-                    <View style={styleC.shipImagView}>
-                        <Image style={styleC.shipAddrImg} source={Images.positioning}/>
-                    </View>
-                    <View style={{ alignItems: 'center',marginLeft:21,width:300}}>
-                        <Text style={styleC.Txt1}>【{city}】{I18n.t('logistics_status1')}{I18n.t('logistics_status2')}</Text>
-                        <Text style={styleC.Txt2}>{I18n.t('order_time')}: {utcDate(created_at, 'YYYY/MM/DD  HH:mm')}</Text>
-                    </View>
-                    <Image style={styleC.specificationImg} source={Images.is}/>
-                </View>
+            <View style={{backgroundColor: '#ECECEE',alignItems:'center'}}>
+                {util.isEmpty(traces)?null:<TouchableOpacity style={styleC.logistiscView}
+                                                             onPress={()=>{
+                    global.router.toLogisticsPage(this.props.orderDetail);
+                }}>
+                        <Image style={styleC.shipImagView} source={Images.delivery}/>
+                        <View style={{ alignItems: 'flex-start',marginLeft:21}}>
+                            <Text style={styleC.Txt1}>{this.tracesTation()}</Text>
+                            <Text style={styleC.Txt2}> {this.acceptTime()}</Text>
+                        </View>
+                        <View style={{flex:1}}/>
+                        <Image style={styleC.specificationImg} source={Images.is}/>
+                    </TouchableOpacity>}
+
                 <View style={styleC.addressView}>
                     <View style={styleC.shipImagView}>
                         <Image style={styleC.shipAddrImg} source={Images.positioning}/>
@@ -50,24 +93,28 @@ const styleC = StyleSheet.create({
     lineImg: {
         width: '100%',
         height: 4,
-        marginTop: 16,
+
 
     },
     addressView: {
+        width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#FFFFFF',
+        marginTop: 1,
+        paddingBottom: 16,
 
     },
-    logistiscView:{
+    logistiscView: {
+        width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#FFFFFF',
-        paddingTop:20,
-        paddingBottom:20
+        paddingTop: 20,
+        paddingBottom: 15,
     },
     shipImagView: {
-        width: 28,
+        width: 40,
         height: 28,
         marginLeft: 17,
         alignItems: 'center'
@@ -91,9 +138,9 @@ const styleC = StyleSheet.create({
         fontSize: 14,
         color: '#666666',
     },
-    shipAddrView:{
+    shipAddrView: {
         marginTop: 10,
-        marginRight:20
+        marginRight: 20
     },
     shipAddrTxt2: {
         fontSize: 14,
@@ -115,14 +162,14 @@ const styleC = StyleSheet.create({
         width: 28,
         height: 35
     },
-    Txt1:{
+    Txt1: {
         fontSize: 14,
         color: '#34BA3C',
     },
-    Txt2:{
+    Txt2: {
         fontSize: 14,
         color: '#666666',
-        marginTop:4
+        marginTop: 5
     },
     specificationImg: {
         width: 8,
