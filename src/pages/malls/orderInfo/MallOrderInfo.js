@@ -25,7 +25,7 @@ export default class MallOrderInfo extends PureComponent {
 
 
     refresh = () => {
-        this.container.open();
+        this.container && this.container.open();
         const {orderDetail} = this.props.params;
         getMallDetail({order_number: orderDetail.order_number}, data => {
             this.setState({
