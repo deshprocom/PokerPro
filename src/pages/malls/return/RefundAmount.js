@@ -5,12 +5,22 @@ import I18n from 'react-native-i18n';
 
 export default class RefundAmount extends PureComponent {
 
+    state = {
+        price: ''
+    };
+
+    getPrice = () => {
+        return this.state.price;
+    };
 
     render() {
         return (
             <View style={styles.page}>
                 <Text style={styles.amountTxt}>{I18n.t('refund_amount')}：</Text>
                 <TextInput
+                    onChangeText={(text) => {
+                        this.setState({price: text});
+                    }}
                     placeholder={I18n.t('refund_price')}
                     numberOfLines={1}
                     underlineColorAndroid='transparent'

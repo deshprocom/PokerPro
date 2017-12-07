@@ -4,9 +4,10 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import I18n from 'react-native-i18n';
 
 export default class LeaveMessage extends PureComponent {
-    state={
-        text:""
+    state = {
+        text: ""
     };
+
     componentDidMount() {
 
 
@@ -18,16 +19,21 @@ export default class LeaveMessage extends PureComponent {
 
     render() {
         return (
-            <TextInput style={styleL.messageView}
-                       placeholder={I18n.t('leaveMessage')}
-                       placeholderTextColor="#AAAAAA"
-                       multiline={true}
-                       textAlignVertical='top'
-                       returnKeyType={'done'}
-                       underlineColorAndroid="transparent"
-                       onChangeText={(text) => {
-                          this.setState({text});
-                        }}
+            <TextInput
+                ref={ref => this.remark = ref}
+                style={styleL.messageView}
+                placeholder={I18n.t('leaveMessage')}
+                placeholderTextColor="#AAAAAA"
+                multiline={true}
+                textAlignVertical='top'
+                returnKeyType={'done'}
+                underlineColorAndroid="transparent"
+                onChangeText={(text) => {
+                    this.setState({text});
+                }}
+                onSubmitEditing={() => {
+                    this.forceUpdate();
+                }}
             />
 
         )
