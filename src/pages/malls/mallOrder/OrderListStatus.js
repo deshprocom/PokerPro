@@ -54,6 +54,7 @@ export default class OrderListStatus extends Component {
         return <BaseComponent
             ref={ref => this.contain = ref}>
             <UltimateFlatList
+                arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
                 ref={ref => this.ultimate = ref}
                 onFetch={this.onFetch}
                 keyExtractor={(item, index) => `${this.props.status}${index}`}

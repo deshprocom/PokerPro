@@ -34,12 +34,13 @@ export default class MallList extends Component {
 
     };
 
-    empty=()=>{
+    empty = () => {
         return <SearchEmpty/>
     };
 
     renderFlatList = () => {
         return <UltimateFlatList
+            arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
             firstLoader={!this.props.isSearch}
             ref={(ref) => this.listView = ref}
             onFetch={this.onFetch}
@@ -51,7 +52,7 @@ export default class MallList extends Component {
             dateTitle={I18n.t('last_refresh')}
             allLoadedText={I18n.t('no_more')}
             waitingSpinnerText={I18n.t('loading')}
-            emptyView={()=><SearchEmpty/>}
+            emptyView={() => <SearchEmpty/>}
         />
 
 
@@ -59,7 +60,7 @@ export default class MallList extends Component {
 
     search = (keywords) => {
         this.searchKey = keywords;
-        if(!util.isEmpty(this.props.isSearch)){
+        if (!util.isEmpty(this.props.isSearch)) {
             this.listView.refresh()
         }
 
