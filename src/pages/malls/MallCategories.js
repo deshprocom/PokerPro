@@ -88,7 +88,7 @@ export default class MallCategories extends Component {
         const {speciesId, childMap} = this.state;
         const {categories} = this.props;
 
-        return <Animatable.View animation={'fadeInDown'}
+        return <Animatable.View animation={'fadeIn'}
                                 duration={500}
                                 style={styles.page}>
             <View style={styles.topBar}>
