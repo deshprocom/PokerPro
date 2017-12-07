@@ -56,7 +56,7 @@ export default class LogisticsPage extends Component {
                         </View>
                     </Image>
                     <View style={styles.topRight}>
-                        <Text style={styles.topRightTxt1}>{I18n.t(menu[state])}</Text>
+                        <Text style={styles.topRightTxt1}>{state !== '4' ? I18n.t(menu[state]):""}</Text>
                         <Text style={styles.topRightTxt2}>{I18n.t('carrier_source')}：{shipments.shipping_company}</Text>
                         <Text style={styles.topRightTxt2}>{I18n.t('tracking_no')}：{shipping_number}</Text>
                         <View style={styles.topRightView}>

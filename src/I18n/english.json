@@ -289,7 +289,7 @@
   "buy_set_success": "Successfully set",
   "buy_del_success": "Delete successfully",
   "buy_editor_adr": "Edit delivery address",
-  "buy_person": "Consignee: ",
+  "buy_person": "Consignee",
   "buy_adr": "Location",
   "buy_ple_choice": "Select",
   "buy_adr_name": "Detailed address, more than 5 words",
@@ -418,7 +418,7 @@
   "quantity": "Quantity",
   "returned": "7 days return",
   "expandMore": "Tap for more",
-  "leaveMessage": "Option：Leave message to Seller（Within 45 words）",
+  "leaveMessage": "（Within 45 words）",
   "cost": "Delivery fee",
   "payment": "Payment：",
   "orderSubmit": "Submit Order",
@@ -484,8 +484,9 @@
   "mall_completed": "退换成功",
   "agree_transaction_refund": "同意本次交易支持退款",
   "img_load_fail": "图片上传失败",
-  "ticket_order":"票务订单",
-  "logistics_status1":"快件已从",
-  "logistics_status2":"中心发出，准备发往"
+  "ticket_order": "票务订单",
+  "refund_price": "请输入退款金额",
+  "refund_explain": "请输入退换说明",
+  "leaveMessage1":"给商家留言："
 }
 

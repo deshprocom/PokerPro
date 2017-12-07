@@ -158,11 +158,14 @@ export default class CompletedBottom extends Component {
 
                 <TouchableOpacity
                     onPress={() => {
-                        deleteMall({order_number: order_number}, ret => {
+                          alertOrder('verified_del', () => {
+                               deleteMall({order_number: order_number}, ret => {
                             if (this.props.refresh)
                                 this.props.refresh();
                         }, err => {
                         })
+                          })
+
                     }}
                     style={styleO.customer}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('order_del')}</Text>
@@ -186,11 +189,14 @@ export default class CompletedBottom extends Component {
 
                 <TouchableOpacity
                     onPress={() => {
-                        deleteMall({order_number: order_number}, ret => {
+                         alertOrder('verified_del', () => {
+                               deleteMall({order_number: order_number}, ret => {
                             if (this.props.refresh)
                                 this.props.refresh();
                         }, err => {
                         })
+                         })
+
                     }}
                     style={styleO.customer}>
                     <Text style={styleO.orderSubmitTxt}>{I18n.t('order_del')}</Text>
