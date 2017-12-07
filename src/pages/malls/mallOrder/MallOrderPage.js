@@ -45,7 +45,7 @@ export default class MallOrderPage extends Component {
                     textStyle={{fontSize: 15}}
                     tabStyle={{paddingBottom: 0}}
                     style={{borderColor: Colors._EEE, marginTop: 1,height:44,alignItems:'center'}}
-                    underlineStyle={{backgroundColor: '#F34A4A', height: 2}}/>}>
+                    underlineStyle={{backgroundColor: '#F34A4A', width: '12%', height: 2, marginLeft: '4.6%'}}/>}>
                 {menu.map((item, index) => {
                     return <OrderListStatus
                         key={`mallStatus${index}`}

@@ -248,7 +248,7 @@ const styleO = StyleSheet.create({
     bottomView: {
         height: 50,
         backgroundColor: "#FFFFFF",
-        marginTop: 1,
+        marginTop: 0.5,
         flexDirection: 'row-reverse',
         alignItems: 'center',
         width: '100%',

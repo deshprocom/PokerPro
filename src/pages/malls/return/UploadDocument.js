@@ -124,18 +124,18 @@ export default class UploadDocument extends PureComponent {
                                     style={{
                                         position: 'absolute',
                                         left: 65,
-                                        top: 3,
+                                        top: 2,
                                         width: 30,
                                         height: 30,
                                         alignItems: 'center',
                                         justifyContent: 'center',
-                                        zIndex: 99
+                                        zIndex: 99,
                                     }}
                                     onPress={() => {
                                         this.deleteImg(index)
 
                                     }}>
-                                    <Image style={{width: 10, height: 3}} source={Images.cut}/>
+                                    <Image style={{width: 20, height: 20}} source={Images.imgDel}/>
                                 </TouchableOpacity>}
 
                             </TouchableOpacity>

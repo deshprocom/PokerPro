@@ -261,7 +261,8 @@ const images = {
     ticket_order: require('../../source/mall/ticket_order.png'),
     delivery: require('../../source/mall/delivery.png'),
     mall_up: require('../../source/mall/mall_up.png'),
-    loading: require('../../source/setting/loading.gif')
+    loading: require('../../source/setting/loading.gif'),
+    imgDel: require('../../source/mall/imgDel.png')
 
 
 };
