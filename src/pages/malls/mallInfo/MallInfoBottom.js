@@ -49,12 +49,11 @@ export default class MallInfoBottom extends Component {
     countView = () => {
         let count = global.shoppingCarts.length;
         if (count > 0)
-            return <Animatable.View
-                delay={500}
-                animation="zoomInDown"
+            return <View
+
                 style={styleB.shoppingCarView}>
                 <Text style={styleB.shoppingCarTxt}>{count}</Text>
-            </Animatable.View>
+            </View>
     }
 }
 
