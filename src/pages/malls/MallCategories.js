@@ -92,7 +92,21 @@ export default class MallCategories extends Component {
                                 duration={500}
                                 style={styles.page}>
             <View style={styles.topBar}>
-                <Text>请选择分类</Text>
+                <View style={{flex: 1}}/>
+                <Text style={{alignSelf: 'center'}}>请选择分类</Text>
+
+                <View style={{flex: 1, flexDirection: 'row-reverse'}}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            this.props.showCatePage && this.props.showCatePage()
+                        }}
+                        style={styles.btnFilter}>
+                        <Image
+                            source={Images.mall_up}
+                            style={{height: 9, width: 16}}/>
+                    </TouchableOpacity>
+                </View>
+
 
             </View>
             <View style={styles.content}>
@@ -192,7 +206,16 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: 'white',
         alignItems: 'center',
-        flexDirection: 'row'
-    }
+        flexDirection: 'row',
+        borderBottomColor: Colors._ECE,
+        borderBottomWidth: 1
+    },
+    btnFilter: {
+        height: 39,
+        width: 58,
+        alignItems: 'center',
+        justifyContent: 'center',
+
+    },
 
 });
