@@ -421,8 +421,8 @@ const stylesP = StyleSheet.create({
     },
     orderView: {flexDirection: 'row', height: 82, width: '100%', backgroundColor: 'white'},
     btnOrder: {flex: 1, justifyContent: 'center', alignItems: 'center'},
-    imgOrder1: {height: 33, width: 32},
-    imgOrder2: {height: 33, width: 36},
+    imgOrder1: {height: 25, width: 25},
+    imgOrder2: {height: 27, width: 30},
     txtProfile1: {
         fontSize: 14,
         color: Colors.txt_444,

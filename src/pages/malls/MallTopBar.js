@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     searchImg: {
         height: 17,
         width: 17,
-        marginLeft: 20,
+        marginLeft: 15,
         marginRight: 9
     },
     txtSearch: {

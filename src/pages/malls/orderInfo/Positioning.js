@@ -111,7 +111,7 @@ const styleC = StyleSheet.create({
     },
     shipImagView: {
         width: 40,
-        height: 28,
+        height: 30,
         marginLeft: 17,
         alignItems: 'center'
     },
@@ -155,7 +155,7 @@ const styleC = StyleSheet.create({
         justifyContent: 'center'
     },
     shipAddrImg: {
-        width: 28,
+        width: 27,
         height: 35
     },
     Txt1: {
