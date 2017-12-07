@@ -88,12 +88,12 @@ export default class Badge extends Component {
         else {
             width = e.nativeEvent.layout.width + this.props.extraPaddingHorizontal
         }
-        width = Math.max(width, this.props.minWidth)
+        width = Math.max(width, this.props.minWidth)-3
         if (this._width == width) {
             return
         }
         this._width = width
-        let height = Math.max(e.nativeEvent.layout.height, this.props.minHeight)
+        let height = Math.max(e.nativeEvent.layout.height, this.props.minHeight)-3;
         let borderRadius = height / 2
         this._container.setNativeProps({
             style: {

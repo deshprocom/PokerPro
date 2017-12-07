@@ -505,7 +505,11 @@ const styleS = StyleSheet.create({
         color: '#444444',
     },
     renderItem: {
-        flexDirection: 'row', alignItems: 'center', backgroundColor: '#FFFFFF', paddingTop: 15, paddingBottom: 11
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+        paddingTop: 15,
+        paddingBottom: 11,
     },
     quantity: {
         marginRight: 17, flexDirection: 'row', alignItems: 'center', marginTop: 9,

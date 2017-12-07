@@ -376,7 +376,8 @@ const styleP = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         height: 50,
-        width: '100%'
+        width: '100%',
+        justifyContent: 'center',
     },
     confirm: {
         height: 40,

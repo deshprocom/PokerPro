@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     badge: {
         position: 'absolute',
         top: 5,
-        right:'20%'
+        right:'26%'
     }
 
 });
