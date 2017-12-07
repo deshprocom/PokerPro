@@ -468,7 +468,7 @@
   "logistics_info": "物流详情",
   "online_service": "在线客服",
   "official_phone": "官方电话",
-  "carrier_source": "承运来源",
+  "logistics_company": "物流公司",
   "no_track": "无轨迹",
   "on_the_way": "在途中",
   "have_been_received": "已签收",
@@ -487,6 +487,7 @@
   "ticket_order": "票务订单",
   "refund_price": "请输入退款金额",
   "refund_explain": "请输入退换说明",
-  "leaveMessage1":"给商家留言："
+  "leaveMessage1":"给商家留言：",
+  "waiting_file":"等待揽件"
 }
 

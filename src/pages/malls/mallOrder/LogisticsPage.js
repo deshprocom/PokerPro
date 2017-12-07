@@ -41,10 +41,24 @@ export default class LogisticsPage extends Component {
             height: height
         })
     };
+    status=(state,menu)=>{
+        if(state === '0'){
+            return(
+                <Text style={styles.topRightTxt1}>{I18n.t('waiting_file')}</Text>
+            )
+        }else{
+            return(
+                <Text style={styles.topRightTxt1}>{state !== '4' ? I18n.t(menu[state]):""}</Text>
+            )
+        }
+
+
+    };
     content=()=>{
         const {logisticsInfo} = this.state;
         const {traces,phone,state,shipping_number} = logisticsInfo;
-        const{order_items,shipments} = this.props.params.orderItem;
+        const{order_items,shipments,created_at} = this.props.params.orderItem;
+        console.log("logisticsInfo:",this.props.params.orderItem)
         let menu = [LogisticsStatus.no_track, '', LogisticsStatus.on_the_way, LogisticsStatus.have_been_received, LogisticsStatus.question_piece];
         return(
             <ScrollView>
@@ -56,21 +70,33 @@ export default class LogisticsPage extends Component {
                         </View>
                     </Image>
                     <View style={styles.topRight}>
-                        <Text style={styles.topRightTxt1}>{state !== '4' ? I18n.t(menu[state]):""}</Text>
-                        <Text style={styles.topRightTxt2}>{I18n.t('carrier_source')}：{shipments.shipping_company}</Text>
+                        {this.status(state,menu)}
+                        <Text style={styles.topRightTxt2}>{I18n.t('logistics_company')}：{shipments.shipping_company}</Text>
                         <Text style={styles.topRightTxt2}>{I18n.t('tracking_no')}：{shipping_number}</Text>
-                        <View style={styles.topRightView}>
+                        <TouchableOpacity style={styles.topRightView}
+                        onPress={()=>{
+                            call(phone)
+                        }}>
                             <Text style={styles.topRightTxt2}>{I18n.t('official_phone')}：</Text>
                             <Text style={styles.topRightTxt3}>{phone}</Text>
-                        </View>
+                        </TouchableOpacity>
                     </View>
 
 
 
                 </View>
-                {state === LogisticsStatus.have_been_received ? <View style={styles.contentEmpty}>
-                        <View style={{height:400,width:2,backgroundColor:'#CCCCCC',marginLeft:26,marginTop:30}}/>
-                        <Text style={{fontSize:14,color:'#333333',marginLeft:83,marginTop:350}}>{I18n.t('order_success')}</Text>
+                {state === '0' ? <View style={styles.contentEmpty}>
+                        <View style={styles.itemLeft3}>
+                            <Text
+                                style={[styles.itemLeftTxt]}>{convertDate(created_at, 'MM/DD')}</Text>
+                            <Text
+                                style={[styles.itemLeftTxt2,styles.color3]}>{convertDate(created_at, 'hh:mm')}</Text>
+                        </View>
+                        <View style={{alignItems:'center',width:14,marginLeft:12,marginTop:20}}>
+                            <View style={{height:250,backgroundColor:'#CCCCCC',width:1}}/>
+                            <View style={styles.radio3}/>
+                        </View>
+                        <Text style={{fontSize:14,color:'#F34A4A',marginLeft:83,marginTop:200}}>{I18n.t('order_success')}</Text>
                     </View> : <View style={styles.content}>
                         <View style={styles.contentTop}/>
                         {traces.map((item, i) => {
@@ -273,6 +299,25 @@ const styles = {
         backgroundColor: '#DDDDDD',
         position: 'absolute',
         top: 20
+    },
+    itemLeft3: {
+        width: 42,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        marginTop:230,
+        marginLeft:17
+
+    },
+    radio3: {
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        marginLeft: 11,
+        backgroundColor: '#DDDDDD',
+        position: 'absolute',
+        top: 220
     },
     itemRight: {
         marginLeft: 14,
