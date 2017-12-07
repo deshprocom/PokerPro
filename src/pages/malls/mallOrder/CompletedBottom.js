@@ -141,7 +141,7 @@ export default class CompletedBottom extends Component {
             <TouchableOpacity
 
                 onPress={() => {
-                    global.router.toMallSelectPage(orderItem)
+                    global.router.toMallSelectPage(orderItem,this.props.refresh)
                 }}
                 style={styleO.returnedBottom}>
                 <Text style={styleO.orderSubmitTxt}>{I18n.t('refund_mall_amount')}</Text>

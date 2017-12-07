@@ -44,10 +44,13 @@ export default class Router {
 
     }
 
-    toMallSelectPage(params) {
+    toMallSelectPage(orderItem, mallRefresh) {
         this.stackPush({
             name: 'MallSelectPage',
-            params: params
+            params: {
+                orderItem,
+                mallRefresh
+            }
         })
     }
 
