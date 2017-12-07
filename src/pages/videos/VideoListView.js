@@ -45,6 +45,7 @@ export default class VideoListView extends Component {
             testID={'page_news_' + this.props.newsTypeItem.id}>
 
             <UltimateListView
+                arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
                 keyExtractor={(item, index) => index}
                 ref={(ref) => this.listView = ref}
                 onFetch={this.onFetch}
