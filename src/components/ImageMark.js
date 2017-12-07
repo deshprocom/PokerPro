@@ -6,7 +6,7 @@ import {ActivityIndicator, TouchableOpacity, View, Image} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes/index';
 import PropTypes from 'prop-types';
 import {util} from '../utils/ComonHelper';
-FastImage
+
 
 export default class ImageMark extends Component {
     static propTypes = {
