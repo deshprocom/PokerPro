@@ -1,7 +1,8 @@
 import React, {PureComponent, PropTypes} from 'react';
-import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView, TextInput} from 'react-native';
+import {View, StyleSheet, TextInput, Keyboard} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
+
 
 export default class LeaveMessage extends PureComponent {
     state = {
@@ -32,7 +33,7 @@ export default class LeaveMessage extends PureComponent {
                     this.setState({text});
                 }}
                 onSubmitEditing={() => {
-                    this.forceUpdate();
+                    Keyboard.dismiss();
                 }}
             />
 
