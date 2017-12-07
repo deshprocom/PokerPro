@@ -37,19 +37,22 @@ export default class ReturnSucceedPage extends PureComponent {
 
     content = () => {
         const {refundInfo} = this.state;
-        const {refund_number, refund_type, refund_price, memo, admin_memo, status, created_at, refund_order_items} = refundInfo;
+        const {refund_number, refund_type, refund_price, memo, status, created_at, refund_order_items} = refundInfo;
         return (
             <ScrollView style={styleC.orderView}>
 
                 <ReturnStatus refundInfo={refundInfo}/>
 
-                <RefundAmount refund_price={refund_price}/>
+                <View style={styleC.priceView}>
+                    <Text style={styleC.amountTxt}>{I18n.t('refund_amount')}：</Text>
+                    <Text style={styleC.amount}>¥{refund_price}</Text>
+                </View>
 
                 <ProductItem lists={refund_order_items}/>
 
                 <RefundInfo refundInfo={refundInfo}/>
 
-                <View style={{height:80}}/>
+                <View style={{height: 80}}/>
             </ScrollView>
         )
 
@@ -109,5 +112,22 @@ const styleC = StyleSheet.create({
         fontSize: 15,
         color: '#161718'
     },
+    priceView: {
+        height: 48,
+        backgroundColor: '#FFFFFF',
+        marginTop: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 6
+    },
+    amountTxt: {
+        fontSize: 14,
+        color: '#333333',
+        marginLeft: 17
+    },
+    amount: {
+        fontSize: 14,
+        color: '#F34A4A'
+    }
 
 })
