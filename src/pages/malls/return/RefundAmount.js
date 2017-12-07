@@ -1,5 +1,5 @@
 import React, {PureComponent, PropTypes} from 'react';
-import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView} from 'react-native';
+import {View, StyleSheet, TextInput, Text, Image, TouchableOpacity, FlatList, ListView} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 
@@ -10,7 +10,11 @@ export default class RefundAmount extends PureComponent {
         return (
             <View style={styles.page}>
                 <Text style={styles.amountTxt}>{I18n.t('refund_amount')}：</Text>
-                <Text style={styles.amount}>¥{this.props.refund_price}</Text>
+                <TextInput
+                    placeholder={I18n.t('refund_price')}
+                    numberOfLines={1}
+                    underlineColorAndroid='transparent'
+                    style={styles.amount}/>
             </View>
         )
     }
@@ -30,7 +34,11 @@ const styles = StyleSheet.create({
         marginLeft: 17
     },
     amount: {
-        fontSize: 18,
-        color: '#F34A4A'
+        fontSize: 14,
+        color: '#F34A4A',
+        height: 40,
+        flex: 1,
+        marginTop: 5
+
     }
 })

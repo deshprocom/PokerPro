@@ -1,5 +1,5 @@
 import React, {PureComponent, PropTypes} from 'react';
-import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView} from 'react-native';
+import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, Alert, ListView} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 import Tips from './Tips';
@@ -63,7 +63,12 @@ export default class OrderSubmitPage extends PureComponent {
                 invalidProducts
             })
         }, err => {
-
+            Alert.alert(`${I18n.t('tint')}`, err, [
+                {
+                    text: `${I18n.t('certain')}`, onPress: () => {
+                    global.router.pop()
+                }
+                }])
         });
 
     }

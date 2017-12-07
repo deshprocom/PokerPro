@@ -267,8 +267,8 @@ const styles = StyleSheet.create({
         opacity: 0.7
     },
     imgFilter: {
-        height: 20,
-        width: 20
+        height: 9,
+        width: 16
     }
 
 });

@@ -80,7 +80,7 @@ export default class MallInfoPage extends Component {
                             selectProduct={selectProduct}
                             showSpecInfo={this.showSpecInfo}
                         />
-                        <ShipAddress/>
+                        {/*<ShipAddress/>*/}
                         <MallIntroduction
                             product={product}/>
                         <View style={{height: 50}}/>

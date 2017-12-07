@@ -20,7 +20,7 @@ export default class MallSelectPage extends PureComponent {
     };
 
     componentDidMount() {
-        const {order_items, order_number} = this.props.params;
+        const {order_items, order_number} = this.props.params.orderItem;
         if (util.isEmpty(order_items))
             return;
         order_items.map(item => {
@@ -40,7 +40,11 @@ export default class MallSelectPage extends PureComponent {
                 toolbarStyle={{backgroundColor: 'white'}}
                 leftBtnIcon={Images.mall_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                leftBtnPress={() => router.pop()}
+                leftBtnPress={() => {
+                    router.pop();
+                    this.props.params.mallRefresh &&
+                    this.props.params.mallRefresh()
+                }}
                 titleStyle={{color: Colors._161}}
                 title={I18n.t('mall_select')}/>
 
@@ -94,6 +98,8 @@ export default class MallSelectPage extends PureComponent {
     };
 
     renderShowEditView = (item) => {
+        if (item.refund_status !== RefundStatus.none)
+            return;
         let imageURL = Images.radio;
         if (item.isSelect === true) {
             imageURL = Images.radioSelected
@@ -127,7 +133,7 @@ export default class MallSelectPage extends PureComponent {
         const {order_items} = this.state;
         let array = [...order_items];
         array.map(x => {
-            x.isSelect = !this.state.selectAll;
+            x.isSelect = !this.state.selectAll && x.refund_status === RefundStatus.none;
         });
 
         this.setState({

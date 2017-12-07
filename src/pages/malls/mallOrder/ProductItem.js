@@ -92,6 +92,7 @@ const styleR = StyleSheet.create({
         marginLeft: 17,
         marginTop: 12,
         resizeMode: 'contain',
+        backgroundColor: 'white'
     },
     TxtView: {
         flex: 1,
