@@ -181,7 +181,7 @@ class ShoppingCart extends Component {
                     });
                     this.refreshAll()
                 }}>
-                <Text style={styleS.rightTxt}>{this.state.showEdit ? I18n.t('buy_del') : I18n.t('complete')}</Text>
+                <Text style={styleS.rightTxt}>{this.state.showEdit ? I18n.t('buy_editor') : I18n.t('complete')}</Text>
             </TouchableOpacity>
 
 
