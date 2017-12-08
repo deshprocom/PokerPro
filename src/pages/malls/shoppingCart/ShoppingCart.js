@@ -382,18 +382,16 @@ class ShoppingCart extends Component {
         return (
             <View style={{flex: 1}}>
                 {this.topBar()}
-                <ScrollView>
-                    <FlatList
-                        style={{paddingTop: 6}}
-                        data={this.state.dataHosts}
-                        showsHorizontalScrollIndicator={false}
-                        ItemSeparatorComponent={this._separator}
-                        renderItem={this._renderItem}
-                        keyExtractor={(item, index) => `commodities${index}`}
-                    />
+                <FlatList
+                    style={{paddingTop: 6}}
+                    data={this.state.dataHosts}
+                    showsHorizontalScrollIndicator={false}
+                    ItemSeparatorComponent={this._separator}
+                    renderItem={this._renderItem}
+                    keyExtractor={(item, index) => `commodities${index}`}
+                />
 
-                    <View style={{paddingTop: 160}}/>
-                </ScrollView>
+                <View style={{paddingTop: 160}}/>
 
                 {this.state.showBottom ? this.toBottom() : this.toBottom2()}
 
