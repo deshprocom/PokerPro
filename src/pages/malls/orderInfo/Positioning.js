@@ -2,21 +2,23 @@ import React, {PureComponent} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
-import {utcDate, util} from '../../../utils/ComonHelper';
+import {utcDate, util, isEmptyObject} from '../../../utils/ComonHelper';
 import {getLogisticsInfo} from '../../../services/MallDao';
 
 
 export default class Positioning extends PureComponent {
     state = {
         logisticsInfo: {},
-        accept_station:'',
-        accept_time:''
+        accept_station: '',
+        accept_time: ''
 
     };
 
     componentDidMount() {
         const {shipments, order_number} = this.props.orderDetail;
-        console.log('LogisticsInfo', this.props.orderDetail)
+
+        if (isEmptyObject(shipments))
+            return;
         const body = {
             shipping_number: shipments.shipping_number,
             express_code: shipments.express_code,
@@ -25,15 +27,15 @@ export default class Positioning extends PureComponent {
         getLogisticsInfo(body, data => {
             console.log('LogisticsInfo', data);
 
-            if (util.isEmpty(data.traces)){
+            if (util.isEmpty(data.traces)) {
                 this.setState({
                     logisticsInfo: data
                 });
-            }else{
+            } else {
                 this.setState({
                     logisticsInfo: data,
-                    accept_station:data.traces[0].accept_station,
-                    accept_time:data.traces[0].accept_time
+                    accept_station: data.traces[0].accept_station,
+                    accept_time: data.traces[0].accept_time
                 });
             }
 
@@ -47,19 +49,19 @@ export default class Positioning extends PureComponent {
         const {traces} = this.state.logisticsInfo;
         const {province, city, area, address, mobile, name} = this.props.address;
         return (
-            <View style={{backgroundColor: '#ECECEE',alignItems:'center'}}>
-                {util.isEmpty(traces)?null:<TouchableOpacity style={styleC.logistiscView}
-                                                             onPress={()=>{
-                    global.router.toLogisticsPage(this.props.orderDetail);
-                }}>
-                        <Image style={styleC.shipImagView} source={Images.delivery}/>
-                        <View style={{ alignItems: 'flex-start',marginLeft:21}}>
-                            <Text style={styleC.Txt1}>{this.state.accept_station}</Text>
-                            <Text style={styleC.Txt2}>{this.state.accept_time}</Text>
-                        </View>
-                        <View style={{flex:1}}/>
-                        <Image style={styleC.specificationImg} source={Images.is}/>
-                    </TouchableOpacity>}
+            <View style={{backgroundColor: '#ECECEE', alignItems: 'center'}}>
+                {util.isEmpty(traces) ? null : <TouchableOpacity style={styleC.logistiscView}
+                                                                 onPress={() => {
+                                                                     global.router.toLogisticsPage(this.props.orderDetail);
+                                                                 }}>
+                    <Image style={styleC.shipImagView} source={Images.delivery}/>
+                    <View style={{alignItems: 'flex-start', marginLeft: 21}}>
+                        <Text style={styleC.Txt1}>{this.state.accept_station}</Text>
+                        <Text style={styleC.Txt2}>{this.state.accept_time}</Text>
+                    </View>
+                    <View style={{flex: 1}}/>
+                    <Image style={styleC.specificationImg} source={Images.is}/>
+                </TouchableOpacity>}
 
                 <View style={styleC.addressView}>
                     <View style={styleC.shipImagView}>
