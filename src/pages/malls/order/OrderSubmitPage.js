@@ -10,7 +10,7 @@ import OrderDetails from './OrderDetails';
 import OrderBottom from './OrderBottom';
 import {NavigationBar, BaseComponent} from '../../../components';
 import ExpiredOrder from './ExpiredOrder';
-import {util, payWx, isWXAppInstalled, deleteProductFromCart, showToast} from '../../../utils/ComonHelper';
+import {util, payWx, isWXAppInstalled, deleteProductFromCart, showToast,alertOrder} from '../../../utils/ComonHelper';
 import {getProductOrders, postMallOrder, postWxPay, getWxPaidResult} from '../../../services/MallDao';
 import {addTimeRecode} from "../../../components/PayCountDown";
 
@@ -135,7 +135,7 @@ export default class OrderSubmitPage extends PureComponent {
 
                                 global.router.replaceMallOrderInfo(data)
                             }, err => {
-                                alert('支付成功，系统正在处理')
+                                showToast('支付成功，系统正在处理')
                             }, () => {
                             })
 
@@ -146,7 +146,7 @@ export default class OrderSubmitPage extends PureComponent {
 
                     });
                 } else {
-                    alert('商城支付需要安装微信')
+                    alertOrder('need_weChat', ()=>{})
                 }
             }, err => {
                 showToast(err)
@@ -207,6 +207,7 @@ export default class OrderSubmitPage extends PureComponent {
                     submitBtn={this.submitBtn}
                     invalidProducts={invalidProducts}
                     orderData={this.state.orderData}
+                    prop={this.props}
                     showExpiredInfo={this.showExpiredInfo}/> : null}
             </BaseComponent>
 

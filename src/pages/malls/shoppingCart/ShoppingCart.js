@@ -382,16 +382,17 @@ class ShoppingCart extends Component {
         return (
             <View style={{flex: 1}}>
                 {this.topBar()}
-                <FlatList
-                    style={{paddingTop: 6}}
-                    data={this.state.dataHosts}
-                    showsHorizontalScrollIndicator={false}
-                    ItemSeparatorComponent={this._separator}
-                    renderItem={this._renderItem}
-                    keyExtractor={(item, index) => `commodities${index}`}
-                />
-
-                <View style={{paddingTop: 160}}/>
+                <ScrollView style={{paddingBottom:80}}>
+                    <FlatList
+                        style={{paddingTop: 6}}
+                        data={this.state.dataHosts}
+                        showsHorizontalScrollIndicator={false}
+                        ItemSeparatorComponent={this._separator}
+                        renderItem={this._renderItem}
+                        keyExtractor={(item, index) => `commodities${index}`}
+                    />
+                    <View style={{height:80}}/>
+                </ScrollView>
 
                 {this.state.showBottom ? this.toBottom() : this.toBottom2()}
 
@@ -551,7 +552,8 @@ const styleS = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         borderWidth:0.5,
-        borderColor:'#EEEEEE'
+        borderColor:'#EEEEEE',
+
     },
     settlementView2: {
         flexDirection: 'row',
