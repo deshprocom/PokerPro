@@ -5,7 +5,7 @@ import I18n from 'react-native-i18n';
 import PayCountDown from '../../../components/PayCountDown';
 import {cancelMallOrder, postWxPay, getWxPaidResult, postOrderConfirm, deleteMall} from "../../../services/MallDao";
 import {MallStatus} from "../../../configs/Status";
-import {util, payWx, isWXAppInstalled, call, alertOrder} from '../../../utils/ComonHelper';
+import {util, payWx, isWXAppInstalled, call, alertOrder,showToast} from '../../../utils/ComonHelper';
 import {DeShangPhone} from '../../../configs/Constants';
 
 
@@ -55,7 +55,7 @@ export default class CompletedBottom extends Component {
                         if (this.props.refresh)
                             this.props.refresh();
                     }, err => {
-                        alert('支付成功，系统正在处理')
+                        showToast('支付成功，系统正在处理')
                     })
 
                 }, () => {
@@ -66,7 +66,7 @@ export default class CompletedBottom extends Component {
             });
         }
         else
-            alert('商城支付需要安装微信')
+            alertOrder('need_weChat', ()=>{})
     };
 
 
