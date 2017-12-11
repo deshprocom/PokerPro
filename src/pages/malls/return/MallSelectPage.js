@@ -98,7 +98,7 @@ export default class MallSelectPage extends PureComponent {
     };
 
     renderShowEditView = (item) => {
-        if (item.refund_status !== RefundStatus.none)
+        if (item.refund_status !== RefundStatus.none && item.refund_status !== RefundStatus.close)
             return;
         let imageURL = Images.radio;
         if (item.isSelect === true) {
@@ -133,7 +133,8 @@ export default class MallSelectPage extends PureComponent {
         const {order_items} = this.state;
         let array = [...order_items];
         array.map(x => {
-            x.isSelect = !this.state.selectAll && x.refund_status === RefundStatus.none;
+            let canSelect = x.refund_status === RefundStatus.none || x.refund_status === RefundStatus.close;
+            x.isSelect = !this.state.selectAll && canSelect;
         });
 
         this.setState({

@@ -104,7 +104,11 @@ export default class ReturnPage extends Component {
                         product_refund_type={this.state.product_refund_type}/>
 
                     <RefundAmount
-                        ref={ref => this.refundPrice = ref}
+                        changeText={(refund_price)=>{
+                            this.setState({
+                                refund_price
+                            })
+                        }}
                         refund_price={this.state.refund_price}/>
 
 
@@ -148,17 +152,17 @@ export default class ReturnPage extends Component {
 
     _upload = async () => {
 
-        let refundPrice = this.refundMemo.getMemo();
+
         if (util.isEmpty(this.state.product_refund_type)) {
             showToast(I18n.t('ple_select_refund_type'));
             return;
         }
 
-        if (strNotNull(refundPrice)) {
+        if (!strNotNull(this.state.refund_price)) {
             showToast('请填写退款金额');
             return;
         }
-        Alert.alert('退款金额', `¥${refundPrice}`, [{
+        Alert.alert('退款金额', `¥${this.state.refund_price}`, [{
             text: `${I18n.t('cancel')}`, onPress: () => {
 
             }
@@ -205,7 +209,7 @@ export default class ReturnPage extends Component {
 
 
         let body = {
-            refund_price: this.refundPrice.getPrice(),
+            refund_price: refund_price,
             product_refund_type_id: product_refund_type.id,
             order_item_ids,
             memo: this.refundMemo.getMemo(),
