@@ -61,9 +61,7 @@ const styleL = StyleSheet.create({
     messageView: {
         fontSize: 14,
         color: '#000000',
-        height: 40,
         flex: 1,
-        marginTop: 5,
 
     }
 })
