@@ -488,6 +488,8 @@
   "refund_price": "请输入退款金额",
   "refund_explain": "请输入退换说明",
   "leaveMessage1":"给商家留言：",
-  "waiting_file":"等待揽件"
+  "waiting_file":"等待揽件",
+  "need_weChat":"商城支付需要安装微信",
+  "pay_success":"支付成功，系统正在处理"
 }
 
