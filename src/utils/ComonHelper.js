@@ -884,6 +884,10 @@ export function alertOrder(str, callback) {
         }
     }])
 }
+//微信提示
+export function alertOrderChat(str) {
+    Alert.alert(str)
+}
 
 //正在开发提示
 export function alertRefresh(callback) {

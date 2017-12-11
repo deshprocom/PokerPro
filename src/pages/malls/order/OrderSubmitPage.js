@@ -10,7 +10,7 @@ import OrderDetails from './OrderDetails';
 import OrderBottom from './OrderBottom';
 import {NavigationBar, BaseComponent} from '../../../components';
 import ExpiredOrder from './ExpiredOrder';
-import {util, payWx, isWXAppInstalled, deleteProductFromCart, showToast,alertOrder} from '../../../utils/ComonHelper';
+import {util, payWx, isWXAppInstalled, deleteProductFromCart, showToast,alertOrderChat} from '../../../utils/ComonHelper';
 import {getProductOrders, postMallOrder, postWxPay, getWxPaidResult} from '../../../services/MallDao';
 import {addTimeRecode} from "../../../components/PayCountDown";
 
@@ -146,7 +146,7 @@ export default class OrderSubmitPage extends PureComponent {
 
                     });
                 } else {
-                    alertOrder(I18n.t('need_weChat'), ()=>{})
+                    alertOrderChat(I18n.t('need_weChat'))
                 }
             }, err => {
                 showToast(err)

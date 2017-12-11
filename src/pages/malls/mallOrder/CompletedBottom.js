@@ -5,7 +5,7 @@ import I18n from 'react-native-i18n';
 import PayCountDown from '../../../components/PayCountDown';
 import {cancelMallOrder, postWxPay, getWxPaidResult, postOrderConfirm, deleteMall} from "../../../services/MallDao";
 import {MallStatus} from "../../../configs/Status";
-import {util, payWx, isWXAppInstalled, call, alertOrder,showToast} from '../../../utils/ComonHelper';
+import {util, payWx, isWXAppInstalled, call, alertOrder,showToast,alertOrderChat} from '../../../utils/ComonHelper';
 import {DeShangPhone} from '../../../configs/Constants';
 
 
@@ -66,7 +66,7 @@ export default class CompletedBottom extends Component {
             });
         }
         else
-            alertOrder(I18n.t('need_weChat'), ()=>{})
+            alertOrderChat(I18n.t('need_weChat'))
     };
 
 
