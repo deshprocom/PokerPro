@@ -66,7 +66,7 @@ export default class CompletedBottom extends Component {
             });
         }
         else
-            alertOrder('need_weChat', ()=>{})
+            alertOrder(I18n.t('need_weChat'), ()=>{})
     };
 
 
@@ -115,7 +115,7 @@ export default class CompletedBottom extends Component {
 
                 <Text
                     onPress={() => {//`${I18n.t('confirm_cancel')}`
-                        alertOrder('confirm_cancel', () => {
+                        alertOrder(I18n.t('confirm_cancel'), () => {
                             cancelMallOrder({order_number: order_number}, ret => {
                                 if (this.props.refresh)
                                     this.props.refresh();
@@ -158,7 +158,7 @@ export default class CompletedBottom extends Component {
 
                 <TouchableOpacity
                     onPress={() => {
-                          alertOrder('verified_del', () => {
+                          alertOrder(I18n.t('verified_del'), () => {
                                deleteMall({order_number: order_number}, ret => {
                             if (this.props.refresh)
                                 this.props.refresh();
@@ -189,7 +189,7 @@ export default class CompletedBottom extends Component {
 
                 <TouchableOpacity
                     onPress={() => {
-                         alertOrder('verified_del', () => {
+                         alertOrder(I18n.t('verified_del'), () => {
                                deleteMall({order_number: order_number}, ret => {
                             if (this.props.refresh)
                                 this.props.refresh();
@@ -212,7 +212,7 @@ export default class CompletedBottom extends Component {
             <View style={styleO.bottomView}>
                 <TouchableOpacity
                     onPress={() => {
-                        alertOrder('confirm_receipt', () => {
+                        alertOrder(I18n.t('confirm_receipt'), () => {
                             postOrderConfirm({order_number: order_number}, data => {
                                 if (this.props.refresh)
                                     this.props.refresh();

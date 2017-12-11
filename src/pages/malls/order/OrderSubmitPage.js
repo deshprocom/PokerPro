@@ -146,7 +146,7 @@ export default class OrderSubmitPage extends PureComponent {
 
                     });
                 } else {
-                    alertOrder('need_weChat', ()=>{})
+                    alertOrder(I18n.t('need_weChat'), ()=>{})
                 }
             }, err => {
                 showToast(err)

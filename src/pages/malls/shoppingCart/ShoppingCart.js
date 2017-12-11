@@ -261,7 +261,7 @@ class ShoppingCart extends Component {
                 text: I18n.t('buy_del'),
                 backgroundColor: '#F34A4A',
                 onPress: () => {
-                    alertOrder('confirm_delete', () => {
+                    alertOrder(I18n.t('confirm_delete'), () => {
                         this.closeThisMall(item)
                     });
 
