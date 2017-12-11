@@ -138,11 +138,12 @@ const styleC = StyleSheet.create({
     },
     shipAddrView: {
         marginTop: 10,
-        marginRight: 20
+        marginRight: 60,
     },
     shipAddrTxt2: {
         fontSize: 14,
         color: '#666666',
+        marginRight: 20
     },
     mobile: {
         marginLeft: 20,
@@ -158,7 +159,7 @@ const styleC = StyleSheet.create({
     },
     shipAddrImg: {
         width: 27,
-        height: 35
+        height: 35,
     },
     Txt1: {
         fontSize: 14,
