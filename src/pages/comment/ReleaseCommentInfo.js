@@ -5,38 +5,44 @@ import I18n from 'react-native-i18n';
 import {utcDate, util} from '../../utils/ComonHelper';
 
 export default class ReleaseCommentInfo extends Component {
-    state:{
+    state={
         releaseShow:false,
         text:""
     };
 
 
     render(){
+        console.log("ReleaseCommentInfo")
         return(
             <View style={ApplicationStyles.bgContainer}>
                 <Animatable.View
                     duration={300}
                     animation={'fadeInUp'}
                     style={styles.page}>
-                    <View style={styles.inputView}>
-                        <Image
-                            style={styles.searchImg}
-                            source={Images.pen}/>
-                        <TextInput
-                            onChangeText={(text) => {
+
+                    <View style={styles.content}>
+                        <View style={styles.inputView}>
+                            <Image
+                                style={styles.searchImg}
+                                source={Images.pen}/>
+                            <TextInput
+                                onChangeText={(text) => {
                             this.setState({text});
                         }}
-                            placeholder={I18n.t('reply')}
-                            placeholderTextColor="#CCCCCC"
-                            multiline={false}
-                            style={styles.input}
-                            underlineColorAndroid='transparent'
-                            returnKeyLabel={I18n.t('certain')}
-                            placeholderColor={Colors._BBBB}
-                            returnKeyType={'go'}/>
-                        <View style={{flex:1}}/>
+                                placeholder={I18n.t('reply')}
+                                placeholderTextColor="#CCCCCC"
+                                multiline={false}
+                                style={styles.input}
+                                underlineColorAndroid='transparent'
+                                returnKeyLabel={I18n.t('certain')}
+                                placeholderColor={Colors._BBBB}
+                                returnKeyType={'go'}/>
+                            <View style={{flex:1}}/>
+
+                        </View>
                         <Text style={styles.txt}>发布</Text>
                     </View>
+
                 </Animatable.View>
             </View>
         )
@@ -56,6 +62,12 @@ const styles= StyleSheet.create({
         right: 0,
         bottom: 0,
         zIndex: 999
+    },
+    content:{
+      flexDirection:"row",
+        alignItems:'center',
+        height:48,
+        backgroundColor:'#FFFFFF'
     },
     searchImg: {
         height: 14,

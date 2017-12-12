@@ -18,12 +18,12 @@ export default class CommentInfoPage extends Component {
             releaseShow: !this.state.releaseShow
         })
     };
+
     _renderItem=()=>{
         return(
             <CommentItem/>
         )
     };
-
     _separator = () => {
         return <View style={{height: 0.5, marginLeft: 68, marginRight: 17, backgroundColor: '#DDDDDD'}}/>;
     };
@@ -42,7 +42,10 @@ export default class CommentInfoPage extends Component {
                     titleStyle={{color: Colors._161}}
                     title={I18n.t('comment_info')}/>
 
-                <CommentItem/>
+                <View style={{backgroundColor:'#FFFFFF',marginTop:1,paddingBottom:16}}>
+                    <CommentItem releaseInfo={this.releaseInfo}/>
+                </View>
+
                 <CommentBottom/>
 
                 <ScrollView  style={{backgroundColor:'#ECECEE',marginBottom:80}}>
@@ -62,7 +65,6 @@ export default class CommentInfoPage extends Component {
                 </ScrollView>
 
                 {releaseShow ? <ReleaseCommentInfo
-                        product={product}
                         releaseInfo={this.releaseInfo}/> : null}
             </View>
         )

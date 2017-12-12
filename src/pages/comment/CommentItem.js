@@ -1,10 +1,15 @@
 import React, {PureComponent} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView, TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
+import PropTypes from 'prop-types';
 
 export default class CommentItem extends PureComponent {
     state={
         showMessage:true,
+    };
+
+    static propTypes = {
+        releaseInfo: PropTypes.func.isRequired
     };
 
     moreMessage=()=>{
@@ -26,7 +31,7 @@ export default class CommentItem extends PureComponent {
         return (
             <View style={styles.content}>
                 <TouchableOpacity onPress={()=>{
-
+                    this.props.releaseInfo();
                 }}>
                     <Image style={styles.img} source={Images.empty_image}/>
                 </TouchableOpacity>

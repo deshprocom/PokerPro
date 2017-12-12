@@ -6,7 +6,7 @@ import {utcDate, util} from '../../utils/ComonHelper';
 import CommentItem from './CommentItem';
 
 export default class Comment extends Component {
-    state:{
+    state={
 
     };
 
