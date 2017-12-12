@@ -382,7 +382,8 @@ class ShoppingCart extends Component {
         return (
             <View style={{flex: 1}}>
                 {this.topBar()}
-                <ScrollView style={{paddingBottom:80}}>
+                <ScrollView
+                    bounces={false}>
                     <FlatList
                         style={{paddingTop: 6}}
                         data={this.state.dataHosts}
@@ -391,8 +392,10 @@ class ShoppingCart extends Component {
                         renderItem={this._renderItem}
                         keyExtractor={(item, index) => `commodities${index}`}
                     />
-                    <View style={{height:80}}/>
+
+                    <View style={{paddingTop: 160}}/>
                 </ScrollView>
+
 
                 {this.state.showBottom ? this.toBottom() : this.toBottom2()}
 
@@ -551,9 +554,8 @@ const styleS = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%',
-        borderWidth:0.5,
-        borderColor:'#EEEEEE',
-
+        borderWidth: 0.5,
+        borderColor: '#EEEEEE'
     },
     settlementView2: {
         flexDirection: 'row',

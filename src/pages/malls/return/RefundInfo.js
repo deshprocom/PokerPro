@@ -2,21 +2,9 @@ import React, {PureComponent, PropTypes} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
-import {utcDate} from '../../../utils/ComonHelper';
-import {showToast, util} from '../../../utils/ComonHelper';
+import {utcDate, util} from '../../../utils/ComonHelper';
 
 export default class RefundInfo extends PureComponent {
-
-    imgView = (images) => {
-        return (
-            <View style={styles.imgView}>
-                {images.map((item, index) => {
-                    return <Image key={`refund_${index}`} style={styles.img} source={{uri:item.image_url}}/>
-                })}
-
-            </View>
-        )
-    };
 
     render() {
         const {images, refund_number, refund_type, refund_price, memo, admin_memo, status, created_at} = this.props.refundInfo;
@@ -27,7 +15,12 @@ export default class RefundInfo extends PureComponent {
                 <Text style={styles.txt}>{I18n.t('application_time')}：{utcDate(created_at, "YYYY.MM.DD hh:mm")}</Text>
                 <Text style={styles.txt}>{I18n.t('refund_num')}：{refund_number}</Text>
                 <Text style={styles.txt}>{I18n.t('refund_reason')}：{memo}</Text>
-                {util.isEmpty(images) ? null : this.imgView(images)}
+                <View style={styles.imgView}>
+                    {!util.isEmpty(images) && images.map((item, index) => {
+                        return <Image key={`refund_${index}`} style={styles.img} source={{uri: item.image_url}}/>
+                    })}
+
+                </View>
 
             </View>
 

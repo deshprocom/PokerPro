@@ -78,7 +78,7 @@ export default class Loading extends Component {
         textContent: '',
         color: 'white',
         size: 'large', // 'normal',
-        overlayColor: 'rgba(0, 0, 0, 0.38)'
+        overlayColor: 'rgba(0, 0, 0, 0)'
     };
 
     close() {

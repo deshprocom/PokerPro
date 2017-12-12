@@ -1,6 +1,6 @@
 //退换货申请页面
 import React, {Component, PropTypes} from 'react';
-import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView, TextInput} from 'react-native';
+import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, Alert, ListView, TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 import ApplicationType from './ApplicationType';
@@ -11,7 +11,7 @@ import UploadDocument from './UploadDocument';
 import {NavigationBar, BaseComponent} from '../../../components';
 import ReturnItem from './ReturnItem';
 import {postTempImg, postMallRefund, getReturnType} from '../../../services/MallDao';
-import {strNotNull, showToast, getFileName, util} from '../../../utils/ComonHelper';
+import {strNotNull, showToast, getFileName, util, alertOrder} from '../../../utils/ComonHelper';
 
 
 export default class ReturnPage extends Component {
@@ -104,7 +104,11 @@ export default class ReturnPage extends Component {
                         product_refund_type={this.state.product_refund_type}/>
 
                     <RefundAmount
-                        ref={ref => this.refundPrice = ref}
+                        changeText={(refund_price)=>{
+                            this.setState({
+                                refund_price
+                            })
+                        }}
                         refund_price={this.state.refund_price}/>
 
 
@@ -121,6 +125,7 @@ export default class ReturnPage extends Component {
                 <View style={styleC.bottomView}>
                     <TouchableOpacity
                         onPress={() => {
+
                             this._upload()
                         }}
                         style={styleC.customer}>
@@ -146,39 +151,54 @@ export default class ReturnPage extends Component {
     };
 
     _upload = async () => {
+
+
         if (util.isEmpty(this.state.product_refund_type)) {
             showToast(I18n.t('ple_select_refund_type'));
             return;
         }
-        let locals = this.upFiles.getImages();
-        this.contain.open();
-        let uploadeds = [];
-        if (util.isEmpty(locals)) {
-            this.postRefundReq(uploadeds)
-        } else
-            locals.forEach(item => {
-                setTimeout(() => {
-                    let formData = new FormData();
-                    let file = {
-                        uri: item.path, type: 'multipart/form-data',
-                        name: this._fileName(item.path)
-                    };
-                    formData.append("image", file);
-                    postTempImg(formData, data => {
 
-                        uploadeds.push(data);
-                        if (uploadeds.length === locals.length) {
+        if (!strNotNull(this.state.refund_price)) {
+            showToast('请填写退款金额');
+            return;
+        }
+        Alert.alert('退款金额', `¥${this.state.refund_price}`, [{
+            text: `${I18n.t('cancel')}`, onPress: () => {
 
-                            console.log('上传完成：', uploadeds);
-                            this.postRefundReq(uploadeds)
+            }
+        }, {
+            text: `${I18n.t('confirm')}`, onPress: () => {
+                let locals = this.upFiles.getImages();
+                this.contain.open();
+                let uploadeds = [];
+                if (util.isEmpty(locals)) {
+                    this.postRefundReq(uploadeds)
+                } else
+                    locals.forEach(item => {
+                        setTimeout(() => {
+                            let formData = new FormData();
+                            let file = {
+                                uri: item.path, type: 'multipart/form-data',
+                                name: this._fileName(item.path)
+                            };
+                            formData.append("image", file);
+                            postTempImg(formData, data => {
+
+                                uploadeds.push(data);
+                                if (uploadeds.length === locals.length) {
+
+                                    console.log('上传完成：', uploadeds);
+                                    this.postRefundReq(uploadeds)
 
 
-                        }
-                    }, err => {
-                        showToast(I18n.t('img_load_fail'))
-                    })
-                }, 500)
-            });
+                                }
+                            }, err => {
+                                showToast(I18n.t('img_load_fail'))
+                            })
+                        }, 500)
+                    });
+            }
+        }])
 
 
     };
@@ -189,7 +209,7 @@ export default class ReturnPage extends Component {
 
 
         let body = {
-            refund_price: this.refundPrice.getPrice(),
+            refund_price: refund_price,
             product_refund_type_id: product_refund_type.id,
             order_item_ids,
             memo: this.refundMemo.getMemo(),
