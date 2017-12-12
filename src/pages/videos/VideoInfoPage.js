@@ -15,6 +15,7 @@ import {isEmptyObject, uVideoShare, strNotNull} from '../../utils/ComonHelper';
 import {LoadingView} from '../../components/load'
 import {NavigationBar, MarkdownPlat, VideoPlayer} from '../../components';
 import {getVideoDetail, getSubVideo} from '../../services/NewsDao';
+import CommentBottom from '../comment/CommentBottom';
 
 
 export default class VideoInfoPage extends Component {
@@ -77,7 +78,7 @@ export default class VideoInfoPage extends Component {
 
             {this.renderContent()}
 
-
+            <CommentBottom/>
         </View>)
     }
 

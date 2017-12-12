@@ -491,5 +491,6 @@
   "leaveMessage1":"给商家留言：",
   "waiting_file":"等待揽件",
   "need_weChat":"商城支付需要安装微信",
-  "pay_success":"支付成功，系统正在处理"
+  "pay_success":"支付成功，系统正在处理",
+  "write_comment":"写下评论"
 }
