@@ -63,7 +63,6 @@ const styleL = StyleSheet.create({
         color: '#000000',
         height: 40,
         flex: 1,
-        marginTop: 5,
 
     }
 })
