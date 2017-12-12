@@ -7,12 +7,19 @@ import CommentItem from './CommentItem';
 
 export default class Comment extends Component {
     state={
+        releaseShow:false
+    };
 
+    releaseInfo = () => {
+        this.setState({
+            releaseShow: !this.state.releaseShow
+        });
+        console.log("releaseShow:",this.state.releaseShow);
     };
 
     _renderItem=()=>{
         return(
-            <CommentItem/>
+            <CommentItem releaseInfo={this.releaseInfo}/>
         )
     };
 

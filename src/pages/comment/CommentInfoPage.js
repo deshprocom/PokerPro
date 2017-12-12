@@ -16,12 +16,13 @@ export default class CommentInfoPage extends Component {
     releaseInfo = () => {
         this.setState({
             releaseShow: !this.state.releaseShow
-        })
+        });
+        console.log("releaseShow:",this.state.releaseShow);
     };
 
     _renderItem=()=>{
         return(
-            <CommentItem/>
+            <CommentItem releaseInfo={this.releaseInfo}/>
         )
     };
     _separator = () => {
@@ -31,6 +32,7 @@ export default class CommentInfoPage extends Component {
     render(){
         let dataHosts =[1,2,3,4,5,6,7,8];
         const{releaseShow} = this.state;
+
         return(
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar

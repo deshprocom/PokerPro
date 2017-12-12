@@ -6,7 +6,6 @@ import {utcDate, util} from '../../utils/ComonHelper';
 
 export default class ReleaseCommentInfo extends Component {
     state={
-        releaseShow:false,
         text:""
     };
 
@@ -14,7 +13,9 @@ export default class ReleaseCommentInfo extends Component {
     render(){
         console.log("ReleaseCommentInfo")
         return(
-            <View style={ApplicationStyles.bgContainer}>
+            <View style={ApplicationStyles.bgContainer} onPress={()=>{
+                this.props.releaseInfo()
+            }}>
                 <Animatable.View
                     duration={300}
                     animation={'fadeInUp'}
@@ -27,8 +28,8 @@ export default class ReleaseCommentInfo extends Component {
                                 source={Images.pen}/>
                             <TextInput
                                 onChangeText={(text) => {
-                            this.setState({text});
-                        }}
+                                    this.setState({text});
+                                }}
                                 placeholder={I18n.t('reply')}
                                 placeholderTextColor="#CCCCCC"
                                 multiline={false}
