@@ -5,11 +5,18 @@ import I18n from 'react-native-i18n';
 import {utcDate, util} from '../../utils/ComonHelper';
 import CommentBottom from './CommentBottom';
 import CommentItem from './CommentItem';
+import ReleaseCommentInfo from './ReleaseCommentInfo';
 import {NavigationBar} from '../../components';
 
 export default class CommentInfoPage extends Component {
-    state:{
+    state={
+        releaseShow:false
+    };
 
+    releaseInfo = () => {
+        this.setState({
+            releaseShow: !this.state.releaseShow
+        })
     };
     _renderItem=()=>{
         return(
@@ -23,6 +30,7 @@ export default class CommentInfoPage extends Component {
 
     render(){
         let dataHosts =[1,2,3,4,5,6,7,8];
+        const{releaseShow} = this.state;
         return(
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
@@ -53,6 +61,9 @@ export default class CommentInfoPage extends Component {
 
                 </ScrollView>
 
+                {releaseShow ? <ReleaseCommentInfo
+                        product={product}
+                        releaseInfo={this.releaseInfo}/> : null}
             </View>
         )
     }

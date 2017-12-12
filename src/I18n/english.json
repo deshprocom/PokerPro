@@ -492,6 +492,7 @@
   "need_weChat":"商城支付需要安装微信",
   "pay_success":"支付成功，系统正在处理",
   "write_comment":"写下评论....",
-  "comment_info":"评论详情"
+  "comment_info":"评论详情",
+  "reply":"回复"
 }
 

@@ -4,8 +4,8 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 
 export default class CommentItem extends PureComponent {
     state={
-        showMessage:true
-    }
+        showMessage:true,
+    };
 
     moreMessage=()=>{
         if(this.state.showMessage){
@@ -23,10 +23,13 @@ export default class CommentItem extends PureComponent {
     };
 
     render() {
-
         return (
             <View style={styles.content}>
-                <Image style={styles.img} source={Images.empty_image}/>
+                <TouchableOpacity onPress={()=>{
+
+                }}>
+                    <Image style={styles.img} source={Images.empty_image}/>
+                </TouchableOpacity>
                 <View style={styles.contentRight}>
                     <View style={styles.commentTop}>
                         <Text style={styles.name}>花花公子</Text>
@@ -41,6 +44,7 @@ export default class CommentItem extends PureComponent {
                     <Text style={styles.messages}>已越来越多的德扑选手参加比赛</Text>
                     {this.moreMessage()}
                 </View>
+
             </View>
         )
     }
