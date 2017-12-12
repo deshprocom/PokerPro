@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity,TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import PropTypes from 'prop-types';
@@ -26,7 +26,7 @@ export default class CommentBottom extends Component {
 
         const {likeButton} = this.state;
         return (
-            <View styles={styles.bottom}>
+            <View style={styles.bottom}>
                 <View
                     style={styles.search}>
                     <Image
@@ -34,17 +34,18 @@ export default class CommentBottom extends Component {
                         source={Images.pen}/>
 
                     <TextInput
-                        ref={ref => this.input = ref}
-                        onChangeText={text => {
-                            this.setState({text})
+                        numberOfLines={1}
+                        onChangeText={(text) => {
+                            this.setState({text});
                         }}
+                        placeholder={I18n.t('write_comment')}
+                        placeholderTextColor="#CCCCCC"
+                        multiline={false}
                         style={styles.input}
                         underlineColorAndroid='transparent'
                         returnKeyLabel={I18n.t('certain')}
-                        clearButtonMode='always'
                         placeholderColor={Colors._BBBB}
-                        returnKeyType={'search'}
-                        placeholder={I18n.t('write_comment')}/>
+                        returnKeyType={'go'}/>
                 </View>
 
                 <TouchableOpacity
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
         height: 30,
         width: 187,
         backgroundColor: Colors._ECE,
-        borderRadius: 3,
+        borderRadius: 40,
         flexDirection: 'row',
         alignItems: 'center'
     },
@@ -107,13 +108,16 @@ const styles = StyleSheet.create({
         height: 14,
         width: 14,
         marginLeft: 15,
-        marginRight: 8,
+        marginRight:30,
     },
     commentWhiteView: {
         alignItems: 'center',
         justifyContent: 'center',
         marginLeft: 27,
-        padding: '5,5,5,5'
+        paddingTop:5,
+        paddingBottom:5,
+        paddingLeft:5,
+        paddingRight:5
     },
     commentWhite: {
         width: 22,
@@ -123,7 +127,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginLeft: 31,
-        padding: '5,5,5,5'
+        paddingTop:5,
+        paddingBottom:5,
+        paddingLeft:5,
+        paddingRight:5
     },
     like: {
         width: 20,
@@ -133,8 +140,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginLeft: 31,
-        padding: '5,5,5,5',
-        marginRight: 17
+        marginRight: 17,
+        paddingTop:5,
+        paddingBottom:5,
+        paddingLeft:5,
+        paddingRight:5
     },
     forward: {
         width: 24,
@@ -142,8 +152,8 @@ const styles = StyleSheet.create({
     },
     badge: {
         position: 'absolute',
-        top: 5,
-        right: '26%'
+        top:-5,
+        left: '60%'
     }
 
 });
