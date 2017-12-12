@@ -3,6 +3,7 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, L
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {utcDate, util} from '../../utils/ComonHelper';
+import CommentItem from './CommentItem';
 
 export default class Comment extends Component {
     state:{
@@ -11,26 +12,7 @@ export default class Comment extends Component {
 
     _renderItem=()=>{
         return(
-            <View style={styles.content}>
-                <Image style={styles.img} source={Images.empty_image}/>
-                <View style={styles.contentRight}>
-                    <View style={styles.commentTop}>
-                        <Text style={styles.name}>花花公子</Text>
-                        <View style={{flex:1}}/>
-                        <TouchableOpacity
-                        style={styles.commentView}>
-                            <Image style={styles.commentImg} source={Images.comment}/>
-                        </TouchableOpacity>
-
-                    </View>
-                    <Text style={styles.time}>3小时前</Text>
-                    <Text style={styles.messages}>已越来越多的德扑选手参加比赛</Text>
-                    <TouchableOpacity
-                        style={styles.moreMessagesView}>
-                        <Text style={styles.moreMessages}>查看34条回复></Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+            <CommentItem/>
         )
     };
 

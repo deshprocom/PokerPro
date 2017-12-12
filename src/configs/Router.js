@@ -763,5 +763,11 @@ export default class Router {
         })
     }
 
+    toCommentInfoPage() {
+        this.stackPush({
+            name: 'CommentInfoPage'
+        })
+    }
+
 
 }
