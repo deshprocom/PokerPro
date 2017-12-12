@@ -35,6 +35,7 @@ export default class CommentInfoPage extends Component {
                     title={I18n.t('comment_info')}/>
 
                 <CommentItem/>
+                <CommentBottom/>
 
                 <ScrollView  style={{backgroundColor:'#ECECEE',marginBottom:80}}>
 
@@ -51,7 +52,7 @@ export default class CommentInfoPage extends Component {
                     <View style={{height:80}}/>
 
                 </ScrollView>
-                <CommentBottom/>
+
             </View>
         )
     }

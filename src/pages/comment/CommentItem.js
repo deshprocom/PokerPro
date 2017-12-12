@@ -3,8 +3,24 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, L
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 
 export default class CommentItem extends PureComponent {
+    state={
+        showMessage:true
+    }
 
+    moreMessage=()=>{
+        if(this.state.showMessage){
+            return (
+                <TouchableOpacity
+                    style={styles.moreMessagesView}
+                    onPress={()=>{
+                        global.router.toCommentInfoPage();
+                    }}>
+                    <Text style={styles.moreMessages}>查看34条回复></Text>
+                </TouchableOpacity>
+            )
+        }
 
+    };
 
     render() {
 
@@ -23,13 +39,7 @@ export default class CommentItem extends PureComponent {
                     </View>
                     <Text style={styles.time}>3小时前</Text>
                     <Text style={styles.messages}>已越来越多的德扑选手参加比赛</Text>
-                    <TouchableOpacity
-                        style={styles.moreMessagesView}
-                    onPress={()=>{
-                        global.router.toCommentInfoPage();
-                    }}>
-                        <Text style={styles.moreMessages}>查看34条回复></Text>
-                    </TouchableOpacity>
+                    {this.moreMessage()}
                 </View>
             </View>
         )
