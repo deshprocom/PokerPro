@@ -129,7 +129,7 @@ export default class MainRaceResultView extends Component {
     _tabPage = () => {
 
         const {curTab} = this.state;
-        const {raceRanks, schedules, blinds, isSideRace, schedules_markdown, raceInfo} = this.props;
+        const {raceRanks, schedules, blinds, isSideRace, schedules_markdown, raceInfo, data} = this.props;
 
 
         switch (curTab) {
@@ -139,9 +139,11 @@ export default class MainRaceResultView extends Component {
                         noScroll={true}
                         markdownStr={schedules_markdown}/> :
                     <ScheduleList
+                        data={data}
                         schedules={schedules}/>;
             case TAB_BLINDS:
                 return <BlindsList
+                    data={data}
                     startChips={isEmptyObject(raceInfo) ? null : raceInfo.blind}
                     blinds={blinds}/>;
             case TAB_RESULT:

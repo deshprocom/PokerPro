@@ -35,6 +35,7 @@ let headHeight = 200 - Metrics.navBarHeight;
 
 class RaceScene extends Component {
     state = {
+        data: {},
         raceInfo: {},
         noBottomBar: false,
         selectPage: 0,
@@ -88,7 +89,8 @@ class RaceScene extends Component {
                 raceInfo: race,
                 raceRanks: isEmptyObject(ranks) ? [] : ranks,
                 schedules: isEmptyObject(schedules) ? [] : schedules,
-                blinds: isEmptyObject(blinds) ? [] : blinds
+                blinds: isEmptyObject(blinds) ? [] : blinds,
+                data: raceInfo
             })
         } else if (newProps.actionType === SUB_RACES
             && !isEmptyObject(subRaces)) {
@@ -242,7 +244,7 @@ class RaceScene extends Component {
         const {
             selectPage, raceInfo, subRaces,
             raceRanks, selectPageKey, schedules,
-            blinds
+            blinds, data
         } = this.state;
         let noBottomBar = this._hasBottomBar();
         let tabs = [];
@@ -327,6 +329,7 @@ class RaceScene extends Component {
                     paddingBottom: 200
                 }}>
                     <MainRaceResultView
+                        data={data}
                         raceInfo={raceInfo}
                         blinds={blinds}
                         schedules={schedules}
