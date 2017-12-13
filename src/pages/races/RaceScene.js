@@ -296,11 +296,14 @@ class RaceScene extends Component {
             </View>)
         }
 
+        const {blind_memo, schedule_memo} = data;
 
         if (this.pages.length > 0
             && raceRanks.length > 0
             || schedules.length > 0
-            || blinds.length > 0) {
+            || blinds.length > 0
+            || strNotNull(blind_memo)
+            || strNotNull(schedule_memo)) {
 
             tabs.push(<TouchableOpacity
                 testID="btn_main_result"
