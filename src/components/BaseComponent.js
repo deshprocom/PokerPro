@@ -23,7 +23,7 @@ export default class BaseComponent extends Component {
         this.loading && this.loading.open()
     };
 
-    _renderChildren() {
+    _renderChildren = () => {
         return React.Children.map(this.props.children, (child) => {
             return child
         })
