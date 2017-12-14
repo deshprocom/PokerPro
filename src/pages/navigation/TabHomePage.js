@@ -14,12 +14,13 @@ import Router from '../../configs/Router';
 import {connect} from 'react-redux';
 import {SearchPage} from './SearchPage';
 import {SHOW_BACK_TOP, HIDE_BACK_TOP, BACK_TOP} from '../../actions/ActionTypes';
-import {getDispatchAction, alertRefresh} from '../../utils/ComonHelper';
+import {getDispatchAction, alertRefresh, getCurrentDate} from '../../utils/ComonHelper';
 import {BaseComponent} from '../../components';
 import ActivityModel from '../message/ActivityModel';
 import {getActivityPush} from '../../services/AccountDao';
 import StorageKey from '../../configs/StorageKey';
 
+let today = getCurrentDate().format('YYYY-MM-DD');
 
 class TabHomePage extends Component {
     state = {
@@ -61,36 +62,46 @@ class TabHomePage extends Component {
     }
 
     _getPushActivity = () => {
+
         storage.load({key: StorageKey.Activity})
             .then(ret => {
                 getActivityPush(data => {
+
                     const {activity} = data;
-                    if (ret.id === activity.id && ret.updated_time === activity.updated_time)
-                        return;
-                    if (this.activityModel)
-                        this.activityModel.setData(data.activity);
-                    storage.save({
-                        key: StorageKey.Activity,
-                        rawData: data.activity
-                    })
+                    if (ret.id !== activity.id
+                        && activity.push_type === 'once') {
+                        this._setActivity(activity)
+                    }
+                    if (activity.push_type === 'once_a_day'
+                        && ret.today !== today) {
+                        this._setActivity(activity)
+                    }
+
+
                 }, err => {
 
                 })
 
             }).catch(err => {
             getActivityPush(data => {
-                if (this.activityModel)
-                    this.activityModel.setData(data.activity)
-                storage.save({
-                    key: StorageKey.Activity,
-                    rawData: data.activity
-                })
+                this._setActivity(data.activity)
             }, err => {
 
             })
         })
 
     };
+
+    _setActivity = (activity) => {
+
+        if (this.activityModel)
+            this.activityModel.setData(activity);
+        activity.today = today;
+        storage.save({
+            key: StorageKey.Activity,
+            rawData: activity
+        })
+    }
 
     _getData = () => {
         this.container.open();
