@@ -5,7 +5,7 @@ import I18n from 'react-native-i18n';
 import PayCountDown from '../../../components/PayCountDown';
 import {cancelMallOrder, postWxPay, getWxPaidResult, postOrderConfirm, deleteMall} from "../../../services/MallDao";
 import {MallStatus} from "../../../configs/Status";
-import {util, payWx, isWXAppInstalled, call, alertOrder,showToast} from '../../../utils/ComonHelper';
+import {util, payWx, isWXAppInstalled, call, alertOrder, showToast} from '../../../utils/ComonHelper';
 import {DeShangPhone} from '../../../configs/Constants';
 
 
@@ -66,7 +66,8 @@ export default class CompletedBottom extends Component {
             });
         }
         else
-            alertOrder('need_weChat', ()=>{})
+            alertOrder('need_weChat', () => {
+            })
     };
 
 
@@ -158,13 +159,16 @@ export default class CompletedBottom extends Component {
 
                 <TouchableOpacity
                     onPress={() => {
-                          alertOrder('verified_del', () => {
-                               deleteMall({order_number: order_number}, ret => {
-                            if (this.props.refresh)
-                                this.props.refresh();
-                        }, err => {
+                        alertOrder('verified_del', () => {
+                            deleteMall({order_number: order_number}, ret => {
+                                if (this.props.pageOrderInfo) {
+                                    global.router.pop();
+
+                                } else if (this.props.refresh)
+                                    this.props.refresh();
+                            }, err => {
+                            })
                         })
-                          })
 
                     }}
                     style={styleO.customer}>
@@ -189,13 +193,16 @@ export default class CompletedBottom extends Component {
 
                 <TouchableOpacity
                     onPress={() => {
-                         alertOrder('verified_del', () => {
-                               deleteMall({order_number: order_number}, ret => {
-                            if (this.props.refresh)
-                                this.props.refresh();
-                        }, err => {
+                        alertOrder('verified_del', () => {
+                            deleteMall({order_number: order_number}, ret => {
+                                if (this.props.pageOrderInfo) {
+                                    global.router.pop();
+
+                                } else if (this.props.refresh)
+                                    this.props.refresh();
+                            }, err => {
+                            })
                         })
-                         })
 
                     }}
                     style={styleO.customer}>
@@ -252,8 +259,8 @@ const styleO = StyleSheet.create({
         flexDirection: 'row-reverse',
         alignItems: 'center',
         width: '100%',
-        borderWidth:0.5,
-        borderColor:'#EEEEEE'
+        borderWidth: 0.5,
+        borderColor: '#EEEEEE'
     },
     returnedBottom: {
         borderWidth: 1,
