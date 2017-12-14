@@ -52,7 +52,7 @@ export const picker = {
 
 export function uShareMallInfo(title, desc, icon, id) {
 
-    UMShare.share(title, shareTxt(desc), getShareIcon(icon), shareHost() + "products/" + id + "/" + Lang)
+    UMShare.share(title, I18n.t('ads_poker'), getShareIcon(icon), shareHost() + "products/" + id + "/" + Lang)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
