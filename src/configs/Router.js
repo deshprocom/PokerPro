@@ -708,9 +708,10 @@ export default class Router {
 
     }
 
-    toWebPage() {
+    toWebPage(url) {
         this.stackPush({
-            name: 'WebPage'
+            name: 'WebPage',
+            params: {url: url}
         })
     }
 

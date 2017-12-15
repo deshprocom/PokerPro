@@ -87,6 +87,12 @@ export function setAccessToken(token) {
     client.setHeader('X-DP-ACCESS-TOKEN', token)
 }
 
+export function getAccessToken() {
+    let token = client.headers['X-DP-ACCESS-TOKEN'];
+    console.log(token)
+    return token;
+}
+
 export function removeToken() {
     delete client.headers['X-DP-ACCESS-TOKEN']
 }

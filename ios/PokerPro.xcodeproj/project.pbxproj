@@ -1663,6 +1663,7 @@
 					"$(SRCROOT)/../node_modules/rn-umeng/ios/RCTUmeng/RCTUmeng/**",
 				);
 				INFOPLIST_FILE = PokerPro/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1699,6 +1700,7 @@
 					"$(SRCROOT)/../node_modules/rn-umeng/ios/RCTUmeng/RCTUmeng/**",
 				);
 				INFOPLIST_FILE = PokerPro/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",

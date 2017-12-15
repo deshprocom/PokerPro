@@ -10,19 +10,23 @@ import {
     View,
     Text,
     TextInput,
-    Button
+    Button,
+    TouchableOpacity
 } from 'react-native';
 
 import {NavigationBar} from '../components';
 import {Colors, Fonts, Images, ApplicationStyles} from '../Themes';
+import {getAccessToken} from '../services/RequestHelper';
 
 
 export default class WebPage extends Component {
 
     constructor(props) {
         super(props);
+        console.log(getAccessToken(), props)
+        const {url} = props.params;
         this.state = {
-            url: this.props.url,
+            url: url + `?accessToken=${getAccessToken()}`,
             canGoBack: false,
             title: this.props.title,
             webViewData: '',
@@ -36,7 +40,7 @@ export default class WebPage extends Component {
         } else {
             global.router.pop();
         }
-    }
+    };
 
     onNavigationStateChange(navState) {
         console.log('onNavigationStateChange', navState);
@@ -48,15 +52,18 @@ export default class WebPage extends Component {
     }
 
     sendMessage = (str) => {
-        this.webView.postMessage(str);
+        this.webView && this.webView.postMessage(str);
     };
 
     handleMessage = (e) => {
-        this.setState({webViewData: e.nativeEvent.data});
+        console.log('来自Web数据', e.nativeEvent.data)
+        this.setState({
+            webViewData: e.nativeEvent.data
+        });
     };
 
     render() {
-        const {webViewData, nativeData} = this.state;
+        const {webViewData, nativeData, url} = this.state;
         return (
             <View style={styles.container}>
 
@@ -68,30 +75,29 @@ export default class WebPage extends Component {
                     title={this.state.title}
                 />}
 
-                <View style={{height: 300, width: '100%', borderWidth: 1, borderColor: Colors._ECE}}>
-                    <TextInput
-                        onChangeText={text => this.setState({
-                            nativeData: text
-                        })}
-                        style={{height: 40, width: '100%'}}/>
-                    <Button
-                        onPress={() => {
-                            this.sendMessage(nativeData)
-                        }}
-                        title={'发送数据到Web'}/>
-
-
-                    <Text>{`${webViewData}`}</Text>
-                </View>
-
 
                 <WebView
                     ref={ref => this.webView = ref}
                     startInLoadingState={true}
+                    renderError={this._renderError}
                     onNavigationStateChange={(e) => this.onNavigationStateChange(e)}
-                    source={{uri: 'http://192.168.2.173:3000'}}
+                    source={{uri: url}}
+                    mixedContentMode={'always'}
+                    domStorageEnabled={true}
                     onMessage={this.handleMessage}/>
             </View>
+        );
+    }
+
+    _renderError = () => {
+        return (
+            <TouchableOpacity
+                onPress={() => {
+                    this.webView.reload();
+                }}
+                style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                <Text> 出错了, 重新刷新下吧～</Text>
+            </TouchableOpacity>
         );
     }
 }
