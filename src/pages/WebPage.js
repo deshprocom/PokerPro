@@ -29,7 +29,7 @@ export default class WebPage extends Component {
         const {url, body} = props.params;
         let webUrl = '';
         if (isEmptyObject(body))
-            webUrl = url + `?accessToken=${getAccessToken()}&body=''`;
+            webUrl = url + `?accessToken=${getAccessToken()}`;
         else
             webUrl = url + `?accessToken=${getAccessToken()}&body=${JSON.stringify(body)}`;
 
