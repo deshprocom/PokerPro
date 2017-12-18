@@ -23,15 +23,19 @@ export default class WebPage extends Component {
 
     constructor(props) {
         super(props);
-        console.log(getAccessToken(), props)
+
         const {url} = props.params;
+        let webUrl = url + `?accessToken=${getAccessToken()}`;
+
         this.state = {
-            url: url + `?accessToken=${getAccessToken()}`,
+            url: webUrl,
             canGoBack: false,
             title: this.props.title,
             webViewData: '',
             nativeData: ''
-        }
+        };
+        this.webMsg = '';
+        this.navState = {};
     }
 
     onBackPress = () => {
@@ -43,12 +47,15 @@ export default class WebPage extends Component {
     };
 
     onNavigationStateChange(navState) {
-        console.log('onNavigationStateChange', navState);
-        this.setState({
-            canGoBack: navState.canGoBack,
-            url: navState.url,
-            title: navState.title
-        });
+        if (this.navState !== navState) {
+            console.log('onNavigationStateChange', navState);
+            this.setState({
+                canGoBack: navState.canGoBack,
+                url: navState.url,
+                title: navState.title
+            });
+        }
+
     }
 
     sendMessage = (str) => {
@@ -56,10 +63,13 @@ export default class WebPage extends Component {
     };
 
     handleMessage = (e) => {
-        console.log('来自Web数据', e.nativeEvent.data)
-        this.setState({
-            webViewData: e.nativeEvent.data
-        });
+        let msg = e.nativeEvent.data;
+        if (this.webMsg !== msg) {
+            this.webMsg = msg;
+            console.log('来自Web数据', JSON.parse(msg));
+
+        }
+
     };
 
     render() {
@@ -84,6 +94,7 @@ export default class WebPage extends Component {
                     source={{uri: url}}
                     mixedContentMode={'always'}
                     domStorageEnabled={true}
+                    scalesPageToFit={false}
                     onMessage={this.handleMessage}/>
             </View>
         );

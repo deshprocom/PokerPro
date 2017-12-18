@@ -226,6 +226,7 @@ export function getDateDiff(dateTimeStamp) {
     var dayC = diffValue / day;
     var hourC = diffValue / hour;
     var minC = diffValue / minute;
+    let result = '';
     if (monthC >= 1) {
         result = "" + parseInt(monthC) + I18n.t('time_month');
     }
