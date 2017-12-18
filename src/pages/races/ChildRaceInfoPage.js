@@ -108,6 +108,7 @@ class ChildRaceInfoPage extends Component {
         const {schedules, ranks, blinds,schedules_markdown} = subRaceInfo;
 
         return ( <MainRaceResultView
+            data={subRaceInfo}
             schedules_markdown={schedules_markdown}
             isSideRace={true}
             blinds={blinds}

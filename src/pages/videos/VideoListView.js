@@ -249,7 +249,10 @@ export default class VideoListView extends Component {
     }
 
     _pressItem = (item) => {
-        router.toVideoInfoPage(this.props, item)
+        // router.toVideoInfoPage(this.props, item)
+        const {id} = item;
+        let url = `${global.desh5}videos/${id}/${global.language}`;
+        global.router.toWebPage(url)
     };
 
 }

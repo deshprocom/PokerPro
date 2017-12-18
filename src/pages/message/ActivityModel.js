@@ -43,12 +43,13 @@ export default class ActivityModel extends Component {
                         if (strNotNull(activity.link))
                             router.toWebViewPage(this.props, activity.link)
                         else
-                            router.toActivityInfo(this.props,activity);
+                            router.toActivityInfo(this.props, activity);
                     }}
                 >
+                    {strNotNull(activity.pushed_img) ? <Image style={styles.banner}
+                                                              source={{uri: activity.pushed_img}}/> : null}
 
-                    <Image style={styles.banner}
-                           source={{uri: activity.pushed_img}}/>
+
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={this.toggle}

@@ -9,21 +9,23 @@ import {
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {strNotNull, moneyFormat} from '../../utils/ComonHelper';
-
+import {MarkdownPlat} from '../../components';
 
 export default class BlindsList extends Component {
 
     render() {
-
+        const {data, blinds} = this.props;
         return (<View testID="BlindsList">
 
             {this.startChipsView()}
-
-            <FlatList
+            <MarkdownPlat
+                markdownStr={data.blind_memo}/>
+            {blinds.length > 0 ? <FlatList
                 ListHeaderComponent={this._listHeader}
                 keyExtractor={this._keyExtractor}
                 data={this.props.blinds}
-                renderItem={this._renderRow}/>
+                renderItem={this._renderRow}/> : null}
+
 
         </View>)
 

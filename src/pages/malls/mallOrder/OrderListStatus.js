@@ -37,6 +37,7 @@ export default class OrderListStatus extends Component {
                         style={styles.txtTotal1}>{order_items.length}{I18n.t('pieces')}{I18n.t('malls')} {I18n.t('order_total')}：¥</Text>
                 </View>
                 <CompletedBottom
+                    pageOrderInfo={false}
                     refresh={this.refresh}
                     orderItem={item}/>
             </TouchableOpacity>

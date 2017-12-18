@@ -3,7 +3,7 @@
  */
 import {create, SERVER_ERROR, TIMEOUT_ERROR, NETWORK_ERROR} from 'apisauce';
 import Api from '../configs/ApiConfig';
-import {clearLoginUser, showToast} from '../utils/ComonHelper';
+import {clearLoginUser, showToast, strNotNull} from '../utils/ComonHelper';
 import StorageKey from '../configs/StorageKey';
 import {NetworkInfo} from 'react-native-network-info';
 import {Platform} from 'react-native';
@@ -85,6 +85,12 @@ export function setBaseURL(api) {
 
 export function setAccessToken(token) {
     client.setHeader('X-DP-ACCESS-TOKEN', token)
+}
+
+export function getAccessToken() {
+    let token = client.headers['X-DP-ACCESS-TOKEN'];
+
+    return strNotNull(token) ? token : '';
 }
 
 export function removeToken() {

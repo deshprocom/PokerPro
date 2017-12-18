@@ -1,5 +1,5 @@
 import React, {PureComponent, PropTypes} from 'react';
-import {View, StyleSheet, TextInput, Keyboard,Text} from 'react-native';
+import {View, StyleSheet, TextInput, Keyboard, Text} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 
@@ -37,7 +37,7 @@ export default class LeaveMessage extends PureComponent {
                     returnKeyType={'done'}
                     underlineColorAndroid="transparent"
                     onSubmitEditing={() => {
-                      Keyboard.dismiss();
+                        Keyboard.dismiss();
                     }}/>
 
             </View>
@@ -46,23 +46,24 @@ export default class LeaveMessage extends PureComponent {
     }
 }
 const styleL = StyleSheet.create({
-    page:{
+    page: {
         height: 48,
         backgroundColor: '#FFFFFF',
         marginTop: 11,
         flexDirection: 'row',
         alignItems: 'center',
     },
-    txt:{
-        fontSize:14,
-        color:'#000000',
-        marginLeft:17
+    txt: {
+        fontSize: 14,
+        color: '#000000',
+        marginLeft: 17
     },
     messageView: {
         fontSize: 14,
         color: '#000000',
         height: 40,
         flex: 1,
+        marginTop: 5
 
     }
 })
