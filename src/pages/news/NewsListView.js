@@ -198,7 +198,7 @@ class NewsListView extends Component {
         // router.toNewsInfoPage(this.props, item)
 
         const {id} = item;
-        let url = `http://192.168.2.173:3000/news/${id}/${global.language}`;
+        let url = `${global.desh5}news/${id}/${global.language}`;
         global.router.toWebPage(url)
     };
 

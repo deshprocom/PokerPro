@@ -17,15 +17,21 @@ import {
 import {NavigationBar} from '../components';
 import {Colors, Fonts, Images, ApplicationStyles} from '../Themes';
 import {getAccessToken} from '../services/RequestHelper';
+import {strNotNull, isEmptyObject} from "../utils/ComonHelper";
 
 
 export default class WebPage extends Component {
 
+
     constructor(props) {
         super(props);
 
-        const {url} = props.params;
-        let webUrl = url + `?accessToken=${getAccessToken()}`;
+        const {url, body} = props.params;
+        let webUrl = '';
+        if (isEmptyObject(body))
+            webUrl = url + `?accessToken=${getAccessToken()}&body=''`;
+        else
+            webUrl = url + `?accessToken=${getAccessToken()}&body=${JSON.stringify(body)}`;
 
         this.state = {
             url: webUrl,
@@ -66,7 +72,17 @@ export default class WebPage extends Component {
         let msg = e.nativeEvent.data;
         if (this.webMsg !== msg) {
             this.webMsg = msg;
-            console.log('来自Web数据', JSON.parse(msg));
+            let webParam = JSON.parse(msg);
+            console.log('来自Web数据', webParam);
+            const {route, param} = webParam;
+            if (strNotNull(route)) {
+                switch (route) {
+                    case 'comments':
+                        let commentsUrl = `${global.desh5}comment`;
+                        global.router.toWebPage(commentsUrl, param)
+                }
+            }
+
 
         }
 
