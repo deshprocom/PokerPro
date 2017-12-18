@@ -2,38 +2,64 @@ import React, {Component} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, TextInput, Modal} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types';
 import {Badge} from '../../components';
 import {util} from '../../utils/ComonHelper';
-import ClickComment from './ClickComment';
-import InputComment from './InputComment';
 
-export default class CommentBottom extends Component {
+export default class InputComment extends Component {
 
     state = {
-        showInput: false
+        text: '',
+        likeButton: false
+    };
 
+    static propTypes = {
+        _showInput: propTypes.func.isRequired
     };
 
     componentDidMount() {
 
     };
 
-    _showInput=()=> {
-        this.setState({
-            showInput: !this.state.showInput
-        })
+
+    inputComment = () => {
+        return <Modal
+            animationType={"slide"}
+            transparent
+            visible={this.props.showInput}
+            style={{flex:1}}
+        >
+            <TouchableOpacity
+                onPress={()=>{
+                      this.props._showInput()
+                }}
+                style={styles.inputModal}>
+
+            </TouchableOpacity>
+
+            <View style={styles.bottom}>
+                <View style={{width: '80%', marginLeft: 5, borderWidth: 0}}>
+                    <TextInput
+                        style={styles.inputComment}
+                        placeholder="回复花花公子:"
+                        ref={el => this.autoFocusInst = el}
+                    />
+
+                </View>
+
+                <View style={styles.release}>
+                    <Text style={{color: Colors.txt_444, fontSize: 15}}>评论</Text>
+                </View>
+
+
+            </View>
+        </Modal>
+
     };
 
     render() {
-        const {showInput} = this.state;
         return (
-            <View style={styles.bottom}>
-                {showInput ? <InputComment _showInput={this._showInput}
-                                           showInput={this.state.showInput}/> :
-                    <ClickComment _showInput={this._showInput}/>}
-
-            </View>
+            this.inputComment()
         );
     }
 
@@ -117,10 +143,25 @@ const styles = StyleSheet.create({
         width: 20,
         height: 20
     },
-    badge: {
-        position: 'absolute',
-        top: -5,
-        left: '60%'
-    }
+    inputModal:{
+        flex:1,
+        backgroundColor: 'rgba(0,0,0,0.5)'
+    },
+    release: {
+        flex: 1,
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        height: 40,
+        justifyContent: 'center',
+        marginRight: 17
+    },
+    inputComment: {
+        backgroundColor: Colors._ECE,
+        height: 30,
+        borderRadius: 15,
+        paddingLeft: 20,
+        fontSize: 14
+    },
 
 });

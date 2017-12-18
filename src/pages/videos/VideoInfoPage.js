@@ -16,7 +16,7 @@ import {LoadingView} from '../../components/load'
 import {NavigationBar, MarkdownPlat, VideoPlayer} from '../../components';
 import {getVideoDetail, getSubVideo} from '../../services/NewsDao';
 import CommentBottom from '../comment/CommentBottom';
-import Comment from '../comment/Comment';
+import Comment from '../comment/CommentList';
 
 
 export default class VideoInfoPage extends Component {
