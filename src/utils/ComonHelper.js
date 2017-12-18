@@ -875,7 +875,7 @@ export function getDispatchAction() {
 
 //正在开发提示
 export function alertOrder(str, callback) {
-    Alert.alert(I18n.t(str), '', [{
+    Alert.alert(str, '', [{
         text: `${I18n.t('cancel')}`, onPress: () => {
 
         }
@@ -884,6 +884,10 @@ export function alertOrder(str, callback) {
             callback()
         }
     }])
+}
+//微信提示
+export function alertOrderChat(str) {
+    Alert.alert(str)
 }
 
 //正在开发提示

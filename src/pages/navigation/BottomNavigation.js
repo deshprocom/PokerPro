@@ -107,7 +107,9 @@ const styleBN = StyleSheet.create({
         alignItems: 'center'
     },
     navigations: {
-        flex: 1
+        flex: 1,
+        justifyContent:'center',
+        alignItems:'center'
     },
     tabs: {
         height: 50

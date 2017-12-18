@@ -1,0 +1,126 @@
+import React, {Component} from 'react';
+import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, TextInput, Modal} from 'react-native';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
+import I18n from 'react-native-i18n';
+import PropTypes from 'prop-types';
+import {Badge} from '../../components';
+import {util} from '../../utils/ComonHelper';
+import ClickComment from './ClickComment';
+import InputComment from './InputComment';
+
+export default class CommentBottom extends Component {
+
+    state = {
+        showInput: false
+
+    };
+
+    componentDidMount() {
+
+    };
+
+    _showInput=()=> {
+        this.setState({
+            showInput: !this.state.showInput
+        })
+    };
+
+    render() {
+        const {showInput} = this.state;
+        return (
+            <View style={styles.bottom}>
+                {showInput ? <InputComment _showInput={this._showInput}
+                                           showInput={this.state.showInput}/> :
+                    <ClickComment _showInput={this._showInput}/>}
+
+            </View>
+        );
+    }
+
+
+}
+
+const styles = StyleSheet.create({
+    bottom: {
+        height: 48,
+        width: '100%',
+        backgroundColor: '#FFFFFF',
+        borderColor: '#EEEEEE',
+        flexDirection: 'row',
+        alignItems: 'center',
+        bottom: 0,
+        zIndex: 99,
+        position: 'absolute',
+    },
+    input: {
+        height: 30,
+        paddingTop: 5,
+        paddingBottom: 5,
+        paddingRight: 20,
+        backgroundColor: '#ECECEE',
+        borderRadius: 40,
+        fontSize: 14,
+        color: '#CCCCCC'
+    },
+    search: {
+        marginLeft: 17,
+        height: 30,
+        width: '48%',
+        backgroundColor: Colors._ECE,
+        borderRadius: 40,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    searchImg: {
+        height: 14,
+        width: 14,
+        marginLeft: 15,
+        marginRight: 30,
+    },
+    commentWhiteView: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 20,
+        paddingTop: 5,
+        paddingBottom: 5,
+        paddingLeft: 5,
+        paddingRight: 5
+    },
+    commentWhite: {
+        width: 22,
+        height: 20
+    },
+    likeView: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 31,
+        paddingTop: 5,
+        paddingBottom: 5,
+        paddingLeft: 5,
+        paddingRight: 5
+    },
+    like: {
+        width: 20,
+        height: 19
+    },
+    forwardView: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 31,
+        marginRight: 17,
+        paddingTop: 5,
+        paddingBottom: 5,
+        paddingLeft: 5,
+        paddingRight: 5
+    },
+    forward: {
+        width: 20,
+        height: 20
+    },
+    badge: {
+        position: 'absolute',
+        top: -5,
+        left: '60%'
+    }
+
+});
