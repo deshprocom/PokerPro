@@ -33,10 +33,10 @@ export function getNewsDetail(body, resolve, reject) {
 }
 
 /* 获取首页热门资讯*/
-export function getHotInfos(resolve, reject) {
+export function getHotInfos(resolve, reject, params) {
     helper.get(Api.hot_infos, ret => {
         resolve(ret.data)
-    }, reject)
+    }, reject, params)
 }
 
 export function getPukeNews(resolve, reject) {

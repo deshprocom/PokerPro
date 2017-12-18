@@ -708,6 +708,13 @@ export default class Router {
 
     }
 
+    toWebPage(url, body) {
+        this.stackPush({
+            name: 'WebPage',
+            params: {url: url, body: body}
+        })
+    }
+
     toShippingCart() {
         this.stackPush({
             name: 'ShoppingCart',

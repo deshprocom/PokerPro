@@ -54,7 +54,7 @@ export default class MallInfoPageTopBar extends Component {
 
         if (isEmptyObject(this.props.product))
             return;
-        const {title, master,freight_fee} = this.props.product;
+        const {title, master, freight_fee, seven_days_return} = this.props.product;
         const {price, original_price, origin_point} = master;
 
         return <View>
@@ -67,7 +67,9 @@ export default class MallInfoPageTopBar extends Component {
                 {/*<Text style={styleM.discount}>2.3折</Text>*/}
             </View>
             <View style={styleM.locations}>
-                {/*<View style={styleM.return7}><Text style={styleM.return7Txt}>{I18n.t('returned')}</Text></View>*/}
+                {seven_days_return ? <View style={styleM.return7}><Text
+                    style={styleM.return7Txt}>{I18n.t('returned')}</Text></View> : null}
+
                 <Text style={styleM.freight}>{I18n.t('cost')}：¥{freight_fee}</Text>
                 <View style={{flex: 1}}/>
                 <Text style={styleM.location}>{origin_point}</Text>

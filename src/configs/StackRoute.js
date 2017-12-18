@@ -77,12 +77,12 @@ import MallOrderPage from '../pages/malls/mallOrder/MallOrderPage';
 import LogisticsPage from '../pages/malls/mallOrder/LogisticsPage';
 import {LogisticsWeb} from '../components';
 import MallSelectPage from '../pages/malls/return/MallSelectPage';
-import CommentInfoPage from '../pages/comment/CommentInfoPage';
+import WebPage from '../pages/WebPage';
 
 
 export const Stacks = Actions.create(
     <Scene key="root">
-        <Scene key="CommentInfoPage" component={CommentInfoPage} hideNavBar/>
+        <Scene key="WebPage" component={WebPage} hideNavBar/>
         <Scene key="MallSelectPage" component={MallSelectPage} hideNavBar/>
         <Scene key="LogisticsWeb" component={LogisticsWeb} hideNavBar/>
         <Scene key="LogisticsPage" component={LogisticsPage} hideNavBar/>

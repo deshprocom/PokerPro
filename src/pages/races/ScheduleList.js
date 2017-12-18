@@ -9,21 +9,27 @@ import {
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {singleOrdouble, convertDate, strNotNull, MM_DD, strRow} from '../../utils/ComonHelper';
+import {MarkdownPlat} from '../../components';
 
 
 export default class ScheduleList extends Component {
 
     render() {
 
+        const {data, schedules} = this.props;
+
         return (<View
             testID="ScheduleList">
 
+            <MarkdownPlat
+                markdownStr={data.schedule_memo}/>
 
-            <FlatList
+            {schedules.length > 0 ? <FlatList
                 ListHeaderComponent={this._listHeader}
                 keyExtractor={this._keyExtractor}
                 data={this.props.schedules}
-                renderItem={this._renderRow}/>
+                renderItem={this._renderRow}/> : null}
+
 
         </View>)
 

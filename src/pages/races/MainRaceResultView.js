@@ -48,8 +48,8 @@ export default class MainRaceResultView extends Component {
     _tabView = () => {
 
         const {curTab} = this.state;
-        const {raceRanks, schedules, blinds, isSideRace, schedules_markdown} = this.props;
-
+        const {raceRanks, schedules, blinds, isSideRace, schedules_markdown, data} = this.props;
+        const {blind_memo, schedule_memo} = data;
         this.tabs = [];
 
         if (isSideRace && strNotNull(schedules_markdown)) {
@@ -66,7 +66,7 @@ export default class MainRaceResultView extends Component {
 
         }
         else if (!isSideRace && !isEmptyObject(schedules) &&
-            schedules.length > 0) {
+            schedules.length > 0 || strNotNull(schedule_memo)) {
             this.tabs.push(<Button
                 onPress={() => this.btnSelectTab(TAB_INFO)}
                 activeOpacity={1}
@@ -80,7 +80,7 @@ export default class MainRaceResultView extends Component {
 
         }
         if (!isEmptyObject(blinds)
-            && blinds.length > 0) {
+            && blinds.length > 0 || strNotNull(blind_memo)) {
             this.tabs.push(<Button
                 onPress={() => this.btnSelectTab(TAB_BLINDS)}
                 activeOpacity={1}
@@ -129,7 +129,7 @@ export default class MainRaceResultView extends Component {
     _tabPage = () => {
 
         const {curTab} = this.state;
-        const {raceRanks, schedules, blinds, isSideRace, schedules_markdown, raceInfo} = this.props;
+        const {raceRanks, schedules, blinds, isSideRace, schedules_markdown, raceInfo, data} = this.props;
 
 
         switch (curTab) {
@@ -139,9 +139,11 @@ export default class MainRaceResultView extends Component {
                         noScroll={true}
                         markdownStr={schedules_markdown}/> :
                     <ScheduleList
+                        data={data}
                         schedules={schedules}/>;
             case TAB_BLINDS:
                 return <BlindsList
+                    data={data}
                     startChips={isEmptyObject(raceInfo) ? null : raceInfo.blind}
                     blinds={blinds}/>;
             case TAB_RESULT:

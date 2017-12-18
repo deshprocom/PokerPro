@@ -90,6 +90,7 @@ export default class MallOrderInfo extends PureComponent {
 
 
             <CompletedBottom
+                pageOrderInfo={true}
                 refresh={this.refresh}
                 orderItem={detail}/>
         </View>

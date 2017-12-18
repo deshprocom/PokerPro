@@ -195,7 +195,11 @@ class NewsListView extends Component {
     };
 
     _pressItem = (item) => {
-        router.toNewsInfoPage(this.props, item)
+        // router.toNewsInfoPage(this.props, item)
+
+        const {id} = item;
+        let url = `${global.desh5}news/${id}/${global.language}`;
+        global.router.toWebPage(url)
     };
 
 }

@@ -5,7 +5,7 @@ import I18n from 'react-native-i18n';
 import PayCountDown from '../../../components/PayCountDown';
 import {cancelMallOrder, postWxPay, getWxPaidResult, postOrderConfirm, deleteMall} from "../../../services/MallDao";
 import {MallStatus} from "../../../configs/Status";
-import {util, payWx, isWXAppInstalled, call, alertOrder,showToast,alertOrderChat} from '../../../utils/ComonHelper';
+import {util, payWx, isWXAppInstalled, call, alertOrder, showToast} from '../../../utils/ComonHelper';
 import {DeShangPhone} from '../../../configs/Constants';
 
 
@@ -66,7 +66,8 @@ export default class CompletedBottom extends Component {
             });
         }
         else
-            alertOrderChat(I18n.t('need_weChat'))
+            alertOrder('need_weChat', () => {
+            })
     };
 
 
@@ -115,7 +116,7 @@ export default class CompletedBottom extends Component {
 
                 <Text
                     onPress={() => {//`${I18n.t('confirm_cancel')}`
-                        alertOrder(I18n.t('confirm_cancel'), () => {
+                        alertOrder('confirm_cancel', () => {
                             cancelMallOrder({order_number: order_number}, ret => {
                                 if (this.props.refresh)
                                     this.props.refresh();
@@ -158,13 +159,16 @@ export default class CompletedBottom extends Component {
 
                 <TouchableOpacity
                     onPress={() => {
-                          alertOrder(I18n.t('verified_del'), () => {
-                               deleteMall({order_number: order_number}, ret => {
-                            if (this.props.refresh)
-                                this.props.refresh();
-                        }, err => {
+                        alertOrder('verified_del', () => {
+                            deleteMall({order_number: order_number}, ret => {
+                                if (this.props.pageOrderInfo) {
+                                    global.router.pop();
+
+                                } else if (this.props.refresh)
+                                    this.props.refresh();
+                            }, err => {
+                            })
                         })
-                          })
 
                     }}
                     style={styleO.customer}>
@@ -189,13 +193,16 @@ export default class CompletedBottom extends Component {
 
                 <TouchableOpacity
                     onPress={() => {
-                         alertOrder(I18n.t('verified_del'), () => {
-                               deleteMall({order_number: order_number}, ret => {
-                            if (this.props.refresh)
-                                this.props.refresh();
-                        }, err => {
+                        alertOrder('verified_del', () => {
+                            deleteMall({order_number: order_number}, ret => {
+                                if (this.props.pageOrderInfo) {
+                                    global.router.pop();
+
+                                } else if (this.props.refresh)
+                                    this.props.refresh();
+                            }, err => {
+                            })
                         })
-                         })
 
                     }}
                     style={styleO.customer}>
@@ -212,7 +219,7 @@ export default class CompletedBottom extends Component {
             <View style={styleO.bottomView}>
                 <TouchableOpacity
                     onPress={() => {
-                        alertOrder(I18n.t('confirm_receipt'), () => {
+                        alertOrder('confirm_receipt', () => {
                             postOrderConfirm({order_number: order_number}, data => {
                                 if (this.props.refresh)
                                     this.props.refresh();
@@ -252,8 +259,8 @@ const styleO = StyleSheet.create({
         flexDirection: 'row-reverse',
         alignItems: 'center',
         width: '100%',
-        borderWidth:0.5,
-        borderColor:'#EEEEEE'
+        borderWidth: 0.5,
+        borderColor: '#EEEEEE'
     },
     returnedBottom: {
         borderWidth: 1,
