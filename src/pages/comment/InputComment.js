@@ -3,8 +3,6 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, TextInput, 
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
-import {Badge} from '../../components';
-import {util} from '../../utils/ComonHelper';
 
 export default class InputComment extends Component {
 
@@ -23,37 +21,41 @@ export default class InputComment extends Component {
 
 
     inputComment = () => {
-        return <Modal
-            animationType={"slide"}
-            transparent
-            visible={this.props.showInput}
-            style={{flex:1}}
-        >
-            <TouchableOpacity
-                onPress={()=>{
+        return <View>
+            <Modal
+                animationType={"slide"}
+                transparent
+                visible={this.props.showInput}
+                style={{flex:1}}
+            >
+                <TouchableOpacity
+                    onPress={()=>{
                       this.props._showInput()
                 }}
-                style={styles.inputModal}>
+                    style={styles.inputModal}>
 
-            </TouchableOpacity>
+                </TouchableOpacity>
 
-            <View style={styles.bottom}>
-                <View style={{width: '80%', marginLeft: 5, borderWidth: 0}}>
-                    <TextInput
-                        style={styles.inputComment}
-                        placeholder="回复花花公子:"
-                        ref={el => this.autoFocusInst = el}
-                    />
+                <View style={styles.bottom}>
+                    <View style={{width: '80%', marginLeft: 5, borderWidth: 0}}>
+                        <TextInput
+                            multiline
+                            underlineColorAndroid="transparent"
+                            style={styles.inputComment}
+                            placeholder="回复花花公子:"
+                            returnKeyType={'done'}
+                        />
+
+                    </View>
+
+                    <View style={styles.release}>
+                        <Text style={{color: Colors.txt_444, fontSize: 15}}>评论</Text>
+                    </View>
+
 
                 </View>
-
-                <View style={styles.release}>
-                    <Text style={{color: Colors.txt_444, fontSize: 15}}>评论</Text>
-                </View>
-
-
-            </View>
-        </Modal>
+            </Modal>
+        </View>
 
     };
 

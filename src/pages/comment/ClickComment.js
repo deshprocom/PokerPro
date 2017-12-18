@@ -36,20 +36,8 @@ export default class ClickComment extends Component {
                     <Image
                         style={styles.searchImg}
                         source={Images.pen}/>
+                    <Text style={styles.input}>{I18n.t('write_comment')}</Text>
 
-                    <TextInput
-                        numberOfLines={1}
-                        onChangeText={(text) => {
-                            this.setState({text});
-                        }}
-                        placeholder={I18n.t('write_comment')}
-                        placeholderTextColor="#CCCCCC"
-                        multiline={false}
-                        style={styles.input}
-                        underlineColorAndroid='transparent'
-                        returnKeyLabel={I18n.t('certain')}
-                        placeholderColor={Colors._BBBB}
-                        returnKeyType={'go'}/>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -90,7 +78,6 @@ const styles = StyleSheet.create({
         paddingTop: 5,
         paddingBottom: 5,
         paddingRight: 20,
-        backgroundColor: '#ECECEE',
         borderRadius: 40,
         fontSize: 14,
         color: '#CCCCCC'
@@ -108,7 +95,7 @@ const styles = StyleSheet.create({
         height: 14,
         width: 14,
         marginLeft: 15,
-        marginRight: 30,
+        marginRight: 10,
     },
     commentWhiteView: {
         alignItems: 'center',
