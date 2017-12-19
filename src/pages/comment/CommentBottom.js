@@ -11,7 +11,8 @@ import InputComment from './InputComment';
 export default class CommentBottom extends Component {
 
     state = {
-        showInput: false
+        showInput: false,
+        repliesShow: false
 
     };
 
@@ -30,8 +31,21 @@ export default class CommentBottom extends Component {
 
     };
 
+    repliesBtn = (repliesItem) => {
+        if (isEmptyObject(global.login_user)) {
+            global.router.toLoginFirstPage()
+        } else {
+            this.setState({
+                repliesShow: !this.state.repliesShow,
+                repliesItem: repliesItem
+            })
+        }
+    };
+
     render() {
         const {info, topic_type} = this.props;
+
+
         return (
             <View style={styles.bottom}>
 
@@ -40,10 +54,31 @@ export default class CommentBottom extends Component {
                     topic_id={info.id}
                     topic_type={topic_type}
                     _showInput={this._showInput}
-                    showInput={this.state.showInput}/>
+                    visible={this.state.showInput}/>
 
+                {this.renderRelies()}
             </View>
         );
+    }
+
+
+    showReplies = ()=>{
+        this.setState({
+            repliesShow: !this.state.repliesShow
+        })
+    };
+
+    renderRelies = () => {
+        const {repliesShow, repliesItem} = this.state;
+        if (repliesShow && !isEmptyObject(repliesItem)) {
+            const {id,} = repliesItem;
+            return <InputComment
+                topic_id={id}
+                topic_type={'replies'}
+                _showInput={this.showReplies}
+                visible={this.state.repliesShow}/>
+        }
+
     }
 
 

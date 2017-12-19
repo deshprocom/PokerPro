@@ -3,7 +3,7 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, TextInput, 
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
-import {postComment} from '../../services/CommentDao';
+import {postComment, postRelaies} from '../../services/CommentDao';
 import {isEmptyObject, showToast, strNotNull} from "../../utils/ComonHelper";
 
 export default class InputComment extends Component {
@@ -23,7 +23,7 @@ export default class InputComment extends Component {
             <Modal
                 animationType={"slide"}
                 transparent
-                visible={this.props.showInput}
+                visible={this.props.visible}
                 style={{flex: 1}}
             >
                 <TouchableOpacity
@@ -64,7 +64,7 @@ export default class InputComment extends Component {
     };
 
     releaseComment = () => {
-        const {topic_type, topic_id} = this.props;
+
         const {comment} = this.state;
         if (!strNotNull(comment)) {
 
@@ -72,13 +72,26 @@ export default class InputComment extends Component {
             return
         }
 
+        const {topic_type, topic_id} = this.props;
+
+        if (topic_type === 'replies') {
+            postRelaies({
+                comment_id: topic_id,
+                body: comment
+            }, data => {
+                this.props._showInput();
+                showToast('回复成功')
+            }, err => {
+                showToast('回复失败')
+            })
+        }
         let body = {
             topic_type, topic_id,
             body: comment
         };
 
         postComment(body, data => {
-            this.props._showInput()
+            this.props._showInput();
             showToast('评论成功');
 
         }, err => {

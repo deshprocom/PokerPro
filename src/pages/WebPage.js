@@ -79,6 +79,9 @@ export default class WebPage extends Component {
                         let commentsUrl = `${global.desh5}comment`;
                         global.router.toWebPage(commentsUrl, param);
                         break;
+                    case 'replies':
+                        this.commentNav && this.commentNav.repliesBtn(param);
+                        break;
                 }
             }
 
@@ -127,6 +130,7 @@ export default class WebPage extends Component {
             switch (bottomNav) {
                 case 'commentNav':
                     return <CommentBottom
+                        ref={ref => this.commentNav = ref}
                         topic_type={'info'}
                         info={info}/>
 
