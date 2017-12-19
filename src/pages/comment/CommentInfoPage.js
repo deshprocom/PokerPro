@@ -7,6 +7,9 @@ import CommentBottom from './CommentBottom';
 import CommentItem from './CommentItem';
 import ReleaseCommentInfo from './ReleaseCommentInfo';
 import {NavigationBar} from '../../components';
+import UltimateFlatList from '../../components/ultimate';
+import {BaseComponent} from '../../components';
+import {postRelaies} from '../../services/CommentDao';
 
 export default class CommentInfoPage extends Component {
     state={
@@ -17,12 +20,11 @@ export default class CommentInfoPage extends Component {
         this.setState({
             releaseShow: !this.state.releaseShow
         });
-        console.log("releaseShow:",this.state.releaseShow);
     };
 
-    _renderItem=()=>{
+    _renderItem=(item, index)=>{
         return(
-            <CommentItem releaseInfo={this.releaseInfo}/>
+           <Text>{index}</Text>
         )
     };
     _separator = () => {
@@ -42,12 +44,37 @@ export default class CommentInfoPage extends Component {
             }
         }
     };
+    load = (body, postRefresh, endFetch) => {
+        postRelaies(body, data => {
+            this.contain && this.contain.close();
+            this.next_id = data.next_id;
+            console.log("data:",data)
+            postRefresh(data.items, 6);
+
+        }, err => {
+            this.contain && this.contain.close();
+            endFetch();
+        });
+    };
+    onFetch = (page, postRefresh, endFetch) => {
+
+        if (page === 1) {
+
+           postRefresh([1,2,3,4,5],4)
+        } else {
+            this.load({
+                next_id: this.next_id,
+                status: this.props.status
+            }, postRefresh, endFetch)
+        }
+
+    };
 
     render(){
-        let dataHosts =[1,2,3,4,5,6,7,8];
+
+
         const{releaseShow} = this.state;
-        const {bottomNav, info} = this.props.params.item;
-        console.log("item:",this.props.params.item);
+        const {item} = this.props.params;
         return(
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
@@ -60,26 +87,34 @@ export default class CommentInfoPage extends Component {
                     title={I18n.t('comment_info')}/>
 
                 <View style={{backgroundColor:'#FFFFFF',marginTop:1,paddingBottom:16}}>
-                    <CommentItem releaseInfo={this.releaseInfo}/>
+                    <CommentItem releaseInfo={this.releaseInfo}
+                                 item={item}/>
                 </View>
 
                 {this._renderBottomNav()}
 
-                <ScrollView  style={{backgroundColor:'#ECECEE',marginBottom:80}}>
 
-                    <Text style={styles.allComment}>全部评论（333）</Text>
-                    <FlatList
-                        style={{marginTop: 16,backgroundColor:'#ECECEE'}}
-                        data={dataHosts}
-                        showsHorizontalScrollIndicator={false}
-                        ItemSeparatorComponent={this._separator}
-                        renderItem={this._renderItem}
-                        keyExtractor={(item, index) => `comment${index}`}
+
+
+                    <UltimateFlatList
+                        header={()=>{
+                            return  <Text style={styles.allComment}>全部评论（333）</Text>
+                        }}
+                        arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
+                        ref={ref => this.ultimate = ref}
+                        onFetch={this.onFetch}
+                        keyExtractor={(item, index) => `${this.props.status}${index}`}
+                        item={this._renderItem}
+                        refreshableTitlePull={I18n.t('pull_refresh')}
+                        refreshableTitleRelease={I18n.t('release_refresh')}
+                        dateTitle={I18n.t('last_refresh')}
+                        allLoadedText={I18n.t('no_more')}
+                        waitingSpinnerText={I18n.t('loading')}
                     />
 
                     <View style={{height:80}}/>
 
-                </ScrollView>
+
 
                 {releaseShow ? <ReleaseCommentInfo
                         releaseInfo={this.releaseInfo}/> : null}

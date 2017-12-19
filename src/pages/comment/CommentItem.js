@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView, TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import PropTypes from 'prop-types';
+import {getDateDiff,strNotNull} from '../../utils/ComonHelper';
 
 export default class CommentItem extends PureComponent {
     state={
@@ -28,6 +29,11 @@ export default class CommentItem extends PureComponent {
     };
 
     render() {
+        console.log(this.props.item)
+        if(strNotNull(this.props.item)){
+            return<View/>
+        }
+        const{avatar,body,created_at,nick_name,id,official,recommended,total_count,typological,user_id} = this.props.item;
         return (
             <View style={styles.content}>
                 <TouchableOpacity onPress={()=>{
@@ -37,7 +43,7 @@ export default class CommentItem extends PureComponent {
                 </TouchableOpacity>
                 <View style={styles.contentRight}>
                     <View style={styles.commentTop}>
-                        <Text style={styles.name}>花花公子</Text>
+                        <Text style={styles.name}>{nick_name}</Text>
                         <View style={{flex:1}}/>
                         <TouchableOpacity
                             style={styles.commentView}>
@@ -45,8 +51,8 @@ export default class CommentItem extends PureComponent {
                         </TouchableOpacity>
 
                     </View>
-                    <Text style={styles.time}>3小时前</Text>
-                    <Text style={styles.messages}>已越来越多的德扑选手参加比赛</Text>
+                    <Text style={styles.time}>{getDateDiff(created_at)}</Text>
+                    <Text style={styles.messages}>{body}</Text>
                     {/*{this.moreMessage()}*/}
                 </View>
 
