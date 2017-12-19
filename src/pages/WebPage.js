@@ -126,7 +126,9 @@ export default class WebPage extends Component {
         if (strNotNull(bottomNav)) {
             switch (bottomNav) {
                 case 'commentNav':
-                    return <CommentBottom/>
+                    return <CommentBottom
+                        topic_type={'info'}
+                        info={info}/>
 
             }
         }

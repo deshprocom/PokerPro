@@ -362,7 +362,8 @@ const styles = {
         borderColor: '#333333',
         alignItems: 'center',
         justifyContent: 'center',
-        marginRight:18
+        marginRight:18,
+        left: 0, right: 0
     },
     bottomTxt:{
         fontSize: 14,

@@ -4,7 +4,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import PropTypes from 'prop-types';
 import {Badge} from '../../components';
-import {util} from '../../utils/ComonHelper';
+import {util, isEmptyObject} from '../../utils/ComonHelper';
 import ClickComment from './ClickComment';
 import InputComment from './InputComment';
 
@@ -19,19 +19,28 @@ export default class CommentBottom extends Component {
 
     };
 
-    _showInput=()=> {
-        this.setState({
-            showInput: !this.state.showInput
-        })
+    _showInput = () => {
+        if (isEmptyObject(global.login_user)) {
+            global.router.toLoginFirstPage()
+        } else {
+            this.setState({
+                showInput: !this.state.showInput
+            })
+        }
+
     };
 
     render() {
-        const {showInput} = this.state;
+        const {info, topic_type} = this.props;
         return (
             <View style={styles.bottom}>
-                {showInput ? <InputComment _showInput={this._showInput}
-                                           showInput={this.state.showInput}/> :
-                    <ClickComment _showInput={this._showInput}/>}
+
+                <ClickComment _showInput={this._showInput}/>
+                <InputComment
+                    topic_id={info.id}
+                    topic_type={topic_type}
+                    _showInput={this._showInput}
+                    showInput={this.state.showInput}/>
 
             </View>
         );

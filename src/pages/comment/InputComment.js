@@ -3,20 +3,18 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, TextInput, 
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
+import {postComment} from '../../services/CommentDao';
+import {isEmptyObject, showToast, strNotNull} from "../../utils/ComonHelper";
 
 export default class InputComment extends Component {
 
     state = {
-        text: '',
-        likeButton: false
+        likeButton: false,
+        comment: ''
     };
 
     static propTypes = {
         _showInput: propTypes.func.isRequired
-    };
-
-    componentDidMount() {
-
     };
 
 
@@ -26,12 +24,12 @@ export default class InputComment extends Component {
                 animationType={"slide"}
                 transparent
                 visible={this.props.showInput}
-                style={{flex:1}}
+                style={{flex: 1}}
             >
                 <TouchableOpacity
-                    onPress={()=>{
-                      this.props._showInput()
-                }}
+                    onPress={() => {
+                        this.props._showInput()
+                    }}
                     style={styles.inputModal}>
 
                 </TouchableOpacity>
@@ -39,23 +37,53 @@ export default class InputComment extends Component {
                 <View style={styles.bottom}>
                     <View style={{width: '80%', marginLeft: 5, borderWidth: 0}}>
                         <TextInput
-                            multiline
                             underlineColorAndroid="transparent"
                             style={styles.inputComment}
                             placeholder="回复花花公子:"
                             returnKeyType={'done'}
+                            onChangeText={text => this.setState({
+                                comment: text
+                            })}
                         />
 
                     </View>
 
-                    <View style={styles.release}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            this.releaseComment()
+                        }}
+                        style={styles.release}>
                         <Text style={{color: Colors.txt_444, fontSize: 15}}>评论</Text>
-                    </View>
+                    </TouchableOpacity>
 
 
                 </View>
             </Modal>
         </View>
+
+    };
+
+    releaseComment = () => {
+        const {topic_type, topic_id} = this.props;
+        const {comment} = this.state;
+        if (!strNotNull(comment)) {
+
+            showToast('评论不能为空');
+            return
+        }
+
+        let body = {
+            topic_type, topic_id,
+            body: comment
+        };
+
+        postComment(body, data => {
+            this.props._showInput()
+            showToast('评论成功');
+
+        }, err => {
+            showToast('评论失败')
+        })
 
     };
 
@@ -145,8 +173,8 @@ const styles = StyleSheet.create({
         width: 20,
         height: 20
     },
-    inputModal:{
-        flex:1,
+    inputModal: {
+        flex: 1,
         backgroundColor: 'rgba(0,0,0,0.5)'
     },
     release: {
