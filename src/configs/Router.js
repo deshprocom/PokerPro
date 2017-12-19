@@ -780,9 +780,12 @@ export default class Router {
         })
     }
 
-    toCommentInfoPage() {
+    toCommentInfoPage(item) {
         this.stackPush({
-            name: 'CommentInfoPage'
+            name: 'CommentInfoPage',
+            params:{
+                item:item
+            }
         })
     }
 

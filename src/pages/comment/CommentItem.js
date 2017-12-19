@@ -47,7 +47,7 @@ export default class CommentItem extends PureComponent {
                     </View>
                     <Text style={styles.time}>3小时前</Text>
                     <Text style={styles.messages}>已越来越多的德扑选手参加比赛</Text>
-                    {this.moreMessage()}
+                    {/*{this.moreMessage()}*/}
                 </View>
 
             </View>
@@ -95,7 +95,8 @@ const styles = StyleSheet.create({
     messages:{
         fontSize: 16,
         color: '#444444',
-        marginTop:6
+        marginTop:6,
+        marginBottom:5
     },
     moreMessagesView:{
         width:'100%',

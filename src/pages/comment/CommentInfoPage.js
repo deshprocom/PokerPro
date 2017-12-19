@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView,TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {utcDate, util} from '../../utils/ComonHelper';
+import {strNotNull, util} from '../../utils/ComonHelper';
 import CommentBottom from './CommentBottom';
 import CommentItem from './CommentItem';
 import ReleaseCommentInfo from './ReleaseCommentInfo';
@@ -26,13 +26,28 @@ export default class CommentInfoPage extends Component {
         )
     };
     _separator = () => {
-        return <View style={{height: 0.5, marginLeft: 68, marginRight: 17, backgroundColor: '#DDDDDD'}}/>;
+        return <View style={{height: 1, marginLeft: 68, marginRight: 17, backgroundColor: '#DDDDDD'}}/>;
+    };
+
+    _renderBottomNav = () => {
+        const {bottomNav, info} = this.props.params.item;
+        if (strNotNull(bottomNav)) {
+            switch (bottomNav) {
+                case 'commentNav':
+                    return <CommentBottom
+                        ref={ref => this.commentNav = ref}
+                        topic_type={'info'}
+                        info={info}/>
+
+            }
+        }
     };
 
     render(){
         let dataHosts =[1,2,3,4,5,6,7,8];
         const{releaseShow} = this.state;
-
+        const {bottomNav, info} = this.props.params.item;
+        console.log("item:",this.props.params.item);
         return(
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
@@ -48,7 +63,7 @@ export default class CommentInfoPage extends Component {
                     <CommentItem releaseInfo={this.releaseInfo}/>
                 </View>
 
-                <CommentBottom/>
+                {this._renderBottomNav()}
 
                 <ScrollView  style={{backgroundColor:'#ECECEE',marginBottom:80}}>
 
