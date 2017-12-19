@@ -16,10 +16,22 @@ export default class PersonDynamicPage extends Component {
     personTop=()=>{
         return(
             <View style={styles.topPage}>
-                <Image style={styles.TopImg} source={Images.icon_deshpro}/>
+                <Image style={styles.TopImg} source={Images.business}/>
+                <View style={styles.TopTxt}>
+                    <Text style={{fontSize:20,color:'#444444'}}>Deshpro</Text>
+                    <Text style={{fontSize:14,color:'#888888',marginTop:5}}>还未填写个性签名，介绍下自己吧</Text>
+                </View>
             </View>
         )
     };
+
+    content=()=>{
+        return(
+            <ScrollView style={styles.itemsView}>
+
+            </ScrollView>
+        )
+    }
 
     render() {
         return (
@@ -35,6 +47,7 @@ export default class PersonDynamicPage extends Component {
                     rightImageStyle={{height: 20, width: 22, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
                 {this.personTop()}
+                {this.content()}
             </View>
         );
     }
@@ -47,10 +60,23 @@ const styles = StyleSheet.create({
     topPage:{
         width:Metrics.screenWidth,
         flexDirection:'row',
-        alignItems:'center'
+        alignItems:'center',
+        paddingTop:18,
+        paddingBottom:24,
+        backgroundColor:'#DEDEDE',
     },
     TopImg:{
-
+        width:74,
+        height:74,
+        marginLeft:24
+    },
+    TopTxt:{
+        flexDirection:'column',
+        alignItems:'flex-start',
+        marginLeft:21
+    },
+    itemsView:{
+        paddingTop:5
     }
 
 });
