@@ -36,7 +36,7 @@ export default class Comment extends Component {
                     <Text style={styles.topTxt}>全部评论（555）</Text>
                 </View>
                 <FlatList
-                    style={{paddingTop: 6,marginTop:1,backgroundColor:'#F5F5F5'}}
+                    style={{flex:1,paddingTop: 6,marginTop:1,backgroundColor:'#F5F5F5'}}
                     data={dataHosts}
                     showsHorizontalScrollIndicator={false}
                     ItemSeparatorComponent={this._separator}
