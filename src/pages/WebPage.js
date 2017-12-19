@@ -18,6 +18,7 @@ import {NavigationBar} from '../components';
 import {Colors, Fonts, Images, ApplicationStyles} from '../Themes';
 import {getAccessToken} from '../services/RequestHelper';
 import {strNotNull, isEmptyObject} from "../utils/ComonHelper";
+import {CommentBottom} from './comment';
 
 
 export default class WebPage extends Component {
@@ -26,12 +27,9 @@ export default class WebPage extends Component {
     constructor(props) {
         super(props);
 
-        const {url, body} = props.params;
-        let webUrl = '';
-        if (isEmptyObject(body))
-            webUrl = url + `?accessToken=${getAccessToken()}&body=''`;
-        else
-            webUrl = url + `?accessToken=${getAccessToken()}&body=${JSON.stringify(body)}`;
+        const {url} = props.params;
+
+        let webUrl = url + `?accessToken=${getAccessToken()}`;
 
         this.state = {
             url: webUrl,
@@ -79,7 +77,11 @@ export default class WebPage extends Component {
                 switch (route) {
                     case 'comments':
                         let commentsUrl = `${global.desh5}comment`;
-                        global.router.toWebPage(commentsUrl, param)
+                        global.router.toWebPage(commentsUrl, param);
+                        break;
+                    case 'replies':
+                        this.commentNav && this.commentNav.repliesBtn(param);
+                        break;
                 }
             }
 
@@ -112,9 +114,29 @@ export default class WebPage extends Component {
                     domStorageEnabled={true}
                     scalesPageToFit={false}
                     onMessage={this.handleMessage}/>
+
+                <View style={styles.bottom}>
+                    {this._renderBottomNav()}
+                </View>
+
+
             </View>
         );
     }
+
+    _renderBottomNav = () => {
+        const {bottomNav, info} = this.props.params.body;
+        if (strNotNull(bottomNav)) {
+            switch (bottomNav) {
+                case 'commentNav':
+                    return <CommentBottom
+                        ref={ref => this.commentNav = ref}
+                        topic_type={'info'}
+                        info={info}/>
+
+            }
+        }
+    };
 
     _renderError = () => {
         return (
@@ -137,5 +159,11 @@ const styles = StyleSheet.create({
     listViewContainer: {
         flex: 1,
         backgroundColor: '#f3f3f4',
+    },
+    bottom: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0
     }
 });

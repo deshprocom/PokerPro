@@ -113,7 +113,10 @@ export default {
     refund_types: 'refund_types',
     upload_temp_img: 'uploaders/tmp_image',
     mall_refund: mall_refund,
-    refund_info:refund_info
+    refund_info: refund_info,
+    topic_comments: 'topic/comments',
+    comment_replies: comment_replies
+
 
 }
 
@@ -126,6 +129,12 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+export function comment_replies(body) {
+    const {comment_id} = body;
+
+    return `topic/comments/${comment_id}/replies`;
+}
 
 export function refund_info(body) {
     const {refund_number} = body;
