@@ -5,78 +5,26 @@ import I18n from 'react-native-i18n';
 import {strNotNull, util} from '../../utils/ComonHelper';
 import CommentBottom from './CommentBottom';
 import CommentItem from './CommentItem';
-import ReleaseCommentInfo from './ReleaseCommentInfo';
-import {NavigationBar} from '../../components';
+import {NavigationBar,BaseComponent} from '../../components';
 import UltimateFlatList from '../../components/ultimate';
-import {BaseComponent} from '../../components';
-import {postRelaies} from '../../services/CommentDao';
+import {getReplies} from '../../services/CommentDao';
 
 export default class CommentInfoPage extends Component {
     state={
-        releaseShow:false
+        totalComment:0
     };
 
-    releaseInfo = () => {
-        this.setState({
-            releaseShow: !this.state.releaseShow
-        });
-    };
-
-    _renderItem=(item, index)=>{
-        return(
-           <Text>{index}</Text>
-        )
-    };
     _separator = () => {
         return <View style={{height: 1, marginLeft: 68, marginRight: 17, backgroundColor: '#DDDDDD'}}/>;
     };
 
-    _renderBottomNav = () => {
-        const {bottomNav, info} = this.props.params.item;
-        if (strNotNull(bottomNav)) {
-            switch (bottomNav) {
-                case 'commentNav':
-                    return <CommentBottom
-                        ref={ref => this.commentNav = ref}
-                        topic_type={'info'}
-                        info={info}/>
-
-            }
-        }
-    };
-    load = (body, postRefresh, endFetch) => {
-        postRelaies(body, data => {
-            this.contain && this.contain.close();
-            this.next_id = data.next_id;
-            console.log("data:",data)
-            postRefresh(data.items, 6);
-
-        }, err => {
-            this.contain && this.contain.close();
-            endFetch();
-        });
-    };
-    onFetch = (page, postRefresh, endFetch) => {
-
-        if (page === 1) {
-
-           postRefresh([1,2,3,4,5],4)
-        } else {
-            this.load({
-                next_id: this.next_id,
-                status: this.props.status
-            }, postRefresh, endFetch)
-        }
-
-    };
 
     render(){
-
-
-        const{releaseShow} = this.state;
         const {item} = this.props.params;
+        console.log('CommentItem',item)
+
         return(
-            <View style={ApplicationStyles.bgContainer}>
+            <BaseComponent>
                 <NavigationBar
                     barStyle={'dark-content'}
                     toolbarStyle={{backgroundColor: 'white'}}
@@ -86,41 +34,56 @@ export default class CommentInfoPage extends Component {
                     titleStyle={{color: Colors._161}}
                     title={I18n.t('comment_info')}/>
 
-                <View style={{backgroundColor:'#FFFFFF',marginTop:1,paddingBottom:16}}>
-                    <CommentItem releaseInfo={this.releaseInfo}
-                                 item={item}/>
+                <View style={{backgroundColor:'#FFFFFF',paddingBottom:10,marginTop:1}}>
+                    <CommentItem
+                        item={item}/>
                 </View>
 
-                {this._renderBottomNav()}
-
-
-
-
-                    <UltimateFlatList
-                        header={()=>{
-                            return  <Text style={styles.allComment}>全部评论（333）</Text>
+                <UltimateFlatList
+                    header={()=>{
+                            return  <Text style={styles.allComment}>全部评论（{this.state.totalComment}）</Text>
                         }}
-                        arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
-                        ref={ref => this.ultimate = ref}
-                        onFetch={this.onFetch}
-                        keyExtractor={(item, index) => `${this.props.status}${index}`}
-                        item={this._renderItem}
-                        refreshableTitlePull={I18n.t('pull_refresh')}
-                        refreshableTitleRelease={I18n.t('release_refresh')}
-                        dateTitle={I18n.t('last_refresh')}
-                        allLoadedText={I18n.t('no_more')}
-                        waitingSpinnerText={I18n.t('loading')}
-                    />
-
-                    <View style={{height:80}}/>
-
-
-
-                {releaseShow ? <ReleaseCommentInfo
-                        releaseInfo={this.releaseInfo}/> : null}
-            </View>
+                    arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
+                    ref={ref => this.ultimate = ref}
+                    onFetch={this.onFetch}
+                    keyExtractor={(item, index) => `replies${index}`}
+                    item={this.renderItem}
+                    refreshableTitlePull={I18n.t('pull_refresh')}
+                    refreshableTitleRelease={I18n.t('release_refresh')}
+                    dateTitle={I18n.t('last_refresh')}
+                    allLoadedText={I18n.t('no_more')}
+                    waitingSpinnerText={I18n.t('loading')}
+                    separator={this._separator}
+                />
+            </BaseComponent>
         )
     }
+
+    renderItem = (item, index) => {
+        return(
+            <View>
+                <CommentItem item={item}/>
+            </View>
+        )
+    };
+
+    onFetch = (page, postRefresh, endFetch) => {
+        if (page === 1) {
+            getReplies({comment_id:this.props.params.item.id}, data => {
+                console.log("replies:",data);
+                this.setState({
+                    totalComment:data.total_count
+                });
+                postRefresh(data.items, 6);
+            }, err => {
+                endFetch()
+            });
+
+        } else {
+
+        }
+
+    };
 }
 
 const styles= StyleSheet.create({
@@ -132,7 +95,8 @@ const styles= StyleSheet.create({
         fontSize: 14,
         color: '#AAAAAA',
         marginLeft:17,
-        marginTop:11
+        marginTop:11,
+        marginBottom:10
     }
 
 });

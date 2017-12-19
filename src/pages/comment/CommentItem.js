@@ -2,16 +2,15 @@ import React, {PureComponent} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView, TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import PropTypes from 'prop-types';
-import {getDateDiff,strNotNull} from '../../utils/ComonHelper';
+import {getDateDiff,isEmptyObject} from '../../utils/ComonHelper';
+import {ImageLoad} from '../../components';
 
 export default class CommentItem extends PureComponent {
     state={
         showMessage:true,
     };
 
-    static propTypes = {
-        releaseInfo: PropTypes.func.isRequired
-    };
+
 
     moreMessage=()=>{
         if(this.state.showMessage){
@@ -30,7 +29,7 @@ export default class CommentItem extends PureComponent {
 
     render() {
         console.log(this.props.item)
-        if(strNotNull(this.props.item)){
+        if(isEmptyObject(this.props.item)){
             return<View/>
         }
         const{avatar,body,created_at,nick_name,id,official,recommended,total_count,typological,user_id} = this.props.item;
@@ -39,7 +38,7 @@ export default class CommentItem extends PureComponent {
                 <TouchableOpacity onPress={()=>{
                     this.props.releaseInfo();
                 }}>
-                    <Image style={styles.img} source={Images.empty_image}/>
+                    <ImageLoad style={styles.img} source={{uri:avatar}}/>
                 </TouchableOpacity>
                 <View style={styles.contentRight}>
                     <View style={styles.commentTop}>
