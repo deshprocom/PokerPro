@@ -262,7 +262,14 @@ const images = {
     delivery: require('../../source/mall/delivery.png'),
     mall_up: require('../../source/mall/mall_up.png'),
     loading: require('../../source/setting/loading.gif'),
-    imgDel: require('../../source/mall/imgDel.png')
+    imgDel: require('../../source/mall/imgDel.png'),
+
+    comment: require('../../source/comment/comment.png'),
+    pen: require('../../source/comment/pen.png'),
+    commentWhite: require('../../source/comment/commentWhite.png'),
+    like: require('../../source/comment/like.png'),
+    likeRed: require('../../source/comment/likeRed.png'),
+    forward: require('../../source/comment/forward.png')
 
 
 };

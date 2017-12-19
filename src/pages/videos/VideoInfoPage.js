@@ -15,6 +15,8 @@ import {isEmptyObject, uVideoShare, strNotNull} from '../../utils/ComonHelper';
 import {LoadingView} from '../../components/load'
 import {NavigationBar, MarkdownPlat, VideoPlayer} from '../../components';
 import {getVideoDetail, getSubVideo} from '../../services/NewsDao';
+import CommentBottom from '../comment/CommentBottom';
+import Comment from '../comment/CommentList';
 
 
 export default class VideoInfoPage extends Component {
@@ -78,6 +80,7 @@ export default class VideoInfoPage extends Component {
             {this.renderContent()}
 
 
+            <CommentBottom/>
         </View>)
     }
 
@@ -151,12 +154,13 @@ export default class VideoInfoPage extends Component {
 
     renderContent = () => {
         const {description} = this.state.videoInfo;
-        return <ScrollView>
+        return <ScrollView style={{backgroundColor:'#FFFFFF'}}>
 
             <MarkdownPlat
                 noScroll={true}
                 markdownStr={description}
             />
+            <Comment/>
         </ScrollView>
     };
 

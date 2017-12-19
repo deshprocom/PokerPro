@@ -66,7 +66,7 @@ export default class UploadDocument extends PureComponent {
 
     deleteImg = (index) => {
         return (
-            alertOrder('confirm_delete', () => {
+            alertOrder(I18n.t('confirm_delete'), () => {
                 let imgs = [...this.state.localImg];
 
                 imgs.splice(index, 1);

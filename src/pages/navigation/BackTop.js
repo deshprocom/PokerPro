@@ -30,7 +30,9 @@ const styleB = StyleSheet.create({
     buttonAnimated: {
         position: 'absolute',
         bottom: 0,
-        left: 0
+        left: 0,
+        justifyContent:'center',
+        alignItems:'center'
     },
     buttonView: {
         width: 94,

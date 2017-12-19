@@ -12,6 +12,7 @@ import I18n from 'react-native-i18n';
 import {isEmptyObject, convertDate, newShare, strNotNull} from '../../utils/ComonHelper';
 import {NavigationBar, MarkdownPlat} from '../../components';
 import {getNewsDetail} from '../../services/NewsDao';
+import CommentBottom from '../comment/CommentBottom';
 
 
 export default class NewsInfoPage extends Component {
@@ -84,8 +85,8 @@ export default class NewsInfoPage extends Component {
                     markdownStr={description}
                 />
             </ScrollView>
-
-
+            <View style={{height:50}}/>
+            <CommentBottom/>
         </View>)
     }
 
