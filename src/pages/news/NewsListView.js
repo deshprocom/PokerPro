@@ -199,7 +199,7 @@ class NewsListView extends Component {
 
         const {id} = item;
         let url = `${global.desh5}news/${id}/${global.language}`;
-        global.router.toWebPage(url)
+        global.router.toWebPage(url, {bottomNav: 'commentNav', info: item})
     };
 
 }
