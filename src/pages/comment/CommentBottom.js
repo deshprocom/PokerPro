@@ -11,16 +11,16 @@ import InputComment from './InputComment';
 export default class CommentBottom extends Component {
 
     static replies = 'replies';
+    static RepliesReplies = 'RepliesReplies';
+
 
     state = {
         showInput: false,
-        repliesShow: false
+        repliesShow: false,
+        repliesType: ''
 
     };
 
-    componentDidMount() {
-
-    };
 
     _showInput = () => {
         if (isEmptyObject(global.login_user)) {
@@ -33,13 +33,14 @@ export default class CommentBottom extends Component {
 
     };
 
-    repliesBtn = (repliesItem) => {
+    repliesBtn = (repliesItem, repliesType) => {
         if (isEmptyObject(global.login_user)) {
             global.router.toLoginFirstPage()
         } else {
             this.setState({
                 repliesShow: !this.state.repliesShow,
-                repliesItem: repliesItem
+                repliesItem: repliesItem,
+                repliesType: repliesType
             })
         }
     };
@@ -72,13 +73,14 @@ export default class CommentBottom extends Component {
     };
 
     renderRelies = () => {
-        const {repliesShow, repliesItem} = this.state;
+        const {repliesShow, repliesItem, repliesType} = this.state;
         if (repliesShow && !isEmptyObject(repliesItem)) {
             const {id, nick_name} = repliesItem;
             return <InputComment
+                repliesItem={repliesItem}
                 repliesName={nick_name}
                 topic_id={id}
-                topic_type={'replies'}
+                topic_type={repliesType}
                 _showInput={this.showReplies}
                 visible={this.state.repliesShow}/>
         }

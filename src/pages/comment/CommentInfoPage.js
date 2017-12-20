@@ -54,21 +54,28 @@ export default class CommentInfoPage extends Component {
                     allLoadedText={I18n.t('no_more')}
                     waitingSpinnerText={I18n.t('loading')}
                     separator={this._separator}
+                    pagination={false}
                 />
-
-                <CommentBottom
-                    info={item}
-                    topic_type={CommentBottom.replies}/>
+                <View style={{height: 60}}/>
+                <View style={styles.bottom}>
+                    <CommentBottom
+                        ref={ref => this.commentBottom = ref}
+                        info={item}
+                        topic_type={CommentBottom.replies}/>
+                </View>
             </BaseComponent>
         )
     }
 
+    repliesReFunc = (item, repliesType) => {
+        this.commentBottom && this.commentBottom.repliesBtn(item, repliesType)
+    };
+
     renderItem = (item, index) => {
-        return (
-            <View>
-                <CommentItem item={item}/>
-            </View>
-        )
+        return ( <CommentItem
+            repliesReFunc={this.repliesReFunc}
+            commentType={CommentItem.RepliesReplies}
+            item={item}/>)
     };
 
     onFetch = (page, postRefresh, endFetch) => {
@@ -78,12 +85,10 @@ export default class CommentInfoPage extends Component {
                 this.setState({
                     totalComment: data.total_count
                 });
-                postRefresh(data.items, 6);
+                postRefresh(data.items, 9);
             }, err => {
                 endFetch()
             });
-
-        } else {
 
         }
 
@@ -101,6 +106,12 @@ const styles = StyleSheet.create({
         marginLeft: 17,
         marginTop: 11,
         marginBottom: 10
+    },
+    bottom: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0
     }
 
 });

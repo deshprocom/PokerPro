@@ -19,6 +19,7 @@ import {Colors, Fonts, Images, ApplicationStyles} from '../Themes';
 import {getAccessToken} from '../services/RequestHelper';
 import {strNotNull, isEmptyObject} from "../utils/ComonHelper";
 import {CommentBottom} from './comment';
+import CommentItem from "./comment/CommentItem";
 
 class PostRoute {
     static NewsInfo = 'NewsInfo';
@@ -87,7 +88,7 @@ export default class WebPage extends Component {
                         global.router.toCommentInfoPage(param);
                         break;
                     case PostRoute.RepliesComment:
-                        this.commentNav && this.commentNav.repliesBtn(param);
+                        this.commentNav && this.commentNav.repliesBtn(param, CommentBottom.replies);
                         break;
                 }
             }
