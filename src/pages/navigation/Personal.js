@@ -64,7 +64,7 @@ class Personal extends Component {
 
             }}>
                 <View style={[stylesP.personDynamic]}>
-                    <Image style={{width: 21, height: 22, marginLeft: 20}} source={Images.person_dynamic}/>
+                    <Image style={{width: 23, height: 22, marginLeft: 20}} source={Images.person_dynamic}/>
                     <Text style={[stylesP.personalText]}>{I18n.t('person_dynamic')}</Text>
                     <View style={{flex: 1}}/>
 

@@ -5,6 +5,7 @@ import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
 import {Badge} from '../../components';
 import {util} from '../../utils/ComonHelper';
+import {postNewLikes} from '../../services/CommentDao';
 
 export default class ClickComment extends Component {
 
@@ -24,8 +25,20 @@ export default class ClickComment extends Component {
         return <Badge style={styles.badge}>{44}</Badge>
     };
 
+    likeChang=()=>{
+        postNewLikes({info_id:this.props.info_id}, data => {
+            // console.log("newLikes:",data);
+            // this.setState({
+            //     newLikes:data
+            // });
+        }, err => {
+        });
+        this.props.webRefesh();
+    };
+
     likeShare = () => {
         const {likeButton} = this.state;
+        const {newLikes} = this.props;
         return (
             <View style={{flexDirection:'row',flex:1,marginRight:17}}>
                 <TouchableOpacity
@@ -49,7 +62,8 @@ export default class ClickComment extends Component {
                 <TouchableOpacity
                     style={styles.likeView}
                     onPress={()=>{
-                    this.setState({likeButton:!likeButton})
+                    this.setState({likeButton:!likeButton});
+                    this.likeChang()
                 }}>
                     <Image style={styles.like} source={likeButton?Images.likeRed:Images.like}/>
                 </TouchableOpacity>

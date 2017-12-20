@@ -8,16 +8,15 @@ import {util, isEmptyObject} from '../../utils/ComonHelper';
 import ClickComment from './ClickComment';
 import InputComment from './InputComment';
 
+
 export default class CommentBottom extends Component {
 
     state = {
         showInput: false,
         repliesShow: false
-
     };
 
     componentDidMount() {
-
     };
 
     _showInput = () => {
@@ -43,13 +42,15 @@ export default class CommentBottom extends Component {
     };
 
     render() {
-        const {info, topic_type} = this.props;
-
+        const {info, topic_type,webRefesh} = this.props;
+        const{newLikes} = this.state;
 
         return (
             <View style={styles.bottom}>
 
-                <ClickComment _showInput={this._showInput}/>
+                <ClickComment _showInput={this._showInput}
+                              info_id={info.id}
+                              webRefesh={webRefesh}/>
                 <InputComment
                     topic_id={info.id}
                     topic_type={topic_type}

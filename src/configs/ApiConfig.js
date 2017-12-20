@@ -115,7 +115,8 @@ export default {
     mall_refund: mall_refund,
     refund_info: refund_info,
     topic_comments: 'topic/comments',
-    comment_replies: comment_replies
+    comment_replies: comment_replies,
+    new_likes:new_likes
 
 
 }
@@ -129,6 +130,12 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+export function new_likes(body) {
+    const {info_id} = body;
+
+    return `topic/infos/${info_id}/likes`;
+}
 
 export function comment_replies(body) {
     const {comment_id} = body;
