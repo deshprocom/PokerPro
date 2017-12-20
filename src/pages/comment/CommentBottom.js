@@ -43,6 +43,7 @@ export default class CommentBottom extends Component {
     };
 
     render() {
+        console.log(this)
         const {info, topic_type} = this.props;
 
 

@@ -55,6 +55,10 @@ export default class CommentInfoPage extends Component {
                     waitingSpinnerText={I18n.t('loading')}
                     separator={this._separator}
                 />
+
+                <CommentBottom
+                info={item}
+                topic_type={item.typological}/>
             </BaseComponent>
         )
     }
