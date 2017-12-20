@@ -43,7 +43,6 @@ export default class CommentBottom extends Component {
     };
 
     render() {
-        console.log(this)
         const {info, topic_type} = this.props;
 
 
@@ -72,8 +71,9 @@ export default class CommentBottom extends Component {
     renderRelies = () => {
         const {repliesShow, repliesItem} = this.state;
         if (repliesShow && !isEmptyObject(repliesItem)) {
-            const {id,} = repliesItem;
+            const {id,nick_name} = repliesItem;
             return <InputComment
+                repliesName={nick_name}
                 topic_id={id}
                 topic_type={'replies'}
                 _showInput={this.showReplies}

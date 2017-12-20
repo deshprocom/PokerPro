@@ -39,7 +39,7 @@ export default class InputComment extends Component {
                         <TextInput
                             underlineColorAndroid="transparent"
                             style={styles.inputComment}
-                            placeholder="回复花花公子:"
+                            placeholder={this.txtPlaceholder()}
                             returnKeyType={'done'}
                             onChangeText={text => this.setState({
                                 comment: text
@@ -53,7 +53,7 @@ export default class InputComment extends Component {
                             this.releaseComment()
                         }}
                         style={styles.release}>
-                        <Text style={{color: Colors.txt_444, fontSize: 15}}>评论</Text>
+                        <Text style={{color: Colors.txt_444, fontSize: 15}}>{this.txtCommentOrReplies()}</Text>
                     </TouchableOpacity>
 
 
@@ -61,6 +61,16 @@ export default class InputComment extends Component {
             </Modal>
         </View>
 
+    };
+
+    txtCommentOrReplies = () => {
+        const {topic_type} = this.props;
+        return topic_type === 'replies' ? I18n.t('release') : I18n.t('comment')
+    };
+
+    txtPlaceholder = () => {
+        const {topic_type, repliesName} = this.props;
+        return topic_type === 'replies' ? `回复${repliesName}:` : '写下评论...'
     };
 
     releaseComment = () => {
