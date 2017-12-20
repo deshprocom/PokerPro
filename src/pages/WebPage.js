@@ -20,6 +20,12 @@ import {getAccessToken} from '../services/RequestHelper';
 import {strNotNull, isEmptyObject} from "../utils/ComonHelper";
 import {CommentBottom} from './comment';
 
+class PostRoute {
+    static NewsInfo = 'NewsInfo';
+    static CommentList = 'comments';
+    static RepliesComment = 'replies';
+}
+
 
 export default class WebPage extends Component {
 
@@ -68,25 +74,22 @@ export default class WebPage extends Component {
 
     handleMessage = (e) => {
         let msg = e.nativeEvent.data;
-        if (this.webMsg !== msg) {
-            this.webMsg = msg;
-            let webParam = JSON.parse(msg);
-            console.log('来自Web数据', webParam);
-            const {route, param} = webParam;
-            if (strNotNull(route)) {
-                switch (route) {
-                    case 'comments':
-                        let commentsUrl = `${global.desh5}comment`;
-                        global.router.toCommentInfoPage(param);
-                        break;
-                    case 'replies':
-                        this.commentNav && this.commentNav.repliesBtn(param);
-                        break;
-                }
+
+        let webParam = JSON.parse(msg);
+        console.log('来自Web数据', webParam);
+        const {route, param} = webParam;
+        if (strNotNull(route)) {
+            switch (route) {
+                case PostRoute.CommentList:
+                    let commentsUrl = `${global.desh5}comment`;
+                    global.router.toCommentInfoPage(param);
+                    break;
+                case PostRoute.RepliesComment:
+                    this.commentNav && this.commentNav.repliesBtn(param);
+                    break;
             }
-
-
         }
+
 
     };
 
