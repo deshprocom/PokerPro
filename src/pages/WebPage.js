@@ -125,17 +125,20 @@ export default class WebPage extends Component {
     }
 
     _renderBottomNav = () => {
-        const {bottomNav, info} = this.props.params.body;
-        if (strNotNull(bottomNav)) {
-            switch (bottomNav) {
-                case 'commentNav':
-                    return <CommentBottom
-                        ref={ref => this.commentNav = ref}
-                        topic_type={'info'}
-                        info={info}/>
+        if (this.props.params.body) {
+            const {bottomNav, info, topic_type} = this.props.params.body;
+            if (strNotNull(bottomNav)) {
+                switch (bottomNav) {
+                    case 'commentNav':
+                        return <CommentBottom
+                            ref={ref => this.commentNav = ref}
+                            topic_type={topic_type}
+                            info={info}/>
 
+                }
             }
         }
+
     };
 
     _renderError = () => {
