@@ -90,24 +90,26 @@ export default class PersonDynamicPage extends Component {
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     rightImageStyle={{height: 20, width: 22, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
+                <ScrollView>
+                    {this.personTop()}
 
-                {this.personTop()}
+                    <View style={{backgroundColor:'#FFFFFF'}}>
+                        <UltimateFlatList
+                            arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
+                            ref={ref => this.ultimate = ref}
+                            onFetch={this.onFetch}
+                            keyExtractor={(item, index) => `replies${index}`}
+                            item={this.content}
+                            refreshableTitlePull={I18n.t('pull_refresh')}
+                            refreshableTitleRelease={I18n.t('release_refresh')}
+                            dateTitle={I18n.t('last_refresh')}
+                            allLoadedText={I18n.t('no_more')}
+                            waitingSpinnerText={I18n.t('loading')}
+                            separator={this._separator1}
+                        />
+                    </View>
+                </ScrollView>
 
-                <View style={{backgroundColor:'#FFFFFF'}}>
-                    <UltimateFlatList
-                        arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
-                        ref={ref => this.ultimate = ref}
-                        onFetch={this.onFetch}
-                        keyExtractor={(item, index) => `replies${index}`}
-                        item={this.content}
-                        refreshableTitlePull={I18n.t('pull_refresh')}
-                        refreshableTitleRelease={I18n.t('release_refresh')}
-                        dateTitle={I18n.t('last_refresh')}
-                        allLoadedText={I18n.t('no_more')}
-                        waitingSpinnerText={I18n.t('loading')}
-                        separator={this._separator1}
-                    />
-                </View>
 
             </BaseComponent>
         );
@@ -144,7 +146,8 @@ const styles = StyleSheet.create({
         color: '#444444',
         marginLeft:17,
         marginTop:11,
-        marginBottom:10
+        marginBottom:10,
+        fontWeight:'bold'
     },
     itemPage:{
         marginLeft:78,
