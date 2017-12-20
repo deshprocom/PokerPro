@@ -115,7 +115,8 @@ export default {
     mall_refund: mall_refund,
     refund_info: refund_info,
     topic_comments: 'topic/comments',
-    comment_replies: comment_replies
+    comment_replies: comment_replies,
+    replies_replies: replies_replies
 
 
 }
@@ -129,6 +130,11 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+export function replies_replies(body) {
+    const {comment_id, reply_id} = body;
+    return `topic/comments/${comment_id}/replies/${reply_id}/replies`
+}
 
 export function comment_replies(body) {
     const {comment_id} = body;

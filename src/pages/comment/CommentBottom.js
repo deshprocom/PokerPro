@@ -53,6 +53,7 @@ export default class CommentBottom extends Component {
 
                 <ClickComment _showInput={this._showInput}/>
                 <InputComment
+                    repliesName={info.nick_name}
                     topic_id={info.id}
                     topic_type={topic_type}
                     _showInput={this._showInput}
@@ -64,7 +65,7 @@ export default class CommentBottom extends Component {
     }
 
 
-    showReplies = ()=>{
+    showReplies = () => {
         this.setState({
             repliesShow: !this.state.repliesShow
         })
@@ -73,7 +74,7 @@ export default class CommentBottom extends Component {
     renderRelies = () => {
         const {repliesShow, repliesItem} = this.state;
         if (repliesShow && !isEmptyObject(repliesItem)) {
-            const {id,nick_name} = repliesItem;
+            const {id, nick_name} = repliesItem;
             return <InputComment
                 repliesName={nick_name}
                 topic_id={id}

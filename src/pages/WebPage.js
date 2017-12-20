@@ -74,19 +74,22 @@ export default class WebPage extends Component {
 
     handleMessage = (e) => {
         let msg = e.nativeEvent.data;
+        if (this.webMsg !== msg) {
+            this.webMsg = msg;
+            //去重
+            let webParam = JSON.parse(msg.substring(6));
+            console.log('来自Web数据', webParam);
+            const {route, param} = webParam;
+            if (strNotNull(route)) {
+                switch (route) {
+                    case PostRoute.CommentList:
 
-        let webParam = JSON.parse(msg);
-        console.log('来自Web数据', webParam);
-        const {route, param} = webParam;
-        if (strNotNull(route)) {
-            switch (route) {
-                case PostRoute.CommentList:
-
-                    global.router.toCommentInfoPage(param);
-                    break;
-                case PostRoute.RepliesComment:
-                    this.commentNav && this.commentNav.repliesBtn(param);
-                    break;
+                        global.router.toCommentInfoPage(param);
+                        break;
+                    case PostRoute.RepliesComment:
+                        this.commentNav && this.commentNav.repliesBtn(param);
+                        break;
+                }
             }
         }
 
