@@ -46,7 +46,7 @@ export default class CommentItem extends PureComponent {
     };
 
     render() {
-        console.log(this.props.item)
+
         if (isEmptyObject(this.props.item)) {
             return <View/>
         }

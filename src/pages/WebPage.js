@@ -81,7 +81,7 @@ export default class WebPage extends Component {
         if (strNotNull(route)) {
             switch (route) {
                 case PostRoute.CommentList:
-                    let commentsUrl = `${global.desh5}comment`;
+
                     global.router.toCommentInfoPage(param);
                     break;
                 case PostRoute.RepliesComment:

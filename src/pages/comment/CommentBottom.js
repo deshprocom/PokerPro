@@ -10,6 +10,8 @@ import InputComment from './InputComment';
 
 export default class CommentBottom extends Component {
 
+    static replies = 'replies';
+
     state = {
         showInput: false,
         repliesShow: false

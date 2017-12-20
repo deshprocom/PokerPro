@@ -1,17 +1,17 @@
-import React,{Component} from 'react';
-import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView,TextInput} from 'react-native';
+import React, {Component} from 'react';
+import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView, TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {strNotNull, util} from '../../utils/ComonHelper';
 import CommentBottom from './CommentBottom';
 import CommentItem from './CommentItem';
-import {NavigationBar,BaseComponent} from '../../components';
+import {NavigationBar, BaseComponent} from '../../components';
 import UltimateFlatList from '../../components/ultimate';
 import {getReplies} from '../../services/CommentDao';
 
 export default class CommentInfoPage extends Component {
-    state={
-        totalComment:0
+    state = {
+        totalComment: 0
     };
 
     _separator = () => {
@@ -19,11 +19,11 @@ export default class CommentInfoPage extends Component {
     };
 
 
-    render(){
+    render() {
         const {item} = this.props.params;
-        console.log('CommentItem',item)
+        console.log('CommentItem', item)
 
-        return(
+        return (
             <BaseComponent>
                 <NavigationBar
                     barStyle={'dark-content'}
@@ -34,15 +34,15 @@ export default class CommentInfoPage extends Component {
                     titleStyle={{color: Colors._161}}
                     title={I18n.t('comment_info')}/>
 
-                <View style={{backgroundColor:'#FFFFFF',paddingBottom:10,marginTop:1}}>
+                <View style={{backgroundColor: '#FFFFFF', paddingBottom: 10, marginTop: 1}}>
                     <CommentItem
                         item={item}/>
                 </View>
 
                 <UltimateFlatList
-                    header={()=>{
-                            return  <Text style={styles.allComment}>全部评论（{this.state.totalComment}）</Text>
-                        }}
+                    header={() => {
+                        return <Text style={styles.allComment}>全部评论（{this.state.totalComment}）</Text>
+                    }}
                     arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
                     ref={ref => this.ultimate = ref}
                     onFetch={this.onFetch}
@@ -57,14 +57,14 @@ export default class CommentInfoPage extends Component {
                 />
 
                 <CommentBottom
-                info={item}
-                topic_type={item.typological}/>
+                    info={item}
+                    topic_type={CommentBottom.replies}/>
             </BaseComponent>
         )
     }
 
     renderItem = (item, index) => {
-        return(
+        return (
             <View>
                 <CommentItem item={item}/>
             </View>
@@ -73,10 +73,10 @@ export default class CommentInfoPage extends Component {
 
     onFetch = (page, postRefresh, endFetch) => {
         if (page === 1) {
-            getReplies({comment_id:this.props.params.item.id}, data => {
-                console.log("replies:",data);
+            getReplies({comment_id: this.props.params.item.id}, data => {
+                console.log("replies:", data);
                 this.setState({
-                    totalComment:data.total_count
+                    totalComment: data.total_count
                 });
                 postRefresh(data.items, 6);
             }, err => {
@@ -90,17 +90,17 @@ export default class CommentInfoPage extends Component {
     };
 }
 
-const styles= StyleSheet.create({
-    container:{
-        backgroundColor:'#FFFFFF',
-        marginTop:1,
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#FFFFFF',
+        marginTop: 1,
     },
-    allComment:{
+    allComment: {
         fontSize: 14,
         color: '#AAAAAA',
-        marginLeft:17,
-        marginTop:11,
-        marginBottom:10
+        marginLeft: 17,
+        marginTop: 11,
+        marginBottom: 10
     }
 
 });
