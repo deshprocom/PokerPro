@@ -7,13 +7,11 @@ import {Badge} from '../../components';
 import {util} from '../../utils/ComonHelper';
 import {postNewLikes} from '../../services/CommentDao';
 import {sharePage} from '../../utils/ComonHelper';
-import {getNewsDetail} from '../../services/NewsDao';
 
 export default class ClickComment extends Component {
 
     state = {
-        text: '',
-        newsInfo: {}
+        text: ''
     };
     static propTypes = {
         _showInput: propTypes.func.isRequired
@@ -32,14 +30,7 @@ export default class ClickComment extends Component {
         }, err => {
         });
         // this.props.webRefesh();
-        getNewsDetail({info_id: this.props.info_id}, data => {
-            console.log("newsInfo2:",data)
-            this.setState({
-                newsInfo: data
-            })
-        }, err => {
 
-        })
     };
 
     likeShare = () => {
