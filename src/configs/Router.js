@@ -44,6 +44,16 @@ export default class Router {
 
     }
 
+    toPersonDynamic() {
+        this.stackPush({
+            name: 'PersonDynamicPage',
+            // params: {
+            //     orderItem,
+            //     mallRefresh
+            // }
+        })
+    }
+
     toMallSelectPage(orderItem, mallRefresh) {
         this.stackPush({
             name: 'MallSelectPage',
@@ -770,9 +780,12 @@ export default class Router {
         })
     }
 
-    toCommentInfoPage() {
+    toCommentInfoPage(item) {
         this.stackPush({
-            name: 'CommentInfoPage'
+            name: 'CommentInfoPage',
+            params:{
+                item:item
+            }
         })
     }
 

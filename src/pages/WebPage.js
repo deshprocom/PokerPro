@@ -77,7 +77,7 @@ export default class WebPage extends Component {
                 switch (route) {
                     case 'comments':
                         let commentsUrl = `${global.desh5}comment`;
-                        global.router.toWebPage(commentsUrl, param);
+                        global.router.toCommentInfoPage(param);
                         break;
                     case 'replies':
                         this.commentNav && this.commentNav.repliesBtn(param);

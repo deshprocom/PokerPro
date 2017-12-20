@@ -269,7 +269,8 @@ const images = {
     commentWhite: require('../../source/comment/commentWhite.png'),
     like: require('../../source/comment/like.png'),
     likeRed: require('../../source/comment/likeRed.png'),
-    forward: require('../../source/comment/forward.png')
+    forward: require('../../source/comment/forward.png'),
+    person_dynamic: require('../../source/comment/person_dynamic.png')
 
 
 };

@@ -2,39 +2,29 @@ import React,{Component} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView,TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import {utcDate, util} from '../../utils/ComonHelper';
+import {strNotNull, util} from '../../utils/ComonHelper';
 import CommentBottom from './CommentBottom';
 import CommentItem from './CommentItem';
-import ReleaseCommentInfo from './ReleaseCommentInfo';
-import {NavigationBar} from '../../components';
+import {NavigationBar,BaseComponent} from '../../components';
+import UltimateFlatList from '../../components/ultimate';
+import {getReplies} from '../../services/CommentDao';
 
 export default class CommentInfoPage extends Component {
     state={
-        releaseShow:false
+        totalComment:0
     };
 
-    releaseInfo = () => {
-        this.setState({
-            releaseShow: !this.state.releaseShow
-        });
-        console.log("releaseShow:",this.state.releaseShow);
-    };
-
-    _renderItem=()=>{
-        return(
-            <CommentItem releaseInfo={this.releaseInfo}/>
-        )
-    };
     _separator = () => {
-        return <View style={{height: 0.5, marginLeft: 68, marginRight: 17, backgroundColor: '#DDDDDD'}}/>;
+        return <View style={{height: 1, marginLeft: 68, marginRight: 17, backgroundColor: '#DDDDDD'}}/>;
     };
+
 
     render(){
-        let dataHosts =[1,2,3,4,5,6,7,8];
-        const{releaseShow} = this.state;
+        const {item} = this.props.params;
+        console.log('CommentItem',item)
 
         return(
-            <View style={ApplicationStyles.bgContainer}>
+            <BaseComponent>
                 <NavigationBar
                     barStyle={'dark-content'}
                     toolbarStyle={{backgroundColor: 'white'}}
@@ -44,33 +34,60 @@ export default class CommentInfoPage extends Component {
                     titleStyle={{color: Colors._161}}
                     title={I18n.t('comment_info')}/>
 
-                <View style={{backgroundColor:'#FFFFFF',marginTop:1,paddingBottom:16}}>
-                    <CommentItem releaseInfo={this.releaseInfo}/>
+                <View style={{backgroundColor:'#FFFFFF',paddingBottom:10,marginTop:1}}>
+                    <CommentItem
+                        item={item}/>
                 </View>
 
-                <CommentBottom/>
+                <UltimateFlatList
+                    header={()=>{
+                            return  <Text style={styles.allComment}>全部评论（{this.state.totalComment}）</Text>
+                        }}
+                    arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
+                    ref={ref => this.ultimate = ref}
+                    onFetch={this.onFetch}
+                    keyExtractor={(item, index) => `replies${index}`}
+                    item={this.renderItem}
+                    refreshableTitlePull={I18n.t('pull_refresh')}
+                    refreshableTitleRelease={I18n.t('release_refresh')}
+                    dateTitle={I18n.t('last_refresh')}
+                    allLoadedText={I18n.t('no_more')}
+                    waitingSpinnerText={I18n.t('loading')}
+                    separator={this._separator}
+                />
 
-                <ScrollView  style={{backgroundColor:'#ECECEE',marginBottom:80}}>
-
-                    <Text style={styles.allComment}>全部评论（333）</Text>
-                    <FlatList
-                        style={{marginTop: 16,backgroundColor:'#ECECEE'}}
-                        data={dataHosts}
-                        showsHorizontalScrollIndicator={false}
-                        ItemSeparatorComponent={this._separator}
-                        renderItem={this._renderItem}
-                        keyExtractor={(item, index) => `comment${index}`}
-                    />
-
-                    <View style={{height:80}}/>
-
-                </ScrollView>
-
-                {releaseShow ? <ReleaseCommentInfo
-                        releaseInfo={this.releaseInfo}/> : null}
-            </View>
+                <CommentBottom
+                info={item}
+                topic_type={item.typological}/>
+            </BaseComponent>
         )
     }
+
+    renderItem = (item, index) => {
+        return(
+            <View>
+                <CommentItem item={item}/>
+            </View>
+        )
+    };
+
+    onFetch = (page, postRefresh, endFetch) => {
+        if (page === 1) {
+            getReplies({comment_id:this.props.params.item.id}, data => {
+                console.log("replies:",data);
+                this.setState({
+                    totalComment:data.total_count
+                });
+                postRefresh(data.items, 6);
+            }, err => {
+                endFetch()
+            });
+
+        } else {
+
+        }
+
+    };
 }
 
 const styles= StyleSheet.create({
@@ -82,7 +99,8 @@ const styles= StyleSheet.create({
         fontSize: 14,
         color: '#AAAAAA',
         marginLeft:17,
-        marginTop:11
+        marginTop:11,
+        marginBottom:10
     }
 
 });
