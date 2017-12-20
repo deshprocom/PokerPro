@@ -4,10 +4,9 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import PropTypes from 'prop-types';
 import {Badge} from '../../components';
-import {util, isEmptyObject} from '../../utils/ComonHelper';
+import {util, isEmptyObject,sharePage} from '../../utils/ComonHelper';
 import ClickComment from './ClickComment';
 import InputComment from './InputComment';
-
 
 export default class CommentBottom extends Component {
 
@@ -43,14 +42,15 @@ export default class CommentBottom extends Component {
 
     render() {
         const {info, topic_type,webRefesh} = this.props;
-        const{newLikes} = this.state;
 
         return (
             <View style={styles.bottom}>
 
                 <ClickComment _showInput={this._showInput}
                               info_id={info.id}
-                              webRefesh={webRefesh}/>
+                              webRefesh={webRefesh}
+                                info={info}
+                              />
                 <InputComment
                     topic_id={info.id}
                     topic_type={topic_type}

@@ -127,8 +127,8 @@ export default class WebPage extends Component {
         );
     };
 
-    webRefesh=()=>{
-        this.webView.reload();
+    webRefesh = () => {
+        this.webView && this.webView.reload();
     };
 
     _renderBottomNav = () => {

@@ -15,7 +15,7 @@ export function getPersonDynamics(body, resolve, reject) {
 
 /*资讯点赞和取消点赞的接口*/
 export function postNewLikes(body, resolve, reject) {
-    helper.get(Api.new_likes(body),  body, ret => {
+    helper.post(Api.new_likes(body),  body, ret => {
         resolve(ret.data)
     }, reject)
 }
