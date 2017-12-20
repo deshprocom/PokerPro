@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>狗蛋的css</title>
+    <style type="text/css">
+
+
+        *, *:after, *:before {
+            box-sizing:border-box;
+        }
+
+        html, body {background:#ff9770; font-size:16px;}
+
+        .wrapper{
+            width:500px;
+            margin:12% auto;
+            user-select: none;
+            display:flex;
+            flex-direction: row;
+            align-content: center;
+            justify-content: center;
+        }
+
+        .map-icon {
+            width: 35px;
+            height:35px;
+            background:#f7f7f7;
+            border-radius:3px;
+            box-shadow: 0 0 3px 1px rgba(0,0,0,0.2);
+            text-align:center;
+            color:#adccce;
+
+        }
+        .map-icon2 {
+            width: 35px;
+            height:35px;
+            background:#f7f7f7;
+            border-radius:3px;
+            box-shadow: 0 0 3px 1px rgba(0,0,0,0.2);
+            text-align:center;
+            color:#adccce;
+
+        }
+        span {
+            font-size:1.3em;
+        }
+
+
+
+        .map-slider {
+            width: 330px;
+            height: 36px;
+            background: #f7f7f7;
+            border-radius: 3px;
+            text-align: center;
+            box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.2);
+            position: relative;
+            color: #866a62;
+            margin-left:20px;
+            margin-right: 20px;
+        }
+
+        .fa-plus {
+            display:block;
+            padding-top:16px;
+            height:50px;
+            cursor:pointer;
+        }
+        .fa-minus {
+            display:block;
+            height:50px;
+            padding-top:12px;
+            cursor:pointer;
+        }
+        .drag-line {
+            width:200px;
+            height:15px;
+            background:deepskyblue;
+            border-radius:8px;
+            margin:-40px auto;
+            position:relative;
+
+        }
+        .line {
+            width:182px;
+            height:8px;
+            background:#adccce;
+            border-radius:8px;
+            margin:25px auto;
+            position:absolute;
+            margin-top:0px;
+            margin-bottom:0px;
+            padding-top:10px;
+            clip: rect(0px, 8px, 183px, 0px);
+
+        }
+        .draggable-button {
+            width:29px;
+            height:29px;
+            background:#f7f7f7;
+            border-radius:50%;
+            position:absolute;
+            box-shadow: 0px 4px 10px 1px rgba(0,0,0,0.2);
+            margin-left:-19px;
+            margin-top:-7px;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body style="font-size:16px">
+
+<div class="wrapper">
+    <div class="map-icon">
+        <span class="fa fa-map-marker">+</span>
+    </div>
+    <div class="map-slider">
+        <div class="buttons">
+            <span class="fa fa-plus"></span>
+            <!--这是那个点 start-->
+            <div class="drag-line">
+                <div class="line"></div>
+                <div class="draggable-button"></div>
+            </div>
+            <!--这是那个点 end-->
+            <div class="draggable-buton"></div>
+            <span class="fa fa-minus"></span>
+        </div>
+    </div>
+    <div class="map-icon2">
+        <span class="fa fa-map-marker">-</span>
+    </div>
+</div>
+
+</body>
+</html>
+
+
+

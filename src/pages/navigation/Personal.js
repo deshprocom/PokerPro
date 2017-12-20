@@ -55,7 +55,23 @@ class Personal extends Component {
     renderItem = () => {
         return <View>
 
+            <TouchableOpacity style={stylesP.personalView} onPress={() => {
+              if (isEmptyObject(login_user)) {
+                router.toLoginFirstPage()
+            } else {
+                router.toPersonDynamic()
+            }
 
+            }}>
+                <View style={[stylesP.personDynamic]}>
+                    <Image style={{width: 21, height: 22, marginLeft: 20}} source={Images.person_dynamic}/>
+                    <Text style={[stylesP.personalText]}>{I18n.t('person_dynamic')}</Text>
+                    <View style={{flex: 1}}/>
+
+                    <Image style={stylesP.personalImg} source={Images.is}/>
+                </View>
+            </TouchableOpacity>
+            <View style={{height:3,width:'100%'}}/>
             <TouchableOpacity style={stylesP.personalView} onPress={() => {
                 umengEvent('more_business');
                 router.toBusinessPage()
@@ -427,6 +443,13 @@ const stylesP = StyleSheet.create({
         fontSize: 14,
         color: Colors.txt_444,
         marginTop: 8
+    },
+    personDynamic:{
+        width: Metrics.screenWidth,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 13,
+        marginBottom: 13,
     }
 
 
