@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, TextInput, Modal} from 'react-native';
+import {
+    View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, TextInput, Modal,
+    KeyboardAvoidingView, Platform
+} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
@@ -26,38 +29,44 @@ export default class InputComment extends Component {
                 visible={this.props.visible}
                 style={{flex: 1}}
             >
-                <TouchableOpacity
-                    onPress={() => {
-                        this.props._showInput()
-                    }}
-                    style={styles.inputModal}>
-
-                </TouchableOpacity>
-
-                <View style={styles.bottom}>
-                    <View style={{width: '80%', marginLeft: 5, borderWidth: 0}}>
-                        <TextInput
-                            underlineColorAndroid="transparent"
-                            style={styles.inputComment}
-                            placeholder={this.txtPlaceholder()}
-                            returnKeyType={'done'}
-                            onChangeText={text => this.setState({
-                                comment: text
-                            })}
-                        />
-
-                    </View>
-
+                <KeyboardAvoidingView
+                    behavior={'height'}
+                    keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 40}
+                    style={{flex: 1}}>
                     <TouchableOpacity
                         onPress={() => {
-                            this.releaseComment()
+                            this.props._showInput()
                         }}
-                        style={styles.release}>
-                        <Text style={{color: Colors.txt_444, fontSize: 15}}>{this.txtCommentOrReplies()}</Text>
+                        style={styles.inputModal}>
+
                     </TouchableOpacity>
 
+                    <View style={styles.bottom}>
+                        <View style={{width: '80%', marginLeft: 5, borderWidth: 0}}>
+                            <TextInput
+                                underlineColorAndroid="transparent"
+                                style={styles.inputComment}
+                                placeholder={this.txtPlaceholder()}
+                                returnKeyType={'done'}
+                                onChangeText={text => this.setState({
+                                    comment: text
+                                })}
+                                autoFocus={true}
+                            />
 
-                </View>
+                        </View>
+
+                        <TouchableOpacity
+                            onPress={() => {
+                                this.releaseComment()
+                            }}
+                            style={styles.release}>
+                            <Text style={{color: Colors.txt_444, fontSize: 15}}>{this.txtCommentOrReplies()}</Text>
+                        </TouchableOpacity>
+
+
+                    </View>
+                </KeyboardAvoidingView>
             </Modal>
         </View>
 
@@ -126,10 +135,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         borderColor: '#EEEEEE',
         flexDirection: 'row',
-        alignItems: 'center',
-        bottom: 0,
-        zIndex: 99,
-        position: 'absolute',
+        alignItems: 'center'
     },
     input: {
         height: 30,
