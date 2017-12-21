@@ -95,6 +95,10 @@ export default class WebPage extends Component {
                             break;
                         case PostRoute.ADD_COMMENT:
                             this.commentNav && this.commentNav.commentTotal(param);
+                            break;
+                        case PostRoute.NewsInfo:
+                            this.commentNav && this.commentNav.userLike(param.current_user_like);
+                            break;
                     }
                 }
             }

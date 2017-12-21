@@ -40,6 +40,11 @@ export default class CommentBottom extends Component {
     };
 
 
+    userLike = (current_user_like) => {
+        this.clickComment && this.clickComment.setUserLike(current_user_like)
+    };
+
+
     commentTotal = (comment_count) => {
         this.setState({comment_count})
     };
@@ -61,17 +66,19 @@ export default class CommentBottom extends Component {
     };
 
     render() {
-        const {info, topic_type,webRefesh} = this.props;
+        const {info, topic_type, webRefesh} = this.props;
 
         return (
             <View style={styles.bottom}>
 
-                <ClickComment _showInput={this._showInput}
-                              comment_count={this.state.comment_count}
-                              info_id={info.id}
-                              webRefesh={webRefesh}
-                                info={info}
-                              />
+                <ClickComment
+                    ref={ref => this.clickComment = ref}
+                    _showInput={this._showInput}
+                    comment_count={this.state.comment_count}
+                    info_id={info.id}
+                    sendMessageToWeb={this.sendMessageToWeb}
+                    info={info}
+                />
                 <InputComment
                     sendMessageToWeb={this.sendMessageToWeb}
                     repliesName={info.nick_name}
