@@ -6,6 +6,13 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
+/*某个回复下回复的接口*/
+export function postRepliesReplies(body, resolve, reject) {
+    helper.post(Api.replies_replies(body), body, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
 /*资讯视频回复列表的接口*/
 export function getReplies(body, resolve, reject) {
     helper.get(Api.comment_replies(body), ret => {

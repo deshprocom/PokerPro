@@ -1,17 +1,17 @@
-import React,{Component} from 'react';
-import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView,TextInput} from 'react-native';
+import React, {Component} from 'react';
+import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView, TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {strNotNull, util} from '../../utils/ComonHelper';
 import CommentBottom from './CommentBottom';
 import CommentItem from './CommentItem';
-import {NavigationBar,BaseComponent} from '../../components';
+import {NavigationBar, BaseComponent} from '../../components';
 import UltimateFlatList from '../../components/ultimate';
 import {getReplies} from '../../services/CommentDao';
 
 export default class CommentInfoPage extends Component {
-    state={
-        totalComment:0
+    state = {
+        totalComment: 0
     };
 
     _separator = () => {
@@ -19,11 +19,11 @@ export default class CommentInfoPage extends Component {
     };
 
 
-    render(){
+    render() {
         const {item} = this.props.params;
-        console.log('CommentItem',item)
+        console.log('CommentItem', item)
 
-        return(
+        return (
             <BaseComponent>
                 <NavigationBar
                     barStyle={'dark-content'}
@@ -34,15 +34,18 @@ export default class CommentInfoPage extends Component {
                     titleStyle={{color: Colors._161}}
                     title={I18n.t('comment_info')}/>
 
-                <View style={{backgroundColor:'#FFFFFF',paddingBottom:10,marginTop:1}}>
+                <View style={{backgroundColor: '#FFFFFF', paddingBottom: 10, marginTop: 1}}>
                     <CommentItem
+                        repliesReFunc={() => {
+                            this.repliesReFunc(item, CommentBottom.replies)
+                        }}
                         item={item}/>
                 </View>
 
                 <UltimateFlatList
-                    header={()=>{
-                            return  <Text style={styles.allComment}>全部评论（{this.state.totalComment}）</Text>
-                        }}
+                    header={() => {
+                        return <Text style={styles.allComment}>全部评论（{this.state.totalComment}）</Text>
+                    }}
                     arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
                     ref={ref => this.ultimate = ref}
                     onFetch={this.onFetch}
@@ -54,53 +57,64 @@ export default class CommentInfoPage extends Component {
                     allLoadedText={I18n.t('no_more')}
                     waitingSpinnerText={I18n.t('loading')}
                     separator={this._separator}
+                    pagination={false}
                 />
-
-                <CommentBottom
-                info={item}
-                topic_type={item.typological}/>
+                <View style={{height: 60}}/>
+                <View style={styles.bottom}>
+                    <CommentBottom
+                        ref={ref => this.commentBottom = ref}
+                        info={item}
+                        topic_type={CommentBottom.replies}/>
+                </View>
             </BaseComponent>
         )
     }
 
+    repliesReFunc = (item, repliesType) => {
+        this.commentBottom && this.commentBottom.repliesBtn(item, repliesType)
+    };
+
     renderItem = (item, index) => {
-        return(
-            <View>
-                <CommentItem item={item}/>
-            </View>
-        )
+        return ( <CommentItem
+            repliesReFunc={this.repliesReFunc}
+            commentType={CommentItem.RepliesReplies}
+            item={item}/>)
     };
 
     onFetch = (page, postRefresh, endFetch) => {
         if (page === 1) {
-            getReplies({comment_id:this.props.params.item.id}, data => {
-                console.log("replies:",data);
+            getReplies({comment_id: this.props.params.item.id}, data => {
+                console.log("replies:", data);
                 this.setState({
-                    totalComment:data.total_count
+                    totalComment: data.total_count
                 });
-                postRefresh(data.items, 6);
+                postRefresh(data.items, 9);
             }, err => {
                 endFetch()
             });
-
-        } else {
 
         }
 
     };
 }
 
-const styles= StyleSheet.create({
-    container:{
-        backgroundColor:'#FFFFFF',
-        marginTop:1,
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#FFFFFF',
+        marginTop: 1,
     },
-    allComment:{
+    allComment: {
         fontSize: 14,
         color: '#AAAAAA',
-        marginLeft:17,
-        marginTop:11,
-        marginBottom:10
+        marginLeft: 17,
+        marginTop: 11,
+        marginBottom: 10
+    },
+    bottom: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0
     }
 
 });
