@@ -99,7 +99,7 @@ export default class WebPage extends Component {
                 }
             }
         } catch (e) {
-            console.log(e)
+            throw Error(e)
         }
 
 
@@ -126,8 +126,7 @@ export default class WebPage extends Component {
                     onNavigationStateChange={(e) => this.onNavigationStateChange(e)}
                     source={{uri: url}}
                     mixedContentMode={'always'}
-                    domStorageEnabled={true}
-                    scalesPageToFit={false}
+                    domStorageEnabled={false}
                     onMessage={this.handleMessage}/>
 
                 <View style={styles.bottom}>
