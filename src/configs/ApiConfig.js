@@ -138,10 +138,11 @@ export function person_dynamics(body) {
 
     return `users/${user_id}/dynamics?page=${page}&page_size=${page_size}`;
 }
-export function new_likes(body) {
-    const {info_id} = body;
 
-    return `topic/infos/${info_id}/likes`;
+export function new_likes(body) {
+    const {info_id, topic_type} = body;
+
+    return `topic/${topic_type}/${info_id}/likes`;
 }
 
 export function replies_replies(body) {

@@ -34,7 +34,9 @@ export default class ClickComment extends Component {
     };
 
     likeChang = () => {
-        postNewLikes({info_id: this.props.info_id}, data => {
+        const {info_id, topic_type} = this.props;
+
+        postNewLikes({info_id: info_id, topic_type: `${topic_type}s`}, data => {
             this.setState({
                 current_user_like: !this.state.current_user_like
             });

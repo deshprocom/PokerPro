@@ -159,7 +159,7 @@ export default class WebPage extends Component {
                             ref={ref => this.commentNav = ref}
                             topic_type={topic_type}
                             info={info}
-                            webRefesh={this.webRefesh}/>
+                        />
 
                 }
             }

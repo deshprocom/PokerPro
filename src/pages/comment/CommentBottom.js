@@ -66,12 +66,13 @@ export default class CommentBottom extends Component {
     };
 
     render() {
-        const {info, topic_type, webRefesh} = this.props;
+        const {info, topic_type} = this.props;
 
         return (
             <View style={styles.bottom}>
 
                 <ClickComment
+                    topic_type={topic_type}
                     ref={ref => this.clickComment = ref}
                     _showInput={this._showInput}
                     comment_count={this.state.comment_count}
