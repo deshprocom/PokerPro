@@ -137,7 +137,11 @@ export default class WebPage extends Component {
 
             </View>
         );
-    }
+    };
+
+    webRefesh = () => {
+        this.webView && this.webView.reload();
+    };
 
     _renderBottomNav = () => {
         if (this.props.params.body) {
@@ -150,7 +154,8 @@ export default class WebPage extends Component {
                             sendMessage={this.sendMessage}
                             ref={ref => this.commentNav = ref}
                             topic_type={topic_type}
-                            info={info}/>
+                            info={info}
+                            webRefesh={this.webRefesh}/>
 
                 }
             }

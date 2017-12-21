@@ -4,16 +4,17 @@
     <title>狗蛋的css</title>
     <style type="text/css">
 
-
+        /**这是整个页面的样式**/
         *, *:after, *:before {
             box-sizing:border-box;
         }
-
+        /**这是整个页面的样式**/
         html, body {background:#ff9770; font-size:16px;}
 
+        /**这是整个轮廓的样式 加号减号 还有中间那部分滑块一起 的父级样式**/
         .wrapper{
             width:500px;
-            margin:12% auto;
+            margin:12% auto; /**位置**/
             user-select: none;
             display:flex;
             flex-direction: row;
@@ -21,16 +22,19 @@
             justify-content: center;
         }
 
+        /**这是左边+号的样式**/
         .map-icon {
             width: 35px;
             height:35px;
-            background:#f7f7f7;
-            border-radius:3px;
-            box-shadow: 0 0 3px 1px rgba(0,0,0,0.2);
-            text-align:center;
-            color:#adccce;
+            background:#f7f7f7;/**背景颜色**/
+            border-radius:3px;/**边框的圆的程度 越大越圆**/
+            box-shadow: 0 0 3px 1px rgba(0,0,0,0.2);/**这个框的阴影**/
+            text-align:center;/**文本居中 **/
+            color:#adccce;/**字体的颜色 这里就是那个加减号的颜色**/
 
         }
+
+        /**这是右边-号的样式**/
         .map-icon2 {
             width: 35px;
             height:35px;
@@ -41,12 +45,13 @@
             color:#adccce;
 
         }
+        /**这是文字的样式 这里边没有文字这个可以忽略**/
         span {
-            font-size:1.3em;
+            font-size:1.3em;/**字体大小**/
         }
 
 
-
+        /**中间那个滑块的样式 白色的长方形加上蓝色的滑块**/
         .map-slider {
             width: 330px;
             height: 36px;
@@ -54,33 +59,37 @@
             border-radius: 3px;
             text-align: center;
             box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.2);
-            position: relative;
+            position: relative;/**位置 设置这个就相当于不受其他的div影响了，它的父级元素是body 了**/
             color: #866a62;
-            margin-left:20px;
-            margin-right: 20px;
+            margin-left:20px;/**距离左边的位置**/
+            margin-right: 20px;/**距离右边的位置**/
         }
 
+        /**这个可以不管**/
         .fa-plus {
-            display:block;
-            padding-top:16px;
+            display:block;/**设置为块级元素 块级元素就是可以定宽高 内边距的元素 比如div**/
+            padding-top:16px;/**距离上面的距离**/
             height:50px;
-            cursor:pointer;
+            cursor:pointer;/**鼠标达到这个位置时吃鼠标的形状 pointer：就是一个手指形状**/
         }
+        /**这个可以不管**/
         .fa-minus {
             display:block;
             height:50px;
             padding-top:12px;
             cursor:pointer;
         }
+        /**中间那个滑块的样式 蓝色的滑块加上那个白色的原点**/
         .drag-line {
             width:200px;
             height:15px;
             background:deepskyblue;
             border-radius:8px;
-            margin:-40px auto;
+            margin:-40px auto; /**距离上下是-40 左右居中**/
             position:relative;
 
         }
+        /**那个蓝色的滑块的样式**/
         .line {
             width:182px;
             height:8px;
@@ -94,6 +103,8 @@
             clip: rect(0px, 8px, 183px, 0px);
 
         }
+
+        /**那个白色的原点的样式**/
         .draggable-button {
             width:29px;
             height:29px;
