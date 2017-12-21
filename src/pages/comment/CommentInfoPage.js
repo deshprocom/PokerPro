@@ -36,6 +36,9 @@ export default class CommentInfoPage extends Component {
 
                 <View style={{backgroundColor: '#FFFFFF', paddingBottom: 10, marginTop: 1}}>
                     <CommentItem
+                        repliesReFunc={() => {
+                            this.repliesReFunc(item, CommentBottom.replies)
+                        }}
                         item={item}/>
                 </View>
 
