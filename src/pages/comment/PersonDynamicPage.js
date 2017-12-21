@@ -102,7 +102,7 @@ export default class PersonDynamicPage extends Component {
     };
     onFetch2 = (page, postRefresh, endFetch) => {
         if (page === 1) {
-            // postRefresh(data.items,3)
+            postRefresh([1,2,3,4,5,6,7,8],3)
         } else {
             endFetch()
         }
