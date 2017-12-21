@@ -118,7 +118,8 @@ export default {
     comment_replies: comment_replies,
     replies_replies: replies_replies,
     new_likes: new_likes,
-    person_dynamics: person_dynamics
+    person_dynamics: person_dynamics,
+    person_reply:person_reply
 
 
 }
@@ -133,6 +134,11 @@ function getUserId() {
 
 const page_size = 10;
 
+export function person_reply(body) {
+    const {user_id, page} = body;
+
+    return `users/${user_id}/receive_replies?page=${page}&page_size=${page_size}`;
+}
 export function person_dynamics(body) {
     const {user_id, page} = body;
 

@@ -7,6 +7,13 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 /*个人中心我的所有动态*/
+export function getReceivedReply(body, resolve, reject) {
+    helper.get(Api.person_reply(body), ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+/*个人中心我的所有动态*/
 export function getPersonDynamics(body, resolve, reject) {
     helper.get(Api.person_dynamics(body), ret => {
         resolve(ret.data)

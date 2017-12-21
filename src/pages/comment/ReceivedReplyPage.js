@@ -7,13 +7,13 @@ import {Badge} from '../../components';
 import {util} from '../../utils/ComonHelper';
 import {NavigationBar, BaseComponent} from '../../components';
 import UltimateFlatList from '../../components/ultimate';
-import {getPersonDynamics} from '../../services/CommentDao';
+import {getReceivedReply} from '../../services/CommentDao';
 import {getDateDiff, isEmptyObject} from '../../utils/ComonHelper';
 import DynamicEmpty from './DynamicEmpty';
 
-export default class ReceivedReply extends Component {
+export default class ReceivedReplyPage extends Component {
     state = {
-
+        receivedReply:{}
     };
 
     componentDidMount() {
@@ -25,14 +25,25 @@ export default class ReceivedReply extends Component {
     };
     onFetch = (page, postRefresh, endFetch) => {
         if (page === 1) {
-            postRefresh([1,2,3,4,5,6],3)
+            let body = {user_id: global.login_user.user_id, page: 1};
+            getReceivedReply(body, data => {
+                console.log("receivedReply:", data);
+                this.setState({
+                    receivedReply: data.items
+                });
+                postRefresh(data.items,3)
+            }, err => {
+            });
+
         } else {
             endFetch()
         }
 
     };
 
-    renderItem = () => {
+    renderItem = (item,index) => {
+        console.log("item:",item);
+        const {reply_lists} = item;
         return (
             <View style={styles.itemPage}>
                 <Image style={styles.personImg} source={Images.business}/>
@@ -53,7 +64,7 @@ export default class ReceivedReply extends Component {
                             你的评论：
                         </Text>
                         <Text style={styles.replyTxt1}>
-                            已越来越多的德扑选手加比赛德尚发生的发生
+                            已越来越多的德扑选手加比赛德尚发生的发生dhiayedhoyropdjq9rfj
                         </Text>
                     </View>
                 </View>
@@ -70,9 +81,7 @@ export default class ReceivedReply extends Component {
                     title={I18n.t('received_reply')}
                     titleStyle={{color: Colors._161}}
                     leftBtnIcon={Images.mall_return}
-                    rightBtnIcon={Images.commentWhite}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                    rightImageStyle={{height: 20, width: 22, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
                 <ScrollView style={{marginTop:7,backgroundColor:'#FFFFFF',flex:1}}>
@@ -106,7 +115,8 @@ const styles = StyleSheet.create({
         paddingTop:13,
         flexDirection:'row',
         alignItems:'flex-start',
-        paddingBottom:15
+        paddingBottom:15,
+        marginRight:17
 
     },
     personImg:{
@@ -116,10 +126,10 @@ const styles = StyleSheet.create({
         marginLeft:17
     },
     pageRight:{
+        flex:1,
         flexDirection:'column',
         alignItems:'flex-start',
         marginLeft:11,
-        marginRight:17
     },
     name:{
         fontSize: 14,
@@ -146,7 +156,7 @@ const styles = StyleSheet.create({
         marginTop:12,
         flexDirection:'row',
         alignItems:'flex-start',
-        flexWrap:'wrap'
+        flexWrap:'wrap',
     },
     replyTxt1:{
         fontSize: 15,
