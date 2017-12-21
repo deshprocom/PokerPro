@@ -53,7 +53,7 @@ export default class ReceivedReply extends Component {
                             你的评论：
                         </Text>
                         <Text style={styles.replyTxt1}>
-                            已越来越多的德扑选手加比赛德尚发生的发生
+                            已越来越多的德扑选手加比赛德尚发生的发生dhiayedhoyropdjq9rfj
                         </Text>
                     </View>
                 </View>
@@ -70,9 +70,7 @@ export default class ReceivedReply extends Component {
                     title={I18n.t('received_reply')}
                     titleStyle={{color: Colors._161}}
                     leftBtnIcon={Images.mall_return}
-                    rightBtnIcon={Images.commentWhite}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                    rightImageStyle={{height: 20, width: 22, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
                 <ScrollView style={{marginTop:7,backgroundColor:'#FFFFFF',flex:1}}>
@@ -106,7 +104,8 @@ const styles = StyleSheet.create({
         paddingTop:13,
         flexDirection:'row',
         alignItems:'flex-start',
-        paddingBottom:15
+        paddingBottom:15,
+        marginRight:17
 
     },
     personImg:{
@@ -116,10 +115,10 @@ const styles = StyleSheet.create({
         marginLeft:17
     },
     pageRight:{
+        flex:1,
         flexDirection:'column',
         alignItems:'flex-start',
         marginLeft:11,
-        marginRight:17
     },
     name:{
         fontSize: 14,
@@ -146,7 +145,7 @@ const styles = StyleSheet.create({
         marginTop:12,
         flexDirection:'row',
         alignItems:'flex-start',
-        flexWrap:'wrap'
+        flexWrap:'wrap',
     },
     replyTxt1:{
         fontSize: 15,
