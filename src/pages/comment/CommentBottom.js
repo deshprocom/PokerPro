@@ -50,13 +50,16 @@ export default class CommentBottom extends Component {
     };
 
     render() {
-        const {info, topic_type} = this.props;
-
+        const {info, topic_type,webRefesh} = this.props;
 
         return (
             <View style={styles.bottom}>
 
-                <ClickComment _showInput={this._showInput}/>
+                <ClickComment _showInput={this._showInput}
+                              info_id={info.id}
+                              webRefesh={webRefesh}
+                                info={info}
+                              />
                 <InputComment
                     sendMessageToWeb={this.sendMessageToWeb}
                     repliesName={info.nick_name}
