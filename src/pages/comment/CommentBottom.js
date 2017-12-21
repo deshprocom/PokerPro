@@ -80,6 +80,7 @@ export default class CommentBottom extends Component {
                     info={info}
                 />
                 <InputComment
+                    refreshCommentInfo={this.refreshCommentInfo}
                     sendMessageToWeb={this.sendMessageToWeb}
                     repliesName={info.nick_name}
                     topic_id={info.id}
@@ -99,11 +100,16 @@ export default class CommentBottom extends Component {
         })
     };
 
+    refreshCommentInfo = () => {
+        this.props.refreshList && this.props.refreshList();
+    };
+
     renderRelies = () => {
         const {repliesShow, repliesItem, repliesType} = this.state;
         if (repliesShow && !isEmptyObject(repliesItem)) {
             const {id, nick_name} = repliesItem;
             return <InputComment
+                refreshCommentInfo={this.refreshCommentInfo}
                 sendMessageToWeb={this.sendMessageToWeb}
                 repliesItem={repliesItem}
                 repliesName={nick_name}

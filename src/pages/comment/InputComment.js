@@ -20,7 +20,8 @@ export default class InputComment extends Component {
 
     static propTypes = {
         _showInput: propTypes.func.isRequired,
-        repliesItem: propTypes.object
+        repliesItem: propTypes.object,
+        refreshCommentInfo: propTypes.func
     };
 
 
@@ -104,6 +105,7 @@ export default class InputComment extends Component {
                 body: comment
             }, data => {
                 this.props._showInput();
+                this.props.refreshCommentInfo && this.props.refreshCommentInfo();
                 showToast('回复成功')
             }, err => {
                 showToast(err)
@@ -118,6 +120,7 @@ export default class InputComment extends Component {
 
             postRepliesReplies(param, data => {
                 this.props._showInput();
+                this.props.refreshCommentInfo && this.props.refreshCommentInfo();
                 showToast('回复成功')
             }, err => {
                 showToast(err)
