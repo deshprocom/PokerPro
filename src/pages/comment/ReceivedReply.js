@@ -23,13 +23,21 @@ export default class ReceivedReply extends Component {
     _separator = () => {
         return <View style={{height: 1, marginLeft: 14, marginRight: 17, backgroundColor: '#DDDDDD',marginBottom:16}}/>;
     };
+    onFetch = (page, postRefresh, endFetch) => {
+        if (page === 1) {
+            postRefresh([1,2,3,4,5,6],3)
+        } else {
+            endFetch()
+        }
+
+    };
 
     renderItem = () => {
         return (
             <View style={styles.itemPage}>
                 <Image style={styles.personImg} source={Images.business}/>
                 <View style={styles.pageRight}>
-                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                    <View style={{flexDirection:'row',alignItems:'flex-start',marginTop:10}}>
                         <Text style={styles.name}>花花公子</Text>
                         <View style={{flex:1}}/>
                         <Text style={styles.time}>2017-11-21 12:32</Text>
@@ -67,7 +75,7 @@ export default class ReceivedReply extends Component {
                     rightImageStyle={{height: 20, width: 22, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
-                <ScrollView style={{marginTop:7}}>
+                <ScrollView style={{marginTop:7,backgroundColor:'#FFFFFF',flex:1}}>
                     <UltimateFlatList
                         arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
                         ref={ref => this.ultimate = ref}
@@ -97,7 +105,9 @@ const styles = StyleSheet.create({
     itemPage:{
         paddingTop:13,
         flexDirection:'row',
-        alignItems:'center'
+        alignItems:'flex-start',
+        paddingBottom:15
+
     },
     personImg:{
         width:38,
@@ -106,8 +116,8 @@ const styles = StyleSheet.create({
         marginLeft:17
     },
     pageRight:{
-        flexDirection:'row',
-        alignItems:'center',
+        flexDirection:'column',
+        alignItems:'flex-start',
         marginLeft:11,
         marginRight:17
     },
@@ -120,6 +130,7 @@ const styles = StyleSheet.create({
         color: '#AAAAAA'
     },
     topic:{
+        width:'100%',
         height:32,
         backgroundColor:'#ECECEE',
         alignItems:'flex-start',
@@ -128,7 +139,8 @@ const styles = StyleSheet.create({
     },
     topicTxt:{
         fontSize: 14,
-        color: '#AAAAAA'
+        color: '#AAAAAA',
+        marginLeft:11
     },
     replyView:{
         marginTop:12,
@@ -138,10 +150,13 @@ const styles = StyleSheet.create({
     },
     replyTxt1:{
         fontSize: 15,
-        color: '#444444'
+        color: '#444444',
+        lineHeight:25
+
     },
     replyTxt2:{
         color:'#4990E2',
         fontSize: 15,
+        lineHeight:25
     }
 });

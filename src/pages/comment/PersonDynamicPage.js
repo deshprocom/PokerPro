@@ -72,9 +72,9 @@ export default class PersonDynamicPage extends Component {
         // const {topic} = item;
         const {topic_description, topic_id, topic_image, topic_title} = topic;
         return (
-            <View style={styles.itemPage}
+            <TouchableOpacity style={styles.itemPage}
             onPress={()=>{
-                global.router.toReceivedReply();
+                router.toReceivedReply();
             }}>
 
                 <Text style={styles.itemTxt1}>{this.txtType()}</Text>
@@ -86,7 +86,7 @@ export default class PersonDynamicPage extends Component {
                         <Text style={styles.TxtRight2} numberOfLines={1}>{topic_title}</Text>
                     </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     };
 
