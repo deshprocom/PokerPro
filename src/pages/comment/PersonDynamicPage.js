@@ -68,7 +68,6 @@ export default class PersonDynamicPage extends Component {
     };
 
     renderItem = (topic) => {
-        console.log("topic:",topic);
         // const {topic} = item;
         const {topic_description, topic_id, topic_image, topic_title} = topic;
         return (

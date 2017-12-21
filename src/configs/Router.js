@@ -46,7 +46,7 @@ export default class Router {
 
     toReceivedReply() {
         this.stackPush({
-            name: 'ReceivedReply',
+            name: 'ReceivedReplyPage',
             // params: {
             //     orderItem,
             //     mallRefresh

@@ -80,12 +80,12 @@ import MallSelectPage from '../pages/malls/return/MallSelectPage';
 import WebPage from '../pages/WebPage';
 import PersonDynamicPage from '../pages/comment/PersonDynamicPage';
 import CommentInfoPage from '../pages/comment/CommentInfoPage';
-import ReceivedReply from '../pages/comment/ReceivedReply';
+import ReceivedReplyPage from '../pages/comment/ReceivedReplyPage';
 
 
 export const Stacks = Actions.create(
     <Scene key="root">
-        <Scene key="ReceivedReply" component={ReceivedReply} hideNavBar/>
+        <Scene key="ReceivedReplyPage" component={ReceivedReplyPage} hideNavBar/>
         <Scene key="CommentInfoPage" component={CommentInfoPage} hideNavBar/>
         <Scene key="PersonDynamicPage" component={PersonDynamicPage} hideNavBar/>
         <Scene key="WebPage" component={WebPage} hideNavBar/>

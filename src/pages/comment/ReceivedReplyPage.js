@@ -7,17 +7,24 @@ import {Badge} from '../../components';
 import {util} from '../../utils/ComonHelper';
 import {NavigationBar, BaseComponent} from '../../components';
 import UltimateFlatList from '../../components/ultimate';
-import {getPersonDynamics} from '../../services/CommentDao';
+import {getReceivedReply} from '../../services/CommentDao';
 import {getDateDiff, isEmptyObject} from '../../utils/ComonHelper';
 import DynamicEmpty from './DynamicEmpty';
 
-export default class ReceivedReply extends Component {
+export default class ReceivedReplyPage extends Component {
     state = {
-
+        receivedReply:{}
     };
 
     componentDidMount() {
-
+        let body = {user_id: global.login_user.user_id, page: 1};
+        getReceivedReply(body, data => {
+            console.log("receivedReply:", data);
+            this.setState({
+                receivedReply: data.items
+            });
+        }, err => {
+        });
     };
 
     _separator = () => {
