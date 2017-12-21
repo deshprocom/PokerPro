@@ -17,14 +17,7 @@ export default class ReceivedReplyPage extends Component {
     };
 
     componentDidMount() {
-        let body = {user_id: global.login_user.user_id, page: 1};
-        getReceivedReply(body, data => {
-            console.log("receivedReply:", data);
-            this.setState({
-                receivedReply: data.items
-            });
-        }, err => {
-        });
+
     };
 
     _separator = () => {
@@ -32,14 +25,25 @@ export default class ReceivedReplyPage extends Component {
     };
     onFetch = (page, postRefresh, endFetch) => {
         if (page === 1) {
-            postRefresh([1,2,3,4,5,6],3)
+            let body = {user_id: global.login_user.user_id, page: 1};
+            getReceivedReply(body, data => {
+                console.log("receivedReply:", data);
+                this.setState({
+                    receivedReply: data.items
+                });
+                postRefresh(data.items,3)
+            }, err => {
+            });
+
         } else {
             endFetch()
         }
 
     };
 
-    renderItem = () => {
+    renderItem = (item,index) => {
+        console.log("item:",item);
+        const {reply_lists} = item;
         return (
             <View style={styles.itemPage}>
                 <Image style={styles.personImg} source={Images.business}/>
