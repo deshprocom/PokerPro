@@ -72,7 +72,10 @@ export default class PersonDynamicPage extends Component {
         // const {topic} = item;
         const {topic_description, topic_id, topic_image, topic_title} = topic;
         return (
-            <View style={styles.itemPage}>
+            <View style={styles.itemPage}
+            onPress={()=>{
+                global.router.toReceivedReply();
+            }}>
 
                 <Text style={styles.itemTxt1}>{this.txtType()}</Text>
 
@@ -119,7 +122,7 @@ export default class PersonDynamicPage extends Component {
 
     onFetch = (page, postRefresh, endFetch) => {
         if (page === 1) {
-            postRefresh(this.state.dynamics.items,3)
+            postRefresh([1,2,3,4,5,6],3)
         } else {
             endFetch()
         }

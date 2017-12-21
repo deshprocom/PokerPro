@@ -500,5 +500,6 @@
   "comment":"评论",
   "release":"发布",
   "no_content":"暂无内容",
-  "info_video_dynamic":"您评论点赞的资讯视频都会在这里显示"
+  "info_video_dynamic":"您评论点赞的资讯视频都会在这里显示",
+  "received_reply":"我收到的回复"
 }
