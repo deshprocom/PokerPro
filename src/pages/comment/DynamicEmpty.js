@@ -42,7 +42,8 @@ const styles = StyleSheet.create({
    page:{
        flex:1,
        flexDirection:'column',
-       alignItems:'center'
+       alignItems:'center',
+       marginTop:120
    },
     Txt1:{
         fontSize: 20,

@@ -9,6 +9,7 @@ import {NavigationBar, BaseComponent} from '../../components';
 import UltimateFlatList from '../../components/ultimate';
 import {getPersonDynamics} from '../../services/CommentDao';
 import {getDateDiff, isEmptyObject} from '../../utils/ComonHelper';
+import DynamicEmpty from './DynamicEmpty';
 
 export default class PersonDynamicPage extends Component {
     state = {
@@ -16,7 +17,14 @@ export default class PersonDynamicPage extends Component {
     };
 
     componentDidMount() {
-
+        let body = {user_id: global.login_user.user_id, page: 1, page_size: 3};
+        getPersonDynamics(body, data => {
+            console.log("dynamics:", data);
+            this.setState({
+                dynamics: data.items
+            });
+        }, err => {
+        });
     };
 
     personTop = () => {
@@ -111,16 +119,7 @@ export default class PersonDynamicPage extends Component {
 
     onFetch = (page, postRefresh, endFetch) => {
         if (page === 1) {
-            let body = {user_id: global.login_user.user_id, page: 1, page_size: 3};
-            getPersonDynamics(body, data => {
-                console.log("dynamics:", data);
-                this.setState({
-                    dynamics: data.items
-                });
-                postRefresh(data.items,3)
-            }, err => {
-            });
-
+            postRefresh(this.state.dynamics.items,3)
         } else {
             endFetch()
         }
@@ -143,21 +142,24 @@ export default class PersonDynamicPage extends Component {
                 <ScrollView>
                     {this.personTop()}
 
-                    <View style={{backgroundColor:'#FFFFFF',marginTop:6}}>
-                        <UltimateFlatList
-                            arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
-                            ref={ref => this.ultimate = ref}
-                            onFetch={this.onFetch}
-                            keyExtractor={(item, index) => `replies${index}`}
-                            item={this.content}
-                            refreshableTitlePull={I18n.t('pull_refresh')}
-                            refreshableTitleRelease={I18n.t('release_refresh')}
-                            dateTitle={I18n.t('last_refresh')}
-                            allLoadedText={I18n.t('no_more')}
-                            waitingSpinnerText={I18n.t('loading')}
-                            separator={this._separator1}
-                        />
-                    </View>
+                    {isEmptyObject(this.state.dynamics)?<DynamicEmpty/>:
+                        <View style={{backgroundColor:'#FFFFFF',marginTop:6}}>
+                            <UltimateFlatList
+                                arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
+                                ref={ref => this.ultimate = ref}
+                                onFetch={this.onFetch}
+                                keyExtractor={(item, index) => `replies${index}`}
+                                item={this.content}
+                                refreshableTitlePull={I18n.t('pull_refresh')}
+                                refreshableTitleRelease={I18n.t('release_refresh')}
+                                dateTitle={I18n.t('last_refresh')}
+                                allLoadedText={I18n.t('no_more')}
+                                waitingSpinnerText={I18n.t('loading')}
+                                separator={this._separator1}
+                            />
+                        </View>
+                    }
+
                 </ScrollView>
 
 
