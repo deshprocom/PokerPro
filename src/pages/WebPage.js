@@ -131,6 +131,7 @@ export default class WebPage extends Component {
                     source={{uri: url}}
                     mixedContentMode={'always'}
                     domStorageEnabled={false}
+                    scalesPageToFit={true}
                     onMessage={this.handleMessage}/>
 
                 <View style={styles.bottom}>
