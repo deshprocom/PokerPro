@@ -25,6 +25,7 @@ class PostRoute {
     static NewsInfo = 'NewsInfo';
     static CommentList = 'comments';
     static RepliesComment = 'replies';
+    static ADD_COMMENT = 'addComment';
 
 }
 
@@ -75,24 +76,30 @@ export default class WebPage extends Component {
     };
 
     handleMessage = (e) => {
-        let msg = e.nativeEvent.data;
-        if (this.webMsg !== msg) {
-            this.webMsg = msg;
-            //去重
-            let webParam = JSON.parse(msg.substring(6));
-            console.log('来自Web数据', webParam);
-            const {route, param} = webParam;
-            if (strNotNull(route)) {
-                switch (route) {
-                    case PostRoute.CommentList:
+        try {
+            let msg = e.nativeEvent.data;
+            if (this.webMsg !== msg) {
+                this.webMsg = msg;
 
-                        global.router.toCommentInfoPage(param);
-                        break;
-                    case PostRoute.RepliesComment:
-                        this.commentNav && this.commentNav.repliesBtn(param, CommentBottom.replies);
-                        break;
+                //去重
+                let webParam = JSON.parse(msg.substring(6));
+                console.log('来自Web数据', webParam);
+                const {route, param} = webParam;
+                if (strNotNull(route)) {
+                    switch (route) {
+                        case PostRoute.CommentList:
+                            global.router.toCommentInfoPage(param);
+                            break;
+                        case PostRoute.RepliesComment:
+                            this.commentNav && this.commentNav.repliesBtn(param, CommentBottom.replies);
+                            break;
+                        case PostRoute.ADD_COMMENT:
+                            this.commentNav && this.commentNav.commentTotal(param);
+                    }
                 }
             }
+        } catch (e) {
+            console.log(e)
         }
 
 
@@ -139,6 +146,7 @@ export default class WebPage extends Component {
     _renderBottomNav = () => {
         if (this.props.params.body) {
             const {bottomNav, info, topic_type} = this.props.params.body;
+
             if (strNotNull(bottomNav)) {
                 switch (bottomNav) {
                     case 'commentNav':

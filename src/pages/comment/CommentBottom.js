@@ -17,9 +17,15 @@ export default class CommentBottom extends Component {
     state = {
         showInput: false,
         repliesShow: false,
-        repliesType: ''
+        repliesType: '',
+        comment_count: 0
 
     };
+
+    componentDidMount() {
+        const {info} = this.props;
+        this.commentTotal(info.total_comments);
+    }
 
 
     _showInput = () => {
@@ -31,6 +37,11 @@ export default class CommentBottom extends Component {
             })
         }
 
+    };
+
+
+    commentTotal = (comment_count) => {
+        this.setState({comment_count})
     };
 
     repliesBtn = (repliesItem, repliesType) => {
@@ -56,6 +67,7 @@ export default class CommentBottom extends Component {
             <View style={styles.bottom}>
 
                 <ClickComment _showInput={this._showInput}
+                              comment_count={this.state.comment_count}
                               info_id={info.id}
                               webRefesh={webRefesh}
                                 info={info}

@@ -14,12 +14,15 @@ export default class ClickComment extends Component {
         text: ''
     };
     static propTypes = {
-        _showInput: propTypes.func.isRequired
+        _showInput: propTypes.func.isRequired,
+        comment_count: propTypes.number
     };
 
 
     _carts = () => {
-        return <Badge style={styles.badge}>{44}</Badge>
+        const {comment_count} = this.props;
+        if (comment_count && comment_count > 0)
+            return <Badge style={styles.badge}>{comment_count}</Badge>
     };
 
     likeChang = () => {
@@ -36,12 +39,12 @@ export default class ClickComment extends Component {
     likeShare = () => {
         const {current_user_like} = this.props;
         return (
-            <View style={{flexDirection:'row',flex:1,marginRight:17}}>
+            <View style={{flexDirection: 'row', flex: 1, marginRight: 17}}>
                 <TouchableOpacity
                     style={styles.search}
-                    onPress={()=>{
+                    onPress={() => {
                         this.props._showInput()
-                }}>
+                    }}>
                     <Image
                         style={styles.searchImg}
                         source={Images.pen}/>
@@ -61,8 +64,9 @@ export default class ClickComment extends Component {
                     this.likeChang()
                 }}>
                     <Image style={styles.like} source={current_user_like?Images.likeRed:Images.like}/>
+
                 </TouchableOpacity>
-                <View style={{flex:1}}/>
+                <View style={{flex: 1}}/>
                 <TouchableOpacity
                     style={styles.forwardView}
                     onPress={()=>{
