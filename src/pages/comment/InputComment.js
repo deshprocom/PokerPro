@@ -106,7 +106,7 @@ export default class InputComment extends Component {
                 this.props._showInput();
                 showToast('回复成功')
             }, err => {
-                showToast('回复失败')
+                showToast(err)
             })
         } else if (topic_type === CommentBottom.RepliesReplies) {
             const {id, parent_comment} = repliesItem;
@@ -120,7 +120,7 @@ export default class InputComment extends Component {
                 this.props._showInput();
                 showToast('回复成功')
             }, err => {
-                showToast('回复失败')
+                showToast(err)
             })
 
         } else {
@@ -134,7 +134,7 @@ export default class InputComment extends Component {
                 showToast('评论成功');
 
             }, err => {
-                showToast('评论失败')
+                showToast(err)
             })
 
         }
