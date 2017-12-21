@@ -19,11 +19,13 @@ import {Colors, Fonts, Images, ApplicationStyles} from '../Themes';
 import {getAccessToken} from '../services/RequestHelper';
 import {strNotNull, isEmptyObject} from "../utils/ComonHelper";
 import {CommentBottom} from './comment';
+import CommentItem from "./comment/CommentItem";
 
 class PostRoute {
     static NewsInfo = 'NewsInfo';
     static CommentList = 'comments';
     static RepliesComment = 'replies';
+
 }
 
 
@@ -68,25 +70,28 @@ export default class WebPage extends Component {
 
     }
 
-    sendMessage = (str) => {
-        this.webView && this.webView.postMessage(str);
+    sendMessage = (msg) => {
+        this.webView && this.webView.postMessage(JSON.stringify(msg));
     };
 
     handleMessage = (e) => {
         let msg = e.nativeEvent.data;
+        if (this.webMsg !== msg) {
+            this.webMsg = msg;
+            //去重
+            let webParam = JSON.parse(msg.substring(6));
+            console.log('来自Web数据', webParam);
+            const {route, param} = webParam;
+            if (strNotNull(route)) {
+                switch (route) {
+                    case PostRoute.CommentList:
 
-        let webParam = JSON.parse(msg);
-        console.log('来自Web数据', webParam);
-        const {route, param} = webParam;
-        if (strNotNull(route)) {
-            switch (route) {
-                case PostRoute.CommentList:
-                    let commentsUrl = `${global.desh5}comment`;
-                    global.router.toCommentInfoPage(param);
-                    break;
-                case PostRoute.RepliesComment:
-                    this.commentNav && this.commentNav.repliesBtn(param);
-                    break;
+                        global.router.toCommentInfoPage(param);
+                        break;
+                    case PostRoute.RepliesComment:
+                        this.commentNav && this.commentNav.repliesBtn(param, CommentBottom.replies);
+                        break;
+                }
             }
         }
 
@@ -138,6 +143,7 @@ export default class WebPage extends Component {
                 switch (bottomNav) {
                     case 'commentNav':
                         return <CommentBottom
+                            sendMessage={this.sendMessage}
                             ref={ref => this.commentNav = ref}
                             topic_type={topic_type}
                             info={info}

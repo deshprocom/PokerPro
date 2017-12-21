@@ -6,8 +6,10 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
-import {postComment, postRelaies} from '../../services/CommentDao';
+import {postComment, postRelaies, postRepliesReplies} from '../../services/CommentDao';
 import {isEmptyObject, showToast, strNotNull} from "../../utils/ComonHelper";
+import CommentBottom from "./CommentBottom";
+import {WebAction} from "../../configs/Status";
 
 export default class InputComment extends Component {
 
@@ -17,7 +19,8 @@ export default class InputComment extends Component {
     };
 
     static propTypes = {
-        _showInput: propTypes.func.isRequired
+        _showInput: propTypes.func.isRequired,
+        repliesItem: propTypes.object
     };
 
 
@@ -74,12 +77,14 @@ export default class InputComment extends Component {
 
     txtCommentOrReplies = () => {
         const {topic_type} = this.props;
-        return topic_type === 'replies' ? I18n.t('release') : I18n.t('comment')
+        return topic_type === CommentBottom.replies ||
+        topic_type === CommentBottom.RepliesReplies ? I18n.t('release') : I18n.t('comment')
     };
 
     txtPlaceholder = () => {
         const {topic_type, repliesName} = this.props;
-        return topic_type === 'replies' ? `回复${repliesName}:` : '写下评论...'
+        return topic_type === CommentBottom.replies ||
+        topic_type === CommentBottom.RepliesReplies ? `回复${repliesName}:` : '写下评论...'
     };
 
     releaseComment = () => {
@@ -91,9 +96,9 @@ export default class InputComment extends Component {
             return
         }
 
-        const {topic_type, topic_id} = this.props;
+        const {topic_type, topic_id, repliesItem, sendMessageToWeb} = this.props;
 
-        if (topic_type === 'replies') {
+        if (topic_type === CommentBottom.replies) {
             postRelaies({
                 comment_id: topic_id,
                 body: comment
@@ -103,19 +108,38 @@ export default class InputComment extends Component {
             }, err => {
                 showToast('回复失败')
             })
+        } else if (topic_type === CommentBottom.RepliesReplies) {
+            const {id, parent_comment} = repliesItem;
+            let param = {
+                comment_id: parent_comment.parent_comment_id,
+                reply_id: id,
+                body: comment
+            };
+
+            postRepliesReplies(param, data => {
+                this.props._showInput();
+                showToast('回复成功')
+            }, err => {
+                showToast('回复失败')
+            })
+
+        } else {
+            let body = {
+                topic_type, topic_id,
+                body: comment
+            };
+
+            postComment(body, data => {
+                this.props._showInput();
+                showToast('评论成功');
+
+            }, err => {
+                showToast('评论失败')
+            })
+
         }
-        let body = {
-            topic_type, topic_id,
-            body: comment
-        };
 
-        postComment(body, data => {
-            this.props._showInput();
-            showToast('评论成功');
-
-        }, err => {
-            showToast('评论失败')
-        })
+        sendMessageToWeb && sendMessageToWeb({action: WebAction.REFRESH_COMMENT})
 
     };
 

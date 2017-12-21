@@ -6,16 +6,9 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
-/*个人中心我的所有动态*/
-export function getPersonDynamics(body, resolve, reject) {
-    helper.get(Api.person_dynamics(body), ret => {
-        resolve(ret.data)
-    }, reject)
-}
-
-/*资讯点赞和取消点赞的接口*/
-export function postNewLikes(body, resolve, reject) {
-    helper.post(Api.new_likes(body),  body, ret => {
+/*某个回复下回复的接口*/
+export function postRepliesReplies(body, resolve, reject) {
+    helper.post(Api.replies_replies(body), body, ret => {
         resolve(ret.data)
     }, reject)
 }

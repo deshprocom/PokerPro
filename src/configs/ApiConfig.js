@@ -116,8 +116,7 @@ export default {
     refund_info: refund_info,
     topic_comments: 'topic/comments',
     comment_replies: comment_replies,
-    new_likes: new_likes,
-    person_dynamics: person_dynamics
+    replies_replies: replies_replies
 
 
 }
@@ -132,15 +131,9 @@ function getUserId() {
 
 const page_size = 10;
 
-export function person_dynamics(body) {
-    const {user_id, page, page_size} = body;
-
-    return `users/${user_id}/dynamics?page=${page}&page_size=${page_size}`;
-}
-export function new_likes(body) {
-    const {info_id} = body;
-
-    return `topic/infos/${info_id}/likes`;
+export function replies_replies(body) {
+    const {comment_id, reply_id} = body;
+    return `topic/comments/${comment_id}/replies/${reply_id}/replies`
 }
 
 export function comment_replies(body) {

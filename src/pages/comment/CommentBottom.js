@@ -4,19 +4,23 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import PropTypes from 'prop-types';
 import {Badge} from '../../components';
-import {util, isEmptyObject,sharePage} from '../../utils/ComonHelper';
+import {util, isEmptyObject} from '../../utils/ComonHelper';
 import ClickComment from './ClickComment';
 import InputComment from './InputComment';
 
 export default class CommentBottom extends Component {
 
+    static replies = 'replies';
+    static RepliesReplies = 'RepliesReplies';
+
+
     state = {
         showInput: false,
-        repliesShow: false
+        repliesShow: false,
+        repliesType: ''
+
     };
 
-    componentDidMount() {
-    };
 
     _showInput = () => {
         if (isEmptyObject(global.login_user)) {
@@ -29,29 +33,33 @@ export default class CommentBottom extends Component {
 
     };
 
-    repliesBtn = (repliesItem) => {
+    repliesBtn = (repliesItem, repliesType) => {
         if (isEmptyObject(global.login_user)) {
             global.router.toLoginFirstPage()
         } else {
             this.setState({
                 repliesShow: !this.state.repliesShow,
-                repliesItem: repliesItem
+                repliesItem: repliesItem,
+                repliesType: repliesType
             })
         }
     };
+    /*发送到Web数据*/
+    sendMessageToWeb = (msg) => {
+        this.props.sendMessage && this.props.sendMessage(msg)
+    };
 
     render() {
-        const {info, topic_type,webRefesh} = this.props;
+        const {info, topic_type} = this.props;
+
 
         return (
             <View style={styles.bottom}>
 
-                <ClickComment _showInput={this._showInput}
-                              info_id={info.id}
-                              webRefesh={webRefesh}
-                                info={info}
-                              />
+                <ClickComment _showInput={this._showInput}/>
                 <InputComment
+                    sendMessageToWeb={this.sendMessageToWeb}
+                    repliesName={info.nick_name}
                     topic_id={info.id}
                     topic_type={topic_type}
                     _showInput={this._showInput}
@@ -63,20 +71,22 @@ export default class CommentBottom extends Component {
     }
 
 
-    showReplies = ()=>{
+    showReplies = () => {
         this.setState({
             repliesShow: !this.state.repliesShow
         })
     };
 
     renderRelies = () => {
-        const {repliesShow, repliesItem} = this.state;
+        const {repliesShow, repliesItem, repliesType} = this.state;
         if (repliesShow && !isEmptyObject(repliesItem)) {
-            const {id,nick_name} = repliesItem;
+            const {id, nick_name} = repliesItem;
             return <InputComment
+                sendMessageToWeb={this.sendMessageToWeb}
+                repliesItem={repliesItem}
                 repliesName={nick_name}
                 topic_id={id}
-                topic_type={'replies'}
+                topic_type={repliesType}
                 _showInput={this.showReplies}
                 visible={this.state.repliesShow}/>
         }
