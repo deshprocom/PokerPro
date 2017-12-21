@@ -246,6 +246,18 @@ export function getDateDiff(dateTimeStamp) {
     return result;
 }
 
+export function sharePage(title, location, icon, url) {
+
+    let thumb = getShareIcon(icon)
+    UMShare.share(title, location, thumb, shareHost() + (url+ + "/" + Lang))
+        .then(() => {
+            showToast(`${I18n.t('show_success')}`)
+        }, (error) => {
+            showToast(error)
+        })
+}
+
+
 export function payWx(data, callback, cancelBack) {
     const body = {
         partnerId: data.partnerid,  // 商家向财付通申请的商家id

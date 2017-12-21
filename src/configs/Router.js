@@ -44,6 +44,15 @@ export default class Router {
 
     }
 
+    toReceivedReply() {
+        this.stackPush({
+            name: 'ReceivedReply',
+            // params: {
+            //     orderItem,
+            //     mallRefresh
+            // }
+        })
+    }
     toPersonDynamic() {
         this.stackPush({
             name: 'PersonDynamicPage',
