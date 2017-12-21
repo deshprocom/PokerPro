@@ -3,6 +3,9 @@
  */
 import I18n from 'react-native-i18n';
 
+export class WebAction {
+    static REFRESH_COMMENT = 'REFRESH_COMMENT';
+}
 
 //邀请码折扣类型
 export class CouponType {

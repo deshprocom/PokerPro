@@ -25,6 +25,7 @@ class PostRoute {
     static NewsInfo = 'NewsInfo';
     static CommentList = 'comments';
     static RepliesComment = 'replies';
+
 }
 
 
@@ -69,8 +70,8 @@ export default class WebPage extends Component {
 
     }
 
-    sendMessage = (str) => {
-        this.webView && this.webView.postMessage(str);
+    sendMessage = (msg) => {
+        this.webView && this.webView.postMessage(JSON.stringify(msg));
     };
 
     handleMessage = (e) => {
@@ -138,6 +139,7 @@ export default class WebPage extends Component {
                 switch (bottomNav) {
                     case 'commentNav':
                         return <CommentBottom
+                            sendMessage={this.sendMessage}
                             ref={ref => this.commentNav = ref}
                             topic_type={topic_type}
                             info={info}/>

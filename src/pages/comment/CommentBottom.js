@@ -44,6 +44,10 @@ export default class CommentBottom extends Component {
             })
         }
     };
+    /*发送到Web数据*/
+    sendMessageToWeb = (msg) => {
+        this.props.sendMessage && this.props.sendMessage(msg)
+    };
 
     render() {
         const {info, topic_type} = this.props;
@@ -54,6 +58,7 @@ export default class CommentBottom extends Component {
 
                 <ClickComment _showInput={this._showInput}/>
                 <InputComment
+                    sendMessageToWeb={this.sendMessageToWeb}
                     repliesName={info.nick_name}
                     topic_id={info.id}
                     topic_type={topic_type}
@@ -77,6 +82,7 @@ export default class CommentBottom extends Component {
         if (repliesShow && !isEmptyObject(repliesItem)) {
             const {id, nick_name} = repliesItem;
             return <InputComment
+                sendMessageToWeb={this.sendMessageToWeb}
                 repliesItem={repliesItem}
                 repliesName={nick_name}
                 topic_id={id}

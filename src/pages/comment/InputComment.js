@@ -9,6 +9,7 @@ import propTypes from 'prop-types';
 import {postComment, postRelaies, postRepliesReplies} from '../../services/CommentDao';
 import {isEmptyObject, showToast, strNotNull} from "../../utils/ComonHelper";
 import CommentBottom from "./CommentBottom";
+import {WebAction} from "../../configs/Status";
 
 export default class InputComment extends Component {
 
@@ -95,7 +96,7 @@ export default class InputComment extends Component {
             return
         }
 
-        const {topic_type, topic_id, repliesItem} = this.props;
+        const {topic_type, topic_id, repliesItem, sendMessageToWeb} = this.props;
 
         if (topic_type === CommentBottom.replies) {
             postRelaies({
@@ -137,6 +138,8 @@ export default class InputComment extends Component {
             })
 
         }
+
+        sendMessageToWeb && sendMessageToWeb({action: WebAction.REFRESH_COMMENT})
 
     };
 
