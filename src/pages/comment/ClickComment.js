@@ -13,7 +13,8 @@ export default class ClickComment extends Component {
         likeButton: false
     };
     static propTypes = {
-        _showInput: propTypes.func.isRequired
+        _showInput: propTypes.func.isRequired,
+        comment_count: propTypes.number
     };
 
     componentDidMount() {
@@ -21,18 +22,20 @@ export default class ClickComment extends Component {
     };
 
     _carts = () => {
-        return <Badge style={styles.badge}>{44}</Badge>
+        const {comment_count} = this.props;
+        if (comment_count && comment_count > 0)
+            return <Badge style={styles.badge}>{comment_count}</Badge>
     };
 
     likeShare = () => {
         const {likeButton} = this.state;
         return (
-            <View style={{flexDirection:'row',flex:1,marginRight:17}}>
+            <View style={{flexDirection: 'row', flex: 1, marginRight: 17}}>
                 <TouchableOpacity
                     style={styles.search}
-                    onPress={()=>{
+                    onPress={() => {
                         this.props._showInput()
-                }}>
+                    }}>
                     <Image
                         style={styles.searchImg}
                         source={Images.pen}/>
@@ -48,12 +51,12 @@ export default class ClickComment extends Component {
 
                 <TouchableOpacity
                     style={styles.likeView}
-                    onPress={()=>{
-                    this.setState({likeButton:!likeButton})
-                }}>
-                    <Image style={styles.like} source={likeButton?Images.likeRed:Images.like}/>
+                    onPress={() => {
+                        this.setState({likeButton: !likeButton})
+                    }}>
+                    <Image style={styles.like} source={likeButton ? Images.likeRed : Images.like}/>
                 </TouchableOpacity>
-                <View style={{flex:1}}/>
+                <View style={{flex: 1}}/>
                 <TouchableOpacity
                     style={styles.forwardView}>
                     <Image style={styles.forward} source={Images.forward}/>
