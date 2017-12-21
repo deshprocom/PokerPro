@@ -101,7 +101,7 @@ export default class CommentItem extends PureComponent {
             return <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Text style={styles.messages}>回复</Text>
                 <Text style={styles.nameId2}>{parent_reply.parent_reply_user}</Text>
-                <Text>：{body}</Text>
+                <Text>:{body}</Text>
 
             </View>
         }
@@ -194,7 +194,6 @@ const styles = StyleSheet.create({
     nameId2: {
         fontSize: 16,
         color: '#4990E2',
-        marginLeft: 7,
-        marginRight: 7
+        marginLeft: 7
     }
 })
