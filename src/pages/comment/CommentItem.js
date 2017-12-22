@@ -39,7 +39,7 @@ export default class CommentItem extends PureComponent {
             <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 5}}>
                 <Text style={styles.name}>{I18n.t('Poker')}</Text>
                 <View style={styles.officialView}>
-                    <Text style={styles.officialTxt}>官方</Text>
+                    <Text style={styles.officialTxt}>{I18n.t('official')}</Text>
                 </View>
             </View>
         )
