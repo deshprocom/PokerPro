@@ -67,14 +67,24 @@ export default class Headlines extends Component {
     _clickBanner = (item) => {
         switch (item.source_type) {
             case BannerStatus.INFO:
-                global.router.toNewsInfo(item.source_id);
+                let url = `${global.desh5}news/${item.source_id}/${global.language}`;
+                global.router.toWebPage(url, {
+                    bottomNav: 'commentNav',
+                    info: {id: item.source_id},
+                    topic_type: item.source_type
+                });
                 break;
             case BannerStatus.RACE:
                 global.router.toRacesInfoPage(this.props, item.source_id, false);
                 break;
 
             case BannerStatus.VIDEO:
-                global.router.toVideoInfo(item.source_id);
+                let urlVideo = `${global.desh5}videos/${item.source_id}/${global.language}`;
+                global.router.toWebPage(urlVideo, {
+                    bottomNav: 'commentNav',
+                    info: {id: item.source_id},
+                    topic_type: item.source_type
+                });
                 break;
             case BannerStatus.LINK:
                 global.router.toWebViewPage(this.props, item.link);

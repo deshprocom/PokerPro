@@ -79,8 +79,6 @@ export default class VideoInfoPage extends Component {
 
             {this.renderContent()}
 
-
-            <CommentBottom/>
         </View>)
     }
 

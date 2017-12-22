@@ -22,12 +22,6 @@ export default class CommentBottom extends Component {
 
     };
 
-    componentDidMount() {
-        const {info} = this.props;
-        this.commentTotal(info.total_comments);
-    }
-
-
     _showInput = () => {
         if (isEmptyObject(global.login_user)) {
             global.router.toLoginFirstPage()
