@@ -19,21 +19,6 @@ export default class CommentItem extends PureComponent {
         repliesReFunc: PropTypes.func
     };
 
-
-    moreMessage = () => {
-        if (this.state.showMessage) {
-            return (
-                <TouchableOpacity
-                    style={styles.moreMessagesView}
-                    onPress={() => {
-                        global.router.toCommentInfoPage();
-                    }}>
-                    <Text style={styles.moreMessages}>查看34条回复></Text>
-                </TouchableOpacity>
-            )
-        }
-
-    };
     official = () => {
         return (
             <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 5}}>
@@ -44,21 +29,12 @@ export default class CommentItem extends PureComponent {
             </View>
         )
     };
-    officialBody = () => {
-        return (
-            <View style={styles.officialBody}>
-                <Text style={styles.nameId1}>{I18n.t('reply')}</Text>
-                <Text style={styles.nameId2}>花花</Text>
-                <Text style={styles.nameId1}>：{body}</Text>
-            </View>
-        )
-    };
 
     _avatar = (avatar) => {
         if (isEmptyObject(avatar))
             return Images.home_avatar;
         else if (strNotNull(avatar))
-            return {uri: avatar}
+            return {uri: avatar};
         else
             return Images.home_avatar;
     };
@@ -108,7 +84,7 @@ export default class CommentItem extends PureComponent {
             return <Text style={styles.messages}>{body}</Text>;
         } else {
             return <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={styles.messages}>回复</Text>
+                <Text style={styles.messages}>{I18n.t('reply')}</Text>
                 <Text style={styles.nameId2}>{parent_reply.parent_reply_user}</Text>
                 <Text>:{body}</Text>
 

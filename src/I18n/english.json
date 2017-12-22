@@ -518,6 +518,7 @@
   "info_reply":"在资讯回复了一个话题",
   "video_topiclike":"在视频点赞了一个话题" ,
   "video_comment":"在视频评论了一个话题",
-  "video_reply":"在视频回复了一个话题"
+  "video_reply":"在视频回复了一个话题",
+  "all_comment":"全部评论"
 }
 

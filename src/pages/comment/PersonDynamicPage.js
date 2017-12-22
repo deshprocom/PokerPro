@@ -62,10 +62,10 @@ export default class PersonDynamicPage extends Component {
             onPress={()=>{
                 if(topic_type === "info"){
                     let url = `${global.desh5}news/${topic_id}/${global.language}`;
-                    global.router.toWebPage(url, {bottomNav: 'commentNav', info: {id: topic_id}, topic_type: 'info'})
+                    global.router.toWebPage(url, {bottomNav: 'commentNav', info: {id: topic_id}, topic_type: topic_type})
                 }else if(topic_type === "video"){
                     let urlVideo = `${global.desh5}videos/${topic_id}/${global.language}`;
-                    global.router.toWebPage(url, {bottomNav: 'commentNav', info: {id: topic_id}, topic_type: 'info'})
+                    global.router.toWebPage(urlVideo, {bottomNav: 'commentNav', info: {id: topic_id}, topic_type: topic_type})
                 }else{
                     global.router.toDeletePage();
                 }
@@ -157,7 +157,7 @@ export default class PersonDynamicPage extends Component {
                     arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
                     ref={ref => this.ultimate = ref}
                     onFetch={this.onFetch}
-                    keyExtractor={(item, index) => `replies${index}`}
+                    keyExtractor={(item, index) => `dynamic${index}`}
                     item={this.content}
                     refreshableTitlePull={I18n.t('pull_refresh')}
                     refreshableTitleRelease={I18n.t('release_refresh')}
