@@ -44,15 +44,16 @@ export default class Router {
 
     }
 
-    toReceivedReply() {
+    toDeletePage() {
         this.stackPush({
-            name: 'ReceivedReplyPage',
+            name: 'DeletePage',
             // params: {
             //     orderItem,
             //     mallRefresh
             // }
         })
     }
+
     toPersonDynamic() {
         this.stackPush({
             name: 'PersonDynamicPage',
