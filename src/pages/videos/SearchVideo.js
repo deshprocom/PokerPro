@@ -235,7 +235,8 @@ export default class SearchVideo extends Component {
     }
 
     _pressItem = (item) => {
-        router.toVideoInfoPage(this.props, item)
+        let url = `${global.desh5}videos/${item.id}/${global.language}`;
+        global.router.toWebPage(url, {bottomNav: 'commentNav', info: item,topic_type:'video'})
     };
 
     _navSearchBar = () => {

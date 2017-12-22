@@ -4,11 +4,10 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
 import {Badge} from '../../components';
-import {util, utcDate,convertDate} from '../../utils/ComonHelper';
 import {NavigationBar, BaseComponent} from '../../components';
 import UltimateFlatList from '../../components/ultimate';
 import {getPersonDynamics} from '../../services/CommentDao';
-import {getDateDiff, isEmptyObject,strNotNull} from '../../utils/ComonHelper';
+import {getDateDiff, isEmptyObject, strNotNull, util, utcDate} from '../../utils/ComonHelper';
 import DynamicEmpty from './DynamicEmpty';
 import DynamicTopBar from './DynamicTopBar';
 
@@ -17,6 +16,11 @@ export default class PersonDynamicPage extends Component {
     state = {
         dynamics: {}
     };
+
+    componentDidMount() {
+        this.dynamicList = [];
+        this.page = 1;
+    }
 
     _avatar = (avatar) => {
         if (isEmptyObject(avatar))
@@ -52,25 +56,33 @@ export default class PersonDynamicPage extends Component {
     };
     txtType = (item) => {
         const {topic_type, typological_type} = item;
-        return I18n.t(topic_type+'_'+typological_type);
+        return I18n.t(topic_type + '_' + typological_type);
     };
 
     renderItem = ({item}) => {
-        const {topic_description, topic_id, topic_image, topic_title,topic_type} = item.topic;
+        const {topic_description, topic_id, topic_image, topic_title, topic_type} = item.topic;
         return (
             <TouchableOpacity style={styles.itemPage}
-            onPress={()=>{
-                if(topic_type === "info"){
-                    let url = `${global.desh5}news/${topic_id}/${global.language}`;
-                    global.router.toWebPage(url, {bottomNav: 'commentNav', info: {id: topic_id}, topic_type: topic_type})
-                }else if(topic_type === "video"){
-                    let urlVideo = `${global.desh5}videos/${topic_id}/${global.language}`;
-                    global.router.toWebPage(urlVideo, {bottomNav: 'commentNav', info: {id: topic_id}, topic_type: topic_type})
-                }else{
-                    global.router.toDeletePage();
-                }
+                              onPress={() => {
+                                  if (topic_type === "info") {
+                                      let url = `${global.desh5}news/${topic_id}/${global.language}`;
+                                      global.router.toWebPage(url, {
+                                          bottomNav: 'commentNav',
+                                          info: {id: topic_id},
+                                          topic_type: 'info'
+                                      })
+                                  } else if (topic_type === "video") {
+                                      let urlVideo = `${global.desh5}videos/${topic_id}/${global.language}`;
+                                      global.router.toWebPage(url, {
+                                          bottomNav: 'commentNav',
+                                          info: {id: topic_id},
+                                          topic_type: 'info'
+                                      })
+                                  } else {
+                                      global.router.toDeletePage();
+                                  }
 
-            }}>
+                              }}>
 
                 <Text style={styles.itemTxt1}>{this.txtType(item)}</Text>
 
@@ -103,7 +115,12 @@ export default class PersonDynamicPage extends Component {
 
 
     onFetch = (page, postRefresh, endFetch) => {
-        this.loadDynamics(page, postRefresh, endFetch)
+        console.log('page', page)
+        if (page === 1) {
+            this.dynamicList = [];
+            this.page = 1;
+        }
+        this.loadDynamics(this.page, postRefresh, endFetch)
 
     };
 
@@ -138,8 +155,17 @@ export default class PersonDynamicPage extends Component {
     loadDynamics = (page, postRefresh, endFetch) => {
         let body = {user_id: global.login_user.user_id, page, page_size: 20};
         getPersonDynamics(body, data => {
-            console.log("PersonDynamics:",data.items)
-            postRefresh(this.blobData(data.items), 1)
+            console.log("PersonDynamics:", data.items)
+            this.dynamicList = util.unionBy(this.dynamicList, data.items, 'id');
+            if (this.ultimate) {
+                if (data.items.length > 0) {
+                    this.page += 1;
+                }
+                this.ultimate.setPage(this.page);
+                this.ultimate.updateRows(this.blobData(this.dynamicList), data.items.length === 0 ? 2 : 1)
+            }
+
+
         }, err => {
             endFetch();
         });
@@ -157,7 +183,7 @@ export default class PersonDynamicPage extends Component {
                     arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
                     ref={ref => this.ultimate = ref}
                     onFetch={this.onFetch}
-                    keyExtractor={(item, index) => `dynamic${index}`}
+                    keyExtractor={(item, index) => `replies${index}`}
                     item={this.content}
                     refreshableTitlePull={I18n.t('pull_refresh')}
                     refreshableTitleRelease={I18n.t('release_refresh')}

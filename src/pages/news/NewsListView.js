@@ -197,8 +197,7 @@ class NewsListView extends Component {
     _pressItem = (item) => {
         // router.toNewsInfoPage(this.props, item)
 
-        const {id} = item;
-        let url = `${global.desh5}news/${id}/${global.language}`;
+        let url = `${global.desh5}news/${item.id}/${global.language}`;
         global.router.toWebPage(url, {bottomNav: 'commentNav', info: item, topic_type: 'info'})
     };
 
