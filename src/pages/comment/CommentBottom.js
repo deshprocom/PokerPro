@@ -22,12 +22,6 @@ export default class CommentBottom extends Component {
 
     };
 
-    componentDidMount() {
-        const {info} = this.props;
-        this.commentTotal(info.total_comments);
-    }
-
-
     _showInput = () => {
         if (isEmptyObject(global.login_user)) {
             global.router.toLoginFirstPage()
@@ -37,6 +31,11 @@ export default class CommentBottom extends Component {
             })
         }
 
+    };
+
+
+    userLike = (current_user_like) => {
+        this.clickComment && this.clickComment.setUserLike(current_user_like)
     };
 
 
@@ -61,18 +60,22 @@ export default class CommentBottom extends Component {
     };
 
     render() {
-        const {info, topic_type,webRefesh} = this.props;
+        const {info, topic_type} = this.props;
 
         return (
             <View style={styles.bottom}>
 
-                <ClickComment _showInput={this._showInput}
-                              comment_count={this.state.comment_count}
-                              info_id={info.id}
-                              webRefesh={webRefesh}
-                                info={info}
-                              />
+                <ClickComment
+                    topic_type={topic_type}
+                    ref={ref => this.clickComment = ref}
+                    _showInput={this._showInput}
+                    comment_count={this.state.comment_count}
+                    info_id={info.id}
+                    sendMessageToWeb={this.sendMessageToWeb}
+                    info={info}
+                />
                 <InputComment
+                    refreshCommentInfo={this.refreshCommentInfo}
                     sendMessageToWeb={this.sendMessageToWeb}
                     repliesName={info.nick_name}
                     topic_id={info.id}
@@ -92,11 +95,16 @@ export default class CommentBottom extends Component {
         })
     };
 
+    refreshCommentInfo = () => {
+        this.props.refreshList && this.props.refreshList();
+    };
+
     renderRelies = () => {
         const {repliesShow, repliesItem, repliesType} = this.state;
         if (repliesShow && !isEmptyObject(repliesItem)) {
             const {id, nick_name} = repliesItem;
             return <InputComment
+                refreshCommentInfo={this.refreshCommentInfo}
                 sendMessageToWeb={this.sendMessageToWeb}
                 repliesItem={repliesItem}
                 repliesName={nick_name}

@@ -7,17 +7,25 @@ import {Badge} from '../../components';
 import {util} from '../../utils/ComonHelper';
 import {postNewLikes} from '../../services/CommentDao';
 import {sharePage} from '../../utils/ComonHelper';
+import {WebAction} from '../../configs/Status';
 
 export default class ClickComment extends Component {
 
     state = {
-        text: ''
+        text: '',
+        current_user_like: false
     };
     static propTypes = {
         _showInput: propTypes.func.isRequired,
         comment_count: propTypes.number
     };
 
+
+    setUserLike = (current_user_like) => {
+        this.setState({
+            current_user_like: current_user_like
+        })
+    };
 
     _carts = () => {
         const {comment_count} = this.props;
@@ -26,18 +34,22 @@ export default class ClickComment extends Component {
     };
 
     likeChang = () => {
-        postNewLikes({info_id: this.props.info_id}, data => {
+        const {info_id, topic_type} = this.props;
 
-            this.props.webRefesh && this.props.webRefesh();
-            console.log("newsLikes")
+        postNewLikes({info_id: info_id, topic_type: `${topic_type}s`}, data => {
+            this.setState({
+                current_user_like: !this.state.current_user_like
+            });
+            this.props.sendMessageToWeb && this.props.sendMessageToWeb({action: WebAction.ADD_TOTAL_LIKES});
+
         }, err => {
         });
-        // this.props.webRefesh();
+
 
     };
 
     likeShare = () => {
-        const {current_user_like} = this.props;
+        const {current_user_like} = this.state;
         return (
             <View style={{flexDirection: 'row', flex: 1, marginRight: 17}}>
                 <TouchableOpacity
@@ -60,19 +72,19 @@ export default class ClickComment extends Component {
 
                 <TouchableOpacity
                     style={styles.likeView}
-                    onPress={()=>{
-                    this.likeChang()
-                }}>
-                    <Image style={styles.like} source={current_user_like?Images.likeRed:Images.like}/>
+                    onPress={() => {
+                        this.likeChang()
+                    }}>
+                    <Image style={styles.like} source={current_user_like ? Images.likeRed : Images.like}/>
 
                 </TouchableOpacity>
                 <View style={{flex: 1}}/>
                 <TouchableOpacity
                     style={styles.forwardView}
-                    onPress={()=>{
-                    const{title,date,image_thumb,id} = this.props.info;
-                    sharePage(title,date,image_thumb,"news/" + id)
-                }}>
+                    onPress={() => {
+                        const {title, date, image_thumb, id} = this.props.info;
+                        sharePage(title, date, image_thumb, "news/" + id)
+                    }}>
                     <Image style={styles.forward} source={Images.forward}/>
                 </TouchableOpacity>
             </View>

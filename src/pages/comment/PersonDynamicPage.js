@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, TextInput, Modal, Platform} from 'react-native';
+import {View, StyleSheet, FlatList, Text, Image, TouchableOpacity, TextInput, Modal, Platform} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
 import {Badge} from '../../components';
-import {util} from '../../utils/ComonHelper';
+import {util, utcDate} from '../../utils/ComonHelper';
 import {NavigationBar, BaseComponent} from '../../components';
 import UltimateFlatList from '../../components/ultimate';
 import {getPersonDynamics} from '../../services/CommentDao';
@@ -18,32 +18,27 @@ export default class PersonDynamicPage extends Component {
         dynamics: {}
     };
 
-    componentDidMount() {
-        let body = {user_id: global.login_user.user_id, page: 1, page_size: 3};
-        getPersonDynamics(body, data => {
-            console.log("dynamics:", data);
-            this.setState({
-                dynamics: data.items
-            });
-        }, err => {
-        });
-    };
 
     personTop = () => {
         const {avatar, nick_name, signature} = global.login_user;
         return (
             <View style={styles.topPage}>
-                <Image style={styles.TopImg} source={{uri:avatar}}/>
+                <Image style={styles.TopImg} source={{uri: avatar}}/>
                 <View style={styles.TopTxt}>
-                    <Text style={{fontSize:20,color:'#444444'}}>{nick_name}</Text>
+                    <Text style={{fontSize: 20, color: '#444444'}}>{nick_name}</Text>
                     <Text
-                        style={{fontSize:14,color:'#888888',marginTop:5}}>{isEmptyObject(signature) ? I18n.t('ple_sign') : signature}</Text>
+                        style={{
+                            fontSize: 14,
+                            color: '#888888',
+                            marginTop: 5
+                        }}>{isEmptyObject(signature) ? I18n.t('ple_sign') : signature}</Text>
                 </View>
             </View>
         )
     };
     _separator = () => {
-        return <View style={{height: 1, marginLeft: 78, marginRight: 17, backgroundColor: '#DDDDDD',marginBottom:16}}/>;
+        return <View
+            style={{height: 1, marginLeft: 78, marginRight: 17, backgroundColor: '#DDDDDD', marginBottom: 16}}/>;
     };
     _separator1 = () => {
         return <View style={{height: 1, marginLeft: 16, marginRight: 17, backgroundColor: '#DDDDDD'}}/>;
@@ -69,16 +64,16 @@ export default class PersonDynamicPage extends Component {
         }
     };
 
-    renderItem = (topic) => {
-        // const {topic} = item;
-        const {topic_description, topic_id, topic_image, topic_title} = topic;
+    renderItem = ({item}) => {
+
+        const {topic_description, topic_id, topic_image, topic_title} = item.topic;
         return (
             <TouchableOpacity style={styles.itemPage}>
 
                 <Text style={styles.itemTxt1}>{this.txtType()}</Text>
 
                 <View style={styles.itemView}>
-                    <Image style={styles.image} source={{uri:topic_image}}/>
+                    <Image style={styles.image} source={{uri: topic_image}}/>
                     <View style={styles.TxtRight}>
                         <Text style={styles.itemTxt1} numberOfLines={1}>{topic_description}</Text>
                         <Text style={styles.TxtRight2} numberOfLines={1}>{topic_title}</Text>
@@ -88,72 +83,87 @@ export default class PersonDynamicPage extends Component {
         )
     };
 
-    content = (item) => {
-        const {created_at, id, topic, topic_type, typological_type} = item;
+    content = (item, index, separators) => {
+
+
         return (
-            <UltimateFlatList
-                header={()=>{
-                            return  <Text style={styles.time}>{getDateDiff(created_at)}</Text>
-                        }}
-                arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
-                ref={ref => this.ultimate = ref}
-                onFetch={this.onFetch2}
-                keyExtractor={(item, index) => `replies${index}`}
-                item={this.renderItem}
-                refreshableTitlePull={I18n.t('pull_refresh')}
-                refreshableTitleRelease={I18n.t('release_refresh')}
-                dateTitle={I18n.t('last_refresh')}
-                allLoadedText={I18n.t('no_more')}
-                waitingSpinnerText={I18n.t('loading')}
-                separator={this._separator}
+            <FlatList
+                data={item.items}
+                ListHeaderComponent={() => {
+                    return <Text style={styles.time}>{item.date}</Text>
+                }}
+                keyExtractor={(item, index) => `topic${index}`}
+                renderItem={this.renderItem}
+                ItemSeparatorComponent={this._separator}
             />
         )
     };
-    onFetch2 = (page, postRefresh, endFetch) => {
-        if (page === 1) {
-            postRefresh([1, 2, 3, 4, 5, 6, 7, 8], 3)
-        } else {
-            endFetch()
-        }
 
-    };
 
     onFetch = (page, postRefresh, endFetch) => {
-        if (page === 1) {
-            postRefresh([1, 2, 3, 4, 5, 6], 3)
-        } else {
-            endFetch()
-        }
+        this.loadDynamics(page, postRefresh, endFetch)
 
     };
+
+
+    blobData = (items) => {
+
+        let objArr = {};
+        let dynamics = [];
+        util.forEach(items, item => {
+            let date = utcDate(item.created_at, 'YYYY-MM-DD');
+            if (!objArr[date]) {
+                objArr[date] = [];
+            }
+            objArr[date].push(item);
+        });
+
+        util.forEach(objArr, (value, key) => {
+            let dynamic = {
+                date: key,
+                items: value
+            };
+            dynamics.push(dynamic)
+        });
+
+        console.log(dynamics);
+        return dynamics;
+
+    };
+
+
+    loadDynamics = (page, postRefresh, endFetch) => {
+        let body = {user_id: global.login_user.user_id, page, page_size: 20};
+        getPersonDynamics(body, data => {
+
+            postRefresh(this.blobData(data.items), 19)
+        }, err => {
+            endFetch();
+        });
+    };
+
 
     render() {
         return (
             <BaseComponent style={ApplicationStyles.bgContainer}>
                 <DynamicTopBar count={this.state.dynamics.length}/>
 
-                <ScrollView>
-                    {this.personTop()}
 
-                    {isEmptyObject(this.state.dynamics) ? <DynamicEmpty/> :
-                        <View style={{backgroundColor:'#FFFFFF',marginTop:6}}>
-                            <UltimateFlatList
-                                arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
-                                ref={ref => this.ultimate = ref}
-                                onFetch={this.onFetch}
-                                keyExtractor={(item, index) => `replies${index}`}
-                                item={this.content}
-                                refreshableTitlePull={I18n.t('pull_refresh')}
-                                refreshableTitleRelease={I18n.t('release_refresh')}
-                                dateTitle={I18n.t('last_refresh')}
-                                allLoadedText={I18n.t('no_more')}
-                                waitingSpinnerText={I18n.t('loading')}
-                                separator={this._separator1}
-                            />
-                        </View>
-                    }
-
-                </ScrollView>
+                <UltimateFlatList
+                    header={() => this.personTop()}
+                    arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
+                    ref={ref => this.ultimate = ref}
+                    onFetch={this.onFetch}
+                    keyExtractor={(item, index) => `replies${index}`}
+                    item={this.content}
+                    refreshableTitlePull={I18n.t('pull_refresh')}
+                    refreshableTitleRelease={I18n.t('release_refresh')}
+                    dateTitle={I18n.t('last_refresh')}
+                    allLoadedText={I18n.t('no_more')}
+                    waitingSpinnerText={I18n.t('loading')}
+                    separator={this._separator1}
+                    emptyView={() => <DynamicEmpty/>}
+                />
 
 
             </BaseComponent>
