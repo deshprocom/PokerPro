@@ -114,13 +114,7 @@ export default class PersonDynamicPage extends Component {
         let dynamics = [];
         util.forEach(items, item => {
             let date = utcDate(item.created_at, 'YYYY-MM-DD');
-            let today = new Date();
-            if(convertDate(today, 'YYYY-MM-DD') === date){
-                date = I18n.t('today')
-            }else if(convertDate(today, 'YYYY-MM') === utcDate(item.created_at, 'YYYY-MM')
-            && (Number(convertDate(today, 'DD'))- Number(utcDate(item.created_at, 'DD'))) <=1){
-                date = I18n.t('yesterday')
-            }
+
             if (!objArr[date]) {
                 objArr[date] = [];
             }
@@ -145,7 +139,7 @@ export default class PersonDynamicPage extends Component {
         let body = {user_id: global.login_user.user_id, page, page_size: 20};
         getPersonDynamics(body, data => {
             console.log("PersonDynamics:",data.items)
-            postRefresh(this.blobData(data.items), 19)
+            postRefresh(this.blobData(data.items), 1)
         }, err => {
             endFetch();
         });
