@@ -17,7 +17,15 @@ export default class ReceivedReplyPage extends Component {
     };
 
     componentDidMount() {
+        let body = {user_id: global.login_user.user_id, page: 1};
+        getReceivedReply(body, data => {
+            console.log("receivedReply:", data);
+            this.setState({
+                receivedReply: data.items
+            });
 
+        }, err => {
+        });
     };
 
     _separator = () => {
@@ -25,16 +33,7 @@ export default class ReceivedReplyPage extends Component {
     };
     onFetch = (page, postRefresh, endFetch) => {
         if (page === 1) {
-            let body = {user_id: global.login_user.user_id, page: 1};
-            getReceivedReply(body, data => {
-                console.log("receivedReply:", data);
-                this.setState({
-                    receivedReply: data.items
-                });
-                postRefresh(data.items, 3)
-            }, err => {
-            });
-
+            postRefresh(this.state.receivedReply, 3)
         } else {
             endFetch()
         }
@@ -51,9 +50,6 @@ export default class ReceivedReplyPage extends Component {
     renderItem = (item, index) => {
         console.log("item:", item);
         const {reply_lists} = item;
-        if (isEmptyObject(reply_lists)) {
-            return <View/>
-        }
         const {mine, other} = reply_lists[0];
         const {avatar, comment, nick_name, official, user_id, id} = other;
         return (
@@ -97,7 +93,7 @@ export default class ReceivedReplyPage extends Component {
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
-                <ScrollView style={{marginTop:7,backgroundColor:'#FFFFFF',flex:1}}>
+                <View style={{marginTop:7,backgroundColor:'#FFFFFF',flex:1}}>
                     <UltimateFlatList
                         arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
                         ref={ref => this.ultimate = ref}
@@ -112,7 +108,7 @@ export default class ReceivedReplyPage extends Component {
                         separator={this._separator}
                     />
 
-                </ScrollView>
+                </View>
 
 
             </BaseComponent>

@@ -504,6 +504,9 @@
   "official":"官方",
   "replied":"回复了",
   "liked":"赞了",
-  "your_comment":"你的评论"
+  "your_comment":"你的评论",
+  "today":"今天",
+  "yesterday":"昨天",
+  "month":"月"
 }
 

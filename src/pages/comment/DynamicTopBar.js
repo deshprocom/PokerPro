@@ -43,7 +43,7 @@ export default class DynamicTopBar extends PureComponent {
     _carts = () => {
         const {count} = this.props;
         if (count && count > 0) {
-            return <Badge style={styles.badge}/>
+            return <View style={styles.badge}/>
         }
     }
 }
@@ -90,9 +90,13 @@ const styles = StyleSheet.create({
         width: 22
     },
     badge: {
+        width:10,
+        height:10,
+        borderRadius:5,
+        backgroundColor:'red',
         position: 'absolute',
-        top: 5,
-        right:'26%'
+        top: 6,
+        right:'32%'
     },
     popBtn: {
         height: 44,

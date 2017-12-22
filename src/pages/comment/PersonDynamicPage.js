@@ -8,7 +8,7 @@ import {util} from '../../utils/ComonHelper';
 import {NavigationBar, BaseComponent} from '../../components';
 import UltimateFlatList from '../../components/ultimate';
 import {getPersonDynamics} from '../../services/CommentDao';
-import {getDateDiff, isEmptyObject} from '../../utils/ComonHelper';
+import {getDateDiff, isEmptyObject,getDayDiff} from '../../utils/ComonHelper';
 import DynamicEmpty from './DynamicEmpty';
 import DynamicTopBar from './DynamicTopBar';
 
@@ -89,11 +89,11 @@ export default class PersonDynamicPage extends Component {
     };
 
     content = (item) => {
-        const {created_at, id, topic, topic_type, typological_type} = item;
+        const {created_at} = item;
         return (
             <UltimateFlatList
                 header={()=>{
-                            return  <Text style={styles.time}>{getDateDiff(created_at)}</Text>
+                            return  <Text style={styles.time}>{getDayDiff(created_at)}</Text>
                         }}
                 arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
                 ref={ref => this.ultimate = ref}
@@ -120,7 +120,16 @@ export default class PersonDynamicPage extends Component {
 
     onFetch = (page, postRefresh, endFetch) => {
         if (page === 1) {
-            postRefresh([1, 2, 3, 4, 5, 6], 3)
+            // let dynamics = this.state.dynamics;
+            // let items = {};
+            // dynamics.map((item, index) => {
+            //     let time=item.created_at;
+            //     let date=new Date();
+            //     if(date-time<1){
+            //         items.push(item)
+            //     }
+            // }
+            postRefresh(this.state.dynamics, 3)
         } else {
             endFetch()
         }
@@ -132,30 +141,24 @@ export default class PersonDynamicPage extends Component {
             <BaseComponent style={ApplicationStyles.bgContainer}>
                 <DynamicTopBar count={this.state.dynamics.length}/>
 
-                <ScrollView>
-                    {this.personTop()}
-
-                    {isEmptyObject(this.state.dynamics) ? <DynamicEmpty/> :
-                        <View style={{backgroundColor:'#FFFFFF',marginTop:6}}>
-                            <UltimateFlatList
-                                arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
-                                ref={ref => this.ultimate = ref}
-                                onFetch={this.onFetch}
-                                keyExtractor={(item, index) => `replies${index}`}
-                                item={this.content}
-                                refreshableTitlePull={I18n.t('pull_refresh')}
-                                refreshableTitleRelease={I18n.t('release_refresh')}
-                                dateTitle={I18n.t('last_refresh')}
-                                allLoadedText={I18n.t('no_more')}
-                                waitingSpinnerText={I18n.t('loading')}
-                                separator={this._separator1}
-                            />
-                        </View>
-                    }
-
-                </ScrollView>
-
-
+                {isEmptyObject(this.state.dynamics) ? <DynamicEmpty/> :
+                    <View style={{backgroundColor:'#FFFFFF',marginTop:6}}>
+                        <UltimateFlatList
+                            header={()=>this.personTop()}
+                            arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
+                            ref={ref => this.ultimate = ref}
+                            onFetch={this.onFetch}
+                            keyExtractor={(item, index) => `replies${index}`}
+                            item={this.content}
+                            refreshableTitlePull={I18n.t('pull_refresh')}
+                            refreshableTitleRelease={I18n.t('release_refresh')}
+                            dateTitle={I18n.t('last_refresh')}
+                            allLoadedText={I18n.t('no_more')}
+                            waitingSpinnerText={I18n.t('loading')}
+                            separator={this._separator1}
+                        />
+                    </View>
+                }
             </BaseComponent>
         );
     }
@@ -191,7 +194,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: '#444444',
         marginLeft: 17,
-        marginTop: 11,
+        marginTop: 17,
         marginBottom: 10,
         fontWeight: 'bold'
     },
