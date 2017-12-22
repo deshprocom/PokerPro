@@ -7,7 +7,7 @@ import {Badge} from '../../components';
 import {NavigationBar, BaseComponent} from '../../components';
 import UltimateFlatList from '../../components/ultimate';
 import {getPersonDynamics} from '../../services/CommentDao';
-import {getDateDiff, isEmptyObject, strNotNull, util, utcDate} from '../../utils/ComonHelper';
+import {getDateDiff, isEmptyObject, strNotNull, util, utcDate,convertDate} from '../../utils/ComonHelper';
 import DynamicEmpty from './DynamicEmpty';
 import DynamicTopBar from './DynamicTopBar';
 
@@ -68,6 +68,7 @@ export default class PersonDynamicPage extends Component {
     };
 
     renderItem = ({item}) => {
+        console.log("item233:",item);
         const {topic, typological_type, topic_type} = item;
         const {topic_description, topic_id, topic_image, topic_title} = topic;
 
@@ -128,7 +129,6 @@ export default class PersonDynamicPage extends Component {
 
 
     onFetch = (page, postRefresh, endFetch) => {
-        console.log('page', page)
         if (page === 1) {
             this.dynamicList = [];
             this.page = 1;
@@ -144,7 +144,13 @@ export default class PersonDynamicPage extends Component {
         let dynamics = [];
         util.forEach(items, item => {
             let date = utcDate(item.created_at, 'YYYY-MM-DD');
-
+            let today = new Date();
+            if(convertDate(new Date(), 'YYYY-MM-DD') === date){
+                date = I18n.t('today')
+            }else if(convertDate(today, 'YYYY-MM') === utcDate(item.created_at, 'YYYY-MM')
+                && Number(convertDate(today, 'DD'))- Number(utcDate(item.created_at, 'DD')) <=1){
+                date =  I18n.t('yesterday')
+            }
             if (!objArr[date]) {
                 objArr[date] = [];
             }
@@ -168,7 +174,7 @@ export default class PersonDynamicPage extends Component {
     loadDynamics = (page, postRefresh, endFetch) => {
         let body = {user_id: global.login_user.user_id, page, page_size: 20};
         getPersonDynamics(body, data => {
-            console.log("PersonDynamics:", data.items)
+            console.log("PersonDynamics23232:", data.items)
             this.dynamicList = util.unionBy(this.dynamicList, data.items, 'id');
             if (this.ultimate) {
                 if (data.items.length > 0) {
