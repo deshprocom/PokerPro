@@ -501,5 +501,9 @@
   "release":"发布",
   "no_content":"暂无内容",
   "info_video_dynamic":"您评论点赞的资讯视频都会在这里显示",
-  "received_reply":"我收到的回复"
+  "received_reply":"我收到的回复",
+  "official":"官方",
+  "replied":"回复了",
+  "liked":"赞了",
+  "your_comment":"你的评论"
 }

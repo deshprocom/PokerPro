@@ -10,6 +10,8 @@ import UltimateFlatList from '../../components/ultimate';
 import {getPersonDynamics} from '../../services/CommentDao';
 import {getDateDiff, isEmptyObject} from '../../utils/ComonHelper';
 import DynamicEmpty from './DynamicEmpty';
+import DynamicTopBar from './DynamicTopBar';
+
 
 export default class PersonDynamicPage extends Component {
     state = {
@@ -56,7 +58,7 @@ export default class PersonDynamicPage extends Component {
             } else if (typological_type === "reply") {
                 return "在资讯回复了一个话题";
             }
-        }else if (topic_type === "video") {
+        } else if (topic_type === "video") {
             if (typological_type === "topiclike") {
                 return "在视频点赞了一个话题";
             } else if (typological_type === "comment") {
@@ -68,14 +70,10 @@ export default class PersonDynamicPage extends Component {
     };
 
     renderItem = (topic) => {
-        console.log("topic:",topic);
         // const {topic} = item;
         const {topic_description, topic_id, topic_image, topic_title} = topic;
         return (
-            <TouchableOpacity style={styles.itemPage}
-            onPress={()=>{
-                router.toReceivedReply();
-            }}>
+            <TouchableOpacity style={styles.itemPage}>
 
                 <Text style={styles.itemTxt1}>{this.txtType()}</Text>
 
@@ -113,7 +111,7 @@ export default class PersonDynamicPage extends Component {
     };
     onFetch2 = (page, postRefresh, endFetch) => {
         if (page === 1) {
-            postRefresh([1,2,3,4,5,6,7,8],3)
+            postRefresh([1, 2, 3, 4, 5, 6, 7, 8], 3)
         } else {
             endFetch()
         }
@@ -122,7 +120,7 @@ export default class PersonDynamicPage extends Component {
 
     onFetch = (page, postRefresh, endFetch) => {
         if (page === 1) {
-            postRefresh([1,2,3,4,5,6],3)
+            postRefresh([1, 2, 3, 4, 5, 6], 3)
         } else {
             endFetch()
         }
@@ -132,20 +130,12 @@ export default class PersonDynamicPage extends Component {
     render() {
         return (
             <BaseComponent style={ApplicationStyles.bgContainer}>
-                <NavigationBar
-                    barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
-                    toolbarStyle={{backgroundColor: Colors.white}}
-                    title={I18n.t('person_dynamic')}
-                    titleStyle={{color: Colors._161}}
-                    leftBtnIcon={Images.mall_return}
-                    rightBtnIcon={Images.commentWhite}
-                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                    rightImageStyle={{height: 20, width: 22, marginLeft: 20, marginRight: 20}}
-                    leftBtnPress={() => router.pop()}/>
+                <DynamicTopBar count={this.state.dynamics.length}/>
+
                 <ScrollView>
                     {this.personTop()}
 
-                    {isEmptyObject(this.state.dynamics)?<DynamicEmpty/>:
+                    {isEmptyObject(this.state.dynamics) ? <DynamicEmpty/> :
                         <View style={{backgroundColor:'#FFFFFF',marginTop:6}}>
                             <UltimateFlatList
                                 arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
@@ -187,7 +177,7 @@ const styles = StyleSheet.create({
         width: 74,
         height: 74,
         marginLeft: 24,
-        borderRadius:37
+        borderRadius: 37
     },
     TopTxt: {
         flexDirection: 'column',
@@ -239,6 +229,19 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#AAAAAA',
         marginTop: 2
+    },
+    commentWhiteView: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 20,
+        paddingTop: 5,
+        paddingBottom: 5,
+        paddingLeft: 5,
+        paddingRight: 5
+    },
+    commentWhite: {
+        width: 22,
+        height: 20
     }
 
 });
