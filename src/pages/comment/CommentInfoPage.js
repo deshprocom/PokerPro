@@ -19,9 +19,12 @@ export default class CommentInfoPage extends Component {
     };
 
 
+    refreshList = () => {
+        this.ultimate && this.ultimate.onRefresh();
+    };
+
     render() {
         const {item} = this.props.params;
-        console.log('CommentItem', item)
 
         return (
             <BaseComponent>
@@ -62,6 +65,7 @@ export default class CommentInfoPage extends Component {
                 <View style={{height: 60}}/>
                 <View style={styles.bottom}>
                     <CommentBottom
+                        refreshList={this.refreshList}
                         ref={ref => this.commentBottom = ref}
                         info={item}
                         topic_type={CommentBottom.replies}/>

@@ -24,10 +24,19 @@ export default class Information extends Component {
         return begin + '-' + end;
     };
     _renderItem = ({item}) => {
-        if (item.source_type == 'info') {
+        if (item.source_type === 'info') {
             return (
                 <TouchableOpacity
-                    onPress={() => router.toNewsInfoPage(this.props, item.info)}
+                    onPress={() => {
+
+                        const {id} = item.info;
+                        let url = `${global.desh5}news/${id}/${global.language}`;
+                        global.router.toWebPage(url, {
+                            bottomNav: 'commentNav',
+                            info: item.info,
+                            topic_type: item.source_type
+                        })
+                    }}
                     style={styles.information}>
                     <View style={{flex: 1}}>
                         <Text numberOfLines={2}
@@ -43,18 +52,35 @@ export default class Information extends Component {
                     <Image style={{width: 123, height: 75}} source={{uri: item.info.image_thumb}}/>
                 </TouchableOpacity>
             )
-        } else if (item.source_type == 'video') {
+        } else if (item.source_type === 'video') {
             return (
                 <View style={{marginLeft: 17, marginTop: 17, marginRight: 17}}>
                     <Text
-                        onPress={() => router.toVideoInfoPage(this.props, item.video)}
+                        onPress={() => {
+
+                            const {id} = item.video;
+                            let url = `${global.desh5}videos/${id}/${global.language}`;
+                            global.router.toWebPage(url, {
+                                bottomNav: 'commentNav',
+                                info: item.video,
+                                topic_type: item.source_type
+                            })
+                        }}
                         style={{
                             fontSize: 15,
                             color: '#333333'
                         }}>{item.video.name}</Text>
 
                     <TouchableOpacity
-                        onPress={() => router.toVideoInfoPage(this.props, item.video)}
+                        onPress={() => {
+                            const {id} = item.video;
+                            let url = `${global.desh5}videos/${id}/${global.language}`;
+                            global.router.toWebPage(url, {
+                                bottomNav: 'commentNav',
+                                info: item.video,
+                                topic_type: item.source_type
+                            })
+                        }}
                         style={{height: 207, marginTop: 14, marginBottom: 14}}>
                         <Image style={{height: 207, alignItems: 'center', justifyContent: 'center'}}
                                source={{uri: item.video.cover_link.trim()}}>

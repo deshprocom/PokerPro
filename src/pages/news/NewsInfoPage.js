@@ -86,7 +86,7 @@ export default class NewsInfoPage extends Component {
                 />
             </ScrollView>
             <View style={{height:50}}/>
-            <CommentBottom/>
+
         </View>)
     }
 

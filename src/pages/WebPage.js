@@ -95,11 +95,15 @@ export default class WebPage extends Component {
                             break;
                         case PostRoute.ADD_COMMENT:
                             this.commentNav && this.commentNav.commentTotal(param);
+                            break;
+                        case PostRoute.NewsInfo:
+                            this.commentNav && this.commentNav.userLike(param.current_user_like);
+                            break;
                     }
                 }
             }
         } catch (e) {
-            console.log(e)
+            throw Error(e)
         }
 
 
@@ -126,8 +130,8 @@ export default class WebPage extends Component {
                     onNavigationStateChange={(e) => this.onNavigationStateChange(e)}
                     source={{uri: url}}
                     mixedContentMode={'always'}
-                    domStorageEnabled={true}
-                    scalesPageToFit={false}
+                    domStorageEnabled={false}
+                    scalesPageToFit={true}
                     onMessage={this.handleMessage}/>
 
                 <View style={styles.bottom}>
@@ -155,7 +159,7 @@ export default class WebPage extends Component {
                             ref={ref => this.commentNav = ref}
                             topic_type={topic_type}
                             info={info}
-                            webRefesh={this.webRefesh}/>
+                        />
 
                 }
             }

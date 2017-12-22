@@ -436,9 +436,10 @@ export default class UltimateListView extends Component {
     }
 
     render() {
-        const {numColumns} = this.props
+        const {numColumns} = this.props;
         if (this.state.dataSource.length <= 0 && this.props.emptyView)
             return <TouchableOpacity
+                style={{flex: 1}}
                 onPress={this.refresh}
             >
                 {this.props.emptyView()}
