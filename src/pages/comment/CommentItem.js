@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView, TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import PropTypes from 'prop-types';
-import {getDateDiff, isEmptyObject} from '../../utils/ComonHelper';
+import {getDateDiff, isEmptyObject,strNotNull} from '../../utils/ComonHelper';
 import {ImageLoad} from '../../components';
 import {postRepliesReplies} from '../../services/CommentDao';
 import CommentBottom from "./CommentBottom";
@@ -54,6 +54,15 @@ export default class CommentItem extends PureComponent {
         )
     };
 
+    _avatar = (avatar) => {
+        if (isEmptyObject(avatar))
+            return Images.home_avatar;
+        else if (strNotNull(avatar))
+            return {uri: avatar}
+        else
+            return Images.home_avatar;
+    };
+
     render() {
 
         const {item} = this.props;
@@ -64,8 +73,8 @@ export default class CommentItem extends PureComponent {
 
         return (
             <View style={styles.content}>
-                <TouchableOpacity>
-                    <ImageLoad style={styles.img} source={{uri: avatar}}/>
+                <TouchableOpacity onPress={()=>global.router.toPersonDynamic()}>
+                    <ImageLoad style={styles.img} source={this._avatar(avatar)}/>
                 </TouchableOpacity>
                 <View style={styles.contentRight}>
                     <View style={styles.commentTop}>
