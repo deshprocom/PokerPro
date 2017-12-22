@@ -43,25 +43,9 @@ export default class PersonDynamicPage extends Component {
     _separator1 = () => {
         return <View style={{height: 1, marginLeft: 16, marginRight: 17, backgroundColor: '#DDDDDD'}}/>;
     };
-    txtType = () => {
-        const {topic_type, typological_type} = this.state.dynamics;
-        if (topic_type === "info") {
-            if (typological_type === "topiclike") {
-                return "在资讯点赞了一个话题";
-            } else if (typological_type === "comment") {
-                return "在资讯评论了一个话题";
-            } else if (typological_type === "reply") {
-                return "在资讯回复了一个话题";
-            }
-        } else if (topic_type === "video") {
-            if (typological_type === "topiclike") {
-                return "在视频点赞了一个话题";
-            } else if (typological_type === "comment") {
-                return "在视频评论了一个话题";
-            } else if (typological_type === "reply") {
-                return "在视频回复了一个话题";
-            }
-        }
+    txtType = (item) => {
+        const {topic_type, typological_type} = item;
+        return I18n.t(topic_type+'_'+typological_type);
     };
 
     renderItem = ({item}) => {
@@ -70,7 +54,7 @@ export default class PersonDynamicPage extends Component {
         return (
             <TouchableOpacity style={styles.itemPage}>
 
-                <Text style={styles.itemTxt1}>{this.txtType()}</Text>
+                <Text style={styles.itemTxt1}>{this.txtType(item)}</Text>
 
                 <View style={styles.itemView}>
                     <Image style={styles.image} source={{uri: topic_image}}/>

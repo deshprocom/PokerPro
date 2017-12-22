@@ -512,6 +512,12 @@
   "de":"的",
   "deleted":"已被删除",
   "already_delete":"删除了",
-  "bad_message":"由于你传播了不良信息"
+  "bad_message":"由于你传播了不良信息",
+  "info_topiclike":"在资讯点赞了一个话题" ,
+  "info_comment":"在资讯评论了一个话题",
+  "info_reply":"在资讯回复了一个话题",
+  "video_topiclike":"在视频点赞了一个话题" ,
+  "video_comment":"在视频评论了一个话题",
+  "video_reply":"在视频回复了一个话题"
 }
 
