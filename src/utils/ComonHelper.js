@@ -207,6 +207,36 @@ export function setLang(lang) {
     // console.log('分享页语言'+Lang);
 }
 
+/*时间 今天*/
+export function getDayDiff(dateTimeStamp) {
+    var minute = 1000 * 60;
+    var hour = minute * 60;
+    var day = hour * 24;
+    var halfamonth = day * 15;
+    var month = day * 30;
+    var now = new Date().getTime();
+
+    var diffValue = now - dateTimeStamp * 1000;
+    if (diffValue < 0) {
+        return;
+    }
+    var monthC = diffValue / month;
+    var weekC = diffValue / (7 * day);
+    var dayC = diffValue / day;
+    var hourC = diffValue / hour;
+    var minC = diffValue / minute;
+    let result = '';
+    if (dayC < 1) {
+        result = "" + I18n.t('today');
+    }
+    else if (dayC === 1) {
+        result = "" + I18n.t('yesterday');
+    }
+    else if (dayC > 1) {
+        result = "" + parseInt(monthC) + I18n.t('month') + parseInt(dayC);
+    }
+    return result;
+}
 /*时间 1小时前*/
 export function getDateDiff(dateTimeStamp) {
 

@@ -4,11 +4,11 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
 import {Badge} from '../../components';
-import {util, utcDate} from '../../utils/ComonHelper';
+import {util, utcDate,convertDate} from '../../utils/ComonHelper';
 import {NavigationBar, BaseComponent} from '../../components';
 import UltimateFlatList from '../../components/ultimate';
 import {getPersonDynamics} from '../../services/CommentDao';
-import {getDateDiff, isEmptyObject} from '../../utils/ComonHelper';
+import {getDateDiff, isEmptyObject,strNotNull} from '../../utils/ComonHelper';
 import DynamicEmpty from './DynamicEmpty';
 import DynamicTopBar from './DynamicTopBar';
 
@@ -18,12 +18,19 @@ export default class PersonDynamicPage extends Component {
         dynamics: {}
     };
 
-
+    _avatar = (avatar) => {
+        if (isEmptyObject(avatar))
+            return Images.home_avatar;
+        else if (strNotNull(avatar))
+            return {uri: avatar}
+        else
+            return Images.home_avatar;
+    };
     personTop = () => {
         const {avatar, nick_name, signature} = global.login_user;
         return (
             <View style={styles.topPage}>
-                <Image style={styles.TopImg} source={{uri: avatar}}/>
+                <Image style={styles.TopImg} source={this._avatar(avatar)}/>
                 <View style={styles.TopTxt}>
                     <Text style={{fontSize: 20, color: '#444444'}}>{nick_name}</Text>
                     <Text
@@ -43,34 +50,29 @@ export default class PersonDynamicPage extends Component {
     _separator1 = () => {
         return <View style={{height: 1, marginLeft: 16, marginRight: 17, backgroundColor: '#DDDDDD'}}/>;
     };
-    txtType = () => {
-        const {topic_type, typological_type} = this.state.dynamics;
-        if (topic_type === "info") {
-            if (typological_type === "topiclike") {
-                return "在资讯点赞了一个话题";
-            } else if (typological_type === "comment") {
-                return "在资讯评论了一个话题";
-            } else if (typological_type === "reply") {
-                return "在资讯回复了一个话题";
-            }
-        } else if (topic_type === "video") {
-            if (typological_type === "topiclike") {
-                return "在视频点赞了一个话题";
-            } else if (typological_type === "comment") {
-                return "在视频评论了一个话题";
-            } else if (typological_type === "reply") {
-                return "在视频回复了一个话题";
-            }
-        }
+    txtType = (item) => {
+        const {topic_type, typological_type} = item;
+        return I18n.t(topic_type+'_'+typological_type);
     };
 
     renderItem = ({item}) => {
-
-        const {topic_description, topic_id, topic_image, topic_title} = item.topic;
+        const {topic_description, topic_id, topic_image, topic_title,topic_type} = item.topic;
         return (
-            <TouchableOpacity style={styles.itemPage}>
+            <TouchableOpacity style={styles.itemPage}
+            onPress={()=>{
+                if(topic_type === "info"){
+                    let url = `${global.desh5}news/${topic_id}/${global.language}`;
+                    global.router.toWebPage(url, {bottomNav: 'commentNav', info: {id: topic_id}, topic_type: 'info'})
+                }else if(topic_type === "video"){
+                    let urlVideo = `${global.desh5}videos/${topic_id}/${global.language}`;
+                    global.router.toWebPage(url, {bottomNav: 'commentNav', info: {id: topic_id}, topic_type: 'info'})
+                }else{
+                    global.router.toDeletePage();
+                }
 
-                <Text style={styles.itemTxt1}>{this.txtType()}</Text>
+            }}>
+
+                <Text style={styles.itemTxt1}>{this.txtType(item)}</Text>
 
                 <View style={styles.itemView}>
                     <Image style={styles.image} source={{uri: topic_image}}/>
@@ -112,6 +114,7 @@ export default class PersonDynamicPage extends Component {
         let dynamics = [];
         util.forEach(items, item => {
             let date = utcDate(item.created_at, 'YYYY-MM-DD');
+
             if (!objArr[date]) {
                 objArr[date] = [];
             }
@@ -135,8 +138,8 @@ export default class PersonDynamicPage extends Component {
     loadDynamics = (page, postRefresh, endFetch) => {
         let body = {user_id: global.login_user.user_id, page, page_size: 20};
         getPersonDynamics(body, data => {
-
-            postRefresh(this.blobData(data.items), 19)
+            console.log("PersonDynamics:",data.items)
+            postRefresh(this.blobData(data.items), 1)
         }, err => {
             endFetch();
         });
