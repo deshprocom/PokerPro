@@ -102,7 +102,7 @@ export default class ReceivedReplyPage extends Component {
                     </View>
                     <View style={styles.replyView}>
                         <Text style={styles.replyTxt1}>
-                            {mine.typological_type === "reply" ? I18n.t('replied') : I18n.t('liked')}
+                            {item.type === "reply" ? I18n.t('replied') : I18n.t('liked')}
                         </Text>
                         <Text style={styles.replyTxt2}>
                             {I18n.t('your_comment')}：
