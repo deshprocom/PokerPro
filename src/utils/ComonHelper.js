@@ -635,7 +635,7 @@ export function sellable(status, sellable) {
 /*日期转化*/
 export function convertDate(date, formate) {
     if (strNotNull(date))
-        return moment(legalValue(date)).format(formate)
+        return moment(date).format(formate)
 }
 
 //UTC 时间转化

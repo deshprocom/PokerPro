@@ -7,10 +7,10 @@ import {Badge} from '../../components';
 import {NavigationBar, BaseComponent} from '../../components';
 import UltimateFlatList from '../../components/ultimate';
 import {getPersonDynamics} from '../../services/CommentDao';
-import {getDateDiff, isEmptyObject, strNotNull, util, utcDate,convertDate} from '../../utils/ComonHelper';
+import {getDateDiff, isEmptyObject, strNotNull, util, utcDate, convertDate} from '../../utils/ComonHelper';
 import DynamicEmpty from './DynamicEmpty';
 import DynamicTopBar from './DynamicTopBar';
-
+import LinearGradient from 'react-native-linear-gradient';
 
 export default class PersonDynamicPage extends Component {
     state = {
@@ -33,7 +33,9 @@ export default class PersonDynamicPage extends Component {
     personTop = () => {
         const {avatar, nick_name, signature} = global.login_user;
         return (
-            <View style={styles.topPage}>
+            <LinearGradient
+                colors={['#DEDEDE', '#FFFFFF', '#DEDEDE']}
+                style={styles.topPage}>
                 <Image style={styles.TopImg} source={this._avatar(avatar)}/>
                 <View style={styles.TopTxt}>
                     <Text style={{fontSize: 20, color: '#444444'}}>{nick_name}</Text>
@@ -44,7 +46,7 @@ export default class PersonDynamicPage extends Component {
                             marginTop: 5
                         }}>{isEmptyObject(signature) ? I18n.t('ple_sign') : signature}</Text>
                 </View>
-            </View>
+            </LinearGradient>
         )
     };
     _separator = () => {
@@ -59,16 +61,16 @@ export default class PersonDynamicPage extends Component {
         return I18n.t(topic_type + '_' + typological_type);
     };
 
-    myComment=(item)=>{
+    myComment = (item) => {
         const {typological} = item;
         const {my_comment_body} = typological;
-        return(
+        return (
             <Text style={styles.itemTxt1} numberOfLines={1}>{my_comment_body}</Text>
         )
     };
 
     renderItem = ({item}) => {
-        console.log("item233:",item);
+
         const {topic, typological_type, topic_type} = item;
         const {topic_description, topic_id, topic_image, topic_title} = topic;
 
@@ -118,7 +120,7 @@ export default class PersonDynamicPage extends Component {
             <FlatList
                 data={item.items}
                 ListHeaderComponent={() => {
-                    return <Text style={styles.time}>{item.date}</Text>
+                    return <Text style={styles.time}>{convertDate(item.date, 'MMMM Do YYYY')}</Text>
                 }}
                 keyExtractor={(item, index) => `topic${index}`}
                 renderItem={this.renderItem}
@@ -145,11 +147,11 @@ export default class PersonDynamicPage extends Component {
         util.forEach(items, item => {
             let date = utcDate(item.created_at, 'YYYY-MM-DD');
             let today = new Date();
-            if(convertDate(new Date(), 'YYYY-MM-DD') === date){
+            if (convertDate(new Date(), 'YYYY-MM-DD') === date) {
                 date = I18n.t('today')
-            }else if(convertDate(today, 'YYYY-MM') === utcDate(item.created_at, 'YYYY-MM')
-                && Number(convertDate(today, 'DD'))- Number(utcDate(item.created_at, 'DD')) <=1){
-                date =  I18n.t('yesterday')
+            } else if (convertDate(today, 'YYYY-MM') === utcDate(item.created_at, 'YYYY-MM')
+                && Number(convertDate(today, 'DD')) - Number(utcDate(item.created_at, 'DD')) <= 1) {
+                date = I18n.t('yesterday')
             }
             if (!objArr[date]) {
                 objArr[date] = [];
@@ -240,7 +242,8 @@ const styles = StyleSheet.create({
     TopTxt: {
         flexDirection: 'column',
         alignItems: 'flex-start',
-        marginLeft: 21
+        marginLeft: 21,
+        backgroundColor: 'transparent'
     },
     itemsView: {
         paddingTop: 5
@@ -263,7 +266,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#444444',
         marginRight: 50,
-        marginBottom:3
+        marginBottom: 3
 
     },
     itemView: {
@@ -277,19 +280,19 @@ const styles = StyleSheet.create({
     image: {
         width: 48, height: 48,
         marginLeft: 6,
-        marginTop:6
+        marginTop: 6
     },
     TxtRight: {
         flexDirection: 'column',
         alignItems: 'flex-start',
         marginLeft: 12,
         marginRight: 8,
-        marginTop:10
+        marginTop: 10
     },
     TxtRight2: {
         fontSize: 14,
         color: '#AAAAAA',
-        marginTop:4
+        marginTop: 4
 
     },
     commentWhiteView: {
