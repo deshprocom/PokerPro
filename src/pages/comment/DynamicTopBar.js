@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         height: 44,
-        marginLeft: 10
+        paddingLeft: 50,
     },
     imgCat: {
         height: 20,

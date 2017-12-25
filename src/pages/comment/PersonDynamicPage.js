@@ -3,8 +3,7 @@ import {View, StyleSheet, FlatList, Text, Image, TouchableOpacity, TextInput, Mo
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
-import {Badge} from '../../components';
-import {NavigationBar, BaseComponent} from '../../components';
+import {NavigationBar, BaseComponent, ImageLoad} from '../../components';
 import UltimateFlatList from '../../components/ultimate';
 import {getPersonDynamics} from '../../services/CommentDao';
 import {agoDynamicDate, isEmptyObject, strNotNull, util, utcDate, convertDate} from '../../utils/ComonHelper';
@@ -43,13 +42,13 @@ export default class PersonDynamicPage extends Component {
                         <Text style={{fontSize: 20, color: '#444444'}}>{nick_name}</Text>
                         <Text
                             style={{
-                            fontSize: 14,
-                            color: '#888888',
-                            marginTop: 5
-                        }}>{isEmptyObject(signature) ? I18n.t('ple_sign') : signature}</Text>
+                                fontSize: 14,
+                                color: '#888888',
+                                marginTop: 5
+                            }}>{isEmptyObject(signature) ? I18n.t('ple_sign') : signature}</Text>
                     </View>
                 </LinearGradient>
-                <View style={{height:6,width:'100%',backgroundColor:'#ECECEE'}}/>
+                <View style={{height: 6, width: '100%', backgroundColor: '#ECECEE'}}/>
             </View>
 
         )
@@ -67,7 +66,7 @@ export default class PersonDynamicPage extends Component {
     };
 
     myComment = (item) => {
-        const {typological, topic_type,typological_type} = item;
+        const {typological, topic_type, typological_type} = item;
         const {my_name, my_comment_body, my_reply_body} = typological;
         return (
             <Text style={styles.itemTxt1}
@@ -101,10 +100,10 @@ export default class PersonDynamicPage extends Component {
                                   }
 
                               }}>
-                <Text style={[styles.itemTxt1,{marginBottom:10}]}>{this.txtType(item)}</Text>
+                <Text style={[styles.itemTxt1, {marginBottom: 10}]}>{this.txtType(item)}</Text>
 
                 <View style={styles.itemView}>
-                    <Image style={styles.image} source={this._avatar(topic_image)}/>
+                    <ImageLoad style={styles.image} source={{uri: topic_image}}/>
                     <View style={styles.TxtRight}>
 
                         {typological_type === "topiclike" ? null :
@@ -222,7 +221,7 @@ export default class PersonDynamicPage extends Component {
             <BaseComponent style={ApplicationStyles.bgContainer}>
                 <DynamicTopBar count={this.state.dynamics.length}/>
 
-                <View style={{backgroundColor:'#FFFFFF',marginBottom:20}}>
+                <View style={{backgroundColor: '#FFFFFF', marginBottom: 20}}>
 
                     <UltimateFlatList
                         header={() => this.personTop()}
@@ -310,7 +309,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         marginLeft: 12,
         marginTop: 10,
-        marginRight:55
+        marginRight: 55
     },
     TxtRight2: {
         fontSize: 14,
