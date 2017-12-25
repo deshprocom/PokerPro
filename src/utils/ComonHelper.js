@@ -237,6 +237,46 @@ export function getDayDiff(dateTimeStamp) {
     }
     return result;
 }
+
+
+export function agoDynamicDate(dateTimeStamp) {
+    let minute = 1000 * 60;
+    let hour = minute * 60;
+    let day = hour * 24;
+    let halfamonth = day * 15;
+    let month = day * 30;
+    let now = new Date().getTime();
+
+    let diffValue = now - dateTimeStamp * 1000;
+    if (diffValue < 0) {
+        return;
+    }
+
+    var monthC = diffValue / month;
+    var weekC = diffValue / (7 * day);
+    var dayC = diffValue / day;
+    var hourC = diffValue / hour;
+    var minC = diffValue / minute;
+
+    let result = '';
+    if (weekC >= 1) {
+        result = "" + parseInt(weekC) + I18n.t('time_week');
+    }
+    else if (0 <= dayC && dayC < 1) {
+        result = I18n.t('today');
+    }
+    else if (1 <= dayC && dayC < 2) {
+        result = I18n.t('yesterday');
+    }
+    else if (dayC >= 1) {
+        result = "" + parseInt(dayC) + I18n.t('time_day');
+    }
+    else
+        result = moment.unix(dateTimeStamp).format('MMM Do YY');
+
+    return result;
+}
+
 /*时间 1小时前*/
 export function getDateDiff(dateTimeStamp) {
 
@@ -272,14 +312,14 @@ export function getDateDiff(dateTimeStamp) {
     else if (minC >= 1) {
         result = "" + parseInt(minC) + I18n.t('time_min');
     } else
-        result = I18n.t('time_moment');
+        moment();
     return result;
 }
 
 export function sharePage(title, location, icon, url) {
 
     let thumb = getShareIcon(icon)
-    UMShare.share(title, location, thumb, shareHost() + (url+ + "/" + Lang))
+    UMShare.share(title, location, thumb, shareHost() + (url + +"/" + Lang))
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
@@ -927,6 +967,7 @@ export function alertOrder(str, callback) {
         }
     }])
 }
+
 //微信提示
 export function alertOrderChat(str) {
     Alert.alert(str)

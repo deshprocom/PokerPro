@@ -7,10 +7,11 @@ import {Badge} from '../../components';
 import {NavigationBar, BaseComponent} from '../../components';
 import UltimateFlatList from '../../components/ultimate';
 import {getPersonDynamics} from '../../services/CommentDao';
-import {getDateDiff, isEmptyObject, strNotNull, util, utcDate, convertDate} from '../../utils/ComonHelper';
+import {agoDynamicDate, isEmptyObject, strNotNull, util, utcDate, convertDate} from '../../utils/ComonHelper';
 import DynamicEmpty from './DynamicEmpty';
 import DynamicTopBar from './DynamicTopBar';
 import LinearGradient from 'react-native-linear-gradient';
+import moment from 'moment';
 
 export default class PersonDynamicPage extends Component {
     state = {
@@ -115,12 +116,16 @@ export default class PersonDynamicPage extends Component {
 
     content = (item, index, separators) => {
 
+        let timestamp2 = Date.parse(new Date(item.date));
+        timestamp2 = timestamp2 / 1000;
+        console.log(timestamp2);
+
 
         return (
             <FlatList
                 data={item.items}
                 ListHeaderComponent={() => {
-                    return <Text style={styles.time}>{convertDate(item.date, 'MMMM Do YYYY')}</Text>
+                    return <Text style={styles.time}>{agoDynamicDate(timestamp2)}</Text>
                 }}
                 keyExtractor={(item, index) => `topic${index}`}
                 renderItem={this.renderItem}
@@ -146,13 +151,7 @@ export default class PersonDynamicPage extends Component {
         let dynamics = [];
         util.forEach(items, item => {
             let date = utcDate(item.created_at, 'YYYY-MM-DD');
-            let today = new Date();
-            if (convertDate(new Date(), 'YYYY-MM-DD') === date) {
-                date = I18n.t('today')
-            } else if (convertDate(today, 'YYYY-MM') === utcDate(item.created_at, 'YYYY-MM')
-                && Number(convertDate(today, 'DD')) - Number(utcDate(item.created_at, 'DD')) <= 1) {
-                date = I18n.t('yesterday')
-            }
+
             if (!objArr[date]) {
                 objArr[date] = [];
             }
