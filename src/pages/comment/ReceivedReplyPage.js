@@ -4,11 +4,10 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
 import {Badge} from '../../components';
-import {convertDate} from '../../utils/ComonHelper';
 import {NavigationBar, BaseComponent} from '../../components';
 import UltimateFlatList from '../../components/ultimate';
 import {getReceivedReply} from '../../services/CommentDao';
-import {getDateDiff, isEmptyObject,strNotNull} from '../../utils/ComonHelper';
+import {getDateDiff, isEmptyObject,strNotNull,utcDate} from '../../utils/ComonHelper';
 import DynamicEmpty from './DynamicEmpty';
 
 export default class ReceivedReplyPage extends Component {
@@ -48,7 +47,7 @@ export default class ReceivedReplyPage extends Component {
         )
     };
 
-    delete=(item)=>{
+    deleteItem=(item)=>{
         const {typological_type, my_comment,created_at} = item;
         return(
             <View style={styles.itemPage}>
@@ -57,7 +56,7 @@ export default class ReceivedReplyPage extends Component {
                     <View style={{flexDirection:'row',alignItems:'flex-start',marginTop:10}}>
                         <Text style={styles.name}>{I18n.t('Poker')}</Text>
                         <View style={{flex:1}}/>
-                        <Text style={styles.time}>{convertDate(created_at,'YYYY-MM-DD mm:ss')}</Text>
+                        <Text style={styles.time}>{utcDate(created_at,'YYYY-MM-DD mm:ss')}</Text>
                     </View>
                     <Text style={styles.topicTxt}>{I18n.t('bad_message')}</Text>
                     <View style={styles.replyView}>
@@ -95,14 +94,14 @@ export default class ReceivedReplyPage extends Component {
                         <Text style={styles.name}>{official ? I18n.t('Poker') : nick_name}</Text>
                         {official ? this.official() : null}
                         <View style={{flex:1}}/>
-                        <Text style={styles.time}>{convertDate(mine.created_at,'YYYY-MM-DD mm:ss')}</Text>
+                        <Text style={styles.time}>{utcDate(mine.created_at,'YYYY-MM-DD mm:ss')}</Text>
                     </View>
                     <View style={styles.topic}>
                         <Text style={styles.topicTxt}>{mine.comment}</Text>
                     </View>
                     <View style={styles.replyView}>
                         <Text style={styles.replyTxt1}>
-                            {mine.typological_type === "reply" ? I18n.t('replied') : I18n.t('liked')}
+                            {item.type === "reply" ? I18n.t('replied') : I18n.t('liked')}
                         </Text>
                         <Text style={styles.replyTxt2}>
                             {I18n.t('your_comment')}：
@@ -120,7 +119,7 @@ export default class ReceivedReplyPage extends Component {
         const {type} = item;
         if(type === "delete"){
 
-            return this.delete(item);
+            return this.deleteItem(item);
 
         }else if(type === "reply"){
             return this.reply(item);
