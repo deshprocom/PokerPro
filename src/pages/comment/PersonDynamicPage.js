@@ -34,20 +34,24 @@ export default class PersonDynamicPage extends Component {
     personTop = () => {
         const {avatar, nick_name, signature} = global.login_user;
         return (
-            <LinearGradient
-                colors={['#DEDEDE', '#FFFFFF', '#DEDEDE']}
-                style={styles.topPage}>
-                <Image style={styles.TopImg} source={this._avatar(avatar)}/>
-                <View style={styles.TopTxt}>
-                    <Text style={{fontSize: 20, color: '#444444'}}>{nick_name}</Text>
-                    <Text
-                        style={{
+            <View>
+                <LinearGradient
+                    colors={['#DEDEDE', '#FFFFFF', '#FFFFFF']}
+                    style={styles.topPage}>
+                    <Image style={styles.TopImg} source={this._avatar(avatar)}/>
+                    <View style={styles.TopTxt}>
+                        <Text style={{fontSize: 20, color: '#444444'}}>{nick_name}</Text>
+                        <Text
+                            style={{
                             fontSize: 14,
                             color: '#888888',
                             marginTop: 5
                         }}>{isEmptyObject(signature) ? I18n.t('ple_sign') : signature}</Text>
-                </View>
-            </LinearGradient>
+                    </View>
+                </LinearGradient>
+                <View style={{height:6,width:'100%',backgroundColor:'#ECECEE'}}/>
+            </View>
+
         )
     };
     _separator = () => {
@@ -63,15 +67,15 @@ export default class PersonDynamicPage extends Component {
     };
 
     myComment = (item) => {
-        const {typological} = item;
-        const {my_comment_body} = typological;
+        const {typological, topic_type,typological_type} = item;
+        const {my_name, my_comment_body, my_reply_body} = typological;
         return (
-            <Text style={styles.itemTxt1} numberOfLines={1}>{my_comment_body}</Text>
+            <Text style={styles.itemTxt1}
+                  numberOfLines={1}>{my_name}：{typological_type === "reply" ? my_reply_body : my_comment_body}</Text>
         )
     };
 
     renderItem = ({item}) => {
-
         const {topic, typological_type, topic_type} = item;
         const {topic_description, topic_id, topic_image, topic_title} = topic;
 
@@ -97,11 +101,10 @@ export default class PersonDynamicPage extends Component {
                                   }
 
                               }}>
-
-                <Text style={styles.itemTxt1}>{this.txtType(item)}</Text>
+                <Text style={[styles.itemTxt1,{marginBottom:10}]}>{this.txtType(item)}</Text>
 
                 <View style={styles.itemView}>
-                    <Image style={styles.image} source={{uri: topic_image}}/>
+                    <Image style={styles.image} source={this._avatar(topic_image)}/>
                     <View style={styles.TxtRight}>
 
                         {typological_type === "topiclike" ? null :
@@ -113,6 +116,15 @@ export default class PersonDynamicPage extends Component {
             </TouchableOpacity>
         )
     };
+    _avatar = (topic_image) => {
+        if (isEmptyObject(topic_image))
+            return Images.empty_image;
+        else if (strNotNull(topic_image))
+            return {uri: topic_image};
+        else
+            return Images.empty_image;
+    };
+
 
     content = (item, index, separators) => {
 
@@ -131,6 +143,8 @@ export default class PersonDynamicPage extends Component {
                 renderItem={this.renderItem}
                 ItemSeparatorComponent={this._separator}
             />
+
+
         )
     };
 
@@ -144,7 +158,17 @@ export default class PersonDynamicPage extends Component {
 
     };
 
-
+    parseDate = (date, item) => {
+        let today = new Date();
+        if (convertDate(new Date(), 'YYYY-MM-DD') === date) {
+            return I18n.t('today');
+        } else if (convertDate(today, 'YYYY-MM') === utcDate(date, 'YYYY-MM')
+            && Number(convertDate(today, 'DD')) - Number(utcDate(date, 'DD')) <= 1) {
+            return I18n.t('yesterday');
+        } else {
+            return utcDate(date, 'MM') + I18n.t('month');
+        }
+    };
     blobData = (items) => {
 
         let objArr = {};
@@ -166,7 +190,8 @@ export default class PersonDynamicPage extends Component {
             dynamics.push(dynamic)
         });
 
-        console.log(dynamics);
+        console.log("dynamics:", dynamics);
+
         return dynamics;
 
     };
@@ -197,23 +222,24 @@ export default class PersonDynamicPage extends Component {
             <BaseComponent style={ApplicationStyles.bgContainer}>
                 <DynamicTopBar count={this.state.dynamics.length}/>
 
+                <View style={{backgroundColor:'#FFFFFF',marginBottom:20}}>
 
-                <UltimateFlatList
-                    header={() => this.personTop()}
-                    arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
-                    ref={ref => this.ultimate = ref}
-                    onFetch={this.onFetch}
-                    keyExtractor={(item, index) => `replies${index}`}
-                    item={this.content}
-                    refreshableTitlePull={I18n.t('pull_refresh')}
-                    refreshableTitleRelease={I18n.t('release_refresh')}
-                    dateTitle={I18n.t('last_refresh')}
-                    allLoadedText={I18n.t('no_more')}
-                    waitingSpinnerText={I18n.t('loading')}
-                    separator={this._separator1}
-                    emptyView={() => <DynamicEmpty/>}
-                />
-
+                    <UltimateFlatList
+                        header={() => this.personTop()}
+                        arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
+                        ref={ref => this.ultimate = ref}
+                        onFetch={this.onFetch}
+                        keyExtractor={(item, index) => `replies${index}`}
+                        item={this.content}
+                        refreshableTitlePull={I18n.t('pull_refresh')}
+                        refreshableTitleRelease={I18n.t('release_refresh')}
+                        dateTitle={I18n.t('last_refresh')}
+                        allLoadedText={I18n.t('no_more')}
+                        waitingSpinnerText={I18n.t('loading')}
+                        separator={this._separator1}
+                        emptyView={() => <DynamicEmpty/>}
+                    />
+                </View>
 
             </BaseComponent>
         );
@@ -231,6 +257,7 @@ const styles = StyleSheet.create({
         paddingTop: 18,
         paddingBottom: 24,
         backgroundColor: '#DEDEDE',
+        marginBottom: 6
     },
     TopImg: {
         width: 74,
@@ -251,7 +278,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: '#444444',
         marginLeft: 17,
-        marginTop: 11,
+        marginTop: 15,
         marginBottom: 10,
         fontWeight: 'bold'
     },
@@ -264,8 +291,6 @@ const styles = StyleSheet.create({
     itemTxt1: {
         fontSize: 14,
         color: '#444444',
-        marginRight: 50,
-        marginBottom: 3
 
     },
     itemView: {
@@ -273,8 +298,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'flex-start',
         backgroundColor: '#F5F5F5',
-        borderRadius: 1,
-
+        borderRadius: 1
     },
     image: {
         width: 48, height: 48,
@@ -285,8 +309,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'flex-start',
         marginLeft: 12,
-        marginRight: 8,
-        marginTop: 10
+        marginTop: 10,
+        marginRight:55
     },
     TxtRight2: {
         fontSize: 14,
