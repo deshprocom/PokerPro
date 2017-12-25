@@ -47,7 +47,7 @@ export default class CommentInfoPage extends Component {
 
                 <UltimateFlatList
                     header={() => {
-                        return <Text style={styles.allComment}>全部评论（{this.state.totalComment}）</Text>
+                        return <Text style={styles.allComment}>{I18n.t('all_comment')}（{this.state.totalComment}）</Text>
                     }}
                     arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
                     ref={ref => this.ultimate = ref}

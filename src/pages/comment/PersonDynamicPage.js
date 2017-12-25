@@ -7,7 +7,7 @@ import {Badge} from '../../components';
 import {NavigationBar, BaseComponent} from '../../components';
 import UltimateFlatList from '../../components/ultimate';
 import {getPersonDynamics} from '../../services/CommentDao';
-import {getDateDiff, isEmptyObject, strNotNull, util, utcDate} from '../../utils/ComonHelper';
+import {getDateDiff, isEmptyObject, strNotNull, util, utcDate,convertDate} from '../../utils/ComonHelper';
 import DynamicEmpty from './DynamicEmpty';
 import DynamicTopBar from './DynamicTopBar';
 
@@ -59,8 +59,19 @@ export default class PersonDynamicPage extends Component {
         return I18n.t(topic_type + '_' + typological_type);
     };
 
+    myComment=(item)=>{
+        const {typological} = item;
+        const {my_comment_body} = typological;
+        return(
+            <Text style={styles.itemTxt1} numberOfLines={1}>{my_comment_body}</Text>
+        )
+    };
+
     renderItem = ({item}) => {
-        const {topic_description, topic_id, topic_image, topic_title, topic_type} = item.topic;
+        console.log("item233:",item);
+        const {topic, typological_type, topic_type} = item;
+        const {topic_description, topic_id, topic_image, topic_title} = topic;
+
         return (
             <TouchableOpacity style={styles.itemPage}
                               onPress={() => {
@@ -69,14 +80,14 @@ export default class PersonDynamicPage extends Component {
                                       global.router.toWebPage(url, {
                                           bottomNav: 'commentNav',
                                           info: {id: topic_id},
-                                          topic_type: 'info'
+                                          topic_type: topic_type
                                       })
                                   } else if (topic_type === "video") {
                                       let urlVideo = `${global.desh5}videos/${topic_id}/${global.language}`;
-                                      global.router.toWebPage(url, {
+                                      global.router.toWebPage(urlVideo, {
                                           bottomNav: 'commentNav',
                                           info: {id: topic_id},
-                                          topic_type: 'info'
+                                          topic_type: topic_type
                                       })
                                   } else {
                                       global.router.toDeletePage();
@@ -89,7 +100,10 @@ export default class PersonDynamicPage extends Component {
                 <View style={styles.itemView}>
                     <Image style={styles.image} source={{uri: topic_image}}/>
                     <View style={styles.TxtRight}>
-                        <Text style={styles.itemTxt1} numberOfLines={1}>{topic_description}</Text>
+
+                        {typological_type === "topiclike" ? null :
+                            this.myComment(item)
+                        }
                         <Text style={styles.TxtRight2} numberOfLines={1}>{topic_title}</Text>
                     </View>
                 </View>
@@ -115,7 +129,6 @@ export default class PersonDynamicPage extends Component {
 
 
     onFetch = (page, postRefresh, endFetch) => {
-        console.log('page', page)
         if (page === 1) {
             this.dynamicList = [];
             this.page = 1;
@@ -131,7 +144,13 @@ export default class PersonDynamicPage extends Component {
         let dynamics = [];
         util.forEach(items, item => {
             let date = utcDate(item.created_at, 'YYYY-MM-DD');
-
+            let today = new Date();
+            if(convertDate(new Date(), 'YYYY-MM-DD') === date){
+                date = I18n.t('today')
+            }else if(convertDate(today, 'YYYY-MM') === utcDate(item.created_at, 'YYYY-MM')
+                && Number(convertDate(today, 'DD'))- Number(utcDate(item.created_at, 'DD')) <=1){
+                date =  I18n.t('yesterday')
+            }
             if (!objArr[date]) {
                 objArr[date] = [];
             }
@@ -155,7 +174,7 @@ export default class PersonDynamicPage extends Component {
     loadDynamics = (page, postRefresh, endFetch) => {
         let body = {user_id: global.login_user.user_id, page, page_size: 20};
         getPersonDynamics(body, data => {
-            console.log("PersonDynamics:", data.items)
+            console.log("PersonDynamics23232:", data.items)
             this.dynamicList = util.unionBy(this.dynamicList, data.items, 'id');
             if (this.ultimate) {
                 if (data.items.length > 0) {
@@ -243,31 +262,35 @@ const styles = StyleSheet.create({
     itemTxt1: {
         fontSize: 14,
         color: '#444444',
-        marginRight: 50
+        marginRight: 50,
+        marginBottom:3
+
     },
     itemView: {
         height: 60,
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         backgroundColor: '#F5F5F5',
         borderRadius: 1,
-        marginTop: 10
+
     },
     image: {
         width: 48, height: 48,
-        marginLeft: 6
+        marginLeft: 6,
+        marginTop:6
     },
     TxtRight: {
         flexDirection: 'column',
         alignItems: 'flex-start',
-        marginTop: 10,
         marginLeft: 12,
-        marginRight: 8
+        marginRight: 8,
+        marginTop:10
     },
     TxtRight2: {
         fontSize: 14,
         color: '#AAAAAA',
-        marginTop: 2
+        marginTop:4
+
     },
     commentWhiteView: {
         alignItems: 'center',
