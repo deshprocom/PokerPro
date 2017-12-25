@@ -33,6 +33,9 @@ export default class ActivityModel extends Component {
     render() {
         const {visible, activity} = this.state;
         return (<Modal
+            onRequestClose={() => {
+                console.log('Active')
+            }}
             transparent
             visible={visible}>
             <View style={styles.body}>
