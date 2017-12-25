@@ -8,7 +8,7 @@ import {convertDate} from '../../utils/ComonHelper';
 import {NavigationBar, BaseComponent} from '../../components';
 import UltimateFlatList from '../../components/ultimate';
 import {getReceivedReply} from '../../services/CommentDao';
-import {getDateDiff, isEmptyObject} from '../../utils/ComonHelper';
+import {getDateDiff, isEmptyObject,strNotNull} from '../../utils/ComonHelper';
 import DynamicEmpty from './DynamicEmpty';
 
 export default class ReceivedReplyPage extends Component {
@@ -28,15 +28,15 @@ export default class ReceivedReplyPage extends Component {
             let body = {user_id: global.login_user.user_id, page: 1};
             getReceivedReply(body, data => {
                 console.log("receivedReply:", data);
+                postRefresh(data.items, 3);
                 this.setState({
                     receivedReply: data.items
-                });
-                postRefresh(data.items, 3)
+                })
             }, err => {
+                endFetch();
             });
 
         } else {
-            endFetch()
         }
 
     };
@@ -75,13 +75,21 @@ export default class ReceivedReplyPage extends Component {
             </View>
         )
     };
+    _avatar = (avatar) => {
+        if (isEmptyObject(avatar))
+            return Images.home_avatar;
+        else if (strNotNull(avatar))
+            return {uri: avatar}
+        else
+            return Images.home_avatar;
+    };
 
     reply=(item)=>{
         const {mine, other} = item;
         const {avatar, comment, nick_name, official, user_id, id} = other;
         return(
             <View style={styles.itemPage}>
-                <Image style={styles.personImg} source={official?Images.poker_key:{uri:avatar}}/>
+                <Image style={styles.personImg} source={official?Images.set_poker:this._avatar(avatar)}/>
                 <View style={styles.pageRight}>
                     <View style={{flexDirection:'row',alignItems:'flex-start',marginTop:10}}>
                         <Text style={styles.name}>{official ? I18n.t('Poker') : nick_name}</Text>
