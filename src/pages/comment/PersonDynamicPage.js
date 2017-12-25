@@ -68,7 +68,6 @@ export default class PersonDynamicPage extends Component {
     };
 
     renderItem = ({item}) => {
-        console.log("item233:",item);
         const {topic, typological_type, topic_type} = item;
         const {topic_description, topic_id, topic_image, topic_title} = topic;
 
@@ -118,7 +117,7 @@ export default class PersonDynamicPage extends Component {
             <FlatList
                 data={item.items}
                 ListHeaderComponent={() => {
-                    return <Text style={styles.time}>{item.date}</Text>
+                    return <Text style={styles.time}>{this.parseDate(item.date,item)}</Text>
                 }}
                 keyExtractor={(item, index) => `topic${index}`}
                 renderItem={this.renderItem}
@@ -137,20 +136,24 @@ export default class PersonDynamicPage extends Component {
 
     };
 
-
+    parseDate=(date,item)=>{
+        let today = new Date();
+        if(convertDate(new Date(), 'YYYY-MM-DD') === date){
+            return I18n.t('today');
+        }else if(convertDate(today, 'YYYY-MM') === utcDate(date, 'YYYY-MM')
+            && Number(convertDate(today, 'DD'))- Number(utcDate(date, 'DD')) <=1){
+            return I18n.t('yesterday');
+        }else{
+            return utcDate(date, 'MM')+I18n.t('month');
+        }
+    };
     blobData = (items) => {
 
         let objArr = {};
         let dynamics = [];
         util.forEach(items, item => {
             let date = utcDate(item.created_at, 'YYYY-MM-DD');
-            let today = new Date();
-            if(convertDate(new Date(), 'YYYY-MM-DD') === date){
-                date = I18n.t('today')
-            }else if(convertDate(today, 'YYYY-MM') === utcDate(item.created_at, 'YYYY-MM')
-                && Number(convertDate(today, 'DD'))- Number(utcDate(item.created_at, 'DD')) <=1){
-                date =  I18n.t('yesterday')
-            }
+
             if (!objArr[date]) {
                 objArr[date] = [];
             }
@@ -165,7 +168,8 @@ export default class PersonDynamicPage extends Component {
             dynamics.push(dynamic)
         });
 
-        console.log(dynamics);
+        console.log("dynamics:",dynamics);
+
         return dynamics;
 
     };
