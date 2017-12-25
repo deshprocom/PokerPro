@@ -20,7 +20,6 @@ import ActivityModel from '../message/ActivityModel';
 import {getActivityPush} from '../../services/AccountDao';
 import StorageKey from '../../configs/StorageKey';
 
-let today = getCurrentDate().format('YYYY-MM-DD');
 
 class TabHomePage extends Component {
     state = {
@@ -62,7 +61,7 @@ class TabHomePage extends Component {
     }
 
     _getPushActivity = () => {
-
+        let today = getCurrentDate().format('YYYY-MM-DD');
         storage.load({key: StorageKey.Activity})
             .then(ret => {
                 getActivityPush(data => {
@@ -96,7 +95,7 @@ class TabHomePage extends Component {
     };
 
     _setActivity = (activity) => {
-
+        let today = getCurrentDate().format('YYYY-MM-DD');
         if (this.activityModel)
             this.activityModel.setData(activity);
         activity.today = today;
@@ -104,7 +103,7 @@ class TabHomePage extends Component {
             key: StorageKey.Activity,
             rawData: activity
         })
-    }
+    };
 
     _getData = () => {
         this.container.open();

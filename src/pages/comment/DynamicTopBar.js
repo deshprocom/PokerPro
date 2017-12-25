@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import {
     StyleSheet, Text, View, Image,
-    TouchableOpacity,
+    TouchableOpacity, StatusBar
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
@@ -12,7 +12,7 @@ export default class DynamicTopBar extends PureComponent {
 
     render() {
         return (<View style={styles.navBar}>
-
+            <StatusBar barStyle={"dark-content"}/>
             <View style={styles.navContent}>
                 <TouchableOpacity
                     testID="btn_bar_left"
@@ -22,7 +22,7 @@ export default class DynamicTopBar extends PureComponent {
                            source={Images.mall_return}/>
                 </TouchableOpacity>
                 <View style={{flex: 1}}/>
-                <Text style={{color: Colors._161,fontWeight:'bold',fontSize:17}}>{I18n.t('person_dynamic')}</Text>
+                <Text style={{color: Colors._161, fontWeight: 'bold', fontSize: 17}}>{I18n.t('person_dynamic')}</Text>
                 <View style={{flex: 1}}/>
                 <TouchableOpacity
                     onPress={() => {
@@ -84,20 +84,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         height: 44,
-        marginLeft:10
+        marginLeft: 10
     },
     imgCat: {
         height: 20,
         width: 22
     },
     badge: {
-        width:10,
-        height:10,
-        borderRadius:5,
-        backgroundColor:'red',
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        backgroundColor: 'red',
         position: 'absolute',
         top: 6,
-        right:'32%'
+        right: '32%'
     },
     popBtn: {
         height: 44,
