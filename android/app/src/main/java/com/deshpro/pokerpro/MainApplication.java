@@ -3,6 +3,7 @@ package com.deshpro.pokerpro;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.BV.LinearGradient.LinearGradientPackage;
 import in.esseak.react_native_umeng.UmengPackage;
 import com.theweflex.react.WeChatPackage;
 import com.zzy.umshare.UMShareModulePackage;
@@ -39,6 +40,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new LinearGradientPackage(),
             new UmengPackage(),
             new WeChatPackage(),
             new UMShareModulePackage(),
