@@ -119,11 +119,10 @@ export default class RankList extends Component {
 
         return (<View style={styles.rank_list}>
             <UltimateListView
-                key={this.state.layout}
-                keyExtractor={(item, index) => `${this.state.layout} - ${index}`}
+                key={'rank_list'}
+                keyExtractor={(item, index) => `rank-${index}`}
                 ref={(ref) => this.listView = ref}
                 onFetch={this.onFetch}
-                legacyImplementation
                 rowView={(rowData, sectionID, rowID) => listRenderRow(rowData, sectionID, rowID, false)}
                 refreshableTitlePull={I18n.t('pull_refresh')}
                 refreshableTitleRelease={I18n.t('release_refresh')}

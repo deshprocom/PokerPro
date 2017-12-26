@@ -26,7 +26,6 @@ export default class RaceListView extends Component {
             pagination={false}
             ref={(ref) => this.listView = ref}
             onFetch={this.onFetch}
-            legacyImplementation
             rowView={this._itemNewsView}
             refreshableTitlePull={I18n.t('pull_refresh')}
             refreshableTitleRelease={I18n.t('release_refresh')}

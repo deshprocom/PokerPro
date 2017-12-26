@@ -26,7 +26,7 @@ class PostRoute {
     static CommentList = 'comments';
     static RepliesComment = 'replies';
     static ADD_COMMENT = 'addComment';
-
+    static ClickAvatar = 'ClickAvatar';
 }
 
 
@@ -98,6 +98,10 @@ export default class WebPage extends Component {
                             break;
                         case PostRoute.NewsInfo:
                             this.commentNav && this.commentNav.userLike(param.current_user_like);
+                            break;
+                        case PostRoute.ClickAvatar:
+
+                            global.router.toPersonDynamic(param);
                             break;
                     }
                 }

@@ -53,7 +53,7 @@ export default class ClickComment extends Component {
         return (
             <View style={{flexDirection: 'row', flex: 1, marginRight: 17}}>
                 <TouchableOpacity
-                    style={styles.search}
+                    style={[styles.search, this.props.onlyComment ? {width: '90%'} : {}]}
                     onPress={() => {
                         this.props._showInput()
                     }}>
@@ -64,29 +64,33 @@ export default class ClickComment extends Component {
 
                 </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.commentWhiteView}>
-                    <Image style={styles.commentWhite} source={Images.commentWhite}/>
-                    {this._carts()}
-                </TouchableOpacity>
+                {this.props.onlyComment ? null : <View style={{flexDirection: 'row', flex: 1}}>
+                    <TouchableOpacity
+                        style={styles.commentWhiteView}>
+                        <Image style={styles.commentWhite} source={Images.commentWhite}/>
+                        {this._carts()}
+                    </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.likeView}
-                    onPress={() => {
-                        this.likeChang()
-                    }}>
-                    <Image style={styles.like} source={current_user_like ? Images.likeRed : Images.like}/>
+                    <TouchableOpacity
+                        style={styles.likeView}
+                        onPress={() => {
+                            this.likeChang()
+                        }}>
+                        <Image style={styles.like} source={current_user_like ? Images.likeRed : Images.like}/>
 
-                </TouchableOpacity>
-                <View style={{flex: 1}}/>
-                <TouchableOpacity
-                    style={styles.forwardView}
-                    onPress={() => {
-                        const {title, date, image_thumb, id} = this.props.info;
-                        sharePage(title, date, image_thumb, "news/" + id)
-                    }}>
-                    <Image style={styles.forward} source={Images.forward}/>
-                </TouchableOpacity>
+                    </TouchableOpacity>
+                    <View style={{flex: 1}}/>
+                    <TouchableOpacity
+                        style={styles.forwardView}
+                        onPress={() => {
+                            const {title, date, image_thumb, id} = this.props.info;
+                            sharePage(title, date, image_thumb, "news/" + id)
+                        }}>
+                        <Image style={styles.forward} source={Images.forward}/>
+                    </TouchableOpacity>
+                </View>}
+
+
             </View>
         )
     };

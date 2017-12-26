@@ -65,6 +65,7 @@ export default class CommentInfoPage extends Component {
                 <View style={{height: 60}}/>
                 <View style={styles.bottom}>
                     <CommentBottom
+                        onlyComment={true}
                         refreshList={this.refreshList}
                         ref={ref => this.commentBottom = ref}
                         info={item}
