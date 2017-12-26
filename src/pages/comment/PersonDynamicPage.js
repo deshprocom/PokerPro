@@ -17,6 +17,17 @@ export default class PersonDynamicPage extends Component {
         dynamics: {}
     };
 
+    constructor(props) {
+        super(props);
+        const {userInfo} = this.props.params;
+        if (userInfo) {
+            this.userInfo = userInfo;
+        } else {
+            this.userInfo = global.login_user
+        }
+
+    }
+
     componentDidMount() {
         this.dynamicList = [];
         this.page = 1;
@@ -31,7 +42,7 @@ export default class PersonDynamicPage extends Component {
             return Images.home_avatar;
     };
     personTop = () => {
-        const {avatar, nick_name, signature} = global.login_user;
+        const {avatar, nick_name, signature} = this.userInfo;
         return (
             <View>
                 <LinearGradient
@@ -197,7 +208,7 @@ export default class PersonDynamicPage extends Component {
 
 
     loadDynamics = (page, postRefresh, endFetch) => {
-        let body = {user_id: global.login_user.user_id, page, page_size: 20};
+        let body = {user_id: this.userInfo.user_id, page, page_size: 20};
         getPersonDynamics(body, data => {
             console.log("PersonDynamics23232:", data.items)
             this.dynamicList = util.unionBy(this.dynamicList, data.items, 'id');

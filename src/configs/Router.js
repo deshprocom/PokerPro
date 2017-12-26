@@ -47,29 +47,23 @@ export default class Router {
     toDeletePage() {
         this.stackPush({
             name: 'DeletePage',
-            // params: {
-            //     orderItem,
-            //     mallRefresh
-            // }
-        })
-    }
-    toReceivedReply() {
-        this.stackPush({
-            name: 'ReceivedReplyPage',
-            // params: {
-            //     orderItem,
-            //     mallRefresh
-            // }
+
         })
     }
 
-    toPersonDynamic() {
+    toReceivedReply() {
+        this.stackPush({
+            name: 'ReceivedReplyPage',
+
+        })
+    }
+
+    toPersonDynamic(userInfo) {
         this.stackPush({
             name: 'PersonDynamicPage',
-            // params: {
-            //     orderItem,
-            //     mallRefresh
-            // }
+            params: {
+                userInfo
+            }
         })
     }
 
@@ -802,8 +796,8 @@ export default class Router {
     toCommentInfoPage(item) {
         this.stackPush({
             name: 'CommentInfoPage',
-            params:{
-                item:item
+            params: {
+                item: item
             }
         })
     }
