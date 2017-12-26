@@ -153,6 +153,7 @@ export default class ReceivedReplyPage extends Component {
                         allLoadedText={I18n.t('no_more')}
                         waitingSpinnerText={I18n.t('loading')}
                         separator={this._separator}
+                        emptyView={() => <DynamicEmpty/>}
                     />
 
                 </View>

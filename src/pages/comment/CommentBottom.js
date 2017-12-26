@@ -66,6 +66,7 @@ export default class CommentBottom extends Component {
             <View style={styles.bottom}>
 
                 <ClickComment
+                    onlyComment={this.props.onlyComment}
                     topic_type={topic_type}
                     ref={ref => this.clickComment = ref}
                     _showInput={this._showInput}

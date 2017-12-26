@@ -80,11 +80,10 @@ const styles = StyleSheet.create({
         fontSize: 12
     },
     btnCat: {
-        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         height: 44,
-        marginLeft: 10
+        width: 50
     },
     imgCat: {
         height: 20,
