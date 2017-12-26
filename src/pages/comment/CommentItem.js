@@ -154,8 +154,10 @@ const styles = StyleSheet.create({
         marginLeft: 11
     },
     commentView: {
+        padding:8,
+        paddingRight:0,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     officialView: {
         width: 32,
