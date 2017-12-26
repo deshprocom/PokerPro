@@ -231,9 +231,12 @@ export default class PersonDynamicPage extends Component {
 
 
     render() {
+        const {userInfo} = this.props.params;
         return (
             <BaseComponent style={ApplicationStyles.bgContainer}>
-                <DynamicTopBar count={this.state.dynamics.length}/>
+                <DynamicTopBar
+                    hideReceived={userInfo !== undefined}
+                    count={this.state.dynamics.length}/>
 
                 <View style={{backgroundColor: '#FFFFFF', marginBottom: 20}}>
 

@@ -24,7 +24,7 @@ export default class DynamicTopBar extends PureComponent {
                 <View style={{flex: 1}}/>
                 <Text style={{color: Colors._161, fontWeight: 'bold', fontSize: 17}}>{I18n.t('person_dynamic')}</Text>
                 <View style={{flex: 1}}/>
-                <TouchableOpacity
+                {this.props.hideReceived ? <View style={styles.btnCat}/> : <TouchableOpacity
                     onPress={() => {
                         global.router.toReceivedReply();
                     }}
@@ -33,7 +33,8 @@ export default class DynamicTopBar extends PureComponent {
                            source={Images.commentWhite}/>
                     {this._carts()}
 
-                </TouchableOpacity>
+                </TouchableOpacity>}
+
             </View>
 
         </View>)
