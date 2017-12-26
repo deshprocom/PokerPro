@@ -137,7 +137,7 @@ export default class ReceivedReplyPage extends Component {
                     title={I18n.t('received_reply')}
                     titleStyle={{color: Colors._161}}
                     leftBtnIcon={Images.mall_return}
-                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                    leftImageStyle={{height: 23, width: 23, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
                 <View style={{marginTop:7,backgroundColor:'#FFFFFF',flex:1}}>
