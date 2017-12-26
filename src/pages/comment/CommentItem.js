@@ -20,10 +20,10 @@ export default class CommentItem extends PureComponent {
         repliesReFunc: PropTypes.func
     };
 
-    official = () => {
+    official = (nick_name) => {
         return (
             <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 5}}>
-                <Text style={styles.name}>{I18n.t('Poker')}</Text>
+                <Text style={styles.name}>{nick_name}</Text>
                 <View style={styles.officialView}>
                     <Text style={styles.officialTxt}>{I18n.t('official')}</Text>
                 </View>
@@ -56,7 +56,7 @@ export default class CommentItem extends PureComponent {
                 <View style={styles.contentRight}>
                     <View style={styles.commentTop}>
 
-                        {official ? this.official() : <Text style={styles.name}>{nick_name}</Text>}
+                        {official ? this.official(nick_name) : <Text style={styles.name}>{nick_name}</Text>}
 
                         <View style={{flex: 1}}/>
                         <TouchableOpacity
@@ -163,7 +163,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#161718',
-        borderRadius: 2
+        borderRadius: 2,
+        marginLeft: 5
     },
     officialBody: {
         marginTop: 6,
@@ -171,7 +172,7 @@ const styles = StyleSheet.create({
     },
     officialTxt: {
         fontSize: 10,
-        color: '#FFE9AD',
+        color: '#FFE9AD'
     },
     nameId1: {
         fontSize: 16,
