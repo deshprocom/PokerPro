@@ -56,6 +56,9 @@ export default class InputComment extends Component {
                                     comment: text
                                 })}
                                 autoFocus={true}
+                                onSubmitEditing={() => {
+                                    this.releaseComment()
+                                }}
                             />
 
                         </View>
@@ -157,7 +160,7 @@ export default class InputComment extends Component {
 
 const styles = StyleSheet.create({
     bottom: {
-        height: 48,
+        minHeight: 48,
         width: '100%',
         backgroundColor: '#FFFFFF',
         borderColor: '#EEEEEE',
@@ -244,10 +247,10 @@ const styles = StyleSheet.create({
     },
     inputComment: {
         backgroundColor: Colors._ECE,
-        height: 30,
         borderRadius: 15,
         paddingLeft: 20,
-        fontSize: 14
+        fontSize: 14,
+        minHeight: 30
     },
 
 });
