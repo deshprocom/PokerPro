@@ -227,7 +227,10 @@ export default class VideoListView extends Component {
                     style={{fontSize: 12, color: Colors._AAA}}> # {video_duration}</Text>
 
                 <View style={{flex: 1}}/>
-
+                <Text style={[styles.reads,{marginTop:1}]}>{I18n.t('read')}</Text>
+                <Text style={styles.reads}></Text>
+                <Image style={styles.likes} source={Images.like}/>
+                <Text style={styles.likesTxt}></Text>
                 <TouchableOpacity
                     onPress={() => {
                         uVideoShare(group_name, title_desc, cover_link, id)
@@ -382,5 +385,18 @@ const styles = StyleSheet.create({
         marginTop: 15,
         marginBottom: 11
 
+    },
+    reads:{
+        color:'#AAAAAA',
+        fontSize:12
+    },
+    likes:{
+        marginLeft:10,
+        width:13,
+        height:13
+    },
+    likesTxt:{
+        color:'#AAAAAA',
+        fontSize:12
     }
 });
