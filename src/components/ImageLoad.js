@@ -37,7 +37,7 @@ class ImageLoad extends React.Component {
                     {...this.props}
                     onLoadEnd={this.onLoadEnd.bind(this)}
                     onError={this.onError.bind(this)}
-                    defaultSource={emptyBg ? null : Images.empty_image}
+                    defaultSource={emptyBg ? emptyBg : Images.empty_image}
                 >
                     {
                         emptyBg && this.state.isError ? <View style={{flex: 1, backgroundColor: '#cccccc'}}/> : null
@@ -50,7 +50,7 @@ class ImageLoad extends React.Component {
         else {
             return (<Image
                 style={[this.props.style, {alignItems: 'center'}]}
-                source={Images.empty_image}/>)
+                source={emptyBg ? emptyBg : Images.empty_image}/>)
         }
     }
 }
