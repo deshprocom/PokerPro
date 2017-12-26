@@ -143,7 +143,6 @@ export default class PersonDynamicPage extends Component {
 
         let timestamp2 = Date.parse(new Date(item.date));
         timestamp2 = timestamp2 / 1000;
-        console.log(timestamp2);
 
 
         return (
