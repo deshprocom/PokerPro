@@ -178,6 +178,12 @@ class NewsListView extends Component {
                     <View style={styles.listTimeView}>
                         <Text style={styles.listSource}>{source}</Text>
                         <Text style={styles.listTime}>{convertDate(date, 'MM-DD')}</Text>
+
+                        <View style={{flex:1}}/>
+                        <Text style={[styles.reads,{marginTop:1}]}>{I18n.t('read')}</Text>
+                        <Text style={styles.reads}></Text>
+                        <Image style={styles.likes} source={Images.like}/>
+                        <Text style={styles.likesTxt}></Text>
                     </View>
 
 
@@ -282,5 +288,24 @@ const styles = StyleSheet.create({
     },
     pullView: {
         flex: 1
+    },
+    readView:{
+        marginRight:10,
+        flexDirection:'row',
+        alignItems:'center'
+    },
+    reads:{
+       color:'#AAAAAA',
+        fontSize:12
+    },
+    likes:{
+        marginLeft:10,
+        width:13,
+        height:13
+    },
+    likesTxt:{
+        color:'#AAAAAA',
+        fontSize:12
     }
+
 });

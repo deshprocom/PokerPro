@@ -27,7 +27,7 @@ export default class ReceivedReplyPage extends Component {
             let body = {user_id: global.login_user.user_id, page: 1};
             getReceivedReply(body, data => {
                 console.log("receivedReply:", data);
-                postRefresh(data.items, 3);
+                postRefresh(data.items, 9);
                 this.setState({
                     receivedReply: data.items
                 })
