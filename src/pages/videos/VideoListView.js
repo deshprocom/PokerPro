@@ -15,7 +15,7 @@ import {isEmptyObject, uniqueArray, FontSize, uVideoShare, strNotNull, getDateDi
 import {ImageLoad, VideoPlayer, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {getVideoList} from '../../services/NewsDao';
-
+import ReadLike from '../comment/ReadLike';
 
 export default class VideoListView extends Component {
 
@@ -228,6 +228,10 @@ export default class VideoListView extends Component {
 
                 <View style={{flex: 1}}/>
 
+                <ReadLike
+                    read={rowData.total_views}
+                    like={rowData.total_likes}/>
+
                 <TouchableOpacity
                     onPress={() => {
                         uVideoShare(group_name, title_desc, cover_link, id)
@@ -382,5 +386,6 @@ const styles = StyleSheet.create({
         marginTop: 15,
         marginBottom: 11
 
-    }
+    },
+
 });

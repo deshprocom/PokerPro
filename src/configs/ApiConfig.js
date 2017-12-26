@@ -119,7 +119,9 @@ export default {
     replies_replies: replies_replies,
     new_likes: new_likes,
     person_dynamics: person_dynamics,
-    person_reply: person_reply
+    person_reply: person_reply,
+    delete_comment: delete_comment,
+    delete_reply: delete_reply
 
 
 }
@@ -133,6 +135,16 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+function delete_reply(body) {
+    const {comment_id, id} = body;
+    return `topic/comments/${comment_id}/replies/${id}`;
+}
+
+function delete_comment(body) {
+    const {comment_id} = body;
+    return `topic/comments/${comment_id}`;
+}
 
 export function person_reply(body) {
     const {user_id, page} = body;

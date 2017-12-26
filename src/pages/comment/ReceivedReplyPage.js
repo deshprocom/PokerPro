@@ -27,7 +27,7 @@ export default class ReceivedReplyPage extends Component {
             let body = {user_id: global.login_user.user_id, page: 1};
             getReceivedReply(body, data => {
                 console.log("receivedReply:", data);
-                postRefresh(data.items, 3);
+                postRefresh(data.items, 9);
                 this.setState({
                     receivedReply: data.items
                 })
@@ -94,7 +94,7 @@ export default class ReceivedReplyPage extends Component {
                         <Text style={styles.name}>{official ? I18n.t('Poker') : nick_name}</Text>
                         {official ? this.official() : null}
                         <View style={{flex:1}}/>
-                        <Text style={styles.time}>{utcDate(mine.created_at,'YYYY-MM-DD mm:ss')}</Text>
+                        <Text style={styles.time}>{utcDate(mine.created_at,'YYYY-MM-DD hh:mm')}</Text>
                     </View>
                     <View style={styles.topic}>
                         <Text style={styles.topicTxt}>{mine.comment}</Text>

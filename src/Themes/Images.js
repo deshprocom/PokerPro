@@ -270,7 +270,8 @@ const images = {
     like: require('../../source/comment/like.png'),
     likeRed: require('../../source/comment/likeRed.png'),
     forward: require('../../source/comment/forward.png'),
-    person_dynamic: require('../../source/comment/person_dynamic.png')
+    person_dynamic: require('../../source/comment/person_dynamic.png'),
+    listLike: require('../../source/comment/listLike.png')
 
 
 };
