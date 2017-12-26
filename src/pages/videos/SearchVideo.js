@@ -14,7 +14,7 @@ import {getDateDiff, isEmptyObject, strNotNull, FontSize, uVideoShare} from '../
 import {searchVideos} from '../../services/NewsDao';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {VideoPlayer, UltimateListView} from '../../components';
-
+import ReadLike from '../comment/ReadLike';
 
 export default class SearchVideo extends Component {
 
@@ -212,7 +212,7 @@ export default class SearchVideo extends Component {
                     style={{fontSize: 12, color: Colors._AAA}}> # {video_duration}</Text>
 
                 <View style={{flex: 1}}/>
-
+                <ReadLike/>
                 <TouchableOpacity
                     onPress={() => {
                         uVideoShare(name, title_desc, cover_link, id)

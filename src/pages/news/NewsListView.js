@@ -19,7 +19,7 @@ import {fetchNewsList} from '../../actions/NewsAction';
 
 const headerStyle = {height: 35, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.bg_f5};
 import {getNewsList} from '../../services/NewsDao';
-
+import ReadLike from '../comment/ReadLike';
 
 class NewsListView extends Component {
 
@@ -180,10 +180,8 @@ class NewsListView extends Component {
                         <Text style={styles.listTime}>{convertDate(date, 'MM-DD')}</Text>
 
                         <View style={{flex:1}}/>
-                        <Text style={[styles.reads,{marginTop:1}]}>{I18n.t('read')}</Text>
-                        <Text style={styles.reads}></Text>
-                        <Image style={styles.likes} source={Images.listLike}/>
-                        <Text style={styles.likesTxt}></Text>
+
+                        <ReadLike/>
                     </View>
 
 
@@ -293,19 +291,5 @@ const styles = StyleSheet.create({
         marginRight:10,
         flexDirection:'row',
         alignItems:'center'
-    },
-    reads:{
-       color:'#AAAAAA',
-        fontSize:12
-    },
-    likes:{
-        marginLeft:10,
-        width:13,
-        height:13
-    },
-    likesTxt:{
-        color:'#AAAAAA',
-        fontSize:12
     }
-
 });

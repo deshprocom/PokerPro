@@ -14,7 +14,7 @@ import {isEmptyObject, convertDate, strNotNull} from '../../utils/ComonHelper';
 import {getNewsSearch} from '../../services/NewsDao';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {ImageLoad, UltimateListView} from '../../components';
-
+import ReadLike from '../comment/ReadLike';
 
 export default class SearchNewsPage extends Component {
 
@@ -150,6 +150,9 @@ export default class SearchNewsPage extends Component {
                 <View style={styles.listTimeView}>
                     <Text style={styles.listSource}>{source}</Text>
                     <Text style={styles.listTime}>{convertDate(date, 'MM-DD')}</Text>
+                    <View style={{flex:1}}/>
+                    <ReadLike/>
+                    <View style={{width:10}}/>
                 </View>
 
 
@@ -282,7 +285,7 @@ const styles = StyleSheet.create({
     },
     listTimeView: {
         flexDirection: 'row',
-        marginTop: 13
+        marginTop: 13,
     },
     listSource: {
         color: Colors._AAA,
