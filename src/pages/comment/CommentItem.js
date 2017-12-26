@@ -50,8 +50,10 @@ export default class CommentItem extends PureComponent {
 
         return (
             <View style={styles.content}>
+
                 <TouchableOpacity onPress={() => global.router.toPersonDynamic(item)}>
                     <ImageLoad style={styles.img} source={this._avatar(avatar)}/>
+
                 </TouchableOpacity>
                 <View style={styles.contentRight}>
                     <View style={styles.commentTop}>
@@ -154,8 +156,10 @@ const styles = StyleSheet.create({
         marginLeft: 11
     },
     commentView: {
+        padding:8,
+        paddingRight:0,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     officialView: {
         width: 32,
