@@ -229,12 +229,21 @@ export default class PersonDynamicPage extends Component {
     };
 
 
-    render() {
+    isMine = () => {
         const {userInfo} = this.props.params;
+        if (userInfo !== undefined) {
+            return userInfo.user_id === global.login_user.user_id;
+        } else
+            return true;
+    };
+
+
+    render() {
+
         return (
             <BaseComponent style={ApplicationStyles.bgContainer}>
                 <DynamicTopBar
-                    hideReceived={userInfo !== undefined}
+                    hideReceived={this.isMine()}
                     count={this.state.dynamics.length}/>
 
                 <View style={{backgroundColor: '#FFFFFF', marginBottom: 20}}>
