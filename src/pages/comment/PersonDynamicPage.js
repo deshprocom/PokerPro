@@ -33,6 +33,7 @@ export default class PersonDynamicPage extends Component {
     };
     personTop = () => {
         const {avatar, nick_name, signature} = global.login_user;
+        console.log("login_user:", global.login_user)
         return (
             <View>
                 <LinearGradient
@@ -104,7 +105,7 @@ export default class PersonDynamicPage extends Component {
                 <Text style={[styles.itemTxt1,{marginBottom:10}]}>{this.txtType(item)}</Text>
 
                 <View style={styles.itemView}>
-                    <Image style={styles.image} source={this._avatar(topic_image)}/>
+                    <Image style={styles.image} source={this._avatar2(topic_image)}/>
                     <View style={styles.TxtRight}>
 
                         {typological_type === "topiclike" ? null :
@@ -116,7 +117,7 @@ export default class PersonDynamicPage extends Component {
             </TouchableOpacity>
         )
     };
-    _avatar = (topic_image) => {
+    _avatar2 = (topic_image) => {
         if (isEmptyObject(topic_image))
             return Images.empty_image;
         else if (strNotNull(topic_image))

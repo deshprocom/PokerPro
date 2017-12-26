@@ -51,7 +51,7 @@ export default class CommentItem extends PureComponent {
         return (
             <View style={styles.content}>
                 <TouchableOpacity onPress={() => global.router.toPersonDynamic()}>
-                    <ImageLoad style={styles.img} source={this._avatar(avatar)}/>
+                    <Image style={styles.img} source={this._avatar(avatar)}/>
                 </TouchableOpacity>
                 <View style={styles.contentRight}>
                     <View style={styles.commentTop}>
