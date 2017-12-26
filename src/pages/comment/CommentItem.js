@@ -119,8 +119,8 @@ const styles = StyleSheet.create({
         marginRight: 17
     },
     name: {
-        fontSize: 14,
-        color: '#666666',
+        fontSize: 12,
+        color: '#4990E2',
     },
     commentImg: {
         width: 20,
