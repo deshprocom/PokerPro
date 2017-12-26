@@ -229,7 +229,7 @@ export default class VideoListView extends Component {
                 <View style={{flex: 1}}/>
                 <Text style={[styles.reads,{marginTop:1}]}>{I18n.t('read')}</Text>
                 <Text style={styles.reads}></Text>
-                <Image style={styles.likes} source={Images.like}/>
+                <Image style={styles.likes} source={Images.listLike}/>
                 <Text style={styles.likesTxt}></Text>
                 <TouchableOpacity
                     onPress={() => {
