@@ -136,6 +136,7 @@ export default class WebPage extends Component {
                     mixedContentMode={'always'}
                     domStorageEnabled={false}
                     scalesPageToFit={true}
+                    dataDetectorTypes={'none'}
                     onMessage={this.handleMessage}/>
 
                 <View style={styles.bottom}>
