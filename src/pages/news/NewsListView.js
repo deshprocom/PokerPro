@@ -176,12 +176,14 @@ class NewsListView extends Component {
                         style={[styles.listTitleTxt, {fontSize: FontSize.h16}]}>{title}</Text>
 
                     <View style={styles.listTimeView}>
-                        <Text style={styles.listSource}>{source}</Text>
+                        <Text numberOfLines={1} style={[styles.listSource,{maxWidth:80}]}>{source}</Text>
                         <Text style={styles.listTime}>{convertDate(date, 'MM-DD')}</Text>
 
                         <View style={{flex:1}}/>
 
-                        <ReadLike/>
+                        <ReadLike
+                            read={rowData.total_views}
+                            like={rowData.total_likes}/>
                     </View>
 
 

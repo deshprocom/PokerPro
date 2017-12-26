@@ -228,7 +228,9 @@ export default class VideoListView extends Component {
 
                 <View style={{flex: 1}}/>
 
-                <ReadLike/>
+                <ReadLike
+                    read={rowData.total_views}
+                    like={rowData.total_likes}/>
 
                 <TouchableOpacity
                     onPress={() => {

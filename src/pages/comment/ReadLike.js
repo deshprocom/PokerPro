@@ -7,30 +7,33 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
 
-export default class InputComment extends Component {
-    render(){
-        return(
+export default class ReadLike extends Component {
+    render() {
+        const {read, like} = this.props;
+        return (
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Text style={[styles.reads,{marginTop:1}]}>{I18n.t('read')}</Text>
-                <Text style={styles.reads}></Text>
+                <Text style={styles.reads}> {read > 999 ? '999+' : read}</Text>
                 <Image style={styles.likes} source={Images.listLike}/>
-                <Text style={styles.likesTxt}></Text>
+                <Text style={styles.likesTxt}> {like > 999 ? '999+' : like}</Text>
             </View>
         )
     }
 }
-const styles=StyleSheet.create({
-    reads:{
-        color:'#AAAAAA',
-        fontSize:12
+const styles = StyleSheet.create({
+    reads: {
+        color: '#AAAAAA',
+        fontSize: 12
     },
-    likes:{
-        marginLeft:10,
-        width:13,
-        height:13
+    likes: {
+        marginLeft: 10,
+        width: 13,
+        height: 13,
+
     },
-    likesTxt:{
-        color:'#AAAAAA',
-        fontSize:12
+    likesTxt: {
+        color: '#AAAAAA',
+        fontSize: 12,
+        marginTop:1
     }
 })
