@@ -94,7 +94,7 @@ export default class ReceivedReplyPage extends Component {
                         <Text style={styles.name}>{official ? I18n.t('Poker') : nick_name}</Text>
                         {official ? this.official() : null}
                         <View style={{flex:1}}/>
-                        <Text style={styles.time}>{utcDate(mine.created_at,'YYYY-MM-DD mm:ss')}</Text>
+                        <Text style={styles.time}>{utcDate(mine.created_at,'YYYY-MM-DD hh:mm')}</Text>
                     </View>
                     <View style={styles.topic}>
                         <Text style={styles.topicTxt}>{mine.comment}</Text>

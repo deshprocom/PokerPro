@@ -45,7 +45,7 @@ export default class CommentItem extends PureComponent {
             <TouchableOpacity style={{marginLeft:8}}
                   onPress={()=>{
                                  alertOrder(I18n.t('confirm_delete'),() => {
-                                     delDeleteComment({id:id}, data => {
+                                     delDeleteComment({comment_id:id}, data => {
                                          showToast(I18n.t('buy_del_success'))
                                      }, err => {
 

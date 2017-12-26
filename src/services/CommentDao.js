@@ -6,6 +6,12 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
+/*删除回复接口*/
+export function delDeleteReply(body, resolve, reject) {
+    del(Api.delete_reply, body, {}, ret => {
+        resolve(ret.data)
+    }, reject)
+}
 /*删除评论接口*/
 export function delDeleteComment(body, resolve, reject) {
     del(Api.delete_comment, body, {}, ret => {
