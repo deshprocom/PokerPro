@@ -13,6 +13,7 @@ import {
 } from '../../utils/ComonHelper';
 import {VideoPlayer} from '../../components';
 import I18n from 'react-native-i18n';
+import ReadLike from '../comment/ReadLike';
 
 export default class Information extends Component {
 
@@ -42,9 +43,16 @@ export default class Information extends Component {
                         <Text numberOfLines={2}
                               style={[styles.raceText, {marginRight: 20}]}>{item.info.title}</Text>
                         <View style={{flexDirection: 'row', marginTop: 14}}>
-                            <Text style={styles.informationText}>{item.info.source}</Text>
+                            <Text
+                                numberOfLines={1}
+                                style={[styles.informationText,{maxWidth:80}]}>{item.info.source}</Text>
                             <Text
                                 style={[styles.informationText, {marginLeft: 15}]}>{convertDate(item.info.date, 'MM-DD')}</Text>
+                            <View style={{flex:1}}/>
+                            <ReadLike
+                                read={item.info.total_views}
+                                like={item.info.total_likes}/>
+                            <View style={{width:10}}/>
                         </View>
 
                     </View>

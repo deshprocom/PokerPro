@@ -2,9 +2,9 @@ import React, {PureComponent} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, ListView, TextInput} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import PropTypes from 'prop-types';
-import {getDateDiff, isEmptyObject, strNotNull} from '../../utils/ComonHelper';
+import {getDateDiff, isEmptyObject, strNotNull,showToast,alertOrder} from '../../utils/ComonHelper';
 import {ImageLoad} from '../../components';
-import {postRepliesReplies} from '../../services/CommentDao';
+import {postRepliesReplies,delDeleteComment} from '../../services/CommentDao';
 import CommentBottom from "./CommentBottom";
 import I18n from 'react-native-i18n';
 
@@ -32,6 +32,24 @@ export default class CommentItem extends PureComponent {
     };
 
 
+    deleteComment = () => {
+        return (
+            <TouchableOpacity style={{marginLeft:8}}
+                  onPress={()=>{
+                                 alertOrder(I18n.t('confirm_delete'),() => {
+                                     delDeleteComment({comment_id:id}, data => {
+                                         showToast(I18n.t('buy_del_success'))
+                                     }, err => {
+
+                                     });
+                                 });
+
+                             }}>
+                <Text style={{fontSize:12,color:'#666666'}}>{I18n.t('buy_del')}</Text>
+            </TouchableOpacity>
+        )
+    }
+
     render() {
 
         const {item} = this.props;
@@ -39,7 +57,7 @@ export default class CommentItem extends PureComponent {
             return <View/>
         }
         const {avatar, body, created_at, nick_name, id, official, recommended, total_count, typological, user_id} = item;
-
+        console.log("item333:",item)
         return (
             <View style={styles.content}>
 
@@ -54,7 +72,8 @@ export default class CommentItem extends PureComponent {
                     <View style={styles.commentTop}>
 
                         {official ? this.official(nick_name) : <Text style={styles.name}>{nick_name}</Text>}
-
+                        {recommended ? <Text style={styles.featured}>{I18n.t('featured')}</Text> : null}
+                        {/*{this.deleteComment()}*/}
                         <View style={{flex: 1}}/>
                         <TouchableOpacity
                             onPress={() => {
@@ -114,8 +133,8 @@ const styles = StyleSheet.create({
         marginRight: 17
     },
     name: {
-        fontSize: 14,
-        color: '#666666',
+        fontSize: 12,
+        color: '#4990E2',
     },
     commentImg: {
         width: 20,
@@ -151,10 +170,8 @@ const styles = StyleSheet.create({
         marginLeft: 11
     },
     commentView: {
-        padding: 8,
-        paddingRight: 0,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
     officialView: {
         width: 32,
@@ -181,5 +198,16 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#4990E2',
         marginLeft: 7
-    }
+    },
+    featured: {
+        color: "#FFFFFF",
+        backgroundColor: '#A1C1E6',
+        fontSize: 10,
+        paddingLeft: 5,
+        paddingRight: 5,
+        paddingTop: 2,
+        paddingBottom: 2,
+        borderRadius: 2,
+        marginLeft: 9
+    },
 })
