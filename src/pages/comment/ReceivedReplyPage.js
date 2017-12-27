@@ -124,6 +124,8 @@ export default class ReceivedReplyPage extends Component {
         }else if(type === "reply"){
             return this.reply(item);
 
+        }else{
+            return this.reply(item);
         }
 
     };
@@ -140,8 +142,9 @@ export default class ReceivedReplyPage extends Component {
                     leftImageStyle={{height: 23, width: 23, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
-                <View style={{marginTop:7,backgroundColor:'#FFFFFF',flex:1}}>
+                <View style={{backgroundColor:'#FFFFFF',flex:1}}>
                     <UltimateFlatList
+                        header={()=><View style={{height:7,width:'100%',backgroundColor:'#ECECEE'}}/>}
                         arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
                         ref={ref => this.ultimate = ref}
                         onFetch={this.onFetch}
