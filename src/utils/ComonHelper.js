@@ -315,7 +315,7 @@ export function getDateDiff(dateTimeStamp) {
     else if (minC >= 1) {
         result = "" + parseInt(minC) + I18n.t('time_min');
     } else
-        moment();
+        result = I18n.t('time_moment');
     return result;
 }
 
