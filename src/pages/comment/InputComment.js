@@ -15,13 +15,23 @@ export default class InputComment extends Component {
 
     state = {
         likeButton: false,
-        comment: ''
+        comment: '',
+        height: 0
     };
 
     static propTypes = {
         _showInput: propTypes.func.isRequired,
         repliesItem: propTypes.object,
         refreshCommentInfo: propTypes.func
+    };
+
+
+    onChange = (event) => {
+        console.log(event.nativeEvent);
+        this.setState({
+            comment: event.nativeEvent.text,
+            height: event.nativeEvent.contentSize.height
+        });
     };
 
 
@@ -49,16 +59,15 @@ export default class InputComment extends Component {
                         <View style={{width: '80%', marginLeft: 5, borderWidth: 0}}>
                             <TextInput
                                 underlineColorAndroid="transparent"
-                                style={styles.inputComment}
+                                style={[styles.inputComment, {height: Math.max(30, this.state.height)}]}
                                 placeholder={this.txtPlaceholder()}
                                 returnKeyType={'done'}
-                                onChangeText={text => this.setState({
-                                    comment: text
-                                })}
                                 autoFocus={true}
                                 onSubmitEditing={() => {
                                     this.releaseComment()
                                 }}
+                                multiline={true}
+                                onChange={this.onChange}
                             />
 
                         </View>
