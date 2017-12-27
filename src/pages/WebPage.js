@@ -38,7 +38,7 @@ export default class WebPage extends Component {
 
         const {url} = props.params;
 
-        let webUrl = url + `?accessToken=${getAccessToken()}`;
+        let webUrl = url + `?accessToken=${getAccessToken()}&user_id=${global.login_user.user_id}`;
 
         this.state = {
             url: webUrl,

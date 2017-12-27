@@ -259,7 +259,10 @@ export function agoDynamicDate(dateTimeStamp) {
     var minC = diffValue / minute;
 
     let result = '';
-    if (weekC >= 1) {
+    if (monthC >= 1) {
+        result = "" + parseInt(monthC) + I18n.t('time_month');
+    }
+    else if (weekC >= 1) {
         result = "" + parseInt(weekC) + I18n.t('time_week');
     }
     else if (0 <= dayC && dayC < 1) {

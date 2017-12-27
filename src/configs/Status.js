@@ -6,6 +6,7 @@ import I18n from 'react-native-i18n';
 export class WebAction {
     static REFRESH_COMMENT = 'REFRESH_COMMENT';
     static ADD_TOTAL_LIKES = 'ADD_TOTAL_LIKES';
+    static SCROLL_COMMENT_TOP = 'SCROLL_COMMENT_TOP';
 }
 
 //邀请码折扣类型
