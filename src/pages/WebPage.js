@@ -16,7 +16,7 @@ import {
 
 import {NavigationBar} from '../components';
 import {Colors, Fonts, Images, ApplicationStyles} from '../Themes';
-import {getAccessToken} from '../services/RequestHelper';
+import {getAccessToken, getDpLang} from '../services/RequestHelper';
 import {strNotNull, isEmptyObject} from "../utils/ComonHelper";
 import {CommentBottom} from './comment';
 import CommentItem from "./comment/CommentItem";
@@ -38,7 +38,8 @@ export default class WebPage extends Component {
 
         const {url} = props.params;
 
-        let webUrl = url + `?accessToken=${getAccessToken()}&user_id=${global.login_user.user_id}`;
+        this.url = url + `/${getDpLang()}`;
+        let webUrl = this.url + `?accessToken=${getAccessToken()}&user_id=${global.login_user.user_id}`;
 
         this.state = {
             url: webUrl,
@@ -155,7 +156,6 @@ export default class WebPage extends Component {
     _renderBottomNav = () => {
         if (this.props.params.body) {
             const {bottomNav, info, topic_type} = this.props.params.body;
-            const {url} = this.props.params;
 
             if (strNotNull(bottomNav)) {
                 switch (bottomNav) {
@@ -165,7 +165,7 @@ export default class WebPage extends Component {
                             ref={ref => this.commentNav = ref}
                             topic_type={topic_type}
                             info={info}
-                            url={url}
+                            url={this.url}
                         />
 
                 }

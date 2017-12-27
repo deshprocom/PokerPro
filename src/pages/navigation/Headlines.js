@@ -67,7 +67,7 @@ export default class Headlines extends Component {
     _clickBanner = (item) => {
         switch (item.source_type) {
             case BannerStatus.INFO:
-                let url = `${global.desh5}news/${item.source_id}/${global.language}`;
+                let url = `${global.desh5}news/${item.source_id}`;
                 global.router.toWebPage(url, {
                     bottomNav: 'commentNav',
                     info: {id: item.source_id},
@@ -79,7 +79,7 @@ export default class Headlines extends Component {
                 break;
 
             case BannerStatus.VIDEO:
-                let urlVideo = `${global.desh5}videos/${item.source_id}/${global.language}`;
+                let urlVideo = `${global.desh5}videos/${item.source_id}`;
                 global.router.toWebPage(urlVideo, {
                     bottomNav: 'commentNav',
                     info: {id: item.source_id},

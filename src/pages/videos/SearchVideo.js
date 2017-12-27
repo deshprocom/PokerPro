@@ -237,7 +237,7 @@ export default class SearchVideo extends Component {
     }
 
     _pressItem = (item) => {
-        let url = `${global.desh5}videos/${item.id}/${global.language}`;
+        let url = `${global.desh5}videos/${item.id}`;
         global.router.toWebPage(url, {bottomNav: 'commentNav', info: item,topic_type:'video'})
     };
 
