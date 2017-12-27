@@ -30,7 +30,10 @@ export default class ClickComment extends Component {
     _carts = () => {
         const {comment_count} = this.props;
         if (comment_count && comment_count > 0)
-            return <Badge style={styles.badge}>{comment_count}</Badge>
+            return <View
+                style={styles.badge}>
+                <Text style={{fontSize:8,color:Colors.white}}>{comment_count > 99 ? '99+' : comment_count}</Text>
+            </View>
     };
 
     likeChang = () => {
@@ -51,7 +54,7 @@ export default class ClickComment extends Component {
     likeShare = () => {
         const {current_user_like} = this.state;
         return (
-            <View style={{flexDirection: 'row', flex: 1, marginRight: 17}}>
+            <View style={{flexDirection: 'row', flex: 1,alignItems:'center'}}>
                 <TouchableOpacity
                     style={[styles.search, this.props.onlyComment ? {width: '90%'} : {}]}
                     onPress={() => {
@@ -65,33 +68,32 @@ export default class ClickComment extends Component {
                 </TouchableOpacity>
 
                 {this.props.onlyComment ? null : <View style={{flexDirection: 'row', flex: 1}}>
-                    <TouchableOpacity
-                        onPress={() => {
+                        <TouchableOpacity
+                            onPress={() => {
                             this.props.sendMessageToWeb && this.props.sendMessageToWeb({action: WebAction.SCROLL_COMMENT_TOP});
                         }}
-                        style={styles.commentWhiteView}>
-                        <Image style={styles.commentWhite} source={Images.commentWhite}/>
-                        {this._carts()}
-                    </TouchableOpacity>
+                            style={styles.commentWhiteView}>
+                            <Image style={styles.commentWhite} source={Images.commentWhite}/>
+                            {this._carts()}
+                        </TouchableOpacity>
 
-                    <TouchableOpacity
-                        style={styles.likeView}
-                        onPress={() => {
+                        <TouchableOpacity
+                            style={styles.likeView}
+                            onPress={() => {
                             this.likeChang()
                         }}>
-                        <Image style={styles.like} source={current_user_like ? Images.likeRed : Images.like}/>
+                            <Image style={styles.like} source={current_user_like ? Images.likeRed : Images.like}/>
 
-                    </TouchableOpacity>
-                    <View style={{flex: 1}}/>
-                    <TouchableOpacity
-                        style={styles.forwardView}
-                        onPress={() => {
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.forwardView}
+                            onPress={() => {
                             const {title, date, image_thumb, id} = this.props.info;
                             sharePage(title, date, image_thumb, "news/" + id)
                         }}>
-                        <Image style={styles.forward} source={Images.forward}/>
-                    </TouchableOpacity>
-                </View>}
+                            <Image style={styles.forward} source={Images.forward}/>
+                        </TouchableOpacity>
+                    </View>}
 
 
             </View>
@@ -134,13 +136,10 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     commentWhiteView: {
-        alignItems: 'center',
         justifyContent: 'center',
         marginLeft: 20,
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingLeft: 10,
-        paddingRight: 10
+        flex: 1,
+        height: 48
     },
     commentWhite: {
         width: 22,
@@ -149,11 +148,12 @@ const styles = StyleSheet.create({
     likeView: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginLeft: 31,
         paddingTop: 5,
         paddingBottom: 5,
         paddingLeft: 5,
-        paddingRight: 5
+        paddingRight: 5,
+        flex: 1,
+        height: 48
     },
     like: {
         width: 20,
@@ -162,12 +162,12 @@ const styles = StyleSheet.create({
     forwardView: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginLeft: 31,
-        marginRight: 17,
         paddingTop: 5,
         paddingBottom: 5,
         paddingLeft: 5,
-        paddingRight: 5
+        paddingRight: 5,
+        flex: 1,
+        height: 48
     },
     forward: {
         width: 20,
@@ -175,8 +175,14 @@ const styles = StyleSheet.create({
     },
     badge: {
         position: 'absolute',
-        top: 1,
-        left: '90%'
+        top: 5,
+        left: 12,
+        height: 20,
+        width: 20,
+        borderRadius: 10,
+        backgroundColor: '#F34A4A',
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 
 });
