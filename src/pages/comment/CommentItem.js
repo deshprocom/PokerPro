@@ -31,14 +31,6 @@ export default class CommentItem extends PureComponent {
         )
     };
 
-    _avatar = (avatar) => {
-        if (isEmptyObject(avatar))
-            return Images.home_avatar;
-        else if (strNotNull(avatar))
-            return {uri: avatar};
-        else
-            return Images.home_avatar;
-    };
 
     deleteComment = () => {
         return (

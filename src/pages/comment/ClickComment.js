@@ -66,6 +66,9 @@ export default class ClickComment extends Component {
 
                 {this.props.onlyComment ? null : <View style={{flexDirection: 'row', flex: 1}}>
                     <TouchableOpacity
+                        onPress={() => {
+                            this.props.sendMessageToWeb && this.props.sendMessageToWeb({action: WebAction.SCROLL_COMMENT_TOP});
+                        }}
                         style={styles.commentWhiteView}>
                         <Image style={styles.commentWhite} source={Images.commentWhite}/>
                         {this._carts()}
