@@ -17,7 +17,8 @@ export default class CommentItem extends PureComponent {
     static propTypes = {
         commentType: PropTypes.string,
         item: PropTypes.object.isRequired,
-        repliesReFunc: PropTypes.func
+        repliesReFunc: PropTypes.func,
+        refreshList: PropTypes.func
     };
 
     official = (nick_name) => {
@@ -30,12 +31,15 @@ export default class CommentItem extends PureComponent {
             </View>
         )
     };
+    refreshCommentInfo = () => {
+        this.props.refreshList && this.props.refreshList();
+    };
 
     deleteComment = (id) => {
         alertOrder(I18n.t('confirm_delete'), () => {
             delDeleteComment({comment_id: id}, data => {
                 showToast(I18n.t('buy_del_success'));
-                // this.props.LoadComment && this.props.LoadComment()
+                this.refreshCommentInfo()
             }, err => {
 
             });
@@ -45,7 +49,7 @@ export default class CommentItem extends PureComponent {
         alertOrder(I18n.t('confirm_delete'), () => {
             delDeleteReply({comment_id: comment_id, id: id}, data => {
                 showToast(I18n.t('buy_del_success'));
-                // this.props.LoadComment && this.props.LoadComment()
+                this.refreshCommentInfo()
             }, err => {
 
             });
