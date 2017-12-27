@@ -60,7 +60,7 @@ export default class CommentBottom extends Component {
     };
 
     render() {
-        const {info, topic_type} = this.props;
+        const {info, topic_type,url} = this.props;
 
         return (
             <View style={styles.bottom}>
@@ -74,6 +74,7 @@ export default class CommentBottom extends Component {
                     info_id={info.id}
                     sendMessageToWeb={this.sendMessageToWeb}
                     info={info}
+                    url={url}
                 />
                 <InputComment
                     refreshCommentInfo={this.refreshCommentInfo}

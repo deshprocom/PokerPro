@@ -155,6 +155,7 @@ export default class WebPage extends Component {
     _renderBottomNav = () => {
         if (this.props.params.body) {
             const {bottomNav, info, topic_type} = this.props.params.body;
+            const {url} = this.props.params;
 
             if (strNotNull(bottomNav)) {
                 switch (bottomNav) {
@@ -164,6 +165,7 @@ export default class WebPage extends Component {
                             ref={ref => this.commentNav = ref}
                             topic_type={topic_type}
                             info={info}
+                            url={url}
                         />
 
                 }

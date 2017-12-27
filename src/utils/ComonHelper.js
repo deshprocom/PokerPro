@@ -321,8 +321,8 @@ export function getDateDiff(dateTimeStamp) {
 
 export function sharePage(title, location, icon, url) {
 
-    let thumb = getShareIcon(icon)
-    UMShare.share(title, location, thumb, shareHost() + (url + +"/" + Lang))
+    let thumb = getShareIcon(icon);
+    UMShare.share(title, location, thumb, url)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {

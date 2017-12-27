@@ -87,7 +87,7 @@ export default class ClickComment extends Component {
                         style={styles.forwardView}
                         onPress={() => {
                             const {title, date, image_thumb, id} = this.props.info;
-                            sharePage(title, date, image_thumb, "news/" + id)
+                            sharePage(title, date, image_thumb, this.props.url)
                         }}>
                         <Image style={styles.forward} source={Images.forward}/>
                     </TouchableOpacity>
