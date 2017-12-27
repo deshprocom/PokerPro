@@ -137,7 +137,7 @@ export default class ReceivedReplyPage extends Component {
                     title={I18n.t('received_reply')}
                     titleStyle={{color: Colors._161}}
                     leftBtnIcon={Images.mall_return}
-                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                    leftImageStyle={{height: 23, width: 23, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
                 <View style={{marginTop:7,backgroundColor:'#FFFFFF',flex:1}}>
@@ -198,16 +198,20 @@ const styles = StyleSheet.create({
     },
     topic: {
         width: '100%',
-        height: 32,
+        minHeight: 32,
         backgroundColor: '#ECECEE',
         alignItems: 'flex-start',
         justifyContent: 'center',
-        marginTop: 17
+        marginTop: 17,
+        paddingTop:5,
+        paddingBottom:5
+
     },
     topicTxt: {
         fontSize: 14,
         color: '#AAAAAA',
-        marginLeft: 11
+        marginLeft: 11,
+        marginRight:8
     },
     replyView: {
         marginTop: 12,
@@ -218,13 +222,13 @@ const styles = StyleSheet.create({
     replyTxt1: {
         fontSize: 15,
         color: '#444444',
-        lineHeight: 25
+
 
     },
     replyTxt2: {
         color: '#4990E2',
         fontSize: 15,
-        lineHeight: 25
+
     },
     officialView: {
         width: 32,
