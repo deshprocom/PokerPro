@@ -87,7 +87,8 @@ export class SearchPage extends Component {
             <View
                 style={{
                     backgroundColor: Colors._161,
-                    paddingTop: Metrics.statusBarHeight
+                    paddingTop: Metrics.statusBarHeight,
+                    opacity:0.98
                 }}>
                 <View style={{
                     flexDirection: 'row',
@@ -140,11 +141,10 @@ const styleR = StyleSheet.create({
         height: 28,
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#FFFFFF',
-        opacity: 0.8,
+        backgroundColor: '#292A2C',
         borderRadius: 3,
         marginLeft: 23,
-        flex: 1
+        flex: 1,
     },
     imgSearch: {
         height: 18,
@@ -159,7 +159,7 @@ const styleR = StyleSheet.create({
         marginRight: 22
     },
     inputSearch: {
-        color: '#6A6B6B',
-        fontSize: 15
+        color: '#666666',
+        fontSize: 12
     }
 })

@@ -126,12 +126,13 @@ const styles = StyleSheet.create({
         height: 48,
         width: '100%',
         backgroundColor: '#FFFFFF',
-        borderColor: '#EEEEEE',
         flexDirection: 'row',
         alignItems: 'center',
         bottom: 0,
         zIndex: 99,
         position: 'absolute',
+        borderTopWidth: 1,
+        borderTopColor: Colors._ECE
     },
     input: {
         height: 30,

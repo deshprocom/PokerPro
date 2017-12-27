@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity, StatusBar, Image, Platform} from 'react-native';
 import I18n from 'react-native-i18n';
-import {Images} from '../../Themes';
+import {Images, Colors} from '../../Themes';
 import TabIcon from './TabIcon';
 import {showTabTop, hideTabTop, onPressBackTop, videoPause} from '../../actions/AccountAction';
 import {SHOW_BACK_TOP, HIDE_BACK_TOP, VIDEO_PAUSE, BACK_TOP} from '../../actions/ActionTypes';
@@ -104,12 +104,14 @@ const styleBN = StyleSheet.create({
         backgroundColor: '#ffffff',
         opacity: 0.96,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderTopWidth: 1,
+        borderTopColor: Colors._ECE
     },
     navigations: {
         flex: 1,
-        justifyContent:'center',
-        alignItems:'center'
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     tabs: {
         height: 50
