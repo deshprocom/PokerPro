@@ -27,7 +27,7 @@ export default class InputComment extends Component {
 
 
     onChange = (event) => {
-        console.log(event.nativeEvent);
+
         this.setState({
             comment: event.nativeEvent.text,
             height: event.nativeEvent.contentSize.height
