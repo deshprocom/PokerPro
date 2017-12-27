@@ -137,10 +137,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginLeft: 20,
-        paddingTop: 5,
-        paddingBottom: 5,
-        paddingLeft: 5,
-        paddingRight: 5
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 10,
+        paddingRight: 10
     },
     commentWhite: {
         width: 22,
@@ -175,8 +175,8 @@ const styles = StyleSheet.create({
     },
     badge: {
         position: 'absolute',
-        top: -5,
-        left: '60%'
+        top: 1,
+        left: '90%'
     }
 
 });
