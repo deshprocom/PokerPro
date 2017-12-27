@@ -13,9 +13,9 @@ export default class ReadLike extends Component {
         return (
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Text style={[styles.reads,{marginTop:1}]}>{I18n.t('read')}</Text>
-                <Text style={styles.reads}> {read > 999 ? '999+' : read}</Text>
+                <Text style={styles.reads}> {read}</Text>
                 <Image style={styles.likes} source={Images.listLike}/>
-                <Text style={styles.likesTxt}> {like > 999 ? '999+' : like}</Text>
+                <Text style={styles.likesTxt}> {like}</Text>
             </View>
         )
     }
