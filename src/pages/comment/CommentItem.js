@@ -4,7 +4,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import PropTypes from 'prop-types';
 import {getDateDiff, isEmptyObject, strNotNull, showToast, alertOrder} from '../../utils/ComonHelper';
 import {ImageLoad} from '../../components';
-import {postRepliesReplies, delDeleteReply,delDeleteComment} from '../../services/CommentDao';
+import {postRepliesReplies, delDeleteReply, delDeleteComment} from '../../services/CommentDao';
 import CommentBottom from "./CommentBottom";
 import I18n from 'react-native-i18n';
 
@@ -56,15 +56,11 @@ export default class CommentItem extends PureComponent {
         });
     };
     deleteView = (item) => {
-        const {typological,id} = item;
+        const {typological, id} = item;
         if (typological === 'reply') {
             const {parent_comment} = item;
             return (
-                this.deleteReply(parent_comment.parent_comment_id,id)
-            )
-        } else if (typological === 'comment') {
-            return (
-                this.deleteComment(id)
+                this.deleteReply(parent_comment.parent_comment_id, id)
             )
         }
     };
@@ -96,8 +92,8 @@ export default class CommentItem extends PureComponent {
                         {official ? this.official(nick_name) : <Text style={styles.name}>{nick_name}</Text>}
                         {recommended ? <Text style={styles.featured}>{I18n.t('featured')}</Text> : null}
 
-                        {this.isMine(user_id) ? <TouchableOpacity style={{marginLeft: 8}}
-                                                                  onPress={() => this.deleteView(item)}>
+                        {this.isMine(user_id) && typological === 'reply' ? <TouchableOpacity style={{marginLeft: 8}}
+                                                                                             onPress={() => this.deleteView(item)}>
                                 <Text style={{fontSize: 12, color: '#666666'}}>{I18n.t('buy_del')}</Text>
                             </TouchableOpacity> : null}
 
