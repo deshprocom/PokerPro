@@ -7,13 +7,11 @@ import {Badge} from '../../components';
 import {NavigationBar, BaseComponent} from '../../components';
 import UltimateFlatList from '../../components/ultimate';
 import {getReceivedReply} from '../../services/CommentDao';
-import {getDateDiff, isEmptyObject,strNotNull,utcDate} from '../../utils/ComonHelper';
+import {getDateDiff, isEmptyObject, strNotNull, utcDate} from '../../utils/ComonHelper';
 import DynamicEmpty from './DynamicEmpty';
 
 export default class ReceivedReplyPage extends Component {
-    state = {
-        receivedReply: {}
-    };
+
 
     componentDidMount() {
 
@@ -23,20 +21,14 @@ export default class ReceivedReplyPage extends Component {
         return <View style={{height: 1, marginLeft: 14, marginRight: 17, backgroundColor: '#DDDDDD',marginBottom:16}}/>;
     };
     onFetch = (page, postRefresh, endFetch) => {
-        if (page === 1) {
-            let body = {user_id: global.login_user.user_id, page: 1};
-            getReceivedReply(body, data => {
-                console.log("receivedReply:", data);
-                postRefresh(data.items, 9);
-                this.setState({
-                    receivedReply: data.items
-                })
-            }, err => {
-                endFetch();
-            });
+        let body = {user_id: global.login_user.user_id, page: page, page_size: 10};
+        getReceivedReply(body, data => {
+            console.log("receivedReply:", data);
+            postRefresh(data.items, 9);
 
-        } else {
-        }
+        }, err => {
+            endFetch();
+        });
 
     };
     official = () => {
@@ -47,16 +39,16 @@ export default class ReceivedReplyPage extends Component {
         )
     };
 
-    deleteItem=(item)=>{
-        const {typological_type, my_comment,created_at} = item;
-        return(
+    deleteItem = (item) => {
+        const {typological_type, my_comment, created_at} = item;
+        return (
             <View style={styles.itemPage}>
                 <Image style={styles.personImg} source={Images.poker_key}/>
                 <View style={styles.pageRight}>
                     <View style={{flexDirection:'row',alignItems:'flex-start',marginTop:10}}>
                         <Text style={styles.name}>{I18n.t('Poker')}</Text>
                         <View style={{flex:1}}/>
-                        <Text style={styles.time}>{utcDate(created_at,'YYYY-MM-DD mm:ss')}</Text>
+                        <Text style={styles.time}>{utcDate(created_at, 'YYYY-MM-DD HH:mm')}</Text>
                     </View>
                     <Text style={styles.topicTxt}>{I18n.t('bad_message')}</Text>
                     <View style={styles.replyView}>
@@ -83,10 +75,10 @@ export default class ReceivedReplyPage extends Component {
             return Images.home_avatar;
     };
 
-    reply=(item)=>{
+    reply = (item) => {
         const {mine, other} = item;
         const {avatar, comment, nick_name, official, user_id, id} = other;
-        return(
+        return (
             <View style={styles.itemPage}>
                 <Image style={styles.personImg} source={official?Images.set_poker:this._avatar(avatar)}/>
                 <View style={styles.pageRight}>
@@ -94,7 +86,7 @@ export default class ReceivedReplyPage extends Component {
                         <Text style={styles.name}>{official ? I18n.t('Poker') : nick_name}</Text>
                         {official ? this.official() : null}
                         <View style={{flex:1}}/>
-                        <Text style={styles.time}>{utcDate(mine.created_at,'YYYY-MM-DD hh:mm')}</Text>
+                        <Text style={styles.time}>{utcDate(mine.created_at, 'YYYY-MM-DD HH:mm')}</Text>
                     </View>
                     <View style={styles.topic}>
                         <Text style={styles.topicTxt}>{mine.comment}</Text>
@@ -106,7 +98,7 @@ export default class ReceivedReplyPage extends Component {
                         <Text style={styles.replyTxt2}>
                             {I18n.t('your_comment')}：
                         </Text>
-                        <Text style={styles.replyTxt1}>
+                        <Text singleLine={true} style={styles.replyTxt1}>
                             {comment}
                         </Text>
                     </View>
@@ -117,14 +109,14 @@ export default class ReceivedReplyPage extends Component {
 
     renderItem = (item, index) => {
         const {type} = item;
-        if(type === "delete"){
+        if (type === "delete") {
 
             return this.deleteItem(item);
 
-        }else if(type === "reply"){
+        } else if (type === "reply") {
             return this.reply(item);
 
-        }else{
+        } else {
             return this.reply(item);
         }
 
@@ -206,15 +198,15 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'center',
         marginTop: 17,
-        paddingTop:5,
-        paddingBottom:5
+        paddingTop: 5,
+        paddingBottom: 5
 
     },
     topicTxt: {
         fontSize: 14,
         color: '#AAAAAA',
         marginLeft: 11,
-        marginRight:8
+        marginRight: 8
     },
     replyView: {
         marginTop: 12,
@@ -225,13 +217,13 @@ const styles = StyleSheet.create({
     replyTxt1: {
         fontSize: 15,
         color: '#444444',
-
+        lineHeight: 20
 
     },
     replyTxt2: {
         color: '#4990E2',
         fontSize: 15,
-
+        lineHeight: 20
     },
     officialView: {
         width: 32,

@@ -6,13 +6,14 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {Badge} from '../../components';
-
+import propTypes from 'prop-types';
 
 export default class DynamicTopBar extends PureComponent {
 
 
-
     render() {
+        const {unreadCount, setUnreadCount} = this.props;
+        let counts = unreadCount;
         return (<View style={styles.navBar}>
             <StatusBar barStyle={"dark-content"}/>
             <View style={styles.navContent}>
@@ -27,15 +28,16 @@ export default class DynamicTopBar extends PureComponent {
                 <Text style={{color: Colors._161, fontWeight: 'bold', fontSize: 17}}>{I18n.t('person_dynamic')}</Text>
                 <View style={{flex: 1}}/>
                 {this.props.hideReceived ? <TouchableOpacity
-                    onPress={() => {
+                        onPress={() => {
                         global.router.toReceivedReply();
+                        setUnreadCount && setUnreadCount(0);
                     }}
-                    style={styles.btnCat}>
-                    <Image style={styles.imgCat}
-                           source={Images.commentWhite}/>
-                    {this._carts()}
+                        style={styles.btnCat}>
+                        <Image style={styles.imgCat}
+                               source={Images.commentWhite}/>
+                        {this._carts(unreadCount)}
 
-                </TouchableOpacity> : <View style={styles.btnCat}/>}
+                    </TouchableOpacity> : <View style={styles.btnCat}/>}
 
             </View>
 
@@ -43,8 +45,8 @@ export default class DynamicTopBar extends PureComponent {
 
     }
 
-    _carts = () => {
-        const {unreadCount} = this.props;
+    _carts = (unreadCount) => {
+
         if (unreadCount && unreadCount > 0)
             return <View
                 style={styles.badge}>
@@ -73,7 +75,7 @@ const styles = StyleSheet.create({
         marginLeft: 17,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent:'center'
+        justifyContent: 'center'
     },
     searchImg: {
         height: 17,

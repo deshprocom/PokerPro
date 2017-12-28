@@ -152,7 +152,7 @@ function delete_comment(body) {
 }
 
 export function person_reply(body) {
-    const {user_id, page} = body;
+    const {user_id, page,page_size} = body;
 
     return `users/${user_id}/receive_replies?page=${page}&page_size=${page_size}`;
 }

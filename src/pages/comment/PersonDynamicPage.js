@@ -5,7 +5,7 @@ import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
 import {NavigationBar, BaseComponent, ImageLoad} from '../../components';
 import UltimateFlatList from '../../components/ultimate';
-import {getPersonDynamics,getUnreadComments} from '../../services/CommentDao';
+import {getPersonDynamics, getUnreadComments} from '../../services/CommentDao';
 import {agoDynamicDate, isEmptyObject, strNotNull, util, utcDate, convertDate} from '../../utils/ComonHelper';
 import DynamicEmpty from './DynamicEmpty';
 import DynamicTopBar from './DynamicTopBar';
@@ -15,7 +15,7 @@ import moment from 'moment';
 export default class PersonDynamicPage extends Component {
     state = {
         dynamics: {},
-        unreadCount:0
+        unreadCount: 0
     };
 
     constructor(props) {
@@ -29,19 +29,29 @@ export default class PersonDynamicPage extends Component {
 
     }
 
+    setUnreadCount = (unreadCount) => {
+        this.setState({
+            unreadCount
+        })
+    };
+
     componentDidMount() {
         this.dynamicList = [];
         this.page = 1;
+        this.unread()
+    };
+
+    unread = () => {
         let body = {user_id: this.userInfo.user_id};
         getUnreadComments(body, data => {
             console.log("unreadCount:", data.unread)
             this.setState({
-                unreadCount:data.unread
+                unreadCount: data.unread
             })
         }, err => {
 
         });
-    }
+    };
 
     _avatar = (avatar) => {
         if (isEmptyObject(avatar))
@@ -180,17 +190,6 @@ export default class PersonDynamicPage extends Component {
 
     };
 
-    parseDate = (date, item) => {
-        let today = new Date();
-        if (convertDate(new Date(), 'YYYY-MM-DD') === date) {
-            return I18n.t('today');
-        } else if (convertDate(today, 'YYYY-MM') === utcDate(date, 'YYYY-MM')
-            && Number(convertDate(today, 'DD')) - Number(utcDate(date, 'DD')) <= 1) {
-            return I18n.t('yesterday');
-        } else {
-            return utcDate(date, 'MM') + I18n.t('month');
-        }
-    };
     blobData = (items) => {
 
         let objArr = {};
@@ -247,15 +246,20 @@ export default class PersonDynamicPage extends Component {
             return true;
     };
 
-
     render() {
 
         return (
             <BaseComponent style={ApplicationStyles.bgContainer}>
-                <DynamicTopBar
-                    unreadCount={this.state.unreadCount}
-                    hideReceived={this.isMine()}
-                    count={this.state.dynamics.length}/>
+                <TouchableOpacity onPress={()=>{
+                    this.unread();
+                }}>
+                    <DynamicTopBar
+                        setUnreadCount={this.setUnreadCount}
+                        unreadCount={this.state.unreadCount}
+                        hideReceived={this.isMine()}
+                        count={this.state.dynamics.length}/>
+                </TouchableOpacity>
+
 
                 <View style={{backgroundColor: '#FFFFFF', marginBottom: 20}}>
 
