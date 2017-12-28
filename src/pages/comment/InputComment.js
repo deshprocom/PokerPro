@@ -56,10 +56,11 @@ export default class InputComment extends Component {
                     </TouchableOpacity>
 
                     <View style={styles.bottom}>
-                        <View style={{width: '80%', marginLeft: 5, borderWidth: 0}}>
+                        <View style={{width: '80%', marginLeft: 5, borderWidth: 0, padding: 5}}>
                             <TextInput
                                 underlineColorAndroid="transparent"
-                                style={[styles.inputComment, {height: Math.max(30, this.state.height)}]}
+                                style={[styles.inputComment,
+                                    {height: Math.max(Platform.OS === 'ios' ? 30 : 40, this.state.height)}]}
                                 placeholder={this.txtPlaceholder()}
                                 returnKeyType={'done'}
                                 autoFocus={true}
