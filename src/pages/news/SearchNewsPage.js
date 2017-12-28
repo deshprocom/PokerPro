@@ -148,12 +148,12 @@ export default class SearchNewsPage extends Component {
                     style={styles.listTitleTxt}>{title}</Text>
 
                 <View style={styles.listTimeView}>
-                    <Text numberOfLines={1} style={[styles.listSource,{maxWidth:80}]}>{source}</Text>
-                    <Text style={styles.listTime}>{convertDate(date, 'MM-DD')}</Text>
-                    <View style={{flex:1}}/>
+
                     <ReadLike
                         read={rowData.total_views}
                         like={rowData.total_likes}/>
+                    <View style={{flex:1}}/>
+                    <Text style={styles.listTime}>{convertDate(date, 'MM-DD')}</Text>
                     <View style={{width:10}}/>
                 </View>
 
