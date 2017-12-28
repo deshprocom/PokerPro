@@ -5,7 +5,7 @@ import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
 import {NavigationBar, BaseComponent, ImageLoad} from '../../components';
 import UltimateFlatList from '../../components/ultimate';
-import {getPersonDynamics} from '../../services/CommentDao';
+import {getPersonDynamics,getUnreadComments} from '../../services/CommentDao';
 import {agoDynamicDate, isEmptyObject, strNotNull, util, utcDate, convertDate} from '../../utils/ComonHelper';
 import DynamicEmpty from './DynamicEmpty';
 import DynamicTopBar from './DynamicTopBar';
@@ -14,7 +14,8 @@ import moment from 'moment';
 
 export default class PersonDynamicPage extends Component {
     state = {
-        dynamics: {}
+        dynamics: {},
+        unreadCount:0
     };
 
     constructor(props) {
@@ -31,6 +32,15 @@ export default class PersonDynamicPage extends Component {
     componentDidMount() {
         this.dynamicList = [];
         this.page = 1;
+        let body = {user_id: this.userInfo.user_id};
+        getUnreadComments(body, data => {
+            console.log("unreadCount:", data.unread)
+            this.setState({
+                unreadCount:data.unread
+            })
+        }, err => {
+
+        });
     }
 
     _avatar = (avatar) => {
@@ -243,6 +253,7 @@ export default class PersonDynamicPage extends Component {
         return (
             <BaseComponent style={ApplicationStyles.bgContainer}>
                 <DynamicTopBar
+                    unreadCount={this.state.unreadCount}
                     hideReceived={this.isMine()}
                     count={this.state.dynamics.length}/>
 

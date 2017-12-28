@@ -10,6 +10,8 @@ import {Badge} from '../../components';
 
 export default class DynamicTopBar extends PureComponent {
 
+
+
     render() {
         return (<View style={styles.navBar}>
             <StatusBar barStyle={"dark-content"}/>
@@ -42,11 +44,13 @@ export default class DynamicTopBar extends PureComponent {
     }
 
     _carts = () => {
-        const {count} = this.props;
-        if (count && count > 0) {
-            return <View style={styles.badge}/>
-        }
-    }
+        const {unreadCount} = this.props;
+        if (unreadCount && unreadCount > 0)
+            return <View
+                style={styles.badge}>
+                <Text style={{fontSize:10,color:Colors.white}}>{unreadCount > 99 ? '99+' : unreadCount}</Text>
+            </View>
+    };
 }
 
 const styles = StyleSheet.create({
@@ -68,7 +72,8 @@ const styles = StyleSheet.create({
         borderRadius: 3,
         marginLeft: 17,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent:'center'
     },
     searchImg: {
         height: 17,
@@ -91,13 +96,15 @@ const styles = StyleSheet.create({
         width: 22
     },
     badge: {
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-        backgroundColor: 'red',
         position: 'absolute',
-        top: 6,
-        right: '32%'
+        top: -2,
+        left: 22,
+        height: 22,
+        width: 22,
+        borderRadius: 11,
+        backgroundColor: '#F34A4A',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     popBtn: {
         height: 44,

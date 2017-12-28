@@ -6,6 +6,12 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
+/*回复未读数量接口*/
+export function getUnreadComments(body, resolve, reject) {
+    helper.get(Api.unread_comments(body) ,ret => {
+        resolve(ret.data)
+    }, reject)
+}
 /*删除回复接口*/
 export function delDeleteReply(body, resolve, reject) {
     helper.del(Api.delete_reply(body), body,ret => {
