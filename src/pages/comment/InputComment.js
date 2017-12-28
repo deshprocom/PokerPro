@@ -98,7 +98,7 @@ export default class InputComment extends Component {
     txtPlaceholder = () => {
         const {topic_type, repliesName} = this.props;
         return topic_type === CommentBottom.replies ||
-        topic_type === CommentBottom.RepliesReplies ? `回复${repliesName}:` : '写下评论...'
+        topic_type === CommentBottom.RepliesReplies ? `${I18n.t('reply')}${repliesName}:` : I18n.t('write_comment')
     };
 
     releaseComment = () => {
@@ -106,7 +106,7 @@ export default class InputComment extends Component {
         const {comment} = this.state;
         if (!strNotNull(comment)) {
 
-            showToast('评论不能为空');
+            showToast(I18n.t('comment_not_empty'));
             return
         }
 
@@ -119,7 +119,7 @@ export default class InputComment extends Component {
             }, data => {
                 this.props._showInput();
                 this.props.refreshCommentInfo && this.props.refreshCommentInfo();
-                showToast('回复成功')
+                showToast(I18n.t('reply_success'))
             }, err => {
                 showToast(err)
             })
@@ -134,7 +134,7 @@ export default class InputComment extends Component {
             postRepliesReplies(param, data => {
                 this.props._showInput();
                 this.props.refreshCommentInfo && this.props.refreshCommentInfo();
-                showToast('回复成功')
+                showToast(I18n.t('reply_success'))
             }, err => {
                 showToast(err)
             })
@@ -147,7 +147,7 @@ export default class InputComment extends Component {
 
             postComment(body, data => {
                 this.props._showInput();
-                showToast('评论成功');
+                showToast(I18n.t('comment_success'));
 
             }, err => {
                 showToast(err)

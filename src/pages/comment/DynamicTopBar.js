@@ -6,11 +6,14 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {Badge} from '../../components';
-
+import propTypes from 'prop-types';
 
 export default class DynamicTopBar extends PureComponent {
 
+
     render() {
+        const {unreadCount, setUnreadCount} = this.props;
+        let counts = unreadCount;
         return (<View style={styles.navBar}>
             <StatusBar barStyle={"dark-content"}/>
             <View style={styles.navContent}>
@@ -25,15 +28,16 @@ export default class DynamicTopBar extends PureComponent {
                 <Text style={{color: Colors._161, fontWeight: 'bold', fontSize: 17}}>{I18n.t('person_dynamic')}</Text>
                 <View style={{flex: 1}}/>
                 {this.props.hideReceived ? <TouchableOpacity
-                    onPress={() => {
+                        onPress={() => {
                         global.router.toReceivedReply();
+                        setUnreadCount && setUnreadCount(0);
                     }}
-                    style={styles.btnCat}>
-                    <Image style={styles.imgCat}
-                           source={Images.commentWhite}/>
-                    {this._carts()}
+                        style={styles.btnCat}>
+                        <Image style={styles.imgCat}
+                               source={Images.commentWhite}/>
+                        {this._carts(unreadCount)}
 
-                </TouchableOpacity> : <View style={styles.btnCat}/>}
+                    </TouchableOpacity> : <View style={styles.btnCat}/>}
 
             </View>
 
@@ -41,12 +45,14 @@ export default class DynamicTopBar extends PureComponent {
 
     }
 
-    _carts = () => {
-        const {count} = this.props;
-        if (count && count > 0) {
-            return <View style={styles.badge}/>
-        }
-    }
+    _carts = (unreadCount) => {
+
+        if (unreadCount && unreadCount > 0)
+            return <View
+                style={styles.badge}>
+                <Text style={{fontSize:10,color:Colors.white}}>{unreadCount > 99 ? '99+' : unreadCount}</Text>
+            </View>
+    };
 }
 
 const styles = StyleSheet.create({
@@ -68,7 +74,8 @@ const styles = StyleSheet.create({
         borderRadius: 3,
         marginLeft: 17,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     searchImg: {
         height: 17,
@@ -91,13 +98,15 @@ const styles = StyleSheet.create({
         width: 22
     },
     badge: {
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-        backgroundColor: 'red',
         position: 'absolute',
-        top: 6,
-        right: '32%'
+        top: -2,
+        left: 22,
+        height: 22,
+        width: 22,
+        borderRadius: 11,
+        backgroundColor: '#F34A4A',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     popBtn: {
         height: 44,

@@ -43,16 +43,13 @@ export default class Information extends Component {
                         <Text numberOfLines={2}
                               style={[styles.raceText, {marginRight: 20}]}>{item.info.title}</Text>
                         <View style={{flexDirection: 'row', marginTop: 14}}>
-                            <Text
-                                numberOfLines={1}
-                                style={[styles.informationText,{maxWidth:80}]}>{item.info.source}</Text>
-                            <Text
-                                style={[styles.informationText, {marginLeft: 15}]}>{convertDate(item.info.date, 'MM-DD')}</Text>
-                            <View style={{flex:1}}/>
                             <ReadLike
                                 read={item.info.total_views}
                                 like={item.info.total_likes}/>
-                            <View style={{width:10}}/>
+                            <View style={{flex:1}}/>
+                            <Text
+                                style={[styles.informationText, {marginLeft: 15,marginRight:17}]}>{convertDate(item.info.date, 'MM-DD')}</Text>
+
                         </View>
 
                     </View>

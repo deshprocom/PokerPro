@@ -90,7 +90,7 @@ export default class MainNewsPage extends Component {
                     inactiveTextColor={Colors._AAA}
                     textStyle={{fontSize: 17}}
                     style={{borderColor: Colors._EEE}}
-                    underlineStyle={{backgroundColor: '#161718', height: 2}}
+                    underlineStyle={{backgroundColor: '#161718', width: '12%', height: 2, marginLeft: '1.5%'}}
                 />}>
                 {pages}
             </ScrollableTabView>)
