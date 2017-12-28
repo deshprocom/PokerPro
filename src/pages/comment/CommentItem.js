@@ -75,7 +75,6 @@ export default class CommentItem extends PureComponent {
             return <View/>
         }
         const {avatar, body, created_at, nick_name, id, official, recommended, total_count, typological, user_id} = item;
-        console.log("item333:", item)
         return (
             <View style={styles.content}>
 
