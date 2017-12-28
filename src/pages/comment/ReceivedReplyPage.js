@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
         paddingTop: 13,
         flexDirection: 'row',
         alignItems: 'flex-start',
-        paddingBottom: 15,
+        paddingBottom: 30,
         marginRight: 17
 
     },

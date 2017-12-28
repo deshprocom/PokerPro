@@ -175,11 +175,11 @@ const styles = StyleSheet.create({
     },
     badge: {
         position: 'absolute',
-        top: 5,
+        top: 3,
         left: 12,
-        height: 20,
-        width: 20,
-        borderRadius: 10,
+        height: 22,
+        width: 22,
+        borderRadius: 11,
         backgroundColor: '#F34A4A',
         alignItems: 'center',
         justifyContent: 'center'
