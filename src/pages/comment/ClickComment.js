@@ -188,11 +188,11 @@ const styles = StyleSheet.create({
     },
     badge: {
         position: 'absolute',
-        top: 3,
+        top: 5,
         left: 12,
-        height: 22,
-        width: 22,
-        borderRadius: 11,
+        height: 18,
+        width: 18,
+        borderRadius: 9,
         backgroundColor: '#F34A4A',
         alignItems: 'center',
         justifyContent: 'center'
