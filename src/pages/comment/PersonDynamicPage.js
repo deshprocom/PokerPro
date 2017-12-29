@@ -254,6 +254,7 @@ export default class PersonDynamicPage extends Component {
                     this.unread();
                 }}>
                     <DynamicTopBar
+                        nickname={this.userInfo.nick_name}
                         setUnreadCount={this.setUnreadCount}
                         unreadCount={this.state.unreadCount}
                         hideReceived={this.isMine()}
