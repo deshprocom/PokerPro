@@ -45,7 +45,7 @@ export default class WebPage extends Component {
             url: webUrl,
             canGoBack: false,
             title: this.props.title,
-            webViewData: '',
+            news_info: {},
             nativeData: ''
         };
         this.webMsg = '';
@@ -98,7 +98,11 @@ export default class WebPage extends Component {
                             this.commentNav && this.commentNav.commentTotal(param);
                             break;
                         case PostRoute.NewsInfo:
-                            this.commentNav && this.commentNav.userLike(param.current_user_like);
+                            if (this.commentNav) {
+                                this.commentNav.userLike(param.current_user_like);
+                                this.commentNav.setNewsInfo(param);
+                            }
+
                             break;
                         case PostRoute.ClickAvatar:
 
@@ -115,7 +119,7 @@ export default class WebPage extends Component {
     };
 
     render() {
-        const {webViewData, nativeData, url} = this.state;
+        const {nativeData, url} = this.state;
         return (
             <View style={styles.container}>
 
