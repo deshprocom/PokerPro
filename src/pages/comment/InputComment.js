@@ -62,6 +62,7 @@ export default class InputComment extends Component {
                                 style={[styles.inputComment,
                                     {height: Math.max(Platform.OS === 'ios' ? 30 : 40, this.state.height)}]}
                                 placeholder={this.txtPlaceholder()}
+                                placeholderTextColor={Colors._CCC}
                                 returnKeyType={'done'}
                                 autoFocus={true}
                                 onSubmitEditing={() => {
