@@ -36,9 +36,9 @@ export default class ClickComment extends Component {
     };
 
     likeChang = () => {
-        const {info_id, topic_type} = this.props;
+        const {info, topic_type} = this.props;
 
-        postNewLikes({info_id: info_id, topic_type: `${topic_type}s`}, data => {
+        postNewLikes({info_id: info.id, topic_type: `${topic_type}s`}, data => {
             this.setState({
                 current_user_like: !this.state.current_user_like
             });
@@ -52,12 +52,13 @@ export default class ClickComment extends Component {
 
     likeShare = () => {
         const {current_user_like} = this.state;
+        const {info} = this.props;
         return (
             <View style={{flexDirection: 'row', flex: 1, alignItems: 'center'}}>
                 <TouchableOpacity
                     style={[styles.search, this.props.onlyComment ? {width: '90%'} : {}]}
                     onPress={() => {
-                        const {info} = this.props;
+
                         if (!isEmptyObject(info))
                             this.props._showInput()
                     }}>
@@ -81,7 +82,8 @@ export default class ClickComment extends Component {
                     <TouchableOpacity
                         style={styles.likeView}
                         onPress={() => {
-                            this.likeChang()
+                            if (!isEmptyObject(info))
+                                this.likeChang()
                         }}>
                         <Image style={styles.like} source={current_user_like ? Images.likeRed : Images.like}/>
 
