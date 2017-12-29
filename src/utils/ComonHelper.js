@@ -26,17 +26,16 @@ export const YYYY年MM月 = 'YYYY年MM月';
 export const YYYYMMDD = 'YYYYMMDD';
 export const MM_DD = 'MM-DD';
 
-const HOST = 'https://h5.deshpro.com/';
-const THOST = 'http://test.h5.deshpro.com/';
+const HOST = 'http://192.168.2.173:3000/';
+const THOST = 'http://192.168.2.173:3000/';
 
 export const util = _;
 
-function shareHost() {
+export function shareHost() {
     if (getApiType() === 'production')
         return HOST;
     else
         return THOST;
-
 }
 
 export const loadApp = HOST + 'race/181/zh/loadAPP';

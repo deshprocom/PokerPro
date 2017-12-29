@@ -31,7 +31,7 @@ export default class Information extends Component {
                     onPress={() => {
 
                         const {id} = item.info;
-                        let url = `${global.desh5}news/${id}`;
+                        let url = `news/${id}`;
                         global.router.toWebPage(url, {
                             bottomNav: 'commentNav',
                             info: item.info,
@@ -64,7 +64,7 @@ export default class Information extends Component {
                         onPress={() => {
 
                             const {id} = item.video;
-                            let url = `${global.desh5}videos/${id}`;
+                            let url = `videos/${id}`;
                             global.router.toWebPage(url, {
                                 bottomNav: 'commentNav',
                                 info: item.video,
@@ -79,7 +79,7 @@ export default class Information extends Component {
                     <TouchableOpacity
                         onPress={() => {
                             const {id} = item.video;
-                            let url = `${global.desh5}videos/${id}/${global.language}`;
+                            let url = `videos/${id}/${global.language}`;
                             global.router.toWebPage(url, {
                                 bottomNav: 'commentNav',
                                 info: item.video,

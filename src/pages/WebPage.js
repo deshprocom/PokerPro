@@ -17,7 +17,7 @@ import {
 import {NavigationBar} from '../components';
 import {Colors, Fonts, Images, ApplicationStyles} from '../Themes';
 import {getAccessToken, getDpLang} from '../services/RequestHelper';
-import {strNotNull, isEmptyObject} from "../utils/ComonHelper";
+import {strNotNull, isEmptyObject, shareHost} from "../utils/ComonHelper";
 import {CommentBottom} from './comment';
 import CommentItem from "./comment/CommentItem";
 
@@ -38,7 +38,7 @@ export default class WebPage extends Component {
 
         const {url} = props.params;
 
-        this.url = url + `/${getDpLang()}`;
+        this.url = shareHost() + url + `/${getDpLang()}`;
         let webUrl = this.url + `?accessToken=${getAccessToken()}&user_id=${global.login_user.user_id}`;
 
         this.state = {

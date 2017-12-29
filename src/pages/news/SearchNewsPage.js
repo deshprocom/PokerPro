@@ -129,7 +129,7 @@ export default class SearchNewsPage extends Component {
 
 
     _pressItem = (item) => {
-        let url = `${global.desh5}news/${item.id}`;
+        let url = `news/${item.id}`;
         global.router.toWebPage(url, {bottomNav: 'commentNav', info: item, topic_type: 'info'})
     };
 
