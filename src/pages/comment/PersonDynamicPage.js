@@ -70,7 +70,14 @@ export default class PersonDynamicPage extends Component {
                 <LinearGradient
                     colors={['#DEDEDE', '#FFFFFF', '#FFFFFF']}
                     style={styles.topPage}>
-                    <Image style={styles.TopImg} source={this._avatar(avatar)}/>
+                    <TouchableOpacity
+                        onPress={() => {
+                            const images = [{url: avatar}];
+                            global.router.toImageGalleryPage(images, 0)
+                        }}>
+                        <Image style={styles.TopImg} source={this._avatar(avatar)}/>
+                    </TouchableOpacity>
+
                     <View style={styles.TopTxt}>
                         <Text style={{fontSize: 20, color: '#444444'}}>{nick_name}</Text>
                         <Text
@@ -250,7 +257,7 @@ export default class PersonDynamicPage extends Component {
 
         return (
             <BaseComponent style={ApplicationStyles.bgContainer}>
-                <TouchableOpacity onPress={()=>{
+                <TouchableOpacity onPress={() => {
                     this.unread();
                 }}>
                     <DynamicTopBar
