@@ -142,16 +142,14 @@ class TabHomePage extends Component {
 
         });
         getHotInfos(data => {
-            this.setState({
-                hotInfos: data.hot_infos
-            })
+            this.infosView && this.infosView.setInfos(data.hot_infos)
 
         }, err => {
             setTimeout(() => {
                 alertRefresh(this._getData)
             }, 2000)
 
-        }, {page: 1, page_size: 200})
+        }, {page: 1, page_size: 20})
     };
 
     _onScroll = (event) => {
@@ -211,6 +209,7 @@ class TabHomePage extends Component {
                     <Coming
                         listRace={listRace}/>
                     <Information
+                        ref={ref => this.infosView = ref}
                         hotInfos={hotInfos}/>
                     <View style={{height: 48}}/>
 
