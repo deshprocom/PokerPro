@@ -14,8 +14,8 @@ export default class ReadLike extends Component {
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Text style={[styles.reads,{marginTop:1}]}>{I18n.t('read')}</Text>
                 <Text style={styles.reads}> {read}</Text>
-                <Image style={styles.likes} source={Images.listLike}/>
-                <Text style={styles.likesTxt}> {like}</Text>
+                {/*<Image style={styles.likes} source={Images.listLike}/>*/}
+                {/*<Text style={styles.likesTxt}> {like}</Text>*/}
             </View>
         )
     }

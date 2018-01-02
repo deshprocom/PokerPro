@@ -103,7 +103,7 @@ export default class MainVideoPage extends Component {
                     inactiveTextColor={Colors._AAA}
                     textStyle={{fontSize: 16}}
                     style={{borderColor: Colors._EEE}}
-                    underlineStyle={{backgroundColor: '#161718',  height: 2}}
+                    underlineStyle={{backgroundColor: '#161718', height: 2}}
                 />}>
                 {pages}
             </ScrollableTabView>)
