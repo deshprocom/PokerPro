@@ -76,6 +76,7 @@ export default class ReceivedReplyPage extends Component {
     };
 
     reply = (item) => {
+        console.log("item333:",item)
         const {mine, other} = item;
         const {avatar, comment, nick_name, official, user_id, id} = other;
         return (
@@ -93,7 +94,7 @@ export default class ReceivedReplyPage extends Component {
                     </View>
                     <View style={styles.replyView}>
                         <Text style={styles.replyTxt1}>
-                            {item.type === "reply" ? I18n.t('replied') : I18n.t('liked')}
+                            {I18n.t('replied')}
                         </Text>
                         <Text style={styles.replyTxt2}>
                             {I18n.t('your_comment')}：
