@@ -149,7 +149,7 @@ class TabHomePage extends Component {
                 alertRefresh(this._getData)
             }, 2000)
 
-        }, {page: 1, page_size: 20})
+        }, {page: 1, page_size: 200})
     };
 
     _onScroll = (event) => {

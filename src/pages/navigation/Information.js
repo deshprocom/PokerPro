@@ -131,9 +131,6 @@ export default class Information extends Component {
                     data={this.state.hot_infos}
                     renderItem={this._renderItem}
                     keyExtractor={(item, index) => index}
-                    onEndReachedThreshold={0.1}
-                    initialNumToRender={20}
-                    onEndReached={this.onEndReached}
                 />
                 <View style={styleI.informationLine}/>
 
