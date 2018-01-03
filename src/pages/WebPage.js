@@ -49,7 +49,7 @@ export default class WebPage extends Component {
             nativeData: ''
         };
         this.webMsg = '';
-        this.navState = {};
+
     }
 
     onBackPress = () => {
@@ -61,14 +61,12 @@ export default class WebPage extends Component {
     };
 
     onNavigationStateChange(navState) {
-        if (this.navState !== navState) {
-            console.log('onNavigationStateChange', navState);
-            this.setState({
-                canGoBack: navState.canGoBack,
-                url: navState.url,
-                title: navState.title
-            });
-        }
+        console.log('onNavigationStateChange', navState);
+        this.setState({
+            canGoBack: navState.canGoBack,
+            url: navState.url,
+            title: navState.title
+        });
 
     }
 
