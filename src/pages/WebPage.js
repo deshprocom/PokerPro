@@ -64,7 +64,6 @@ export default class WebPage extends Component {
         console.log('onNavigationStateChange', navState);
         this.setState({
             canGoBack: navState.canGoBack,
-            url: navState.url,
             title: Platform.OS === 'ios' ? navState.title : 'PokerPro'
         });
 
