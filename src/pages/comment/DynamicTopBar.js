@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import {
     StyleSheet, Text, View, Image,
-    TouchableOpacity, StatusBar
+    TouchableOpacity, StatusBar, Platform
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
@@ -15,7 +15,7 @@ export default class DynamicTopBar extends PureComponent {
         const {unreadCount, setUnreadCount, nickname, hideReceived} = this.props;
         let counts = unreadCount;
         return (<View style={styles.navBar}>
-            <StatusBar barStyle={"dark-content"}/>
+            <StatusBar barStyle={Platform.OS === 'ios' ? "dark-content" : "light-content"}/>
             <View style={styles.navContent}>
                 <TouchableOpacity
                     testID="btn_bar_left"
