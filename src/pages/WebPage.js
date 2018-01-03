@@ -10,7 +10,7 @@ import {
     View,
     Text,
     TextInput,
-    Button,
+    Platform,
     TouchableOpacity
 } from 'react-native';
 
@@ -44,7 +44,7 @@ export default class WebPage extends Component {
         this.state = {
             url: webUrl,
             canGoBack: false,
-            title: this.props.title,
+            title: 'PokerPro',
             news_info: {},
             nativeData: ''
         };
@@ -65,7 +65,7 @@ export default class WebPage extends Component {
         this.setState({
             canGoBack: navState.canGoBack,
             url: navState.url,
-            title: navState.title
+            title: Platform.OS === 'ios' ? navState.title : 'PokerPro'
         });
 
     }
