@@ -221,7 +221,6 @@ export default class PersonDynamicPage extends Component {
     loadDynamics = (page, postRefresh, endFetch) => {
         let body = {user_id: this.userInfo.user_id, page, page_size: 20};
         getPersonDynamics(body, data => {
-            console.log("PersonDynamics23232:", data.items)
             this.dynamicList = util.unionBy(this.dynamicList, data.items, 'id');
             if (this.ultimate) {
                 if (data.items.length > 0) {
