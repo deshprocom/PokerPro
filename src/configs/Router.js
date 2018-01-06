@@ -44,6 +44,10 @@ export default class Router {
 
     }
 
+    toCrowdPage(){
+        this.stackPush({name:'Crowdfunding'})
+    }
+
     toDeletePage() {
         this.stackPush({
             name: 'DeletePage',
@@ -469,9 +473,8 @@ export default class Router {
     }
 
 
-    toSearchKeywordPage(props) {
-        this.push(props, {
-
+    toSearchKeywordPage() {
+        this.stackPush({
             name: 'SearchKeywordPage',
 
         })
