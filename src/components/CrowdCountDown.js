@@ -119,7 +119,7 @@ class CrowdCountDown extends Component {
     }
 
     getDateData(endDate) {
-        let diff = (Date.parse(new Date(endDate)) - Date.parse(new Date)) / 1000;
+        let diff = endDate - Date.parse(new Date) / 1000;
 
         if (diff <= 0) {
             return false;

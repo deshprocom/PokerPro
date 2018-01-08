@@ -10,60 +10,108 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import Carousel from './Carousel';
-import {CrowdCountDown} from '../../components'
+import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
+import CrowItem from './CrowItem';
+import I18n from 'react-native-i18n';
 
 export default class Crowdfunding extends PureComponent {
 
+    state = {
+        crowdList: [
+            {
+                status: 'coming',
+                endDate: '1515403644',
+                image: 'https://cdn-upyun.deshpro.com/uploads/info/image/555/preview_P1044378.JPG',
+                race: {
+                    name: '中国创投扑克联赛',
+                    buy_in: 9000,
+                    end_start_time: '2017.09.11-2017.09.15',
+                    location: '澳门',
+                    prize: '800万'
+                },
+                crowd_num: 200,
+                crowd_sale: 32
+            },
+            {
+                status: 'coming',
+                endDate: '1515727644',
+                image: 'https://cdn-upyun.deshpro.com/uploads/info/image/555/preview_P1044378.JPG',
+                race: {
+                    name: '中国创投扑克联赛',
+                    buy_in: 9000,
+                    end_start_time: '2017.09.11-2017.09.15',
+                    location: '澳门',
+                    prize: '800万'
+                },
+                crowd_num: 200,
+                crowd_sale: 32
+            },
+            {
+                status: 'coming',
+                endDate: '1515554844',
+                image: 'https://cdn-upyun.deshpro.com/uploads/info/image/555/preview_P1044378.JPG',
+                race: {
+                    name: '中国创投扑克联赛',
+                    buy_in: 9000,
+                    end_start_time: '2017.09.11-2017.09.15',
+                    location: '澳门',
+                    prize: '800万'
+                },
+                crowd_num: 200,
+                crowd_sale: 32
+            },
+            {
+                status: 'coming',
+                endDate: '1515900444',
+                image: 'https://cdn-upyun.deshpro.com/uploads/info/image/555/preview_P1044378.JPG',
+                race: {
+                    name: '中国创投扑克联赛',
+                    buy_in: 9000,
+                    end_start_time: '2017.09.11-2017.09.15',
+                    location: '澳门',
+                    prize: '800万'
+                },
+                crowd_num: 200,
+                crowd_sale: 32
+            }
+        ]
+    }
+
     render() {
         return <View style={[ApplicationStyles.bgContainer, {backgroundColor: 'white'}]}>
-            <Carousel/>
-            <CrowdCountDown
-                date="2018-01-28T00:00:00+00:00"
-                days={{plural: '天 ', singular: '天 '}}
-                hours='时'
-                mins='分'
-                segs='秒'
-
-                daysStyle={styles.timeTexStyle}
-                hoursStyle={styles.timeTexStyle}
-                minsStyle={styles.timeTexStyle}
-                secsStyle={styles.timeTexStyle}
-                firstColonStyle={styles.cardItemTimeRemainTxt}
-                secondColonStyle={styles.cardItemTimeRemainTxt}
-                containerStyle={styles.containerStyle}
-                timeStyle={styles.timeStyle}
-            />
-
+            {this.renderFlatList()}
         </View>
+    }
+
+    renderFlatList = () => {
+        return <UltimateFlatList
+            header={() => <Carousel/>}
+            ref={(ref) => this.listView = ref}
+            onFetch={this.onFetch}
+            keyExtractor={(item, index) => `crowd${index}`}  //this is required when you are using FlatList
+            item={this.renderItem}  //this takes two params (item, index)
+            refreshableTitlePull={I18n.t('pull_refresh')}
+            refreshableTitleRelease={I18n.t('release_refresh')}
+            dateTitle={I18n.t('last_refresh')}
+            allLoadedText={I18n.t('no_more')}
+            separator={() => <View style={{height: 10, backgroundColor: Colors._ECE}}>
+
+            </View>}
+            waitingSpinnerText={I18n.t('loading')}
+        />
+
+    };
+
+
+    renderItem = (item, index) => {
+        return <CrowItem
+            item={item}/>
+    };
+
+
+    onFetch = (page = 1, startFetch, abortFetch) => {
+        startFetch(this.state.crowdList, 9)
+
     }
 }
 
-const styles = StyleSheet.create({
-
-    cardItemTimeRemainTxt: {
-        fontSize: 20,
-        color: '#ee394b',
-        margin: 5
-    },
-    containerStyle: {
-        height: 50,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 10
-    },
-    timeTexStyle: {
-        fontSize: 20,
-        color: '#ee394b'
-    },
-    timeStyle: {
-        borderColor: Colors._ECE,
-        borderWidth: 1,
-        height: 50,
-        width: 50,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-
-
-})

@@ -26,7 +26,7 @@ export const YYYY年MM月 = 'YYYY年MM月';
 export const YYYYMMDD = 'YYYYMMDD';
 export const MM_DD = 'MM-DD';
 
-const HOST = 'http://h5.deshpro.com/';
+const HOST = 'https://h5.deshpro.com/';
 const THOST = 'http://192.168.2.173:5000/';
 
 export const util = _;

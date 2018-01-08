@@ -17,7 +17,8 @@ let styles = StyleSheet.create({
     background: {
         backgroundColor: '#bbbbbb',
         height: 5,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        flexDirection: 'row'
     },
     fill: {
         backgroundColor: '#3b5998',

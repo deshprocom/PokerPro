@@ -33,6 +33,7 @@ import Badge from './Badge';
 import BaseComponent from './BaseComponent';
 import LogisticsWeb from './logistics/LogisticsWeb';
 import CrowdCountDown from './CrowdCountDown';
+import ProgressBar from './ProgressBar';
 
 export {
     BtnLong, BtnSoild, NavigationBar,
@@ -61,5 +62,6 @@ export {
     Badge,
     BaseComponent,
     LogisticsWeb,
-    CrowdCountDown
+    CrowdCountDown,
+    ProgressBar
 }
