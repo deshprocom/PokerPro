@@ -60,6 +60,12 @@ const styles = StyleSheet.create({
     tabView: {
         width: '100%', height: 50, flexDirection: 'row',
         borderTopWidth: 1, borderTopColor: Colors._ECE
+    },
+    tabFloatView: {
+        width: '100%', height: 50, flexDirection: 'row',
+        borderTopWidth: 1, borderTopColor: Colors._ECE,
+        position: 'absolute', top: 0, backgroundColor: 'white',
+        zIndex: 9
     }
 });
 
@@ -71,9 +77,9 @@ export default class DetailChild extends PureComponent {
     };
 
     onScroll = (event) => {
-        const offsetHeight = 350;
+        const offsetHeight = 370;
         let offsetY = event.nativeEvent.contentOffset.y;
-        console.log(offsetY);
+
         this.setState({
             floatTabView: offsetY >= offsetHeight
         })
@@ -83,8 +89,9 @@ export default class DetailChild extends PureComponent {
         const {image, race, crowd_sale, crowd_num} = this.props.info;
         let percent = crowd_sale / crowd_num;
         return <View style={{backgroundColor: 'white'}}>
-            {this.state.floatTabView ? this.renderTabView() : null}
+            {this.state.floatTabView ? this.renderTabView(styles.tabFloatView) : null}
             <ScrollView
+                scrollEventThrottle={10}
                 onScroll={this.onScroll}>
                 <ImageLoad style={styles.cover}
                            source={{uri: image}}/>
@@ -104,7 +111,7 @@ export default class DetailChild extends PureComponent {
                     </View>
                 </View>
 
-                {this.renderTabView()}
+                {this.renderTabView(styles.tabView)}
 
                 <View style={{height: 10, width: '100%', backgroundColor: Colors._ECE}}/>
 
@@ -200,8 +207,8 @@ export default class DetailChild extends PureComponent {
 
     }
 
-    renderTabView = () => {
-        return <View style={styles.tabView}>
+    renderTabView = (tabView) => {
+        return <View style={tabView}>
             {this.renderTab(true, '项目介绍')}
             {this.renderTab(false, '众筹概况')}
             {this.renderTab(false, '项目公告')}
