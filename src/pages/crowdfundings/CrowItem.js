@@ -98,7 +98,9 @@ export default class CrowItem extends PureComponent {
         const {endDate, image, race, crowd_num, crowd_sale, status} = this.props.item;
         let percent = crowd_sale / crowd_num;
 
-        return <View style={styles.itemContainer}>
+        return <TouchableOpacity
+            onPress={() => global.router.toCrowdDetailPage()}
+            style={styles.itemContainer}>
 
             {this.renderComing(status, endDate)}
 
@@ -136,7 +138,7 @@ export default class CrowItem extends PureComponent {
             </View>
 
 
-        </View>
+        </TouchableOpacity>
     }
 
     renderCrowd = (label, prize) => {

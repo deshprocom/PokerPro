@@ -44,6 +44,10 @@ export default class Router {
 
     }
 
+
+    toCrowdDetailPage(){
+        this.stackPush({name:'CrowdDetail'})
+    }
     toCrowdPage(){
         this.stackPush({name:'Crowdfunding'})
     }
