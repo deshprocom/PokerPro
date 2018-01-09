@@ -142,9 +142,7 @@ class TabHomePage extends Component {
 
         });
         getHotInfos(data => {
-            this.setState({
-                hotInfos: data.hot_infos
-            })
+            this.infosView && this.infosView.setInfos(data.hot_infos)
 
         }, err => {
             setTimeout(() => {
@@ -211,6 +209,7 @@ class TabHomePage extends Component {
                     <Coming
                         listRace={listRace}/>
                     <Information
+                        ref={ref => this.infosView = ref}
                         hotInfos={hotInfos}/>
                     <View style={{height: 48}}/>
 

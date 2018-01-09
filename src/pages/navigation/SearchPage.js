@@ -37,13 +37,13 @@ export class SearchPage extends Component {
     _search = () => {
         return (
             <TouchableOpacity style={styleR.searchBar}
-                              onPress={() => global.router.toSearchKeywordPage(this.props)}>
+                              onPress={() => global.router.toSearchKeywordPage()}>
 
                 <Image style={styleR.imgSearch}
                        source={Images.search_gray}/>
                 <Text
                     style={styleR.inputSearch}
-                    onPress={() => global.router.toSearchKeywordPage(this.props)}>
+                    >
                     {I18n.t('serachMore')}
                 </Text>
 
@@ -51,15 +51,15 @@ export class SearchPage extends Component {
         )
     };
     toMessagePage = () => {
-
-        umengEvent('home_notification');
-        if (isEmptyObject(login_user)) {
-            router.toLoginFirstPage()
-        } else {
-
-            JpushHelp.iosSetBadge(0);
-            router.toMessageCenter()
-        }
+        global.router.toCrowdPage()
+        // umengEvent('home_notification');
+        // if (isEmptyObject(login_user)) {
+        //     router.toLoginFirstPage()
+        // } else {
+        //
+        //     JpushHelp.iosSetBadge(0);
+        //     router.toMessageCenter()
+        // }
 
     };
 
@@ -88,7 +88,7 @@ export class SearchPage extends Component {
                 style={{
                     backgroundColor: Colors._161,
                     paddingTop: Metrics.statusBarHeight,
-                    opacity:0.98
+                    opacity: 0.98
                 }}>
                 <View style={{
                     flexDirection: 'row',

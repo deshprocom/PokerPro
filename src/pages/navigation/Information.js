@@ -2,28 +2,30 @@ import React, {Component} from 'react';
 import {
     View, Text, Button, Alert, DatePickIOS,
     Image, StyleSheet, ActivityIndicator,
-    TouchableOpacity, ScrollView, Dimensions,
-    ListView, Animated, Easing, FlatList
+    TouchableOpacity, ScrollView, FlatList
 }
     from 'react-native';
 import {Images} from '../../Themes';
 import {styles} from './Styles';
 import {
-    isEmptyObject, YYYY_MM_DD, convertDate,
+    isEmptyObject, util, convertDate,
 } from '../../utils/ComonHelper';
-import {VideoPlayer} from '../../components';
 import I18n from 'react-native-i18n';
 import ReadLike from '../comment/ReadLike';
+import {getHotInfos} from '../../services/NewsDao';
 
 export default class Information extends Component {
 
-    races_time = (raceInfo) => {
-        if (isEmptyObject(raceInfo))
-            return;
-        let begin = convertDate(raceInfo.begin_date, YYYY_MM_DD);
-        let end = convertDate(raceInfo.end_date, YYYY_MM_DD);
-        return begin + '-' + end;
+    state = {
+        hot_infos: []
     };
+
+    setInfos = (hot_infos) => {
+        console.log('hot_infos', hot_infos)
+        this.setState({hot_infos})
+    };
+
+
     _renderItem = ({item}) => {
         if (item.source_type === 'info') {
             return (
@@ -31,7 +33,7 @@ export default class Information extends Component {
                     onPress={() => {
 
                         const {id} = item.info;
-                        let url = `${global.desh5}news/${id}/${global.language}`;
+                        let url = `news/${id}`;
                         global.router.toWebPage(url, {
                             bottomNav: 'commentNav',
                             info: item.info,
@@ -46,9 +48,12 @@ export default class Information extends Component {
                             <ReadLike
                                 read={item.info.total_views}
                                 like={item.info.total_likes}/>
-                            <View style={{flex:1}}/>
+                            <View style={{flex: 1}}/>
                             <Text
-                                style={[styles.informationText, {marginLeft: 15,marginRight:17}]}>{convertDate(item.info.date, 'MM-DD')}</Text>
+                                style={[styles.informationText, {
+                                    marginLeft: 15,
+                                    marginRight: 17
+                                }]}>{convertDate(item.info.date, 'MM-DD')}</Text>
 
                         </View>
 
@@ -64,7 +69,7 @@ export default class Information extends Component {
                         onPress={() => {
 
                             const {id} = item.video;
-                            let url = `${global.desh5}videos/${id}/${global.language}`;
+                            let url = `videos/${id}`;
                             global.router.toWebPage(url, {
                                 bottomNav: 'commentNav',
                                 info: item.video,
@@ -79,7 +84,7 @@ export default class Information extends Component {
                     <TouchableOpacity
                         onPress={() => {
                             const {id} = item.video;
-                            let url = `${global.desh5}videos/${id}/${global.language}`;
+                            let url = `videos/${id}/${global.language}`;
                             global.router.toWebPage(url, {
                                 bottomNav: 'commentNav',
                                 info: item.video,
@@ -120,20 +125,29 @@ export default class Information extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={styleI.informationLine}/>
-                <View style={{flexDirection: 'row'}}>
-                    <FlatList
-                        showsHorizontalScrollIndicator={false}
-                        ItemSeparatorComponent={this._separator}
-                        data={this.props.hotInfos}
-                        renderItem={this._renderItem}
-                        keyExtractor={(item, index) => index}
-                    />
-
-                </View>
+                <FlatList
+                    showsHorizontalScrollIndicator={false}
+                    ItemSeparatorComponent={this._separator}
+                    data={this.state.hot_infos}
+                    renderItem={this._renderItem}
+                    keyExtractor={(item, index) => index}
+                />
                 <View style={styleI.informationLine}/>
 
             </View>
         );
+    }
+
+    onEndReached = () => {
+        console.log('information onEndReached')
+        getHotInfos(data => {
+
+            let {hot_infos} = this.state;
+            hot_infos = util.unionBy(hot_infos, data.hot_infos, 'id');
+            this.setInfos(hot_infos)
+
+        }, err => {
+        }, {page: 1, page_size: 20})
     }
 }
 

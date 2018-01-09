@@ -32,6 +32,8 @@ import ImagePicker from 'react-native-image-crop-picker';
 import Badge from './Badge';
 import BaseComponent from './BaseComponent';
 import LogisticsWeb from './logistics/LogisticsWeb';
+import CrowdCountDown from './CrowdCountDown';
+import ProgressBar from './ProgressBar';
 
 export {
     BtnLong, BtnSoild, NavigationBar,
@@ -59,5 +61,7 @@ export {
     ImagePicker,
     Badge,
     BaseComponent,
-    LogisticsWeb
+    LogisticsWeb,
+    CrowdCountDown,
+    ProgressBar
 }

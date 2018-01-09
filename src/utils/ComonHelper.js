@@ -27,16 +27,15 @@ export const YYYYMMDD = 'YYYYMMDD';
 export const MM_DD = 'MM-DD';
 
 const HOST = 'https://h5.deshpro.com/';
-const THOST = 'http://test.h5.deshpro.com/';
+const THOST = 'http://192.168.2.173:5000/';
 
 export const util = _;
 
-function shareHost() {
+export function shareHost() {
     if (getApiType() === 'production')
         return HOST;
     else
         return THOST;
-
 }
 
 export const loadApp = HOST + 'race/181/zh/loadAPP';
@@ -315,14 +314,14 @@ export function getDateDiff(dateTimeStamp) {
     else if (minC >= 1) {
         result = "" + parseInt(minC) + I18n.t('time_min');
     } else
-        moment();
+        result = I18n.t('time_moment');
     return result;
 }
 
 export function sharePage(title, location, icon, url) {
 
-    let thumb = getShareIcon(icon)
-    UMShare.share(title, location, thumb, shareHost() + (url + +"/" + Lang))
+    let thumb = getShareIcon(icon);
+    UMShare.share(title, location, thumb, url)
         .then(() => {
             showToast(`${I18n.t('show_success')}`)
         }, (error) => {
