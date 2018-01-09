@@ -6,7 +6,7 @@
 
 import React, {PureComponent} from 'react';
 import {
-    TouchableOpacity, View, TextInput,
+    TouchableOpacity, View, ScrollView,
     StyleSheet, Image, Text
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
@@ -37,11 +37,55 @@ export default class CrowdDetail extends PureComponent {
         return <View style={ApplicationStyles.bgContainer}>
             <Navbar/>
             <DetailChild
-            info={this.state.crowd}/>
+                info={this.state.crowd}/>
 
+            {this.footer()}
+        </View>
+    }
 
+    footer = () => {
+        return <View style={styles.footer}>
+            <TouchableOpacity
+                style={styles.btnLeft}>
+
+                <Text style={styles.txtLeft}>及时赛报</Text>
+            </TouchableOpacity>
+            <View style={{flex: 1}}/>
+            <TouchableOpacity
+                style={styles.btnRight}>
+                <Text style={styles.txtRight}>我要认购</Text>
+            </TouchableOpacity>
         </View>
     }
 
 
 }
+
+const styles = StyleSheet.create({
+    footer: {
+        height: 50, width: '100%', flexDirection: 'row', alignItems: 'center',
+        borderTopColor: Colors._ECE, borderTopWidth: 1, position: 'absolute', bottom: 0,
+        paddingLeft: 17, paddingRight: 17, backgroundColor: 'white'
+    },
+    btnLeft: {
+        height: 34, width: 97, borderColor: Colors._F34, borderWidth: 1, alignItems: 'center',
+        borderRadius: 2, justifyContent: 'center'
+    },
+    btnRight: {
+        height: 34,
+        width: 224,
+        backgroundColor: Colors._F34,
+        borderRadius: 2,
+        alignItems: 'center',
+        justifyContent: 'center'
+
+    },
+    txtRight: {
+        color: 'white',
+        fontSize: 14
+    },
+    txtLeft: {
+        color: Colors._F34,
+        fontSize: 14
+    }
+})
