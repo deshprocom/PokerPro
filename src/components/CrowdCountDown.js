@@ -56,7 +56,7 @@ class CrowdCountDown extends Component {
         onEnd: PropTypes.func,
 
         containerStyle: View.propTypes.style,
-        timeStyle: View.propTypes.styles,
+        timeStyle: View.propTypes.style,
         daysStyle: Text.propTypes.style,
         hoursStyle: Text.propTypes.style,
         minsStyle: Text.propTypes.style,
@@ -165,13 +165,11 @@ class CrowdCountDown extends Component {
         return (
 
             <View style={this.props.containerStyle}>
-                {(countDown.days > 0) ?
-                    <View style={this.props.timeStyle}>
-                        <Text style={this.props.daysStyle}>{this.leadingZeros(countDown.days)}</Text>
-                    </View>
-                    : null}
-                {(countDown.days > 0) ?
-                    <Text style={this.props.firstColonStyle}>{days}</Text> : null}
+                <View style={this.props.timeStyle}>
+                    <Text style={this.props.daysStyle}>{this.leadingZeros(countDown.days)}</Text>
+                </View>
+                <Text style={this.props.firstColonStyle}>{days}</Text>
+
                 <View style={this.props.timeStyle}>
                     <Text style={this.props.hoursStyle}>{this.leadingZeros(countDown.hours)}</Text>
                 </View>

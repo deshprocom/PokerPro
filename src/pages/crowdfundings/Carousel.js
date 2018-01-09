@@ -18,12 +18,14 @@ export default class Carousel extends PureComponent {
     render() {
 
         let carousel = ['https://cdn-upyun.deshpro.com/uploads/info/image/560/preview_langdao1.jpg',
-        'https://cdn-upyun.deshpro.com/uploads/info/image/559/preview_caiyunbei.jpg',
-        'https://cdn-upyun.deshpro.com/uploads/info/image/557/preview_zhanduisaiguanjun.jpg',
-        'https://cdn-upyun.deshpro.com/uploads/info/image/550/preview_guojiabei.png'];
+            'https://cdn-upyun.deshpro.com/uploads/info/image/559/preview_caiyunbei.jpg',
+            'https://cdn-upyun.deshpro.com/uploads/info/image/557/preview_zhanduisaiguanjun.jpg',
+            'https://cdn-upyun.deshpro.com/uploads/info/image/550/preview_guojiabei.png'];
         return (
-            <View style={{height: 200}}>
+            <View style={{height: 200, marginBottom: 10}}>
                 <Swiper
+                    activeDotStyle={stylesM.activeDot}
+                    dotStyle={stylesM.dot}
                     autoplayTimeout={3}
                     autoplay>
                     {carousel.map((item, key) => {
@@ -42,3 +44,22 @@ export default class Carousel extends PureComponent {
         );
     }
 }
+
+
+const stylesM = StyleSheet.create({
+    activeDot: {
+        backgroundColor: 'white',
+        width: 18,
+        height: 4,
+        borderRadius: 2,
+        marginBottom: 0
+    },
+    dot: {
+        backgroundColor: 'rgba(0,0,0,.2)',
+        width: 9,
+        height: 4,
+        borderRadius: 2,
+        marginBottom: 0
+    }
+
+});

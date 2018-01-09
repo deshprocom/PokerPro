@@ -18,11 +18,25 @@ let styles = StyleSheet.create({
         backgroundColor: '#bbbbbb',
         height: 5,
         overflow: 'hidden',
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     fill: {
-        backgroundColor: '#3b5998',
+        backgroundColor: '#F34A4A',
         height: 5
+    },
+    percent: {
+        zIndex: 9,
+        position: 'absolute',
+        backgroundColor: 'white',
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: '#F34A4A',
+        color: '#F34A4A',
+        fontSize: 14,
+        paddingLeft: 5,
+        paddingRight: 5,
+        paddingTop: 2,
+        paddingBottom: 2
     }
 });
 
@@ -53,9 +67,17 @@ export default class ProgressBar extends Component {
         });
 
         return (
-            <View style={[styles.background, this.props.backgroundStyle, this.props.style]}>
-                <Animated.View style={[styles.fill, this.props.fillStyle, {width: fillWidth}]}/>
+            <View style={{
+                flexDirection: 'row', height: 25,
+                alignItems: 'center'
+            }}>
+                <View style={[styles.background, this.props.backgroundStyle, this.props.style]}>
+                    <Animated.View style={[styles.fill, this.props.fillStyle, {width: fillWidth}]}/>
+                </View>
+                <Animated.Text
+                    style={[styles.percent, {marginLeft: fillWidth}]}>{Number.parseInt(this.props.initialProgress * 100)}%</Animated.Text>
             </View>
+
         );
     }
 
