@@ -4,9 +4,8 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
 import {Badge} from '../../components';
-import {util} from '../../utils/ComonHelper';
 import {postNewLikes} from '../../services/CommentDao';
-import {sharePage} from '../../utils/ComonHelper';
+import {sharePage, utcDate, isEmptyObject} from '../../utils/ComonHelper';
 import {WebAction} from '../../configs/Status';
 
 export default class ClickComment extends Component {
@@ -32,14 +31,14 @@ export default class ClickComment extends Component {
         if (comment_count && comment_count > 0)
             return <View
                 style={styles.badge}>
-                <Text style={{fontSize:10,color:Colors.white}}>{comment_count > 99 ? '99+' : comment_count}</Text>
+                <Text style={{fontSize: 10, color: Colors.white}}>{comment_count > 99 ? '99+' : comment_count}</Text>
             </View>
     };
 
     likeChang = () => {
-        const {info_id, topic_type} = this.props;
+        const {info, topic_type} = this.props;
 
-        postNewLikes({info_id: info_id, topic_type: `${topic_type}s`}, data => {
+        postNewLikes({info_id: info.id, topic_type: `${topic_type}s`}, data => {
             this.setState({
                 current_user_like: !this.state.current_user_like
             });
@@ -53,12 +52,15 @@ export default class ClickComment extends Component {
 
     likeShare = () => {
         const {current_user_like} = this.state;
+        const {info} = this.props;
         return (
-            <View style={{flexDirection: 'row', flex: 1,alignItems:'center'}}>
+            <View style={{flexDirection: 'row', flex: 1, alignItems: 'center'}}>
                 <TouchableOpacity
                     style={[styles.search, this.props.onlyComment ? {width: '90%'} : {}]}
                     onPress={() => {
-                        this.props._showInput()
+
+                        if (!isEmptyObject(info))
+                            this.props._showInput()
                     }}>
                     <Image
                         style={styles.searchImg}
@@ -68,32 +70,43 @@ export default class ClickComment extends Component {
                 </TouchableOpacity>
 
                 {this.props.onlyComment ? null : <View style={{flexDirection: 'row', flex: 1}}>
-                        <TouchableOpacity
-                            onPress={() => {
+                    <TouchableOpacity
+                        onPress={() => {
                             this.props.sendMessageToWeb && this.props.sendMessageToWeb({action: WebAction.SCROLL_COMMENT_TOP});
                         }}
-                            style={styles.commentWhiteView}>
-                            <Image style={styles.commentWhite} source={Images.commentWhite}/>
-                            {this._carts()}
-                        </TouchableOpacity>
+                        style={styles.commentWhiteView}>
+                        <Image style={styles.commentWhite} source={Images.commentWhite}/>
+                        {this._carts()}
+                    </TouchableOpacity>
 
-                        <TouchableOpacity
-                            style={styles.likeView}
-                            onPress={() => {
-                            this.likeChang()
+                    <TouchableOpacity
+                        style={styles.likeView}
+                        onPress={() => {
+                            if (!isEmptyObject(info))
+                                this.likeChang()
                         }}>
-                            <Image style={styles.like} source={current_user_like ? Images.likeRed : Images.like}/>
+                        <Image style={styles.like} source={current_user_like ? Images.likeRed : Images.like}/>
 
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.forwardView}
-                            onPress={() => {
-                            const {title, date, image_thumb, id} = this.props.info;
-                            sharePage(title, date, image_thumb, "news/" + id)
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.forwardView}
+                        onPress={() => {
+                            const {topic_type, info, url} = this.props;
+                            if (!isEmptyObject(info)) {
+                                if (topic_type === 'info') {
+                                    const {title, date, image_thumb, id} = info;
+                                    sharePage(title, date, image_thumb, url)
+                                } else if (topic_type === 'video') {
+                                    const {name, created_at, cover_link, id} = info;
+                                    sharePage(name, utcDate(created_at, 'YYYY-MM-DD'), cover_link, url)
+                                }
+                            }
+
+
                         }}>
-                            <Image style={styles.forward} source={Images.forward}/>
-                        </TouchableOpacity>
-                    </View>}
+                        <Image style={styles.forward} source={Images.forward}/>
+                    </TouchableOpacity>
+                </View>}
 
 
             </View>
@@ -175,11 +188,11 @@ const styles = StyleSheet.create({
     },
     badge: {
         position: 'absolute',
-        top: 3,
+        top: 5,
         left: 12,
-        height: 22,
-        width: 22,
-        borderRadius: 11,
+        height: 18,
+        width: 18,
+        borderRadius: 9,
         backgroundColor: '#F34A4A',
         alignItems: 'center',
         justifyContent: 'center'

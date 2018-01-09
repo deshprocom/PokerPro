@@ -27,6 +27,10 @@ export function setDpLang(lang) {
     client.setHeader('X-DP-LANG', lang)
 }
 
+export function getDpLang() {
+    return client.headers['X-DP-LANG'];
+}
+
 export function getApiType() {
     let type = 'production';
     let ret = client.getBaseURL();

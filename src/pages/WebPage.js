@@ -10,14 +10,14 @@ import {
     View,
     Text,
     TextInput,
-    Button,
+    Platform,
     TouchableOpacity
 } from 'react-native';
 
 import {NavigationBar} from '../components';
 import {Colors, Fonts, Images, ApplicationStyles} from '../Themes';
-import {getAccessToken} from '../services/RequestHelper';
-import {strNotNull, isEmptyObject} from "../utils/ComonHelper";
+import {getAccessToken, getDpLang} from '../services/RequestHelper';
+import {strNotNull, isEmptyObject, shareHost} from "../utils/ComonHelper";
 import {CommentBottom} from './comment';
 import CommentItem from "./comment/CommentItem";
 
@@ -38,17 +38,18 @@ export default class WebPage extends Component {
 
         const {url} = props.params;
 
-        let webUrl = url + `?accessToken=${getAccessToken()}&user_id=${global.login_user.user_id}`;
+        this.url = shareHost() + url + `/${getDpLang()}`;
+        let webUrl = this.url + `?accessToken=${getAccessToken()}&user_id=${global.login_user.user_id}`;
 
         this.state = {
             url: webUrl,
             canGoBack: false,
-            title: this.props.title,
-            webViewData: '',
+            title: 'PokerPro',
+            news_info: {},
             nativeData: ''
         };
         this.webMsg = '';
-        this.navState = {};
+
     }
 
     onBackPress = () => {
@@ -60,14 +61,11 @@ export default class WebPage extends Component {
     };
 
     onNavigationStateChange(navState) {
-        if (this.navState !== navState) {
-            console.log('onNavigationStateChange', navState);
-            this.setState({
-                canGoBack: navState.canGoBack,
-                url: navState.url,
-                title: navState.title
-            });
-        }
+        console.log('onNavigationStateChange', navState);
+        this.setState({
+            canGoBack: navState.canGoBack,
+            title: Platform.OS === 'ios' ? navState.title : 'PokerPro'
+        });
 
     }
 
@@ -97,7 +95,11 @@ export default class WebPage extends Component {
                             this.commentNav && this.commentNav.commentTotal(param);
                             break;
                         case PostRoute.NewsInfo:
-                            this.commentNav && this.commentNav.userLike(param.current_user_like);
+                            if (this.commentNav) {
+                                this.commentNav.userLike(param.current_user_like);
+                                this.commentNav.setNewsInfo(param);
+                            }
+
                             break;
                         case PostRoute.ClickAvatar:
 
@@ -114,7 +116,7 @@ export default class WebPage extends Component {
     };
 
     render() {
-        const {webViewData, nativeData, url} = this.state;
+        const {nativeData, url} = this.state;
         return (
             <View style={styles.container}>
 
@@ -164,6 +166,7 @@ export default class WebPage extends Component {
                             ref={ref => this.commentNav = ref}
                             topic_type={topic_type}
                             info={info}
+                            url={this.url}
                         />
 
                 }

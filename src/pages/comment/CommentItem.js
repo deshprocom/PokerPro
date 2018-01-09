@@ -88,13 +88,15 @@ export default class CommentItem extends PureComponent {
                 <View style={styles.contentRight}>
                     <View style={styles.commentTop}>
 
-                        {official ? this.official(nick_name) : <Text style={styles.name}>{nick_name}</Text>}
+                        {official ? this.official(nick_name) : <Text
+                            onPress={() => global.router.toPersonDynamic(item)}
+                            style={styles.name}>{nick_name}</Text>}
                         {recommended ? <Text style={styles.featured}>{I18n.t('featured')}</Text> : null}
 
                         {this.isMine(user_id) && typological === 'reply' ? <TouchableOpacity style={{marginLeft: 8}}
                                                                                              onPress={() => this.deleteView(item)}>
-                                <Text style={{fontSize: 12, color: '#666666'}}>{I18n.t('buy_del')}</Text>
-                            </TouchableOpacity> : null}
+                            <Text style={{fontSize: 12, color: '#666666'}}>{I18n.t('buy_del')}</Text>
+                        </TouchableOpacity> : null}
 
                         <View style={{flex: 1}}/>
                         <TouchableOpacity

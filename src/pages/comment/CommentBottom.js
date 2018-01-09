@@ -18,7 +18,8 @@ export default class CommentBottom extends Component {
         showInput: false,
         repliesShow: false,
         repliesType: '',
-        comment_count: 0
+        comment_count: 0,
+        news_info: {}
 
     };
 
@@ -31,6 +32,10 @@ export default class CommentBottom extends Component {
             })
         }
 
+    };
+
+    setNewsInfo = (news_info) => {
+        this.setState({news_info})
     };
 
 
@@ -60,7 +65,8 @@ export default class CommentBottom extends Component {
     };
 
     render() {
-        const {info, topic_type} = this.props;
+        const {topic_type, url} = this.props;
+        const {news_info} = this.state;
 
         return (
             <View style={styles.bottom}>
@@ -71,18 +77,20 @@ export default class CommentBottom extends Component {
                     ref={ref => this.clickComment = ref}
                     _showInput={this._showInput}
                     comment_count={this.state.comment_count}
-                    info_id={info.id}
+                    info_id={news_info.id}
                     sendMessageToWeb={this.sendMessageToWeb}
-                    info={info}
+                    info={news_info}
+                    url={url}
                 />
-                <InputComment
+
+                {this.state.showInput ? <InputComment
                     refreshCommentInfo={this.refreshCommentInfo}
                     sendMessageToWeb={this.sendMessageToWeb}
-                    repliesName={info.nick_name}
-                    topic_id={info.id}
+                    topic_id={news_info.id}
                     topic_type={topic_type}
                     _showInput={this._showInput}
-                    visible={this.state.showInput}/>
+                    visible={this.state.showInput}/> : null}
+
 
                 {this.renderRelies()}
             </View>

@@ -70,7 +70,14 @@ export default class PersonDynamicPage extends Component {
                 <LinearGradient
                     colors={['#DEDEDE', '#FFFFFF', '#FFFFFF']}
                     style={styles.topPage}>
-                    <Image style={styles.TopImg} source={this._avatar(avatar)}/>
+                    <TouchableOpacity
+                        onPress={() => {
+                            const images = [{url: avatar}];
+                            global.router.toImageGalleryPage(images, 0)
+                        }}>
+                        <Image style={styles.TopImg} source={this._avatar(avatar)}/>
+                    </TouchableOpacity>
+
                     <View style={styles.TopTxt}>
                         <Text style={{fontSize: 20, color: '#444444'}}>{nick_name}</Text>
                         <Text
@@ -115,14 +122,14 @@ export default class PersonDynamicPage extends Component {
             <TouchableOpacity style={styles.itemPage}
                               onPress={() => {
                                   if (topic_type === "info") {
-                                      let url = `${global.desh5}news/${topic_id}/${global.language}`;
+                                      let url = `news/${topic_id}`;
                                       global.router.toWebPage(url, {
                                           bottomNav: 'commentNav',
                                           info: {id: topic_id},
                                           topic_type: topic_type
                                       })
                                   } else if (topic_type === "video") {
-                                      let urlVideo = `${global.desh5}videos/${topic_id}/${global.language}`;
+                                      let urlVideo = `videos/${topic_id}`;
                                       global.router.toWebPage(urlVideo, {
                                           bottomNav: 'commentNav',
                                           info: {id: topic_id},
@@ -249,10 +256,11 @@ export default class PersonDynamicPage extends Component {
 
         return (
             <BaseComponent style={ApplicationStyles.bgContainer}>
-                <TouchableOpacity onPress={()=>{
+                <TouchableOpacity onPress={() => {
                     this.unread();
                 }}>
                     <DynamicTopBar
+                        nickname={this.userInfo.nick_name}
                         setUnreadCount={this.setUnreadCount}
                         unreadCount={this.state.unreadCount}
                         hideReceived={this.isMine()}
