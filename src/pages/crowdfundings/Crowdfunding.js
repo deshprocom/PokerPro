@@ -29,7 +29,7 @@ export default class Crowdfunding extends PureComponent {
                     location: '澳门',
                     prize: '800万'
                 },
-                crowd_num: 200,
+                crowd_num: 101,
                 crowd_sale: 32
             },
             {

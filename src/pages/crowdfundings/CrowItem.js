@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 14,
-        marginBottom: 12
 
     },
     timeTexStyle: {
@@ -43,7 +42,8 @@ const styles = StyleSheet.create({
     },
     img: {
         height: 154,
-        width: '100%'
+        width: '100%',
+        marginTop: 12
     },
     saleStyle: {
         flexDirection: 'row',
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         borderRadius: 4
     },
     separator: {
-        height: 42, width: 1, backgroundColor: Colors._ECE,
+        height: 42, width: 2, backgroundColor: Colors._ECE,
         marginTop: 16, marginLeft: 15
     },
     txtPrize: {
@@ -110,7 +110,7 @@ export default class CrowItem extends PureComponent {
                 <View style={{flexDirection: 'row'}}>
                     <View style={{flex: 0.75}}>
                         <Text style={styles.txtName}>{race.name}</Text>
-                        <Text style={styles.txtTime}>{`入赛资格：${race.buy_in}  ${race.end_start_time}`}</Text>
+                        <Text style={styles.txtTime}>{`入赛资格：¥${race.buy_in}  ${race.end_start_time}`}</Text>
                         <Text style={styles.txtTime}>地点：{race.location}</Text>
                     </View>
 
