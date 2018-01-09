@@ -69,7 +69,7 @@ export default class ProgressBar extends Component {
         return (
             <View style={{
                 flexDirection: 'row', height: 25,
-                alignItems: 'center'
+                alignItems: 'center', marginTop: 10
             }}>
                 <View style={[styles.background, this.props.backgroundStyle, this.props.style]}>
                     <Animated.View style={[styles.fill, this.props.fillStyle, {width: fillWidth}]}/>

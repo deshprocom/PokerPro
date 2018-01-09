@@ -70,7 +70,7 @@ export default class Navbar extends PureComponent {
             <StatusBar barStyle={"dark-content"}/>
             {this.renderBtn(true, Images.mall_return, styles.imgLeft)}
             <View style={{flex: 1, alignItems: 'center', height: 44, justifyContent: 'center'}}>
-                {this.renderComing('coming', 1515900444)}
+                {this.renderComing('coming', '1515900444')}
             </View>
             {this.renderBtn(false, Images.forward, styles.imgRight)}
         </View>
