@@ -65,12 +65,13 @@ const styles = StyleSheet.create({
 export default class Navbar extends PureComponent {
 
     render() {
+        const {endDate, status} = this.props.info;
         return <View
             style={styles.nav}>
             <StatusBar barStyle={"dark-content"}/>
             {this.renderBtn(true, Images.mall_return, styles.imgLeft)}
             <View style={{flex: 1, alignItems: 'center', height: 44, justifyContent: 'center'}}>
-                {this.renderComing('coming', '1515900444')}
+                {this.renderComing(status, endDate)}
             </View>
             {this.renderBtn(false, Images.forward, styles.imgRight)}
         </View>

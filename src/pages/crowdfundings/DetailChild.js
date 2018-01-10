@@ -121,6 +121,8 @@ export default class DetailChild extends PureComponent {
                     <Text>开发中...</Text>
                 </View>}
 
+                <View style={{height: 100}}/>
+
             </ScrollView>
         </View>
 

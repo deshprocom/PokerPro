@@ -20,7 +20,8 @@ export default class CrowdDetail extends PureComponent {
     render() {
         const {crowd} = this.props.params;
         return <View style={ApplicationStyles.bgContainer}>
-            <Navbar/>
+            <Navbar
+                info={crowd}/>
             <DetailChild
                 info={crowd}/>
 
