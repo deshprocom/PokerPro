@@ -16,28 +16,13 @@ import DetailChild from './DetailChild';
 
 export default class CrowdDetail extends PureComponent {
 
-    state = {
-        crowd: {
-            status: 'coming',
-            endDate: '1515554844',
-            image: 'https://cdn-upyun.deshpro.com/uploads/info/image/555/preview_P1044378.JPG',
-            race: {
-                name: '中国创投扑克联赛',
-                buy_in: 9000,
-                end_start_time: '2017.09.11-2017.09.15',
-                location: '澳门',
-                prize: '800万'
-            },
-            crowd_num: 200,
-            crowd_sale: 32
-        },
-    };
 
     render() {
+        const {crowd} = this.props.params;
         return <View style={ApplicationStyles.bgContainer}>
             <Navbar/>
             <DetailChild
-                info={this.state.crowd}/>
+                info={crowd}/>
 
             {this.footer()}
         </View>

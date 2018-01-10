@@ -9,6 +9,7 @@ import VideoNewsTab from './VideoNewsTab';
 import DrawerRank from '../rank/DrawerRank';
 import CustomTabBar from './BottomNavigation';
 import MallPage from '../malls/MallPage';
+import Crowdfunding from '../crowdfundings/Crowdfunding';
 
 
 export const Navigation = () => {
@@ -42,7 +43,7 @@ export const Navigation = () => {
             </Stack>
             <Stack key="tab_3">
                 <Scene key="tab_rank"
-                       component={DrawerRank}
+                       component={Crowdfunding}
                        hideNavBar
 
                 />
