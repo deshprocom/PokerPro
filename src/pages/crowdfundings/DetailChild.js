@@ -73,7 +73,8 @@ export default class DetailChild extends PureComponent {
 
 
     state = {
-        floatTabView: false
+        floatTabView: false,
+        tabIndex: 0
     };
 
     onScroll = (event) => {
@@ -86,7 +87,7 @@ export default class DetailChild extends PureComponent {
     };
 
     render() {
-        const {image, race, crowd_sale, crowd_num,mark_desc} = this.props.info;
+        const {image, race, crowd_sale, crowd_num, mark_desc} = this.props.info;
         let percent = crowd_sale / crowd_num;
         return <View style={{backgroundColor: 'white'}}>
             {this.state.floatTabView ? this.renderTabView(styles.tabFloatView) : null}
@@ -115,8 +116,11 @@ export default class DetailChild extends PureComponent {
 
                 <View style={{height: 10, width: '100%', backgroundColor: Colors._ECE}}/>
 
-                <MarkdownPlat
-                    markdownStr={mark_desc}/>
+                {this.state.tabIndex === 0 ? <MarkdownPlat
+                    markdownStr={mark_desc}/> : <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Text>开发中...</Text>
+                </View>}
+
             </ScrollView>
         </View>
 
@@ -124,19 +128,23 @@ export default class DetailChild extends PureComponent {
     }
 
     renderTabView = (tabView) => {
+
         return <View style={tabView}>
-            {this.renderTab(true, '项目介绍')}
-            {this.renderTab(false, '众筹概况')}
-            {this.renderTab(false, '项目公告')}
-            {this.renderTab(false, '投资风险')}
+            {this.renderTab(0, '项目介绍')}
+            {this.renderTab(1, '众筹概况')}
+            {this.renderTab(2, '项目公告')}
+            {this.renderTab(3, '投资风险')}
         </View>
     };
 
-    renderTab = (selected, name) => {
+    renderTab = (tabIndex, name) => {
         return <TouchableOpacity
+            onPress={() => {
+                this.setState({tabIndex})
+            }}
             style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Text style={selected ? styles.txtSelected : styles.txtSelect}>{name}</Text>
-            {selected ? <View style={styles.lineSelected}/> : null}
+            <Text style={this.state.tabIndex === tabIndex ? styles.txtSelected : styles.txtSelect}>{name}</Text>
+            {this.state.tabIndex === tabIndex ? <View style={styles.lineSelected}/> : null}
         </TouchableOpacity>
     };
 
