@@ -42,8 +42,8 @@ class TabIcon extends PureComponent {
             case 'news':
                 return I18n.t('home_info');
             case 'rank':
-                // return '众筹';
-            return I18n.t('home_sort');
+                return '众筹';
+            // return I18n.t('home_sort');
             case 'me':
                 return I18n.t('mine');
             case 'mall':
