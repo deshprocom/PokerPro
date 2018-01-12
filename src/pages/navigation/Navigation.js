@@ -43,7 +43,7 @@ export const Navigation = () => {
             </Stack>
             <Stack key="tab_3">
                 <Scene key="tab_rank"
-                       component={Crowdfunding}
+                       component={DrawerRank}
                        hideNavBar
 
                 />

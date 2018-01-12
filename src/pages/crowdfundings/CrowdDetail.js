@@ -12,6 +12,7 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import Navbar from './Navbar';
 import DetailChild from './DetailChild';
+import {ActionPay} from '../../components';
 
 
 export default class CrowdDetail extends PureComponent {
@@ -26,12 +27,17 @@ export default class CrowdDetail extends PureComponent {
                 info={crowd}/>
 
             {this.footer()}
+            <ActionPay
+                ref={ref => this.actionPay = ref}/>
         </View>
     }
 
     footer = () => {
         return <View style={styles.footer}>
             <TouchableOpacity
+                onPress={() => {
+                    this.actionPay.toggle()
+                }}
                 style={styles.btnLeft}>
 
                 <Text style={styles.txtLeft}>及时赛报</Text>
