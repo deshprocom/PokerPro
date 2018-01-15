@@ -51,15 +51,14 @@ export class SearchPage extends Component {
         )
     };
     toMessagePage = () => {
-        global.router.toCrowdPage()
-        // umengEvent('home_notification');
-        // if (isEmptyObject(login_user)) {
-        //     router.toLoginFirstPage()
-        // } else {
-        //
-        //     JpushHelp.iosSetBadge(0);
-        //     router.toMessageCenter()
-        // }
+        umengEvent('home_notification');
+        if (isEmptyObject(login_user)) {
+            router.toLoginFirstPage()
+        } else {
+
+            JpushHelp.iosSetBadge(0);
+            router.toMessageCenter()
+        }
 
     };
 

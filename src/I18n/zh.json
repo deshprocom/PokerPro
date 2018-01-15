@@ -527,5 +527,7 @@
   "comment_not_empty":"评论不能为空",
   "comment_success":"评论成功",
   "comment_failed":"评论失败",
-  "reply_success":"回复成功"
+  "reply_success":"回复成功",
+  "hot":"热点",
+  "crowdfunding":"众筹"
 }

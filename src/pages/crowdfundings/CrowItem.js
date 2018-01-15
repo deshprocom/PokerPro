@@ -99,7 +99,7 @@ export default class CrowItem extends PureComponent {
         let percent = crowd_sale / crowd_num;
 
         return <TouchableOpacity
-            onPress={() => global.router.toCrowdDetailPage()}
+            onPress={() => global.router.toCrowdDetailPage(this.props.item)}
             style={styles.itemContainer}>
 
             {this.renderComing(status, endDate)}
@@ -127,7 +127,7 @@ export default class CrowItem extends PureComponent {
 
                 <ProgressBar
                     backgroundStyle={{backgroundColor: Colors._ECE, borderRadius: 2}}
-                    style={{ width: Metrics.screenWidth - 34}}
+                    style={{width: Metrics.screenWidth - 34}}
                     initialProgress={percent}/>
 
                 <View style={styles.saleStyle}>

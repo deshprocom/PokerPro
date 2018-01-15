@@ -40,9 +40,9 @@ class TabIcon extends PureComponent {
             case 'home':
                 return I18n.t('home');
             case 'news':
-                return I18n.t('home_info');
+                return I18n.t('hot');
             case 'rank':
-                return I18n.t('home_sort');
+                return I18n.t('crowdfunding');
             case 'me':
                 return I18n.t('mine');
             case 'mall':
@@ -99,12 +99,12 @@ const styles = StyleSheet.create({
         width: 24
     },
     bgInformationStyle: {
-        width: 17,
-        height: 23
+        width: 21,
+        height: 24
     },
     bgRankStyle2: {
-        height: 25,
-        width: 25
+        height: 23,
+        width: 26
     }
 });
 

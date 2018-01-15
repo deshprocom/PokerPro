@@ -17,10 +17,10 @@ export default class Carousel extends PureComponent {
 
     render() {
 
-        let carousel = ['https://cdn-upyun.deshpro.com/uploads/info/image/560/preview_langdao1.jpg',
-            'https://cdn-upyun.deshpro.com/uploads/info/image/559/preview_caiyunbei.jpg',
-            'https://cdn-upyun.deshpro.com/uploads/info/image/557/preview_zhanduisaiguanjun.jpg',
-            'https://cdn-upyun.deshpro.com/uploads/info/image/550/preview_guojiabei.png'];
+        let carousel = ['https://cdn-upyun.deshpro.com/uploads/photo/2018/01/b10f8847636ed9e19fcb43310f26b48b.jpg',
+            'https://cdn-upyun.deshpro.com/uploads/photo/2018/01/605e1ef97f57f20eb595ac3695223059.jpg',
+            'https://cdn-upyun.deshpro.com/uploads/photo/2018/01/d5c623d68fbfba5d3b2cfa1a1d843db1.jpg',
+            'https://cdn-upyun.deshpro.com/uploads/photo/2018/01/1d25c4c446fae853245b0d547361c3b4.jpg'];
         return (
             <View style={{height: 200, marginBottom: 10}}>
                 <Swiper
