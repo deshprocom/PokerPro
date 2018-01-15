@@ -84,10 +84,12 @@ import ReceivedReplyPage from '../pages/comment/ReceivedReplyPage';
 import DeletePage from '../pages/comment/DeletePage';
 import Crowdfunding from '../pages/crowdfundings/Crowdfunding';
 import CrowdDetail from '../pages/crowdfundings/CrowdDetail';
+import ReportPage from '../pages/crowdfundings/ReportPage';
 
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="ReportPage" component={ReportPage} hideNavBar/>
         <Scene key="CrowdDetail" component={CrowdDetail} hideNavBar/>
         <Scene key="Crowdfunding" component={Crowdfunding} hideNavBar/>
         <Scene key="DeletePage" component={DeletePage} hideNavBar/>

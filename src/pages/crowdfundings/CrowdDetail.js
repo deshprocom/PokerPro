@@ -36,7 +36,8 @@ export default class CrowdDetail extends PureComponent {
         return <View style={styles.footer}>
             <TouchableOpacity
                 onPress={() => {
-                    this.actionPay.toggle()
+                    global.router.toReportPage()
+
                 }}
                 style={styles.btnLeft}>
 
@@ -44,6 +45,9 @@ export default class CrowdDetail extends PureComponent {
             </TouchableOpacity>
             <View style={{flex: 1}}/>
             <TouchableOpacity
+                onPress={() => {
+                    this.actionPay.toggle()
+                }}
                 style={styles.btnRight}>
                 <Text style={styles.txtRight}>我要认购</Text>
             </TouchableOpacity>

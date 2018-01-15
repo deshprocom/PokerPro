@@ -54,8 +54,8 @@ export default class Router {
         })
     }
 
-    toCrowdPage() {
-        this.stackPush({name: 'Crowdfunding'})
+    toReportPage() {
+        this.stackPush({name: 'ReportPage'})
     }
 
     toDeletePage() {
