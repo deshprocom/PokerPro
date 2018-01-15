@@ -19,7 +19,6 @@ import {Colors, Fonts, Images, ApplicationStyles} from '../Themes';
 import {getAccessToken, getDpLang} from '../services/RequestHelper';
 import {strNotNull, isEmptyObject, shareHost} from "../utils/ComonHelper";
 import {CommentBottom} from './comment';
-import CommentItem from "./comment/CommentItem";
 
 class PostRoute {
     static NewsInfo = 'NewsInfo';

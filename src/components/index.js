@@ -34,6 +34,7 @@ import BaseComponent from './BaseComponent';
 import LogisticsWeb from './logistics/LogisticsWeb';
 import CrowdCountDown from './CrowdCountDown';
 import ProgressBar from './ProgressBar';
+import ActionPay from './ActionPay';
 
 export {
     BtnLong, BtnSoild, NavigationBar,
@@ -63,5 +64,6 @@ export {
     BaseComponent,
     LogisticsWeb,
     CrowdCountDown,
-    ProgressBar
+    ProgressBar,
+    ActionPay
 }

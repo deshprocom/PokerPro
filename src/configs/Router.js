@@ -45,11 +45,17 @@ export default class Router {
     }
 
 
-    toCrowdDetailPage(){
-        this.stackPush({name:'CrowdDetail'})
+    toCrowdDetailPage(crowd) {
+        this.stackPush({
+            name: 'CrowdDetail',
+            params: {
+                crowd
+            }
+        })
     }
-    toCrowdPage(){
-        this.stackPush({name:'Crowdfunding'})
+
+    toCrowdPage() {
+        this.stackPush({name: 'Crowdfunding'})
     }
 
     toDeletePage() {
