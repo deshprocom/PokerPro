@@ -6,7 +6,7 @@
 
 import React, {PureComponent} from 'react';
 import {
-    TouchableOpacity, View, ScrollView,
+    TouchableOpacity, View, ScrollView,FlatList,
     StyleSheet, Image, Text
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';

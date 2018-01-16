@@ -5,11 +5,12 @@
  */
 import React, {PureComponent} from 'react';
 import {
-    TouchableOpacity, View, StatusBar,
+    TouchableOpacity, View, StatusBar,FlatList,ScrollView,
     StyleSheet, Image, Text, Platform
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, ImageLoad, ProgressBar} from '../../components';
+import PokerRecord from './PokerRecord';
 
 const styles = StyleSheet.create({
     img_poker: {
@@ -93,7 +94,14 @@ export default class PokerInfo extends PureComponent {
         }
     };
 
+    _renderItem=()=>{
+        return <View style={{marginTop:21,width:'100%'}}>
+            <PokerRecord/>
+        </View>
+    };
+
     render() {
+        let data = [1,2,3,4,5,6];
         const {
             img, name, price, entry_percent, final_percent, slogan,
             buy_percent, concede_percent, share_divided, total
@@ -108,39 +116,48 @@ export default class PokerInfo extends PureComponent {
                 leftBtnIcon={Images.mall_return}
                 leftImageStyle={{height: 23, width: 23, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => global.router.pop()}/>
-            <ImageLoad style={styles.img_poker}
-                       source={{uri: img}}/>
 
-            <View style={styles.view_info}>
-                <View style={styles.view_info1}>
-                    <View>
-                        <Text style={styles.txt_name}>赞助牌手：{name}</Text>
-                        <Text style={styles.lb_price}>每份单价：<Text style={styles.txt_price}>{price}</Text></Text>
-                    </View>
+            <ScrollView>
+                <ImageLoad style={styles.img_poker}
+                           source={{uri: img}}/>
 
-                    <View style={styles.view_info2}>
-                        <View style={{textAlign: 'center', marginRight: 10}}>
-                            <Text style={styles.txt_entry}>{entry_percent}</Text>
-                            <Text style={styles.lb_entry}>进圈率</Text>
+                <View style={styles.view_info}>
+                    <View style={styles.view_info1}>
+                        <View>
+                            <Text style={styles.txt_name}>赞助牌手：{name}</Text>
+                            <Text style={styles.lb_price}>每份单价：<Text style={styles.txt_price}>{price}</Text></Text>
                         </View>
-                        <View style={{textAlign: 'center'}}>
-                            <Text style={styles.txt_final}>{final_percent}</Text>
-                            <Text style={styles.lb_final}>进圈率</Text>
+
+                        <View style={styles.view_info2}>
+                            <View style={{textAlign: 'center', marginRight: 10}}>
+                                <Text style={styles.txt_entry}>{entry_percent}</Text>
+                                <Text style={styles.lb_entry}>进圈率</Text>
+                            </View>
+                            <View style={{textAlign: 'center'}}>
+                                <Text style={styles.txt_final}>{final_percent}</Text>
+                                <Text style={styles.lb_final}>进圈率</Text>
+                            </View>
                         </View>
+
                     </View>
+                    <Text style={styles.lb_slogan}>口号：<Text style={styles.txt_slogan}>{slogan}</Text></Text>
+
+                    <ProgressBar
+                        backgroundStyle={{backgroundColor: Colors._ECE, borderRadius: 2}}
+                        style={{width: Metrics.screenWidth - 34}}
+                        initialProgress={buy_percent}/>
+
+                    <FlatList
+                        data={data}
+                        renderItem={this._renderItem}
+                        keyExtractor={(item, index) => `pokerList${index}`}
+                        ItemSeparatorComponent={() => <View style={{height: 1, width: '100%', backgroundColor: '#FFFFFF'}}/>}
+                    />
+
 
                 </View>
-                <Text style={styles.lb_slogan}>口号：<Text style={styles.txt_slogan}>{slogan}</Text></Text>
+            </ScrollView>
 
-                <ProgressBar
-                    backgroundStyle={{backgroundColor: Colors._ECE, borderRadius: 2}}
-                    style={{width: Metrics.screenWidth - 34}}
-                    initialProgress={buy_percent}/>
-
-                <View>
-
-                </View>
-            </View>
 
 
         </View>
