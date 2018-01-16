@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, ImageLoad, ProgressBar} from '../../components';
+import PokerRecord from './PokerRecord'
 
 const styles = StyleSheet.create({
     img_poker: {
@@ -119,11 +120,16 @@ export default class PokerInfo extends PureComponent {
         }
     };
 
+    _renderItem=()=>{
+        return <PokerRecord/>
+    };
+
     render() {
         const {
             img, name, price, entry_percent, final_percent, slogan,
             buy_percent, concede_percent, share_divided, total, headers
         } = this.state.poker;
+        let data = [1,2,3,4,5,6];
 
         return <View style={ApplicationStyles.bgContainer}>
             <NavigationBar
@@ -187,10 +193,15 @@ export default class PokerInfo extends PureComponent {
                         renderItem={({item}) => <ImageLoad style={styles.img_head} source={{uri: item}}/>}
                         keyExtractor={(item, index) => `buy_person${index}`}/>
                 </View>
-
-                <View>
-
+                <View style={{paddingTop:21,width:'100%',backgroundColor:'#FFFFFF'}}>
+                    <FlatList
+                        data={data}
+                        renderItem={this._renderItem}
+                        keyExtractor={(item, index) => `pokerList${index}`}
+                        ItemSeparatorComponent={() => <View style={{height: 10, width: '100%', backgroundColor: '#FFFFFF'}}/>}
+                    />
                 </View>
+
             </ScrollView>
 
 

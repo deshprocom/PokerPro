@@ -7,6 +7,13 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 
 export default class PokerRecord extends PureComponent {
 
+    messageItem = (type,percent) => {
+        return <View style={styles.message1}>
+            <Text style={styles.txt1}>{type}</Text>
+            <Text style={styles.txt2}>{percent}</Text>
+        </View>
+    };
+
     render(){
         return(
             <View style={styles.itemView}>
@@ -19,26 +26,17 @@ export default class PokerRecord extends PureComponent {
                 </View>
 
                 <View style={styles.message}>
-                    <View style={styles.message1}>
-                        <Text style={styles.txt1}>买入</Text>
-                        <Text style={styles.txt2}>¥34,344</Text>
-                    </View>
-                    <View style={styles.message1}>
-                        <Text style={styles.txt1}>参赛人数</Text>
-                        <Text style={styles.txt2}>2800</Text>
-                    </View>
-                    <View style={styles.message1}>
-                        <Text style={styles.txt1}>奖金</Text>
-                        <Text style={styles.txt2}>¥824,344</Text>
-                    </View>
+                    {this.messageItem('买入', '¥34,344')}
+                    {this.messageItem('参赛人数', 2800)}
+                    {this.messageItem('奖金', '¥824,344')}
                 </View>
 
-                <View style={styles.bottom}>
+                <View style={styles.bottomItem}>
                     <View style={{flexDirection:'row',alignItems:'center'}}>
                         <Image style={styles.timeImg} source={Images.camera} alt=""/>
                         <Text style={styles.timeTxt}>2017.04.23-2017.05.12</Text>
                     </View>
-                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                    <View style={{flexDirection:'row',alignItems:'center',marginTop:5}}>
                         <Image style={styles.locImg} source={Images.camera} alt=""/>
                         <Text style={styles.timeTxt}>澳大利亚墨尔本皇冠娱乐场澳大是寿...</Text>
                     </View>
@@ -51,8 +49,10 @@ export default class PokerRecord extends PureComponent {
 
 const styles = StyleSheet.create({
     itemView:{
-        width:'100%',
-        height:194,
+        paddingTop:11,
+        paddingBottom:19,
+        paddingLeft:12,
+        paddingRight:12,
         marginLeft:7,
         marginRight:7,
         borderWidth:1,
@@ -66,9 +66,7 @@ const styles = StyleSheet.create({
     itemRank:{
         flexDirection:'row',
         alignItems:'center',
-        marginTop:16,
-        marginLeft:12,
-        marginRight:12
+        marginTop:16
     },
     rankName:{
         fontSize:15,
@@ -88,12 +86,11 @@ const styles = StyleSheet.create({
         color:'#FFFFFF'
     },
     message:{
-        marginLeft:12,
-        marginRight:12,
+        width:'100%',
         flexDirection:'row',
         alignItems:'center',
-        justifyContent:'space-between',
-        marginTop:20
+        marginTop:20,
+        justifyContent:'space-around'
     },
     message1:{
         flexDirection:'column',
@@ -106,20 +103,18 @@ const styles = StyleSheet.create({
     txt2:{
         fontSize:15,
         color:'#666666',
-        fontWeight:'bold'
+        fontWeight:'bold',
+        marginTop:6
     },
-    bottom:{
+    bottomItem:{
+        width:'100%',
         marginTop:17,
-        marginLeft:12,
-        marginRight:12,
-        borderTopWidth:3,
+        paddingTop:11,
+        borderTopWidth:2,
         borderColor:'#ECECEE',
         borderStyle:'solid',
-        paddingTop:11,
-        paddingBottom:19,
         flexDirection:'column',
-        justifyContent:'flex-start',
-        alignItems:'center'
+        alignItems:'flex-start'
     },
     timeImg:{
         width:8,
