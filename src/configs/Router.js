@@ -53,6 +53,14 @@ export default class Router {
             }
         })
     }
+    toSelectPlayer() {
+        this.stackPush({
+            name: 'SelectPlayerPage',
+            params: {
+
+            }
+        })
+    }
 
     toCrowdPage() {
         this.stackPush({name: 'Crowdfunding'})

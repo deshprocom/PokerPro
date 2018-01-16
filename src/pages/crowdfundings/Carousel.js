@@ -31,7 +31,10 @@ export default class Carousel extends PureComponent {
                     {carousel.map((item, key) => {
                         return <TouchableOpacity
                             key={key}
-                            activeOpacity={1}>
+                            activeOpacity={1}
+                        onPress={()=>{
+                            global.router.toSelectPlayer()
+                        }}>
                             <Image style={{height: 200, width: '100%'}} source={{uri: item}}/>
                         </TouchableOpacity>
 

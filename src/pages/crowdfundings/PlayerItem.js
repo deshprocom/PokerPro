@@ -11,13 +11,14 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import { ProgressBar} from '../../components';
+import I18n from 'react-native-i18n';
 
 export default class PlayerItem extends PureComponent {
 
 
     render() {
         return (
-            <View style={style.itemPage}>
+            <View style={styles.itemPage}>
                 <Image style={styles.itemImg} source={Images.home_adr} alt=""/>
                 <View style={styles.message}>
                     <Text style={styles.name}>刘家明</Text>
@@ -27,8 +28,8 @@ export default class PlayerItem extends PureComponent {
                     <Text style={styles.rankMessage}>出让20%股份，股份划分20份</Text>
                     <ProgressBar
                         backgroundStyle={{backgroundColor: Colors._ECE, borderRadius: 2}}
-                        style={{width: Metrics.screenWidth - 34,marginTop:42}}
-                        initialProgress='20%'/>
+                        style={{width:Metrics.screenWidth - 210,marginTop:2}}
+                        initialProgress={0.2}/>
                 </View>
                 <View style={{flex:1}}/>
                 <View style={styles.itemRight}>
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
     itemPage:{
         backgroundColor:'#FFFFFF',
         flexDirection:'row',
-        alignItems:'center',
+        alignItems:'flex-start',
         paddingTop:15,
         paddingBottom:15
     },
@@ -62,6 +63,7 @@ const styles = StyleSheet.create({
         marginLeft:17
     },
     message:{
+
         flexDirection:'column',
         alignItems:'flex-start',
         marginLeft:16
@@ -80,7 +82,8 @@ const styles = StyleSheet.create({
     },
     rankMessage:{
         fontSize: 12,
-        color: '#888888'
+        color: '#888888',
+        marginBottom:40
     },
     itemRight:{
         marginTop:16,
