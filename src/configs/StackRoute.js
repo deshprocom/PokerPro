@@ -87,10 +87,12 @@ import CrowdDetail from '../pages/crowdfundings/CrowdDetail';
 import ReportPage from '../pages/crowdfundings/ReportPage';
 import PokerInfo from '../pages/crowdfundings/PokerInfo';
 import SelectPlayerPage from '../pages/crowdfundings/SelectPlayerPage';
+import SubscriptionPage from '../pages/crowdfundings/SubscriptionPage';
 
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="SubscriptionPage" component={SubscriptionPage} hideNavBar/>
         <Scene key="SelectPlayerPage" component={SelectPlayerPage} hideNavBar/>
         <Scene key="PokerInfo" component={PokerInfo} hideNavBar/>
         <Scene key="ReportPage" component={ReportPage} hideNavBar/>

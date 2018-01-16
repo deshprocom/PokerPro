@@ -18,7 +18,10 @@ export default class PlayerItem extends PureComponent {
 
     render() {
         return (
-            <View style={styles.itemPage}>
+            <TouchableOpacity style={styles.itemPage}
+            onPress={()=>{
+                global.router.toSubscriptionPage()
+            }}>
                 <Image style={styles.itemImg} source={Images.home_adr} alt=""/>
                 <View style={styles.message}>
                     <Text style={styles.name}>刘家明</Text>
@@ -41,7 +44,7 @@ export default class PlayerItem extends PureComponent {
                     <Text style={styles.finalsPer}> 12%</Text>
                     <Text style={styles.finalsInto}> 决赛率</Text>
                 </View>
-            </View>
+            </TouchableOpacity>
 
 
         );

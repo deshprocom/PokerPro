@@ -530,5 +530,6 @@
   "reply_success":"回复成功",
   "hot":"热点",
   "crowdfunding":"众筹",
-  "select_player":"选择牌手"
+  "select_player":"选择牌手",
+  "subscription":"认购"
 }
