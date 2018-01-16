@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
         borderColor: Colors._ECE,
         borderWidth: 1,
         alignSelf: 'center',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginBottom: 10
     },
     item: {
         borderRadius: 4,

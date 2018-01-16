@@ -11,6 +11,7 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, ImageLoad, ProgressBar} from '../../components';
 import IntroRecord from './IntroRecord';
+import {footer} from './CrowdDetail';
 
 const styles = StyleSheet.create({
     img_poker: {
@@ -192,7 +193,7 @@ export default class PokerInfo extends PureComponent {
                 <IntroRecord/>
             </ScrollView>
 
-
+            {footer()}
         </View>
     }
 
