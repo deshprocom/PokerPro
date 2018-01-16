@@ -197,7 +197,7 @@
   "Level": "Level",
   "Blinds": "Blinds",
   "Ante": "Ante",
-  "Company": "Beijing De Shang Quan Cai Sports & Cultural Media Co.,Ltd@",
+  "Company": "ShenZhen De Shang Quan Cai Sports & Cultural Media Co.,Ltd@",
   "phoneBang": "Successfully combine with phone",
   "phone": "combine with phone",
   "reset": "Need this number if reset and modify",
@@ -528,6 +528,7 @@
   "comment_failed":"评论失败",
   "reply_success":"回复成功",
   "hot":"热点",
-  "crowdfunding":"众筹"
+  "crowdfunding":"众筹",
+  "select_player":"选择牌手"
 }
 

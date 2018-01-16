@@ -57,6 +57,14 @@ export default class Router {
             }
         })
     }
+    toSelectPlayer() {
+        this.stackPush({
+            name: 'SelectPlayerPage',
+            params: {
+
+            }
+        })
+    }
 
     toReportPage() {
         this.stackPush({name: 'ReportPage'})
