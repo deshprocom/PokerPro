@@ -40,6 +40,9 @@ export default class CrowdDetail extends PureComponent {
 
                 }}
                 style={styles.btnLeft}>
+                <Image
+                    style={{height: 12, width: 10, marginRight: 5}}
+                    source={Images.black_fire}/>
 
                 <Text style={styles.txtLeft}>及时赛报</Text>
             </TouchableOpacity>
@@ -66,7 +69,7 @@ const styles = StyleSheet.create({
     },
     btnLeft: {
         height: 34, width: 97, borderColor: Colors.txt_444, borderWidth: 1, alignItems: 'center',
-        borderRadius: 2, justifyContent: 'center'
+        borderRadius: 2, justifyContent: 'center', flexDirection: 'row'
     },
     btnRight: {
         height: 34,

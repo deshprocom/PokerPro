@@ -51,9 +51,6 @@ const styles = StyleSheet.create({
     },
     race: {
         width: '100%',
-        backgroundColor: 'white',
-        marginTop: 5,
-        marginBottom: 10,
         padding: 17
     },
     txtName: {
@@ -66,6 +63,15 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: Colors._888,
         marginTop: 5
+    },
+    list: {
+        backgroundColor: 'white',
+        marginTop: 5,
+    },
+    red_point: {
+        height: 14, width: 14, borderRadius: 7,
+        backgroundColor: Colors._F34, marginTop: 8,
+        position: 'absolute'
     }
 
 
@@ -109,35 +115,53 @@ export default class ReportPage extends PureComponent {
 
     headerRace = () => {
         const {title, time, location} = this.state.race_reports;
-        return <View style={styles.race}>
-            <Text style={styles.txtName}>{title}</Text>
-            <Text style={styles.txtTime}>{time}</Text>
-            <Text style={styles.txtTime}>{location}</Text>
+        return <View>
+            <View style={styles.race}>
+                <Text style={styles.txtName}>{title}</Text>
+                <Text style={styles.txtTime}>{time}</Text>
+                <Text style={styles.txtTime}>{location}</Text>
+            </View>
+            <View style={{height: 10, backgroundColor: Colors._ECE}}/>
         </View>
     };
 
     renderFlatList = () => {
-        return <UltimateFlatList
-            header={() => this.headerRace()}
-            ref={(ref) => this.listView = ref}
-            onFetch={this.onFetch}
-            keyExtractor={(item, index) => `crowd${index}`}
-            item={this.renderItem}
-            refreshableTitlePull={I18n.t('pull_refresh')}
-            refreshableTitleRelease={I18n.t('release_refresh')}
-            dateTitle={I18n.t('last_refresh')}
-            allLoadedText={I18n.t('no_more')}
-            waitingSpinnerText={I18n.t('loading')}
-        />
+        return <View style={styles.list}>
+            <UltimateFlatList
+                header={() => this.headerRace()}
+                ref={(ref) => this.listView = ref}
+                onFetch={this.onFetch}
+                keyExtractor={(item, index) => `crowd${index}`}
+                item={this.renderItem}
+                refreshableTitlePull={I18n.t('pull_refresh')}
+                refreshableTitleRelease={I18n.t('release_refresh')}
+                dateTitle={I18n.t('last_refresh')}
+                allLoadedText={I18n.t('no_more')}
+                waitingSpinnerText={I18n.t('loading')}
+            />
+        </View>
 
     };
 
     onFetch = (page = 1, startFetch, abortFetch) => {
-
+        startFetch([1, 2, 3, 4, 5, 6], 9)
     };
 
     renderItem = (item, index) => {
+        return <View style={{flexDirection: 'row', paddingLeft: 17, paddingRight: 17}}>
+            <View style={{width: 14, alignItems: 'center'}}>
 
+                <View style={{backgroundColor: Colors._ECE, width: 1, flex: 1}}/>
+                <View style={styles.red_point}/>
+            </View>
+
+            <View style={{marginLeft: 17}}>
+                <Text style={{fontSize: 14, color: Colors._F34, marginTop: 8}}>NCBP国家杯棋牌职业大师赛-Day2</Text>
+                <View style={{height: 700}}/>
+            </View>
+
+
+        </View>
     };
 
 

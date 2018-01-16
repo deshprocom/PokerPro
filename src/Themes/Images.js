@@ -271,7 +271,8 @@ const images = {
     likeRed: require('../../source/comment/likeRed.png'),
     forward: require('../../source/comment/forward.png'),
     person_dynamic: require('../../source/comment/person_dynamic.png'),
-    listLike: require('../../source/comment/listLike.png')
+    listLike: require('../../source/comment/listLike.png'),
+    black_fire:require('../../source/crowd/black_fire.png')
 
 
 };
