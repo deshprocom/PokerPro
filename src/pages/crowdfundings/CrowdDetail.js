@@ -46,7 +46,8 @@ export default class CrowdDetail extends PureComponent {
             <View style={{flex: 1}}/>
             <TouchableOpacity
                 onPress={() => {
-                    this.actionPay.toggle()
+                    global.router.toPokerInfo()
+
                 }}
                 style={styles.btnRight}>
                 <Text style={styles.txtRight}>我要认购</Text>
