@@ -193,6 +193,7 @@ export default class PokerInfo extends PureComponent {
                         renderItem={({item}) => <ImageLoad style={styles.img_head} source={{uri: item}}/>}
                         keyExtractor={(item, index) => `buy_person${index}`}/>
                 </View>
+
                 <View style={{paddingTop:21,width:'100%',backgroundColor:'#FFFFFF'}}>
                     <FlatList
                         data={data}
