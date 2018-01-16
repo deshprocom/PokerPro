@@ -84,7 +84,7 @@ export default class ReportPage extends PureComponent {
 
 
     render() {
-        const {title, time, location} = this.state.race_reports;
+
         return <View style={ApplicationStyles.bgContainer}>
             <View
                 style={styles.nav}>
@@ -108,6 +108,8 @@ export default class ReportPage extends PureComponent {
 
 
     headerRace = () => {
+        const {title, time, location} = this.state.race_reports;
+
         return <View style={styles.race}>
             <Text style={styles.txtName}>{title}</Text>
             <Text style={styles.txtTime}>{time}</Text>
@@ -117,7 +119,7 @@ export default class ReportPage extends PureComponent {
 
     renderFlatList = () => {
         return <UltimateFlatList
-            header={this.headerRace()}
+            header={()=>this.headerRace()}
             ref={(ref) => this.listView = ref}
             onFetch={this.onFetch}
             keyExtractor={(item, index) => `crowd${index}`}
