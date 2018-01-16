@@ -65,24 +65,24 @@ const styles = StyleSheet.create({
         paddingLeft: 17, paddingRight: 17, backgroundColor: 'white'
     },
     btnLeft: {
-        height: 34, width: 97, borderColor: Colors._F34, borderWidth: 1, alignItems: 'center',
+        height: 34, width: 97, borderColor: Colors.txt_444, borderWidth: 1, alignItems: 'center',
         borderRadius: 2, justifyContent: 'center'
     },
     btnRight: {
         height: 34,
         width: 224,
-        backgroundColor: Colors._F34,
+        backgroundColor: Colors._161,
         borderRadius: 2,
         alignItems: 'center',
         justifyContent: 'center'
 
     },
     txtRight: {
-        color: 'white',
+        color: '#FFE9AD',
         fontSize: 14
     },
     txtLeft: {
-        color: Colors._F34,
+        color: Colors.txt_444,
         fontSize: 14
     }
 })

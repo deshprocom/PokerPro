@@ -6,7 +6,7 @@
 import React, {PureComponent} from 'react';
 import {
     TouchableOpacity, View, FlatList,
-    StyleSheet, Image, Text, Platform
+    StyleSheet, Image, Text, Platform,ScrollView
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, ImageLoad, ProgressBar} from '../../components';
@@ -134,58 +134,65 @@ export default class PokerInfo extends PureComponent {
                 leftBtnIcon={Images.mall_return}
                 leftImageStyle={{height: 23, width: 23, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => global.router.pop()}/>
-            <ImageLoad style={styles.img_poker}
-                       source={{uri: img}}/>
+            <ScrollView>
+                <ImageLoad style={styles.img_poker}
+                           source={{uri: img}}/>
 
-            <View style={styles.view_info}>
-                <View style={styles.view_info1}>
-                    <View>
-                        <Text style={styles.txt_name}>赞助牌手：{name}</Text>
-                        <Text style={styles.lb_price}>每份单价：<Text style={styles.txt_price}>{price}</Text></Text>
+                <View style={styles.view_info}>
+                    <View style={styles.view_info1}>
+                        <View>
+                            <Text style={styles.txt_name}>赞助牌手：{name}</Text>
+                            <Text style={styles.lb_price}>每份单价：<Text style={styles.txt_price}>{price}</Text></Text>
+                        </View>
+
+                        <View style={styles.view_info2}>
+                            <View style={{textAlign: 'center', marginRight: 10}}>
+                                <Text style={styles.txt_entry}>{entry_percent}</Text>
+                                <Text style={styles.lb_entry}>进圈率</Text>
+                            </View>
+                            <View style={{textAlign: 'center'}}>
+                                <Text style={styles.txt_final}>{final_percent}</Text>
+                                <Text style={styles.lb_final}>进圈率</Text>
+                            </View>
+                        </View>
+
+                    </View>
+                    <View style={{
+                        flexDirection: 'row', alignItems: 'center', marginTop: 12,
+                        marginBottom: 8
+                    }}>
+                        <Text style={styles.lb_slogan}>口号：</Text>
+                        <Text style={styles.txt_slogan}>{slogan}</Text>
                     </View>
 
-                    <View style={styles.view_info2}>
-                        <View style={{textAlign: 'center', marginRight: 10}}>
-                            <Text style={styles.txt_entry}>{entry_percent}</Text>
-                            <Text style={styles.lb_entry}>进圈率</Text>
-                        </View>
-                        <View style={{textAlign: 'center'}}>
-                            <Text style={styles.txt_final}>{final_percent}</Text>
-                            <Text style={styles.lb_final}>进圈率</Text>
-                        </View>
+                    <ProgressBar
+                        backgroundStyle={{backgroundColor: Colors._ECE, borderRadius: 2}}
+                        style={{width: Metrics.screenWidth - 34}}
+                        initialProgress={buy_percent}/>
+
+                    <View style={styles.view_percent}>
+                        {this.renderItem(concede_percent, '让出股份')}
+                        {this.renderItem(share_divided, '股份划分')}
+                        {this.renderItem(total, '众筹总额')}
                     </View>
-
-                </View>
-                <View style={{
-                    flexDirection: 'row', alignItems: 'center', marginTop: 12,
-                    marginBottom: 8
-                }}>
-                    <Text style={styles.lb_slogan}>口号：</Text>
-                    <Text style={styles.txt_slogan}>{slogan}</Text>
                 </View>
 
-                <ProgressBar
-                    backgroundStyle={{backgroundColor: Colors._ECE, borderRadius: 2}}
-                    style={{width: Metrics.screenWidth - 34}}
-                    initialProgress={buy_percent}/>
+                <View style={styles.view_head}>
+                    <Text style={[styles.txt_slogan, {marginBottom: 14, alignSelf: 'center'}]}
+                    >目前已有<Text style={{color: Colors._F34}}>4</Text>人认购</Text>
 
-                <View style={styles.view_percent}>
-                    {this.renderItem(concede_percent, '让出股份')}
-                    {this.renderItem(share_divided, '股份划分')}
-                    {this.renderItem(total, '众筹总额')}
+                    <FlatList
+                        horizontal={true}
+                        data={headers}
+                        renderItem={({item}) => <ImageLoad style={styles.img_head} source={{uri: item}}/>}
+                        keyExtractor={(item, index) => `buy_person${index}`}/>
                 </View>
-            </View>
 
-            <View style={styles.view_head}>
-                <Text style={[styles.txt_slogan, {marginBottom: 14, alignSelf: 'center'}]}
-                >目前已有<Text style={{color: Colors._F34}}>4</Text>人认购</Text>
+                <View>
 
-                <FlatList
-                    horizontal={true}
-                    data={headers}
-                    renderItem={({item}) => <ImageLoad style={styles.img_head} source={{uri: item}}/>}
-                    keyExtractor={(item, index) => `buy_person${index}`}/>
-            </View>
+                </View>
+            </ScrollView>
+
 
         </View>
     }
