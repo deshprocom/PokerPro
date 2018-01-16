@@ -70,11 +70,13 @@ const styles = StyleSheet.create({
     },
     name:{
         fontSize: 15,
-        color: '#333333'
+        color: '#333333',
+        fontWeight:'bold'
     },
     priceTxt:{
         fontSize: 14,
-        color: '#444444'
+        color: '#444444',
+        fontWeight:'bold'
     },
     price:{
         fontSize: 14,
