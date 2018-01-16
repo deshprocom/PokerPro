@@ -44,6 +44,10 @@ export default class Router {
 
     }
 
+    toPokerInfo() {
+        this.stackPush({name: 'PokerInfo'})
+    }
+
 
     toCrowdDetailPage(crowd) {
         this.stackPush({
@@ -54,8 +58,8 @@ export default class Router {
         })
     }
 
-    toCrowdPage() {
-        this.stackPush({name: 'Crowdfunding'})
+    toReportPage() {
+        this.stackPush({name: 'ReportPage'})
     }
 
     toDeletePage() {

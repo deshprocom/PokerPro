@@ -21,7 +21,8 @@ const styles = StyleSheet.create({
         fontSize: 14,
         lineHeight: 20,
         fontWeight: 'bold',
-        marginTop: 8
+        marginTop: 8,
+        flex: 1
     },
     txtTime: {
         fontSize: 12,
@@ -66,6 +67,21 @@ const styles = StyleSheet.create({
         borderTopWidth: 1, borderTopColor: Colors._ECE,
         position: 'absolute', top: 0, backgroundColor: 'white',
         zIndex: 9
+    },
+    btnReport: {
+        borderWidth: 1,
+        borderColor: Colors._F34,
+        borderRadius: 2,
+        flexDirection: 'row',
+        height: 25,
+        alignItems: 'center',
+        paddingRight: 5,
+        paddingLeft: 5,
+        marginTop: 10
+    },
+    txtReport: {
+        fontSize: 14,
+        color: Colors._F34
     }
 });
 
@@ -97,7 +113,14 @@ export default class DetailChild extends PureComponent {
                 <ImageLoad style={styles.cover}
                            source={{uri: image}}/>
                 <View style={{marginLeft: 17, marginRight: 17}}>
-                    <Text style={styles.txtName}>{race.name}</Text>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text style={styles.txtName}>{race.name}</Text>
+
+                        <View style={styles.btnReport}>
+                            <Text style={styles.txtReport}>及时赛报</Text>
+                        </View>
+                    </View>
+
                     <Text style={styles.txtTime}>{`入赛资格：¥${race.buy_in}  ${race.end_start_time}`}</Text>
                     <Text style={styles.txtTime}>地点：{race.location}</Text>
                     <ProgressBar
