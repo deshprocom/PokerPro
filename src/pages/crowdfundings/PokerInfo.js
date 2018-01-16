@@ -6,10 +6,11 @@
 import React, {PureComponent} from 'react';
 import {
     TouchableOpacity, View, FlatList,
-    StyleSheet, Image, Text, Platform,ScrollView
+    StyleSheet, Image, Text, Platform, ScrollView
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, ImageLoad, ProgressBar} from '../../components';
+import IntroRecord from './IntroRecord';
 
 const styles = StyleSheet.create({
     img_poker: {
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         paddingTop: 14,
         marginTop: 7,
-        paddingBottom: 20,
+        paddingBottom: 30,
         paddingLeft: 17
     },
     img_head: {
@@ -188,9 +189,7 @@ export default class PokerInfo extends PureComponent {
                         keyExtractor={(item, index) => `buy_person${index}`}/>
                 </View>
 
-                <View>
-
-                </View>
+                <IntroRecord/>
             </ScrollView>
 
 

@@ -73,14 +73,14 @@ const styles = StyleSheet.create({
         borderColor: Colors._F34,
         borderRadius: 2,
         flexDirection: 'row',
-        height: 25,
+        height: 23,
         alignItems: 'center',
         paddingRight: 5,
         paddingLeft: 5,
         marginTop: 10
     },
     txtReport: {
-        fontSize: 14,
+        fontSize: 12,
         color: Colors._F34
     }
 });
