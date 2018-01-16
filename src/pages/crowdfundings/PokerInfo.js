@@ -6,11 +6,12 @@
 import React, {PureComponent} from 'react';
 import {
     TouchableOpacity, View, FlatList,
-    StyleSheet, Image, Text, Platform,ScrollView
+    StyleSheet, Image, Text, Platform, ScrollView
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, ImageLoad, ProgressBar} from '../../components';
-import PokerRecord from './PokerRecord'
+import IntroRecord from './IntroRecord';
+import {footer} from './CrowdDetail';
 
 const styles = StyleSheet.create({
     img_poker: {
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         paddingTop: 14,
         marginTop: 7,
-        paddingBottom: 20,
+        paddingBottom: 30,
         paddingLeft: 17
     },
     img_head: {
@@ -120,16 +121,11 @@ export default class PokerInfo extends PureComponent {
         }
     };
 
-    _renderItem=()=>{
-        return <PokerRecord/>
-    };
-
     render() {
         const {
             img, name, price, entry_percent, final_percent, slogan,
             buy_percent, concede_percent, share_divided, total, headers
         } = this.state.poker;
-        let data = [1,2,3,4,5,6];
 
         return <View style={ApplicationStyles.bgContainer}>
             <NavigationBar
@@ -194,18 +190,10 @@ export default class PokerInfo extends PureComponent {
                         keyExtractor={(item, index) => `buy_person${index}`}/>
                 </View>
 
-                <View style={{paddingTop:21,width:'100%',backgroundColor:'#FFFFFF'}}>
-                    <FlatList
-                        data={data}
-                        renderItem={this._renderItem}
-                        keyExtractor={(item, index) => `pokerList${index}`}
-                        ItemSeparatorComponent={() => <View style={{height: 10, width: '100%', backgroundColor: '#FFFFFF'}}/>}
-                    />
-                </View>
-
+                <IntroRecord/>
             </ScrollView>
 
-
+            {footer()}
         </View>
     }
 

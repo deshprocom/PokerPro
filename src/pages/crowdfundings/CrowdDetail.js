@@ -15,6 +15,33 @@ import DetailChild from './DetailChild';
 import {ActionPay} from '../../components';
 
 
+
+export const footer = () => {
+    return <View style={styles.footer}>
+        <TouchableOpacity
+            onPress={() => {
+                global.router.toReportPage()
+
+            }}
+            style={styles.btnLeft}>
+            <Image
+                style={{height: 12, width: 10, marginRight: 5}}
+                source={Images.black_fire}/>
+
+            <Text style={styles.txtLeft}>及时赛报</Text>
+        </TouchableOpacity>
+        <View style={{flex: 1}}/>
+        <TouchableOpacity
+            onPress={() => {
+                global.router.toPokerInfo()
+
+            }}
+            style={styles.btnRight}>
+            <Text style={styles.txtRight}>我要认购</Text>
+        </TouchableOpacity>
+    </View>
+}
+
 export default class CrowdDetail extends PureComponent {
 
 
@@ -26,34 +53,12 @@ export default class CrowdDetail extends PureComponent {
             <DetailChild
                 info={crowd}/>
 
-            {this.footer()}
+            {footer()}
             <ActionPay
                 ref={ref => this.actionPay = ref}/>
         </View>
     }
 
-    footer = () => {
-        return <View style={styles.footer}>
-            <TouchableOpacity
-                onPress={() => {
-                    global.router.toReportPage()
-
-                }}
-                style={styles.btnLeft}>
-
-                <Text style={styles.txtLeft}>及时赛报</Text>
-            </TouchableOpacity>
-            <View style={{flex: 1}}/>
-            <TouchableOpacity
-                onPress={() => {
-                    global.router.toPokerInfo()
-
-                }}
-                style={styles.btnRight}>
-                <Text style={styles.txtRight}>我要认购</Text>
-            </TouchableOpacity>
-        </View>
-    }
 
 
 }
@@ -66,7 +71,7 @@ const styles = StyleSheet.create({
     },
     btnLeft: {
         height: 34, width: 97, borderColor: Colors.txt_444, borderWidth: 1, alignItems: 'center',
-        borderRadius: 2, justifyContent: 'center'
+        borderRadius: 2, justifyContent: 'center', flexDirection: 'row'
     },
     btnRight: {
         height: 34,
