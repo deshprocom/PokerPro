@@ -5,12 +5,11 @@
  */
 import React, {PureComponent} from 'react';
 import {
-    TouchableOpacity, View, StatusBar,FlatList,ScrollView,
-    StyleSheet, Image, Text, Platform
+    TouchableOpacity, View, FlatList,
+    StyleSheet, Image, Text, Platform,ScrollView
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, ImageLoad, ProgressBar} from '../../components';
-import PokerRecord from './PokerRecord';
 
 const styles = StyleSheet.create({
     img_poker: {
@@ -66,13 +65,30 @@ const styles = StyleSheet.create({
     lb_slogan: {
         fontSize: 14,
         fontWeight: 'bold',
-        color: Colors.txt_444,
-        marginTop: 12,
-        marginBottom: 8
+        color: Colors.txt_444
     },
     txt_slogan: {
         fontSize: 14,
         color: Colors.txt_444
+    },
+    view_percent: {
+        justifyContent: 'space-around',
+        flexDirection: 'row',
+        marginTop: 15
+    },
+    view_head: {
+        backgroundColor: 'white',
+        paddingTop: 14,
+        marginTop: 7,
+        paddingBottom: 20,
+        paddingLeft: 17
+    },
+    img_head: {
+        height: 44,
+        width: 44,
+        borderRadius: 22,
+        marginRight: 10
+
     }
 });
 
@@ -89,22 +105,24 @@ export default class PokerInfo extends PureComponent {
             buy_percent: 0.12,
             concede_percent: 20,
             share_divided: 200,
-            total: 20
+            total: 20,
+            headers: [
+                'https://cdn-upyun.deshpro.com/uploads/player/avatar/1251/thumb_%E9%92%B1%E5%BF%97%E5%BC%BA.jpg?suffix=1499683689',
+                'https://cdn-upyun.deshpro.com/uploads/player/avatar/807/thumb_%E9%99%88%E7%81%BF%E6%9E%97.png?suffix=1499399181',
+                'https://cdn-upyun.deshpro.com/uploads/player/avatar/445/thumb_149032602884767500.jpg?suffix=1498635527',
+                'https://cdn-upyun.deshpro.com/uploads/player/avatar/2594/thumb_%E8%B7%AF%E8%BF%AA.jpg?suffix=1501058772',
+                'https://cdn-upyun.deshpro.com/uploads/player/avatar/1495/thumb_%E8%8E%AB%E5%92%8F%E8%96%87.jpg?suffix=1499681132',
+                'https://cdn-upyun.deshpro.com/uploads/player/avatar/275/thumb_%E5%94%90%E5%A4%A9%E5%85%83.jpg?suffix=1498565296'
+
+            ]
 
         }
     };
 
-    _renderItem=()=>{
-        return <View style={{marginTop:21,width:'100%'}}>
-            <PokerRecord/>
-        </View>
-    };
-
     render() {
-        let data = [1,2,3,4,5,6];
         const {
             img, name, price, entry_percent, final_percent, slogan,
-            buy_percent, concede_percent, share_divided, total
+            buy_percent, concede_percent, share_divided, total, headers
         } = this.state.poker;
 
         return <View style={ApplicationStyles.bgContainer}>
@@ -116,7 +134,6 @@ export default class PokerInfo extends PureComponent {
                 leftBtnIcon={Images.mall_return}
                 leftImageStyle={{height: 23, width: 23, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => global.router.pop()}/>
-
             <ScrollView>
                 <ImageLoad style={styles.img_poker}
                            source={{uri: img}}/>
@@ -140,26 +157,51 @@ export default class PokerInfo extends PureComponent {
                         </View>
 
                     </View>
-                    <Text style={styles.lb_slogan}>口号：<Text style={styles.txt_slogan}>{slogan}</Text></Text>
+                    <View style={{
+                        flexDirection: 'row', alignItems: 'center', marginTop: 12,
+                        marginBottom: 8
+                    }}>
+                        <Text style={styles.lb_slogan}>口号：</Text>
+                        <Text style={styles.txt_slogan}>{slogan}</Text>
+                    </View>
 
                     <ProgressBar
                         backgroundStyle={{backgroundColor: Colors._ECE, borderRadius: 2}}
                         style={{width: Metrics.screenWidth - 34}}
                         initialProgress={buy_percent}/>
 
-                    <FlatList
-                        data={data}
-                        renderItem={this._renderItem}
-                        keyExtractor={(item, index) => `pokerList${index}`}
-                        ItemSeparatorComponent={() => <View style={{height: 1, width: '100%', backgroundColor: '#FFFFFF'}}/>}
-                    />
+                    <View style={styles.view_percent}>
+                        {this.renderItem(concede_percent, '让出股份')}
+                        {this.renderItem(share_divided, '股份划分')}
+                        {this.renderItem(total, '众筹总额')}
+                    </View>
+                </View>
 
+                <View style={styles.view_head}>
+                    <Text style={[styles.txt_slogan, {marginBottom: 14, alignSelf: 'center'}]}
+                    >目前已有<Text style={{color: Colors._F34}}>4</Text>人认购</Text>
+
+                    <FlatList
+                        horizontal={true}
+                        data={headers}
+                        renderItem={({item}) => <ImageLoad style={styles.img_head} source={{uri: item}}/>}
+                        keyExtractor={(item, index) => `buy_person${index}`}/>
+                </View>
+
+                <View>
 
                 </View>
             </ScrollView>
 
 
+        </View>
+    }
 
+
+    renderItem = (percent, type) => {
+        return <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <Text style={{fontSize: 18, color: Colors._F34}}>{percent}</Text>
+            <Text style={{fontSize: 12, color: Colors._888, marginTop: 5}}>{type}</Text>
         </View>
     }
 }
