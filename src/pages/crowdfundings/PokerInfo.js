@@ -65,13 +65,16 @@ const styles = StyleSheet.create({
     lb_slogan: {
         fontSize: 14,
         fontWeight: 'bold',
-        color: Colors.txt_444,
-        marginTop: 12,
-        marginBottom: 8
+        color: Colors.txt_444
     },
     txt_slogan: {
         fontSize: 14,
         color: Colors.txt_444
+    },
+    view_percent: {
+        justifyContent: 'space-around',
+        flexDirection: 'row',
+        marginTop: 15
     }
 });
 
@@ -130,19 +133,34 @@ export default class PokerInfo extends PureComponent {
                     </View>
 
                 </View>
-                <Text style={styles.lb_slogan}>口号：<Text style={styles.txt_slogan}>{slogan}</Text></Text>
+                <View style={{
+                    flexDirection: 'row', alignItems: 'center', marginTop: 12,
+                    marginBottom: 8
+                }}>
+                    <Text style={styles.lb_slogan}>口号：</Text>
+                    <Text style={styles.txt_slogan}>{slogan}</Text>
+                </View>
 
                 <ProgressBar
                     backgroundStyle={{backgroundColor: Colors._ECE, borderRadius: 2}}
                     style={{width: Metrics.screenWidth - 34}}
                     initialProgress={buy_percent}/>
 
-                <View>
-
+                <View style={styles.view_percent}>
+                    {this.renderItem(concede_percent, '让出股份')}
+                    {this.renderItem(share_divided, '股份划分')}
+                    {this.renderItem(total, '众筹总额')}
                 </View>
             </View>
 
 
+        </View>
+    }
+
+    renderItem = (percent, type) => {
+        return <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <Text style={{fontSize: 18, color: Colors._F34}}>{percent}</Text>
+            <Text style={{fontSize: 12, color: Colors._888, marginTop: 5}}>{type}</Text>
         </View>
     }
 }
