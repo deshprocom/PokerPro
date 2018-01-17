@@ -44,6 +44,18 @@ export default class Router {
 
     }
 
+    toRiskWarningPage() {
+        this.stackPush({name: 'RiskWarningPage'})
+    }
+
+    toSubscriptionConfirmPage() {
+        this.stackPush({name: 'SubscriptionConfirmPage'})
+    }
+
+    toSubscriptionPage() {
+        this.stackPush({name: 'SubscriptionPage'})
+    }
+
     toPokerInfo() {
         this.stackPush({name: 'PokerInfo'})
     }
@@ -59,10 +71,7 @@ export default class Router {
     }
     toSelectPlayer() {
         this.stackPush({
-            name: 'SelectPlayerPage',
-            params: {
-
-            }
+            name: 'SelectPlayerPage'
         })
     }
 
