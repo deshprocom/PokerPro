@@ -42,7 +42,7 @@ const colors = {
     txt_race_type: '#CAC6CA',
     txt_price:'#DF1D0F',
 
-    text_choice_btn: '#FFE9AD',
+    _FFE: '#FFE9AD',
 
     bg_ec:'#ECECEE',
     _F4E:'#F4E3A1',

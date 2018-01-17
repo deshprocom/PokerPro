@@ -87,13 +87,17 @@ import CrowdDetail from '../pages/crowdfundings/CrowdDetail';
 import ReportPage from '../pages/crowdfundings/ReportPage';
 import PokerInfo from '../pages/crowdfundings/PokerInfo';
 import SelectPlayerPage from '../pages/crowdfundings/SelectPlayerPage';
+import PokerB from '../pages/crowdfundings/PokerB';
 import SubscriptionPage from '../pages/crowdfundings/SubscriptionPage';
 import SubscriptionConfirmPage from '../pages/crowdfundings/SubscriptionConfirmPage';
 import RiskWarningPage from '../pages/crowdfundings/RiskWarningPage';
 
 
+
 export const Stacks = Actions.create(
     <Scene key="root">
+
+        <Scene key="PokerB" component={PokerB} hideNavBar/>
         <Scene key="RiskWarningPage" component={RiskWarningPage} hideNavBar/>
         <Scene key="SubscriptionConfirmPage" component={SubscriptionConfirmPage} hideNavBar/>
         <Scene key="SubscriptionPage" component={SubscriptionPage} hideNavBar/>

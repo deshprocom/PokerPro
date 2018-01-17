@@ -272,9 +272,11 @@ const images = {
     forward: require('../../source/comment/forward.png'),
     person_dynamic: require('../../source/comment/person_dynamic.png'),
     listLike: require('../../source/comment/listLike.png'),
-
-    clickImg:require('../../source/crowdfundings/clickImg.png'),
-    clickImgBlue:require('../../source/crowdfundings/clickImgBlue.png')
+    black_fire: require('../../source/crowd/black_fire.png'),
+    poker_b: require('../../source/navigation/poker_b.png'),
+    crowd: require('../../source/navigation/crowd.png'),
+    clickImg: require('../../source/crowdfundings/clickImg.png'),
+    clickImgBlue: require('../../source/crowdfundings/clickImgBlue.png')
 
 
 };

@@ -44,6 +44,11 @@ export default class Router {
 
     }
 
+
+    toPokerB() {
+        this.stackPush({name: 'PokerB'})
+    }
+
     toRiskWarningPage() {
         this.stackPush({name: 'RiskWarningPage'})
     }
@@ -69,6 +74,7 @@ export default class Router {
             }
         })
     }
+
     toSelectPlayer() {
         this.stackPush({
             name: 'SelectPlayerPage'
