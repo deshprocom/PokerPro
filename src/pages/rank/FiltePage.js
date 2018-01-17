@@ -74,7 +74,7 @@ export default class FiltePage extends Component {
                 <TouchableOpacity
                     onPress={this._sureSendType}
                     style={[{backgroundColor: Colors._161817, marginLeft: 48, borderRadius: 2}, styles.side_btn]}>
-                    <Text style={{fontSize: 15, color: Colors.text_choice_btn}}
+                    <Text style={{fontSize: 15, color: Colors._FFE}}
                     >{I18n.t('alert_sure')}</Text>
                 </TouchableOpacity>
             </View>

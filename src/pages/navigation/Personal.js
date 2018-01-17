@@ -11,8 +11,6 @@ import {umengEvent} from '../../utils/UmengEvent';
 import I18n from 'react-native-i18n';
 import JpushHelp from '../../services/JpushHelper';
 import {connect} from 'react-redux';
-import {BlurView} from 'react-native-blur';
-import {Badge, NavigationBar} from '../../components';
 import {FETCH_SUCCESS, GET_PROFILE, GET_UNREAND_MSG} from '../../actions/ActionTypes';
 
 
@@ -55,46 +53,42 @@ class Personal extends Component {
     renderItem = () => {
         return <View>
 
-            <TouchableOpacity style={stylesP.personalView} onPress={() => {
-              if (isEmptyObject(login_user)) {
-                router.toLoginFirstPage()
-            } else {
-                router.toPersonDynamic()
-            }
+            {this._item(stylesP.item_view, Images.person_dynamic, stylesP.img_dy,
+                I18n.t('person_dynamic'), () => {
+                    if (isEmptyObject(login_user)) {
+                        router.toLoginFirstPage()
+                    } else {
+                        router.toPersonDynamic()
+                    }
 
-            }}>
-                <View style={[stylesP.personDynamic]}>
-                    <Image style={{width: 23, height: 22, marginLeft: 20}} source={Images.person_dynamic}/>
-                    <Text style={[stylesP.personalText]}>{I18n.t('person_dynamic')}</Text>
-                    <View style={{flex: 1}}/>
+                })}
 
-                    <Image style={stylesP.personalImg} source={Images.is}/>
-                </View>
-            </TouchableOpacity>
-            <View style={{height:3,width:'100%'}}/>
-            <TouchableOpacity style={stylesP.personalView} onPress={() => {
-                umengEvent('more_business');
-                router.toBusinessPage()
-            }}>
-                <View style={[stylesP.personalView2]}>
-                    <Image style={{width: 21, height: 22, marginLeft: 20}} source={Images.business}/>
-                    <Text style={stylesP.personalText}>{I18n.t('business_cooperation')}</Text>
-                    <View style={{flex: 1}}/>
+            <View style={{height: 3, width: '100%'}}/>
+            {this._item(stylesP.item_view, Images.crowd, stylesP.img_dy,
+                '赞助记录', () => {
+                    if (isEmptyObject(login_user)) {
+                        router.toLoginFirstPage()
+                    } else {
+                        router.toPersonDynamic()
+                    }
 
-                    <Image style={stylesP.personalImg} source={Images.is}/>
-                </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={[stylesP.personalView, {marginTop: 1}]} onPress={() => {
-                router.toSettingPage()
-            }}>
-                <View style={stylesP.personalView2}>
-                    <Image style={{width: 23, height: 23, marginLeft: 20}} source={Images.settings}/>
-                    <Text style={stylesP.personalText}>{I18n.t('setting')}</Text>
-                    <View style={{flex: 1}}/>
+                })}
 
-                    <Image style={stylesP.personalImg} source={Images.is}/>
-                </View>
-            </TouchableOpacity>
+            <View style={{height: 1, width: '100%'}}/>
+
+            {this._item(stylesP.item_view, Images.business, {width: 21, height: 22, marginLeft: 20},
+                I18n.t('business_cooperation'), () => {
+                    umengEvent('more_business');
+                    router.toBusinessPage()
+
+                })}
+            <View style={{height: 1, width: '100%'}}/>
+            {this._item(stylesP.item_view, Images.settings, {width: 23, height: 23, marginLeft: 20},
+                I18n.t('setting'), () => {
+                    router.toSettingPage()
+
+                })}
+
 
             <TouchableOpacity style={[stylesP.personalView, {marginTop: 20}]} onPress={() => {
                 Linking.openURL('tel:0755-23919844');
@@ -109,35 +103,14 @@ class Personal extends Component {
     };
 
 
-    _msgItem = () => {
-        return <TouchableOpacity style={stylesP.personalView} onPress={() => {
-            umengEvent('home_notification');
-            if (isEmptyObject(login_user)) {
-                router.toLoginFirstPage()
-            } else {
+    _item = (itemStyle, img, imgStyle, title, onPress) => {
+        return <TouchableOpacity style={itemStyle} onPress={onPress}>
+            <Image style={imgStyle} source={img}/>
+            <Text style={stylesP.personalText}>{title}</Text>
+            <View style={{flex: 1}}/>
 
-                JpushHelp.iosSetBadge(0);
-                router.toMessageCenter()
-            }
-        }}>
-            <View style={stylesP.personalView2}>
-                <Image style={stylesP.personalView2Img} source={Images.speaker}/>
-                <Text style={stylesP.personalText}>{I18n.t('message')}</Text>
-                <View style={{flex: 1}}/>
-
-                {this._msgBadge()}
-
-                <Image style={stylesP.personalImg} source={Images.is}/>
-            </View>
+            <Image style={stylesP.personalImg} source={Images.is}/>
         </TouchableOpacity>
-
-    };
-
-    _msgBadge = () => {
-        if (!isEmptyObject(this.props.unread))
-            return <Badge textStyle={{color: '#fff',}} style={{marginRight: 15,}}>
-                {this.props.unread.unread_count}
-            </Badge>
     };
 
 
@@ -159,16 +132,6 @@ class Personal extends Component {
             return I18n.t('ple_sign')
     };
 
-    _username = () => {
-        const {profile} = this.props;
-        return profile.user_name ?
-            <Text style={stylesP.personID}>ID:{profile.user_name ? profile.user_name : ''}</Text> : null;
-
-    };
-
-    imageLoaded = () => {
-        this.setState({viewRef: findNodeHandle(this.refs.backgroundImage)})
-    };
 
     readerMe = () => {
         const {profile} = this.props;
@@ -225,6 +188,14 @@ class Personal extends Component {
                     <Image style={{marginRight: 17, width: 8, height: 15}} source={Images.rightImg}/>
                 </TouchableOpacity>
 
+                <TouchableOpacity style={{alignItems: 'center', marginTop: 20, marginBottom: 17}}>
+                    <Text style={{fontSize: 24, color: Colors._FFE}}>24232.23</Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 5}}>
+                        <Image style={{height: 18, width: 18}} source={Images.poker_b}/>
+                        <Text style={{fontSize: 14, color: Colors._FFE, marginLeft: 3}}>扑客币</Text>
+                    </View>
+
+                </TouchableOpacity>
 
             </View>
 
@@ -261,62 +232,6 @@ class Personal extends Component {
 
     };
 
-    renderPerson = () => {
-        let props = Platform.OS === 'ios' ? {
-            // blurType: "light",
-            // blurAmount: 18
-        } : {
-            viewRef: this.state.viewRef,
-            downsampleFactor: 10,
-            overlayColor: 'rgba(255,255,255,.4)'
-        };
-
-        const {profile} = this.props;
-        return (<Animated.Image
-            ref={'backgroundImage'}
-            style={stylesP.blurImg}
-            source={Images.home_bg}
-            onLoadEnd={this.imageLoaded}
-        >
-            <BlurView {...props} style={stylesP.blur}/>
-            <View style={stylesP.personRadius}>
-                <TouchableOpacity
-                    onPress={() => {
-                        if (!isEmptyObject(login_user))
-                            router.toPersonPage()
-                        else
-                            router.toLoginFirstPage()
-
-                    }}
-                    style={stylesP.personRadius2}>
-                    <Image style={{width: 74, height: 74, borderRadius: 37}} source={this._avatar()}/>
-                </TouchableOpacity>
-            </View>
-            <Text
-                style={stylesP.personSignature2}>{profile.nick_name ? profile.nick_name : ''}</Text>
-            <Text style={stylesP.personSignature}>{this._signature()}</Text>
-
-            {this._username()}
-
-            {this._msgView()}
-        </Animated.Image>)
-    };
-
-
-    _msgView = () => {
-        return <TouchableOpacity
-            style={{
-                height: 50, width: 44, alignItems: 'center', justifyContent: 'center',
-                position: 'absolute', top: Metrics.statusBarHeight, right: 10
-            }}
-            testID="btn_bar_right"
-            onPress={this.toMessagePage}
-            activeOpacity={1}>
-            <Image style={stylesP.msgImg}
-                   source={this._imgNotice()}
-            />
-        </TouchableOpacity>;
-    };
 
     toMessagePage = () => {
         umengEvent('home_notification');
@@ -340,6 +255,18 @@ class Personal extends Component {
 }
 
 const stylesP = StyleSheet.create({
+    img_dy: {
+        width: 23,
+        height: 22,
+        marginLeft: 20
+    },
+    item_view: {
+        backgroundColor: 'white',
+        height: 48,
+        flexDirection: 'row',
+        alignItems: 'center',
+
+    },
     blurImg: {
         height: 260,
         width: '100%',
@@ -409,13 +336,13 @@ const stylesP = StyleSheet.create({
     },
     personSignature: {
         fontSize: 13,
-        color: '#eeeeee',
+        color: Colors._888,
         marginTop: 8,
         backgroundColor: 'transparent'
     },
     personSignature2: {
         fontSize: 17,
-        color: '#ffffff',
+        color: Colors._CCC,
         fontWeight: 'bold',
         marginTop: 8,
         backgroundColor: 'transparent'
@@ -433,7 +360,8 @@ const stylesP = StyleSheet.create({
     },
     meView: {
         backgroundColor: '#090909',
-        height: 180
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     orderView: {flexDirection: 'row', height: 82, width: '100%', backgroundColor: 'white'},
     btnOrder: {flex: 1, justifyContent: 'center', alignItems: 'center'},
@@ -444,7 +372,7 @@ const stylesP = StyleSheet.create({
         color: Colors.txt_444,
         marginTop: 8
     },
-    personDynamic:{
+    personDynamic: {
         width: Metrics.screenWidth,
         flexDirection: 'row',
         alignItems: 'center',

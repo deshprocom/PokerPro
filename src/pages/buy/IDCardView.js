@@ -212,7 +212,7 @@ class IDCardView extends Component {
                 <View style={styles.choice_view}>
                     <Button style={[styles.choice_btn, styles.choice_btn_right,
                         {backgroundColor: choice_id === 'chinese_id' ? '#16181D' : Colors.bg_f5}]}
-                            textStyle={[styles.choice_text_btn, {color: choice_id === 'chinese_id' ? Colors.text_choice_btn : Colors.txt_444}]}
+                            textStyle={[styles.choice_text_btn, {color: choice_id === 'chinese_id' ? Colors._FFE : Colors.txt_444}]}
                             onPress={() => {
                                 this.setState({
                                     choice_id: 'chinese_id',
@@ -223,7 +223,7 @@ class IDCardView extends Component {
 
                     <Button
                         style={[styles.choice_btn, {backgroundColor: choice_id === 'passport_id' ? '#16181D' : Colors.bg_f5}]}
-                        textStyle={[styles.choice_text_btn, {color: choice_id === 'passport_id' ? Colors.text_choice_btn : Colors.txt_444}]}
+                        textStyle={[styles.choice_text_btn, {color: choice_id === 'passport_id' ? Colors._FFE : Colors.txt_444}]}
                         onPress={() => {
                             this.setState({
                                 choice_id: 'passport_id',
