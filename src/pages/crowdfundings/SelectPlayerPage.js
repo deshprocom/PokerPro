@@ -16,6 +16,17 @@ import I18n from 'react-native-i18n';
 
 export default class SelectPlayerPage extends PureComponent {
 
+    state = {
+        data: {
+            name: 'NCBP国家杯棋牌职业大师赛棋牌职业大师赛',
+            reward:'800万',
+            address:'北京香格里拉酒店',
+            price:2000,
+            begin_date:'2017.09.11',
+            end_date:'2017.09.12'
+        }
+    };
+
     _renderItem=()=>{
         return <View>
             <PlayerItem/>
@@ -23,6 +34,7 @@ export default class SelectPlayerPage extends PureComponent {
     };
 
     render() {
+        const {name,reward,address,price,begin_date,end_date} =this.state.data;
         let data = [1,2,3,4,5,6];
         return (
             <View style={ApplicationStyles.bgContainer}>
@@ -37,22 +49,20 @@ export default class SelectPlayerPage extends PureComponent {
                 <ScrollView>
                     <View style={styles.topBar}>
                         <View style={styles.barLeft}>
-                            <Text style={styles.leftTheme}>NCBP国家杯棋牌职业大师赛棋牌职业大师赛</Text>
-                            <Text style={styles.leftTxt}>入场资格：¥2000</Text>
-                            <Text style={styles.leftTxt2}>2017.09.11—2017.09.12</Text>
-                            <Text style={styles.leftTxt2}>地点：北京香格里拉酒店</Text>
+                            <Text style={styles.leftTheme}>{name}</Text>
+                            <Text style={styles.leftTxt}>{I18n.t('admission')}：¥{price}</Text>
+                            <Text style={styles.leftTxt2}>{begin_date}-{end_date}</Text>
+                            <Text style={styles.leftTxt2}>{I18n.t('address')}：{address}</Text>
                         </View>
                         <View style={styles.line}/>
                         <View style={styles.barRight}>
-                            <Text style={styles.RightReward}>800万</Text>
-                            <Text style={styles.RightTxt}>奖励圈</Text>
+                            <Text style={styles.RightReward}>{reward}</Text>
+                            <Text style={styles.RightTxt}>{I18n.t('reward_circle')}</Text>
                         </View>
                     </View>
 
                     <View style={styles.listView}>
                         <FlatList
-
-
                             data={data}
                             renderItem={this._renderItem}
                             keyExtractor={(item, index) => `playerList${index}`}
@@ -101,7 +111,8 @@ const styles = StyleSheet.create({
     leftTheme:{
         fontSize: 14,
         color: '#333333',
-        fontWeight:'bold'
+        fontWeight:'bold',
+        lineHeight:20
     },
     leftTxt:{
         marginTop:7,

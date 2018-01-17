@@ -274,7 +274,9 @@ const images = {
     listLike: require('../../source/comment/listLike.png'),
     black_fire: require('../../source/crowd/black_fire.png'),
     poker_b: require('../../source/navigation/poker_b.png'),
-    crowd: require('../../source/navigation/crowd.png')
+    crowd: require('../../source/navigation/crowd.png'),
+    clickImg: require('../../source/crowdfundings/clickImg.png'),
+    clickImgBlue: require('../../source/crowdfundings/clickImgBlue.png')
 
 
 };

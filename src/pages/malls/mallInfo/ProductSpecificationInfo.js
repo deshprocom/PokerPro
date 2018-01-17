@@ -78,9 +78,9 @@ export default class ProductSpecificationInfo extends PureComponent {
 
             <View style={{marginRight: 29, flexDirection: 'row', alignItems: 'center', marginTop: 14}}>
                 <TouchableOpacity
-                    style={[styleP.buyTouch, number === 0 ? styleCutDisable : styleCut]}
+                    style={[styleP.buyTouch, number === 1 ? styleCutDisable : styleCut]}
                     onPress={() => {
-                        if (number > 0) {
+                        if (number > 1 ) {
                             this.setState({number: --number})
                         }
 
