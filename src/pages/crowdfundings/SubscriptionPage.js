@@ -13,26 +13,42 @@ import {NavigationBar} from '../../components';
 import {Colors,Images,ApplicationStyles} from '../../Themes';
 import {showToast} from '../../utils/ComonHelper';
 import I18n from 'react-native-i18n';
+import SubscriptionBottom from './SubscriptionBottom';
 
 export default class SubscriptionPage extends PureComponent {
     state={
-
+        subscription:{
+            img: 'https://cdn-upyun.deshpro.com/uploads/player/avatar/7/thumb_ee03c12f507b1314176cd8deca6b260e.jpg?suffix=1496305626',
+            name: '马叉虫',
+            message:'NCBP国家杯棋牌职业大师赛-Day2',
+            count:12,
+            stock:30,
+            price:'100元',
+            intro:'一.请谨慎确定购买份数，提交订单后不可以重复购买。 '
+        },
+        number:1
     };
 
     buyQuantity = () => {
+        let {stock} = this.state.subscription;
+        let {number} = this.state;
         const styleCutDisable = {
             backgroundColor: '#FBFAFA'
         };
         const styleCut = {
             backgroundColor: '#F6F5F5'
         };
-        const item={'number':2,'stock':30};
-        const {stock,number} = item;
 
         return (
             <View style={styles.quantity}>
                 <TouchableOpacity
-                    style={[styles.buyTouch, number === 1 ? styleCutDisable : styleCut]}>
+                    style={[styles.buyTouch, number === 1 ? styleCutDisable : styleCut]}
+                    onPress={() => {
+                        if (number > 1) {
+                            this.setState({number: --number})
+                        }
+
+                    }}>
                     <Image style={styles.buyImgCut} source={Images.cut}/>
                 </TouchableOpacity>
 
@@ -43,11 +59,14 @@ export default class SubscriptionPage extends PureComponent {
                 <TouchableOpacity
                     style={styles.buyTouch}
                     onPress={() => {
-                        if (number >= stock) {
-                            showToast(I18n.t('max_stock'));
-                            return;
+
+                        if (number < stock && number>=1) {
+                            this.setState({
+                                number: ++number
+                            })
+                        } else {
+                            showToast(I18n.t('max_stock'))
                         }
-                        ++item.number;
 
                     }}>
                     <Image style={styles.buyImgAdd} source={Images.add}/>
@@ -57,6 +76,7 @@ export default class SubscriptionPage extends PureComponent {
     };
 
     render() {
+        const {img,name,message,count,price,intro} = this.state.subscription;
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
@@ -69,27 +89,28 @@ export default class SubscriptionPage extends PureComponent {
                     leftBtnPress={() => router.pop()}/>
 
                 <View style={styles.itemPage}>
-                    <Image style={{width:95,height:120,marginLeft:19}} source={Images.camera} alt=""/>
+                    <Image style={{width:95,height:120,marginLeft:19}} source={{uri:img}}/>
                     <View style={styles.pageRight}>
-                        <Text style={styles.name}>马叉虫</Text>
-                        <Text style={styles.content}>参与赛事：NCBP国家杯棋牌职业大师赛-Day2</Text>
+                        <Text style={styles.name}>{name}</Text>
+                        <Text style={styles.content}>参与赛事：{message}</Text>
                         <View style={{flex:1}}/>
                         <View style={{flexDirection:'row',alignItems:'center'}}>
-                            <Text style={styles.priceTxt}>每份单价：</Text><Text style={styles.price}>100元</Text>
+                            <Text style={styles.priceTxt}>每份单价：</Text><Text style={styles.price}>{price}</Text>
                         </View>
                     </View>
                 </View>
 
                 <View  style={styles.buyView}>
-                    <Text style={styles.txt1}>购买份数（限购</Text><Text style={styles.txt2}>12</Text><Text style={styles.txt1}>份）</Text>
+                    <Text style={styles.txt1}>购买份数（限购</Text><Text style={styles.txt2}>{count}</Text><Text style={styles.txt1}>份）</Text>
                     <View style={{flex:1}}/>
                     {this.buyQuantity()}
                 </View>
                 <View style={styles.intro}>
                     <Text style={styles.txt}>认购说明</Text>
-                    <Text style={styles.txt}>一.请谨慎确定购买份数，提交订单后不可以重复购买。</Text>
+                    <Text style={styles.txt}>{intro}</Text>
                 </View>
 
+                <SubscriptionBottom/>
             </View>
 
 
@@ -108,9 +129,9 @@ const styles = StyleSheet.create({
         paddingBottom:15
     },
     pageRight:{
+        flex:1,
         marginLeft:15,
-        flexDirection:'column',
-        alignItems:'flex-start'
+        marginRight:28
     },
     name:{
         fontSize:15,

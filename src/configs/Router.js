@@ -44,6 +44,14 @@ export default class Router {
 
     }
 
+    toRiskWarningPage() {
+        this.stackPush({name: 'RiskWarningPage'})
+    }
+
+    toSubscriptionConfirmPage() {
+        this.stackPush({name: 'SubscriptionConfirmPage'})
+    }
+
     toSubscriptionPage() {
         this.stackPush({name: 'SubscriptionPage'})
     }
