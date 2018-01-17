@@ -16,12 +16,16 @@ import OrderBottom from '../malls/order/OrderBottom';
 import {showToast} from '../../utils/ComonHelper';
 
 export default class SubscriptionConfirmPage extends PureComponent {
-    state = {};
+    state = {
+        clickImg:false
+    };
 
     submitBtn = () => {
-
-        return showToast('支付成功，系统正在处理')
-
+        if(this.state.clickImg){
+            return showToast('成功')
+        }else{
+            return
+        }
     };
 
     render() {
@@ -71,11 +75,16 @@ export default class SubscriptionConfirmPage extends PureComponent {
                             <Text style={{color:Colors._F34}}>200.00元</Text>。</Text>
 
                     </View>
-                    <View
-                        style={{flexDirection:'row',alignItems:'center',marginTop:12,marginLeft: 17, marginRight: 17}}>
-                        <Image style={styles.img} source={Images.begin} alt=""/>
+                    <TouchableOpacity
+                        style={{flexDirection:'row',alignItems:'center',marginTop:12,marginLeft: 17, marginRight: 17}}
+                    onPress={()=>{
+                        this.setState({
+                            clickImg:!this.state.clickImg
+                        })
+                    }}>
+                        <Image style={styles.img} source={this.state.clickImg?Images.clickImgBlue:Images.clickImg} alt=""/>
                         <Text style={styles.txt}>{I18n.t('promise_message')}</Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
 
                 <OrderBottom

@@ -94,7 +94,7 @@ export default class SubscriptionPage extends PureComponent {
                         <Text style={styles.name}>{name}</Text>
                         <Text style={styles.content}>{I18n.t('join_race')}：{message}</Text>
                         <View style={{flex:1}}/>
-                        <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <View style={{flexDirection:'row',alignItems:'center',marginBottom:5}}>
                             <Text style={styles.priceTxt}>{I18n.t('part_price')}：</Text><Text style={styles.price}>{price}</Text>
                         </View>
                     </View>
@@ -131,7 +131,8 @@ const styles = StyleSheet.create({
     pageRight:{
         flex:1,
         marginLeft:15,
-        marginRight:28
+        marginRight:28,
+        marginTop:5
     },
     name:{
         fontSize:15,
@@ -212,6 +213,7 @@ const styles = StyleSheet.create({
     },
     txt:{
         fontSize: 14,
-        color: '#888888'
+        color: '#888888',
+        lineHeight:20
     }
 });

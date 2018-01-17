@@ -272,7 +272,9 @@ const images = {
     forward: require('../../source/comment/forward.png'),
     person_dynamic: require('../../source/comment/person_dynamic.png'),
     listLike: require('../../source/comment/listLike.png'),
-    black_fire:require('../../source/crowd/black_fire.png')
+
+    clickImg:require('../../source/crowdfundings/clickImg.png'),
+    clickImgBlue:require('../../source/crowdfundings/clickImgBlue.png')
 
 
 };
