@@ -21,7 +21,31 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     txt_what: {fontSize: 12, color: Colors._CCC, marginTop: 26},
-    txt_title: {fontSize: 32, color: Colors._FFE, marginRight: 5}
+    txt_title: {fontSize: 32, color: Colors._FFE, marginRight: 5},
+    view_item: {
+        backgroundColor: 'white',
+        paddingLeft: 17,
+        paddingRight: 17,
+        paddingTop: 7,
+        paddingBottom: 7
+    },
+    view_item1: {
+        justifyContent: 'space-between',
+        alignItems: 'center', flexDirection: 'row',
+
+    },
+    txt_name: {
+        fontSize: 14,
+        color: Colors.txt_444
+    },
+    txt_time: {
+        fontSize: 12,
+        color: Colors._AAA
+    },
+    txt_account: {
+        fontSize: 14,
+        color: Colors._F34
+    }
 });
 
 export default class PokerB extends PureComponent {
@@ -43,6 +67,24 @@ export default class PokerB extends PureComponent {
                 <Text style={styles.txt_what}>什么是扑客币？</Text>
             </View>
 
+            {this.renderItem()}
+
+        </View>
+    }
+
+    renderItem = () => {
+        return <View style={styles.view_item}>
+
+            {this._item(styles.txt_name, '兑换商品', styles.txt_time, '2018-1-23  23:34')}
+            <View style={{height: 5}}/>
+            {this._item(styles.txt_time, '余额：0.00', styles.txt_account, '-1000.00')}
+        </View>
+    };
+
+    _item = (leftStyle, left, rightStyle, right) => {
+        return <View style={styles.view_item1}>
+            <Text style={leftStyle}>{left}</Text>
+            <Text style={rightStyle}>{right}</Text>
         </View>
     }
 }
