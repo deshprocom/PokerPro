@@ -44,6 +44,10 @@ export default class Router {
 
     }
 
+    toPokerB() {
+        this.stackPush({name: 'PokerB'})
+    }
+
     toPokerInfo() {
         this.stackPush({name: 'PokerInfo'})
     }
@@ -57,12 +61,11 @@ export default class Router {
             }
         })
     }
+
     toSelectPlayer() {
         this.stackPush({
             name: 'SelectPlayerPage',
-            params: {
-
-            }
+            params: {}
         })
     }
 

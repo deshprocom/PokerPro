@@ -66,11 +66,7 @@ class Personal extends Component {
             <View style={{height: 3, width: '100%'}}/>
             {this._item(stylesP.item_view, Images.crowd, stylesP.img_dy,
                 '赞助记录', () => {
-                    if (isEmptyObject(login_user)) {
-                        router.toLoginFirstPage()
-                    } else {
-                        router.toPersonDynamic()
-                    }
+                    global.router.toPokerB()
 
                 })}
 
@@ -188,7 +184,9 @@ class Personal extends Component {
                     <Image style={{marginRight: 17, width: 8, height: 15}} source={Images.rightImg}/>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={{alignItems: 'center', marginTop: 20, marginBottom: 17}}>
+                <TouchableOpacity
+                    onPress={() => global.router.toPokerB()}
+                    style={{alignItems: 'center', marginTop: 20, marginBottom: 17}}>
                     <Text style={{fontSize: 24, color: Colors._FFE}}>24232.23</Text>
                     <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 5}}>
                         <Image style={{height: 18, width: 18}} source={Images.poker_b}/>
