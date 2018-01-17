@@ -24,7 +24,7 @@ export default class SubscriptionBottom extends PureComponent {
                 global.router.toSubscriptionConfirmPage()
             }}>
                 <View style={styles.bottomView}>
-                    <Text style={styles.txt}>认购</Text>
+                    <Text style={styles.txt}>{I18n.t('subscription')}</Text>
                 </View>
             </TouchableOpacity>
 

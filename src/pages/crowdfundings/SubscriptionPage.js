@@ -92,21 +92,21 @@ export default class SubscriptionPage extends PureComponent {
                     <Image style={{width:95,height:120,marginLeft:19}} source={{uri:img}}/>
                     <View style={styles.pageRight}>
                         <Text style={styles.name}>{name}</Text>
-                        <Text style={styles.content}>参与赛事：{message}</Text>
+                        <Text style={styles.content}>{I18n.t('join_race')}：{message}</Text>
                         <View style={{flex:1}}/>
                         <View style={{flexDirection:'row',alignItems:'center'}}>
-                            <Text style={styles.priceTxt}>每份单价：</Text><Text style={styles.price}>{price}</Text>
+                            <Text style={styles.priceTxt}>{I18n.t('part_price')}：</Text><Text style={styles.price}>{price}</Text>
                         </View>
                     </View>
                 </View>
 
                 <View  style={styles.buyView}>
-                    <Text style={styles.txt1}>购买份数（限购</Text><Text style={styles.txt2}>{count}</Text><Text style={styles.txt1}>份）</Text>
+                    <Text style={styles.txt1}>{I18n.t('purchase_copies')}（{I18n.t('limit_buy')}</Text><Text style={styles.txt2}>{count}</Text><Text style={styles.txt1}>{I18n.t('parts')}）</Text>
                     <View style={{flex:1}}/>
                     {this.buyQuantity()}
                 </View>
                 <View style={styles.intro}>
-                    <Text style={styles.txt}>认购说明</Text>
+                    <Text style={styles.txt}>{I18n.t('subscription_des')}</Text>
                     <Text style={styles.txt}>{intro}</Text>
                 </View>
 

@@ -38,16 +38,16 @@ export default class SubscriptionConfirmPage extends PureComponent {
 
                 <View style={styles.page}>
                     <View style={styles.title}>
-                        <Text style={styles.titleTxt}>订单详情</Text>
+                        <Text style={styles.titleTxt}>{I18n.t('order_info')}</Text>
                     </View>
 
                     <View style={[styles.message,{paddingTop:15}]}>
-                        <Text style={styles.messageTxt1}>商品金额</Text>
+                        <Text style={styles.messageTxt1}>{I18n.t('order_price')}</Text>
 
                         <Text style={styles.messageTxt2}>¥2182.8</Text>
                     </View>
                     <View style={[styles.message,{marginTop:6,paddingBottom:13}]}>
-                        <Text style={styles.messageTxt1}>购买份数</Text>
+                        <Text style={styles.messageTxt1}>{I18n.t('purchase_copies')}</Text>
 
                         <Text style={styles.messageTxt1}>X2</Text>
                     </View>
@@ -56,7 +56,7 @@ export default class SubscriptionConfirmPage extends PureComponent {
 
                 <View style={styles.buy}>
                     <Text style={styles.messageTxt2}>¥2182.8</Text>
-                    <Text style={styles.messageTxt1}>实付款：</Text>
+                    <Text style={styles.messageTxt1}>{I18n.t('payment')}：</Text>
 
                 </View>
 
@@ -74,7 +74,7 @@ export default class SubscriptionConfirmPage extends PureComponent {
                     <View
                         style={{flexDirection:'row',alignItems:'center',marginTop:12,marginLeft: 17, marginRight: 17}}>
                         <Image style={styles.img} source={Images.begin} alt=""/>
-                        <Text style={styles.txt}>我承认以上信息真实有效</Text>
+                        <Text style={styles.txt}>{I18n.t('promise_message')}</Text>
                     </View>
                 </View>
 
