@@ -544,6 +544,11 @@
   "limit_buy":"限购",
   "parts":"份",
   "part_price":"每份单价",
-  "join_race":"参与赛事"
+  "join_race":"参与赛事",
+  "subscription_info":"赞助详情",
+  "announce_time":"公布时间",
+  "prize_time":"发奖时间",
+  "betting_information":"投注信息",
+  "price_per":"每股单价"
 }
 
