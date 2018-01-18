@@ -128,7 +128,8 @@ export default class RecordList extends PureComponent {
             race_name, price, copies, total
         } = this.state.info;
 
-        return <View>
+        return <TouchableOpacity
+            onPress={() => global.router.toSubscriptionInfoPage()}>
             <View style={styles.view1}>
                 <Text style={styles.txt_order}>{`订单编号：${order_no}`}</Text>
                 <Text style={[styles.txt_order, this.orderStyle(status)]}>待公布</Text>
@@ -155,7 +156,7 @@ export default class RecordList extends PureComponent {
                     <Text style={{fontSize: 18}}>{total}</Text></Text>
             </View>
 
-        </View>
+        </TouchableOpacity>
 
     };
 
