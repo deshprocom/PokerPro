@@ -92,12 +92,13 @@ import SubscriptionPage from '../pages/crowdfundings/SubscriptionPage';
 import SubscriptionConfirmPage from '../pages/crowdfundings/SubscriptionConfirmPage';
 import RiskWarningPage from '../pages/crowdfundings/RiskWarningPage';
 import RecordList from '../pages/crowdfundings/RecordList';
-
+import SubscriptionInfoPage from '../pages/crowdfundings/SubscriptionInfoPage';
 
 
 export const Stacks = Actions.create(
     <Scene key="root">
-            <Scene key="RecordList" component={RecordList} hideNavBar/>
+        <Scene key="RecordList" component={RecordList} hideNavBar/>
+        <Scene key="SubscriptionInfoPage" component={SubscriptionInfoPage} hideNavBar/>
         <Scene key="PokerB" component={PokerB} hideNavBar/>
         <Scene key="RiskWarningPage" component={RiskWarningPage} hideNavBar/>
         <Scene key="SubscriptionConfirmPage" component={SubscriptionConfirmPage} hideNavBar/>

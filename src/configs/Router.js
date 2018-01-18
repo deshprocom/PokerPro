@@ -53,6 +53,10 @@ export default class Router {
         this.stackPush({name: 'PokerB'})
     }
 
+    toSubscriptionInfoPage() {
+        this.stackPush({name: 'SubscriptionInfoPage'})
+    }
+
     toRiskWarningPage() {
         this.stackPush({name: 'RiskWarningPage'})
     }
