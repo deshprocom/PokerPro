@@ -66,7 +66,7 @@ class Personal extends Component {
             <View style={{height: 3, width: '100%'}}/>
             {this._item(stylesP.item_view, Images.crowd, stylesP.img_dy,
                 '赞助记录', () => {
-                    global.router.toPokerB()
+                    global.router.toRecordList()
 
                 })}
 

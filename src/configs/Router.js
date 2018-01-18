@@ -44,6 +44,10 @@ export default class Router {
 
     }
 
+    toRecordList() {
+        this.stackPush({name: 'RecordList'})
+    }
+
 
     toPokerB() {
         this.stackPush({name: 'PokerB'})
