@@ -24,8 +24,6 @@ export default class SubscriptionConfirmPage extends PureComponent {
         if(this.state.clickImg){
              showToast('成功');
             return global.router.toSubscriptionInfoPage()
-        }else{
-            return
         }
     };
 
