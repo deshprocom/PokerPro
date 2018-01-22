@@ -20,9 +20,11 @@ export default class Information extends Component {
         hot_infos: []
     };
 
-    setInfos = (hot_infos) => {
-        console.log('hot_infos', hot_infos)
-        this.setState({hot_infos})
+    setInfos = (infos) => {
+        console.log('hot_infos', infos);
+        let {hot_infos} = this.state;
+
+        this.setState({hot_infos: hot_infos.concat(infos)})
     };
 
 
