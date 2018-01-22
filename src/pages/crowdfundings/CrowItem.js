@@ -159,9 +159,11 @@ export default class CrowItem extends PureComponent {
     };
 
     renderComing = (status, endDate) => {
-        if (status === 'coming')
+        let date = new Date(endDate).getTime();
+        console.log("endDate:",endDate)
+        if (status === 'unbegin')
             return <CrowdCountDown
-                date={endDate}
+                date={date}
                 days={{plural: '天 ', singular: '天 '}}
                 hours='时'
                 mins='分'
