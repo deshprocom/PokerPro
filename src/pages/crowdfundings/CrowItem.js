@@ -113,15 +113,15 @@ export default class CrowItem extends PureComponent {
                 <View style={{flexDirection: 'row'}}>
                     <View style={{flex: 0.75}}>
                         <Text style={styles.txtName}>{race.name}</Text>
-                        <Text style={styles.txtTime}>{`入赛资格：¥${cf_cond}  ${convertDate(race.begin_date,'YYYY.MM.DD')} - ${convertDate(race.end_date,'YYYY.MM.DD')}`}</Text>
-                        <Text style={styles.txtTime}>地点：{race.location}</Text>
+                        <Text style={styles.txtTime}>{`${I18n.t('qualification')}：¥${cf_cond}  ${convertDate(race.begin_date,'YYYY.MM.DD')} - ${convertDate(race.end_date,'YYYY.MM.DD')}`}</Text>
+                        <Text style={styles.txtTime}>${I18n.t('address')}：{race.location}</Text>
                     </View>
 
                     <View style={styles.separator}/>
 
                     <View style={{flex: 0.25, alignItems: 'flex-end'}}>
                         <Text style={styles.txtPrize}>{race.prize}</Text>
-                        <Text style={styles.txtTime}>奖励圈</Text>
+                        <Text style={styles.txtTime}>{I18n.t('reward_circle')}</Text>
                     </View>
                 </View>
 
@@ -133,8 +133,8 @@ export default class CrowItem extends PureComponent {
 
                 <View style={styles.saleStyle}>
 
-                    {this.renderCrowd('赞助总额', cf_total_money)}
-                    {this.renderCrowd('认购金额', cf_offer_money)}
+                    {this.renderCrowd(I18n.t('total_sponsorship'), cf_total_money)}
+                    {this.renderCrowd(I18n.t('subscription_amount'), cf_offer_money)}
                 </View>
             </View>
 

@@ -549,6 +549,9 @@
   "announce_time":"公布时间",
   "prize_time":"发奖时间",
   "betting_information":"投注信息",
-  "look_detail":"查看"
+  "look_detail":"查看",
+  "qualification":"入赛资格",
+  "total_sponsorship":"赞助总额",
+  "subscription_amount":"认购金额"
 }
 
