@@ -4,7 +4,7 @@
  * Desc:
  */
 
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, ScrollView, FlatList,
     StyleSheet, Image, Text
@@ -12,7 +12,7 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import Navbar from './Navbar';
 import DetailChild from './DetailChild';
-import {ActionPay} from '../../components';
+import {ActionPay, BaseComponent} from '../../components';
 import {getCrowdfundingsInfo} from '../../services/CrowdfundingsDao';
 import {isEmptyObject} from '../../utils/ComonHelper';
 import I18n from 'react-native-i18n';
@@ -43,9 +43,9 @@ export const footer = () => {
     </View>
 };
 
-export default class CrowdDetail extends PureComponent {
+export default class CrowdDetail extends Component {
     state = {
-        crowdfundingsInfo: {}
+        info: {}
     };
 
     componentDidMount() {
@@ -53,7 +53,7 @@ export default class CrowdDetail extends PureComponent {
         getCrowdfundingsInfo({id: id}, data => {
             console.log("crowdfundingsInfo:", data);
             this.setState({
-                crowdfundingsInfo: data
+                info: data
             })
         }, err => {
 
@@ -62,17 +62,21 @@ export default class CrowdDetail extends PureComponent {
     };
 
     render() {
-        const {crowdfundingsInfo} = this.state;
-        return <View style={ApplicationStyles.bgContainer}>
-            <Navbar
-                info={crowdfundingsInfo}/>
-            <DetailChild
-                info={crowdfundingsInfo}/>
+        const {info} = this.state;
 
-            {footer()}
+        return <View style={ApplicationStyles.bgContainer}>
+
+            {isEmptyObject(info) ? null : <Navbar
+                    info={info}/>}
+
+            <DetailChild
+                info={info}/>
+
+            {/*{footer()}*/}
             <ActionPay
                 ref={ref => this.actionPay = ref}/>
         </View>
+
     }
 
 

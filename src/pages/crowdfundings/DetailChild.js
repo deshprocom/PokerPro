@@ -11,6 +11,7 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {ImageLoad, ProgressBar, MarkdownPlat} from '../../components';
 import I18n from 'react-native-i18n';
+import {convertDate} from '../../utils/ComonHelper';
 
 const styles = StyleSheet.create({
     cover: {
@@ -112,7 +113,7 @@ export default class DetailChild extends PureComponent {
                 scrollEventThrottle={10}
                 onScroll={this.onScroll}>
                 <ImageLoad style={styles.cover}
-                           source={{uri: master_image.url}}/>
+                           source={{uri: master_image}}/>
                 <View style={{marginLeft: 17, marginRight: 17}}>
                     <View style={{flexDirection: 'row'}}>
                         <Text style={styles.txtName}>{race.name}</Text>

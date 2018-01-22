@@ -4,13 +4,14 @@
  * Desc:
  */
 
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, StatusBar,
     StyleSheet, Image, Text
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {CrowdCountDown} from '../../components';
+import {RaceStatus} from '../../configs/Status'
 
 const styles = StyleSheet.create({
     btnLeft: {
@@ -62,17 +63,17 @@ const styles = StyleSheet.create({
     }
 });
 
-export default class Navbar extends PureComponent {
+export default class Navbar extends Component {
 
     render() {
-        const {race} = this.props.info;
-        const {end_date, status} = race;
+
+
         return <View
             style={styles.nav}>
             <StatusBar barStyle={"dark-content"}/>
             {this.renderBtn(true, Images.mall_return, styles.imgLeft)}
             <View style={{flex: 1, alignItems: 'center', height: 44, justifyContent: 'center'}}>
-                {this.renderComing(status, end_date)}
+                {this.renderComing()}
             </View>
             {this.renderBtn(false, Images.forward, styles.imgRight)}
         </View>
@@ -89,10 +90,13 @@ export default class Navbar extends PureComponent {
         </TouchableOpacity>
     };
 
-    renderComing = (status, end_date) => {
-        if (status === 'coming')
+    renderComing = () => {
+        const {race, expire_date} = this.props.info;
+        console.log(race)
+
+        if (race.status === RaceStatus.unbegin)
             return <CrowdCountDown
-                date={end_date}
+                date={expire_date}
                 days={{plural: '天 ', singular: '天 '}}
                 hours='时'
                 mins='分'
