@@ -4,18 +4,17 @@
  * Desc:
  */
 
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {
-    TouchableOpacity, View, ScrollView, FlatList,
+    TouchableOpacity, View, ScrollView,FlatList,
     StyleSheet, Image, Text
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import Navbar from './Navbar';
 import DetailChild from './DetailChild';
-import {ActionPay, BaseComponent} from '../../components';
-import {getCrowdfundingsInfo} from '../../services/CrowdfundingsDao';
-import {isEmptyObject} from '../../utils/ComonHelper';
-import I18n from 'react-native-i18n';
+import {ActionPay} from '../../components';
+
+
 
 export const footer = () => {
     return <View style={styles.footer}>
@@ -29,7 +28,7 @@ export const footer = () => {
                 style={{height: 12, width: 10, marginRight: 5}}
                 source={Images.black_fire}/>
 
-            <Text style={styles.txtLeft}>{I18n.t('timely_match')}</Text>
+            <Text style={styles.txtLeft}>及时赛报</Text>
         </TouchableOpacity>
         <View style={{flex: 1}}/>
         <TouchableOpacity
@@ -38,46 +37,28 @@ export const footer = () => {
 
             }}
             style={styles.btnRight}>
-            <Text style={styles.txtRight}>{I18n.t('subscribe')}</Text>
+            <Text style={styles.txtRight}>我要认购</Text>
         </TouchableOpacity>
     </View>
-};
+}
 
-export default class CrowdDetail extends Component {
-    state = {
-        info: {}
-    };
+export default class CrowdDetail extends PureComponent {
 
-    componentDidMount() {
-        const {id} = this.props.params.crowd;
-        getCrowdfundingsInfo({id: id}, data => {
-            console.log("crowdfundingsInfo:", data);
-            this.setState({
-                info: data
-            })
-        }, err => {
-
-        })
-
-    };
 
     render() {
-        const {info} = this.state;
-
+        const {crowd} = this.props.params;
         return <View style={ApplicationStyles.bgContainer}>
-
-            {isEmptyObject(info) ? null : <Navbar
-                    info={info}/>}
-
+            <Navbar
+                info={crowd}/>
             <DetailChild
-                info={info}/>
+                info={crowd}/>
 
-            {/*{footer()}*/}
+            {footer()}
             <ActionPay
                 ref={ref => this.actionPay = ref}/>
         </View>
-
     }
+
 
 
 }
