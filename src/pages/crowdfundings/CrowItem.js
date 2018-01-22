@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
 
 export default class CrowItem extends PureComponent {
     render() {
-        const {cf_cond, race,cf_total_money, cf_offer_money} = this.props.item;
+        const {master_image,cf_cond, race,cf_total_money, cf_offer_money} = this.props.item;
         let percent = cf_offer_money / cf_total_money;
 
         return <TouchableOpacity
@@ -106,7 +106,7 @@ export default class CrowItem extends PureComponent {
 
             <Image
                 style={styles.img}
-                source={{uri: race.big_logo}}>
+                source={{uri: master_image}}>
                 {this.raceStatus(race.status)}
             </Image>
 
@@ -159,8 +159,7 @@ export default class CrowItem extends PureComponent {
     };
 
     renderComing = (status, endDate) => {
-        let date = new Date(endDate).getTime();
-        console.log("endDate:",endDate)
+        let date = new Date(endDate).getTime().toString();
         if (status === 'unbegin')
             return <CrowdCountDown
                 date={date}

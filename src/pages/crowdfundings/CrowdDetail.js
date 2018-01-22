@@ -15,6 +15,7 @@ import DetailChild from './DetailChild';
 import {ActionPay} from '../../components';
 import {getCrowdfundingsInfo} from '../../services/CrowdfundingsDao';
 import {isEmptyObject} from '../../utils/ComonHelper';
+import I18n from 'react-native-i18n';
 
 export const footer = () => {
     return <View style={styles.footer}>
@@ -28,7 +29,7 @@ export const footer = () => {
                 style={{height: 12, width: 10, marginRight: 5}}
                 source={Images.black_fire}/>
 
-            <Text style={styles.txtLeft}>及时赛报</Text>
+            <Text style={styles.txtLeft}>{I18n.t('timely_match')}</Text>
         </TouchableOpacity>
         <View style={{flex: 1}}/>
         <TouchableOpacity
@@ -37,7 +38,7 @@ export const footer = () => {
 
             }}
             style={styles.btnRight}>
-            <Text style={styles.txtRight}>我要认购</Text>
+            <Text style={styles.txtRight}>{I18n.t('subscribe')}</Text>
         </TouchableOpacity>
     </View>
 };
@@ -62,10 +63,6 @@ export default class CrowdDetail extends PureComponent {
 
     render() {
         const {crowdfundingsInfo} = this.state;
-
-
-
-        console.log(crowdfundingsInfo)
         return <View style={ApplicationStyles.bgContainer}>
             <Navbar
                 info={crowdfundingsInfo}/>
