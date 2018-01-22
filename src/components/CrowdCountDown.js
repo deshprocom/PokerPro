@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
 class CrowdCountDown extends Component {
     static displayName = 'Simple countDown';
     static propTypes = {
-        date: PropTypes.string,
+        date: PropTypes.number,
         days: PropTypes.objectOf(PropTypes.string),
         hours: PropTypes.string,
         mins: PropTypes.string,

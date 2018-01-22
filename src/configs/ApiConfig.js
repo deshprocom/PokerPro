@@ -122,7 +122,9 @@ export default {
     person_reply: person_reply,
     delete_comment: delete_comment,
     delete_reply: delete_reply,
-    unread_comments:unread_comments
+    unread_comments: unread_comments,//查看回复未读数量
+    crowdfundings: 'crowdfundings',//获取众筹列表
+    crowd_detail: crowd_detail,//获取众筹详情
 
 
 }
@@ -137,10 +139,17 @@ function getUserId() {
 
 const page_size = 10;
 
+
+function crowd_detail(body) {
+    const {id} = body;
+    return `crowdfundings${id}`
+}
+
 function unread_comments(body) {
     const {user_id} = body;
     return `users/${user_id}/reply_unread_count`;
 }
+
 function delete_reply(body) {
     const {comment_id, id} = body;
     return `topic/comments/${comment_id}/replies/${id}`;
@@ -152,7 +161,7 @@ function delete_comment(body) {
 }
 
 export function person_reply(body) {
-    const {user_id, page,page_size} = body;
+    const {user_id, page, page_size} = body;
 
     return `users/${user_id}/receive_replies?page=${page}&page_size=${page_size}`;
 }
