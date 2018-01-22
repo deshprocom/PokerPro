@@ -174,7 +174,6 @@ export default class CrowItem extends PureComponent {
         }
         let num = str.replace(/[^0-9]+/g, '');
 
-        console.log(num)
         return num / 10000 + '万';
 
     };
