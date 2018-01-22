@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     img: {
         height: 154,
         width: '100%',
-        marginTop: 12
+        marginTop: 12,
     },
     saleStyle: {
         flexDirection: 'row',
@@ -94,9 +94,8 @@ const styles = StyleSheet.create({
 });
 
 export default class CrowItem extends PureComponent {
-
     render() {
-        const {master_image, cf_cond, race,cf_total_money, cf_offer_money} = this.props.item;
+        const {cf_cond, race,cf_total_money, cf_offer_money} = this.props.item;
         let percent = cf_offer_money / cf_total_money;
 
         return <TouchableOpacity
@@ -105,9 +104,11 @@ export default class CrowItem extends PureComponent {
 
             {this.renderComing(race.status, race.end_date)}
 
-            <ImageLoad
+            <Image
                 style={styles.img}
-                source={{uri: master_image.url}}/>
+                source={{uri: race.big_logo}}>
+                {this.raceStatus(race.status)}
+            </Image>
 
             <View>
                 <View style={{flexDirection: 'row'}}>
@@ -140,7 +141,15 @@ export default class CrowItem extends PureComponent {
 
 
         </TouchableOpacity>
-    }
+    };
+    raceStatus=(status)=>{
+        if(status === 'ended'){
+            return <Image style={{width:55,height:55}} source={Images.crowd_ended}/>
+        }else if(status === 'coming'){
+            return <Image style={{width:55,height:55}} source={Images.crowd_coming}/>
+        }else return null
+    };
+
 
     renderCrowd = (label, prize) => {
         return <View style={{flexDirection: 'row', alignItems: 'center'}}>

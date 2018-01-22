@@ -6,7 +6,7 @@
 
 import React, {PureComponent} from 'react';
 import {
-    TouchableOpacity, View, ScrollView,FlatList,
+    TouchableOpacity, View, ScrollView, FlatList,
     StyleSheet, Image, Text
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
@@ -40,18 +40,17 @@ export const footer = () => {
             <Text style={styles.txtRight}>我要认购</Text>
         </TouchableOpacity>
     </View>
-}
+};
 
 export default class CrowdDetail extends PureComponent {
-    state={
-        crowdfundingsInfo:{}
+    state = {
+        crowdfundingsInfo: {}
     };
 
     componentDidMount() {
-        this.container.open();
         const {id} = this.props.params.crowd;
         getCrowdfundingsInfo({id: id}, data => {
-            console.log("crowdfundingsInfo:",data);
+            console.log("crowdfundingsInfo:", data);
             this.setState({
                 crowdfundingsInfo: data
             })
@@ -63,6 +62,10 @@ export default class CrowdDetail extends PureComponent {
 
     render() {
         const {crowdfundingsInfo} = this.state;
+
+
+
+        console.log(crowdfundingsInfo)
         return <View style={ApplicationStyles.bgContainer}>
             <Navbar
                 info={crowdfundingsInfo}/>
@@ -74,7 +77,6 @@ export default class CrowdDetail extends PureComponent {
                 ref={ref => this.actionPay = ref}/>
         </View>
     }
-
 
 
 }
