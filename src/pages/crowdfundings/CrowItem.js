@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
     img: {
         height: 154,
         width: '100%',
-        marginTop: 12
     },
     saleStyle: {
         flexDirection: 'row',
@@ -87,6 +86,18 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: Colors._F34,
         marginLeft: 8
+    },
+    arrow: {
+        width: 0,
+        height: 0,
+        borderStyle: 'solid',
+        borderWidth: 30,
+        borderTopColor: Colors._F34,//下箭头颜色
+        borderLeftColor: Colors._F34,//右箭头颜色
+        borderBottomColor: 'transparent',//上箭头颜色
+        borderRightColor: 'transparent',//左箭头颜色
+        position: 'absolute',
+        top: 0
     }
 
 
@@ -104,9 +115,17 @@ export default class CrowItem extends PureComponent {
 
             {this.renderComing(status, endDate)}
 
-            <ImageLoad
-                style={styles.img}
-                source={{uri: image}}/>
+            <View style={{marginTop: 12}}>
+                <ImageLoad
+                    style={styles.img}
+                    source={{uri: image}}/>
+                <View style={styles.arrow}>
+
+                </View>
+
+
+            </View>
+
 
             <View>
                 <View style={{flexDirection: 'row'}}>
