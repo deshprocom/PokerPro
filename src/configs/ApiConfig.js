@@ -122,7 +122,8 @@ export default {
     person_reply: person_reply,
     delete_comment: delete_comment,
     delete_reply: delete_reply,
-    unread_comments:unread_comments
+    unread_comments:unread_comments,
+    crowdfundings_list:crowdfundings_list
 
 
 }
@@ -136,6 +137,11 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+function crowdfundings_list(body) {
+    const {page} = body;
+    return `crowdfundings?page=${page}&page_size=${page_size}`;
+}
 
 function unread_comments(body) {
     const {user_id} = body;

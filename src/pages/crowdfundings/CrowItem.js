@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {CrowdCountDown, ImageLoad, ProgressBar} from '../../components';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
+import {convertDate} from '../../utils/ComonHelper';
 
 
 const styles = StyleSheet.create({
@@ -95,24 +96,24 @@ const styles = StyleSheet.create({
 export default class CrowItem extends PureComponent {
 
     render() {
-        const {endDate, image, race, crowd_num, crowd_sale, status} = this.props.item;
-        let percent = crowd_sale / crowd_num;
+        const {expire_date, master_image, cf_cond, race,cf_total_money, cf_offer_money, status} = this.props.item;
+        let percent = cf_offer_money / cf_total_money;
 
         return <TouchableOpacity
             onPress={() => global.router.toCrowdDetailPage(this.props.item)}
             style={styles.itemContainer}>
 
-            {this.renderComing(status, endDate)}
+            {this.renderComing(status, expire_date)}
 
             <ImageLoad
                 style={styles.img}
-                source={{uri: image}}/>
+                source={{uri: master_image.url}}/>
 
             <View>
                 <View style={{flexDirection: 'row'}}>
                     <View style={{flex: 0.75}}>
                         <Text style={styles.txtName}>{race.name}</Text>
-                        <Text style={styles.txtTime}>{`入赛资格：¥${race.buy_in}  ${race.end_start_time}`}</Text>
+                        <Text style={styles.txtTime}>{`入赛资格：¥${cf_cond}  ${convertDate(race.begin_date,'YYYY.MM.DD')} - ${convertDate(race.end_date,'YYYY.MM.DD')}`}</Text>
                         <Text style={styles.txtTime}>地点：{race.location}</Text>
                     </View>
 
@@ -132,8 +133,8 @@ export default class CrowItem extends PureComponent {
 
                 <View style={styles.saleStyle}>
 
-                    {this.renderCrowd('赞助总额', crowd_num)}
-                    {this.renderCrowd('认购金额', crowd_sale)}
+                    {this.renderCrowd('赞助总额', cf_total_money)}
+                    {this.renderCrowd('认购金额', cf_offer_money)}
                 </View>
             </View>
 
