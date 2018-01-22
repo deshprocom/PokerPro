@@ -12,7 +12,7 @@ import {
 import {CrowdCountDown, ImageLoad, ProgressBar} from '../../components';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {convertDate} from '../../utils/ComonHelper';
-
+import I18n from 'react-native-i18n';
 
 const styles = StyleSheet.create({
     cardItemTimeRemainTxt: {
@@ -96,14 +96,14 @@ const styles = StyleSheet.create({
 export default class CrowItem extends PureComponent {
 
     render() {
-        const {expire_date, master_image, cf_cond, race,cf_total_money, cf_offer_money, status} = this.props.item;
+        const {master_image, cf_cond, race,cf_total_money, cf_offer_money} = this.props.item;
         let percent = cf_offer_money / cf_total_money;
 
         return <TouchableOpacity
             onPress={() => global.router.toCrowdDetailPage(this.props.item)}
             style={styles.itemContainer}>
 
-            {this.renderComing(status, expire_date)}
+            {this.renderComing(race.status, race.end_date)}
 
             <ImageLoad
                 style={styles.img}

@@ -122,8 +122,9 @@ export default {
     person_reply: person_reply,
     delete_comment: delete_comment,
     delete_reply: delete_reply,
-    unread_comments:unread_comments,
-    crowdfundings_list:crowdfundings_list
+    unread_comments: unread_comments,
+    crowdfundings_list: crowdfundings_list,
+    crowdfundings_info: crowdfundings_info
 
 
 }
@@ -137,6 +138,11 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+function crowdfundings_info(body) {
+    const {id} = body;
+    return `crowdfundings/${id}`;
+}
 
 function crowdfundings_list(body) {
     const {page} = body;
@@ -158,7 +164,7 @@ function delete_comment(body) {
 }
 
 export function person_reply(body) {
-    const {user_id, page,page_size} = body;
+    const {user_id, page, page_size} = body;
 
     return `users/${user_id}/receive_replies?page=${page}&page_size=${page_size}`;
 }

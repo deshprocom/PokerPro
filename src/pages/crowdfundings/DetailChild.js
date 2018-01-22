@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {ImageLoad, ProgressBar, MarkdownPlat} from '../../components';
+import I18n from 'react-native-i18n';
 
 const styles = StyleSheet.create({
     cover: {
@@ -103,35 +104,35 @@ export default class DetailChild extends PureComponent {
     };
 
     render() {
-        const {image, race, crowd_sale, crowd_num, mark_desc} = this.props.info;
-        let percent = crowd_sale / crowd_num;
+        const {master_image, race,cf_total_money, cf_offer_money,cf_cond} = this.props.info;
+        let percent = cf_offer_money / cf_total_money;
         return <View style={{backgroundColor: 'white'}}>
             {this.state.floatTabView ? this.renderTabView(styles.tabFloatView) : null}
             <ScrollView
                 scrollEventThrottle={10}
                 onScroll={this.onScroll}>
                 <ImageLoad style={styles.cover}
-                           source={{uri: image}}/>
+                           source={{uri: master_image.url}}/>
                 <View style={{marginLeft: 17, marginRight: 17}}>
                     <View style={{flexDirection: 'row'}}>
                         <Text style={styles.txtName}>{race.name}</Text>
 
                         <View style={styles.btnReport}>
-                            <Text style={styles.txtReport}>及时赛报</Text>
+                            <Text style={styles.txtReport}>{I18n.t('timely_match')}</Text>
                         </View>
                     </View>
 
-                    <Text style={styles.txtTime}>{`入赛资格：¥${race.buy_in}  ${race.end_start_time}`}</Text>
-                    <Text style={styles.txtTime}>地点：{race.location}</Text>
+                    <Text style={styles.txtTime}>{`${I18n.t('qualification')}：¥${cf_cond}  ${convertDate(race.begin_date,'YYYY.MM.DD')} - ${convertDate(race.end_date,'YYYY.MM.DD')}`}</Text>
+                    <Text style={styles.txtTime}>{I18n.t('address')}：{race.location}</Text>
                     <ProgressBar
                         backgroundStyle={{backgroundColor: Colors._ECE, borderRadius: 2}}
                         style={{width: Metrics.screenWidth - 34}}
                         initialProgress={percent}/>
 
                     <View style={{width: '100%', height: 70, flexDirection: 'row'}}>
-                        {this.renderTotal('5人', '选手人数')}
-                        {this.renderTotal(crowd_num + '万', '赞助总额')}
-                        {this.renderTotal(crowd_sale + '万', '认购金额')}
+                        {this.renderTotal('5人', I18n.t('player_numbers'))}
+                        {this.renderTotal(crowd_num + '万', I18n.t('total_sponsorship'))}
+                        {this.renderTotal(crowd_sale + '万', I18n.t('subscription_amount'))}
                     </View>
                 </View>
 

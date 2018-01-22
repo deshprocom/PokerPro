@@ -13,8 +13,8 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import Navbar from './Navbar';
 import DetailChild from './DetailChild';
 import {ActionPay} from '../../components';
-
-
+import {getCrowdfundingsInfo} from '../../services/CrowdfundingsDao';
+import {isEmptyObject} from '../../utils/ComonHelper';
 
 export const footer = () => {
     return <View style={styles.footer}>
@@ -43,15 +43,31 @@ export const footer = () => {
 }
 
 export default class CrowdDetail extends PureComponent {
+    state={
+        crowdfundingsInfo:{}
+    };
 
+    componentDidMount() {
+        this.container.open();
+        const {id} = this.props.params.crowd;
+        getCrowdfundingsInfo({id: id}, data => {
+            console.log("crowdfundingsInfo:",data);
+            this.setState({
+                crowdfundingsInfo: data
+            })
+        }, err => {
+
+        })
+
+    };
 
     render() {
-        const {crowd} = this.props.params;
+        const {crowdfundingsInfo} = this.state;
         return <View style={ApplicationStyles.bgContainer}>
             <Navbar
-                info={crowd}/>
+                info={crowdfundingsInfo}/>
             <DetailChild
-                info={crowd}/>
+                info={crowdfundingsInfo}/>
 
             {footer()}
             <ActionPay

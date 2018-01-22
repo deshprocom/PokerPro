@@ -65,13 +65,14 @@ const styles = StyleSheet.create({
 export default class Navbar extends PureComponent {
 
     render() {
-        const {endDate, status} = this.props.info;
+        const {race} = this.props.info;
+        const {end_date, status} = race;
         return <View
             style={styles.nav}>
             <StatusBar barStyle={"dark-content"}/>
             {this.renderBtn(true, Images.mall_return, styles.imgLeft)}
             <View style={{flex: 1, alignItems: 'center', height: 44, justifyContent: 'center'}}>
-                {this.renderComing(status, endDate)}
+                {this.renderComing(status, end_date)}
             </View>
             {this.renderBtn(false, Images.forward, styles.imgRight)}
         </View>
@@ -88,10 +89,10 @@ export default class Navbar extends PureComponent {
         </TouchableOpacity>
     };
 
-    renderComing = (status, endDate) => {
+    renderComing = (status, end_date) => {
         if (status === 'coming')
             return <CrowdCountDown
-                date={endDate}
+                date={end_date}
                 days={{plural: '天 ', singular: '天 '}}
                 hours='时'
                 mins='分'
