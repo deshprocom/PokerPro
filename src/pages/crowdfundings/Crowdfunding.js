@@ -13,16 +13,10 @@ import Carousel from './Carousel';
 import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
 import CrowItem from './CrowItem';
 import I18n from 'react-native-i18n';
-import {getCrowdfundingsList} from '../../services/CrowdfundingsDao';
+import {crowd_list} from '../../services/CrowdDao';
 
 export default class Crowdfunding extends PureComponent {
 
-    state={
-        crowdList:{},
-    };
-
-    componentDidMount() {
-    }
 
     render() {
         return <View style={ApplicationStyles.bgContainer}>
@@ -57,22 +51,9 @@ export default class Crowdfunding extends PureComponent {
 
 
     onFetch = (page = 1, startFetch, abortFetch) => {
-        try {
-            getCrowdfundingsList({page:page}, data => {
-                console.log("crowdList:",data)
-
-                if (data.length > 0) {
-                    this.setState({
-                        crowdList: data
-                    })
-                }
-                startFetch(data, 9)
-            }, err => {
-            });
-
-        }catch (err) {
-            abortFetch();
-        }
+        crowd_list({page, page_size: 20}, data => {
+            startFetch(data, 2)
+        })
 
     }
 }

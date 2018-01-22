@@ -70,6 +70,9 @@ export function getFileMine(filePath) {
 }
 
 
+
+
+
 //根据路径获取文件名
 export function getFileName(o) {
     let pos = o.lastIndexOf("/");

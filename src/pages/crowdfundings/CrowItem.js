@@ -11,8 +11,9 @@ import {
 } from 'react-native';
 import {CrowdCountDown, ImageLoad, ProgressBar} from '../../components';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {convertDate} from '../../utils/ComonHelper';
-import I18n from 'react-native-i18n';
+import {RaceStatus} from '../../configs/Status';
+import moment from 'moment';
+import _ from 'lodash'
 
 const styles = StyleSheet.create({
     cardItemTimeRemainTxt: {
@@ -44,7 +45,6 @@ const styles = StyleSheet.create({
     img: {
         height: 154,
         width: '100%',
-        marginTop: 12,
     },
     saleStyle: {
         flexDirection: 'row',
@@ -88,41 +88,56 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: Colors._F34,
         marginLeft: 8
+    },
+    arrow: {
+        position: 'absolute',
+        top: 0,
+        height: 55,
+        width: 55
     }
 
 
 });
 
 export default class CrowItem extends PureComponent {
+
     render() {
-        const {master_image,cf_cond, race,cf_total_money, cf_offer_money} = this.props.item;
-        let percent = cf_offer_money / cf_total_money;
+        const {
+            master_image, race, cf_cond, expire_date,
+            cf_offer_money, cf_total_money
+        } = this.props.item;
+        let percent = 0;
+        if (cf_total_money !== 0)
+            percent = cf_offer_money / cf_total_money;
 
         return <TouchableOpacity
             onPress={() => global.router.toCrowdDetailPage(this.props.item)}
             style={styles.itemContainer}>
 
-            {this.renderComing(race.status, race.end_date)}
+            {this.renderComing(race.status, expire_date)}
 
-            <Image
-                style={styles.img}
-                source={{uri: master_image}}>
-                {this.raceStatus(race.status)}
-            </Image>
+            <View style={{marginTop: 12}}>
+                <ImageLoad
+                    style={styles.img}
+                    source={{uri: master_image}}/>
+                {this.crowd_status(race.status)}
+
+            </View>
+
 
             <View>
                 <View style={{flexDirection: 'row'}}>
                     <View style={{flex: 0.75}}>
                         <Text style={styles.txtName}>{race.name}</Text>
-                        <Text style={styles.txtTime}>{`${I18n.t('qualification')}：¥${cf_cond}  ${convertDate(race.begin_date,'YYYY.MM.DD')} - ${convertDate(race.end_date,'YYYY.MM.DD')}`}</Text>
-                        <Text style={styles.txtTime}>${I18n.t('address')}：{race.location}</Text>
+                        <Text style={styles.txtTime}>{`入赛资格：¥${cf_cond}  ${this.race_time(race)}`}</Text>
+                        <Text style={styles.txtTime}>地点：{race.location}</Text>
                     </View>
 
                     <View style={styles.separator}/>
 
                     <View style={{flex: 0.25, alignItems: 'flex-end'}}>
-                        <Text style={styles.txtPrize}>{race.prize}</Text>
-                        <Text style={styles.txtTime}>{I18n.t('reward_circle')}</Text>
+                        <Text style={styles.txtPrize}>{this.numToW(race.prize)}</Text>
+                        <Text style={styles.txtTime}>奖励圈</Text>
                     </View>
                 </View>
 
@@ -134,35 +149,53 @@ export default class CrowItem extends PureComponent {
 
                 <View style={styles.saleStyle}>
 
-                    {this.renderCrowd(I18n.t('total_sponsorship'), cf_total_money)}
-                    {this.renderCrowd(I18n.t('subscription_amount'), cf_offer_money)}
+                    {this.renderCrowd('赞助总额', cf_total_money)}
+                    {this.renderCrowd('认购金额', cf_offer_money)}
                 </View>
             </View>
 
 
         </TouchableOpacity>
-    };
-    raceStatus=(status)=>{
-        if(status === 'ended'){
-            return <Image style={{width:55,height:55}} source={Images.crowd_ended}/>
-        }else if(status === 'coming'){
-            return <Image style={{width:55,height:55}} source={Images.crowd_coming}/>
-        }else return null
+    }
+
+    crowd_status = (status) => {
+        if (status === RaceStatus.unbegin)
+            return;
+        let src = Images.crowd_close;
+        if (status === RaceStatus.go_ahead)
+            src = Images.crowd_starting;
+        return <Image style={styles.arrow}
+                      source={src}/>
     };
 
+    numToW = (str) => {
+        if (str.length <= 0) {
+            return '0万'
+        }
+        let num = str.replace(/[^0-9]+/g, '');
+
+        return num / 10000 + '万';
+
+    };
+
+    race_time = (race) => {
+        const {begin_date, end_date} = race;
+        return moment(begin_date).format('YYYY.MM.DD') + '-' + moment(end_date).format('YYYY.MM.DD')
+    };
 
     renderCrowd = (label, prize) => {
         return <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={styles.txtCrowd}>{label}</Text>
-            <Text style={styles.txtCrowdPrize}>{prize}万</Text>
+            <Text style={styles.txtCrowdPrize}>{prize}</Text>
         </View>
     };
 
     renderComing = (status, endDate) => {
-        let date = new Date(endDate).getTime().toString();
-        if (status === 'unbegin')
+        let utc = moment.utc(endDate).valueOf();
+
+        if (status === RaceStatus.unbegin)
             return <CrowdCountDown
-                date={date}
+                date={utc / 1000}
                 days={{plural: '天 ', singular: '天 '}}
                 hours='时'
                 mins='分'

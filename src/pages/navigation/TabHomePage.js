@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {
-    View, ScrollView, StyleSheet, RefreshControl
+    View, ScrollView, StyleSheet, RefreshControl,
+    Text, ActivityIndicator
 }
     from 'react-native';
 import Races from './Races';
@@ -19,13 +20,12 @@ import {BaseComponent} from '../../components';
 import ActivityModel from '../message/ActivityModel';
 import {getActivityPush} from '../../services/AccountDao';
 import StorageKey from '../../configs/StorageKey';
-
+import I18n from 'react-native-i18n';
 
 class TabHomePage extends Component {
     state = {
         listRace: [],
         raceTickets: [],
-        hotInfos: [],
         banners: [],
         bgColor: 'transparent',
         opacity: 0,
@@ -33,7 +33,9 @@ class TabHomePage extends Component {
         next_id: '0',
         keyword: '',
         informationY: 0,
-        isRefreshing: false
+        isRefreshing: false,
+        info_page: 1,
+        load_more: ''
     };
 
     componentWillReceiveProps(newProps) {
@@ -141,20 +143,79 @@ class TabHomePage extends Component {
         }, err => {
 
         });
+
+        this.setState({
+            load_more: 'loading'
+        });
         getHotInfos(data => {
-            this.infosView && this.infosView.setInfos(data.hot_infos)
+            if (data.hot_infos.length > 0) {
+
+                this.setState({
+                    info_page: ++this.state.info_page,
+                    load_more: 'success'
+                });
+                this.infosView && this.infosView.setInfos(data.hot_infos)
+            } else {
+                this.setState({
+                    load_more: 'load_all'
+                });
+            }
+
 
         }, err => {
+            this.setState({
+                load_more: 'fail'
+            });
             setTimeout(() => {
                 alertRefresh(this._getData)
             }, 2000)
 
-        }, {page: 1, page_size: 200})
+        }, {page: 1, page_size: 20})
     };
 
     _onScroll = (event) => {
 
         this.onTopScroll(event);
+        this.scrollLoad(event);
+    };
+
+    scrollLoad = (e) => {
+
+        let {load_more, info_page} = this.state;
+        const event = e.nativeEvent;
+        const offsetY = event.contentOffset.y;
+
+        const _num = event['contentSize']['height'] - event['layoutMeasurement']['height'] - offsetY;
+        if (event['contentSize']['height'] > event['layoutMeasurement']['height'] && _num < -48
+            && load_more !== 'loading' && load_more !== 'load_all') {
+
+            this.setState({
+                load_more: 'loading'
+            });
+            setTimeout(() => {
+                getHotInfos(data => {
+                    if (data.hot_infos.length > 0) {
+
+                        this.setState({
+                            info_page: ++info_page,
+                            load_more: 'success'
+                        });
+                        this.infosView && this.infosView.setInfos(data.hot_infos)
+                    } else {
+                        this.setState({
+                            load_more: 'load_all'
+                        });
+                    }
+
+
+                }, err => {
+                    this.setState({
+                        load_more: 'fail'
+                    });
+                }, {page: info_page, page_size: 20})
+            }, 300)
+
+        }
     };
 
 
@@ -181,7 +242,7 @@ class TabHomePage extends Component {
     };
 
     render() {
-        const {listRace, raceTickets, hotInfos, banners, headlines} = this.state;
+        const {listRace, raceTickets, banners, headlines, load_more} = this.state;
 
         return (
 
@@ -210,9 +271,21 @@ class TabHomePage extends Component {
                         listRace={listRace}/>
                     <Information
                         ref={ref => this.infosView = ref}
-                        hotInfos={hotInfos}/>
-                    <View style={{height: 48}}/>
+                    />
+                    {load_more === 'loading' ? <View style={{
+                        height: 48, alignItems: 'center', justifyContent: 'center',
+                        flexDirection: 'row'
+                    }}>
+                        <Text>{I18n.t('loading')}</Text>
+                        <ActivityIndicator/>
+                    </View> : null}
 
+                    {load_more === 'load_all' ? <View style={{
+                        height: 48, alignItems: 'center', justifyContent: 'center',
+                        flexDirection: 'row'
+                    }}>
+                        <Text>{I18n.t('no_more')}</Text>
+                    </View> : null}
                 </ScrollView>
 
 

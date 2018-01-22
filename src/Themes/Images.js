@@ -277,8 +277,8 @@ const images = {
     crowd: require('../../source/navigation/crowd.png'),
     clickImg: require('../../source/crowdfundings/clickImg.png'),
     clickImgBlue: require('../../source/crowdfundings/clickImgBlue.png'),
-    crowd_coming: require('../../source/crowdfundings/coming.png'),
-    crowd_ended: require('../../source/crowdfundings/ended.png')
+    crowd_close: require('../../source/crowd/crowd_close.png'),
+    crowd_starting: require('../../source/crowd/crowd_starting.png')
 
 
 };

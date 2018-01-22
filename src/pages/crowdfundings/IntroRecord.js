@@ -189,7 +189,7 @@ Q♦ 10♦组成了同花顺，收获了巨大底池，试问天nuts花的那位
         return <View style={{backgroundColor: 'white'}}>
             <View style={styles.tab_menu}>
                 {this.btnMenu('牌手简介', 0)}
-                {this.btnMenu('牌手战绩', 1)}
+                {this.btnMenu('众筹战绩', 1)}
             </View>
 
             {this.pageMenu()}
