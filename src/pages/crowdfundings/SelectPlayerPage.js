@@ -36,7 +36,7 @@ export default class SelectPlayerPage extends Component {
     }
 
     _renderItem = (player) => {
-        const {cf_total_money, cf_offer_money} = this.props.params.crowd;
+        const {cf_total_money, cf_offer_money, race} = this.props.params.crowd;
         let percent = 0;
         if (cf_total_money !== 0)
             percent = cf_offer_money / cf_total_money;
@@ -44,7 +44,7 @@ export default class SelectPlayerPage extends Component {
             <PlayerItem player={player.item}
                         percent={percent}
                         crowd={this.props.params.crowd}
-                        crowd_id={this.props.params.crowd.id}/>
+                        race={race}/>
         </View>
     };
     race_time = (race) => {

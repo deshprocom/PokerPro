@@ -64,29 +64,31 @@ export default class Router {
     toSubscriptionConfirmPage(order_info) {
         this.stackPush({
             name: 'SubscriptionConfirmPage',
-            params:{
+            params: {
                 order_info
             }
         })
     }
 
-    toSubscriptionPage(crowd_id, player) {
+    toSubscriptionPage(crowd_id, player, race) {
         this.stackPush({
             name: 'SubscriptionPage',
             params: {
                 crowd_id: crowd_id,
-                player: player
+                player: player,
+                race: race
             }
 
         })
     }
 
-    toPokerInfo(crowd, player) {
+    toPokerInfo(crowd, player, race) {
         this.stackPush({
             name: 'PokerInfo',
             params: {
                 crowd,
-                player
+                player,
+                race
             }
         })
     }

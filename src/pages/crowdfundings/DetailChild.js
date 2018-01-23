@@ -12,7 +12,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {ImageLoad, ProgressBar, MarkdownPlat} from '../../components';
 import moment from 'moment';
 import {isEmptyObject} from '../../utils/ComonHelper';
-import {crowd_detail} from '../../services/CrowdDao';
+import _ from 'lodash'
 
 const styles = StyleSheet.create({
     cover: {
@@ -93,20 +93,8 @@ export default class DetailChild extends Component {
 
     state = {
         floatTabView: false,
-        tabIndex: 0,
-        crowd:{}
+        tabIndex: 0
     };
-    componentDidMount() {
-        const {id} = this.props.info;
-        crowd_detail({id: id}, data => {
-            console.log('crowd_detail', data)
-            this.setState({
-                crowd: data
-            })
-        }, err => {
-
-        })
-    }
 
     onScroll = (event) => {
         const offsetHeight = 400;
@@ -123,11 +111,12 @@ export default class DetailChild extends Component {
     };
 
     render() {
-        const {master_image, race, cf_total_money, cf_offer_money, mark_desc, cf_cond} = this.props.info;
-        const {categories} = this.state.crowd;
+        const {master_image, race, cf_total_money, cf_offer_money, mark_desc, cf_cond, categories,player_count} = this.props.info;
         let percent = cf_offer_money / cf_total_money;
+
         return <View style={{backgroundColor: 'white'}}>
-            {this.state.floatTabView ? this.renderTabView(styles.tabFloatView) : null}
+            {this.state.floatTabView && categories.length > 0 ?
+                this.renderTabView(categories, styles.tabFloatView) : null}
             <ScrollView
                 scrollEventThrottle={10}
                 onScroll={this.onScroll}>
@@ -150,21 +139,21 @@ export default class DetailChild extends Component {
                         initialProgress={percent}/>
 
                     <View style={{width: '100%', height: 70, flexDirection: 'row'}}>
-                        {this.renderTotal('5人', '选手人数')}
+                        {this.renderTotal(player_count, '选手人数')}
                         {this.renderTotal(cf_total_money + '万', '赞助总额')}
                         {this.renderTotal(cf_offer_money + '万', '认购金额')}
                     </View>
                 </View>
 
-                {this.renderTabView(categories, styles.tabView)}
+                {isEmptyObject(categories) ? null : this.renderTabView(categories, styles.tabView)}
 
                 <View style={{height: 10, width: '100%', backgroundColor: Colors._ECE}}/>
 
-                {this.state.tabIndex === 0 ? <MarkdownPlat
-                        markdownStr={mark_desc}/> :
-                    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                        <Text>开发中...</Text>
-                    </View>}
+                {!isEmptyObject(categories) && categories.length > 0 ?
+                    <MarkdownPlat
+                        markdownStr={categories[this.state.tabIndex].description}/> : null
+
+                }
 
                 <View style={{height: 100}}/>
 
@@ -175,15 +164,15 @@ export default class DetailChild extends Component {
     }
 
     renderTabView = (categories, tabView) => {
+
         return <View style={tabView}>
-            {isEmptyObject(categories) ? null : categories.map((item,key) => {
-                    this.renderTab(key, item.name)
-            })}
+            {categories.map((item, key) => this.renderTab(key, item.name))}
         </View>
     };
 
     renderTab = (tabIndex, name) => {
         return <TouchableOpacity
+            key={_.uniqueId()}
             onPress={() => {
                 this.setState({tabIndex})
             }}

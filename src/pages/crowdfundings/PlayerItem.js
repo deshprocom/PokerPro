@@ -19,13 +19,14 @@ export default class PlayerItem extends PureComponent {
     };
 
     render() {
+        const {player,crowd,race} = this.props;
         const {cf_player_id,name, nick_name, logo, logo_sm, join_slogan,
-            stock_unit_price, cf_money, lairage_rate, final_rate} = this.props.player;
+            stock_unit_price, cf_money, lairage_rate, final_rate} = player;
 
         return (
             <TouchableOpacity style={styles.itemPage}
                               onPress={()=>{
-                global.router.toPokerInfo(this.props.crowd,this.props.player)
+                global.router.toPokerInfo(crowd,player,race)
             }}>
                 <Image style={styles.itemImg} source={{uri:logo.url}}/>
 

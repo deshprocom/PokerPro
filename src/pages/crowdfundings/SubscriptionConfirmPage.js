@@ -24,16 +24,17 @@ export default class SubscriptionConfirmPage extends PureComponent {
 
     submitBtn = (order_info) => {
         if (this.state.clickImg) {
-            const {number, player_id, stock_unit_price} = order_info;
-            let order = {number: number, player_id: player_id};
-            crowd_order({order}, data => {
-                console.log("crowd_order:", data)
+
+            crowd_order(order_info, data => {
+
                 this.setState({
                     order: data
                 })
             }, err => {
 
             })
+        } else {
+            showToast('必须同意扑客协议')
         }
 
     };
@@ -45,7 +46,6 @@ export default class SubscriptionConfirmPage extends PureComponent {
     render() {
 
         const {order_info} = this.props.params;
-        console.log("order_info:", order_info);
         const {number, player_id, stock_unit_price} =order_info;
         let sumMoney = this.total_prize(number, stock_unit_price);
         return (
@@ -108,9 +108,8 @@ export default class SubscriptionConfirmPage extends PureComponent {
                 </View>
 
                 <OrderBottom
-                    submitBtn={this.submitBtn(order_info)}
-                    sumMoney={sumMoney}
-                    showExpiredInfo={()=>false}/>
+                    submitBtn={()=>this.submitBtn(order_info)}
+                    sumMoney={sumMoney}/>
             </View>
 
 

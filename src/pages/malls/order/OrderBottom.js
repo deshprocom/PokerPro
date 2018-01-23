@@ -5,9 +5,6 @@ import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
 
 export default class OrderBottom extends PureComponent {
-    static propTypes = {
-        showExpiredInfo: propTypes.func.isRequired
-    };
 
 
     componentDidMount() {

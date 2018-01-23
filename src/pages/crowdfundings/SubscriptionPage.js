@@ -73,8 +73,9 @@ export default class SubscriptionPage extends PureComponent {
     render() {
         const {player} =  this.props.params;
         const {sell_stock, name, logo, stock_unit_price, description, cf_player_id} =player;
+        console.log(player)
         let order ={
-            number:this.state.number,player_id:cf_player_id,stock_unit_price:stock_unit_price
+            number:this.state.number,cf_player_id:cf_player_id,stock_unit_price:stock_unit_price
         };
         return (
             <View style={ApplicationStyles.bgContainer}>
@@ -91,11 +92,11 @@ export default class SubscriptionPage extends PureComponent {
                     <Image style={{width:95,height:120,marginLeft:19}} source={{uri:isEmptyObject(logo)?'':logo.url}}/>
                     <View style={styles.pageRight}>
                         <Text style={styles.name}>{name}</Text>
-                        <Text style={styles.content}>{I18n.t('join_race')}：</Text>
+                        <Text style={styles.content}>{I18n.t('join_race')}：{this.props.params.race.name}</Text>
                         <View style={{flex:1}}/>
                         <View style={{flexDirection:'row',alignItems:'center',marginBottom:5}}>
-                            <Text style={styles.priceTxt}>{I18n.t('part_price')}：</Text><Text
-                            style={styles.price}>{stock_unit_price}</Text>
+                            <Text style={styles.priceTxt}>{I18n.t('part_price')}：</Text>
+                            <Text style={styles.price}>{stock_unit_price}</Text>
                         </View>
                     </View>
                 </View>
