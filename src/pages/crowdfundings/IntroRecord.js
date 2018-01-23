@@ -13,6 +13,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {MarkdownPlat, Badge} from '../../components';
 import moment from 'moment';
 import {isEmptyObject} from '../../utils/ComonHelper';
+import I18n from 'react-native-i18n';
 
 const styles = StyleSheet.create({
     tab_menu: {
@@ -97,8 +98,8 @@ export default class IntroRecord extends PureComponent {
         const {description, race_rank} = this.props;
         return <View style={{backgroundColor: 'white'}}>
             <View style={styles.tab_menu}>
-                {isEmptyObject(description) ? null : this.btnMenu('牌手简介', 0)}
-                {isEmptyObject(race_rank) ? null : this.btnMenu('众筹战绩', 1)}
+                {isEmptyObject(description) ? null : this.btnMenu(I18n.t('player_profile'), 0)}
+                {isEmptyObject(race_rank) ? null : this.btnMenu(I18n.t('crowdfunding_record'), 1)}
             </View>
 
             {this.pageMenu(description, race_rank)}
@@ -152,9 +153,9 @@ export default class IntroRecord extends PureComponent {
             </View>
 
             <View style={styles.view2}>
-                {this.renderTag('买入', race.ticket_price)}
-                {this.renderTag('参赛人数', race.participants)}
-                {this.renderTag('奖金', rank.earning)}
+                {this.renderTag(I18n.t('rank_buyIn'), race.ticket_price)}
+                {this.renderTag(I18n.t('rank_participate'), race.participants)}
+                {this.renderTag(I18n.t('bonus'), rank.earning)}
             </View>
 
             <View style={{

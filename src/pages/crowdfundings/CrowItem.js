@@ -13,7 +13,8 @@ import {CrowdCountDown, ImageLoad, ProgressBar} from '../../components';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {RaceStatus} from '../../configs/Status';
 import moment from 'moment';
-import _ from 'lodash'
+import _ from 'lodash';
+import I18n from 'react-native-i18n';
 
 const styles = StyleSheet.create({
     cardItemTimeRemainTxt: {
@@ -129,15 +130,15 @@ export default class CrowItem extends PureComponent {
                 <View style={{flexDirection: 'row'}}>
                     <View style={{flex: 0.75}}>
                         <Text style={styles.txtName}>{race.name}</Text>
-                        <Text style={styles.txtTime}>{`入赛资格：¥${cf_cond}  ${this.race_time(race)}`}</Text>
-                        <Text style={styles.txtTime}>地点：{race.location}</Text>
+                        <Text style={styles.txtTime}>{`${I18n.t('qualification')}：¥${cf_cond}  ${this.race_time(race)}`}</Text>
+                        <Text style={styles.txtTime}>{I18n.t('address')}：{race.location}</Text>
                     </View>
 
                     <View style={styles.separator}/>
 
                     <View style={{flex: 0.25, alignItems: 'flex-end'}}>
                         <Text style={styles.txtPrize}>{this.numToW(race.prize)}</Text>
-                        <Text style={styles.txtTime}>奖励圈</Text>
+                        <Text style={styles.txtTime}>{I18n.t('PrizePond')}</Text>
                     </View>
                 </View>
 
@@ -149,8 +150,8 @@ export default class CrowItem extends PureComponent {
 
                 <View style={styles.saleStyle}>
 
-                    {this.renderCrowd('赞助总额', cf_total_money)}
-                    {this.renderCrowd('认购金额', cf_offer_money)}
+                    {this.renderCrowd(I18n.t('total_sponsorship'), cf_total_money)}
+                    {this.renderCrowd(I18n.t('subscription_amount'), cf_offer_money)}
                 </View>
             </View>
 
@@ -170,11 +171,11 @@ export default class CrowItem extends PureComponent {
 
     numToW = (str) => {
         if (str.length <= 0) {
-            return '0万'
+            return `0${I18n.t('thousand')}`
         }
         let num = str.replace(/[^0-9]+/g, '');
 
-        return num / 10000 + '万';
+        return num / 10000 + I18n.t('thousand');
 
     };
 

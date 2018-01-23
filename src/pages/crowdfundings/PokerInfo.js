@@ -14,6 +14,7 @@ import IntroRecord from './IntroRecord';
 import {footer} from './CrowdDetail';
 import {poker_info} from '../../services/CrowdDao';
 import {isEmptyObject} from '../../utils/ComonHelper';
+import I18n from 'react-native-i18n';
 
 const styles = StyleSheet.create({
     img_poker: {
@@ -145,18 +146,18 @@ export default class PokerInfo extends PureComponent {
                 <View style={styles.view_info}>
                     <View style={styles.view_info1}>
                         <View>
-                            <Text style={styles.txt_name}>赞助牌手：{name}</Text>
-                            <Text style={styles.lb_price}>每份单价：<Text style={styles.txt_price}>{stock_unit_price}</Text></Text>
+                            <Text style={styles.txt_name}>{I18n.t('sponsor_player')}：{name}</Text>
+                            <Text style={styles.lb_price}>{i18n.t('part_price')}：<Text style={styles.txt_price}>{stock_unit_price}</Text></Text>
                         </View>
 
                         <View style={styles.view_info2}>
                             <View style={{alignItems:'center', marginRight: 10}}>
                                 <Text style={styles.txt_entry}>{lairage_rate}</Text>
-                                <Text style={styles.lb_entry}>进圈率</Text>
+                                <Text style={styles.lb_entry}>{I18n.t('into_ring_rate')}</Text>
                             </View>
                             <View style={{alignItems:'center'}}>
                                 <Text style={styles.txt_final}>{final_rate}</Text>
-                                <Text style={styles.lb_final}>决赛率</Text>
+                                <Text style={styles.lb_final}>{I18n.t('admission')}</Text>
                             </View>
                         </View>
 
@@ -165,7 +166,7 @@ export default class PokerInfo extends PureComponent {
                         flexDirection: 'row', alignItems: 'center', marginTop: 12,
                         marginBottom: 8
                     }}>
-                        <Text style={styles.lb_slogan}>口号：</Text>
+                        <Text style={styles.lb_slogan}>{I18n.t('slogan')}：</Text>
                         <Text style={styles.txt_slogan}>{join_slogan}</Text>
                     </View>
 
@@ -175,16 +176,16 @@ export default class PokerInfo extends PureComponent {
                         initialProgress={percent}/>
 
                     <View style={styles.view_percent}>
-                        {this.renderItem(sell_stock, '让出股份')}
-                        {this.renderItem(stock_number, '股份划分')}
-                        {this.renderItem(cf_money, '众筹总额')}
+                        {this.renderItem(sell_stock, I18n.t('give_up_hares'))}
+                        {this.renderItem(stock_number, I18n.t('share_division'))}
+                        {this.renderItem(cf_money, I18n.t('total_crowdfunding'))}
                     </View>
                 </View>
 
                 <View style={styles.view_head}>
                     <Text style={[styles.txt_slogan, {marginBottom: 14, alignSelf: 'center'}]}
-                    >目前已有<Text
-                        style={{color: Colors._F34}}>{isEmptyObject(ordered) ? '' : ordered.number}</Text>人认购</Text>
+                    >{I18n.t('currently_there')}<Text
+                        style={{color: Colors._F34}}>{isEmptyObject(ordered) ? '' : ordered.number}</Text>{I18n.t('people')}{I18n.t('subscription')}</Text>
 
                     <FlatList
                         horizontal={true}
@@ -197,7 +198,7 @@ export default class PokerInfo extends PureComponent {
                     description={description}
                     race_rank={race_rank}/>
             </ScrollView>
-
+            <View style={{height:30}}/>
             {footer(this.props.params.crowd,'poker_info',this.state.pokerInfo,this.props.params.race)}
         </View>
     }

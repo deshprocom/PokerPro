@@ -14,7 +14,7 @@ import Navbar from './Navbar';
 import DetailChild from './DetailChild';
 import {ActionPay} from '../../components';
 import {crowd_detail} from '../../services/CrowdDao'
-
+import I18n from 'react-native-i18n';
 
 export const footer = (crowd,type,player,race) => {
     return <View style={styles.footer}>
@@ -28,7 +28,7 @@ export const footer = (crowd,type,player,race) => {
                 style={{height: 12, width: 10, marginRight: 5}}
                 source={Images.black_fire}/>
 
-            <Text style={styles.txtLeft}>及时赛报</Text>
+            <Text style={styles.txtLeft}>{I18n.t('timely_match')}</Text>
         </TouchableOpacity>
         <View style={{flex: 1}}/>
         <TouchableOpacity
@@ -40,7 +40,7 @@ export const footer = (crowd,type,player,race) => {
                 }
             }}
             style={styles.btnRight}>
-            <Text style={styles.txtRight}>我要认购</Text>
+            <Text style={styles.txtRight}>{I18n.t('subscribe')}</Text>
         </TouchableOpacity>
     </View>
 }

@@ -12,7 +12,8 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {ImageLoad, ProgressBar, MarkdownPlat} from '../../components';
 import moment from 'moment';
 import {isEmptyObject} from '../../utils/ComonHelper';
-import _ from 'lodash'
+import _ from 'lodash';
+import I18n from 'react-native-i18n';
 
 const styles = StyleSheet.create({
     cover: {
@@ -127,21 +128,21 @@ export default class DetailChild extends Component {
                         <Text style={styles.txtName}>{race.name}</Text>
 
                         <View style={styles.btnReport}>
-                            <Text style={styles.txtReport}>及时赛报</Text>
+                            <Text style={styles.txtReport}>{I18n.t('timely_match')}</Text>
                         </View>
                     </View>
 
-                    <Text style={styles.txtTime}>{`入赛资格：¥${cf_cond}  ${this.race_time(race)}`}</Text>
-                    <Text style={styles.txtTime}>地点：{race.location}</Text>
+                    <Text style={styles.txtTime}>{`${I18n.t('qualification')}：¥${cf_cond}  ${this.race_time(race)}`}</Text>
+                    <Text style={styles.txtTime}>{I18n.t('address')}：{race.location}</Text>
                     <ProgressBar
                         backgroundStyle={{backgroundColor: Colors._ECE, borderRadius: 2}}
                         style={{width: Metrics.screenWidth - 34}}
                         initialProgress={percent}/>
 
                     <View style={{width: '100%', height: 70, flexDirection: 'row'}}>
-                        {this.renderTotal(player_count, '选手人数')}
-                        {this.renderTotal(cf_total_money + '万', '赞助总额')}
-                        {this.renderTotal(cf_offer_money + '万', '认购金额')}
+                        {this.renderTotal(player_count, I18n.t('player_numbers'))}
+                        {this.renderTotal(cf_total_money + I18n.t('thousand'), I18n.t('total_sponsorship'))}
+                        {this.renderTotal(cf_offer_money + I18n.t('thousand'), I18n.t('subscription_amount'))}
                     </View>
                 </View>
 
