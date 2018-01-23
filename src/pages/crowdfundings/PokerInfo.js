@@ -13,6 +13,7 @@ import {NavigationBar, ImageLoad, ProgressBar} from '../../components';
 import IntroRecord from './IntroRecord';
 import {footer} from './CrowdDetail';
 import {poker_info} from '../../services/CrowdDao';
+import {isEmptyObject} from '../../utils/ComonHelper';
 
 const styles = StyleSheet.create({
     img_poker: {
@@ -114,14 +115,18 @@ export default class PokerInfo extends PureComponent {
     }
 
     render() {
+
+        console.log(this.state.pokerInfo)
         const {
             race_rank, ordered, player_images, name, logo, stock_unit_price, cf_money,
-            stock_number, sell_stock, lairage_rate, final_rate, join_slogan
+            stock_number, sell_stock, lairage_rate, final_rate, join_slogan, description
         } = this.state.pokerInfo;
+
         const {cf_total_money, cf_offer_money} = this.props.params.crowd;
         let percent = 0;
         if (cf_total_money !== 0)
             percent = cf_offer_money / cf_total_money;
+
 
         return <View style={ApplicationStyles.bgContainer}>
             <NavigationBar
@@ -133,8 +138,10 @@ export default class PokerInfo extends PureComponent {
                 leftImageStyle={{height: 23, width: 23, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => global.router.pop()}/>
             <ScrollView>
-                <ImageLoad style={styles.img_poker}
-                           source={{uri: logo.url}}/>
+
+                {isEmptyObject(logo) ? null : <ImageLoad style={styles.img_poker}
+                                                         source={{uri:logo.url}}/>}
+
 
                 <View style={styles.view_info}>
                     <View style={styles.view_info1}>
@@ -144,13 +151,13 @@ export default class PokerInfo extends PureComponent {
                         </View>
 
                         <View style={styles.view_info2}>
-                            <View style={{textAlign: 'center', marginRight: 10}}>
+                            <View style={{alignItems:'center', marginRight: 10}}>
                                 <Text style={styles.txt_entry}>{lairage_rate}</Text>
                                 <Text style={styles.lb_entry}>进圈率</Text>
                             </View>
-                            <View style={{textAlign: 'center'}}>
+                            <View style={{alignItems:'center'}}>
                                 <Text style={styles.txt_final}>{final_rate}</Text>
-                                <Text style={styles.lb_final}>进圈率</Text>
+                                <Text style={styles.lb_final}>决赛率</Text>
                             </View>
                         </View>
 
@@ -177,16 +184,19 @@ export default class PokerInfo extends PureComponent {
 
                 <View style={styles.view_head}>
                     <Text style={[styles.txt_slogan, {marginBottom: 14, alignSelf: 'center'}]}
-                    >目前已有<Text style={{color: Colors._F34}}>{ordered}</Text>人认购</Text>
+                    >目前已有<Text
+                        style={{color: Colors._F34}}>{isEmptyObject(ordered) ? '' : ordered.number}</Text>人认购</Text>
 
                     <FlatList
                         horizontal={true}
-                        data={ordered.users}
+                        data={isEmptyObject(ordered) ?[]:ordered.users}
                         renderItem={({item}) => <ImageLoad style={styles.img_head} source={{uri: item.avatar}}/>}
                         keyExtractor={(item, index) => `buy_person${index}`}/>
                 </View>
 
-                <IntroRecord/>
+                <IntroRecord
+                    description={description}
+                    race_rank={race_rank}/>
             </ScrollView>
 
             {footer()}
