@@ -3,13 +3,16 @@
  * Function:
  * Desc:
  */
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, StatusBar,
     StyleSheet, Image, Text, ScrollView
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {ImageLoad, ProgressBar, MarkdownPlat} from '../../components';
+import moment from 'moment';
+import {isEmptyObject} from '../../utils/ComonHelper';
+import {crowd_detail} from '../../services/CrowdDao';
 
 const styles = StyleSheet.create({
     cover: {
@@ -85,13 +88,25 @@ const styles = StyleSheet.create({
     }
 });
 
-export default class DetailChild extends PureComponent {
+export default class DetailChild extends Component {
 
 
     state = {
         floatTabView: false,
-        tabIndex: 0
+        tabIndex: 0,
+        crowd:{}
     };
+    componentDidMount() {
+        const {id} = this.props.info;
+        crowd_detail({id: id}, data => {
+            console.log('crowd_detail', data)
+            this.setState({
+                crowd: data
+            })
+        }, err => {
+
+        })
+    }
 
     onScroll = (event) => {
         const offsetHeight = 400;
@@ -102,16 +117,22 @@ export default class DetailChild extends PureComponent {
         })
     };
 
+    race_time = (race) => {
+        const {begin_date, end_date} = race;
+        return moment(begin_date).format('YYYY.MM.DD') + '-' + moment(end_date).format('YYYY.MM.DD')
+    };
+
     render() {
-        const {image, race, crowd_sale, crowd_num, mark_desc} = this.props.info;
-        let percent = crowd_sale / crowd_num;
+        const {master_image, race, cf_total_money, cf_offer_money, mark_desc, cf_cond} = this.props.info;
+        const {categories} = this.state.crowd;
+        let percent = cf_offer_money / cf_total_money;
         return <View style={{backgroundColor: 'white'}}>
             {this.state.floatTabView ? this.renderTabView(styles.tabFloatView) : null}
             <ScrollView
                 scrollEventThrottle={10}
                 onScroll={this.onScroll}>
                 <ImageLoad style={styles.cover}
-                           source={{uri: image}}/>
+                           source={{uri: master_image}}/>
                 <View style={{marginLeft: 17, marginRight: 17}}>
                     <View style={{flexDirection: 'row'}}>
                         <Text style={styles.txtName}>{race.name}</Text>
@@ -121,7 +142,7 @@ export default class DetailChild extends PureComponent {
                         </View>
                     </View>
 
-                    <Text style={styles.txtTime}>{`入赛资格：¥${race.buy_in}  ${race.end_start_time}`}</Text>
+                    <Text style={styles.txtTime}>{`入赛资格：¥${cf_cond}  ${this.race_time(race)}`}</Text>
                     <Text style={styles.txtTime}>地点：{race.location}</Text>
                     <ProgressBar
                         backgroundStyle={{backgroundColor: Colors._ECE, borderRadius: 2}}
@@ -130,17 +151,18 @@ export default class DetailChild extends PureComponent {
 
                     <View style={{width: '100%', height: 70, flexDirection: 'row'}}>
                         {this.renderTotal('5人', '选手人数')}
-                        {this.renderTotal(crowd_num + '万', '赞助总额')}
-                        {this.renderTotal(crowd_sale + '万', '认购金额')}
+                        {this.renderTotal(cf_total_money + '万', '赞助总额')}
+                        {this.renderTotal(cf_offer_money + '万', '认购金额')}
                     </View>
                 </View>
 
-                {this.renderTabView(styles.tabView)}
+                {this.renderTabView(categories, styles.tabView)}
 
                 <View style={{height: 10, width: '100%', backgroundColor: Colors._ECE}}/>
 
                 {this.state.tabIndex === 0 ? <MarkdownPlat
-                        markdownStr={mark_desc}/> : <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                        markdownStr={mark_desc}/> :
+                    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                         <Text>开发中...</Text>
                     </View>}
 
@@ -152,13 +174,11 @@ export default class DetailChild extends PureComponent {
 
     }
 
-    renderTabView = (tabView) => {
-
+    renderTabView = (categories, tabView) => {
         return <View style={tabView}>
-            {this.renderTab(0, '项目介绍')}
-            {this.renderTab(1, '众筹概况')}
-            {this.renderTab(2, '项目公告')}
-            {this.renderTab(3, '投资风险')}
+            {isEmptyObject(categories) ? null : categories.map((item,key) => {
+                    this.renderTab(key, item.name)
+            })}
         </View>
     };
 

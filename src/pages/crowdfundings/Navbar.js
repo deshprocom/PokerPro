@@ -4,14 +4,15 @@
  * Desc:
  */
 
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {
     TouchableOpacity, View, StatusBar,
     StyleSheet, Image, Text
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {CrowdCountDown} from '../../components';
-import {RaceStatus} from '../../configs/Status'
+import {RaceStatus} from '../../configs/Status';
+import moment from 'moment';
 
 const styles = StyleSheet.create({
     btnLeft: {
@@ -63,11 +64,9 @@ const styles = StyleSheet.create({
     }
 });
 
-export default class Navbar extends Component {
+export default class Navbar extends PureComponent {
 
     render() {
-
-
         return <View
             style={styles.nav}>
             <StatusBar barStyle={"dark-content"}/>
@@ -92,11 +91,10 @@ export default class Navbar extends Component {
 
     renderComing = () => {
         const {race, expire_date} = this.props.info;
-        console.log(race)
-
+        let utc = moment.utc(expire_date).valueOf();
         if (race.status === RaceStatus.unbegin)
             return <CrowdCountDown
-                date={expire_date}
+                date={utc/1000}
                 days={{plural: '天 ', singular: '天 '}}
                 hours='时'
                 mins='分'

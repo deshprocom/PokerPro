@@ -142,7 +142,7 @@ const page_size = 10;
 
 function crowd_detail(body) {
     const {id} = body;
-    return `crowdfundings${id}`
+    return `crowdfundings/${id}`
 }
 
 function unread_comments(body) {

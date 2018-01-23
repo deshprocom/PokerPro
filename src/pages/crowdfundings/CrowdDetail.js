@@ -4,16 +4,16 @@
  * Desc:
  */
 
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {
-    TouchableOpacity, View, ScrollView,FlatList,
+    TouchableOpacity, View, ScrollView, FlatList,
     StyleSheet, Image, Text
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import Navbar from './Navbar';
 import DetailChild from './DetailChild';
 import {ActionPay} from '../../components';
-
+import {crowd_detail} from '../../services/CrowdDao'
 
 
 export const footer = () => {
@@ -42,11 +42,31 @@ export const footer = () => {
     </View>
 }
 
-export default class CrowdDetail extends PureComponent {
+export default class CrowdDetail extends Component {
+
+    constructor(props) {
+        super(props);
+        const {crowd} = props.params;
+        this.state = {
+            crowd
+        }
+    }
+
+    componentDidMount() {
+        const {crowd} = this.state;
+        console.log('params', crowd)
+        crowd_detail({id: crowd.id}, data => {
+            this.setState({
+                crowd: data
+            })
+        }, err => {
+
+        })
+    }
 
 
     render() {
-        const {crowd} = this.props.params;
+        const {crowd} = this.state;
         return <View style={ApplicationStyles.bgContainer}>
             <Navbar
                 info={crowd}/>
@@ -58,7 +78,6 @@ export default class CrowdDetail extends PureComponent {
                 ref={ref => this.actionPay = ref}/>
         </View>
     }
-
 
 
 }
