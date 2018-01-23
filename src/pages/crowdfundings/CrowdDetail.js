@@ -16,7 +16,7 @@ import {ActionPay} from '../../components';
 import {crowd_detail} from '../../services/CrowdDao'
 
 
-export const footer = (crowd) => {
+export const footer = (crowd,type,player) => {
     return <View style={styles.footer}>
         <TouchableOpacity
             onPress={() => {
@@ -33,9 +33,11 @@ export const footer = (crowd) => {
         <View style={{flex: 1}}/>
         <TouchableOpacity
             onPress={() => {
-                global.router.toSelectPlayer(crowd)
-                {/*global.router.toPokerInfo(this.state.crowd)*/}
-
+                if(type === 'crowd_detail'){
+                    global.router.toSelectPlayer(crowd);
+                }else {
+                    global.router.toSubscriptionPage(crowd.id,player)
+                }
             }}
             style={styles.btnRight}>
             <Text style={styles.txtRight}>我要认购</Text>
@@ -74,7 +76,7 @@ export default class CrowdDetail extends Component {
             <DetailChild
                 info={crowd}/>
 
-            {footer(crowd)}
+            {footer(crowd,'crowd_detail',null)}
             <ActionPay
                 ref={ref => this.actionPay = ref}/>
         </View>

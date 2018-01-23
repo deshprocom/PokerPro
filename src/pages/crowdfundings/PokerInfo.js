@@ -116,9 +116,8 @@ export default class PokerInfo extends PureComponent {
 
     render() {
 
-        console.log(this.state.pokerInfo)
         const {
-            race_rank, ordered, player_images, name, logo, stock_unit_price, cf_money,
+            cf_player_id,race_rank, ordered, player_images, name, logo, stock_unit_price, cf_money,
             stock_number, sell_stock, lairage_rate, final_rate, join_slogan, description
         } = this.state.pokerInfo;
 
@@ -199,7 +198,7 @@ export default class PokerInfo extends PureComponent {
                     race_rank={race_rank}/>
             </ScrollView>
 
-            {footer()}
+            {footer(this.props.params.crowd,'poker_info',this.state.pokerInfo)}
         </View>
     }
 

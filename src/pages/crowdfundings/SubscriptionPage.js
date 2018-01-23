@@ -6,24 +6,25 @@
 
 import React, {PureComponent} from 'react';
 import {
-    TouchableOpacity, View, TextInput,Platform,
+    TouchableOpacity, View, TextInput, Platform,
     StyleSheet, Image, Text
 } from 'react-native';
 import {NavigationBar} from '../../components';
-import {Colors,Images,ApplicationStyles} from '../../Themes';
+import {Colors, Images, ApplicationStyles} from '../../Themes';
 import {showToast} from '../../utils/ComonHelper';
 import I18n from 'react-native-i18n';
 import SubscriptionBottom from './SubscriptionBottom';
+import {crowd_order} from '../../services/CrowdDao';
+import {isEmptyObject} from '../../utils/ComonHelper';
 
 export default class SubscriptionPage extends PureComponent {
-    state={
-
+    state = {
+        number: 1
     };
 
 
-
-    buyQuantity = () => {
-        let {stock} = this.state.subscription;
+    buyQuantity = (player) => {
+        let {sell_stock, stock_number} =player;
         let {number} = this.state;
         const styleCutDisable = {
             backgroundColor: '#FBFAFA'
@@ -31,6 +32,7 @@ export default class SubscriptionPage extends PureComponent {
         const styleCut = {
             backgroundColor: '#F6F5F5'
         };
+
 
         return (
             <View style={styles.quantity}>
@@ -53,7 +55,7 @@ export default class SubscriptionPage extends PureComponent {
                     style={styles.buyTouch}
                     onPress={() => {
 
-                        if (number < stock && number>=1) {
+                        if (number < stock_number && number>=1) {
                             this.setState({
                                 number: ++number
                             })
@@ -69,7 +71,8 @@ export default class SubscriptionPage extends PureComponent {
     };
 
     render() {
-        const {img,name,message,count,price,intro} = this.state.subscription;
+        const {player} =  this.props.params;
+        const {sell_stock,name, logo,stock_unit_price,description,cf_player_id} =player;
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
@@ -82,28 +85,34 @@ export default class SubscriptionPage extends PureComponent {
                     leftBtnPress={() => router.pop()}/>
 
                 <View style={styles.itemPage}>
-                    <Image style={{width:95,height:120,marginLeft:19}} source={{uri:img}}/>
+                    <Image style={{width:95,height:120,marginLeft:19}} source={{uri:isEmptyObject(logo)?'':logo.url}}/>
                     <View style={styles.pageRight}>
                         <Text style={styles.name}>{name}</Text>
-                        <Text style={styles.content}>{I18n.t('join_race')}：{message}</Text>
+                        <Text style={styles.content}>{I18n.t('join_race')}：</Text>
                         <View style={{flex:1}}/>
                         <View style={{flexDirection:'row',alignItems:'center',marginBottom:5}}>
-                            <Text style={styles.priceTxt}>{I18n.t('part_price')}：</Text><Text style={styles.price}>{price}</Text>
+                            <Text style={styles.priceTxt}>{I18n.t('part_price')}：</Text><Text
+                            style={styles.price}>{stock_unit_price}</Text>
                         </View>
                     </View>
                 </View>
 
-                <View  style={styles.buyView}>
-                    <Text style={styles.txt1}>{I18n.t('purchase_copies')}（{I18n.t('limit_buy')}</Text><Text style={styles.txt2}>{count}</Text><Text style={styles.txt1}>{I18n.t('parts')}）</Text>
+                <View style={styles.buyView}>
+                    <Text style={styles.txt1}>{I18n.t('purchase_copies')}（{I18n.t('limit_buy')}</Text><Text
+                    style={styles.txt2}>{sell_stock}</Text><Text style={styles.txt1}>{I18n.t('parts')}）</Text>
                     <View style={{flex:1}}/>
-                    {this.buyQuantity()}
+                    {this.buyQuantity(player)}
                 </View>
                 <View style={styles.intro}>
                     <Text style={styles.txt}>{I18n.t('subscription_des')}</Text>
-                    <Text style={styles.txt}>{intro}</Text>
+                    <Text style={styles.txt}>{I18n.t('subscription_intro')}</Text>
                 </View>
 
-                <SubscriptionBottom/>
+                <SubscriptionBottom
+                    number={this.state.number}
+                    player_id={cf_player_id}
+                    stock_unit_price={stock_unit_price}
+                />
             </View>
 
 
@@ -113,64 +122,64 @@ export default class SubscriptionPage extends PureComponent {
 
 
 const styles = StyleSheet.create({
-    itemPage:{
-        marginTop:1,
-        backgroundColor:'#FFFFFF',
-        flexDirection:'row',
-        alignItems:'center',
-        paddingTop:15,
-        paddingBottom:15
+    itemPage: {
+        marginTop: 1,
+        backgroundColor: '#FFFFFF',
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingTop: 15,
+        paddingBottom: 15
     },
-    pageRight:{
-        flex:1,
-        marginLeft:15,
-        marginRight:28,
-        marginTop:5
+    pageRight: {
+        flex: 1,
+        marginLeft: 15,
+        marginRight: 28,
+        marginTop: 5
     },
-    name:{
-        fontSize:15,
-        color:'#333333',
-        fontWeight:'bold'
+    name: {
+        fontSize: 15,
+        color: '#333333',
+        fontWeight: 'bold'
     },
-    content:{
-        fontSize:14,
-        color:'#888888',
-        marginTop:11
+    content: {
+        fontSize: 14,
+        color: '#888888',
+        marginTop: 11
 
     },
-    priceTxt:{
+    priceTxt: {
         fontSize: 14,
         color: '#444444',
-        fontWeight:'bold'
+        fontWeight: 'bold'
     },
-    price:{
+    price: {
         fontSize: 14,
         color: '#F34A4A'
     },
-    buyView:{
-        marginTop:9,
-        paddingTop:13,
-        paddingBottom:13,
-        paddingLeft:17,
-        flexDirection:'row',
-        alignItems:'center',
-        backgroundColor:'#FFFFFF'
+    buyView: {
+        marginTop: 9,
+        paddingTop: 13,
+        paddingBottom: 13,
+        paddingLeft: 17,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF'
     },
-    txt1:{
+    txt1: {
         fontSize: 15,
         color: '#333333',
-        fontWeight:'bold'
+        fontWeight: 'bold'
     },
-    txt2:{
+    txt2: {
         fontSize: 15,
         color: '#F34A4A',
-        fontWeight:'bold'
+        fontWeight: 'bold'
     },
     quantity: {
         marginRight: 17,
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor:'#FFFFFF'
+        backgroundColor: '#FFFFFF'
     },
     buyTouch: {
         width: 33,
@@ -197,16 +206,16 @@ const styles = StyleSheet.create({
         width: 12,
         height: 12,
     },
-    intro:{
-        marginTop:21,
-        marginLeft:17,
-        marginRight:17,
-        paddingBottom:80,
+    intro: {
+        marginTop: 21,
+        marginLeft: 17,
+        marginRight: 17,
+        paddingBottom: 80,
         alignItems: 'flex-start'
     },
-    txt:{
+    txt: {
         fontSize: 14,
         color: '#888888',
-        lineHeight:20
+        lineHeight: 20
     }
 });

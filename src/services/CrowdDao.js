@@ -7,6 +7,11 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
+export function crowd_order(body, resolve, reject) {
+    helper.post(Api.crowdfunding_orders,body, ret => {
+        resolve(ret.data)
+    }, reject, body)
+}
 export function poker_info(body, resolve, reject) {
     helper.get(Api.poker_info(body), ret => {
         resolve(ret.data)

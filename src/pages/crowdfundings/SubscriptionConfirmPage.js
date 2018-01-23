@@ -14,20 +14,38 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import OrderBottom from '../malls/order/OrderBottom';
 import {showToast} from '../../utils/ComonHelper';
+import {crowd_order} from '../../services/CrowdDao';
+import {isEmptyObject} from '../../utils/ComonHelper';
 
 export default class SubscriptionConfirmPage extends PureComponent {
     state = {
-        clickImg:false
+        clickImg: false
     };
 
-    submitBtn = () => {
+    submitBtn = (order_info) => {
         if(this.state.clickImg){
-             showToast('成功');
-            return global.router.toSubscriptionInfoPage()
+            const {number, player_id, stock_unit_price} = order_info;
+            let order = {number: number, player_id: player_id};
+            crowd_order({order}, data => {
+                console.log("crowd_order:", data)
+                this.setState({
+                    order: data
+                })
+            }, err => {
+
+            })
         }
+
+    };
+
+    total_prize = (number, stock_unit_price) => {
+        return number * stock_unit_price;
     };
 
     render() {
+        const {order_info} = this.props.params;
+        const {number, player_id, stock_unit_price} =this.props.params;
+        let sumMoney = this.total_prize(number, stock_unit_price);
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
@@ -47,18 +65,18 @@ export default class SubscriptionConfirmPage extends PureComponent {
                     <View style={[styles.message,{paddingTop:15}]}>
                         <Text style={styles.messageTxt1}>{I18n.t('order_price')}</Text>
 
-                        <Text style={styles.messageTxt2}>¥2182.8</Text>
+                        <Text style={styles.messageTxt2}>¥{stock_unit_price}</Text>
                     </View>
                     <View style={[styles.message,{marginTop:6,paddingBottom:13}]}>
                         <Text style={styles.messageTxt1}>{I18n.t('purchase_copies')}</Text>
 
-                        <Text style={styles.messageTxt1}>X2</Text>
+                        <Text style={styles.messageTxt1}>X{number}</Text>
                     </View>
 
                 </View>
 
                 <View style={styles.buy}>
-                    <Text style={styles.messageTxt2}>¥2182.8</Text>
+                    <Text style={styles.messageTxt2}>¥{sumMoney}</Text>
                     <Text style={styles.messageTxt1}>{I18n.t('payment')}：</Text>
 
                 </View>
@@ -71,24 +89,25 @@ export default class SubscriptionConfirmPage extends PureComponent {
                                 global.router.toRiskWarningPage()
                             }}>《风险提示》</Text>
                             及其他相关条款和协议，自愿认购xxxxxx赛事众筹项目，并支付众筹款项
-                            <Text style={{color:Colors._F34}}>200.00元</Text>。</Text>
+                            <Text style={{color:Colors._F34}}>{sumMoney}元</Text>。</Text>
 
                     </View>
                     <TouchableOpacity
                         style={{flexDirection:'row',alignItems:'center',marginTop:12,marginLeft: 17, marginRight: 17}}
-                    onPress={()=>{
+                        onPress={()=>{
                         this.setState({
                             clickImg:!this.state.clickImg
                         })
                     }}>
-                        <Image style={styles.img} source={this.state.clickImg?Images.clickImgBlue:Images.clickImg} alt=""/>
+                        <Image style={styles.img} source={this.state.clickImg?Images.clickImgBlue:Images.clickImg}
+                               alt=""/>
                         <Text style={styles.txt}>{I18n.t('promise_message')}</Text>
                     </TouchableOpacity>
                 </View>
 
                 <OrderBottom
-                    submitBtn={this.submitBtn}
-                    sumMoney="222222"/>
+                    submitBtn={this.submitBtn(order_info)}
+                    sumMoney={sumMoney}/>
             </View>
 
 
