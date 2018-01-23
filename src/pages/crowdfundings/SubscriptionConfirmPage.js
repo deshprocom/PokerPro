@@ -23,7 +23,7 @@ export default class SubscriptionConfirmPage extends PureComponent {
     };
 
     submitBtn = (order_info) => {
-        if(this.state.clickImg){
+        if (this.state.clickImg) {
             const {number, player_id, stock_unit_price} = order_info;
             let order = {number: number, player_id: player_id};
             crowd_order({order}, data => {
@@ -43,8 +43,10 @@ export default class SubscriptionConfirmPage extends PureComponent {
     };
 
     render() {
+
         const {order_info} = this.props.params;
-        const {number, player_id, stock_unit_price} =this.props.params;
+        console.log("order_info:", order_info);
+        const {number, player_id, stock_unit_price} =order_info;
         let sumMoney = this.total_prize(number, stock_unit_price);
         return (
             <View style={ApplicationStyles.bgContainer}>
@@ -77,7 +79,7 @@ export default class SubscriptionConfirmPage extends PureComponent {
 
                 <View style={styles.buy}>
                     <Text style={styles.messageTxt2}>¥{sumMoney}</Text>
-                    <Text style={styles.messageTxt1}>{I18n.t('payment')}：</Text>
+                    <Text style={styles.messageTxt1}>{I18n.t('payment')}</Text>
 
                 </View>
 
@@ -107,7 +109,8 @@ export default class SubscriptionConfirmPage extends PureComponent {
 
                 <OrderBottom
                     submitBtn={this.submitBtn(order_info)}
-                    sumMoney={sumMoney}/>
+                    sumMoney={sumMoney}
+                    showExpiredInfo={()=>false}/>
             </View>
 
 

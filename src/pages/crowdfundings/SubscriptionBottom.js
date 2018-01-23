@@ -17,11 +17,10 @@ export default class SubscriptionBottom extends PureComponent {
 
     };
     render() {
-
         return (
             <TouchableOpacity style={styles.bottom}
             onPress={()=>{
-                global.router.toSubscriptionConfirmPage(this.props)
+                global.router.toSubscriptionConfirmPage(this.props.order)
             }}>
                 <View style={styles.bottomView}>
                     <Text style={styles.txt}>{I18n.t('subscription')}</Text>

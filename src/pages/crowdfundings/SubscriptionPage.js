@@ -72,7 +72,10 @@ export default class SubscriptionPage extends PureComponent {
 
     render() {
         const {player} =  this.props.params;
-        const {sell_stock,name, logo,stock_unit_price,description,cf_player_id} =player;
+        const {sell_stock, name, logo, stock_unit_price, description, cf_player_id} =player;
+        let order ={
+            number:this.state.number,player_id:cf_player_id,stock_unit_price:stock_unit_price
+        };
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
@@ -109,9 +112,7 @@ export default class SubscriptionPage extends PureComponent {
                 </View>
 
                 <SubscriptionBottom
-                    number={this.state.number}
-                    player_id={cf_player_id}
-                    stock_unit_price={stock_unit_price}
+                    order={order}
                 />
             </View>
 
