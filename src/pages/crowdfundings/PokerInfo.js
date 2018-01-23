@@ -98,14 +98,15 @@ const styles = StyleSheet.create({
 export default class PokerInfo extends PureComponent {
 
     state = {
-        poker: {}
+        pokerInfo: {}
     };
 
     componentDidMount() {
-        const {id} = this.props.crowd;
-        poker_info({id: id, page: 1}, data => {
+        const {crowd, player} = this.props.params;
+        poker_info({id: crowd.id, player_id: player.cf_player_id}, data => {
+            console.log("pokerInfo:", data)
             this.setState({
-                poker: data
+                pokerInfo: data
             })
         }, err => {
 
@@ -114,10 +115,13 @@ export default class PokerInfo extends PureComponent {
 
     render() {
         const {
-            race_info, players
-        } = this.state.poker;
-        const {race_name, cf_cond, prize, begin_date, end_date} = race_info;
-        const {name, nick_name, logo, logo_sm, join_slogan, sell_stock, stock_number, stock_unit_price, cf_money, lairage_rate, final_rate} = players;
+            race_rank, ordered, player_images, name, logo, stock_unit_price, cf_money,
+            stock_number, sell_stock, lairage_rate, final_rate, join_slogan
+        } = this.state.pokerInfo;
+        const {cf_total_money, cf_offer_money} = this.props.params.crowd;
+        let percent = 0;
+        if (cf_total_money !== 0)
+            percent = cf_offer_money / cf_total_money;
 
         return <View style={ApplicationStyles.bgContainer}>
             <NavigationBar
@@ -130,7 +134,7 @@ export default class PokerInfo extends PureComponent {
                 leftBtnPress={() => global.router.pop()}/>
             <ScrollView>
                 <ImageLoad style={styles.img_poker}
-                           source={{uri: logo}}/>
+                           source={{uri: logo.url}}/>
 
                 <View style={styles.view_info}>
                     <View style={styles.view_info1}>
@@ -162,23 +166,23 @@ export default class PokerInfo extends PureComponent {
                     <ProgressBar
                         backgroundStyle={{backgroundColor: Colors._ECE, borderRadius: 2}}
                         style={{width: Metrics.screenWidth - 34}}
-                        initialProgress={buy_percent}/>
+                        initialProgress={percent}/>
 
                     <View style={styles.view_percent}>
-                        {this.renderItem(concede_percent, '让出股份')}
-                        {this.renderItem(share_divided, '股份划分')}
+                        {this.renderItem(stock_number, '让出股份')}
+                        {this.renderItem(sell_stock, '股份划分')}
                         {this.renderItem(cf_money, '众筹总额')}
                     </View>
                 </View>
 
                 <View style={styles.view_head}>
                     <Text style={[styles.txt_slogan, {marginBottom: 14, alignSelf: 'center'}]}
-                    >目前已有<Text style={{color: Colors._F34}}>4</Text>人认购</Text>
+                    >目前已有<Text style={{color: Colors._F34}}>{ordered}</Text>人认购</Text>
 
                     <FlatList
                         horizontal={true}
-                        data={headers}
-                        renderItem={({item}) => <ImageLoad style={styles.img_head} source={{uri: item}}/>}
+                        data={ordered.users}
+                        renderItem={({item}) => <ImageLoad style={styles.img_head} source={{uri: item.avatar}}/>}
                         keyExtractor={(item, index) => `buy_person${index}`}/>
                 </View>
 

@@ -42,7 +42,9 @@ export default class SelectPlayerPage extends Component {
             percent = cf_offer_money / cf_total_money;
         return <View>
             <PlayerItem player={player.item}
-                        percent={percent}/>
+                        percent={percent}
+                        crowd={this.props.params.crowd}
+                        crowd_id={this.props.params.crowd.id}/>
         </View>
     };
     race_time = (race) => {

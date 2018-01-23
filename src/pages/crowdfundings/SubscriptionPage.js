@@ -17,17 +17,10 @@ import SubscriptionBottom from './SubscriptionBottom';
 
 export default class SubscriptionPage extends PureComponent {
     state={
-        subscription:{
-            img: 'https://cdn-upyun.deshpro.com/uploads/player/avatar/7/thumb_ee03c12f507b1314176cd8deca6b260e.jpg?suffix=1496305626',
-            name: '马叉虫',
-            message:'NCBP国家杯棋牌职业大师赛-Day2',
-            count:12,
-            stock:30,
-            price:'100元',
-            intro:'一.请谨慎确定购买份数，提交订单后不可以重复购买。 '
-        },
-        number:1
+
     };
+
+
 
     buyQuantity = () => {
         let {stock} = this.state.subscription;
