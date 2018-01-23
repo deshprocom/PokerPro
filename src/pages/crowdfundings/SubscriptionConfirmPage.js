@@ -17,6 +17,7 @@ import {showToast} from '../../utils/ComonHelper';
 import {crowd_order} from '../../services/CrowdDao';
 import {payWx, isWXAppInstalled, showToast,alertOrderChat} from '../../utils/ComonHelper';
 import {postWxPay, getWxPaidResult} from '../../services/MallDao';
+import {isEmptyObject} from '../../utils/ComonHelper';
 
 export default class SubscriptionConfirmPage extends PureComponent {
     state = {
@@ -71,6 +72,9 @@ export default class SubscriptionConfirmPage extends PureComponent {
     };
 
     total_prize = (number, stock_unit_price) => {
+        if(isEmptyObject(number) || isEmptyObject(stock_unit_price)){
+            return 0
+        }
         return number * stock_unit_price;
     };
 

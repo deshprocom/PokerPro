@@ -72,7 +72,7 @@ export default class SubscriptionPage extends PureComponent {
 
     render() {
         const {player} =  this.props.params;
-        const {sell_stock, name, logo, stock_unit_price, description, cf_player_id} =player;
+        const {sell_stock, name, logo, stock_unit_price, limit_buy, cf_player_id} =player;
         console.log(player)
         let order ={
             number:this.state.number,cf_player_id:cf_player_id,stock_unit_price:stock_unit_price
@@ -103,7 +103,7 @@ export default class SubscriptionPage extends PureComponent {
 
                 <View style={styles.buyView}>
                     <Text style={styles.txt1}>{I18n.t('purchase_copies')}（{I18n.t('limit_buy')}</Text><Text
-                    style={styles.txt2}>{sell_stock}</Text><Text style={styles.txt1}>{I18n.t('parts')}）</Text>
+                    style={styles.txt2}>{limit_buy}</Text><Text style={styles.txt1}>{I18n.t('parts')}）</Text>
                     <View style={{flex:1}}/>
                     {this.buyQuantity(player)}
                 </View>
