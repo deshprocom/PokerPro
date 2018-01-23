@@ -15,34 +15,32 @@ import I18n from 'react-native-i18n';
 
 export default class PlayerItem extends PureComponent {
     state = {
-        data: {
-            img: 'https://cdn-upyun.deshpro.com/uploads/player/avatar/7/thumb_ee03c12f507b1314176cd8deca6b260e.jpg?suffix=1496305626',
-            name: '刘佳明',
-            message:'出让20%股份，股份划分20份'
-        }
+
     };
 
     render() {
-        const {img, name,message} = this.state.data;
+        const {name, nick_name, logo, logo_sm, join_slogan, sell_stock, stock_number,
+            stock_unit_price, cf_money, lairage_rate, final_rate} = this.props.player;
+
         return (
             <TouchableOpacity style={styles.itemPage}
                               onPress={()=>{
                 global.router.toSubscriptionPage()
             }}>
-                <Image style={styles.itemImg} source={{uri:img}}/>
+                <Image style={styles.itemImg} source={{uri:logo.url}}/>
 
                 <View style={{flex:1,marginLeft:16,marginRight:17,alignItems:'center',marginTop:3}}>
                     <View style={styles.content}>
                         <View style={styles.message}>
                             <Text style={styles.name}>{name}</Text>
                             <View style={{marginTop:7,flexDirection:'row',alignItems:'center'}}>
-                                <Text style={styles.priceTxt}>{I18n.t('each_price')}：</Text><Text style={styles.price}>100元</Text>
+                                <Text style={styles.priceTxt}>{I18n.t('each_price')}：</Text><Text style={styles.price}>{stock_unit_price}元</Text>
                             </View>
-                            <Text style={styles.rankMessage}>{message}</Text>
+                            <Text style={styles.rankMessage}>{join_slogan}</Text>
                         </View>
                         <View style={{flex:1}}/>
                         <View style={styles.message2}>
-                            <Text style={styles.circlePer}>13%</Text>
+                            <Text style={styles.circlePer}>{lairage_rate}</Text>
                             <Text style={styles.circleInto}>{I18n.t('into_ring_rate')}</Text>
                         </View>
                     </View>
@@ -51,10 +49,10 @@ export default class PlayerItem extends PureComponent {
                         <ProgressBar
                             backgroundStyle={{backgroundColor: Colors._ECE, borderRadius: 2}}
                             style={{width:Metrics.screenWidth - 220,marginTop:2}}
-                            initialProgress={0.2}/>
+                            initialProgress={this.props.percent}/>
                         <View style={{flex:1}}/>
                         <View style={styles.message2}>
-                            <Text style={styles.finalsPer}>12%</Text>
+                            <Text style={styles.finalsPer}>{final_rate}</Text>
                             <Text style={styles.finalsInto}>{I18n.t('race_rate')}</Text>
                         </View>
                     </View>

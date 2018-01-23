@@ -69,8 +69,13 @@ export default class Router {
         this.stackPush({name: 'SubscriptionPage'})
     }
 
-    toPokerInfo() {
-        this.stackPush({name: 'PokerInfo'})
+    toPokerInfo(crowd) {
+        this.stackPush({
+            name: 'PokerInfo',
+            params: {
+                crowd
+            }
+        })
     }
 
 
@@ -83,9 +88,12 @@ export default class Router {
         })
     }
 
-    toSelectPlayer() {
+    toSelectPlayer(crowd) {
         this.stackPush({
-            name: 'SelectPlayerPage'
+            name: 'SelectPlayerPage',
+            params:{
+                crowd
+            }
         })
     }
 
