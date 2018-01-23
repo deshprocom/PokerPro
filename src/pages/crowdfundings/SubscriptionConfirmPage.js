@@ -15,12 +15,23 @@ import {NavigationBar} from '../../components';
 import OrderBottom from '../malls/order/OrderBottom';
 import {showToast} from '../../utils/ComonHelper';
 import {crowd_order} from '../../services/CrowdDao';
-import {isEmptyObject} from '../../utils/ComonHelper';
+import {payWx, isWXAppInstalled, showToast,alertOrderChat} from '../../utils/ComonHelper';
+import {postWxPay, getWxPaidResult} from '../../services/MallDao';
 
 export default class SubscriptionConfirmPage extends PureComponent {
     state = {
-        clickImg: false
+        clickImg: false,
+        order:{},
+        isInstall:false
     };
+
+    componentDidMount(){
+        isWXAppInstalled(isInstall => {
+            this.setState({
+                isInstall: isInstall
+            })
+        });
+    }
 
     submitBtn = (order_info) => {
         if (this.state.clickImg) {
@@ -29,7 +40,27 @@ export default class SubscriptionConfirmPage extends PureComponent {
 
                 this.setState({
                     order: data
-                })
+                });
+                if (this.state.isInstall) {
+                    postWxPay(data, ret => {
+                        payWx(ret, () => {
+                            getWxPaidResult(data, result => {
+
+                                global.router.replaceMallOrderInfo(data)
+                            }, err => {
+                                showToast('支付成功，系统正在处理')
+                            }, () => {
+                            })
+
+                        }, () => {
+                            global.router.replaceMallOrderInfo(data)
+                        })
+                    }, err => {
+
+                    });
+                } else {
+                    alertOrderChat(I18n.t('need_weChat'))
+                }
             }, err => {
 
             })

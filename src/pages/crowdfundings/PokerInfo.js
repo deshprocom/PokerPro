@@ -175,8 +175,8 @@ export default class PokerInfo extends PureComponent {
                         initialProgress={percent}/>
 
                     <View style={styles.view_percent}>
-                        {this.renderItem(stock_number, '让出股份')}
-                        {this.renderItem(sell_stock, '股份划分')}
+                        {this.renderItem(sell_stock, '让出股份')}
+                        {this.renderItem(stock_number, '股份划分')}
                         {this.renderItem(cf_money, '众筹总额')}
                     </View>
                 </View>
