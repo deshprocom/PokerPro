@@ -13,11 +13,9 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import OrderBottom from '../malls/order/OrderBottom';
-import {showToast} from '../../utils/ComonHelper';
 import {crowd_order} from '../../services/CrowdDao';
-import {payWx, isWXAppInstalled, showToast,alertOrderChat} from '../../utils/ComonHelper';
+import {payWx, isWXAppInstalled, showToast,alertOrderChat,isEmptyObject} from '../../utils/ComonHelper';
 import {postWxPay, getWxPaidResult} from '../../services/MallDao';
-import {isEmptyObject} from '../../utils/ComonHelper';
 
 export default class SubscriptionConfirmPage extends PureComponent {
     state = {
