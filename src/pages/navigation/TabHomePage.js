@@ -186,9 +186,11 @@ class TabHomePage extends Component {
         const offsetY = event.contentOffset.y;
 
         const _num = event['contentSize']['height'] - event['layoutMeasurement']['height'] - offsetY;
+        console.log(_num)
         if (event['contentSize']['height'] > event['layoutMeasurement']['height'] && _num < -48
             && load_more !== 'loading' && load_more !== 'load_all') {
 
+            console.log('上拉加载:' + offsetY)
             this.setState({
                 load_more: 'loading'
             });
