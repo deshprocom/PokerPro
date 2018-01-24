@@ -11,6 +11,9 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {CrowdCountDown} from '../../components';
+import {RaceStatus} from '../../configs/Status';
+import moment from 'moment';
+import {sharePage} from '../../utils/ComonHelper';
 
 const styles = StyleSheet.create({
     btnLeft: {
@@ -65,13 +68,12 @@ const styles = StyleSheet.create({
 export default class Navbar extends PureComponent {
 
     render() {
-        const {endDate, status} = this.props.info;
         return <View
             style={styles.nav}>
             <StatusBar barStyle={"dark-content"}/>
             {this.renderBtn(true, Images.mall_return, styles.imgLeft)}
             <View style={{flex: 1, alignItems: 'center', height: 44, justifyContent: 'center'}}>
-                {this.renderComing(status, endDate)}
+                {this.renderComing()}
             </View>
             {this.renderBtn(false, Images.forward, styles.imgRight)}
         </View>
@@ -80,18 +82,24 @@ export default class Navbar extends PureComponent {
     renderBtn = (isLeft, image, imgStyle) => {
         return <TouchableOpacity
             onPress={() => {
-                global.router.pop()
-
+                if(isLeft){
+                    global.router.pop()
+                }else{
+                    const {race,master_image} = this.props.info;
+                    sharePage(race.name, race.location, master_image, this.props.url)
+                }
             }}
             style={styles.btnLeft}>
             <Image style={imgStyle} source={image}/>
         </TouchableOpacity>
     };
 
-    renderComing = (status, endDate) => {
-        if (status === 'coming')
+    renderComing = () => {
+        const {race, expire_date} = this.props.info;
+        let utc = moment.utc(expire_date).valueOf();
+        if (race.status === RaceStatus.unbegin)
             return <CrowdCountDown
-                date={endDate}
+                date={utc/1000}
                 days={{plural: '天 ', singular: '天 '}}
                 hours='时'
                 mins='分'

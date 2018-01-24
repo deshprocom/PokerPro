@@ -4,19 +4,19 @@
  * Desc:
  */
 
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {
-    TouchableOpacity, View, ScrollView,FlatList,
+    TouchableOpacity, View, ScrollView, FlatList,
     StyleSheet, Image, Text
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import Navbar from './Navbar';
 import DetailChild from './DetailChild';
 import {ActionPay} from '../../components';
+import {crowd_detail} from '../../services/CrowdDao'
+import I18n from 'react-native-i18n';
 
-
-
-export const footer = () => {
+export const footer = (crowd,type,player,race) => {
     return <View style={styles.footer}>
         <TouchableOpacity
             onPress={() => {
@@ -28,37 +28,61 @@ export const footer = () => {
                 style={{height: 12, width: 10, marginRight: 5}}
                 source={Images.black_fire}/>
 
-            <Text style={styles.txtLeft}>及时赛报</Text>
+            <Text style={styles.txtLeft}>{I18n.t('timely_match')}</Text>
         </TouchableOpacity>
         <View style={{flex: 1}}/>
         <TouchableOpacity
             onPress={() => {
-                global.router.toPokerInfo()
-
+                if(type === 'crowd_detail'){
+                    global.router.toSelectPlayer(crowd);
+                }else {
+                    global.router.toSubscriptionPage(crowd.id,player,race)
+                }
             }}
             style={styles.btnRight}>
-            <Text style={styles.txtRight}>我要认购</Text>
+            <Text style={styles.txtRight}>{I18n.t('subscribe')}</Text>
         </TouchableOpacity>
     </View>
 }
 
-export default class CrowdDetail extends PureComponent {
+export default class CrowdDetail extends Component {
+
+    constructor(props) {
+        super(props);
+        const {crowd} = props.params;
+        this.state = {
+            crowd
+        }
+    }
+
+    componentDidMount() {
+        const {crowd} = this.state;
+        console.log('params', crowd)
+        crowd_detail({id: crowd.id}, data => {
+            this.setState({
+                crowd: data
+            })
+        }, err => {
+
+        })
+    }
 
 
     render() {
-        const {crowd} = this.props.params;
+        const {crowd} = this.state;
+        let url = `crowdfundings/${crowd.id}`;
         return <View style={ApplicationStyles.bgContainer}>
             <Navbar
-                info={crowd}/>
+                info={crowd}
+                url={url}/>
             <DetailChild
                 info={crowd}/>
 
-            {footer()}
+            {footer(crowd,'crowd_detail',null,null)}
             <ActionPay
                 ref={ref => this.actionPay = ref}/>
         </View>
     }
-
 
 
 }

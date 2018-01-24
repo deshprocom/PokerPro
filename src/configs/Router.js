@@ -61,16 +61,36 @@ export default class Router {
         this.stackPush({name: 'RiskWarningPage'})
     }
 
-    toSubscriptionConfirmPage() {
-        this.stackPush({name: 'SubscriptionConfirmPage'})
+    toSubscriptionConfirmPage(order_info) {
+        this.stackPush({
+            name: 'SubscriptionConfirmPage',
+            params: {
+                order_info
+            }
+        })
     }
 
-    toSubscriptionPage() {
-        this.stackPush({name: 'SubscriptionPage'})
+    toSubscriptionPage(crowd_id, player, race) {
+        this.stackPush({
+            name: 'SubscriptionPage',
+            params: {
+                crowd_id: crowd_id,
+                player: player,
+                race: race
+            }
+
+        })
     }
 
-    toPokerInfo() {
-        this.stackPush({name: 'PokerInfo'})
+    toPokerInfo(crowd, player, race) {
+        this.stackPush({
+            name: 'PokerInfo',
+            params: {
+                crowd,
+                player,
+                race
+            }
+        })
     }
 
 
@@ -83,9 +103,12 @@ export default class Router {
         })
     }
 
-    toSelectPlayer() {
+    toSelectPlayer(crowd) {
         this.stackPush({
-            name: 'SelectPlayerPage'
+            name: 'SelectPlayerPage',
+            params: {
+                crowd
+            }
         })
     }
 

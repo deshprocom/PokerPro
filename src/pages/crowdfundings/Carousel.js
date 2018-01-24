@@ -32,9 +32,7 @@ export default class Carousel extends PureComponent {
                         return <TouchableOpacity
                             key={key}
                             activeOpacity={1}
-                        onPress={()=>{
-                            global.router.toSelectPlayer()
-                        }}>
+                        >
                             <Image style={{height: 200, width: '100%'}} source={{uri: item}}/>
                         </TouchableOpacity>
 

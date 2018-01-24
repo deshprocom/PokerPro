@@ -13,21 +13,74 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import OrderBottom from '../malls/order/OrderBottom';
-import {showToast} from '../../utils/ComonHelper';
+import {crowd_order} from '../../services/CrowdDao';
+import {payWx, isWXAppInstalled, showToast,alertOrderChat,isEmptyObject} from '../../utils/ComonHelper';
+import {postWxPay, getWxPaidResult} from '../../services/MallDao';
 
 export default class SubscriptionConfirmPage extends PureComponent {
     state = {
-        clickImg:false
+        clickImg: false,
+        order:{},
+        isInstall:false
     };
 
-    submitBtn = () => {
-        if(this.state.clickImg){
-             showToast('成功');
-            return global.router.toSubscriptionInfoPage()
+    componentDidMount(){
+        isWXAppInstalled(isInstall => {
+            this.setState({
+                isInstall: isInstall
+            })
+        });
+    }
+
+    submitBtn = (order_info) => {
+        if (this.state.clickImg) {
+
+            crowd_order(order_info, data => {
+
+                this.setState({
+                    order: data
+                });
+                if (this.state.isInstall) {
+                    postWxPay(data, ret => {
+                        payWx(ret, () => {
+                            getWxPaidResult(data, result => {
+
+                                global.router.replaceMallOrderInfo(data)
+                            }, err => {
+                                showToast('支付成功，系统正在处理')
+                            }, () => {
+                            })
+
+                        }, () => {
+                            global.router.replaceMallOrderInfo(data)
+                        })
+                    }, err => {
+
+                    });
+                } else {
+                    alertOrderChat(I18n.t('need_weChat'))
+                }
+            }, err => {
+
+            })
+        } else {
+            showToast('必须同意扑客协议')
         }
+
+    };
+
+    total_prize = (number, stock_unit_price) => {
+        if(isEmptyObject(number) || isEmptyObject(stock_unit_price)){
+            return 0
+        }
+        return number * stock_unit_price;
     };
 
     render() {
+
+        const {order_info} = this.props.params;
+        const {number, player_id, stock_unit_price} =order_info;
+        let sumMoney = this.total_prize(number, stock_unit_price);
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
@@ -47,19 +100,19 @@ export default class SubscriptionConfirmPage extends PureComponent {
                     <View style={[styles.message,{paddingTop:15}]}>
                         <Text style={styles.messageTxt1}>{I18n.t('order_price')}</Text>
 
-                        <Text style={styles.messageTxt2}>¥2182.8</Text>
+                        <Text style={styles.messageTxt2}>¥{stock_unit_price}</Text>
                     </View>
                     <View style={[styles.message,{marginTop:6,paddingBottom:13}]}>
                         <Text style={styles.messageTxt1}>{I18n.t('purchase_copies')}</Text>
 
-                        <Text style={styles.messageTxt1}>X2</Text>
+                        <Text style={styles.messageTxt1}>X{number}</Text>
                     </View>
 
                 </View>
 
                 <View style={styles.buy}>
-                    <Text style={styles.messageTxt2}>¥2182.8</Text>
-                    <Text style={styles.messageTxt1}>{I18n.t('payment')}：</Text>
+                    <Text style={styles.messageTxt2}>¥{sumMoney}</Text>
+                    <Text style={styles.messageTxt1}>{I18n.t('payment')}</Text>
 
                 </View>
 
@@ -71,24 +124,25 @@ export default class SubscriptionConfirmPage extends PureComponent {
                                 global.router.toRiskWarningPage()
                             }}>《风险提示》</Text>
                             及其他相关条款和协议，自愿认购xxxxxx赛事众筹项目，并支付众筹款项
-                            <Text style={{color:Colors._F34}}>200.00元</Text>。</Text>
+                            <Text style={{color:Colors._F34}}>{sumMoney}元</Text>。</Text>
 
                     </View>
                     <TouchableOpacity
                         style={{flexDirection:'row',alignItems:'center',marginTop:12,marginLeft: 17, marginRight: 17}}
-                    onPress={()=>{
+                        onPress={()=>{
                         this.setState({
                             clickImg:!this.state.clickImg
                         })
                     }}>
-                        <Image style={styles.img} source={this.state.clickImg?Images.clickImgBlue:Images.clickImg} alt=""/>
+                        <Image style={styles.img} source={this.state.clickImg?Images.clickImgBlue:Images.clickImg}
+                               alt=""/>
                         <Text style={styles.txt}>{I18n.t('promise_message')}</Text>
                     </TouchableOpacity>
                 </View>
 
                 <OrderBottom
-                    submitBtn={this.submitBtn}
-                    sumMoney="222222"/>
+                    submitBtn={()=>this.submitBtn(order_info)}
+                    sumMoney={sumMoney}/>
             </View>
 
 

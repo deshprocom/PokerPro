@@ -11,17 +11,16 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 
+
 export default class SubscriptionBottom extends PureComponent {
     state={
 
     };
-
-
     render() {
         return (
             <TouchableOpacity style={styles.bottom}
             onPress={()=>{
-                global.router.toSubscriptionConfirmPage()
+                global.router.toSubscriptionConfirmPage(this.props.order)
             }}>
                 <View style={styles.bottomView}>
                     <Text style={styles.txt}>{I18n.t('subscription')}</Text>

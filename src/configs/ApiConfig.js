@@ -125,7 +125,9 @@ export default {
     unread_comments: unread_comments,//查看回复未读数量
     crowdfundings: 'crowdfundings',//获取众筹列表
     crowd_detail: crowd_detail,//获取众筹详情
-
+    poker_list: poker_list,//查看某个众筹牌手列表
+    poker_info:poker_info,//查看某个众筹牌手详情
+    crowdfunding_orders:'crowdfunding_orders',//生成众筹订单
 
 }
 
@@ -140,9 +142,17 @@ function getUserId() {
 const page_size = 10;
 
 
+function poker_info(body) {
+    const {id,player_id} = body;
+    return `crowdfundings/${id}/players/${player_id}`;
+}
+function poker_list(body) {
+    const {id,page} = body;
+    return `crowdfundings/${id}/players?page=${page}&page_size=${page_size}`;
+}
 function crowd_detail(body) {
     const {id} = body;
-    return `crowdfundings${id}`
+    return `crowdfundings/${id}`
 }
 
 function unread_comments(body) {

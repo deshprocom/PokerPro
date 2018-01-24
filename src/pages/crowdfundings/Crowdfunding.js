@@ -53,7 +53,7 @@ export default class Crowdfunding extends PureComponent {
     onFetch = (page = 1, startFetch, abortFetch) => {
         crowd_list({page, page_size: 20}, data => {
             startFetch(data, 2)
-        })
+        },err=>{})
 
     }
 }
