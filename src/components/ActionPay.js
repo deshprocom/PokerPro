@@ -17,7 +17,112 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
 import {isEmptyObject, strNotNull, payWx} from '../utils/ComonHelper';
 import {postWxPay, postPayOrder} from '../services/OrderDao'
 
-let testUrl = 'http://localhost:4200/pay/success';
+const styles = StyleSheet.create({
+    page: {
+        flex: 1
+    },
+    pageTop: {flex: 1, backgroundColor: 'rgba(0,0,0,0.5)'},
+    page2: {
+        flex: 1,
+        backgroundColor: Colors.bg_ec
+    },
+    top: {
+        height: 56,
+        backgroundColor: Colors.white,
+        alignItems: 'center',
+        flexDirection: 'row'
+    },
+    title: {
+        fontSize: 17,
+        color: '#444444'
+    },
+    btnClose: {
+        height: 56,
+        width: 56,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    imgClose: {
+        height: 19,
+        width: 19,
+    },
+    page3: {
+        height: 72,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: Colors.white
+    },
+    img3: {
+        height: 37,
+        width: 37,
+        marginLeft: 17,
+        marginRight: 22
+    },
+    txt3: {
+        fontSize: 15,
+        color: '#444444',
+    },
+    txt31: {
+        fontSize: 12,
+        color: Colors._888,
+        marginTop: 8
+    },
+    txt32: {
+        fontSize: 18,
+        color: Colors._DF1
+    },
+    page4: {
+        height: 74,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: Colors.white,
+        marginTop: 1
+    },
+    page5: {
+        height: 74,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: Colors.white,
+        marginTop: 14
+    },
+    img4: {
+        height: 23,
+        width: 29,
+        marginLeft: 17,
+        marginRight: 22
+    },
+    btnPay: {
+        height: 50,
+        backgroundColor: Colors._DF1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+        bottom: 0,
+        width: '100%'
+    },
+    txtPay: {
+        fontSize: 17,
+        color: Colors.white
+    },
+    img5: {
+        height: 25,
+        width: 25
+    },
+    txt_support: {
+        fontSize: 11,
+        color: Colors.white,
+        margin: 3
+    },
+    support: {
+        position: 'absolute',
+        top: 18,
+        left: 170,
+        backgroundColor: Colors._DF1,
+        opacity: 0.4,
+        borderRadius: 2
+    }
+
+});
 
 export default class ActionPay extends Component {
     state = {
@@ -63,16 +168,30 @@ export default class ActionPay extends Component {
     topView = () => {
 
         return <View style={styles.top}>
-            <Text style={styles.title}>{I18n.t('pay_online')}</Text>
-
             <TouchableOpacity
                 onPress={() => {
-                    this.toggle();
+                    this.toggle()
                 }}
                 style={styles.btnClose}>
                 <Image
                     source={Images.pay_close}
                     style={styles.imgClose}/>
+
+            </TouchableOpacity>
+            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <Text style={styles.title}>{I18n.t('pay_online')}</Text>
+            </View>
+
+
+            <TouchableOpacity
+                onPress={() => {
+                    this.toggle();
+                    global.router.toWebPage('pay/help');
+                }}
+                style={styles.btnClose}>
+                <Image
+                    source={Images.pay_help}
+                    style={{height: 24, width: 24}}/>
 
             </TouchableOpacity>
         </View>;
@@ -185,111 +304,3 @@ export default class ActionPay extends Component {
     }
 }
 
-const styles = StyleSheet.create({
-    page: {
-        flex: 1
-    },
-    pageTop: {flex: 1, backgroundColor: 'rgba(0,0,0,0.5)'},
-    page2: {
-        flex: 1,
-        backgroundColor: Colors.bg_ec
-    },
-    top: {
-        height: 56,
-        backgroundColor: Colors.white,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    title: {
-        fontSize: 17,
-        color: '#444444'
-    },
-    btnClose: {
-        position: 'absolute',
-        right: 0,
-        height: 56,
-        width: 56,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    imgClose: {
-        height: 19,
-        width: 19,
-    },
-    page3: {
-        height: 72,
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: Colors.white
-    },
-    img3: {
-        height: 37,
-        width: 37,
-        marginLeft: 17,
-        marginRight: 22
-    },
-    txt3: {
-        fontSize: 15,
-        color: '#444444',
-    },
-    txt31: {
-        fontSize: 12,
-        color: Colors._888,
-        marginTop: 8
-    },
-    txt32: {
-        fontSize: 18,
-        color: Colors._DF1
-    },
-    page4: {
-        height: 74,
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: Colors.white,
-        marginTop: 1
-    },
-    page5: {
-        height: 74,
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: Colors.white,
-        marginTop: 14
-    },
-    img4: {
-        height: 23,
-        width: 29,
-        marginLeft: 17,
-        marginRight: 22
-    },
-    btnPay: {
-        height: 50,
-        backgroundColor: Colors._DF1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'absolute',
-        bottom: 0,
-        width: '100%'
-    },
-    txtPay: {
-        fontSize: 17,
-        color: Colors.white
-    },
-    img5: {
-        height: 25,
-        width: 25
-    },
-    txt_support: {
-        fontSize: 11,
-        color: Colors.white,
-        margin: 3
-    },
-    support: {
-        position: 'absolute',
-        top: 18,
-        left: 170,
-        backgroundColor: Colors._DF1,
-        opacity: 0.4,
-        borderRadius: 2
-    }
-
-});
