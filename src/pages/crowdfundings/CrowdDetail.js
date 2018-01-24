@@ -12,7 +12,6 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import Navbar from './Navbar';
 import DetailChild from './DetailChild';
-import {ActionPay} from '../../components';
 import {crowd_detail} from '../../services/CrowdDao'
 import I18n from 'react-native-i18n';
 
@@ -79,8 +78,7 @@ export default class CrowdDetail extends Component {
                 info={crowd}/>
 
             {footer(crowd,'crowd_detail',null,null)}
-            <ActionPay
-                ref={ref => this.actionPay = ref}/>
+
         </View>
     }
 

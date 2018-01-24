@@ -27,7 +27,7 @@ export const YYYYMMDD = 'YYYYMMDD';
 export const MM_DD = 'MM-DD';
 
 const HOST = 'https://h5.deshpro.com/';
-const THOST = 'http://192.168.2.173:5000/';
+const THOST = 'http://192.168.2.173:3000/';
 
 export const util = _;
 

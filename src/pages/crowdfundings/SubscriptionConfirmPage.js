@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar} from '../../components';
+import {NavigationBar,ActionPay} from '../../components';
 import OrderBottom from '../malls/order/OrderBottom';
 import {crowd_order} from '../../services/CrowdDao';
 import {payWx, isWXAppInstalled, showToast,alertOrderChat,isEmptyObject} from '../../utils/ComonHelper';
@@ -40,26 +40,7 @@ export default class SubscriptionConfirmPage extends PureComponent {
                 this.setState({
                     order: data
                 });
-                if (this.state.isInstall) {
-                    postWxPay(data, ret => {
-                        payWx(ret, () => {
-                            getWxPaidResult(data, result => {
-
-                                global.router.replaceMallOrderInfo(data)
-                            }, err => {
-                                showToast('支付成功，系统正在处理')
-                            }, () => {
-                            })
-
-                        }, () => {
-                            global.router.replaceMallOrderInfo(data)
-                        })
-                    }, err => {
-
-                    });
-                } else {
-                    alertOrderChat(I18n.t('need_weChat'))
-                }
+                this.actionPay.toggle();
             }, err => {
 
             })
@@ -143,6 +124,9 @@ export default class SubscriptionConfirmPage extends PureComponent {
                 <OrderBottom
                     submitBtn={()=>this.submitBtn(order_info)}
                     sumMoney={sumMoney}/>
+
+                <ActionPay
+                    ref={ref => this.actionPay = ref}/>
             </View>
 
 
