@@ -147,7 +147,7 @@ export default class PokerInfo extends PureComponent {
                     <View style={styles.view_info1}>
                         <View>
                             <Text style={styles.txt_name}>{I18n.t('sponsor_player')}：{name}</Text>
-                            <Text style={styles.lb_price}>{i18n.t('part_price')}：<Text style={styles.txt_price}>{stock_unit_price}</Text></Text>
+                            <Text style={styles.lb_price}>{I18n.t('part_price')}：<Text style={styles.txt_price}>{stock_unit_price}</Text></Text>
                         </View>
 
                         <View style={styles.view_info2}>

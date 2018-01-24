@@ -13,6 +13,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {CrowdCountDown} from '../../components';
 import {RaceStatus} from '../../configs/Status';
 import moment from 'moment';
+import {sharePage} from '../../utils/ComonHelper';
 
 const styles = StyleSheet.create({
     btnLeft: {
@@ -81,8 +82,12 @@ export default class Navbar extends PureComponent {
     renderBtn = (isLeft, image, imgStyle) => {
         return <TouchableOpacity
             onPress={() => {
-                global.router.pop()
-
+                if(isLeft){
+                    global.router.pop()
+                }else{
+                    const {race,master_image} = this.props.info;
+                    sharePage(race.name, race.location, master_image, this.props.url)
+                }
             }}
             style={styles.btnLeft}>
             <Image style={imgStyle} source={image}/>

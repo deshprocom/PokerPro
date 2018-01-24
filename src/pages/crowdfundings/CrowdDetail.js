@@ -70,9 +70,11 @@ export default class CrowdDetail extends Component {
 
     render() {
         const {crowd} = this.state;
+        let url = `crowdfundings/${crowd.id}`;
         return <View style={ApplicationStyles.bgContainer}>
             <Navbar
-                info={crowd}/>
+                info={crowd}
+                url={url}/>
             <DetailChild
                 info={crowd}/>
 
