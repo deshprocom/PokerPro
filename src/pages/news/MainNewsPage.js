@@ -88,7 +88,7 @@ export default class MainNewsPage extends Component {
                     backgroundColor={Colors.white}
                     activeTextColor="#161718"
                     inactiveTextColor={Colors._AAA}
-                    textStyle={{fontSize: 17}}
+                    textStyle={{fontSize: 16}}
                     style={{borderColor: Colors._EEE}}
                     underlineStyle={{backgroundColor: '#161718', height: 2}}
                 />}>

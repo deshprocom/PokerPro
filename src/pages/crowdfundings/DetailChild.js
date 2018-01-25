@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         height: 3,
         width: 60,
         backgroundColor: Colors._F34,
-        marginTop: 3
+        marginTop: 5
     },
     tabView: {
         width: '100%', height: 50, flexDirection: 'row',
