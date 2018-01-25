@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     btnClose: {
         height: 56,
         width: 56,
+
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -207,9 +208,9 @@ export default class ActionPay extends Component {
             <View>
                 <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
                     <Text style={styles.txt3}>{I18n.t('pay_need')}</Text>
-                    <Text style={styles.txt32}> ¥200</Text>
+                    <Text style={styles.txt32}> ¥{this.props.sumMoney}</Text>
                 </View>
-                <Text style={styles.txt31}>{I18n.t('order_num')}: {23984122983}</Text>
+                <Text style={styles.txt31}>{I18n.t('order_num')}: {this.props.orderNumber}</Text>
             </View>
 
         </View>;
@@ -233,7 +234,7 @@ export default class ActionPay extends Component {
                 <Text style={styles.txt3}>{I18n.t('pay_card')}  </Text>
                 <Text style={styles.txt31}>{I18n.t('pay_tine')}</Text>
             </View>
-
+            <View style={{flex:1}}/>
             {strNotNull(this.state.pay_url) ? <View
                 style={styles.btnClose}>
                 <Image
@@ -265,7 +266,7 @@ export default class ActionPay extends Component {
                 <Text style={styles.txt3}>{I18n.t('pay_weixin')}  </Text>
                 <Text style={styles.txt31}>{I18n.t('pay_weixin_support')}</Text>
             </View>
-
+            <View style={{flex:1}}/>
             {isEmptyObject(this.state.wxPay) ? null : <View
                 style={styles.btnClose}>
                 <Image
