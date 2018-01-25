@@ -34,9 +34,7 @@ export default class RiskWarningPage extends PureComponent {
                 <View style={styles.page}>
                     <Text style={styles.pageTxt}>{I18n.t('risk_warn_content')}</Text>
                 </View>
-                <OrderBottom
-                    submitBtn={this.submitBtn}
-                    sumMoney="222222"/>
+
             </View>
 
 

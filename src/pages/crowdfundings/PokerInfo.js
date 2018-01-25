@@ -184,7 +184,7 @@ export default class PokerInfo extends PureComponent {
                 <View style={{height: 14, backgroundColor: 'white', marginTop: 7}}/>
 
 
-                {!isEmptyObject(ordered) && ordered.users.length > 0 ?   <View style={styles.view_head}>
+                {!isEmptyObject(ordered) && ordered.users.length > 0 ? <View style={styles.view_head}>
                     <Text style={[styles.txt_slogan, {marginBottom: 14, alignSelf: 'center'}]}
                     >{I18n.t('currently_there')}<Text
                         style={{color: Colors._F34}}>{isEmptyObject(ordered) ? '' : ordered.number}</Text>{I18n.t('people')}{I18n.t('subscription')}
@@ -210,8 +210,8 @@ export default class PokerInfo extends PureComponent {
 
     renderItem = (percent, type) => {
         return <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <Text style={{fontSize: 18, color: Colors._F34}}>{percent}</Text>
-            <Text style={{fontSize: 12, color: Colors._888, marginTop: 5}}>{type}</Text>
+            <Text style={{fontSize: 18, color: Colors._F34, fontWeight: 'bold'}}>{percent}</Text>
+            <Text style={{fontSize: 12, color: Colors._888, marginTop: 5, fontWeight: 'bold'}}>{type}</Text>
         </View>
     }
 }
