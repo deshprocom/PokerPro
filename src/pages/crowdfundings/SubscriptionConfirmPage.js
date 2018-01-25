@@ -11,20 +11,20 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar,ActionPay} from '../../components';
+import {NavigationBar, ActionPay} from '../../components';
 import OrderBottom from '../malls/order/OrderBottom';
 import {crowd_order} from '../../services/CrowdDao';
-import {payWx, isWXAppInstalled, showToast,alertOrderChat,isEmptyObject} from '../../utils/ComonHelper';
+import {payWx, isWXAppInstalled, showToast, alertOrderChat, isEmptyObject} from '../../utils/ComonHelper';
 import {postWxPay, getWxPaidResult} from '../../services/MallDao';
 
 export default class SubscriptionConfirmPage extends PureComponent {
     state = {
         clickImg: false,
-        order:{},
-        isInstall:false
+        order: {},
+        isInstall: false
     };
 
-    componentDidMount(){
+    componentDidMount() {
         isWXAppInstalled(isInstall => {
             this.setState({
                 isInstall: isInstall
@@ -51,7 +51,7 @@ export default class SubscriptionConfirmPage extends PureComponent {
     };
 
     total_prize = (number, stock_unit_price) => {
-        if(isNaN(number) || isNaN(stock_unit_price)){
+        if (isNaN(number) || isNaN(stock_unit_price)) {
             return 0
         }
         return number * stock_unit_price;
@@ -102,7 +102,7 @@ export default class SubscriptionConfirmPage extends PureComponent {
                         <Text style={styles.readTxt1}>我是投资人本人xxx，身份证号码xxxxxxxxxxxxxxxxxxxx，我已认真阅读并同意
                             <Text style={{color:'#438EE6'}}
                                   onPress={()=>{
-                                global.router.toRiskWarningPage()
+                                global.router.toRiskWarningPage(sumMoney,order_info,this.state.clickImg,this.state.order)
                             }}>《风险提示》</Text>
                             及其他相关条款和协议，自愿认购xxxxxx赛事众筹项目，并支付众筹款项
                             <Text style={{color:Colors._F34}}>{sumMoney}元</Text>。</Text>
@@ -126,7 +126,9 @@ export default class SubscriptionConfirmPage extends PureComponent {
                     sumMoney={sumMoney}/>
 
                 <ActionPay
-                    ref={ref => this.actionPay = ref}/>
+                    ref={ref => this.actionPay = ref}
+                    sumMoney={sumMoney}
+                    orderNumber={this.state.order.order_number}/>
             </View>
 
 

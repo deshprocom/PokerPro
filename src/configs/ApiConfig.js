@@ -128,6 +128,7 @@ export default {
     poker_list: poker_list,//查看某个众筹牌手列表
     poker_info:poker_info,//查看某个众筹牌手详情
     crowdfunding_orders:'crowdfunding_orders',//生成众筹订单
+    crowdfunding_banners:'crowdfunding_banners',//获取众筹banner
 
 }
 
