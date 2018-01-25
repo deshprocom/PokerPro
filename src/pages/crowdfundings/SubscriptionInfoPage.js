@@ -123,7 +123,7 @@ export default class SubscriptionInfoPage extends PureComponent {
                 </View>
 
                 <View style={{marginLeft: 17, marginRight: 17,marginTop:17}}>
-                    <Text style={styles.readTxt1}>我是投资人本人xxx，身份证号码xxxxxxxxxxxxxxxxxxxx，我已认真阅读并同意
+                    <Text style={styles.readTxt1}>我是投资人本人xxx，身份证号码xxxxxxxxxxxx，我已认真阅读并同意
                         <Text style={{color:'#438EE6'}}
                               onPress={()=>{
                                 global.router.toRiskWarningPage()

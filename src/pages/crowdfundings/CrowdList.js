@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     },
     view2: {
         flexDirection: 'row', paddingTop: 14, paddingBottom: 14,
-        backgroundColor: Colors._ECE,
+        backgroundColor: '#FBFAFA',
         paddingLeft: 17,
         paddingRight: 17,
     },
@@ -49,6 +49,20 @@ const styles = StyleSheet.create({
 });
 
 export default class CrowdList extends PureComponent {
+
+    state = {
+        info: {
+            order_no: '21345345311',
+            status: 'waiting',
+            name: '马叉虫（马永春）',
+            avatar: 'https://wx2.sinaimg.cn/mw690/006Ey6KAly1fnk0j69gm8j30qo0qowj6.jpg',
+            race_name: 'NCBP国家杯棋牌职业大师赛-Day2',
+            price: '¥100／份',
+            copies: 2,
+            total: 1184.0
+
+        }
+    }
 
     render() {
         return <UltimateFlatList
@@ -70,7 +84,7 @@ export default class CrowdList extends PureComponent {
 
         try {
             crowd_order_list({page, page_size: 20, status: this.props.status}, data => {
-                postRefresh(data, 2)
+                postRefresh([1, 2, 3, 4, 5], 2)
             }, err => {
                 endFetch()
             })
