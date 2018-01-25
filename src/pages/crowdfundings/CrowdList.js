@@ -69,10 +69,10 @@ export default class CrowdList extends PureComponent {
     onFetch = (page = 1, postRefresh, endFetch) => {
 
         try {
-            crowd_order_list({page,page_size:20,status:this.props.status},data=>{
-
-            },err=>{
-
+            crowd_order_list({page, page_size: 20, status: this.props.status}, data => {
+                postRefresh(data, 2)
+            }, err => {
+                endFetch()
             })
 
         } catch (e) {
