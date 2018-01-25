@@ -188,7 +188,7 @@ class TabHomePage extends Component {
         const _num = event['contentSize']['height'] - event['layoutMeasurement']['height'] - offsetY;
 
         if (event['contentSize']['height'] > event['layoutMeasurement']['height']
-            && _num < Platform.OS === 'ios' ? -48 : 2
+            && _num < Platform.OS === 'ios' ? -30 : 2
                 && load_more !== 'loading' && load_more !== 'load_all') {
 
             this.setState({
