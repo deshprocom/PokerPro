@@ -83,9 +83,7 @@ const styles = StyleSheet.create({
     },
     view_head: {
         backgroundColor: 'white',
-        paddingTop: 14,
-        marginTop: 7,
-        paddingBottom: 30,
+        paddingBottom: 20,
         paddingLeft: 17
     },
     img_head: {
@@ -118,7 +116,7 @@ export default class PokerInfo extends PureComponent {
     render() {
 
         const {
-            cf_player_id,race_rank, ordered, player_images, name, logo, stock_unit_price, cf_money,
+            cf_player_id, race_rank, ordered, player_images, name, logo, stock_unit_price, cf_money,
             stock_number, sell_stock, lairage_rate, final_rate, join_slogan, description
         } = this.state.pokerInfo;
 
@@ -140,22 +138,23 @@ export default class PokerInfo extends PureComponent {
             <ScrollView>
 
                 {isEmptyObject(logo) ? null : <ImageLoad style={styles.img_poker}
-                                                         source={{uri:logo.url}}/>}
+                                                         source={{uri: logo.url}}/>}
 
 
                 <View style={styles.view_info}>
                     <View style={styles.view_info1}>
                         <View>
                             <Text style={styles.txt_name}>{I18n.t('sponsor_player')}：{name}</Text>
-                            <Text style={styles.lb_price}>{I18n.t('part_price')}：<Text style={styles.txt_price}>{stock_unit_price}</Text></Text>
+                            <Text style={styles.lb_price}>{I18n.t('part_price')}：<Text
+                                style={styles.txt_price}>{stock_unit_price}</Text></Text>
                         </View>
 
                         <View style={styles.view_info2}>
-                            <View style={{alignItems:'center', marginRight: 10}}>
+                            <View style={{alignItems: 'center', marginRight: 10}}>
                                 <Text style={styles.txt_entry}>{lairage_rate}</Text>
                                 <Text style={styles.lb_entry}>{I18n.t('into_ring_rate')}</Text>
                             </View>
-                            <View style={{alignItems:'center'}}>
+                            <View style={{alignItems: 'center'}}>
                                 <Text style={styles.txt_final}>{final_rate}</Text>
                                 <Text style={styles.lb_final}>{I18n.t('admission')}</Text>
                             </View>
@@ -182,32 +181,37 @@ export default class PokerInfo extends PureComponent {
                     </View>
                 </View>
 
-                <View style={styles.view_head}>
+                <View style={{height: 14, backgroundColor: 'white', marginTop: 7}}/>
+
+
+                {!isEmptyObject(ordered) && ordered.users.length > 0 ? <View style={styles.view_head}>
                     <Text style={[styles.txt_slogan, {marginBottom: 14, alignSelf: 'center'}]}
                     >{I18n.t('currently_there')}<Text
-                        style={{color: Colors._F34}}>{isEmptyObject(ordered) ? '' : ordered.number}</Text>{I18n.t('people')}{I18n.t('subscription')}</Text>
+                        style={{color: Colors._F34}}>{isEmptyObject(ordered) ? '' : ordered.number}</Text>{I18n.t('people')}{I18n.t('subscription')}
+                    </Text>
 
                     <FlatList
                         horizontal={true}
-                        data={isEmptyObject(ordered) ?[]:ordered.users}
+                        data={isEmptyObject(ordered) ? [] : ordered.users}
                         renderItem={({item}) => <ImageLoad style={styles.img_head} source={{uri: item.avatar}}/>}
                         keyExtractor={(item, index) => `buy_person${index}`}/>
-                </View>
+                </View> : null}
+
 
                 <IntroRecord
                     description={description}
                     race_rank={race_rank}/>
             </ScrollView>
-            <View style={{height:30}}/>
-            {footer(this.props.params.crowd,'poker_info',this.state.pokerInfo,this.props.params.race)}
+            <View style={{height: 30}}/>
+            {footer(this.props.params.crowd, 'poker_info', this.state.pokerInfo, this.props.params.race)}
         </View>
     }
 
 
     renderItem = (percent, type) => {
         return <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <Text style={{fontSize: 18, color: Colors._F34}}>{percent}</Text>
-            <Text style={{fontSize: 12, color: Colors._888, marginTop: 5}}>{type}</Text>
+            <Text style={{fontSize: 18, color: Colors._F34, fontWeight: 'bold'}}>{percent}</Text>
+            <Text style={{fontSize: 12, color: Colors._888, marginTop: 5, fontWeight: 'bold'}}>{type}</Text>
         </View>
     }
 }

@@ -566,5 +566,8 @@
   "share_division":"股份划分",
   "total_crowdfunding":"众筹总额",
   "currently_there":"目前已有",
-  "people":"人"
+  "people":"人",
+  "unpublish":"待公布",
+  "success":"成功",
+  "unsuccess":"未成功"
 }

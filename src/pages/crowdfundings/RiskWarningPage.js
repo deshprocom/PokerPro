@@ -11,31 +11,15 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar,ActionPay} from '../../components';
+import {NavigationBar} from '../../components';
 import OrderBottom from '../malls/order/OrderBottom';
-import {crowd_order} from '../../services/CrowdDao';
-import {showToast} from '../../utils/ComonHelper';
 
 export default class RiskWarningPage extends PureComponent {
     state={
 
     };
 
-    submitBtn = (order_info) => {
-        if (this.props.params.clickImg) {
 
-            crowd_order(order_info, data => {
-
-                this.props.params.order=data;
-                this.actionPay.toggle();
-            }, err => {
-
-            })
-        } else {
-            showToast('请返回上一页同意扑客协议')
-        }
-
-    };
     render() {
         return (
             <View style={ApplicationStyles.bgContainer}>
@@ -50,13 +34,7 @@ export default class RiskWarningPage extends PureComponent {
                 <View style={styles.page}>
                     <Text style={styles.pageTxt}>{I18n.t('risk_warn_content')}</Text>
                 </View>
-                <OrderBottom
-                    submitBtn={()=>this.submitBtn(this.props.params.order_info)}
-                    sumMoney={this.props.params.sumMoney}/>
-                <ActionPay
-                    ref={ref => this.actionPay = ref}
-                    sumMoney = {this.props.params.sumMoney}
-                    orderNumber={this.props.params.order.order_number}/>
+
             </View>
 
 

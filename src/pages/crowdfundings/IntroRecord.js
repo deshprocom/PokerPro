@@ -86,17 +86,17 @@ const styles = StyleSheet.create({
         height: 10,
         width: 10
     },
-    rankView:{
-        backgroundColor:'#F34A4A',
-        borderRadius:32
+    rankView: {
+        backgroundColor: '#F34A4A',
+        borderRadius: 32
     },
-    rankTxt:{
+    rankTxt: {
         fontSize: 13,
         color: '#FFFFFF',
-        marginTop:3,
-        marginBottom:3,
-        marginLeft:9,
-        marginRight:9
+        marginTop: 3,
+        marginBottom: 3,
+        marginLeft: 9,
+        marginRight: 9
     }
 
 });
@@ -116,7 +116,7 @@ export default class IntroRecord extends PureComponent {
             </View>
 
             {this.pageMenu(description, race_rank)}
-            <View style={{height:30}}/>
+            <View style={{height: 30}}/>
         </View>
     }
 
@@ -140,10 +140,12 @@ export default class IntroRecord extends PureComponent {
             onPress={() => {
                 this.setState({menu})
             }}
-            style={{
+            style={[{
                 flex: 1, alignItems: 'center', justifyContent: 'center',
                 backgroundColor: select ? Colors._161 : 'white'
-            }}>
+            }, menu === 0 && select ? {borderBottomLeftRadius: 2, borderTopLeftRadius: 2} : {
+                borderTopRightRadius: 2, borderBottomRightRadius: 2
+            }]}>
             <Text style={{fontSize: 14, color: select ? '#FFE9AD' : Colors.txt_444}}>{btnTitle}</Text>
 
         </TouchableOpacity>
@@ -156,7 +158,7 @@ export default class IntroRecord extends PureComponent {
 
     renderItem = (item) => {
         const {rank, race, parent_race} = item.item;
-        console.log("item33:",item)
+        console.log("item33:", item)
         return <View style={styles.item}>
 
             <View style={styles.view1}>

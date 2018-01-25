@@ -51,18 +51,19 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 18,
-        marginTop: 10
+        marginTop: 12
     },
     txtName: {
         color: Colors._333,
         fontSize: 14,
         lineHeight: 20,
         fontWeight: 'bold',
-        marginTop: 8
+        marginTop: 8,
+        marginBottom: 4
     },
     txtTime: {
         fontSize: 12,
-        color: Colors._666,
+        color: Colors._AAA,
         marginTop: 5
     },
     itemContainer: {
@@ -83,12 +84,14 @@ const styles = StyleSheet.create({
     },
     txtCrowd: {
         fontSize: 12,
-        color: Colors._888
+        color: Colors._888,
+        fontWeight: 'bold'
     },
     txtCrowdPrize: {
         fontSize: 14,
         color: Colors._F34,
-        marginLeft: 8
+        marginLeft: 8,
+        fontWeight: 'bold'
     },
     arrow: {
         position: 'absolute',
@@ -127,10 +130,11 @@ export default class CrowItem extends PureComponent {
 
 
             <View>
-                <View style={{flexDirection: 'row'}}>
+                <View style={{flexDirection: 'row', marginBottom: 4}}>
                     <View style={{flex: 0.75}}>
                         <Text style={styles.txtName}>{race.name}</Text>
-                        <Text style={styles.txtTime}>{`${I18n.t('qualification')}：¥${cf_cond}  ${this.race_time(race)}`}</Text>
+                        <Text style={styles.txtTime}>{`${I18n.t('qualification')}：¥${cf_cond}     `}
+                            <Text>{this.race_time(race)}</Text></Text>
                         <Text style={styles.txtTime}>{I18n.t('address')}：{race.location}</Text>
                     </View>
 
@@ -145,7 +149,7 @@ export default class CrowItem extends PureComponent {
 
                 <ProgressBar
                     backgroundStyle={{backgroundColor: Colors._ECE, borderRadius: 2}}
-                    style={{width: Metrics.screenWidth - 74}}
+                    style={{width: Metrics.screenWidth - 34}}
                     initialProgress={percent}/>
 
                 <View style={styles.saleStyle}>
@@ -181,7 +185,7 @@ export default class CrowItem extends PureComponent {
 
     race_time = (race) => {
         const {begin_date, end_date} = race;
-        return moment(begin_date).format('YYYY.MM.DD') + '-' + moment(end_date).format('YYYY.MM.DD')
+        return moment(begin_date).format('YYYY.MM.DD') + '-' + moment(end_date).format('MM.DD')
     };
 
     renderCrowd = (label, prize) => {

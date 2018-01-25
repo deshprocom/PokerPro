@@ -16,7 +16,7 @@ import {
 let styles = StyleSheet.create({
     background: {
         backgroundColor: '#bbbbbb',
-        height: 5,
+        height: 3,
         overflow: 'hidden',
         flexDirection: 'row',
     },
@@ -25,7 +25,7 @@ let styles = StyleSheet.create({
         height: 5
     },
     percent: {
-        zIndex: 9,
+        zIndex: 3,
         position: 'absolute',
         backgroundColor: 'white',
         borderRadius: 5,
@@ -68,6 +68,10 @@ export default class ProgressBar extends Component {
             outputRange: [0 * this.props.style.width, 1 * this.props.style.width],
         });
 
+        let marginFill = fillWidth;
+        if(JSON.stringify(fillWidth)>100){
+            marginFill =  JSON.stringify(fillWidth) -40;
+        }
 
         return (
             <View style={{
@@ -78,7 +82,7 @@ export default class ProgressBar extends Component {
                     <Animated.View style={[styles.fill, this.props.fillStyle, {width: fillWidth}]}/>
                 </View>
                 <Animated.View
-                    style={[styles.percent, {marginLeft: fillWidth}]}>
+                    style={[styles.percent, {marginLeft:marginFill}]}>
                     <Text style={styles.txt_per}>{Number.parseInt(this.props.initialProgress * 100)}%</Text>
                 </Animated.View>
             </View>

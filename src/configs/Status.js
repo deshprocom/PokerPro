@@ -3,6 +3,14 @@
  */
 import I18n from 'react-native-i18n';
 
+//用户赞助状态
+export class CrowdStatus{
+    static ALL = 'all';
+    static  UNPUBLISHED = 'unpublished';
+    static SUCCESS = 'success';
+    static  FAILED = 'failed';
+}
+
 export class WebAction {
     static REFRESH_COMMENT = 'REFRESH_COMMENT';
     static ADD_TOTAL_LIKES = 'ADD_TOTAL_LIKES';

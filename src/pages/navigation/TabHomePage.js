@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
     View, ScrollView, StyleSheet, RefreshControl,
-    Text, ActivityIndicator
+    Text, ActivityIndicator, Platform
 }
     from 'react-native';
 import Races from './Races';
@@ -186,8 +186,10 @@ class TabHomePage extends Component {
         const offsetY = event.contentOffset.y;
 
         const _num = event['contentSize']['height'] - event['layoutMeasurement']['height'] - offsetY;
-        if (event['contentSize']['height'] > event['layoutMeasurement']['height'] && _num < -48
-            && load_more !== 'loading' && load_more !== 'load_all') {
+
+        if (event['contentSize']['height'] > event['layoutMeasurement']['height']
+            && _num < Platform.OS === 'ios' ? -30 : 2
+                && load_more !== 'loading' && load_more !== 'load_all') {
 
             this.setState({
                 load_more: 'loading'

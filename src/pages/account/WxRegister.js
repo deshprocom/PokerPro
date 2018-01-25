@@ -79,10 +79,11 @@ export default class WxRegister extends React.Component {
                 vcode_type: 'mobile',
                 mobile: this.state.mobile
             };
+            if (this.countDownButton)
+                this.countDownButton.startCountDown()
 
             postVCode(body, data => {
-                if (this.countDownButton)
-                    this.countDownButton.startCountDown()
+
             }, err => {
                 showToast(err)
             })
