@@ -11,16 +11,26 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import Swiper from 'react-native-swiper';
+import {crowd_banner} from '../../services/CrowdDao';
+import {isEmptyObject} from '../../utils/ComonHelper';
 
 export default class Carousel extends PureComponent {
+    state = {
+        banners: {}
+    };
 
+    componentDidMount() {
+        crowd_banner(data => {
+            console.log("banners:", data);
+            this.setState({
+                banners: data
+            })
+        }, err => {
+        });
+    }
 
     render() {
-
-        let carousel = ['https://cdn-upyun.deshpro.com/uploads/photo/2018/01/b10f8847636ed9e19fcb43310f26b48b.jpg',
-            'https://cdn-upyun.deshpro.com/uploads/photo/2018/01/605e1ef97f57f20eb595ac3695223059.jpg',
-            'https://cdn-upyun.deshpro.com/uploads/photo/2018/01/d5c623d68fbfba5d3b2cfa1a1d843db1.jpg',
-            'https://cdn-upyun.deshpro.com/uploads/photo/2018/01/1d25c4c446fae853245b0d547361c3b4.jpg'];
+        const {banners} = this.state.banners;
         return (
             <View style={{height: 200, marginBottom: 10}}>
                 <Swiper
@@ -28,15 +38,15 @@ export default class Carousel extends PureComponent {
                     dotStyle={stylesM.dot}
                     autoplayTimeout={3}
                     autoplay>
-                    {carousel.map((item, key) => {
-                        return <TouchableOpacity
-                            key={key}
-                            activeOpacity={1}
-                        >
-                            <Image style={{height: 200, width: '100%'}} source={{uri: item}}/>
-                        </TouchableOpacity>
+                    {isEmptyObject(banners) ? [] : banners.map((item, key) => {
+                            return <TouchableOpacity
+                                key={key}
+                                activeOpacity={1}
+                            >
+                                <Image style={{height: 200, width: '100%'}} source={{uri: item.image}}/>
+                            </TouchableOpacity>
 
-                    })}
+                        })}
 
                 </Swiper>
             </View>
