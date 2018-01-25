@@ -51,7 +51,7 @@ export default class SubscriptionConfirmPage extends PureComponent {
     };
 
     total_prize = (number, stock_unit_price) => {
-        if(isEmptyObject(number) || isEmptyObject(stock_unit_price)){
+        if(isNaN(number) || isNaN(stock_unit_price)){
             return 0
         }
         return number * stock_unit_price;

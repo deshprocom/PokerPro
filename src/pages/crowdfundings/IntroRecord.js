@@ -85,6 +85,18 @@ const styles = StyleSheet.create({
     img_time: {
         height: 10,
         width: 10
+    },
+    rankView:{
+        backgroundColor:'#F34A4A',
+        borderRadius:32
+    },
+    rankTxt:{
+        fontSize: 13,
+        color: '#FFFFFF',
+        marginTop:3,
+        marginBottom:3,
+        marginLeft:9,
+        marginRight:9
     }
 
 });
@@ -95,11 +107,12 @@ export default class IntroRecord extends PureComponent {
     };
 
     render() {
+        console.log("hhh:", this.props)
         const {description, race_rank} = this.props;
         return <View style={{backgroundColor: 'white'}}>
             <View style={styles.tab_menu}>
-                {isEmptyObject(description) ? null : this.btnMenu(I18n.t('player_profile'), 0)}
-                {isEmptyObject(race_rank) ? null : this.btnMenu(I18n.t('crowdfunding_record'), 1)}
+                {this.btnMenu(I18n.t('player_profile'), 0)}
+                {this.btnMenu(I18n.t('crowdfunding_record'), 1)}
             </View>
 
             {this.pageMenu(description, race_rank)}
@@ -142,20 +155,21 @@ export default class IntroRecord extends PureComponent {
     };
 
     renderItem = (item) => {
-        const {rank, race, parent_race} = item;
+        const {rank, race, parent_race} = item.item;
+        console.log("item33:",item)
         return <View style={styles.item}>
 
             <View style={styles.view1}>
-                <Text style={styles.title}>{race.name}</Text>
-
-                <Badge
-                    textStyle={{fontSize: 12}}>第{rank.ranking}名</Badge>
+                <Text style={styles.title}>{isEmptyObject(race) ? '' : race.name}</Text>
+                <View style={styles.rankView}>
+                    <Text style={styles.rankTxt}>第{isEmptyObject(rank) ? '' : rank.ranking}名</Text>
+                </View>
             </View>
 
             <View style={styles.view2}>
-                {this.renderTag(I18n.t('rank_buyIn'), race.ticket_price)}
-                {this.renderTag(I18n.t('rank_participate'), race.participants)}
-                {this.renderTag(I18n.t('bonus'), rank.earning)}
+                {this.renderTag(I18n.t('rank_buyIn'), isEmptyObject(race) ? '' : race.ticket_price)}
+                {this.renderTag(I18n.t('rank_participate'), isEmptyObject(race) ? '' : race.participants)}
+                {this.renderTag(I18n.t('bonus'), isEmptyObject(rank) ? '' : rank.earning)}
             </View>
 
             <View style={{
@@ -163,8 +177,8 @@ export default class IntroRecord extends PureComponent {
                 marginTop: 17, marginBottom: 11
             }}/>
 
-            {this.renderFooter(Images.home_clock, styles.img_time, this.race_time(race))}
-            {this.renderFooter(Images.home_adr, styles.img_loc, race.location)}
+            {this.renderFooter(Images.home_clock, styles.img_time, isEmptyObject(race) ? '' : this.race_time(race))}
+            {this.renderFooter(Images.home_adr, styles.img_loc, isEmptyObject(race) ? '' : race.location)}
 
         </View>
     };
