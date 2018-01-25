@@ -167,7 +167,7 @@ export default class IntroRecord extends PureComponent {
             </View>
 
             <View style={styles.view2}>
-                {this.renderTag(I18n.t('rank_buyIn'), isEmptyObject(race) ? '' : race.ticket_price)}
+                {this.renderTag(I18n.t('rank_buyIn'), isEmptyObject(race) ? '' : `¥${race.ticket_price}`)}
                 {this.renderTag(I18n.t('rank_participate'), isEmptyObject(race) ? '' : race.participants)}
                 {this.renderTag(I18n.t('bonus'), isEmptyObject(rank) ? '' : rank.earning)}
             </View>

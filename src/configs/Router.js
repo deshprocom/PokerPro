@@ -57,8 +57,16 @@ export default class Router {
         this.stackPush({name: 'SubscriptionInfoPage'})
     }
 
-    toRiskWarningPage() {
-        this.stackPush({name: 'RiskWarningPage'})
+    toRiskWarningPage(sumMoney,order_info,clickImg,order) {
+        this.stackPush({
+            name: 'RiskWarningPage',
+            params: {
+                sumMoney: sumMoney,
+                order_info:order_info,
+                clickImg:clickImg,
+                order:order
+            }
+        })
     }
 
     toSubscriptionConfirmPage(order_info) {
