@@ -150,7 +150,7 @@ export default class CrowItem extends PureComponent {
                 <ProgressBar
                     backgroundStyle={{backgroundColor: Colors._ECE, borderRadius: 2}}
                     style={{width: Metrics.screenWidth - 34}}
-                    initialProgress={1}/>
+                    initialProgress={percent}/>
 
                 <View style={styles.saleStyle}>
 
