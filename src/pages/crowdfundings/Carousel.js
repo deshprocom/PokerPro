@@ -13,6 +13,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import Swiper from 'react-native-swiper';
 import {crowd_banner} from '../../services/CrowdDao';
 import {isEmptyObject} from '../../utils/ComonHelper';
+import {_clickBanner} from '../navigation/MainBanner';
 
 export default class Carousel extends PureComponent {
     state = {
@@ -36,12 +37,13 @@ export default class Carousel extends PureComponent {
                 <Swiper
                     activeDotStyle={stylesM.activeDot}
                     dotStyle={stylesM.dot}
-                    autoplayTimeout={3}
+                    autoplayTimeout={2}
                     autoplay>
                     {isEmptyObject(banners) ? [] : banners.map((item, key) => {
                             return <TouchableOpacity
                                 key={key}
                                 activeOpacity={1}
+                                onPress={()=>_clickBanner(item)}
                             >
                                 <Image style={{height: 200, width: '100%'}} source={{uri: item.image}}/>
                             </TouchableOpacity>
