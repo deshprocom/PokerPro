@@ -69,8 +69,14 @@ class Personal extends Component {
                     global.router.toRecordList()
 
                 })}
+            <View style={{height: 1, marginLeft:69}}/>
+            {this._item(stylesP.item_view, Images.poker_b, stylesP.img_dy,
+                '我的扑客币', () => {
+                    global.router.toPokerB()
 
-            <View style={{height: 1, width: '100%'}}/>
+                })}
+
+            <View style={{height: 15, width: '100%'}}/>
 
             {this._item(stylesP.item_view, Images.business, {width: 21, height: 22, marginLeft: 20},
                 I18n.t('business_cooperation'), () => {
@@ -78,7 +84,7 @@ class Personal extends Component {
                     router.toBusinessPage()
 
                 })}
-            <View style={{height: 1, width: '100%'}}/>
+            <View style={{height: 1, marginLeft:69}}/>
             {this._item(stylesP.item_view, Images.settings, {width: 23, height: 23, marginLeft: 20},
                 I18n.t('setting'), () => {
                     router.toSettingPage()
@@ -100,11 +106,14 @@ class Personal extends Component {
 
 
     _item = (itemStyle, img, imgStyle, title, onPress) => {
+        const {profile} = this.props;
         return <TouchableOpacity style={itemStyle} onPress={onPress}>
             <Image style={imgStyle} source={img}/>
             <Text style={stylesP.personalText}>{title}</Text>
             <View style={{flex: 1}}/>
-
+            {title === '我的扑客币' ? <Text
+                    style={{fontSize: 16, color: '#AAAAAA',marginRight:12,lineHeight:22}}>{(profile.total_poker_coins === '0.0' || profile.total_poker_coins === '0') ? '0.00' : profile.total_poker_coins}</Text>
+                : null}
             <Image style={stylesP.personalImg} source={Images.is}/>
         </TouchableOpacity>
     };
@@ -184,16 +193,6 @@ class Personal extends Component {
                     <Image style={{marginRight: 17, width: 8, height: 15}} source={Images.rightImg}/>
                 </TouchableOpacity>
 
-                <TouchableOpacity
-                    onPress={() => global.router.toPokerB()}
-                    style={{alignItems: 'center', marginTop: 20, marginBottom: 17}}>
-                    <Text style={{fontSize: 24, color: Colors._FFE}}>24232.23</Text>
-                    <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 5}}>
-                        <Image style={{height: 18, width: 18}} source={Images.poker_b}/>
-                        <Text style={{fontSize: 14, color: Colors._FFE, marginLeft: 3}}>扑客币</Text>
-                    </View>
-
-                </TouchableOpacity>
 
             </View>
 
@@ -359,7 +358,8 @@ const stylesP = StyleSheet.create({
     meView: {
         backgroundColor: '#090909',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        paddingBottom: 37
     },
     orderView: {flexDirection: 'row', height: 82, width: '100%', backgroundColor: 'white'},
     btnOrder: {flex: 1, justifyContent: 'center', alignItems: 'center'},

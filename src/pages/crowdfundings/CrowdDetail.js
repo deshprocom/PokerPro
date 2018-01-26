@@ -19,12 +19,12 @@ export const footer = (crowd,type,player,race) => {
     return <View style={styles.footer}>
         <TouchableOpacity
             onPress={() => {
-                global.router.toReportPage()
+                {/*global.router.toReportPage()*/}
 
             }}
             style={styles.btnLeft}>
             <Image
-                style={{height: 12, width: 10, marginRight: 5}}
+                style={{height: 12, width: 10, marginRight: 5,opacity:0.3}}
                 source={Images.black_fire}/>
 
             <Text style={styles.txtLeft}>{I18n.t('timely_match')}</Text>
@@ -56,7 +56,6 @@ export default class CrowdDetail extends Component {
 
     componentDidMount() {
         const {crowd} = this.state;
-        console.log('params', crowd)
         crowd_detail({id: crowd.id}, data => {
             this.setState({
                 crowd: data
@@ -92,8 +91,8 @@ const styles = StyleSheet.create({
         paddingLeft: 17, paddingRight: 17, backgroundColor: 'white'
     },
     btnLeft: {
-        height: 34, width: 97, borderColor: Colors.txt_444, borderWidth: 1, alignItems: 'center',
-        borderRadius: 2, justifyContent: 'center', flexDirection: 'row'
+        height: 34, width: 97, borderColor: Colors._ECE, borderWidth: 1, alignItems: 'center',
+        borderRadius: 2, justifyContent: 'center', flexDirection: 'row',
     },
     btnRight: {
         height: 34,
@@ -109,7 +108,7 @@ const styles = StyleSheet.create({
         fontSize: 14
     },
     txtLeft: {
-        color: Colors.txt_444,
+        color: '#ECECEE',
         fontSize: 14
     }
 })

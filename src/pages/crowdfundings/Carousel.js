@@ -32,7 +32,6 @@ export default class Carousel extends PureComponent {
 
     render() {
         const {banners} = this.state.banners;
-        console.log("banners:", banners);
         if (!isEmptyObject(banners) && banners.length > 0)
             return (
                 <View style={{height: 200, marginBottom: 10}}>
