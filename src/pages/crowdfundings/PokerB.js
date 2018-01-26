@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
+import {poker_coins} from '../../services/CrowdDao';
+import {isEmptyObject, convertDate} from '../../utils/ComonHelper';
 
 const styles = StyleSheet.create({
     view1: {
@@ -28,8 +30,8 @@ const styles = StyleSheet.create({
         paddingRight: 17,
         paddingTop: 7,
         paddingBottom: 7,
-        flexDirection:'row',
-        alignItems:'center'
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     view_item1: {
         justifyContent: 'space-between',
@@ -47,13 +49,33 @@ const styles = StyleSheet.create({
     txt_account: {
         fontSize: 14,
         color: Colors._F34,
-        marginTop:5
+        marginTop: 5
     }
 });
 
 export default class PokerB extends PureComponent {
+    state = {
+        pokerB: {}
+    }
+
+    componentDidMount() {
+        poker_coins({page: 1}, data => {
+            console.log('pokerB:', data)
+            this.setState({
+                pokerB: data
+            })
+        }, err => {
+
+        })
+    }
 
     render() {
+        const {total_poker_coins} = this.state.pokerB;
+        var detail = [
+            {'memo': '兑换商品', 'created_at': '1516936360', 'number': '1.555'},
+            {'memo': '众筹成功', 'created_at': '1516936380', 'number': '-7777'},
+            {'memo': '兑换商品', 'created_at': '1516953360', 'number': '0'}
+        ];
         return <View style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors.bg_09}}
@@ -64,24 +86,33 @@ export default class PokerB extends PureComponent {
 
             <View style={styles.view1}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Text style={styles.txt_title}>24232.23</Text>
+                    <Text style={styles.txt_title}>{total_poker_coins}</Text>
                     <Image style={{height: 18, width: 18, marginTop: 10}} source={Images.poker_b}/>
                 </View>
                 <Text style={styles.txt_what}>什么是扑客币？</Text>
             </View>
 
-            {this.renderItem()}
+            <FlatList
+                data={detail}
+                keyExtractor={(item, index) => `pokerB${index}`}
+                renderItem={this.renderItem}
+            />
 
         </View>
     }
 
-    renderItem = () => {
+    _coins = (number) => {
+        console.log("number:",number)
+        return number;
+    };
+    renderItem = (item) => {
+        console.log(item)
         return <View style={styles.view_item}>
-            <Text style={styles.txt_name}>兑换商品</Text>
+            <Text style={styles.txt_name}>{item.memo}</Text>
             <View style={{flex:1}}/>
             <View style={{alignItems:'flex-end'}}>
-                <Text style={styles.txt_time}>2018-1-23  23:34</Text>
-                <Text style={styles.txt_account}>-1000.0</Text>
+                <Text style={styles.txt_time}>{isEmptyObject(item) ? '' : convertDate(item.created_at)}</Text>
+                <Text style={styles.txt_account}>{this._coins(item.number)}</Text>
             </View>
         </View>
     };
