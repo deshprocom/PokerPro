@@ -113,8 +113,9 @@ export default class DetailChild extends Component {
 
     render() {
         const {master_image, race, cf_total_money, cf_offer_money, mark_desc, cf_cond, categories,player_count} = this.props.info;
-        let percent = cf_offer_money / cf_total_money;
-
+        let percent = 0;
+        if (cf_total_money !== 0)
+            percent = cf_offer_money / cf_total_money;
         return <View style={{backgroundColor: 'white'}}>
             {this.state.floatTabView && categories.length > 0 ?
                 this.renderTabView(categories, styles.tabFloatView) : null}

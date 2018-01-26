@@ -19,7 +19,7 @@ export const footer = (crowd,type,player,race) => {
     return <View style={styles.footer}>
         <TouchableOpacity
             onPress={() => {
-                global.router.toReportPage()
+                {/*global.router.toReportPage()*/}
 
             }}
             style={styles.btnLeft}>
@@ -56,7 +56,6 @@ export default class CrowdDetail extends Component {
 
     componentDidMount() {
         const {crowd} = this.state;
-        console.log('params', crowd)
         crowd_detail({id: crowd.id}, data => {
             this.setState({
                 crowd: data
