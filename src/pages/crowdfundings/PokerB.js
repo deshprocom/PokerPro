@@ -13,6 +13,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import {poker_coins} from '../../services/CrowdDao';
 import {isEmptyObject, convertDate} from '../../utils/ComonHelper';
+import moment from 'moment';
 
 const styles = StyleSheet.create({
     view1: {
@@ -70,12 +71,12 @@ export default class PokerB extends PureComponent {
     }
 
     render() {
-        const {total_poker_coins} = this.state.pokerB;
-        var detail = [
-            {'memo': '兑换商品', 'created_at': '1516936360', 'number': '1.555'},
-            {'memo': '众筹成功', 'created_at': '1516936380', 'number': '-7777'},
-            {'memo': '兑换商品', 'created_at': '1516953360', 'number': '0'}
-        ];
+        const {total_poker_coins,detail} = this.state.pokerB;
+        // var detail = [
+        //     {"memo": "兑换商品", "created_at": 1516936360, "number": "1.555"},
+        //     {"memo": "众筹成功", "created_at": 1516936380, "number": "-7777"},
+        //     {"memo": "兑换商品", "created_at": 1516953360, "number": "0"}
+        // ];
         return <View style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors.bg_09}}
@@ -96,23 +97,29 @@ export default class PokerB extends PureComponent {
                 data={detail}
                 keyExtractor={(item, index) => `pokerB${index}`}
                 renderItem={this.renderItem}
+                ItemSeparatorComponent={this._separator}
             />
 
         </View>
-    }
+    };
+    _separator = () => {
+        return <View style={{height: 1,  backgroundColor: '#ECECEE'}}/>;
+    };
 
     _coins = (number) => {
-        console.log("number:",number)
-        return number;
+        if (number.substr(0, 1) != '-' && number != "0") {
+            return `+${number}`
+        } else {
+            return number;
+        }
     };
     renderItem = (item) => {
-        console.log(item)
         return <View style={styles.view_item}>
-            <Text style={styles.txt_name}>{item.memo}</Text>
+            <Text style={styles.txt_name}>{item.item.memo}</Text>
             <View style={{flex:1}}/>
-            <View style={{alignItems:'flex-end'}}>
-                <Text style={styles.txt_time}>{isEmptyObject(item) ? '' : convertDate(item.created_at)}</Text>
-                <Text style={styles.txt_account}>{this._coins(item.number)}</Text>
+            <View style={{alignItems:"flex-end"}}>
+                <Text style={styles.txt_time}>{isEmptyObject(item) ? '' : moment(item.created_at).format('YYYY-MM-DD mm:ss')}</Text>
+                <Text style={styles.txt_account}>{this._coins(item.item.number)}</Text>
             </View>
         </View>
     };
