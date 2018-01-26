@@ -24,7 +24,7 @@ export default class SubscriptionPage extends PureComponent {
 
 
     buyQuantity = (player) => {
-        let {sell_stock, stock_number} =player;
+        let {limit_buy, stock_number} =player;
         let {number} = this.state;
         const styleCutDisable = {
             backgroundColor: '#FBFAFA'
@@ -55,12 +55,12 @@ export default class SubscriptionPage extends PureComponent {
                     style={styles.buyTouch}
                     onPress={() => {
 
-                        if (number < stock_number && number>=1) {
+                        if (number < limit_buy && number>=1) {
                             this.setState({
                                 number: ++number
                             })
                         } else {
-                            showToast(I18n.t('max_stock'))
+                            showToast(`限购${limit_buy}份`)
                         }
 
                     }}>
