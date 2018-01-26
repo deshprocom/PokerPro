@@ -185,17 +185,30 @@ class Personal extends Component {
                     <Image style={{marginRight: 17, width: 8, height: 15}} source={Images.rightImg}/>
                 </TouchableOpacity>
 
-                <TouchableOpacity
-                    onPress={() => global.router.toPokerB()}
-                    style={{alignItems: 'center', marginTop: 20, marginBottom: 17}}>
-                    <Text
-                        style={{fontSize: 24, color: Colors._FFE}}>{(profile.total_poker_coins === '0.0' || profile.total_poker_coins === '0') ? '0.00' : profile.total_poker_coins}</Text>
-                    <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 5}}>
-                        <Image style={{height: 18, width: 18}} source={Images.poker_b}/>
-                        <Text style={{fontSize: 14, color: Colors._FFE, marginLeft: 3}}>扑客币</Text>
-                    </View>
+                <View style={{flexDirection:'row',alignItems:'flex-start',marginLeft:20,marginTop: 20, marginBottom: 17}}>
+                    <TouchableOpacity
+                        onPress={() => global.router.toPokerB()}
+                        style={{alignItems: 'flex-start'}}>
+                        <View style={{flexDirection: 'row', alignItems: 'flex-start', marginTop: 5}}>
+                            <Image style={{height: 18, width: 18}} source={Images.poker_b}/>
+                            <Text style={{fontSize: 14, color: Colors._FFE, marginLeft: 3}}>扑客币</Text>
+                        </View>
+                        <Text
+                            style={{fontSize: 24, color: Colors._FFE,marginLeft:1,lineHeight:37}}>{(profile.total_poker_coins === '0.0' || profile.total_poker_coins === '0') ? '0.00' : profile.total_poker_coins}</Text>
 
-                </TouchableOpacity>
+                    </TouchableOpacity>
+                    <View style={{flex:1}}/>
+                    <TouchableOpacity
+
+                        style={{alignItems: 'center',justifyContent:'center',width:72,height:22,
+                        backgroundColor:'#29292B',borderRadius:28,borderBottomRightRadius:0,borderTopRightRadius:0}}>
+
+                        <Text style={{fontSize:12,color:'#FFE9AD',opacity:0.6}}>
+                            交易明细 >
+                        </Text>
+                    </TouchableOpacity>
+
+                </View>
 
             </View>
 

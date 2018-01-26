@@ -86,7 +86,7 @@ export default class PokerB extends PureComponent {
 
             <View style={styles.view1}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Text style={styles.txt_title}>{total_poker_coins}</Text>
+                    <Text style={styles.txt_title}>{(total_poker_coins === '0.0' || total_poker_coins === '0') ? '0.00' : total_poker_coins}</Text>
                     <Image style={{height: 18, width: 18, marginTop: 10}} source={Images.poker_b}/>
                 </View>
                 <Text style={styles.txt_what}>什么是扑客币？</Text>
