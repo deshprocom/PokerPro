@@ -27,7 +27,9 @@ const styles = StyleSheet.create({
         paddingLeft: 17,
         paddingRight: 17,
         paddingTop: 7,
-        paddingBottom: 7
+        paddingBottom: 7,
+        flexDirection:'row',
+        alignItems:'center'
     },
     view_item1: {
         justifyContent: 'space-between',
@@ -44,7 +46,8 @@ const styles = StyleSheet.create({
     },
     txt_account: {
         fontSize: 14,
-        color: Colors._F34
+        color: Colors._F34,
+        marginTop:5
     }
 });
 
@@ -74,10 +77,12 @@ export default class PokerB extends PureComponent {
 
     renderItem = () => {
         return <View style={styles.view_item}>
-
-            {this._item(styles.txt_name, '兑换商品', styles.txt_time, '2018-1-23  23:34')}
-            <View style={{height: 5}}/>
-            {this._item(styles.txt_time, '余额：0.00', styles.txt_account, '-1000.00')}
+            <Text style={styles.txt_name}>兑换商品</Text>
+            <View style={{flex:1}}/>
+            <View style={{alignItems:'flex-end'}}>
+                <Text style={styles.txt_time}>2018-1-23  23:34</Text>
+                <Text style={styles.txt_account}>-1000.0</Text>
+            </View>
         </View>
     };
 

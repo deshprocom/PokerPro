@@ -24,7 +24,7 @@ export const footer = (crowd,type,player,race) => {
             }}
             style={styles.btnLeft}>
             <Image
-                style={{height: 12, width: 10, marginRight: 5}}
+                style={{height: 12, width: 10, marginRight: 5,opacity:0.3}}
                 source={Images.black_fire}/>
 
             <Text style={styles.txtLeft}>{I18n.t('timely_match')}</Text>
@@ -92,8 +92,8 @@ const styles = StyleSheet.create({
         paddingLeft: 17, paddingRight: 17, backgroundColor: 'white'
     },
     btnLeft: {
-        height: 34, width: 97, borderColor: Colors.txt_444, borderWidth: 1, alignItems: 'center',
-        borderRadius: 2, justifyContent: 'center', flexDirection: 'row'
+        height: 34, width: 97, borderColor: Colors._ECE, borderWidth: 1, alignItems: 'center',
+        borderRadius: 2, justifyContent: 'center', flexDirection: 'row',
     },
     btnRight: {
         height: 34,
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
         fontSize: 14
     },
     txtLeft: {
-        color: Colors.txt_444,
+        color: '#ECECEE',
         fontSize: 14
     }
 })

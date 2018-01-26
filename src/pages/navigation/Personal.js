@@ -131,6 +131,7 @@ class Personal extends Component {
 
     readerMe = () => {
         const {profile} = this.props;
+        console.log(profile)
         return <View style={{marginBottom: 10}}>
             <View style={stylesP.meView}>
 
@@ -187,7 +188,8 @@ class Personal extends Component {
                 <TouchableOpacity
                     onPress={() => global.router.toPokerB()}
                     style={{alignItems: 'center', marginTop: 20, marginBottom: 17}}>
-                    <Text style={{fontSize: 24, color: Colors._FFE}}>24232.23</Text>
+                    <Text
+                        style={{fontSize: 24, color: Colors._FFE}}>{(profile.total_poker_coins === '0.0' || profile.total_poker_coins === '0') ? '0.00' : profile.total_poker_coins}</Text>
                     <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 5}}>
                         <Image style={{height: 18, width: 18}} source={Images.poker_b}/>
                         <Text style={{fontSize: 14, color: Colors._FFE, marginLeft: 3}}>扑客币</Text>
