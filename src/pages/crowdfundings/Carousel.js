@@ -17,12 +17,12 @@ import {_clickBanner} from '../navigation/MainBanner';
 
 export default class Carousel extends PureComponent {
     state = {
-        banners: {}
+        banners: []
     };
 
     componentDidMount() {
         crowd_banner(data => {
-            console.log("banners:", data);
+
             this.setState({
                 banners: data
             })
@@ -32,29 +32,35 @@ export default class Carousel extends PureComponent {
 
     render() {
         const {banners} = this.state.banners;
-        return (
-            <View style={{height: 200, marginBottom: 10}}>
-                <Swiper
-                    activeDotStyle={stylesM.activeDot}
-                    dotStyle={stylesM.dot}
-                    autoplayTimeout={2}
-                    autoplay>
-                    {isEmptyObject(banners) ? [] : banners.map((item, key) => {
-                            return <TouchableOpacity
+        console.log("banners:", banners);
+        if (!isEmptyObject(banners) && banners.length > 0)
+            return (
+                <View style={{height: 200, marginBottom: 10}}>
+                    <Swiper
+                        activeDotStyle={stylesM.activeDot}
+                        dotStyle={stylesM.dot}
+                        autoplayTimeout={2}
+                        autoplay>
+                        {banners.map((item,key)=>{
+                            return    <TouchableOpacity
                                 key={key}
                                 activeOpacity={1}
-                                onPress={()=>_clickBanner(item)}
+                                onPress={() => _clickBanner(item)}
                             >
                                 <Image style={{height: 200, width: '100%'}} source={{uri: item.image}}/>
                             </TouchableOpacity>
-
                         })}
 
-                </Swiper>
+
+                    </Swiper>
+                </View>
+
+
+            );
+        else
+            return <View  style={{height: 200, marginBottom: 10}}>
+
             </View>
-
-
-        );
     }
 }
 
