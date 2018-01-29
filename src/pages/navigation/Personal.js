@@ -70,7 +70,7 @@ class Personal extends Component {
 
                 })}
             <View style={{height: 1, marginLeft:69}}/>
-            {this._item(stylesP.item_view, Images.poker_b, stylesP.img_dy,
+            {this._item(stylesP.item_view, Images.poker_P, stylesP.img_dy,
                 '我的扑客币', () => {
                     global.router.toPokerB()
 
