@@ -156,7 +156,7 @@ export default class PokerInfo extends PureComponent {
                             </View>
                             <View style={{alignItems: 'center'}}>
                                 <Text style={styles.txt_final}>{final_rate}</Text>
-                                <Text style={styles.lb_final}>{I18n.t('admission')}</Text>
+                                <Text style={styles.lb_final}>{I18n.t('race_rate')}</Text>
                             </View>
                         </View>
 
@@ -175,7 +175,7 @@ export default class PokerInfo extends PureComponent {
                         initialProgress={percent}/>
 
                     <View style={styles.view_percent}>
-                        {this.renderItem(sell_stock, I18n.t('give_up_hares'))}
+                        {this.renderItem(`${sell_stock}%`, I18n.t('give_up_hares'))}
                         {this.renderItem(stock_number, I18n.t('share_division'))}
                         {this.renderItem(cf_money, I18n.t('total_crowdfunding'))}
                     </View>
