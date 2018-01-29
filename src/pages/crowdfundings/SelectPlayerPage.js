@@ -37,15 +37,14 @@ export default class SelectPlayerPage extends Component {
 
     _renderItem = (player) => {
         const {cf_total_money, cf_offer_money, race} = this.props.params.crowd;
-        const {order_stock_number, stock_number} = player;
-
+        const {order_stock_number, stock_number} = player.item;
         let percent = 0;
         if (stock_number !== 0) {
             percent = parseFloat(order_stock_number) / stock_number;
             if(isNaN(percent)){
                 percent = 0;
             }
-        };
+        }
 
         return <View>
             <PlayerItem player={player.item}
