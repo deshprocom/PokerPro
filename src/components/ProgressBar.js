@@ -83,7 +83,7 @@ export default class ProgressBar extends Component {
                 </View>
                 <Animated.View
                     style={[styles.percent, {marginLeft:marginFill}]}>
-                    <Text style={styles.txt_per}>{Number.parseInt(this.props.initialProgress * 100)}%</Text>
+                    <Text style={styles.txt_per}>{Number.parseFloat(this.props.initialProgress * 100)}%</Text>
                 </Animated.View>
             </View>
 

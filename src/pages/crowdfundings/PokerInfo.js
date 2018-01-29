@@ -116,14 +116,17 @@ export default class PokerInfo extends PureComponent {
     render() {
 
         const {
-            cf_player_id, race_rank, ordered, player_images, name, logo, stock_unit_price, cf_money,
+            cf_player_id, race_rank, ordered, player_images, name, logo, stock_unit_price, cf_money,order_stock_number,
             stock_number, sell_stock, lairage_rate, final_rate, join_slogan, description
         } = this.state.pokerInfo;
 
-        const {cf_total_money, cf_offer_money} = this.props.params.crowd;
         let percent = 0;
-        if (cf_total_money !== 0)
-            percent = cf_offer_money / cf_total_money;
+        if (stock_number !== 0) {
+            percent = parseFloat(order_stock_number) / stock_number;
+            if(isNaN(percent)){
+                percent = 0;
+            }
+        };
 
 
         return <View style={ApplicationStyles.bgContainer}>
@@ -185,17 +188,17 @@ export default class PokerInfo extends PureComponent {
 
 
                 {!isEmptyObject(ordered) && ordered.users.length > 0 ? <View style={styles.view_head}>
-                    <Text style={[styles.txt_slogan, {marginBottom: 14, alignSelf: 'center'}]}
-                    >{I18n.t('currently_there')}<Text
-                        style={{color: Colors._F34}}>{isEmptyObject(ordered) ? '' : ordered.number}</Text>{I18n.t('people')}{I18n.t('subscription')}
-                    </Text>
+                        <Text style={[styles.txt_slogan, {marginBottom: 14, alignSelf: 'center'}]}
+                        >{I18n.t('currently_there')}<Text
+                            style={{color: Colors._F34}}>{isEmptyObject(ordered) ? '' : ordered.number}</Text>{I18n.t('people')}{I18n.t('subscription')}
+                        </Text>
 
-                    <FlatList
-                        horizontal={true}
-                        data={isEmptyObject(ordered) ? [] : ordered.users}
-                        renderItem={({item}) => <ImageLoad style={styles.img_head} source={{uri: item.avatar}}/>}
-                        keyExtractor={(item, index) => `buy_person${index}`}/>
-                </View> : null}
+                        <FlatList
+                            horizontal={true}
+                            data={isEmptyObject(ordered) ? [] : ordered.users}
+                            renderItem={({item}) => <ImageLoad style={styles.img_head} source={{uri: item.avatar}}/>}
+                            keyExtractor={(item, index) => `buy_person${index}`}/>
+                    </View> : null}
 
 
                 <IntroRecord
