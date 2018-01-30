@@ -14,8 +14,7 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
-import {isEmptyObject, strNotNull, payWx} from '../utils/ComonHelper';
-import {postWxPay, postPayOrder} from '../services/OrderDao'
+import {isEmptyObject, strNotNull, payWx, isWXAppInstalled, showToast} from '../utils/ComonHelper';
 
 const styles = StyleSheet.create({
     page: {
@@ -51,7 +50,8 @@ const styles = StyleSheet.create({
         height: 72,
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: Colors.white
+        backgroundColor: Colors.white,
+        marginBottom: 14
     },
     img3: {
         height: 37,
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: Colors.white,
-        marginTop: 14
+        marginTop: 1
     },
     img4: {
         height: 23,
@@ -125,23 +125,60 @@ const styles = StyleSheet.create({
 
 });
 
+
 export default class ActionPay extends Component {
     state = {
         visible: false,
-        payUrl: {},
-        payWay: 1,
+        order: {},
+        payWay: 0,
         wxPay: {partnerId: ''},
-        pay_url: 'pay-success'
+        pay_url: 'pay-success',
+        isInstall: false
     };
 
-    toggle = () => {
+    componentDidMount() {
+        isWXAppInstalled(isInstall => {
+            this.setState({
+                isInstall: isInstall
+            })
+        });
+    }
+
+    open = (pay_order) => {
+        console.log('支付参数:', pay_order)
+        const {order, wxPay} = pay_order;
 
         this.setState({
-            visible: !this.state.visible
+            visible: true,
+            order,
+            wxPay
         })
     };
 
+    close = ()=>{
+        this.setState({
+            visible: false
+        })
+    }
+
     render() {
+
+        const pay_ways = [
+            {
+                icon: require('../../source/buy/weixin.png'),
+                title: I18n.t('pay_weixin'),
+                memo: I18n.t('pay_weixin_support'),
+                index: 0
+
+            },
+            {
+                icon: Images.pay_card,
+                title: I18n.t('pay_card'),
+                memo: I18n.t('pay_tine'),
+                index: 1
+            }
+        ];
+
         return (<Modal
             animationType={"slide"}
             transparent={true}
@@ -154,8 +191,9 @@ export default class ActionPay extends Component {
                 <View style={{height: 1}}/>
                 <ScrollView>
                     {this.orderView()}
-                    {this.wxView()}
-                    {this.cardView()}
+                    {pay_ways.map((item, index) => {
+                        return this.item(item, index)
+                    })}
 
                     <View style={{height: 80}}/>
                 </ScrollView>
@@ -171,7 +209,9 @@ export default class ActionPay extends Component {
         return <View style={styles.top}>
             <TouchableOpacity
                 onPress={() => {
-                    this.toggle()
+                    this.setState({
+                        visible: false
+                    })
                 }}
                 style={styles.btnClose}>
                 <Image
@@ -200,6 +240,8 @@ export default class ActionPay extends Component {
 
     orderView = () => {
 
+        const {order_number, price} = this.state.order;
+
         return <View style={styles.page3}>
 
             <Image style={styles.img3}
@@ -208,69 +250,38 @@ export default class ActionPay extends Component {
             <View>
                 <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
                     <Text style={styles.txt3}>{I18n.t('pay_need')}</Text>
-                    <Text style={styles.txt32}> ¥{this.props.sumMoney}</Text>
+                    <Text style={styles.txt32}> ¥{price}</Text>
                 </View>
-                <Text style={styles.txt31}>{I18n.t('order_num')}: {this.props.orderNumber}</Text>
+                <Text style={styles.txt31}>{I18n.t('order_num')}: {order_number}</Text>
             </View>
 
         </View>;
     };
 
 
-    cardView = () => {
+    item = (item, index) => {
         return <TouchableOpacity
-            disabled={!strNotNull(this.state.pay_url)}
-            onPress={() => {
-                this.setState({
-                    payWay: 0
-                })
-            }}
-            style={styles.page4}>
-
-            <Image style={styles.img4}
-                   source={Images.pay_card}/>
-
-            <View>
-                <Text style={styles.txt3}>{I18n.t('pay_card')}  </Text>
-                <Text style={styles.txt31}>{I18n.t('pay_tine')}</Text>
-            </View>
-            <View style={{flex:1}}/>
-            {strNotNull(this.state.pay_url) ? <View
-                style={styles.btnClose}>
-                <Image
-                    source={this.state.payWay === 0 ? Images.pay_selected : Images.pay_select}
-                    style={styles.img5}/>
-
-            </View> : null}
-
-            {strNotNull(this.state.pay_url) ? null : <View style={styles.support}>
-                <Text style={styles.txt_support}>{I18n.t('un_support')}</Text>
-            </View>}
-        </TouchableOpacity>;
-    };
-
-    wxView = () => {
-        return <TouchableOpacity
+            key={`pay_${index}`}
             disabled={isEmptyObject(this.state.wxPay)}
             onPress={() => {
                 this.setState({
-                    payWay: 1
+                    payWay: item.index
                 })
             }}
             style={styles.page5}>
 
             <Image style={styles.img4}
-                   source={require('../../source/buy/weixin.png')}/>
+                   source={item.icon}/>
 
             <View>
-                <Text style={styles.txt3}>{I18n.t('pay_weixin')}  </Text>
-                <Text style={styles.txt31}>{I18n.t('pay_weixin_support')}</Text>
+                <Text style={styles.txt3}>{item.title}</Text>
+                <Text style={styles.txt31}>{item.memo}</Text>
             </View>
-            <View style={{flex:1}}/>
+            <View style={{flex: 1}}/>
             {isEmptyObject(this.state.wxPay) ? null : <View
                 style={styles.btnClose}>
                 <Image
-                    source={this.state.payWay === 1 ? Images.pay_selected : Images.pay_select}
+                    source={this.state.payWay === item.index ? Images.pay_selected : Images.pay_select}
                     style={styles.img5}/>
 
             </View>}
@@ -289,19 +300,37 @@ export default class ActionPay extends Component {
         const {payWay} = this.state;
         return <TouchableOpacity
             onPress={() => {
-                this.toggle();
+                this.close();
                 if (payWay === 0) {
-                    this._webPay();
-                } else if (payWay === 1) {
                     this._wxPay();
+                } else if (payWay === 1) {
+                    this._webPay();
                 }
 
 
-            }
-            }
+            }}
             style={styles.btnPay}>
             <Text style={styles.txtPay}>{I18n.t('pay_confirm')}</Text>
         </TouchableOpacity>
+    };
+
+    _webPay = () => {
+
+    };
+
+    _wxPay = () => {
+        const {wxPay, isInstall} = this.state;
+        if (isInstall) {
+            payWx(wxPay, () => {
+                this.props.callback && this.props.callback();
+
+            }, () => {
+            })
+        } else {
+            showToast(I18n.t('need_weChat'))
+        }
+
+
     }
 }
 

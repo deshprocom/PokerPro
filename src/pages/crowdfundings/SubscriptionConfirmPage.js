@@ -11,11 +11,11 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar, ActionPay} from '../../components';
+import {NavigationBar, ActionPay, Loading} from '../../components';
 import OrderBottom from '../malls/order/OrderBottom';
-import {crowd_order} from '../../services/CrowdDao';
-import {payWx, isWXAppInstalled, showToast, alertOrderChat, isEmptyObject} from '../../utils/ComonHelper';
-import {postWxPay, getWxPaidResult} from '../../services/MallDao';
+import {crowd_order, crowd_wx_pay} from '../../services/CrowdDao';
+import {isWXAppInstalled, showToast, alertOrderChat, isEmptyObject} from '../../utils/ComonHelper';
+
 
 export default class SubscriptionConfirmPage extends PureComponent {
     state = {
@@ -33,16 +33,31 @@ export default class SubscriptionConfirmPage extends PureComponent {
     }
 
     submitBtn = (order_info) => {
+
+        const {number, stock_unit_price} = order_info;
         if (this.state.clickImg) {
 
+            this.loading.open();
             crowd_order(order_info, data => {
+                crowd_wx_pay(data, ret => {
+                    this.loading.close();
+                    let order = {
+                        price: stock_unit_price * number,
+                        order_number: data.order_number
+                    };
 
-                this.setState({
-                    order: data
+                    let payOrder = {
+                        order,
+                        wxPay: ret
+                    };
+
+                    this.actionPay.open(payOrder);
+                }, err => {
+                    this.loading.close();
                 });
-                this.actionPay.toggle();
-            }, err => {
 
+            }, err => {
+                this.loading.close();
             })
         } else {
             showToast('必须同意扑客协议')
@@ -60,7 +75,7 @@ export default class SubscriptionConfirmPage extends PureComponent {
     render() {
 
         const {order_info} = this.props.params;
-        const {number, player_id, stock_unit_price} =order_info;
+        const {number, player_id, stock_unit_price} = order_info;
         let sumMoney = this.total_prize(number, stock_unit_price);
         return (
             <View style={ApplicationStyles.bgContainer}>
@@ -78,12 +93,12 @@ export default class SubscriptionConfirmPage extends PureComponent {
                         <Text style={styles.titleTxt}>{I18n.t('order_info')}</Text>
                     </View>
 
-                    <View style={[styles.message,{paddingTop:15}]}>
+                    <View style={[styles.message, {paddingTop: 15}]}>
                         <Text style={styles.messageTxt1}>{I18n.t('order_price')}</Text>
 
                         <Text style={styles.messageTxt2}>¥{stock_unit_price}</Text>
                     </View>
-                    <View style={[styles.message,{marginTop:6,paddingBottom:13}]}>
+                    <View style={[styles.message, {marginTop: 6, paddingBottom: 13}]}>
                         <Text style={styles.messageTxt1}>{I18n.t('purchase_copies')}</Text>
 
                         <Text style={styles.messageTxt1}>X{number}</Text>
@@ -100,35 +115,45 @@ export default class SubscriptionConfirmPage extends PureComponent {
                 <View style={styles.read}>
                     <View style={{marginLeft: 17, marginRight: 17}}>
                         <Text style={styles.readTxt1}>我是投资人本人xxx，身份证号码xxxxxxxxxxxxxxxxxxxx，我已认真阅读并同意
-                            <Text style={{color:'#438EE6'}}
-                                  onPress={()=>{
-                                global.router.toRiskWarningPage(sumMoney,order_info,this.state.clickImg,this.state.order)
-                            }}>《风险提示》</Text>
+                            <Text style={{color: '#438EE6'}}
+                                  onPress={() => {
+                                      global.router.toRiskWarningPage(sumMoney, order_info, this.state.clickImg, this.state.order)
+                                  }}>《风险提示》</Text>
                             及其他相关条款和协议，自愿认购xxxxxx赛事众筹项目，并支付众筹款项
-                            <Text style={{color:Colors._F34}}>{sumMoney}元</Text>。</Text>
+                            <Text style={{color: Colors._F34}}>{sumMoney}元</Text>。</Text>
 
                     </View>
                     <TouchableOpacity
-                        style={{flexDirection:'row',alignItems:'center',marginTop:12,marginLeft: 17, marginRight: 17}}
-                        onPress={()=>{
-                        this.setState({
-                            clickImg:!this.state.clickImg
-                        })
-                    }}>
-                        <Image style={styles.img} source={this.state.clickImg?Images.clickImgBlue:Images.clickImg}
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            marginTop: 12,
+                            marginLeft: 17,
+                            marginRight: 17
+                        }}
+                        onPress={() => {
+                            this.setState({
+                                clickImg: !this.state.clickImg
+                            })
+                        }}>
+                        <Image style={styles.img} source={this.state.clickImg ? Images.clickImgBlue : Images.clickImg}
                                alt=""/>
                         <Text style={styles.txt}>{I18n.t('promise_message')}</Text>
                     </TouchableOpacity>
                 </View>
 
                 <OrderBottom
-                    submitBtn={()=>this.submitBtn(order_info)}
+                    submitBtn={() => this.submitBtn(order_info)}
                     sumMoney={sumMoney}/>
 
                 <ActionPay
                     ref={ref => this.actionPay = ref}
-                    sumMoney={sumMoney}
-                    orderNumber={this.state.order.order_number}/>
+                    callback={() => {
+                        global.router.replaceCrowdOrder()
+                    }}
+                />
+
+                <Loading ref={ref => this.loading = ref}/>
             </View>
 
 

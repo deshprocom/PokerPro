@@ -36,8 +36,13 @@ export default class Crowdfunding extends PureComponent {
             dateTitle={I18n.t('last_refresh')}
             allLoadedText={I18n.t('no_more')}
             separator={() => <View style={{height: 10, backgroundColor: Colors._ECE}}>
-
             </View>}
+            emptyView={() => {
+                return <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Text>暂无众筹</Text>
+
+                </View>
+            }}
             waitingSpinnerText={I18n.t('loading')}
         />
 
@@ -53,7 +58,8 @@ export default class Crowdfunding extends PureComponent {
     onFetch = (page = 1, startFetch, abortFetch) => {
         crowd_list({page, page_size: 20}, data => {
             startFetch(data, 2)
-        },err=>{})
+        }, err => {
+        })
 
     }
 }

@@ -44,6 +44,10 @@ export default class Router {
 
     }
 
+    replaceCrowdOrder(){
+        this.replace({name: 'SubscriptionInfoPage'})
+    }
+
     toRecordList() {
         this.stackPush({name: 'RecordList'})
     }

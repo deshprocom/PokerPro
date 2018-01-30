@@ -11,8 +11,8 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import NavigationBar from '../../components/NavigationBar';
 import {connect} from 'react-redux';
 import {checkPhone, strNotNull, showToast} from '../../utils/ComonHelper';
-import {CountDownText}from '../../components/countdown/CountDownText';
-import {fetchPostVerifyCode, fetchPostVCode, fetchPostLogin}from '../../actions/AccountAction';
+import {CountDownText} from '../../components/countdown/CountDownText';
+import {fetchPostVerifyCode, fetchPostVCode, fetchPostLogin} from '../../actions/AccountAction';
 import {fetchGetProfile} from '../../actions/PersonAction';
 import {fetchGetRecentRaces} from '../../actions/RacesAction';
 import {POST_VCODE_LOGIN} from '../../actions/ActionTypes';
@@ -46,7 +46,11 @@ class LoginCodeView extends React.Component {
                 showToast(I18n.t('login_success'));
                 this.props._getRecentRaces(recentRaces);
                 this.props._getProfile(user_id);
-                router.popToTop();
+                global.router.pop();
+                setTimeout(() => {
+                    global.router.pop();
+                }, 200)
+
             }, err => {
                 showToast(err)
             });
