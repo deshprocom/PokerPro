@@ -71,12 +71,11 @@ export default class PokerB extends PureComponent {
     }
 
     render() {
-        const {total_poker_coins,detail} = this.state.pokerB;
-        // var detail = [
-        //     {"memo": "兑换商品", "created_at": 1516936360, "number": "1.555"},
-        //     {"memo": "众筹成功", "created_at": 1516936380, "number": "-7777"},
-        //     {"memo": "兑换商品", "created_at": 1516953360, "number": "0"}
-        // ];
+        const {total_poker_coins} = this.state.pokerB;
+        var detail = [
+            {"memo": "兑换商品", "created_at": 1517222746, "number": "1.555"},
+            {"memo": "众筹成功", "created_at": 1517222746, "number": "-7777"}
+        ];
         return <View style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors.bg_09}}
@@ -118,7 +117,7 @@ export default class PokerB extends PureComponent {
             <Text style={styles.txt_name}>{item.item.memo}</Text>
             <View style={{flex:1}}/>
             <View style={{alignItems:"flex-end"}}>
-                <Text style={styles.txt_time}>{isEmptyObject(item) ? '' : moment(item.created_at).format('YYYY-MM-DD mm:ss')}</Text>
+                <Text style={styles.txt_time}>{isEmptyObject(item) ? '' : moment(item.item.created_at * 1000).format('YYYY-MM-DD hh:mm:ss')}</Text>
                 <Text style={styles.txt_account}>{this._coins(item.item.number)}</Text>
             </View>
         </View>

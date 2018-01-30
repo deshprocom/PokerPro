@@ -11,8 +11,8 @@ import {
 import I18n from 'react-native-i18n';
 import UltimateFlatList from '../../components/ultimate';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {crowd_order_list} from '../../services/CrowdDao';
-
+import {user_crowd_orders} from '../../services/CrowdDao';
+import {BaseComponent} from '../../components';
 
 const styles = StyleSheet.create({
     view1: {
@@ -65,35 +65,36 @@ export default class CrowdList extends PureComponent {
     }
 
     render() {
-        return <UltimateFlatList
-            arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
-            ref={ref => this.ultimate = ref}
-            onFetch={this.onFetch}
-            keyExtractor={(item, index) => `${this.props.status}${index}`}
-            item={this.renderItem}
-            separator={() => <View style={{height: 5, backgroundColor: Colors._ECE}}/>}
-            refreshableTitlePull={I18n.t('pull_refresh')}
-            refreshableTitleRelease={I18n.t('release_refresh')}
-            dateTitle={I18n.t('last_refresh')}
-            allLoadedText={I18n.t('no_more')}
-            waitingSpinnerText={I18n.t('loading')}
-        />
+        return (
+            <BaseComponent
+                ref={ref => this.contain = ref}>
+                <UltimateFlatList
+                    arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
+                    ref={ref => this.ultimate = ref}
+                    onFetch={this.onFetch}
+                    keyExtractor={(item, index) => `${this.props.status}${index}`}
+                    item={this.renderItem}
+                    separator={() => <View style={{height: 5, backgroundColor: Colors._ECE}}/>}
+                    refreshableTitlePull={I18n.t('pull_refresh')}
+                    refreshableTitleRelease={I18n.t('release_refresh')}
+                    dateTitle={I18n.t('last_refresh')}
+                    allLoadedText={I18n.t('no_more')}
+                    waitingSpinnerText={I18n.t('loading')}
+                />
+            </BaseComponent>
+        )
     }
 
-    onFetch = (page = 1, postRefresh, endFetch) => {
+    onFetch = (page, postRefresh, endFetch) => {
+        user_crowd_orders({page: page, status: this.props.status}, data => {
+            console.log("userCrowdList:", data);
+            this.contain && this.contain.close();
+            postRefresh(data.items, 6);
 
-        try {
-            crowd_order_list({page, page_size: 20, status: this.props.status}, data => {
-                postRefresh([1, 2, 3, 4, 5], 2)
-            }, err => {
-                endFetch()
-            })
-
-        } catch (e) {
-            endFetch()
-            throw new Error(e);
-
-        }
+        }, err => {
+            this.contain && this.contain.close();
+            endFetch();
+        });
     };
 
     renderItem = (item, index) => {

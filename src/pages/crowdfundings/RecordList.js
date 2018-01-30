@@ -15,14 +15,12 @@ import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view
 import I18n from 'react-native-i18n';
 import {CrowdStatus} from '../../configs/Status';
 import CrowdList from './CrowdList';
-
+import {user_crowd_orders} from '../../services/CrowdDao';
 
 export default class RecordList extends PureComponent {
 
     state = {
-        menu: [
-            CrowdStatus.ALL, CrowdStatus.UNPUBLISHED, CrowdStatus.SUCCESS, CrowdStatus.FAILED
-        ],
+
         info: {
             order_no: '21345345311',
             status: 'waiting',
@@ -38,7 +36,9 @@ export default class RecordList extends PureComponent {
 
 
     render() {
-        const {menu} = this.state;
+        var menu =[
+            CrowdStatus.ALL, CrowdStatus.UNPUBLISHED, CrowdStatus.SUCCESS, CrowdStatus.FAILED
+        ];
         return <View style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 barStyle={'dark-content'}
