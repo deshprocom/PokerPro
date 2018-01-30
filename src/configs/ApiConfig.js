@@ -130,9 +130,10 @@ export default {
     crowdfunding_orders: 'crowdfunding_orders',//生成众筹订单
     crowdfunding_banners: 'crowdfunding_banners',//获取众筹banner
     poker_coins: 'poker_coins',//获取扑客币交易详情
-    user_crowd_orders:user_crowd_orders,//用户赞助订单记录列表
-    get_crowd_info:get_crowd_info,//查看某个赞助详情
-    del_crowd_info:del_crowd_info,//删除某个赞助详情
+    user_crowd_orders: 'crowdfunding_orders',//用户赞助订单记录列表
+    get_crowd_info: get_crowd_info,//查看某个赞助详情
+    del_crowd_info: del_crowd_info,//删除某个赞助详情
+    crowd_order_wx: crowd_order_wx,//对众筹商品调起微信支付
 
 }
 
@@ -147,30 +148,37 @@ function getUserId() {
 const page_size = 10;
 
 
+function crowd_order_wx(body) {
+    const {order_number} = body;
+    return `crowdfunding_orders/${order_number}/wx_pay`
+}
+
+
 function del_crowd_info(body) {
     const {order_number} = body;
     return `crowdfunding_orders/${order_number}`;
 }
+
 function get_crowd_info(body) {
     const {order_number} = body;
     return `crowdfunding_orders/${order_number}`;
 }
-function user_crowd_orders(body) {
-    const {page,status} = body;
-    return `crowdfunding_orders?page=${page}&page_size=${page_size}&status=${status}`;
-}
+
 function poker_coins(body) {
     const {page} = body;
     return `poker_coins?page=${page}&page_size=${page_size}`;
 }
+
 function poker_info(body) {
     const {id, player_id} = body;
     return `crowdfundings/${id}/players/${player_id}`;
 }
+
 function poker_list(body) {
     const {id, page} = body;
     return `crowdfundings/${id}/players?page=${page}&page_size=${page_size}`;
 }
+
 function crowd_detail(body) {
     const {id} = body;
     return `crowdfundings/${id}`

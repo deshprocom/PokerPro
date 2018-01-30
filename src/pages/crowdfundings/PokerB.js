@@ -112,13 +112,23 @@ export default class PokerB extends PureComponent {
             return number;
         }
     };
+
+
+    _coinsStyle = (number) => {
+        if (number.substr(0, 1) !== '-' && number !== "0") {
+            return {color:'#F34A4A'}
+        } else {
+            return {color:'#34BA3C'}
+        }
+    };
+
     renderItem = (item) => {
         return <View style={styles.view_item}>
             <Text style={styles.txt_name}>{item.item.memo}</Text>
             <View style={{flex:1}}/>
             <View style={{alignItems:"flex-end"}}>
                 <Text style={styles.txt_time}>{isEmptyObject(item) ? '' : moment(item.item.created_at * 1000).format('YYYY-MM-DD hh:mm:ss')}</Text>
-                <Text style={styles.txt_account}>{this._coins(item.item.number)}</Text>
+                <Text style={[styles.txt_account,this._coinsStyle(item.item.number)]}>{this._coins(item.item.number)}</Text>
             </View>
         </View>
     };

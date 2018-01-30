@@ -175,6 +175,7 @@ export default class PokerInfo extends PureComponent {
                     <ProgressBar
                         backgroundStyle={{backgroundColor: Colors._ECE, borderRadius: 2}}
                         style={{width: Metrics.screenWidth - 34}}
+                        progress={percent}
                         initialProgress={percent}/>
 
                     <View style={styles.view_percent}>
