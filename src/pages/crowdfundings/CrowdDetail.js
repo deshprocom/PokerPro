@@ -15,7 +15,7 @@ import DetailChild from './DetailChild';
 import {crowd_detail} from '../../services/CrowdDao'
 import I18n from 'react-native-i18n';
 
-export const footer = (crowd,type,player,race) => {
+export const footer = (crowd, type, player, race) => {
     return <View style={styles.footer}>
         <TouchableOpacity
             onPress={() => {
@@ -68,6 +68,7 @@ export default class CrowdDetail extends Component {
 
     render() {
         const {crowd} = this.state;
+        console.log("dd:", crowd)
         let url = `crowdfundings/${crowd.id}`;
         return <View style={ApplicationStyles.bgContainer}>
             <Navbar
@@ -76,7 +77,7 @@ export default class CrowdDetail extends Component {
             <DetailChild
                 info={crowd}/>
 
-            {footer(crowd,'crowd_detail',null,null)}
+            {crowd.race.status === 'ended' ? null : footer(crowd, 'crowd_detail', null, null)}
 
         </View>
     }
