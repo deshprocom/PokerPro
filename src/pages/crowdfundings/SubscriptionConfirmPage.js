@@ -149,7 +149,7 @@ export default class SubscriptionConfirmPage extends PureComponent {
                 <ActionPay
                     ref={ref => this.actionPay = ref}
                     callback={() => {
-                        global.router.toSubscriptionInfoPage()
+                        global.router.replaceCrowdOrder()
                     }}
                 />
 
