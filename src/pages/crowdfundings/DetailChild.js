@@ -129,6 +129,7 @@ export default class DetailChild extends Component {
                         <Text style={styles.txtName}>{race.name}</Text>
 
                         <View style={styles.btnReport}>
+                            <Image source={Images.timely_matchRed} style={{width:13 ,height:13}}/>
                             <Text style={styles.txtReport}>{I18n.t('timely_match')}</Text>
                         </View>
                     </View>

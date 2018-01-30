@@ -116,7 +116,8 @@ export default class CrowItem extends PureComponent {
 
         return <TouchableOpacity
             onPress={() => global.router.toCrowdDetailPage(this.props.item)}
-            style={styles.itemContainer}>
+            style={styles.itemContainer}
+            activeOpacity={1}>
 
             {this.renderComing(race.status, expire_date)}
 

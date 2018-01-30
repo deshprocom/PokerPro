@@ -15,9 +15,10 @@ import DetailChild from './DetailChild';
 import {crowd_detail} from '../../services/CrowdDao'
 import I18n from 'react-native-i18n';
 
-export const footer = (crowd,type,player,race) => {
+export const footer = (crowd, type, player, race) => {
     return <View style={styles.footer}>
         <TouchableOpacity
+            activeOpacity={1}
             onPress={() => {
                 {/*global.router.toReportPage()*/}
 
@@ -76,7 +77,7 @@ export default class CrowdDetail extends Component {
             <DetailChild
                 info={crowd}/>
 
-            {footer(crowd,'crowd_detail',null,null)}
+            {crowd.race.status === 'ended' ||  crowd.race.status === 'go_ahead'? null : footer(crowd, 'crowd_detail', null, null)}
 
         </View>
     }
