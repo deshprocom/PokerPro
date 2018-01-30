@@ -58,7 +58,7 @@ export default class Carousel extends PureComponent {
             );
         else
             return <View  style={{height: 200, marginBottom: 10}}>
-
+                <Image source={Images.crowd_banner} style={{height: 200, width: '100%'}}/>
             </View>
     }
 }

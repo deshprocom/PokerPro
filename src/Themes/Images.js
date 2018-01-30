@@ -276,10 +276,12 @@ const images = {
     poker_b: require('../../source/navigation/poker_b.png'),
     poker_P:require('../../source/navigation/poker_P.png'),
     crowd: require('../../source/navigation/crowd.png'),
+    crowd_banner: require('../../source/crowd/crowd_banner.png'),
     clickImg: require('../../source/crowd/clickImg.png'),
     clickImgBlue: require('../../source/crowd/clickImgBlue.png'),
     crowd_close: require('../../source/crowd/crowd_close.png'),
     crowd_starting: require('../../source/crowd/crowd_starting.png'),
+    timely_matchRed: require('../../source/crowd/timely_matchRed.png'),
     pay_help: require('../../source/mall/pay_help.png')
 
 
