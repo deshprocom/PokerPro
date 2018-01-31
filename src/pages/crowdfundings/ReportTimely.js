@@ -6,14 +6,16 @@
 
 import React, {PureComponent} from 'react';
 import {
-    TouchableOpacity, View, StatusBar,
+    TouchableOpacity, View, FlatList,
     StyleSheet, Image, Text
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
 import I18n from 'react-native-i18n';
 import {timely_match} from '../../services/CrowdDao';
-import moment from 'moment';
+import {utcDate, convertDate} from '../../utils/ComonHelper';
+import _ from 'lodash';
+import {MarkdownPlat} from '../../components'
 
 const styles = StyleSheet.create({
     race: {
@@ -48,18 +50,15 @@ const styles = StyleSheet.create({
     },
     itemTime: {
         fontSize: 12,
-        color: '#AAAAAA',
-        marginLeft: 7
+        color: '#AAAAAA'
     },
-    txt1: {
+    txt_title: {
         fontSize: 12,
-        color: '#444444',
-        marginLeft: 1
+        color: '#444444'
     },
-    txt2: {
+    txt_name: {
         fontSize: 12,
-        color: '#4990E2',
-        marginLeft: 18
+        color: '#4990E2'
     }
 });
 
@@ -68,7 +67,7 @@ export default class ReportTimely extends PureComponent {
 
     race_time = (race) => {
         const {begin_date, end_date} = race;
-        return moment(begin_date).format('YYYY.MM.DD') + '-' + moment(end_date).format('YYYY.MM.DD')
+        return convertDate(begin_date, 'YYYY.MM.DD') + '-' + convertDate(end_date, 'YYYY.MM.DD')
     };
 
     headerRace = () => {
@@ -115,26 +114,47 @@ export default class ReportTimely extends PureComponent {
 
     };
 
+    blobData = (items) => {
+
+        let objArr = {};
+        let dynamics = [];
+        _.forEach(items, item => {
+            let date = utcDate(item.record_time, 'YYYY-MM-DD');
+
+            if (!objArr[date]) {
+                objArr[date] = [];
+            }
+            objArr[date].push(item);
+        });
+
+        _.forEach(objArr, (value, key) => {
+            let dynamic = {
+                date: key,
+                items: value
+            };
+            dynamics.push(dynamic)
+        });
+
+        console.log("dynamics:", dynamics);
+
+        return dynamics;
+
+    };
+
 
     onFetch = (page = 1, postRefresh, abortFetch) => {
         const {crowd} = this.props;
-        timely_match({crowdfunding_id: crowd.id, page: page}, data => {
-            console.log("timely_match:", data)
-            this.setState({
-                timely_match: data
-            })
-            postRefresh(data, 6);
+        timely_match({crowdfunding_id: crowd.id, page: page, page_size: 20}, data => {
+
+            postRefresh(this.blobData(data), 6);
         }, err => {
             abortFetch()
         })
     };
 
     renderItem = (item, index) => {
-
-        const {
-            crowdfunding_id, crowdfunding_player_id, crowdfunding_player_name, record_time,
-            name, title, small_blind, big_blind, ante, description, created_at
-        } = item;
+        const {race} = this.props.crowd;
+        const {date, items} = item;
         return <View style={{flexDirection: 'row', paddingLeft: 17, paddingRight: 17}}>
             <View style={{width: 14, alignItems: 'center'}}>
 
@@ -142,17 +162,69 @@ export default class ReportTimely extends PureComponent {
                 <View style={styles.red_point}/>
             </View>
 
-            <View style={{marginLeft: 17}}>
-                <Text style={{fontSize: 14, color: Colors._F34, marginTop: 8}}>{name}</Text>
-                <Text style={styles.itemTime}>{moment(created_at * 1000).format('YYYY.MM.DD mm:ss')}</Text>
-                <View>
-                    <Text style={styles.txt1}>{title}</Text>
-                    <Text style={[styles.txt1, {marginLeft: 36}]}>{ante}/{big_blind}</Text>
-                    <Text style={styles.txt2}>{crowdfunding_player_name}</Text>
-                </View>
+            <View style={{marginLeft: 17, flex: 1}}>
+                <Text style={{fontSize: 14, color: Colors._F34, marginTop: 8}}>{race.name}</Text>
+                <FlatList
+                    data={items}
+                    renderItem={this.renderChild}
+                    keyExtractor={item => item.created_at}
+                />
             </View>
 
 
         </View>
     };
+
+    renderChild = ({item}) => {
+        const {
+            created_at, title, ante, big_blind, crowdfunding_player_name, description
+        } = item;
+        return <View>
+            <Text style={[styles.itemTime, {marginTop: 7}]}>{utcDate(created_at, 'YYYY.MM.DD HH.mm')}</Text>
+            <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 3}}>
+                <Text style={styles.txt_title}>{title}</Text>
+
+                <Text style={[styles.txt_title, {marginLeft: 36, marginRight: 18}]}>{`前注：${ante}/${big_blind}`}</Text>
+
+                <Text
+                    onPress={() => {
+                        global.router.toPokerInfo(item)
+                    }}
+                    style={styles.txt_name}>{crowdfunding_player_name}</Text>
+
+            </View>
+
+            <MarkdownPlat
+                markdownStr={description}
+                markStyle={markdownStyles}/>
+
+            <View style={{height: 1, width: '100%', backgroundColor: Colors._ECE}}/>
+
+        </View>
+    }
 }
+
+const markdownStyles = {
+
+    heading1: {
+        fontSize: 24,
+        color: 'purple',
+    },
+    link: {
+        color: 'blue',
+        textDecorationLine: 'underline',
+    },
+    mail_to: {
+        color: 'orange',
+    },
+    text: {
+        color: '#444444',
+        fontSize: 15,
+        lineHeight: 25,
+        letterSpacing: 0.3
+    },
+    heading5: {
+        alignSelf: 'center',
+        fontSize: 15,
+    }
+};

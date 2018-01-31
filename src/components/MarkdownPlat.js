@@ -47,13 +47,13 @@ export default class MarkdownPlat extends Component {
 
 
     render() {
-        const {markdownStr} = this.props;
+        const {markdownStr, markStyle} = this.props;
         try {
             if (strNotNull(markdownStr))
                 return (
                     <EasyMarkdown
                         contentContainerStyle={styles.container}
-                        markdownStyles={markdownStyles}>
+                        markdownStyles={markStyle ? markStyle : markdownStyles}>
                         {markdownStr}
                     </EasyMarkdown>
 
@@ -71,7 +71,7 @@ export default class MarkdownPlat extends Component {
 
 const markdownStyles = {
     container: {
-        padding: 20
+        padding: 17
     },
     heading1: {
         fontSize: 24,
