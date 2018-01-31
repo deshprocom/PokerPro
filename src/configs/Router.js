@@ -44,7 +44,7 @@ export default class Router {
 
     }
 
-    replaceCrowdOrder(){
+    replaceCrowdOrder() {
         this.replace({name: 'SubscriptionInfoPage'})
     }
 
@@ -61,14 +61,14 @@ export default class Router {
         this.stackPush({name: 'SubscriptionInfoPage'})
     }
 
-    toRiskWarningPage(sumMoney,order_info,clickImg,order) {
+    toRiskWarningPage(sumMoney, order_info, clickImg, order) {
         this.stackPush({
             name: 'RiskWarningPage',
             params: {
                 sumMoney: sumMoney,
-                order_info:order_info,
-                clickImg:clickImg,
-                order:order
+                order_info: order_info,
+                clickImg: clickImg,
+                order: order
             }
         })
     }
@@ -124,8 +124,11 @@ export default class Router {
         })
     }
 
-    toReportPage() {
-        this.stackPush({name: 'ReportPage'})
+    toReportPage(crowd) {
+        this.stackPush({
+            name: 'ReportPage',
+            crowd: crowd
+        })
     }
 
     toDeletePage() {

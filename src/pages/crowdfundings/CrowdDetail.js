@@ -20,12 +20,12 @@ export const footer = (crowd, type, player, race) => {
         <TouchableOpacity
             activeOpacity={1}
             onPress={() => {
-                {/*global.router.toReportPage()*/}
+                global.router.toReportPage(crowd)
 
             }}
             style={styles.btnLeft}>
             <Image
-                style={{height: 12, width: 10, marginRight: 5,opacity:0.3}}
+                style={{height: 12, width: 10, marginRight: 5}}
                 source={Images.black_fire}/>
 
             <Text style={styles.txtLeft}>{I18n.t('timely_match')}</Text>
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
         paddingLeft: 17, paddingRight: 17, backgroundColor: 'white'
     },
     btnLeft: {
-        height: 34, width: 97, borderColor: Colors._ECE, borderWidth: 1, alignItems: 'center',
+        height: 34, width: 97, borderColor: '#444444', borderWidth: 1, alignItems: 'center',
         borderRadius: 2, justifyContent: 'center', flexDirection: 'row',
     },
     btnRight: {
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
         fontSize: 14
     },
     txtLeft: {
-        color: '#ECECEE',
+        color: '#444444',
         fontSize: 14
     }
 })

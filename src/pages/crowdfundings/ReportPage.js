@@ -12,6 +12,7 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
 import I18n from 'react-native-i18n';
+import {timely_match} from '../../services/CrowdDao'
 
 const styles = StyleSheet.create({
     btnLeft: {
@@ -87,6 +88,17 @@ export default class ReportPage extends PureComponent {
 
         }
     };
+
+    componentDidMount() {
+        const {crowd} = this.props.params;
+        timely_match({crowdfunding_id: crowd.id}, data => {
+            this.setState({
+                crowd: data
+            })
+        }, err => {
+
+        })
+    }
 
 
     render() {
