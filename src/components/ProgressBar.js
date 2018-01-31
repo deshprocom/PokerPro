@@ -12,6 +12,7 @@ import {
     Animated,
     Easing,
 } from 'react-native';
+import {toDecimal} from '../utils/ComonHelper';
 
 let styles = StyleSheet.create({
     background: {
@@ -83,7 +84,7 @@ export default class ProgressBar extends Component {
                 </View>
                 <Animated.View
                     style={[styles.percent, {marginLeft:marginFill}]}>
-                    <Text style={styles.txt_per}>{Number.parseFloat(this.props.initialProgress * 100)}%</Text>
+                    <Text style={styles.txt_per}>{toDecimal(this.props.initialProgress)}%</Text>
                 </Animated.View>
             </View>
 

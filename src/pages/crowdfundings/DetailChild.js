@@ -128,10 +128,14 @@ export default class DetailChild extends Component {
                     <View style={{flexDirection: 'row'}}>
                         <Text style={styles.txtName}>{race.name}</Text>
 
-                        <View style={styles.btnReport}>
+                        <TouchableOpacity style={styles.btnReport}
+                                          onPress={() => {
+                                             global.router.toReportPage(this.props.info)
+
+                                           }}>
                             <Image source={Images.timely_matchRed} style={{width:13 ,height:13}}/>
                             <Text style={styles.txtReport}>{I18n.t('timely_match')}</Text>
-                        </View>
+                        </TouchableOpacity>
                     </View>
 
                     <Text style={styles.txtTime}>{`${I18n.t('qualification')}：¥${cf_cond}  ${this.race_time(race)}`}</Text>

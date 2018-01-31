@@ -44,6 +44,7 @@ export default class Router {
 
     }
 
+
     replaceCrowdOrder(order_number) {
         this.replace({
             name: 'SubscriptionInfoPage',
@@ -134,8 +135,13 @@ export default class Router {
         })
     }
 
-    toReportPage() {
-        this.stackPush({name: 'ReportPage'})
+    toReportPage(crowd) {
+        this.stackPush({
+            name: 'ReportPage',
+            params:{
+                crowd: crowd
+            }
+        })
     }
 
     toDeletePage() {
