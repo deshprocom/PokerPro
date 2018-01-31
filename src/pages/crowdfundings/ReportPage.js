@@ -39,12 +39,11 @@ const styles = StyleSheet.create({
 
     },
     selected: {
-        borderRadius: 2,
-        borderWidth: 1,
+
         paddingRight: 5,
         paddingLeft: 5,
-        height: 24,
-        justifyContent: 'center',
+
+        alignItems: 'center',
         marginLeft: 18
     },
     txtTitle: {
@@ -82,7 +81,8 @@ const styles = StyleSheet.create({
 export default class ReportPage extends PureComponent {
 
     state = {
-        timely_match:{}
+        timely_match: {},
+        matchShow: 0
     };
 
     componentDidMount() {
@@ -100,8 +100,8 @@ export default class ReportPage extends PureComponent {
                     flex: 1, alignItems: 'center', height: 44, justifyContent: 'center',
                     flexDirection: 'row'
                 }}>
-                    {this.reportBtn(true, '及时赛报')}
-                    {this.reportBtn(false, '牌手赛报')}
+                    {this.reportBtn(0, '及时赛报')}
+                    {this.reportBtn(1, '牌手赛报')}
                 </View>
                 {this.renderBtn(false)}
             </View>
@@ -111,6 +111,7 @@ export default class ReportPage extends PureComponent {
 
         </View>
     }
+
     race_time = (race) => {
         const {begin_date, end_date} = race;
         return moment(begin_date).format('YYYY.MM.DD') + '-' + moment(end_date).format('YYYY.MM.DD')
@@ -148,9 +149,9 @@ export default class ReportPage extends PureComponent {
 
     onFetch = (page = 1, startFetch, abortFetch) => {
         const {crowd} = this.props.params;
-        console.log("crowd22:",crowd)
+        console.log("crowd22:", crowd)
         timely_match({crowdfunding_id: crowd.id, page: page}, data => {
-            console.log("timely_match:",data)
+            console.log("timely_match:", data)
             this.setState({
                 timely_match: data
             })
@@ -160,8 +161,10 @@ export default class ReportPage extends PureComponent {
     };
 
     renderItem = (item, index) => {
-        const {crowdfunding_id,crowdfunding_player_id,crowdfunding_player_name,record_time,
-            name,title,small_blind,big_blind,ante,description,created_at} = item;
+        const {
+            crowdfunding_id, crowdfunding_player_id, crowdfunding_player_name, record_time,
+            name, title, small_blind, big_blind, ante, description, created_at
+        } = item;
         return <View style={{flexDirection: 'row', paddingLeft: 17, paddingRight: 17}}>
             <View style={{width: 14, alignItems: 'center'}}>
 
@@ -189,10 +192,18 @@ export default class ReportPage extends PureComponent {
         </TouchableOpacity>
     };
 
-    reportBtn = (select, title) => {
-        return <View style={[styles.selected, {borderColor: select ? Colors._F34 : Colors.txt_444}]}>
-            <Text style={[styles.txtTitle, {color: select ? Colors._F34 : Colors.txt_444}]}>{title}</Text>
-        </View>
+    reportBtn = (matchShow, title) => {
+        let select = matchShow === this.state.matchShow;
+        return <TouchableOpacity style={styles.selected}
+                                 onPress={()=>{
+            this.setState({
+                matchShow
+            })
+        }}>
+            <Text
+                style={[styles.txtTitle, {color: select ? '#161718' : '#666666',fontSize:select ? 16 : 14}]}>{title}</Text>
+            {select ? <View style={{backgroundColor:'#161718',width:50,height:3,marginTop:7}}/> : null}
+        </TouchableOpacity>
     }
 
 
