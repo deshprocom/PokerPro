@@ -25,14 +25,14 @@ export const footer = (crowd, type, player, race) => {
                 global.router.toReportPage(crowd)
 
             }}
-            style={styles.btnLeft}>
+            style={[styles.btnLeft,_width(status)]}>
             <Image
                 style={{height: 12, width: 10, marginRight: 5}}
                 source={Images.black_fire}/>
 
             <Text style={styles.txtLeft}>{I18n.t('timely_match')}</Text>
         </TouchableOpacity>
-        {status === 'go_ahead' ? null :<View style={{flex: 1}}/>}
+        {status === 'go_ahead' ? null : <View style={{flex: 1}}/>}
         {status === 'go_ahead' ? null :
             <TouchableOpacity
                 onPress={() => {
@@ -50,10 +50,28 @@ export const footer = (crowd, type, player, race) => {
     </View>
 
 };
-export function _justifyContent(status){
-    if(status === 'go_ahead'){
+export function _width(status) {
+    if (status === 'go_ahead') {
+        return {
+            paddingTop: 7,
+            paddingBottom: 7,
+            paddingLeft: 84,
+            paddingRight: 84
+        }
+    } else {
+        return {
+            paddingTop: 7,
+            paddingBottom: 7,
+            paddingLeft: 14,
+            paddingRight: 14
+        }
+    }
+}
+export function _justifyContent(status) {
+
+    if (status === 'go_ahead') {
         return 'center'
-    }else{
+    } else {
         return 'flex-start'
     }
 }
@@ -106,12 +124,14 @@ const styles = StyleSheet.create({
         paddingLeft: 17, paddingRight: 17, backgroundColor: 'white'
     },
     btnLeft: {
-        height: 34, width: 97, borderColor: '#444444', borderWidth: 1, alignItems: 'center',
+        height: 34, paddingTop: 7, paddingBottom: 7,
+        paddingLeft: 14, paddingRight: 14, borderColor: '#444444', borderWidth: 1, alignItems: 'center',
         borderRadius: 2, justifyContent: 'center', flexDirection: 'row',
     },
     btnRight: {
         height: 34,
-        width: 224,
+        paddingTop: 7, paddingBottom: 7,
+        paddingLeft: 84, paddingRight: 84,
         backgroundColor: Colors._161,
         borderRadius: 2,
         alignItems: 'center',
