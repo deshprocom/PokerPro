@@ -15,6 +15,12 @@ export function crowd_wx_paid_result(body, resolve, reject) {
 }
 
 
+export function report_player(body, resolve, reject) {
+    helper.get(Api.report_player(body), ret => {
+        resolve(ret.data)
+    }, reject, body)
+}
+
 export function timely_match(body, resolve, reject) {
     helper.get(Api.timely_match(body), ret => {
         resolve(ret.data)

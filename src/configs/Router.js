@@ -135,11 +135,12 @@ export default class Router {
         })
     }
 
-    toReportPage(crowd) {
+    toReportPage(crowd,player) {
         this.stackPush({
             name: 'ReportPage',
             params:{
-                crowd: crowd
+                crowd: crowd,
+                player:player
             }
         })
     }

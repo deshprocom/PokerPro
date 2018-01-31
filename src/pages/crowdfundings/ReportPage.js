@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import ReportTimely from './ReportTimely';
+import ReportPlayer from './ReportPlayer';
 
 const styles = StyleSheet.create({
     btnLeft: {
@@ -83,6 +84,10 @@ export default class ReportPage extends PureComponent {
             case 0:
                 return <ReportTimely
                     crowd={this.props.params.crowd}/>
+            case 1:
+                return <ReportPlayer
+                    crowd={this.props.params.crowd}
+                    player={this.props.params.player}/>
         }
     };
 

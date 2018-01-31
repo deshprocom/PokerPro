@@ -104,7 +104,7 @@ export default class PokerInfo extends PureComponent {
     componentDidMount() {
         const {crowd, player} = this.props.params;
         poker_info({id: crowd.id, player_id: player.cf_player_id}, data => {
-            console.log("pokerInfo:", data)
+            console.log("pokerInfo:", data);
             this.setState({
                 pokerInfo: data
             })
