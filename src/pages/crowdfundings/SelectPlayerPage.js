@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2018/1/6
  * Function:
- * Desc:
+ * Desc: 选择牌手界面
  */
 
 import React, {Component} from 'react';

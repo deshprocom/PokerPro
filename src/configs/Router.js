@@ -44,8 +44,14 @@ export default class Router {
 
     }
 
-    replaceCrowdOrder() {
-        this.replace({name: 'SubscriptionInfoPage'})
+
+    replaceCrowdOrder(order_number) {
+        this.replace({
+            name: 'SubscriptionInfoPage',
+            params: {
+                order_number
+            }
+        })
     }
 
     toRecordList() {
@@ -57,8 +63,13 @@ export default class Router {
         this.stackPush({name: 'PokerB'})
     }
 
-    toSubscriptionInfoPage() {
-        this.stackPush({name: 'SubscriptionInfoPage'})
+    toSubscriptionInfoPage(order_number) {
+        this.stackPush({
+            name: 'SubscriptionInfoPage',
+            params: {
+                order_number
+            }
+        })
     }
 
     toRiskWarningPage(sumMoney, order_info, clickImg, order) {

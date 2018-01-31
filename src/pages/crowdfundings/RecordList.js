@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2018/1/17
  * Function:
- * Desc:
+ * Desc:赞助记录
  */
 
 import React, {PureComponent} from 'react';
@@ -18,21 +18,6 @@ import CrowdList from './CrowdList';
 import {user_crowd_orders} from '../../services/CrowdDao';
 
 export default class RecordList extends PureComponent {
-
-    state = {
-
-        info: {
-            order_no: '21345345311',
-            status: 'waiting',
-            name: '马叉虫（马永春）',
-            avatar: 'https://wx2.sinaimg.cn/mw690/006Ey6KAly1fnk0j69gm8j30qo0qowj6.jpg',
-            race_name: 'NCBP国家杯棋牌职业大师赛-Day2',
-            price: '¥100／份',
-            copies: 2,
-            total: 1184.0
-
-        }
-    };
 
 
     render() {
