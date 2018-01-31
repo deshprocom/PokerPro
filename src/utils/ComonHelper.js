@@ -69,7 +69,15 @@ export function getFileMine(filePath) {
     return ext;
 }
 
-
+//取小数点俩位
+export function toDecimal(x) {
+    var f = parseFloat(x);
+    if (isNaN(f)) {
+        return;
+    }
+    f = Math.round(x*100)/100;
+    return f;
+}
 
 
 

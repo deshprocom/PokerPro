@@ -8,6 +8,11 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 
+export function timely_match(body, resolve, reject) {
+    helper.get(Api.timely_match(body), ret => {
+        resolve(ret.data)
+    }, reject, body)
+}
 export function crowd_wx_pay(body, resolve, reject) {
     helper.post(Api.crowd_order_wx(body), {}, ret => {
         resolve(ret.data)
@@ -15,13 +20,13 @@ export function crowd_wx_pay(body, resolve, reject) {
 }
 
 export function del_crowd_info(body, resolve, reject) {
-    helper.del(Api.del_crowd_info, ret => {
+    helper.del(Api.del_crowd_info(body), ret => {
         resolve(ret.data)
     }, reject, body)
 }
 
 export function get_crowd_info(body, resolve, reject) {
-    helper.get(Api.get_crowd_info, ret => {
+    helper.get(Api.get_crowd_info(body), ret => {
         resolve(ret.data)
     }, reject, body)
 }

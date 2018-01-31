@@ -16,7 +16,9 @@ import {crowd_detail} from '../../services/CrowdDao'
 import I18n from 'react-native-i18n';
 
 export const footer = (crowd, type, player, race) => {
-    return <View style={styles.footer}>
+
+    var status = crowd.race.status;
+    return <View style={[styles.footer, {justifyContent:_justifyContent(status)}]}>
         <TouchableOpacity
             activeOpacity={1}
             onPress={() => {
@@ -30,20 +32,32 @@ export const footer = (crowd, type, player, race) => {
 
             <Text style={styles.txtLeft}>{I18n.t('timely_match')}</Text>
         </TouchableOpacity>
-        <View style={{flex: 1}}/>
-        <TouchableOpacity
-            onPress={() => {
+        {status === 'go_ahead' ? null :<View style={{flex: 1}}/>}
+        {status === 'go_ahead' ? null :
+            <TouchableOpacity
+                onPress={() => {
                 if(type === 'crowd_detail'){
                     global.router.toSelectPlayer(crowd);
                 }else {
                     global.router.toSubscriptionPage(crowd.id,player,race)
                 }
             }}
-            style={styles.btnRight}>
-            <Text style={styles.txtRight}>{I18n.t('subscribe')}</Text>
-        </TouchableOpacity>
+                style={styles.btnRight}>
+                <Text style={styles.txtRight}>{I18n.t('subscribe')}</Text>
+            </TouchableOpacity>
+        }
+
     </View>
+
+};
+export function _justifyContent(status){
+    if(status === 'go_ahead'){
+        return 'center'
+    }else{
+        return 'flex-start'
+    }
 }
+
 
 export default class CrowdDetail extends Component {
 
@@ -77,7 +91,7 @@ export default class CrowdDetail extends Component {
             <DetailChild
                 info={crowd}/>
 
-            {crowd.race.status === 'ended' ||  crowd.race.status === 'go_ahead'? null : footer(crowd, 'crowd_detail', null, null)}
+            {crowd.race.status === 'ended' ? null : footer(crowd, 'crowd_detail', null, null)}
 
         </View>
     }

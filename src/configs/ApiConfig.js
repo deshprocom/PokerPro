@@ -134,6 +134,7 @@ export default {
     get_crowd_info: get_crowd_info,//查看某个赞助详情
     del_crowd_info: del_crowd_info,//删除某个赞助详情
     crowd_order_wx: crowd_order_wx,//对众筹商品调起微信支付
+    timely_match: timely_match,//及时赛报
 
 }
 
@@ -147,6 +148,11 @@ function getUserId() {
 
 const page_size = 10;
 
+
+function timely_match(body) {
+    const {crowdfunding_id, page} = body;
+    return `crowdfundings/${crowdfunding_id}/reports?page=${page}&page_size=${page_size}`
+}
 
 function crowd_order_wx(body) {
     const {order_number} = body;

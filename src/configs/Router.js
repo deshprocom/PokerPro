@@ -127,7 +127,9 @@ export default class Router {
     toReportPage(crowd) {
         this.stackPush({
             name: 'ReportPage',
-            crowd: crowd
+            params:{
+                crowd: crowd
+            }
         })
     }
 
