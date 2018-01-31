@@ -10,40 +10,38 @@ import {
     StyleSheet, Image, Text, ScrollView
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import PlayerItem from './PlayerItem';
 import {NavigationBar} from '../../components';
 import I18n from 'react-native-i18n';
-import {convertDate} from '../../utils/ComonHelper';
+import {utcDate, isEmptyObject, convertDate} from '../../utils/ComonHelper';
+import {get_crowd_info} from '../../services/CrowdDao';
+import {CrowdStatus} from '../../configs/Status';
+import {LoadingView} from '../../components/load'
 
 export default class SubscriptionInfoPage extends PureComponent {
     state = {
-        data: {
-            img: 'https://cdn-upyun.deshpro.com/uploads/info/image/86/preview_44444.jpg',
-            name: '马叉虫',
-            join_race: 'NCBP国家杯棋牌职业大师赛-Day2',
-            promotion_result: '晋级失败',
-            announce_time: '预计2017.08.09 17:50公布结果',
-            prize_time: '预计2017.08.10 17:50',
-            betting_information: '20%出让股份，划分100份',
-            price_per: '2182.8',
-            purchase_copies: 'X2',
-            payment: 2182.8,
-            rank: 21,
-            order_number: '34324232523',
-            order_time: '2018-12-21   23:12',
-            resultN: 1
-        }
+        crowd_info: {}
     };
 
-    result = () => {
-        const {resultN, promotion_result} = this.state.data;
-        if (resultN === 0) {
+    componentDidMount() {
+
+        get_crowd_info(this.props.params, data => {
+            this.setState({
+                crowd_info: data
+            })
+        }, err => {
+
+        })
+    }
+
+    result = (record_status) => {
+
+        if (record_status === CrowdStatus.FAILED) {
             return (
                 <View style={styles.result}>
-                    <Text style={styles.resultTxt}>{promotion_result}</Text>
+                    <Text style={styles.resultTxt}>23234</Text>
                 </View>
             )
-        } else if (resultN === 1) {
+        } else if (record_status === CrowdStatus.UNPUBLISHED) {
             return <Text style={styles.resultTxt1}>待公布</Text>
         } else {
             return (
@@ -61,9 +59,9 @@ export default class SubscriptionInfoPage extends PureComponent {
 
     render() {
         const {
-            img, name, join_race, promotion_result, announce_time, prize_time, betting_information
-            , price_per, purchase_copies, payment, rank, order_number, order_time
-        } = this.state.data;
+            crowdfunding_player
+        } = this.state.crowd_info;
+
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
@@ -74,67 +72,87 @@ export default class SubscriptionInfoPage extends PureComponent {
                     leftBtnIcon={Images.mall_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
-                <View style={styles.pageTop}>
-                    <Image source={{uri:img}} style={styles.image}>
-                        <View style={styles.imgRank}>
-                            <Text style={styles.rankTxt}>{rank}名</Text>
-                        </View>
-                    </Image>
-                    <View style={styles.topRight}>
-                        <Text style={styles.name}>{name}</Text>
-                        <Text style={styles.join_race}>{I18n.t('join_race')}：{join_race}</Text>
-                        {this.result()}
 
-                    </View>
-                </View>
+                {isEmptyObject(crowdfunding_player) ? <LoadingView/> : this.content()}
 
-                <View style={styles.content}>
-                    <Text style={styles.contentTxt}>{I18n.t('announce_time')}：{announce_time}</Text>
-                    <Text style={[styles.contentTxt,{marginTop:5}]}>{I18n.t('prize_time')}：{prize_time}</Text>
-                    <Text
-                        style={[styles.contentTxt,{marginTop:5}]}>{I18n.t('betting_information')}：{betting_information}</Text>
-                </View>
-
-                <View style={styles.orderMessage}>
-                    <Text style={styles.messageTxt}>{I18n.t('order_detail')}</Text>
-                    <View style={styles.order_number}>
-                        <Text style={styles.numberTxt}>{I18n.t('order_num')}：{order_number}</Text>
-                        <View style={{flex:1}}/>
-                        <Text style={styles.timeTxt}>{convertDate(order_time, 'YYYY-MM-DD  mm:ss')}</Text>
-                    </View>
-                </View>
-
-                <View style={styles.orderView}>
-                    <View style={styles.view1}>
-                        <Text style={styles.price_per}>{I18n.t('part_price')}</Text>
-                        <View style={{flex:1}}/>
-                        <Text style={styles.price}>¥{price_per}</Text>
-                    </View>
-                    <View style={[styles.view1,{marginTop:6}]}>
-                        <Text style={styles.price_per}>{I18n.t('purchase_copies')}</Text>
-                        <View style={{flex:1}}/>
-                        <Text style={styles.price_per}>{purchase_copies}</Text>
-                    </View>
-                </View>
-
-                <View style={styles.totalPrice}>
-                    <Text style={styles.payment}>¥{payment}</Text>
-                    <Text style={styles.price_per}>{I18n.t('payment')}</Text>
-                </View>
-
-                <View style={{marginLeft: 17, marginRight: 17,marginTop:17}}>
-                    <Text style={styles.readTxt1}>我是投资人本人xxx，身份证号码xxxxxxxxxxxx，我已认真阅读并同意
-                        <Text style={{color:'#438EE6'}}
-                              onPress={()=>{
-                                global.router.toRiskWarningPage()
-                            }}>《风险提示》</Text>
-                        及其他相关条款和协议，自愿认购xxxxxx赛事众筹项目，并支付众筹款项
-                        <Text style={{color:Colors._F34}}>200.00元</Text>。</Text>
-
-                </View>
 
             </View>
         );
+    }
+
+
+    content = () => {
+        const {
+            crowdfunding, crowdfunding_player, order_info, race
+        } = this.state.crowd_info;
+        const {name, logo, sell_stock, stock_number, ranking} = crowdfunding_player;
+        const {publish_date, award_date} = crowdfunding;
+        const {
+            record_status, order_number, created_at,
+            order_stock_money, order_stock_number, total_money
+        } = order_info;
+        return <View>
+            <View style={styles.pageTop}>
+                <Image source={{uri: logo}} style={styles.image}>
+                    <View style={styles.imgRank}>
+                        <Text style={styles.rankTxt}>{ranking}名</Text>
+                    </View>
+                </Image>
+                <View style={styles.topRight}>
+                    <Text style={styles.name}>{name}</Text>
+                    <Text style={styles.join_race}>{I18n.t('join_race')}：{race.name}</Text>
+                    {this.result(record_status)}
+
+                </View>
+            </View>
+
+            <View style={styles.content}>
+                <Text
+                    style={styles.contentTxt}>{I18n.t('announce_time')}：预计{convertDate(publish_date, 'YYYY.MM.DD HH:mm')}公布结果</Text>
+                <Text
+                    style={[styles.contentTxt, {marginTop: 5}]}>{I18n.t('prize_time')}：预计{convertDate(award_date, 'YYYY.MM.DD HH:mm')}</Text>
+                <Text
+                    style={[styles.contentTxt, {marginTop: 5}]}>{`${I18n.t('betting_information')}：${sell_stock}%出让股份，划分${stock_number}份`}</Text>
+            </View>
+
+            <View style={styles.orderMessage}>
+                <Text style={styles.messageTxt}>{I18n.t('order_detail')}</Text>
+                <View style={styles.order_number}>
+                    <Text style={styles.numberTxt}>{I18n.t('order_num')}：{order_number}</Text>
+                    <View style={{flex: 1}}/>
+                    <Text style={styles.timeTxt}>{utcDate(created_at, 'YYYY-MM-DD  HH:mm')}</Text>
+                </View>
+            </View>
+
+            <View style={styles.orderView}>
+                <View style={styles.view1}>
+                    <Text style={styles.price_per}>{I18n.t('part_price')}</Text>
+                    <View style={{flex: 1}}/>
+                    <Text style={styles.price}>¥{order_stock_money}</Text>
+                </View>
+                <View style={[styles.view1, {marginTop: 6}]}>
+                    <Text style={styles.price_per}>{I18n.t('purchase_copies')}</Text>
+                    <View style={{flex: 1}}/>
+                    <Text style={styles.price_per}>{order_stock_number}</Text>
+                </View>
+            </View>
+
+            <View style={styles.totalPrice}>
+                <Text style={styles.payment}>¥{total_money}</Text>
+                <Text style={styles.price_per}>{I18n.t('payment')}</Text>
+            </View>
+
+            <View style={{marginLeft: 17, marginRight: 17, marginTop: 17}}>
+                <Text style={styles.readTxt1}>我是投资人本人xxx，身份证号码xxxxxxxxxxxx，我已认真阅读并同意
+                    <Text style={{color: '#438EE6'}}
+                          onPress={() => {
+                              global.router.toRiskWarningPage()
+                          }}>《风险提示》</Text>
+                    及其他相关条款和协议，自愿认购xxxxxx赛事众筹项目，并支付众筹款项
+                    <Text style={{color: Colors._F34}}>{total_money}元</Text>。</Text>
+
+            </View>
+        </View>
     }
 }
 
