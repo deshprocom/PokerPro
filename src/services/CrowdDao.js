@@ -10,7 +10,7 @@ import Api from '../configs/ApiConfig';
 
 export function crowd_wx_paid_result(body, resolve, reject) {
     helper.get(Api.crowd_wx_result(body), ret => {
-        resolve(ret.data)
+        resolve(ret)
     }, reject)
 }
 
