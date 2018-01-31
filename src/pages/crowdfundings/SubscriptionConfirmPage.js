@@ -13,7 +13,7 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, ActionPay, Loading} from '../../components';
 import OrderBottom from '../malls/order/OrderBottom';
-import {crowd_order, crowd_wx_pay} from '../../services/CrowdDao';
+import {crowd_order, crowd_wx_pay,crowd_wx_paid_result} from '../../services/CrowdDao';
 import {isWXAppInstalled, showToast, alertOrderChat, isEmptyObject} from '../../utils/ComonHelper';
 
 
@@ -148,8 +148,13 @@ export default class SubscriptionConfirmPage extends PureComponent {
 
                 <ActionPay
                     ref={ref => this.actionPay = ref}
-                    callback={() => {
-                        global.router.replaceCrowdOrder()
+                    callback={(order) => {
+                        crowd_wx_paid_result(order,ret=>{
+                            global.router.replaceCrowdOrder()
+                        },err=>{
+
+                        })
+
                     }}
                 />
 

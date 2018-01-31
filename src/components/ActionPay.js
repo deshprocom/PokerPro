@@ -155,7 +155,7 @@ export default class ActionPay extends Component {
         })
     };
 
-    close = ()=>{
+    close = () => {
         this.setState({
             visible: false
         })
@@ -319,12 +319,13 @@ export default class ActionPay extends Component {
     };
 
     _wxPay = () => {
-        const {wxPay, isInstall} = this.state;
+        const {wxPay, isInstall, order} = this.state;
         if (isInstall) {
             payWx(wxPay, () => {
-                this.props.callback && this.props.callback();
+                this.props.callback && this.props.callback(order);
 
             }, () => {
+                this.props.callback && this.props.callback(order);
             })
         } else {
             showToast(I18n.t('need_weChat'))

@@ -44,7 +44,7 @@ export default class Router {
 
     }
 
-    replaceCrowdOrder(){
+    replaceCrowdOrder() {
         this.replace({name: 'SubscriptionInfoPage'})
     }
 
@@ -57,18 +57,23 @@ export default class Router {
         this.stackPush({name: 'PokerB'})
     }
 
-    toSubscriptionInfoPage() {
-        this.stackPush({name: 'SubscriptionInfoPage'})
+    toSubscriptionInfoPage(order_number) {
+        this.stackPush({
+            name: 'SubscriptionInfoPage',
+            params: {
+                order_number
+            }
+        })
     }
 
-    toRiskWarningPage(sumMoney,order_info,clickImg,order) {
+    toRiskWarningPage(sumMoney, order_info, clickImg, order) {
         this.stackPush({
             name: 'RiskWarningPage',
             params: {
                 sumMoney: sumMoney,
-                order_info:order_info,
-                clickImg:clickImg,
-                order:order
+                order_info: order_info,
+                clickImg: clickImg,
+                order: order
             }
         })
     }
