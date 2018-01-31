@@ -89,14 +89,14 @@ export default class SubscriptionPage extends PureComponent {
                     leftBtnPress={() => router.pop()}/>
 
                 <View style={styles.itemPage}>
-                    <Image style={{width:95,height:120,marginLeft:19}} source={{uri:isEmptyObject(logo)?'':logo.url}}/>
+                    <Image style={{width:95,height:120,marginLeft:19}} source={{uri:isEmptyObject(logo)?'':logo}}/>
                     <View style={styles.pageRight}>
                         <Text style={styles.name}>{name}</Text>
                         <Text style={styles.content}>{I18n.t('join_race')}：{this.props.params.race.name}</Text>
                         <View style={{flex:1}}/>
                         <View style={{flexDirection:'row',alignItems:'center',marginBottom:5}}>
                             <Text style={styles.priceTxt}>{I18n.t('part_price')}：</Text>
-                            <Text style={styles.price}>{stock_unit_price}</Text>
+                            <Text style={styles.price}>{stock_unit_price}元</Text>
                         </View>
                     </View>
                 </View>
@@ -151,8 +151,7 @@ const styles = StyleSheet.create({
     },
     priceTxt: {
         fontSize: 14,
-        color: '#444444',
-        fontWeight: 'bold'
+        color: '#444444'
     },
     price: {
         fontSize: 14,
@@ -169,13 +168,11 @@ const styles = StyleSheet.create({
     },
     txt1: {
         fontSize: 15,
-        color: '#333333',
-        fontWeight: 'bold'
+        color: '#333333'
     },
     txt2: {
         fontSize: 15,
-        color: '#F34A4A',
-        fontWeight: 'bold'
+        color: '#F34A4A'
     },
     quantity: {
         marginRight: 17,

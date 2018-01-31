@@ -569,5 +569,6 @@
   "people":"人",
   "unpublish":"待公布",
   "success":"成功",
-  "unsuccess":"未成功"
+  "unsuccess":"未成功",
+  "crowAddress":"地址"
 }

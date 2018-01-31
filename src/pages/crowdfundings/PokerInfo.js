@@ -111,7 +111,15 @@ export default class PokerInfo extends PureComponent {
         }, err => {
 
         })
-    }
+    };
+    numberToW = (str) => {
+        if (str <= 0) {
+            return `0${I18n.t('thousand')}`
+        }
+
+        return str / 10000 + I18n.t('thousand');
+
+    };
 
     render() {
 
@@ -141,7 +149,7 @@ export default class PokerInfo extends PureComponent {
             <ScrollView>
 
                 {isEmptyObject(logo) ? null : <ImageLoad style={styles.img_poker}
-                                                         source={{uri: logo.url}}/>}
+                                                         source={{uri: logo}}/>}
 
 
                 <View style={styles.view_info}>
@@ -149,7 +157,7 @@ export default class PokerInfo extends PureComponent {
                         <View>
                             <Text style={styles.txt_name}>{I18n.t('sponsor_player')}：{name}</Text>
                             <Text style={styles.lb_price}>{I18n.t('part_price')}：<Text
-                                style={styles.txt_price}>{stock_unit_price}</Text></Text>
+                                style={styles.txt_price}>{stock_unit_price}元</Text></Text>
                         </View>
 
                         <View style={styles.view_info2}>
@@ -180,8 +188,8 @@ export default class PokerInfo extends PureComponent {
 
                     <View style={styles.view_percent}>
                         {this.renderItem(`${sell_stock}%`, I18n.t('give_up_hares'))}
-                        {this.renderItem(stock_number, I18n.t('share_division'))}
-                        {this.renderItem(cf_money, I18n.t('total_crowdfunding'))}
+                        {this.renderItem(`${stock_number}份`, I18n.t('share_division'))}
+                        {this.renderItem(this.numberToW(cf_money), I18n.t('total_crowdfunding'))}
                     </View>
                 </View>
 

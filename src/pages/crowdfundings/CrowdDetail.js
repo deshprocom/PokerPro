@@ -96,7 +96,8 @@ export default class CrowdDetail extends Component {
         }, err => {
 
         })
-    }
+    };
+
 
 
     render() {

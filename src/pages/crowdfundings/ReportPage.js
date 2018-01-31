@@ -207,11 +207,13 @@ export default class ReportPage extends PureComponent {
             <View style={{marginLeft: 17}}>
                 <Text style={{fontSize: 14, color: Colors._F34, marginTop: 8}}>{name}</Text>
                 <Text style={styles.itemTime}>{moment(created_at * 1000).format('YYYY.MM.DD mm:ss')}</Text>
-                <View>
+
+                <View style={{flexDirection:'row'}}>
                     <Text style={styles.txt1}>{title}</Text>
                     <Text style={[styles.txt1,{marginLeft:36}]}>{ante}/{big_blind}</Text>
                     <Text style={styles.txt2}>{crowdfunding_player_name}</Text>
                 </View>
+
             </View>
 
 
