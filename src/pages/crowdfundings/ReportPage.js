@@ -73,7 +73,29 @@ const styles = StyleSheet.create({
         height: 14, width: 14, borderRadius: 7,
         backgroundColor: Colors._F34, marginTop: 8,
         position: 'absolute'
+    },
+    timely_match:{
+        fontSize: 14,
+        color: '#444444',
+        marginLeft: 5,
+        fontWeight:'bold'
+    },
+    itemTime:{
+        fontSize: 12,
+        color: '#AAAAAA',
+        marginLeft: 7
+    },
+    txt1:{
+        fontSize: 12,
+        color: '#444444',
+        marginLeft: 1
+    },
+    txt2:{
+        fontSize: 12,
+        color: '#4990E2',
+        marginLeft: 18
     }
+
 
 
 });
@@ -126,11 +148,19 @@ export default class ReportPage extends PureComponent {
                 <Text style={styles.txtTime}>{race.location}</Text>
             </View>
             <View style={{height: 10, backgroundColor: Colors._ECE}}/>
+            <View style={{flexDirection: 'row',paddingTop:9,backgroundColor:'white',marginLeft:17,marginRight:17}}>
+                <Image
+                    style={{height: 16, width: 16, marginRight: 5}}
+                    source={Images.black_fire}/>
+
+                <Text style={styles.timely_match}>{I18n.t('timely_match')}</Text>
+            </View>
         </View>
     };
 
     renderFlatList = () => {
         return <View style={styles.list}>
+
             <UltimateFlatList
                 header={() => this.headerRace()}
                 ref={(ref) => this.listView = ref}
@@ -147,25 +177,27 @@ export default class ReportPage extends PureComponent {
 
     };
 
-    onFetch = (page = 1, startFetch, abortFetch) => {
+
+    onFetch = (page = 1, postRefresh, abortFetch) => {
         const {crowd} = this.props.params;
-        console.log("crowd22:", crowd)
         timely_match({crowdfunding_id: crowd.id, page: page}, data => {
             console.log("timely_match:", data)
             this.setState({
                 timely_match: data
             })
+            postRefresh(data, 6);
         }, err => {
             abortFetch()
         })
     };
 
     renderItem = (item, index) => {
+        console.log(item);
         const {
             crowdfunding_id, crowdfunding_player_id, crowdfunding_player_name, record_time,
             name, title, small_blind, big_blind, ante, description, created_at
         } = item;
-        return <View style={{flexDirection: 'row', paddingLeft: 17, paddingRight: 17}}>
+        return <View style={{flexDirection: 'row', paddingLeft: 17, paddingRight: 17,paddingTop:11}}>
             <View style={{width: 14, alignItems: 'center'}}>
 
                 <View style={{backgroundColor: Colors._ECE, width: 1, flex: 1}}/>
@@ -174,7 +206,12 @@ export default class ReportPage extends PureComponent {
 
             <View style={{marginLeft: 17}}>
                 <Text style={{fontSize: 14, color: Colors._F34, marginTop: 8}}>{name}</Text>
-                <View style={{height: 700}}/>
+                <Text style={styles.itemTime}>{moment(created_at * 1000).format('YYYY.MM.DD mm:ss')}</Text>
+                <View>
+                    <Text style={styles.txt1}>{title}</Text>
+                    <Text style={[styles.txt1,{marginLeft:36}]}>{ante}/{big_blind}</Text>
+                    <Text style={styles.txt2}>{crowdfunding_player_name}</Text>
+                </View>
             </View>
 
 
