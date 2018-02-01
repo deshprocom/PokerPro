@@ -45,7 +45,7 @@ export default class RankListView extends Component {
         return (<TouchableOpacity
             onPress={
                 () => {
-                    router.toPokerRankPage(this.props, player.player_id)
+                    router.toPokerRankPage( player.player_id)
                 }}
             activeOpacity={1}
             style={[styles.item, {backgroundColor: rowID % 2 === 0 ? 'white' : '#F5F5F5'}]}>

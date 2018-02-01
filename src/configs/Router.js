@@ -135,12 +135,11 @@ export default class Router {
         })
     }
 
-    toReportPage(crowd,player) {
+    toReportPage(crowd) {
         this.stackPush({
             name: 'ReportPage',
-            params:{
-                crowd: crowd,
-                player:player
+            params: {
+                crowd: crowd
             }
         })
     }
@@ -374,8 +373,8 @@ export default class Router {
         })
     }
 
-    toPokerRankPage(props, player_id) {
-        this.push(props, {
+    toPokerRankPage( player_id) {
+        this.stackPush({
             name: 'PokerRankPage',
             params: {
                 player_id: player_id

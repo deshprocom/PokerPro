@@ -161,8 +161,8 @@ function crowd_wx_result(body) {
 }
 
 function timely_match(body) {
-    const {crowdfunding_id, page} = body;
-    return `crowdfundings/${crowdfunding_id}/reports?page=${page}&page_size=${page_size}`
+    const {crowdfunding_id} = body;
+    return `crowdfundings/${crowdfunding_id}/reports`
 
 }
 

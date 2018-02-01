@@ -23,7 +23,7 @@ class FocusPlayer extends Component {
         const {avatar, country, dpi_total_earning, followed, id, name} = focusData;
 
         return (<TouchableOpacity style={styles.row_view}
-                                  onPress={() => router.toPokerRankPage(this.props, id)}>
+                                  onPress={() => router.toPokerRankPage(id)}>
             <View style={{alignItems: 'center', justifyContent: 'center', marginRight: 12.5}}>
                 <Image defaultSource={Images.mask}
                        source={{uri: avatar}}
