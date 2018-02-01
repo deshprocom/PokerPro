@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     },
     list: {
         backgroundColor: 'white',
-        marginTop: 5,
+
     },
     red_point: {
         height: 14, width: 14, borderRadius: 7,
@@ -73,6 +73,7 @@ export default class ReportTimely extends PureComponent {
     headerRace = () => {
         const {race} = this.props.crowd;
         return <View>
+            <View style={{height:5,backgroundColor:'#ECECEE'}}/>
             <View style={styles.race}>
                 <Text style={styles.txtName}>{race.name}</Text>
                 <Text style={styles.txtTime}>{this.race_time(race)}</Text>

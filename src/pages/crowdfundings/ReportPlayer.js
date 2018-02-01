@@ -19,8 +19,7 @@ import {isEmptyObject, utcDate, convertDate} from '../../utils/ComonHelper';
 
 const styles = StyleSheet.create({
     list: {
-        backgroundColor: 'white',
-        marginTop: 5,
+        backgroundColor: 'white'
     },
     player_img: {
         width: 61,
@@ -82,6 +81,7 @@ export default class ReportPlayer extends PureComponent {
     headPlayers = () => {
         const {players, player} = this.state;
         return <View>
+            <View style={{height:5,backgroundColor:'#ECECEE'}}/>
             <FlatList
                 horizontal={true}
                 data={players}

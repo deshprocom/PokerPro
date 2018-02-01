@@ -35,7 +35,7 @@ let styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         height: 25,
-        width: 40
+        width: 42
     },
     txt_per: {
         color: '#F34A4A',
