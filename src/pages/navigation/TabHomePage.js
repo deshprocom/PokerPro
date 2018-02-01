@@ -21,6 +21,7 @@ import ActivityModel from '../message/ActivityModel';
 import {getActivityPush} from '../../services/AccountDao';
 import StorageKey from '../../configs/StorageKey';
 import I18n from 'react-native-i18n';
+import Colors from "../../styles/Colors";
 
 class TabHomePage extends Component {
     state = {
@@ -286,7 +287,7 @@ class TabHomePage extends Component {
                         height: 48, alignItems: 'center', justifyContent: 'center',
                         flexDirection: 'row'
                     }}>
-                        <Text>{I18n.t('no_more')}</Text>
+                        <Text style={{color: Colors._AAA}}>{I18n.t('no_more')}</Text>
                     </View> : null}
                 </ScrollView>
 
