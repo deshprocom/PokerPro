@@ -129,7 +129,7 @@ export default class DetailChild extends Component {
             {this.state.floatTabView && categories.length > 0 ?
                 this.renderTabView(categories, styles.tabFloatView) : null}
             <ScrollView
-                scrollEventThrottle={10}
+                scrollEventThrottle={16}
                 onScroll={this.onScroll}>
                 <ImageLoad style={styles.cover}
                            source={{uri: master_image}}/>

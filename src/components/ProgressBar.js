@@ -35,7 +35,7 @@ let styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         height: 25,
-        width: 40
+        width: 45
     },
     txt_per: {
         color: '#F34A4A',
@@ -71,7 +71,7 @@ export default class ProgressBar extends Component {
 
         let marginFill = fillWidth;
         if(JSON.stringify(fillWidth)>100){
-            marginFill =  JSON.stringify(fillWidth) -40;
+            marginFill =  JSON.stringify(fillWidth) -45;
         }
 
         return (
