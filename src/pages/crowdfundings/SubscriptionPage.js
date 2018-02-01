@@ -89,7 +89,7 @@ export default class SubscriptionPage extends PureComponent {
                     leftBtnPress={() => router.pop()}/>
 
                 <View style={styles.itemPage}>
-                    <Image style={{width:95,height:120,marginLeft:19}} source={{uri:isEmptyObject(logo)?'':logo.url}}/>
+                    <Image style={{width:95,height:120,marginLeft:19}} source={{uri:logo}}/>
                     <View style={styles.pageRight}>
                         <Text style={styles.name}>{name}</Text>
                         <Text style={styles.content}>{I18n.t('join_race')}：{this.props.params.race.name}</Text>

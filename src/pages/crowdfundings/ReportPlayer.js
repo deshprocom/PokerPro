@@ -236,7 +236,8 @@ export default class ReportPlayer extends PureComponent {
 
                 <Text
                     onPress={() => {
-                        global.router.toPokerInfo(item)
+                        const {crowd} = this.props;
+                        global.router.toPokerInfo(crowd,this.state.player,crowd.race)
                     }}
                     style={styles.txt_name}>{crowdfunding_player_name}</Text>
 

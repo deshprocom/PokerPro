@@ -141,7 +141,7 @@ export default class PokerInfo extends PureComponent {
             <ScrollView>
 
                 {isEmptyObject(logo) ? null : <ImageLoad style={styles.img_poker}
-                                                         source={{uri: logo.url}}/>}
+                                                         source={{uri: logo}}/>}
 
 
                 <View style={styles.view_info}>

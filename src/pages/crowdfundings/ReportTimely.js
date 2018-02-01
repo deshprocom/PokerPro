@@ -178,7 +178,8 @@ export default class ReportTimely extends PureComponent {
 
     renderChild = ({item}) => {
         const {
-            created_at, title, ante, big_blind, crowdfunding_player_name, description
+            created_at, title, ante, big_blind, crowdfunding_player_name, description,
+            crowdfunding_player_id
         } = item;
         return <View>
             <Text style={[styles.itemTime, {marginTop: 7}]}>{utcDate(created_at, 'YYYY.MM.DD HH.mm')}</Text>
@@ -189,7 +190,8 @@ export default class ReportTimely extends PureComponent {
 
                 <Text
                     onPress={() => {
-                        global.router.toPokerInfo(item)
+                        const {crowd} = this.props;
+                        global.router.toPokerInfo(crowd, {cf_player_id: crowdfunding_player_id}, crowd.race)
                     }}
                     style={styles.txt_name}>{crowdfunding_player_name}</Text>
 
