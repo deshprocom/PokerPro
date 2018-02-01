@@ -137,7 +137,12 @@ export default class ReportPlayer extends PureComponent {
                 this.setState({
                     player: item,
                     players: [...this.state.players]
-                })
+                });
+
+                setTimeout(() => {
+                    this.listView && this.listView.refresh()
+                }, 200)
+
             }}
             style={{
                 alignItems: 'center', width: 62,
