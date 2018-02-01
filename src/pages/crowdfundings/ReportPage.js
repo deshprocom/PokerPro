@@ -85,6 +85,10 @@ export default class ReportPage extends PureComponent {
             case 1:
                 return <ReportPlayer
                     crowd={this.props.params.crowd}/>
+            case 1:
+                return <ReportPlayer
+                    crowd={this.props.params.crowd}
+                    player={this.props.params.player}/>
         }
     };
 

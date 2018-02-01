@@ -111,6 +111,15 @@ export default class DetailChild extends Component {
         return moment(begin_date).format('YYYY.MM.DD') + '-' + moment(end_date).format('YYYY.MM.DD')
     };
 
+    numberToW = (str) => {
+        if (str <= 0) {
+            return `0${I18n.t('thousand')}`
+        }
+
+        return str / 10000 + I18n.t('thousand');
+
+    };
+
     render() {
         const {master_image, race, cf_total_money, cf_offer_money, mark_desc, cf_cond, categories,player_count} = this.props.info;
         let percent = 0;
@@ -139,7 +148,7 @@ export default class DetailChild extends Component {
                     </View>
 
                     <Text style={styles.txtTime}>{`${I18n.t('qualification')}：¥${cf_cond}  ${this.race_time(race)}`}</Text>
-                    <Text style={styles.txtTime}>{I18n.t('address')}：{race.location}</Text>
+                    <Text style={styles.txtTime}>{I18n.t('crowAddress')}：{race.location}</Text>
                     <ProgressBar
                         backgroundStyle={{backgroundColor: Colors._ECE, borderRadius: 2}}
                         style={{width: Metrics.screenWidth - 34}}
@@ -147,8 +156,8 @@ export default class DetailChild extends Component {
 
                     <View style={{width: '100%', height: 70, flexDirection: 'row'}}>
                         {this.renderTotal(player_count, I18n.t('player_numbers'))}
-                        {this.renderTotal(cf_total_money + I18n.t('thousand'), I18n.t('total_sponsorship'))}
-                        {this.renderTotal(cf_offer_money + I18n.t('thousand'), I18n.t('subscription_amount'))}
+                        {this.renderTotal(this.numberToW(cf_total_money), I18n.t('total_sponsorship'))}
+                        {this.renderTotal(this.numberToW(cf_offer_money), I18n.t('subscription_amount'))}
                     </View>
                 </View>
 

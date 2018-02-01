@@ -55,7 +55,7 @@ export default class SelectPlayerPage extends Component {
     };
     race_time = (race) => {
         const {begin_date, end_date} = race;
-        return moment(begin_date).format('YYYY.MM.DD') + '-' + moment(end_date).format('MM.DD')
+        return moment(begin_date).format('YYYY.MM.DD') +  '-'  + moment(end_date).format('YYYY.MM.DD')
     };
     numToW = (str) => {
         if (str.length <= 0) {

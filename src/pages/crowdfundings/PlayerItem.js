@@ -20,7 +20,7 @@ export default class PlayerItem extends PureComponent {
 
     render() {
         const {player,crowd,race} = this.props;
-        const {cf_player_id,name, nick_name, logo, logo_sm, join_slogan,
+        const {cf_player_id,name, nick_name, logo, logo_sm, join_slogan,stock_number,
             stock_unit_price, cf_money, lairage_rate, final_rate} = player;
 
         return (
@@ -37,8 +37,9 @@ export default class PlayerItem extends PureComponent {
                             <View style={{marginTop:7,flexDirection:'row',alignItems:'center'}}>
                                 <Text style={styles.priceTxt}>{I18n.t('each_price')}：</Text><Text style={styles.price}>{stock_unit_price}元</Text>
                             </View>
-                            <Text style={styles.rankMessage}>{join_slogan}</Text>
+                            <Text style={styles.rankMessage}>出让{final_rate}股份，股份划分{stock_number}份</Text>
                         </View>
+
                         <View style={{flex:1}}/>
                         <View style={styles.message2}>
                             <Text style={styles.circlePer}>{lairage_rate}</Text>
@@ -96,7 +97,6 @@ const styles = StyleSheet.create({
     priceTxt: {
         fontSize: 14,
         color: '#444444',
-        fontWeight: 'bold',
         lineHeight: 20
     },
     price: {
