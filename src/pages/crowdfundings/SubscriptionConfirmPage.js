@@ -150,13 +150,21 @@ export default class SubscriptionConfirmPage extends PureComponent {
                     ref={ref => this.actionPay = ref}
                     callback={(order) => {
                         crowd_wx_paid_result(order, ret => {
-                            if (ret.code === 0)
-                                global.router.replaceCrowdOrder(order.order_number)
+                            global.router.replaceCrowdOrder(order.order_number)
                         }, err => {
 
                         })
 
                     }}
+                    pay_ways={[
+                        {
+                            icon: Images.wx_pay,
+                            title: I18n.t('pay_weixin'),
+                            memo: I18n.t('pay_weixin_support'),
+                            index: 0
+
+                        }
+                    ]}
                 />
 
                 <Loading ref={ref => this.loading = ref}/>

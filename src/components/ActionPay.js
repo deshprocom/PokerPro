@@ -163,22 +163,6 @@ export default class ActionPay extends Component {
 
     render() {
 
-        const pay_ways = [
-            {
-                icon: require('../../source/buy/weixin.png'),
-                title: I18n.t('pay_weixin'),
-                memo: I18n.t('pay_weixin_support'),
-                index: 0
-
-            },
-            {
-                icon: Images.pay_card,
-                title: I18n.t('pay_card'),
-                memo: I18n.t('pay_tine'),
-                index: 1
-            }
-        ];
-
         return (<Modal
             animationType={"slide"}
             transparent={true}
@@ -191,7 +175,7 @@ export default class ActionPay extends Component {
                 <View style={{height: 1}}/>
                 <ScrollView>
                     {this.orderView()}
-                    {pay_ways.map((item, index) => {
+                    {this.props.pay_ways.map((item, index) => {
                         return this.item(item, index)
                     })}
 
