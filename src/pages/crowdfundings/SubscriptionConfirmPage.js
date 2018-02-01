@@ -19,7 +19,7 @@ import {isWXAppInstalled, showToast, alertOrderChat, isEmptyObject} from '../../
 
 export default class SubscriptionConfirmPage extends PureComponent {
     state = {
-        clickImg: false,
+        clickImg: true,
         order: {},
         isInstall: false
     };
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
         height: 16
     },
     txt: {
-        fontSize: 12,
+        fontSize: 14,
         color: '#444444',
         marginLeft: 10
     }

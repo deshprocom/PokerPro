@@ -136,7 +136,7 @@ export default class CrowItem extends PureComponent {
                         <Text style={styles.txtName}>{race.name}</Text>
                         <Text style={styles.txtTime}>{`${I18n.t('qualification')}：¥${cf_cond}     `}
                             <Text>{this.race_time(race)}</Text></Text>
-                        <Text style={styles.txtTime}>{I18n.t('address')}：{race.location}</Text>
+                        <Text style={styles.txtTime}>{I18n.t('crowAddress')}：{race.location}</Text>
                     </View>
 
                     <View style={styles.separator}/>
@@ -155,8 +155,8 @@ export default class CrowItem extends PureComponent {
 
                 <View style={styles.saleStyle}>
 
-                    {this.renderCrowd(I18n.t('total_sponsorship'), cf_total_money)}
-                    {this.renderCrowd(I18n.t('subscription_amount'), cf_offer_money)}
+                    {this.renderCrowd(I18n.t('total_sponsorship'), this.numberToW(cf_total_money))}
+                    {this.renderCrowd(I18n.t('subscription_amount'), this.numberToW(cf_offer_money))}
                 </View>
             </View>
 
@@ -181,6 +181,14 @@ export default class CrowItem extends PureComponent {
         let num = str.replace(/[^0-9]+/g, '');
 
         return num / 10000 + I18n.t('thousand');
+
+    };
+    numberToW = (str) => {
+        if (str <= 0) {
+            return `0${I18n.t('thousand')}`
+        }
+
+        return str / 10000 + I18n.t('thousand');
 
     };
 
