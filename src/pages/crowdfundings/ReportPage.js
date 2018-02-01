@@ -37,16 +37,14 @@ const styles = StyleSheet.create({
 
     },
     selected: {
-
-        paddingRight: 5,
-        paddingLeft: 5,
-
         alignItems: 'center',
-        marginLeft: 18
+        marginLeft: 18,
+        height: 44
     },
     txtTitle: {
         fontSize: 14,
-        color: Colors._F34
+        color: Colors._F34,
+        marginTop: 14
     },
 
 });
@@ -114,6 +112,7 @@ export default class ReportPage extends PureComponent {
                     color: select ? '#161718' : '#666666',
                     fontSize: select ? 16 : 14
                 }]}>{title}</Text>
+            <View style={{flex: 1}}/>
             {select ? <View style={{backgroundColor: '#161718', width: 50, height: 3, marginTop: 7}}/> : null}
         </TouchableOpacity>
     }
