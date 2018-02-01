@@ -12,7 +12,7 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar} from '../../components';
 import I18n from 'react-native-i18n';
-import {utcDate, isEmptyObject, convertDate} from '../../utils/ComonHelper';
+import {utcDate, isEmptyObject, convertDate, strNotNull} from '../../utils/ComonHelper';
 import {get_crowd_info} from '../../services/CrowdDao';
 import {CrowdStatus} from '../../configs/Status';
 import {LoadingView} from '../../components/load'
@@ -94,9 +94,10 @@ export default class SubscriptionInfoPage extends PureComponent {
         return <View>
             <View style={styles.pageTop}>
                 <Image source={{uri: logo}} style={styles.image}>
-                    <View style={styles.imgRank}>
+                    {strNotNull(ranking) ? <View style={styles.imgRank}>
                         <Text style={styles.rankTxt}>{ranking}名</Text>
-                    </View>
+                    </View> : null}
+
                 </Image>
                 <View style={styles.topRight}>
                     <Text style={styles.name}>{name}</Text>
