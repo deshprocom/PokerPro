@@ -10,7 +10,7 @@ import {strNotNull, moneyFormat, nameRow} from '../../utils/ComonHelper';
 export function listRenderRow(rowData, sectionID, rowID, isSearch) {
     const {avatar, country, dpi_total_earning, dpi_total_score, id, memo, name, rank} = rowData;
     return (<TouchableOpacity style={styles.row_view}
-                              onPress={() => router.toPokerRankPage(this.props, id)}>
+                              onPress={() => router.toPokerRankPage( id)}>
         <View style={{flexDirection: 'row'}}>
 
             {isSearch ? null : <View style={[{width: 53}, styles.list_row]}>

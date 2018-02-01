@@ -18,14 +18,14 @@ import I18n from 'react-native-i18n';
 export const footer = (crowd, type, player, race) => {
 
     var status = crowd.race.status;
-    return <View style={[styles.footer, {justifyContent:_justifyContent(status)}]}>
+    return <View style={[styles.footer, {justifyContent: _justifyContent(status)}]}>
         <TouchableOpacity
             activeOpacity={1}
             onPress={() => {
                 global.router.toReportPage(crowd)
 
             }}
-            style={[styles.btnLeft,_width(status)]}>
+            style={[styles.btnLeft, _width(status)]}>
             <Image
                 style={{height: 12, width: 10, marginRight: 5}}
                 source={Images.black_fire}/>
@@ -36,12 +36,12 @@ export const footer = (crowd, type, player, race) => {
         {status === 'go_ahead' ? null :
             <TouchableOpacity
                 onPress={() => {
-                if(type === 'crowd_detail'){
-                    global.router.toSelectPlayer(crowd);
-                }else {
-                    global.router.toSubscriptionPage(crowd.id,player,race)
-                }
-            }}
+                    if (type === 'crowd_detail') {
+                        global.router.toSelectPlayer(crowd);
+                    } else {
+                        global.router.toSubscriptionPage(crowd.id, player, race)
+                    }
+                }}
                 style={styles.btnRight}>
                 <Text style={styles.txtRight}>{I18n.t('subscribe')}</Text>
             </TouchableOpacity>
@@ -50,6 +50,7 @@ export const footer = (crowd, type, player, race) => {
     </View>
 
 };
+
 export function _width(status) {
     if (status === 'go_ahead') {
         return {
@@ -67,6 +68,7 @@ export function _width(status) {
         }
     }
 }
+
 export function _justifyContent(status) {
 
     if (status === 'go_ahead') {

@@ -56,7 +56,7 @@ export default class RaceResultList extends Component {
                 style={styles.txtInfo}>{item.ranking}</Text>
             <Text
                 onPress={() => {
-                    router.toPokerRankPage(this.props, player.player_id)
+                    router.toPokerRankPage( player.player_id)
                 }}
                 testID={"txt_name_" + index}
                 style={styles.txtPerson}>{player.name}</Text>
