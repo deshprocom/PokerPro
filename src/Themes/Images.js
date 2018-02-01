@@ -274,7 +274,7 @@ const images = {
     listLike: require('../../source/comment/listLike.png'),
     black_fire: require('../../source/crowd/black_fire.png'),
     poker_b: require('../../source/navigation/poker_b.png'),
-    poker_P:require('../../source/navigation/poker_P.png'),
+    poker_P: require('../../source/navigation/poker_P.png'),
     crowd: require('../../source/navigation/crowd.png'),
     crowd_banner: require('../../source/crowd/crowd_banner.png'),
     clickImg: require('../../source/crowd/clickImg.png'),
@@ -282,7 +282,8 @@ const images = {
     crowd_close: require('../../source/crowd/crowd_close.png'),
     crowd_starting: require('../../source/crowd/crowd_starting.png'),
     timely_matchRed: require('../../source/crowd/timely_matchRed.png'),
-    pay_help: require('../../source/mall/pay_help.png')
+    pay_help: require('../../source/mall/pay_help.png'),
+    wx_pay: require('../../source/buy/weixin.png')
 
 
 };

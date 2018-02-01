@@ -156,6 +156,15 @@ export default class SubscriptionConfirmPage extends PureComponent {
                         })
 
                     }}
+                    pay_ways={[
+                        {
+                            icon: Images.wx_pay,
+                            title: I18n.t('pay_weixin'),
+                            memo: I18n.t('pay_weixin_support'),
+                            index: 0
+
+                        }
+                    ]}
                 />
 
                 <Loading ref={ref => this.loading = ref}/>
