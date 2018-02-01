@@ -38,7 +38,7 @@ export default class Crowdfunding extends PureComponent {
             separator={() => <View style={{height: 10, backgroundColor: Colors._ECE}}>
             </View>}
             emptyView={() => {
-                return <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
+                return <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                     <Text>暂无众筹</Text>
 
                 </View>
@@ -59,6 +59,7 @@ export default class Crowdfunding extends PureComponent {
         crowd_list({page, page_size: 20}, data => {
             startFetch(data, 2)
         }, err => {
+            abortFetch()
         })
 
     }
