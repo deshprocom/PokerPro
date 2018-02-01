@@ -126,11 +126,17 @@ export default class IntroRecord extends PureComponent {
             return <MarkdownPlat markdownStr={description}/>
         } else {
 
-            return <FlatList
-                data={race_rank}
-                keyExtractor={(item, index) => `record${index}`}
-                renderItem={this.renderItem}
-            />
+            if (race_rank.length > 0)
+                return <FlatList
+                    data={race_rank}
+                    keyExtractor={(item, index) => `record${index}`}
+                    renderItem={this.renderItem}
+                />
+            else
+                return <View style={{alignItems: 'center'}}>
+                    <Text>等待更新</Text>
+                </View>
+
         }
     };
 

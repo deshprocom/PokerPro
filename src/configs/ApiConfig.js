@@ -136,7 +136,7 @@ export default {
     crowd_order_wx: crowd_order_wx,//对众筹商品调起微信支付
     crowd_wx_result: crowd_wx_result,//获取众筹的微信支付结果
     timely_match: timely_match,//及时赛报
-    report_player:report_player,//牌手赛报
+    player_match: player_match,//牌手赛报
 
 }
 
@@ -151,10 +151,12 @@ function getUserId() {
 const page_size = 10;
 
 
-function report_player(body) {
-    const {crowdfunding_id,crowdfunding_player_id,page} = body;
-    return `crowdfundings/${crowdfunding_id}/players/${crowdfunding_player_id}/reports`
+function player_match(body) {
+    const {cf_id, cf_player_id} = body;
+
+    return `crowdfundings/${cf_id}/players/${cf_player_id}/reports`
 }
+
 function crowd_wx_result(body) {
     const {order_number} = body;
     return `crowdfunding_orders/${order_number}/wx_paid_result`
@@ -193,8 +195,8 @@ function poker_info(body) {
 }
 
 function poker_list(body) {
-    const {id, page} = body;
-    return `crowdfundings/${id}/players?page=${page}&page_size=${page_size}`;
+    const {id} = body;
+    return `crowdfundings/${id}/players`;
 }
 
 function crowd_detail(body) {
