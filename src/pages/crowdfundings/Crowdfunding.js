@@ -19,22 +19,18 @@ export default class Crowdfunding extends PureComponent {
 
 
     render() {
-        return <View style={ApplicationStyles.bgContainer}>
-            {this.renderFlatList()}
-        </View>
-    }
-
-    renderFlatList = () => {
         return <UltimateFlatList
             header={() => <Carousel/>}
             ref={(ref) => this.listView = ref}
             onFetch={this.onFetch}
+            item={this.renderItem}
+            arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
             keyExtractor={(item, index) => `crowd${index}`}  //this is required when you are using FlatList
-            item={this.renderItem}  //this takes two params (item, index)
             refreshableTitlePull={I18n.t('pull_refresh')}
             refreshableTitleRelease={I18n.t('release_refresh')}
             dateTitle={I18n.t('last_refresh')}
             allLoadedText={I18n.t('no_more')}
+            waitingSpinnerText={I18n.t('loading')}
             separator={() => <View style={{height: 10, backgroundColor: Colors._ECE}}>
             </View>}
             emptyView={() => {
@@ -43,10 +39,9 @@ export default class Crowdfunding extends PureComponent {
 
                 </View>
             }}
-            waitingSpinnerText={I18n.t('loading')}
-        />
 
-    };
+        />
+    }
 
 
     renderItem = (item, index) => {

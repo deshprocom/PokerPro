@@ -66,10 +66,13 @@ class Personal extends Component {
             <View style={{height: 3, width: '100%'}}/>
             {this._item(stylesP.item_view, Images.crowd, stylesP.img_dy,
                 '赞助记录', () => {
-                    global.router.toRecordList()
+                    if (isEmptyObject(global.login_user))
+                        global.router.toLoginFirstPage()
+                    else
+                        global.router.toRecordList()
 
                 })}
-            <View style={{height: 1, marginLeft:69}}/>
+            <View style={{height: 1, marginLeft: 69}}/>
             {this._item(stylesP.item_view, Images.poker_P, stylesP.img_dy,
                 '我的扑客币', () => {
                     global.router.toPokerB()
@@ -84,7 +87,7 @@ class Personal extends Component {
                     router.toBusinessPage()
 
                 })}
-            <View style={{height: 1, marginLeft:69}}/>
+            <View style={{height: 1, marginLeft: 69}}/>
             {this._item(stylesP.item_view, Images.settings, {width: 23, height: 23, marginLeft: 20},
                 I18n.t('setting'), () => {
                     router.toSettingPage()
@@ -112,7 +115,12 @@ class Personal extends Component {
             <Text style={stylesP.personalText}>{title}</Text>
             <View style={{flex: 1}}/>
             {title === '我的扑客币' ? <Text
-                    style={{fontSize: 16, color: '#AAAAAA',marginRight:12,lineHeight:22}}>{(profile.total_poker_coins === '0.0' || profile.total_poker_coins === '0') ? '0.00' : profile.total_poker_coins}</Text>
+                    style={{
+                        fontSize: 16,
+                        color: '#AAAAAA',
+                        marginRight: 12,
+                        lineHeight: 22
+                    }}>{(profile.total_poker_coins === '0.0' || profile.total_poker_coins === '0') ? '0.00' : profile.total_poker_coins}</Text>
                 : null}
             <Image style={stylesP.personalImg} source={Images.is}/>
         </TouchableOpacity>
