@@ -28,7 +28,7 @@ export default class PlayerItem extends PureComponent {
                               onPress={()=>{
                 global.router.toPokerInfo(crowd,player,race)
             }}>
-                <Image style={styles.itemImg} source={{uri:logo.url}}/>
+                <Image style={styles.itemImg} source={{uri:logo}}/>
 
                 <View style={{flex:1,marginLeft:16,marginRight:17,alignItems:'center',marginTop:3}}>
                     <View style={styles.content}>
