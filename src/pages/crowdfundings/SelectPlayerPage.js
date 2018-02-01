@@ -25,8 +25,8 @@ export default class SelectPlayerPage extends Component {
 
     componentDidMount() {
         const {crowd} = this.props.params;
-        poker_list({id: crowd.id, page: 1}, data => {
-            console.log("pokerList:", data);
+        poker_list({id: crowd.id, page: 1,page_size:100}, data => {
+
             this.setState({
                 pokerList: data
             })

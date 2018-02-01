@@ -188,8 +188,8 @@ function poker_info(body) {
 }
 
 function poker_list(body) {
-    const {id, page} = body;
-    return `crowdfundings/${id}/players?page=${page}&page_size=${page_size}`;
+    const {id} = body;
+    return `crowdfundings/${id}/players`;
 }
 
 function crowd_detail(body) {
