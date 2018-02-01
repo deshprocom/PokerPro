@@ -84,7 +84,8 @@ export default class ReportTimely extends PureComponent {
                 paddingTop: 9,
                 backgroundColor: 'white',
                 marginLeft: 17,
-                marginRight: 17
+                marginRight: 17,
+                marginBottom: 10
             }}>
                 <Image
                     style={{height: 16, width: 16, marginRight: 5}}
