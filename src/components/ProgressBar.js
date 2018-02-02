@@ -26,7 +26,6 @@ let styles = StyleSheet.create({
         height: 5
     },
     percent: {
-        zIndex: 3,
         position: 'absolute',
         backgroundColor: 'white',
         borderRadius: 5,
