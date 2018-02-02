@@ -70,9 +70,10 @@ export default class ProgressBar extends Component {
         });
 
         let marginFill = fillWidth;
-        if(JSON.stringify(fillWidth)>100){
-            marginFill =  JSON.stringify(fillWidth) -45;
+        if (JSON.stringify(fillWidth) > 100) {
+            marginFill = JSON.stringify(fillWidth) - 45;
         }
+
 
         return (
             <View style={{
@@ -83,13 +84,31 @@ export default class ProgressBar extends Component {
                     <Animated.View style={[styles.fill, this.props.fillStyle, {width: fillWidth}]}/>
                 </View>
                 <Animated.View
-                    style={[styles.percent, {marginLeft:marginFill}]}>
-                    <Text style={styles.txt_per}>{toDecimal(this.props.initialProgress)}%</Text>
+                    style={[styles.percent, {marginLeft: marginFill}]}>
+                    <Text style={styles.txt_per}>{this.numBit()}%</Text>
                 </Animated.View>
             </View>
 
         );
     }
+
+    numBit = () => {
+        let progress = this.props.initialProgress * 100;
+
+        if (progress > 0) {
+            if (String(progress).length < 4)
+                return progress;
+            else
+                return String(progress).substring(0, 4)
+        } else {
+            if (String(progress).length < 5)
+                return progress;
+            else
+                return String(progress).substring(0, 4)
+        }
+
+    }
+
 
     update = () => {
         Animated.timing(this.state.progress, {

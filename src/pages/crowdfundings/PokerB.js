@@ -71,11 +71,8 @@ export default class PokerB extends PureComponent {
     }
 
     render() {
-        const {total_poker_coins} = this.state.pokerB;
-        var detail = [
-            {"memo": "兑换商品", "created_at": 1517222746, "number": "1.555"},
-            {"memo": "众筹成功", "created_at": 1517222746, "number": "-7777"}
-        ];
+        const {total_poker_coins,detail} = this.state.pokerB;
+
         return <View style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors.bg_09}}
