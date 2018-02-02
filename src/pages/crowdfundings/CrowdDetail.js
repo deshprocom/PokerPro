@@ -14,7 +14,7 @@ import Navbar from './Navbar';
 import DetailChild from './DetailChild';
 import {crowd_detail} from '../../services/CrowdDao'
 import I18n from 'react-native-i18n';
-import {getVerInfo, isEmptyObject} from '../../utils/ComonHelper';
+import {isEmptyObject} from '../../utils/ComonHelper';
 
 export const footer = (crowd, type, player, race) => {
     console.log("this:", this)
@@ -40,10 +40,15 @@ export const footer = (crowd, type, player, race) => {
                     if (type === 'crowd_detail') {
                         global.router.toSelectPlayer(crowd);
                     } else {
-                        global.router.toVerifiedPage(verified => {
-                            console.log('实名信息：', verified)
-                            global.router.toSubscriptionPage(crowd.id, player, race,verified)
-                        });
+                        if (isEmptyObject(global.login_user)) {
+                            global.router.toLoginFirstPage()
+                        } else {
+                            global.router.toVerifiedPage(verified => {
+                                console.log('实名信息：', verified)
+                                global.router.toSubscriptionPage(crowd.id, player, race, verified)
+                            });
+                        }
+
 
                     }
                 }}
