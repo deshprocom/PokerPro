@@ -38,7 +38,7 @@ export default class SubscriptionInfoPage extends PureComponent {
         if (record_status === CrowdStatus.FAILED) {
             return (
                 <View style={styles.result}>
-                    <Text style={styles.resultTxt}>23234</Text>
+                    <Text style={styles.resultTxt}>晋级失败</Text>
                 </View>
             )
         } else if (record_status === CrowdStatus.UNPUBLISHED) {
@@ -46,11 +46,14 @@ export default class SubscriptionInfoPage extends PureComponent {
         } else {
             return (
                 <View style={styles.result2}>
-                    <Text style={styles.resultTxt2}>晋级成功，获得扑客币20,000</Text>
+                    <Text style={styles.resultTxt2} >晋级成功!{'\n'}</Text>
 
-                    <View style={styles.look}>
+                    <TouchableOpacity style={styles.look}
+                    onPress={()=>{
+                        global.router.toPokerB()
+                    }}>
                         <Text style={styles.lookTxt}>{I18n.t('look_detail')}</Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
             )
 
@@ -309,7 +312,8 @@ const styles = StyleSheet.create({
     resultTxt2: {
         fontSize: 14,
         color: '#F34A4A',
-        marginRight: 11
+        marginRight: 11,
+        lineHeight:20
     },
     look: {
         width: 58,
