@@ -14,15 +14,16 @@ import Navbar from './Navbar';
 import DetailChild from './DetailChild';
 import {crowd_detail} from '../../services/CrowdDao'
 import I18n from 'react-native-i18n';
+import {getVerInfo, isEmptyObject} from '../../utils/ComonHelper';
 
 export const footer = (crowd, type, player, race) => {
-    console.log("this:",this)
+    console.log("this:", this)
     var status = crowd.race.status;
     return <View style={[styles.footer, {justifyContent: _justifyContent(status)}]}>
         <TouchableOpacity
             activeOpacity={1}
             onPress={() => {
-                global.router.toReportPage(crowd,player)
+                global.router.toReportPage(crowd, player)
 
             }}
             style={[styles.btnLeft, _width(status)]}>
@@ -39,7 +40,11 @@ export const footer = (crowd, type, player, race) => {
                     if (type === 'crowd_detail') {
                         global.router.toSelectPlayer(crowd);
                     } else {
-                        global.router.toSubscriptionPage(crowd.id, player, race)
+                        global.router.toVerifiedPage(verified => {
+                            console.log('实名信息：', verified)
+                            global.router.toSubscriptionPage(crowd.id, player, race,verified)
+                        });
+
                     }
                 }}
                 style={styles.btnRight}>
@@ -99,7 +104,6 @@ export default class CrowdDetail extends Component {
 
         })
     };
-
 
 
     render() {

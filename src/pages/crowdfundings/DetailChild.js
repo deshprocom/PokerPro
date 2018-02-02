@@ -102,7 +102,7 @@ export default class DetailChild extends Component {
         let offsetY = event.nativeEvent.contentOffset.y;
 
         this.setState({
-            floatTabView: offsetY >= offsetHeight
+            floatTabView: offsetY > offsetHeight
         })
     };
 
@@ -120,14 +120,15 @@ export default class DetailChild extends Component {
 
     };
 
+
     render() {
-        const {master_image, race, cf_total_money, cf_offer_money, mark_desc, cf_cond, categories,player_count} = this.props.info;
+        const {master_image, race, cf_total_money, cf_offer_money, mark_desc, cf_cond, categories, player_count} = this.props.info;
         let percent = 0;
         if (cf_total_money !== 0)
             percent = cf_offer_money / cf_total_money;
+
         return <View style={{backgroundColor: 'white'}}>
-            {this.state.floatTabView && categories.length > 0 ?
-                this.renderTabView(categories, styles.tabFloatView) : null}
+
             <ScrollView
                 scrollEventThrottle={16}
                 onScroll={this.onScroll}>
@@ -139,15 +140,16 @@ export default class DetailChild extends Component {
 
                         <TouchableOpacity style={styles.btnReport}
                                           onPress={() => {
-                                             global.router.toReportPage(this.props.info)
+                                              global.router.toReportPage(this.props.info)
 
-                                           }}>
-                            <Image source={Images.timely_matchRed} style={{width:13 ,height:13}}/>
+                                          }}>
+                            <Image source={Images.timely_matchRed} style={{width: 13, height: 13}}/>
                             <Text style={styles.txtReport}>{I18n.t('timely_match')}</Text>
                         </TouchableOpacity>
                     </View>
 
-                    <Text style={styles.txtTime}>{`${I18n.t('qualification')}：¥${cf_cond}  ${this.race_time(race)}`}</Text>
+                    <Text
+                        style={styles.txtTime}>{`${I18n.t('qualification')}：¥${cf_cond}  ${this.race_time(race)}`}</Text>
                     <Text style={styles.txtTime}>{I18n.t('crowAddress')}：{race.location}</Text>
                     <ProgressBar
                         backgroundStyle={{backgroundColor: Colors._ECE, borderRadius: 2}}
@@ -174,6 +176,9 @@ export default class DetailChild extends Component {
                 <View style={{height: 100}}/>
 
             </ScrollView>
+
+            {this.state.floatTabView && !isEmptyObject(categories) ?
+                this.renderTabView(categories, styles.tabFloatView) : null}
         </View>
 
 
