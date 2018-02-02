@@ -46,7 +46,7 @@ export default class SubscriptionInfoPage extends PureComponent {
         } else {
             return (
                 <View style={styles.result2}>
-                    <Text style={styles.resultTxt2} >晋级成功!{'\n'}</Text>
+                    <Text style={styles.resultTxt2}>晋级成功!{'\n'}获得扑客币20,000</Text>
 
                     <TouchableOpacity style={styles.look}
                     onPress={()=>{
@@ -147,12 +147,12 @@ export default class SubscriptionInfoPage extends PureComponent {
             </View>
 
             <View style={{marginLeft: 17, marginRight: 17, marginTop: 17}}>
-                <Text style={styles.readTxt1}>我是投资人本人xxx，身份证号码xxxxxxxxxxxx，我已认真阅读并同意
+                <Text style={styles.readTxt1}>我是投资人本人<Text style={{textDecorationLine:'underline'}}>{name}</Text>，身份证号码xxxxxxxxxxxx，我已认真阅读并同意
                     <Text style={{color: '#438EE6'}}
                           onPress={() => {
                               global.router.toRiskWarningPage()
                           }}>《风险提示》</Text>
-                    及其他相关条款和协议，自愿认购xxxxxx赛事众筹项目，并支付众筹款项
+                    及其他相关条款和协议，自愿认购"{race.name}"赛事众筹项目，并支付众筹款项
                     <Text style={{color: Colors._F34}}>{total_money}元</Text>。</Text>
 
             </View>
