@@ -84,22 +84,23 @@ export default class Router {
         })
     }
 
-    toSubscriptionConfirmPage(order_info) {
+    toSubscriptionConfirmPage(order_info,verified) {
         this.stackPush({
             name: 'SubscriptionConfirmPage',
             params: {
-                order_info
+                order_info,verified
             }
         })
     }
 
-    toSubscriptionPage(crowd_id, player, race) {
+    toSubscriptionPage(crowd_id, player, race,verified) {
         this.stackPush({
             name: 'SubscriptionPage',
             params: {
                 crowd_id: crowd_id,
                 player: player,
-                race: race
+                race: race,
+                verified
             }
 
         })

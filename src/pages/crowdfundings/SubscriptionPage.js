@@ -24,7 +24,7 @@ export default class SubscriptionPage extends PureComponent {
 
 
     buyQuantity = (player) => {
-        let {limit_buy, stock_number} =player;
+        let {limit_buy, stock_number} = player;
         let {number} = this.state;
         const styleCutDisable = {
             backgroundColor: '#FBFAFA'
@@ -55,7 +55,7 @@ export default class SubscriptionPage extends PureComponent {
                     style={styles.buyTouch}
                     onPress={() => {
 
-                        if (number < limit_buy && number>=1) {
+                        if (number < limit_buy && number >= 1) {
                             this.setState({
                                 number: ++number
                             })
@@ -71,11 +71,12 @@ export default class SubscriptionPage extends PureComponent {
     };
 
     render() {
-        const {player} =  this.props.params;
-        const {sell_stock, name, logo, stock_unit_price, limit_buy, cf_player_id} =player;
-        console.log(player)
-        let order ={
-            number:this.state.number,cf_player_id:cf_player_id,stock_unit_price:stock_unit_price
+        const {player, race, verified} = this.props.params;
+        const {sell_stock, name, logo, stock_unit_price, limit_buy, cf_player_id} = player;
+
+        let order = {
+            number: this.state.number, cf_player_id: cf_player_id, stock_unit_price: stock_unit_price,
+            race_name: race.name
         };
         return (
             <View style={ApplicationStyles.bgContainer}>
@@ -89,12 +90,13 @@ export default class SubscriptionPage extends PureComponent {
                     leftBtnPress={() => router.pop()}/>
 
                 <View style={styles.itemPage}>
-                    <Image style={{width:95,height:120,marginLeft:19}} source={{uri:isEmptyObject(logo)?'':logo}}/>
+                    <Image style={{width: 95, height: 120, marginLeft: 19}}
+                           source={{uri: isEmptyObject(logo) ? '' : logo}}/>
                     <View style={styles.pageRight}>
                         <Text style={styles.name}>{name}</Text>
-                        <Text style={styles.content}>{I18n.t('join_race')}：{this.props.params.race.name}</Text>
-                        <View style={{flex:1}}/>
-                        <View style={{flexDirection:'row',alignItems:'center',marginBottom:5}}>
+                        <Text style={styles.content}>{I18n.t('join_race')}：{race.name}</Text>
+                        <View style={{flex: 1}}/>
+                        <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
                             <Text style={styles.priceTxt}>{I18n.t('part_price')}：</Text>
                             <Text style={styles.price}>{stock_unit_price}元</Text>
                         </View>
@@ -104,7 +106,7 @@ export default class SubscriptionPage extends PureComponent {
                 <View style={styles.buyView}>
                     <Text style={styles.txt1}>{I18n.t('purchase_copies')}（{I18n.t('limit_buy')}</Text><Text
                     style={styles.txt2}>{limit_buy}</Text><Text style={styles.txt1}>{I18n.t('parts')}）</Text>
-                    <View style={{flex:1}}/>
+                    <View style={{flex: 1}}/>
                     {this.buyQuantity(player)}
                 </View>
                 <View style={styles.intro}>
@@ -114,6 +116,7 @@ export default class SubscriptionPage extends PureComponent {
 
                 <SubscriptionBottom
                     order={order}
+                    verified={verified}
                 />
             </View>
 

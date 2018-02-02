@@ -75,7 +75,7 @@ export function toDecimal(x) {
     if (isNaN(f)) {
         return;
     }
-    f = Math.round(x*100)/100;
+    f = Math.round(x * 100) / 100;
     return f;
 }
 

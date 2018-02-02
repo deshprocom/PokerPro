@@ -74,9 +74,11 @@ export default class SubscriptionConfirmPage extends PureComponent {
 
     render() {
 
-        const {order_info} = this.props.params;
-        const {number, player_id, stock_unit_price} = order_info;
+        const {order_info, verified} = this.props.params;
+        const {number, player_id, stock_unit_price, race_name} = order_info;
+        console.log(order_info)
         let sumMoney = this.total_prize(number, stock_unit_price);
+        const {cert_no, real_name} = verified;
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
@@ -114,12 +116,12 @@ export default class SubscriptionConfirmPage extends PureComponent {
 
                 <View style={styles.read}>
                     <View style={{marginLeft: 17, marginRight: 17}}>
-                        <Text style={styles.readTxt1}>我是投资人本人xxx，身份证号码xxxxxxxxxxxxxxxxxxxx，我已认真阅读并同意
+                        <Text style={styles.readTxt1}>我是投资人本人{real_name}，身份证号码{cert_no}，我已认真阅读并同意
                             <Text style={{color: '#438EE6'}}
                                   onPress={() => {
                                       global.router.toRiskWarningPage(sumMoney, order_info, this.state.clickImg, this.state.order)
                                   }}>《风险提示》</Text>
-                            及其他相关条款和协议，自愿认购xxxxxx赛事众筹项目，并支付众筹款项
+                            及其他相关条款和协议，自愿认购{race_name}众筹项目，并支付众筹款项
                             <Text style={{color: Colors._F34}}>{sumMoney}元</Text>。</Text>
 
                     </View>

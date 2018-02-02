@@ -87,13 +87,13 @@ export default class VerifiedPage extends Component {
 
     setDefault = (body) => {
         const {backRefresh} = this.props.params;
-        if (backRefresh)
-            backRefresh(body);
+
         defaultVerified({
             cert_type: body.cert_type,
             extra_id: body.id
         }, data => {
             router.pop();
+            backRefresh && backRefresh(body);
         }, err => {
 
         })
