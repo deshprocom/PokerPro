@@ -110,8 +110,7 @@ export default class Router {
             name: 'PokerInfo',
             params: {
                 crowd,
-                player,
-                race
+                player
             }
         })
     }

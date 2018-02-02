@@ -107,10 +107,6 @@ export default class SubscriptionPage extends PureComponent {
                     <View style={{flex:1}}/>
                     {this.buyQuantity(player)}
                 </View>
-                <View style={styles.intro}>
-                    <Text style={styles.txt}>{I18n.t('subscription_des')}</Text>
-                    <Text style={styles.txt}>{I18n.t('subscription_intro')}</Text>
-                </View>
 
                 <SubscriptionBottom
                     order={order}
