@@ -32,9 +32,10 @@ export default class SubscriptionConfirmPage extends PureComponent {
         });
     }
 
-    submitBtn = (order_info) => {
-
+    submitBtn = () => {
+        const {order_info, verified} = this.props.params;
         const {number, stock_unit_price} = order_info;
+        order_info.user_extra_id = verified.id;
         if (this.state.clickImg) {
 
             this.loading.open();
@@ -145,7 +146,7 @@ export default class SubscriptionConfirmPage extends PureComponent {
                 </View>
 
                 <OrderBottom
-                    submitBtn={() => this.submitBtn(order_info)}
+                    submitBtn={() => this.submitBtn()}
                     sumMoney={sumMoney}/>
 
                 <ActionPay
