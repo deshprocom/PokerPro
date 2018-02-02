@@ -48,10 +48,11 @@ export default class SubscriptionInfoPage extends PureComponent {
                 <View style={styles.result2}>
                     <Text style={styles.resultTxt2}>晋级成功!{'\n'}获得扑客币{this.state.crowd_info.order_info.poker_coins}</Text>
 
+
                     <TouchableOpacity style={styles.look}
-                    onPress={()=>{
-                        global.router.toPokerB()
-                    }}>
+                                      onPress={() => {
+                                          global.router.toPokerB()
+                                      }}>
                         <Text style={styles.lookTxt}>{I18n.t('look_detail')}</Text>
                     </TouchableOpacity>
                 </View>
@@ -86,7 +87,8 @@ export default class SubscriptionInfoPage extends PureComponent {
 
     content = () => {
         const {
-            crowdfunding, crowdfunding_player, order_info, race
+            crowdfunding, crowdfunding_player, order_info, race,
+            user_extra
         } = this.state.crowd_info;
         const {name, logo, sell_stock, stock_number, ranking} = crowdfunding_player;
         const {publish_date, award_date} = crowdfunding;
@@ -146,8 +148,9 @@ export default class SubscriptionInfoPage extends PureComponent {
                 <Text style={styles.price_per}>{I18n.t('payment')}</Text>
             </View>
 
-            <View style={{marginLeft: 17, marginRight: 17, marginTop: 17}}>
-                <Text style={styles.readTxt1}>我是投资人本人<Text style={{textDecorationLine:'underline'}}></Text>，身份证号码xxxxxxxxxxxx，我已认真阅读并同意
+
+            {isEmptyObject(user_extra) ? null : <View style={{marginLeft: 17, marginRight: 17, marginTop: 17}}>
+                <Text style={styles.readTxt1}>我是投资人本人<Text style={{textDecorationLine:'underline'}}>{user_extra.real_name}</Text>，身份证号码{user_extra.cert_no}，我已认真阅读并同意
                     <Text style={{color: '#438EE6'}}
                           onPress={() => {
                               global.router.toRiskWarningPage()
@@ -155,9 +158,12 @@ export default class SubscriptionInfoPage extends PureComponent {
                     及其他相关条款和协议，自愿认购"{race.name}"赛事众筹项目，并支付众筹款项
                     <Text style={{color: Colors._F34}}>{total_money}元</Text>。</Text>
 
-            </View>
+            </View>}
+
         </View>
     }
+
+
 }
 
 
@@ -313,7 +319,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#F34A4A',
         marginRight: 11,
-        lineHeight:20
+        lineHeight: 20
     },
     look: {
         width: 58,

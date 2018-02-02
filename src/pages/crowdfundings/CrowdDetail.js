@@ -14,7 +14,7 @@ import Navbar from './Navbar';
 import DetailChild from './DetailChild';
 import {crowd_detail} from '../../services/CrowdDao'
 import I18n from 'react-native-i18n';
-import {isEmptyObject} from '../../utils/ComonHelper'
+import {getVerInfo,isEmptyObject} from '../../utils/ComonHelper';
 
 export const footer = (crowd, type, player) => {
     var stockPer = (!isEmptyObject(player) && player.sell_stock === player.stock_number);
@@ -23,7 +23,7 @@ export const footer = (crowd, type, player) => {
         <TouchableOpacity
             activeOpacity={1}
             onPress={() => {
-                global.router.toReportPage(crowd,player)
+                global.router.toReportPage(crowd, player)
 
             }}
             style={[styles.btnLeft, _width(status)]}>
@@ -46,6 +46,11 @@ export const footer = (crowd, type, player) => {
                     } else {
                         global.router.toSubscriptionPage(crowd.id, player, crowd.race)
                     }
+                        global.router.toVerifiedPage(verified => {
+                            console.log('实名信息：', verified)
+                            global.router.toSubscriptionPage(crowd.id, player, crowd.race,verified)
+                        });
+
                     }
 
                 }}
@@ -118,7 +123,6 @@ export const footer = (crowd, type, player) => {
                     url={url}/>
                 <DetailChild
                     info={crowd}/>
-
                 {crowd.race.status === 'ended' ? null : footer(crowd, 'crowd_detail', null)}
 
             </View>
