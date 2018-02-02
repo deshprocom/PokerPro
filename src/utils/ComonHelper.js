@@ -71,7 +71,7 @@ export function getFileMine(filePath) {
 
 //取小数点俩位
 export function toDecimal(x) {
-    var f = parseFloat(x);
+    let f = parseFloat(x);
     if (isNaN(f)) {
         return;
     }
