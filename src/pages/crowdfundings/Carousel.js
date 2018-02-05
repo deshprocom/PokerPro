@@ -7,7 +7,7 @@
 import React, {PureComponent} from 'react';
 import {
     TouchableOpacity, View, TextInput,
-    StyleSheet, Image, Text
+    StyleSheet, Image, Text,StatusBar
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import Swiper from 'react-native-swiper';
@@ -35,6 +35,7 @@ export default class Carousel extends PureComponent {
         if (!isEmptyObject(banners) && banners.length > 0)
             return (
                 <View style={{height: 200, marginBottom: 10}}>
+                    <StatusBar barStyle={'light-content'}/>
                     <Swiper
                         activeDotStyle={stylesM.activeDot}
                         dotStyle={stylesM.dot}
