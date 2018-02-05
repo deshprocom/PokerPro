@@ -14,25 +14,36 @@ import {Colors, Images, ApplicationStyles} from '../../Themes';
 import {showToast} from '../../utils/ComonHelper';
 import I18n from 'react-native-i18n';
 import SubscriptionConfirmPage from './SubscriptionConfirmPage';
-import {crowd_order} from '../../services/CrowdDao';
+import {user_crowd_count} from '../../services/CrowdDao';
 import {isEmptyObject} from '../../utils/ComonHelper';
 
 export default class SubscriptionPage extends PureComponent {
     state = {
-        number: 1
+        number: 1,
+        order_count: 0
     };
+
+    componentDidMount() {
+        const {player, crowd} = this.props.params;
+
+        user_crowd_count({crowdfunding_id: crowd.id, crowdfunding_player_id: player.cf_player_id},
+            data => {
+                this.setState(data)
+            }, err => {
+            })
+    }
 
 
     buyQuantity = (player) => {
         let {limit_buy, stock_number} = player;
-        let {number} = this.state;
+        let {number, order_count} = this.state;
         const styleCutDisable = {
             backgroundColor: '#FBFAFA'
         };
         const styleCut = {
             backgroundColor: '#F6F5F5'
         };
-
+        let limit = limit_buy - order_count;
 
         return (
             <View style={styles.quantity}>
@@ -55,12 +66,15 @@ export default class SubscriptionPage extends PureComponent {
                     style={styles.buyTouch}
                     onPress={() => {
 
-                        if (number < limit_buy && number >= 1) {
+                        if (number < limit && number >= 1) {
                             this.setState({
                                 number: ++number
                             })
                         } else {
-                            showToast(`限购${limit_buy}份`)
+                            if (limit > 0)
+                                showToast(`限购${limit}份`);
+                            else
+                                showToast('超出限购份额')
                         }
 
                     }}>
@@ -79,6 +93,8 @@ export default class SubscriptionPage extends PureComponent {
             number: this.state.number, cf_player_id: cf_player_id, stock_unit_price: stock_unit_price,
             race_name: isEmptyObject(crowd.race) ? '' : crowd.race.name
         };
+
+        let limit = limit_buy - this.state.order_count;
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
@@ -106,7 +122,7 @@ export default class SubscriptionPage extends PureComponent {
 
                 <View style={styles.buyView}>
                     <Text style={styles.txt1}>{I18n.t('purchase_copies')}（{I18n.t('limit_buy')}</Text><Text
-                    style={styles.txt2}>{limit_buy}</Text><Text style={styles.txt1}>{I18n.t('parts')}）</Text>
+                    style={styles.txt2}>{limit}</Text><Text style={styles.txt1}>{I18n.t('parts')}）</Text>
                     <View style={{flex: 1}}/>
                     {this.buyQuantity(player)}
                 </View>

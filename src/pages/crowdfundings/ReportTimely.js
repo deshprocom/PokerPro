@@ -13,7 +13,7 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
 import I18n from 'react-native-i18n';
 import {timely_match} from '../../services/CrowdDao';
-import {utcDate, convertDate} from '../../utils/ComonHelper';
+import {utcDate, convertDate, isEmptyObject} from '../../utils/ComonHelper';
 import _ from 'lodash';
 import {MarkdownPlat} from '../../components'
 
@@ -73,7 +73,7 @@ export default class ReportTimely extends PureComponent {
     headerRace = () => {
         const {race} = this.props.crowd;
         return <View>
-            <View style={{height:5,backgroundColor:'#ECECEE'}}/>
+            <View style={{height: 5, backgroundColor: '#ECECEE'}}/>
             <View style={styles.race}>
                 <Text style={styles.txtName}>{race.name}</Text>
                 <Text style={styles.txtTime}>{this.race_time(race)}</Text>
@@ -165,7 +165,11 @@ export default class ReportTimely extends PureComponent {
             </View>
 
             <View style={{marginLeft: 17, flex: 1}}>
-                <Text style={{fontSize: 14, color: Colors._F34, marginTop: 8}}>{race.name}</Text>
+                <Text style={{
+                    fontSize: 14,
+                    color: Colors._F34,
+                    marginTop: 8
+                }}>{isEmptyObject(items) ? race.name : items[0].name}</Text>
                 <FlatList
                     data={items}
                     renderItem={this.renderChild}
@@ -183,7 +187,7 @@ export default class ReportTimely extends PureComponent {
             crowdfunding_player_id
         } = item;
         return <View>
-            <Text style={[styles.itemTime, {marginTop: 7}]}>{utcDate(created_at, 'YYYY.MM.DD HH.mm')}</Text>
+            <Text style={[styles.itemTime, {marginTop: 7}]}>{utcDate(created_at, 'YYYY.MM.DD HH:mm')}</Text>
             <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 3}}>
                 <Text style={styles.txt_title}>{title}</Text>
 
@@ -191,8 +195,10 @@ export default class ReportTimely extends PureComponent {
 
                 <Text
                     onPress={() => {
-                        const {crowd} = this.props;
-                        global.router.toPokerInfo(crowd, {cf_player_id: crowdfunding_player_id}, crowd.race)
+                        this.props.choise_player && this.props.choise_player({
+                            cf_player_id: crowdfunding_player_id,
+                            name: crowdfunding_player_name
+                        })
                     }}
                     style={styles.txt_name}>{crowdfunding_player_name}</Text>
 

@@ -10,9 +10,9 @@ import {
     StyleSheet, Image, Text, ScrollView
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar} from '../../components';
+import {NavigationBar, SecurityText} from '../../components';
 import I18n from 'react-native-i18n';
-import {utcDate, isEmptyObject, convertDate, strNotNull,getLoginUser} from '../../utils/ComonHelper';
+import {utcDate, isEmptyObject, convertDate, strNotNull, getLoginUser} from '../../utils/ComonHelper';
 import {get_crowd_info} from '../../services/CrowdDao';
 import {CrowdStatus} from '../../configs/Status';
 import {LoadingView} from '../../components/load'
@@ -46,7 +46,8 @@ export default class SubscriptionInfoPage extends PureComponent {
         } else {
             return (
                 <View style={styles.result2}>
-                    <Text style={styles.resultTxt2}>晋级成功!{'\n'}获得扑客币{this.state.crowd_info.order_info.poker_coins}</Text>
+                    <Text
+                        style={styles.resultTxt2}>晋级成功!{'\n'}获得扑客币{this.state.crowd_info.order_info.poker_coins}</Text>
 
 
                     <TouchableOpacity style={styles.look}
@@ -150,7 +151,15 @@ export default class SubscriptionInfoPage extends PureComponent {
 
 
             {isEmptyObject(user_extra) ? null : <View style={{marginLeft: 17, marginRight: 17, marginTop: 17}}>
-                <Text style={styles.readTxt1}>我是投资人本人<Text style={{textDecorationLine:'underline'}}>{user_extra.real_name}</Text>，身份证号码{user_extra.cert_no}，我已认真阅读并同意
+                <Text style={styles.readTxt1}>我是投资人本人<Text
+                    style={{textDecorationLine: 'underline'}}>{user_extra.real_name}</Text>，身份证号码<SecurityText
+                    securityOptions={{
+                        isSecurity: true,
+                        startIndex: 4,
+                        endIndex: 15,
+                    }}>
+                    {user_extra.cert_no}
+                </SecurityText>，我已认真阅读并同意
                     <Text style={{color: '#438EE6'}}
                           onPress={() => {
                               global.router.toRiskWarningPage()

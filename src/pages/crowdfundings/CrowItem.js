@@ -187,6 +187,8 @@ export default class CrowItem extends PureComponent {
         if (str <= 0) {
             return `0${I18n.t('thousand')}`
         }
+        if (str < 10000)
+            return `¥${str}`;
 
         return str / 10000 + I18n.t('thousand');
 

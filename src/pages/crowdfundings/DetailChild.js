@@ -108,7 +108,7 @@ export default class DetailChild extends Component {
 
     race_time = (race) => {
         const {begin_date, end_date} = race;
-        return moment(begin_date).format('YYYY.MM.DD') + '-' + moment(end_date).format('YYYY.MM.DD')
+        return moment(begin_date).format('YYYY.MM.DD') + '-' + moment(end_date).format('MM.DD')
     };
 
     numberToW = (str) => {
@@ -116,6 +116,8 @@ export default class DetailChild extends Component {
             return `0${I18n.t('thousand')}`
         }
 
+        if (str < 10000)
+            return `¥${str}`;
         return str / 10000 + I18n.t('thousand');
 
     };
