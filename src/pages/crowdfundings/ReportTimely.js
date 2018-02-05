@@ -183,7 +183,7 @@ export default class ReportTimely extends PureComponent {
             crowdfunding_player_id
         } = item;
         return <View>
-            <Text style={[styles.itemTime, {marginTop: 7}]}>{utcDate(created_at, 'YYYY.MM.DD HH.mm')}</Text>
+            <Text style={[styles.itemTime, {marginTop: 7}]}>{utcDate(created_at, 'YYYY.MM.DD HH:mm')}</Text>
             <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 3}}>
                 <Text style={styles.txt_title}>{title}</Text>
 

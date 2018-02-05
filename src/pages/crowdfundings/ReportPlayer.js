@@ -228,7 +228,7 @@ export default class ReportPlayer extends PureComponent {
             created_at, title, ante, big_blind, crowdfunding_player_name, description
         } = item;
         return <View>
-            <Text style={[styles.itemTime, {marginTop: 7}]}>{utcDate(created_at, 'YYYY.MM.DD HH.mm')}</Text>
+            <Text style={[styles.itemTime, {marginTop: 7}]}>{utcDate(created_at, 'YYYY.MM.DD HH:mm')}</Text>
             <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 3}}>
                 <Text style={styles.txt_title}>{title}</Text>
 
