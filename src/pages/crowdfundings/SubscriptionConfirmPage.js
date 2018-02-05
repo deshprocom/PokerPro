@@ -19,7 +19,7 @@ import {isWXAppInstalled, showToast, alertOrderChat, isEmptyObject} from '../../
 
 export default class SubscriptionConfirmPage extends PureComponent {
     state = {
-        clickImg: true,
+        clickImg: false,
         order: {},
         isInstall: false
     };

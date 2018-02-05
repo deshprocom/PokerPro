@@ -114,9 +114,9 @@ export default class SubscriptionInfoPage extends PureComponent {
 
             <View style={styles.content}>
                 <Text
-                    style={styles.contentTxt}>{I18n.t('announce_time')}：预计{convertDate(publish_date, 'YYYY.MM.DD HH:mm')}公布结果</Text>
+                    style={styles.contentTxt}>{I18n.t('announce_time')}：预计{convertDate(publish_date, 'YYYY.MM.DD')}公布结果</Text>
                 <Text
-                    style={[styles.contentTxt, {marginTop: 5}]}>{I18n.t('prize_time')}：预计{convertDate(award_date, 'YYYY.MM.DD HH:mm')}</Text>
+                    style={[styles.contentTxt, {marginTop: 5}]}>{I18n.t('prize_time')}：预计{convertDate(award_date, 'YYYY.MM.DD')}</Text>
                 <Text
                     style={[styles.contentTxt, {marginTop: 5}]}>{`${I18n.t('betting_information')}：${sell_stock}%出让股份，划分${stock_number}份`}</Text>
             </View>
