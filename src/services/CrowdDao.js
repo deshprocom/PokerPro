@@ -8,6 +8,12 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 
+export function user_crowd_count(body, resolve, reject) {
+    helper.get(Api.crowd_user_count(body), ret => {
+        resolve(ret.data)
+    }, reject, body)
+}
+
 export function player_match(body, resolve, reject) {
     helper.get(Api.player_match(body), ret => {
         resolve(ret.data)

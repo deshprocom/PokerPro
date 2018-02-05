@@ -137,6 +137,7 @@ export default {
     crowd_wx_result: crowd_wx_result,//获取众筹的微信支付结果
     timely_match: timely_match,//及时赛报
     player_match: player_match,//牌手赛报
+    crowd_user_count: crowd_user_count,//获取用户历史购买份数
 
 }
 
@@ -150,6 +151,11 @@ function getUserId() {
 
 const page_size = 10;
 
+
+function crowd_user_count(body) {
+    const {crowdfunding_id, crowdfunding_player_id} = body;
+    return `crowdfundings/${crowdfunding_id}/players/${crowdfunding_player_id}/user_order_count`
+}
 
 function player_match(body) {
     const {cf_id, cf_player_id} = body;

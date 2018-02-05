@@ -113,8 +113,8 @@ export default class SubscriptionConfirmPage extends PureComponent {
                         <Text style={styles.readTxt1}>我是投资人本人{real_name}，身份证号码<SecurityText
                             securityOptions={{
                                 isSecurity: true,
-                                startIndex: 0,
-                                length: 4
+                                startIndex: 3,
+                                endIndex: 15,
                             }}>
                             {cert_no}
                         </SecurityText>，我已认真阅读并同意
