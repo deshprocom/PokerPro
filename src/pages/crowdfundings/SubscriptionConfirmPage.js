@@ -47,9 +47,13 @@ export default class SubscriptionConfirmPage extends PureComponent {
 
     submitBtn = () => {
         const {order_info} = this.props;
+        const {verified} = this.state;
         const {number, stock_unit_price} = order_info;
-        order_info.user_extra_id = this.state.verified.id;
-        if (this.state.clickImg) {
+        order_info.user_extra_id = verified.id;
+
+        if (isEmptyObject(verified)) {
+            showToast('实名信息不能为空')
+        } else if (this.state.clickImg) {
 
             this.loading.open();
             crowd_order(order_info, data => {
@@ -93,7 +97,6 @@ export default class SubscriptionConfirmPage extends PureComponent {
         const {number, player_id, stock_unit_price, race_name} = order_info;
         let sumMoney = this.total_prize(number, stock_unit_price);
         const {verified} = this.state;
-        const {cert_no, real_name} = verified;
         return (
             <View style={ApplicationStyles.bgContainer}>
 
