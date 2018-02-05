@@ -31,11 +31,11 @@ export default class MainRankPage extends Component {
 
     topHeader = () => {
         return (<View style={styles.header_bar}>
-            <View onPress={() => router.pop()}
+            <TouchableOpacity onPress={() => router.pop()}
                   style={styles.topBtn}>
-                {/* <Image source={Images.sign_return}
-                       style={styles.back_image}/>*/}
-            </View>
+                <Image style={styles.backImg}
+                       source={Images.sign_return}/>
+            </TouchableOpacity>
 
             <View style={styles.topBtn}></View>
 
@@ -157,6 +157,11 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: Colors._AAA,
         marginLeft: 10
-    }
+    },
+    backImg: {
+        width: 11,
+        height: 20,
+        marginLeft: 15
+    },
 
 });

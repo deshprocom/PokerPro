@@ -34,8 +34,8 @@ export default class Carousel extends PureComponent {
         const {banners} = this.state.banners;
         if (!isEmptyObject(banners) && banners.length > 0)
             return (
-                <View style={{height: 200, marginBottom: 10}}>
-                    <StatusBar barStyle={'light-content'}/>
+                <View style={{height: 200, marginBottom: 10,marginTop:0,backgroundColor:'transparent'}}>
+
                     <Swiper
                         activeDotStyle={stylesM.activeDot}
                         dotStyle={stylesM.dot}

@@ -6,6 +6,7 @@ import MainNewsPage from '../news/MainNewsPage';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {connect} from 'react-redux';
+import {umengEvent} from '../../utils/UmengEvent';
 
 class VideoNewsTab extends PureComponent {
 
@@ -83,8 +84,26 @@ class VideoNewsTab extends PureComponent {
             height: Metrics.navBarHeight, width: '100%', paddingTop: Metrics.statusBarHeight,
             flexDirection: 'row'
         }}>
+            <View style={styles.headAlign}>
+
+                <TouchableOpacity
+                    onPress={() => {
+                        if (this.mainVideoPage)
+                            this.mainVideoPage.pauseVideo();
+
+                        if (this.state.currentView === 0)
+                            router.toSearchNewsPage();
+                        else
+                            router.toSearchVideo()
+                    }}
+                    style={styles.btnSearch}>
+                    <Image style={styles.search}
+                           source={Images.news_search}/>
+                </TouchableOpacity>
+
+            </View>
             <View style={{flex: 1}}/>
-            <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <TouchableOpacity
                     onPress={() => {
                         if (this.mainVideoPage)
@@ -110,22 +129,17 @@ class VideoNewsTab extends PureComponent {
                 </TouchableOpacity>
 
             </View>
-
+            <View style={{flex: 1}}/>
             <View style={styles.headAlign}>
-                <View style={{flex: 1}}/>
-                <TouchableOpacity
-                    onPress={() => {
-                        if (this.mainVideoPage)
-                            this.mainVideoPage.pauseVideo();
 
-                        if (this.state.currentView === 0)
-                            router.toSearchNewsPage();
-                        else
-                            router.toSearchVideo()
+                <TouchableOpacity
+                    onPress={()=>{
+                        umengEvent('drawer_rank');
+                        global.router.toDrawerRank();
                     }}
                     style={styles.btnSearch}>
                     <Image style={styles.search}
-                           source={Images.news_search}/>
+                           source={Images.ranking}/>
                 </TouchableOpacity>
 
             </View>
@@ -158,7 +172,7 @@ const styles = StyleSheet.create({
         marginLeft: 20,
     },
     headAlign: {
-        flex: 1, flexDirection: 'row', alignItems: 'center'
+        flexDirection: 'row', alignItems: 'center'
     },
     btnSearch: {
         height: 44,
