@@ -13,7 +13,7 @@ import {NavigationBar} from '../../components';
 import {Colors, Images, ApplicationStyles} from '../../Themes';
 import {showToast} from '../../utils/ComonHelper';
 import I18n from 'react-native-i18n';
-import SubscriptionBottom from './SubscriptionBottom';
+import SubscriptionConfirmPage from './SubscriptionConfirmPage';
 import {crowd_order} from '../../services/CrowdDao';
 import {isEmptyObject} from '../../utils/ComonHelper';
 
@@ -111,8 +111,8 @@ export default class SubscriptionPage extends PureComponent {
                     {this.buyQuantity(player)}
                 </View>
 
-                <SubscriptionBottom
-                    order={order}
+                <SubscriptionConfirmPage
+                    order_info={order}
                     verified={verified}
                 />
             </View>

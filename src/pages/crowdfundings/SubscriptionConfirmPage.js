@@ -33,7 +33,7 @@ export default class SubscriptionConfirmPage extends PureComponent {
     }
 
     submitBtn = () => {
-        const {order_info, verified} = this.props.params;
+        const {order_info, verified} = this.props;
         const {number, stock_unit_price} = order_info;
         order_info.user_extra_id = verified.id;
         if (this.state.clickImg) {
@@ -75,25 +75,17 @@ export default class SubscriptionConfirmPage extends PureComponent {
 
     render() {
 
-        const {order_info, verified} = this.props.params;
+        const {order_info, verified} = this.props;
         const {number, player_id, stock_unit_price, race_name} = order_info;
         console.log(order_info)
         let sumMoney = this.total_prize(number, stock_unit_price);
         const {cert_no, real_name} = verified;
         return (
             <View style={ApplicationStyles.bgContainer}>
-                <NavigationBar
-                    barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
-                    toolbarStyle={{backgroundColor: Colors.white}}
-                    title={I18n.t('confirm_order')}
-                    titleStyle={{color: Colors._161}}
-                    leftBtnIcon={Images.mall_return}
-                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                    leftBtnPress={() => router.pop()}/>
 
                 <View style={styles.page}>
                     <View style={styles.title}>
-                        <Text style={styles.titleTxt}>{I18n.t('order_info')}</Text>
+                        <Text style={styles.titleTxt}>{I18n.t('order_msg')}</Text>
                     </View>
 
                     <View style={[styles.message, {paddingTop: 15}]}>
@@ -226,7 +218,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         paddingTop: 18,
         paddingBottom: 15,
-        backgroundColor: 'white'
+        backgroundColor: '#ECECEE'
     },
     readTxt1: {
         fontSize: 14,
