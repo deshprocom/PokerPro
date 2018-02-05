@@ -45,7 +45,7 @@ export const footer = (crowd, type, player, race) => {
                         } else {
                             global.router.toVerifiedPage(verified => {
                                 console.log('实名信息：', verified)
-                                global.router.toSubscriptionPage(crowd.id, player, race, verified)
+                                global.router.toSubscriptionPage(crowd.id, player, crowd.race, verified)
                             });
                         }
 
