@@ -17,8 +17,8 @@ import I18n from 'react-native-i18n';
 import {isEmptyObject} from '../../utils/ComonHelper';
 
 export const footer = (crowd, type, player, race) => {
-    console.log("this:", this)
-    var status = crowd.race.status;
+
+    let status = crowd.race.status;
     return <View style={[styles.footer, {justifyContent: _justifyContent(status)}]}>
         <TouchableOpacity
             activeOpacity={1}
