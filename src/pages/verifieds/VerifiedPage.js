@@ -118,7 +118,7 @@ export default class VerifiedPage extends Component {
             onPress={this._toAddVerified}
             style={{
                 height: 44, position: 'absolute', backgroundColor: Colors._161,
-                bottom: 60, right: 17, left: 17, alignItems: 'center',
+                bottom: 30, right: 17, left: 17, alignItems: 'center',
                 justifyContent: 'center', flexDirection: 'row'
             }}>
             <Image

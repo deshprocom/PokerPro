@@ -93,14 +93,13 @@ export default class Router {
         })
     }
 
-    toSubscriptionPage(crowd, player, verified) {
+    toSubscriptionPage(crowd, player) {
 
         this.stackPush({
             name: 'SubscriptionPage',
             params: {
                 crowd: crowd,
-                player: player,
-                verified
+                player: player
             }
 
         })

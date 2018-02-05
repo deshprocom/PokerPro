@@ -13,28 +13,42 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {SecurityText, ActionPay, Loading} from '../../components';
 import {crowd_order, crowd_wx_pay, crowd_wx_paid_result} from '../../services/CrowdDao';
-import {isWXAppInstalled, showToast, alertOrderChat, isEmptyObject, idCardStatus} from '../../utils/ComonHelper';
+import {isWXAppInstalled, showToast, getVerId, isEmptyObject, idCardStatus} from '../../utils/ComonHelper';
 import {Verified} from '../../configs/Status'
 
 export default class SubscriptionConfirmPage extends PureComponent {
     state = {
         clickImg: false,
         order: {},
-        isInstall: false
+        isInstall: false,
+        verified: {}
     };
 
     componentDidMount() {
+
         isWXAppInstalled(isInstall => {
             this.setState({
-                isInstall: isInstall
+                isInstall: isInstall,
+                verified: getVerId()
             })
         });
     }
 
+
+    real_name = () => {
+        global.router.toVerifiedPage(verified => {
+            console.log('实名信息：', verified)
+            this.setState({
+                verified
+            })
+
+        });
+    }
+
     submitBtn = () => {
-        const {order_info, verified} = this.props;
+        const {order_info} = this.props;
         const {number, stock_unit_price} = order_info;
-        order_info.user_extra_id = verified.id;
+        order_info.user_extra_id = this.state.verified.id;
         if (this.state.clickImg) {
 
             this.loading.open();
@@ -75,10 +89,10 @@ export default class SubscriptionConfirmPage extends PureComponent {
 
     render() {
 
-        const {order_info, verified} = this.props;
+        const {order_info} = this.props;
         const {number, player_id, stock_unit_price, race_name} = order_info;
-        console.log(order_info)
         let sumMoney = this.total_prize(number, stock_unit_price);
+        const {verified} = this.state;
         const {cert_no, real_name} = verified;
         return (
             <View style={ApplicationStyles.bgContainer}>
@@ -107,57 +121,73 @@ export default class SubscriptionConfirmPage extends PureComponent {
 
                 </View>
 
-                <View
-                    style={{
-                        height: 67,
-                        flexDirection: 'row', alignItems: 'center',
-                        backgroundColor: 'white',
-                        paddingLeft: 17,
-                        paddingRight: 17,
-                        marginTop: 5
-                    }}>
-                    <View style={{flex: 1}}>
-                        <View style={{alignItems: 'center', flexDirection: 'row', marginTop: 10}}>
-                            <View style={{flexDirection: 'row'}}>
-                                <Text style={{fontSize: 15, color: Colors.txt_666, marginRight: 9}}>
-                                    {I18n.t('real_name')}:</Text>
-                                <Text style={{fontSize: 15, color: Colors.txt_666}}>
-                                    {verified.real_name}</Text>
 
-                                <Text style={this.statusStyle(verified.status)}>
-                                    {idCardStatus(verified.status)}
-                                </Text>
+                <TouchableOpacity
+                    onPress={this.real_name}>
+                    <View
+                        style={{
+                            height: 44, justifyContent: 'center',
+                            paddingLeft: 17, backgroundColor: 'white',
+                            marginTop: 5
+                        }}>
+
+                        <Text
+                            style={{fontSize: 15, color: Colors.txt_444, marginTop: 13}}>本项目为实名认购</Text>
+
+                    </View>
+                    <View
+                        style={{
+                            height: 67,
+                            flexDirection: 'row', alignItems: 'center',
+                            backgroundColor: 'white',
+                            paddingLeft: 17,
+                            paddingRight: 17
+                        }}>
+
+                        {isEmptyObject(verified) ? <View style={{flex: 1}}>
+                            <Text style={{color: Colors._CCC}}>请选择实名信息</Text>
+
+                        </View> : <View style={{flex: 1}}>
+                            <View style={{alignItems: 'center', flexDirection: 'row', marginTop: 10}}>
+                                <View style={{flexDirection: 'row'}}>
+                                    <Text style={{fontSize: 15, color: Colors.txt_666, marginRight: 9}}>
+                                        {I18n.t('real_name')}:</Text>
+                                    <Text style={{fontSize: 15, color: Colors.txt_666}}>
+                                        {verified.real_name}</Text>
+
+                                    <Text style={this.statusStyle(verified.status)}>
+                                        {idCardStatus(verified.status)}
+                                    </Text>
+                                </View>
+
                             </View>
 
-                        </View>
+                            <View style={{flexDirection: 'row', marginTop: 8}}>
+                                <Text style={{fontSize: 15, color: Colors.txt_666, marginRight: 9}}>
+                                    {verified.cert_type === 'chinese_id' ? I18n.t('ID_card') : I18n.t('password_card')}</Text>
+                                <SecurityText
+                                    securityOptions={{
+                                        isSecurity: true,
+                                        startIndex: 3,
+                                        endIndex: 15,
+                                    }}
+                                    style={{fontSize: 15, color: Colors.txt_666}}>
+                                    {verified.cert_no}</SecurityText>
+                            </View>
+                        </View>}
 
-                        <View style={{flexDirection: 'row', marginTop: 8}}>
-                            <Text style={{fontSize: 15, color: Colors.txt_666, marginRight: 9}}>
-                                {verified.cert_type === 'chinese_id' ? I18n.t('ID_card') : I18n.t('password_card')}</Text>
-                            <SecurityText
-                                securityOptions={{
-                                    isSecurity: true,
-                                    startIndex: 3,
-                                    endIndex: 12,
-                                }}
-                                style={{fontSize: 15, color: Colors.txt_666}}>
-                                {verified.cert_no}</SecurityText>
-                        </View>
+
+                        <Image style={{width: 11, height: 20}}
+                               source={Images.ticket_arrow}/>
+
+
                     </View>
+                </TouchableOpacity>
 
-
-                </View>
 
                 <View style={styles.read}>
                     <View style={{marginLeft: 17, marginRight: 17}}>
-                        <Text style={styles.readTxt1}>我是投资人本人{real_name}，身份证号码<SecurityText
-                            securityOptions={{
-                                isSecurity: true,
-                                startIndex: 3,
-                                endIndex: 15,
-                            }}>
-                            {cert_no}
-                        </SecurityText>，我已认真阅读并同意
+                        <Text style={styles.readTxt1}>我已认真阅读并同意
                             <Text style={{color: '#438EE6'}}
                                   onPress={() => {
                                       global.router.toRiskWarningPage(sumMoney, order_info, this.state.clickImg, this.state.order)
@@ -277,14 +307,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF'
     },
     read: {
-        marginTop: 10,
-        paddingTop: 18,
+        marginTop: 20,
         paddingBottom: 15,
         backgroundColor: '#ECECEE'
     },
     readTxt1: {
         fontSize: 14,
-        color: '#444444',
+        color: Colors._888,
         lineHeight: 20
     },
     readTxt2: {
@@ -293,7 +322,7 @@ const styles = StyleSheet.create({
     },
     readTxt3: {
         fontSize: 14,
-        color: '#438EE6'
+        color: Colors._888,
     },
     img: {
         width: 16,
@@ -301,7 +330,7 @@ const styles = StyleSheet.create({
     },
     txt: {
         fontSize: 14,
-        color: '#444444',
+        color: Colors._888,
         marginLeft: 10
     },
     pendingStatus: {
