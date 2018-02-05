@@ -283,7 +283,8 @@ const images = {
     crowd_starting: require('../../source/crowd/crowd_starting.png'),
     timely_matchRed: require('../../source/crowd/timely_matchRed.png'),
     pay_help: require('../../source/mall/pay_help.png'),
-    wx_pay: require('../../source/buy/weixin.png')
+    wx_pay: require('../../source/buy/weixin.png'),
+    ranking: require('../../source/navigation/ranking.png')
 
 
 };
