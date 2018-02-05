@@ -16,25 +16,25 @@ import {crowd_detail} from '../../services/CrowdDao'
 import I18n from 'react-native-i18n';
 import {isEmptyObject} from '../../utils/ComonHelper';
 
-export const footer = (crowd, type, player, race) => {
+export const footer = (crowd, type, player) => {
 
     let status = crowd.race.status;
-    return <View style={[styles.footer, {justifyContent: _justifyContent(status)}]}>
+    return <View style={[styles.footer, {justifyContent: _justifyContent(status,type)}]}>
         <TouchableOpacity
             activeOpacity={1}
             onPress={() => {
                 global.router.toReportPage(crowd, player)
 
             }}
-            style={[styles.btnLeft, _width(status)]}>
+            style={[styles.btnLeft, _width(status,type)]}>
             <Image
                 style={{height: 12, width: 10, marginRight: 5}}
                 source={Images.black_fire}/>
 
             <Text style={styles.txtLeft}>{I18n.t('timely_match')}</Text>
         </TouchableOpacity>
-        {status === 'go_ahead' ? null : <View style={{flex: 1}}/>}
-        {status === 'go_ahead' ? null :
+        {status === 'go_ahead' &&  type === 'poker_info' ? null : <View style={{flex: 1}}/>}
+        {status === 'go_ahead' &&  type === 'poker_info'  ? null :
             <TouchableOpacity
                 onPress={() => {
                     if (type === 'crowd_detail') {
@@ -45,7 +45,8 @@ export const footer = (crowd, type, player, race) => {
                         } else {
                             global.router.toVerifiedPage(verified => {
                                 console.log('实名信息：', verified)
-                                global.router.toSubscriptionPage(crowd.id, player, race, verified)
+
+                                global.router.toSubscriptionPage(crowd, player, verified)
                             });
                         }
 
@@ -61,8 +62,8 @@ export const footer = (crowd, type, player, race) => {
 
 };
 
-export function _width(status) {
-    if (status === 'go_ahead') {
+export function _width(status,type) {
+    if (status === 'go_ahead' &&  type === 'poker_info' ) {
         return {
             paddingTop: 7,
             paddingBottom: 7,
@@ -79,9 +80,9 @@ export function _width(status) {
     }
 }
 
-export function _justifyContent(status) {
+export function _justifyContent(status,type) {
 
-    if (status === 'go_ahead') {
+    if (status === 'go_ahead' &&  type === 'poker_info' ) {
         return 'center'
     } else {
         return 'flex-start'
@@ -121,7 +122,7 @@ export default class CrowdDetail extends Component {
             <DetailChild
                 info={crowd}/>
 
-            {crowd.race.status === 'ended' ? null : footer(crowd, 'crowd_detail', null, null)}
+            {footer(crowd, 'crowd_detail', null)}
 
         </View>
     }

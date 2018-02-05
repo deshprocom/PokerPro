@@ -15,6 +15,7 @@ import {footer} from './CrowdDetail';
 import {poker_info} from '../../services/CrowdDao';
 import {isEmptyObject, strNotNull} from '../../utils/ComonHelper';
 import I18n from 'react-native-i18n';
+import Swiper from 'react-native-swiper';
 
 const styles = StyleSheet.create({
     img_poker: {
@@ -92,6 +93,20 @@ const styles = StyleSheet.create({
         borderRadius: 22,
         marginRight: 10
 
+    },
+    activeDot: {
+        backgroundColor: 'white',
+        width: 18,
+        height: 4,
+        borderRadius: 2,
+        marginBottom: -8
+    },
+    dot: {
+        backgroundColor: 'rgba(0,0,0,.2)',
+        width: 9,
+        height: 4,
+        borderRadius: 2,
+        marginBottom: -8
     }
 });
 
@@ -122,6 +137,38 @@ export default class PokerInfo extends PureComponent {
 
     };
 
+    pokerBanner = (logo, player_images) => {
+        if (!isEmptyObject(player_images) && player_images.length > 0)
+            return (
+                <View style={{height: 200, marginBottom: 10}}>
+                    <Swiper
+                        activeDotStyle={styles.activeDot}
+                        dotStyle={styles.dot}
+                        autoplayTimeout={2}
+                        autoplay>
+                        {player_images.map((item, key) => {
+                            return <TouchableOpacity
+                                key={key}
+                                activeOpacity={1}
+                                onPress={()=>{
+                                    global.router.toImageGalleryPage([item.image])
+                                }}
+                            >
+                                <Image style={{height: 200, width: '100%'}} source={{uri: item.image.url}}/>
+                            </TouchableOpacity>
+                        })}
+
+
+                    </Swiper>
+                </View>
+
+
+            );
+        else
+            return <ImageLoad style={styles.img_poker}
+                              source={{uri: logo}}/>
+    };
+
     render() {
 
         const {
@@ -150,8 +197,7 @@ export default class PokerInfo extends PureComponent {
                 leftBtnPress={() => global.router.pop()}/>
             <ScrollView>
 
-                {isEmptyObject(logo) ? null : <ImageLoad style={styles.img_poker}
-                                                         source={{uri: logo}}/>}
+                {this.pokerBanner(logo, player_images)}
 
 
                 <View style={styles.view_info}>
@@ -178,9 +224,9 @@ export default class PokerInfo extends PureComponent {
                         flexDirection: 'row', alignItems: 'center', marginTop: 12,
                         marginBottom: 8
                     }}>
-                        <Text style={styles.lb_slogan}>{I18n.t('slogan')}：</Text>
-                        <Text style={styles.txt_slogan}>{join_slogan}</Text>
-                    </View> : null}
+                            <Text style={styles.lb_slogan}>{I18n.t('slogan')}：</Text>
+                            <Text style={styles.txt_slogan}>{join_slogan}</Text>
+                        </View> : null}
 
 
                     <ProgressBar
@@ -200,17 +246,17 @@ export default class PokerInfo extends PureComponent {
 
 
                 {!isEmptyObject(ordered) && ordered.users.length > 0 ? <View style={styles.view_head}>
-                    <Text style={[styles.txt_slogan, {marginBottom: 14, alignSelf: 'center'}]}
-                    >{I18n.t('currently_there')}<Text
-                        style={{color: Colors._F34}}>{isEmptyObject(ordered) ? '' : ordered.number}</Text>{I18n.t('people')}{I18n.t('subscription')}
-                    </Text>
+                        <Text style={[styles.txt_slogan, {marginBottom: 14, alignSelf: 'center'}]}
+                        >{I18n.t('currently_there')}<Text
+                            style={{color: Colors._F34}}>{isEmptyObject(ordered) ? '' : ordered.number}</Text>{I18n.t('people')}{I18n.t('subscription')}
+                        </Text>
 
-                    <FlatList
-                        horizontal={true}
-                        data={isEmptyObject(ordered) ? [] : ordered.users}
-                        renderItem={({item}) => <ImageLoad style={styles.img_head} source={{uri: item.avatar}}/>}
-                        keyExtractor={(item, index) => `buy_person${index}`}/>
-                </View> : null}
+                        <FlatList
+                            horizontal={true}
+                            data={isEmptyObject(ordered) ? [] : ordered.users}
+                            renderItem={({item}) => <ImageLoad style={styles.img_head} source={{uri: item.avatar}}/>}
+                            keyExtractor={(item, index) => `buy_person${index}`}/>
+                    </View> : null}
 
 
                 <IntroRecord
@@ -218,7 +264,9 @@ export default class PokerInfo extends PureComponent {
                     race_rank={race_rank}/>
             </ScrollView>
             <View style={{height: 30}}/>
-            {footer(this.props.params.crowd, 'poker_info', this.state.pokerInfo)}
+
+            {this.props.params.crowd.race.status === 'ended' ? null : footer(this.props.params.crowd, 'poker_info', this.state.pokerInfo)}
+
         </View>
     }
 

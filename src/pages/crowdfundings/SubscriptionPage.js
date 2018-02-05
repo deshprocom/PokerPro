@@ -13,7 +13,7 @@ import {NavigationBar} from '../../components';
 import {Colors, Images, ApplicationStyles} from '../../Themes';
 import {showToast} from '../../utils/ComonHelper';
 import I18n from 'react-native-i18n';
-import SubscriptionBottom from './SubscriptionBottom';
+import SubscriptionConfirmPage from './SubscriptionConfirmPage';
 import {crowd_order} from '../../services/CrowdDao';
 import {isEmptyObject} from '../../utils/ComonHelper';
 
@@ -71,12 +71,13 @@ export default class SubscriptionPage extends PureComponent {
     };
 
     render() {
-        const {player, race, verified} = this.props.params;
-        const {sell_stock, name, logo, stock_unit_price, limit_buy, cf_player_id} = player;
+        const {player, crowd, verified} = this.props.params;
+
+        const {name, logo, stock_unit_price, limit_buy, cf_player_id} = player;
 
         let order = {
             number: this.state.number, cf_player_id: cf_player_id, stock_unit_price: stock_unit_price,
-            race_name: race.name
+            race_name: isEmptyObject(crowd.race) ? '' : crowd.race.name
         };
         return (
             <View style={ApplicationStyles.bgContainer}>
@@ -94,7 +95,7 @@ export default class SubscriptionPage extends PureComponent {
                            source={{uri: isEmptyObject(logo) ? '' : logo}}/>
                     <View style={styles.pageRight}>
                         <Text style={styles.name}>{name}</Text>
-                        <Text style={styles.content}>{I18n.t('join_race')}：{race.name}</Text>
+                        <Text style={styles.content}>{I18n.t('join_race')}：{order.race_name}</Text>
                         <View style={{flex: 1}}/>
                         <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
                             <Text style={styles.priceTxt}>{I18n.t('part_price')}：</Text>
@@ -110,8 +111,8 @@ export default class SubscriptionPage extends PureComponent {
                     {this.buyQuantity(player)}
                 </View>
 
-                <SubscriptionBottom
-                    order={order}
+                <SubscriptionConfirmPage
+                    order_info={order}
                     verified={verified}
                 />
             </View>
