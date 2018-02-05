@@ -110,7 +110,6 @@ export default class SubscriptionPage extends PureComponent {
                     {this.buyQuantity(player)}
                 </View>
 
-
                 <SubscriptionBottom
                     order={order}
                     verified={verified}
