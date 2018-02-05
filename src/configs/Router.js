@@ -84,29 +84,29 @@ export default class Router {
         })
     }
 
-    toSubscriptionConfirmPage(order_info,verified) {
+    toSubscriptionConfirmPage(order_info, verified) {
         this.stackPush({
             name: 'SubscriptionConfirmPage',
             params: {
-                order_info,verified
+                order_info, verified
             }
         })
     }
 
-    toSubscriptionPage(crowd_id, player, race,verified) {
+    toSubscriptionPage(crowd, player, verified) {
+
         this.stackPush({
             name: 'SubscriptionPage',
             params: {
-                crowd_id: crowd_id,
+                crowd: crowd,
                 player: player,
-                race: race,
                 verified
             }
 
         })
     }
 
-    toPokerInfo(crowd, player, race) {
+    toPokerInfo(crowd, player) {
         this.stackPush({
             name: 'PokerInfo',
             params: {
@@ -373,7 +373,7 @@ export default class Router {
         })
     }
 
-    toPokerRankPage( player_id) {
+    toPokerRankPage(player_id) {
         this.stackPush({
             name: 'PokerRankPage',
             params: {

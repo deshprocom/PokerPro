@@ -218,7 +218,9 @@ export default class PokerInfo extends PureComponent {
                     race_rank={race_rank}/>
             </ScrollView>
             <View style={{height: 30}}/>
-            {footer(this.props.params.crowd, 'poker_info', this.state.pokerInfo)}
+
+            {this.props.params.crowd.race.status === 'ended' ? null : footer(this.props.params.crowd, 'poker_info', this.state.pokerInfo)}
+
         </View>
     }
 
