@@ -65,12 +65,12 @@ export default class ReportPlayer extends PureComponent {
     };
 
     componentDidMount() {
-        const {crowd} = this.props;
+        const {crowd, player} = this.props;
         poker_list({id: crowd.id, page: 1, page_size: 100}, data => {
 
             this.setState({
                 players: data.players,
-                player: data.players.length > 0 ? data.players[0] : {}
+                player: isEmptyObject(player) ? data.players[0] : player
             })
         }, err => {
 
@@ -81,7 +81,7 @@ export default class ReportPlayer extends PureComponent {
     headPlayers = () => {
         const {players, player} = this.state;
         return <View>
-            <View style={{height:5,backgroundColor:'#ECECEE'}}/>
+            <View style={{height: 5, backgroundColor: '#ECECEE'}}/>
             <FlatList
                 horizontal={true}
                 data={players}
@@ -237,7 +237,7 @@ export default class ReportPlayer extends PureComponent {
                 <Text
                     onPress={() => {
                         const {crowd} = this.props;
-                        global.router.toPokerInfo(crowd,this.state.player,crowd.race)
+                        global.router.toPokerInfo(crowd, this.state.player, crowd.race)
                     }}
                     style={styles.txt_name}>{crowdfunding_player_name}</Text>
 

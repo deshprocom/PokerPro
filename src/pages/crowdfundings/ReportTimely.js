@@ -195,8 +195,10 @@ export default class ReportTimely extends PureComponent {
 
                 <Text
                     onPress={() => {
-                        const {crowd} = this.props;
-                        global.router.toPokerInfo(crowd, {cf_player_id: crowdfunding_player_id}, crowd.race)
+                        this.props.choise_player && this.props.choise_player({
+                            cf_player_id: crowdfunding_player_id,
+                            name: crowdfunding_player_name
+                        })
                     }}
                     style={styles.txt_name}>{crowdfunding_player_name}</Text>
 

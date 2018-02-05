@@ -78,14 +78,25 @@ export default class ReportPage extends PureComponent {
     }
 
     select_page = () => {
-        switch (this.state.matchShow) {
+        const {player, matchShow} = this.state;
+        switch (matchShow) {
             case 0:
                 return <ReportTimely
+                    choise_player={this.choise_player}
                     crowd={this.props.params.crowd}/>;
             case 1:
                 return <ReportPlayer
+                    player={player}
                     crowd={this.props.params.crowd}/>
         }
+    };
+
+
+    choise_player = (player) => {
+        this.setState({
+            player,
+            matchShow: 1
+        })
     };
 
 
