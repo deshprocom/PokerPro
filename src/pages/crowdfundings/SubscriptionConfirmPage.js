@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar, ActionPay, Loading} from '../../components';
+import {SecurityText, ActionPay, Loading} from '../../components';
 import OrderBottom from '../malls/order/OrderBottom';
 import {crowd_order, crowd_wx_pay, crowd_wx_paid_result} from '../../services/CrowdDao';
 import {isWXAppInstalled, showToast, alertOrderChat, isEmptyObject} from '../../utils/ComonHelper';
@@ -110,7 +110,14 @@ export default class SubscriptionConfirmPage extends PureComponent {
 
                 <View style={styles.read}>
                     <View style={{marginLeft: 17, marginRight: 17}}>
-                        <Text style={styles.readTxt1}>我是投资人本人{real_name}，身份证号码{cert_no}，我已认真阅读并同意
+                        <Text style={styles.readTxt1}>我是投资人本人{real_name}，身份证号码<SecurityText
+                            securityOptions={{
+                                isSecurity: true,
+                                startIndex: 0,
+                                length: 4
+                            }}>
+                            {cert_no}
+                        </SecurityText>，我已认真阅读并同意
                             <Text style={{color: '#438EE6'}}
                                   onPress={() => {
                                       global.router.toRiskWarningPage(sumMoney, order_info, this.state.clickImg, this.state.order)
