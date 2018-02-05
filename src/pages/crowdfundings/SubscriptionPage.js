@@ -6,7 +6,7 @@
 
 import React, {PureComponent} from 'react';
 import {
-    TouchableOpacity, View, TextInput, Platform,
+    TouchableOpacity, View, ScrollView, Platform,
     StyleSheet, Image, Text
 } from 'react-native';
 import {NavigationBar} from '../../components';
@@ -16,6 +16,7 @@ import I18n from 'react-native-i18n';
 import SubscriptionConfirmPage from './SubscriptionConfirmPage';
 import {user_crowd_count} from '../../services/CrowdDao';
 import {isEmptyObject} from '../../utils/ComonHelper';
+import OrderBottom from '../malls/order/OrderBottom';
 
 export default class SubscriptionPage extends PureComponent {
     state = {
@@ -84,6 +85,14 @@ export default class SubscriptionPage extends PureComponent {
         )
     };
 
+
+    total_prize = (number, stock_unit_price) => {
+        if (isNaN(number) || isNaN(stock_unit_price)) {
+            return 0
+        }
+        return number * stock_unit_price;
+    };
+
     render() {
         const {player, crowd, verified} = this.props.params;
 
@@ -106,31 +115,48 @@ export default class SubscriptionPage extends PureComponent {
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
-                <View style={styles.itemPage}>
-                    <Image style={{width: 95, height: 120, marginLeft: 19}}
-                           source={{uri: isEmptyObject(logo) ? '' : logo}}/>
-                    <View style={styles.pageRight}>
-                        <Text style={styles.name}>{name}</Text>
-                        <Text style={styles.content}>{I18n.t('join_race')}：{order.race_name}</Text>
-                        <View style={{flex: 1}}/>
-                        <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
-                            <Text style={styles.priceTxt}>{I18n.t('part_price')}：</Text>
-                            <Text style={styles.price}>{stock_unit_price}元</Text>
+                <ScrollView>
+
+                    <View style={{flex: 1}}>
+
+                        <View style={styles.itemPage}>
+                            <Image style={{width: 95, height: 120, marginLeft: 19}}
+                                   source={{uri: isEmptyObject(logo) ? '' : logo}}/>
+                            <View style={styles.pageRight}>
+                                <Text style={styles.name}>{name}</Text>
+                                <Text style={styles.content}>{I18n.t('join_race')}：{order.race_name}</Text>
+                                <View style={{flex: 1}}/>
+                                <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
+                                    <Text style={styles.priceTxt}>{I18n.t('part_price')}：</Text>
+                                    <Text style={styles.price}>{stock_unit_price}元</Text>
+                                </View>
+                            </View>
                         </View>
+
+                        <View style={styles.buyView}>
+                            <Text style={styles.txt1}>{I18n.t('purchase_copies')}（{I18n.t('limit_buy')}</Text><Text
+                            style={styles.txt2}>{limit}</Text><Text style={styles.txt1}>{I18n.t('parts')}）</Text>
+                            <View style={{flex: 1}}/>
+                            {this.buyQuantity(player)}
+                        </View>
+
+                        <SubscriptionConfirmPage
+                            order_info={order}
+                            verified={verified}
+                            ref={ref => this.confirm = ref}
+                        />
+
+                        <View style={{height: 100}}/>
                     </View>
-                </View>
 
-                <View style={styles.buyView}>
-                    <Text style={styles.txt1}>{I18n.t('purchase_copies')}（{I18n.t('limit_buy')}</Text><Text
-                    style={styles.txt2}>{limit}</Text><Text style={styles.txt1}>{I18n.t('parts')}）</Text>
-                    <View style={{flex: 1}}/>
-                    {this.buyQuantity(player)}
-                </View>
 
-                <SubscriptionConfirmPage
-                    order_info={order}
-                    verified={verified}
-                />
+                </ScrollView>
+
+                <OrderBottom
+                    submitBtn={() => {
+                        this.confirm && this.confirm.submitBtn()
+                    }}
+                    sumMoney={this.total_prize(this.state.number, stock_unit_price)}/>
             </View>
 
 

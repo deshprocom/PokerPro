@@ -12,10 +12,9 @@ import {
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {SecurityText, ActionPay, Loading} from '../../components';
-import OrderBottom from '../malls/order/OrderBottom';
 import {crowd_order, crowd_wx_pay, crowd_wx_paid_result} from '../../services/CrowdDao';
-import {isWXAppInstalled, showToast, alertOrderChat, isEmptyObject} from '../../utils/ComonHelper';
-
+import {isWXAppInstalled, showToast, alertOrderChat, isEmptyObject, idCardStatus} from '../../utils/ComonHelper';
+import {Verified} from '../../configs/Status'
 
 export default class SubscriptionConfirmPage extends PureComponent {
     state = {
@@ -108,6 +107,47 @@ export default class SubscriptionConfirmPage extends PureComponent {
 
                 </View>
 
+                <View
+                    style={{
+                        height: 67,
+                        flexDirection: 'row', alignItems: 'center',
+                        backgroundColor: 'white',
+                        paddingLeft: 17,
+                        paddingRight: 17,
+                        marginTop: 5
+                    }}>
+                    <View style={{flex: 1}}>
+                        <View style={{alignItems: 'center', flexDirection: 'row', marginTop: 10}}>
+                            <View style={{flexDirection: 'row'}}>
+                                <Text style={{fontSize: 15, color: Colors.txt_666, marginRight: 9}}>
+                                    {I18n.t('real_name')}:</Text>
+                                <Text style={{fontSize: 15, color: Colors.txt_666}}>
+                                    {verified.real_name}</Text>
+
+                                <Text style={this.statusStyle(verified.status)}>
+                                    {idCardStatus(verified.status)}
+                                </Text>
+                            </View>
+
+                        </View>
+
+                        <View style={{flexDirection: 'row', marginTop: 8}}>
+                            <Text style={{fontSize: 15, color: Colors.txt_666, marginRight: 9}}>
+                                {verified.cert_type === 'chinese_id' ? I18n.t('ID_card') : I18n.t('password_card')}</Text>
+                            <SecurityText
+                                securityOptions={{
+                                    isSecurity: true,
+                                    startIndex: 3,
+                                    endIndex: 12,
+                                }}
+                                style={{fontSize: 15, color: Colors.txt_666}}>
+                                {verified.cert_no}</SecurityText>
+                        </View>
+                    </View>
+
+
+                </View>
+
                 <View style={styles.read}>
                     <View style={{marginLeft: 17, marginRight: 17}}>
                         <Text style={styles.readTxt1}>我是投资人本人{real_name}，身份证号码<SecurityText
@@ -145,9 +185,6 @@ export default class SubscriptionConfirmPage extends PureComponent {
                     </TouchableOpacity>
                 </View>
 
-                <OrderBottom
-                    submitBtn={() => this.submitBtn()}
-                    sumMoney={sumMoney}/>
 
                 <ActionPay
                     ref={ref => this.actionPay = ref}
@@ -175,6 +212,23 @@ export default class SubscriptionConfirmPage extends PureComponent {
 
 
         );
+    }
+
+    statusStyle = (status) => {
+        switch (status) {
+            case Verified.PENDING:
+                return styles.pendingStatus;
+            case Verified.PASSED:
+                return [styles.pendingStatus, {
+                    borderColor: '#34BA3C',
+                    color: '#34BA3C'
+                }];
+            case Verified.FAILED:
+                return [styles.pendingStatus, {
+                    borderColor: '#F34A4A',
+                    color: '#F34A4A',
+                }];
+        }
     }
 }
 
@@ -249,6 +303,19 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#444444',
         marginLeft: 10
+    },
+    pendingStatus: {
+        fontSize: 11,
+        paddingTop: 3,
+        paddingLeft: 2,
+        paddingRight: 2,
+        paddingBottom: 1,
+        borderWidth: 1,
+        borderColor: '#6DB0FF',
+        color: '#6DB0FF',
+        borderRadius: 2,
+        textAlign: 'center',
+        marginLeft: 13
     }
 
 
