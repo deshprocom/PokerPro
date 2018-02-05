@@ -58,6 +58,7 @@ export default class SubscriptionConfirmPage extends PureComponent {
                 });
 
             }, err => {
+                showToast(err)
                 this.loading.close();
             })
         } else {
