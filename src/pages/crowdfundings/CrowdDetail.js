@@ -14,11 +14,11 @@ import Navbar from './Navbar';
 import DetailChild from './DetailChild';
 import {crowd_detail} from '../../services/CrowdDao'
 import I18n from 'react-native-i18n';
-import {getVerInfo,isEmptyObject} from '../../utils/ComonHelper';
+import {isEmptyObject} from '../../utils/ComonHelper';
 
-export const footer = (crowd, type, player) => {
-    var stockPer = (!isEmptyObject(player) && player.sell_stock === player.stock_number);
-    var status = crowd.race.status;
+export const footer = (crowd, type, player, race) => {
+
+    let status = crowd.race.status;
     return <View style={[styles.footer, {justifyContent: _justifyContent(status)}]}>
         <TouchableOpacity
             activeOpacity={1}
@@ -36,128 +36,126 @@ export const footer = (crowd, type, player) => {
         {status === 'go_ahead' ? null : <View style={{flex: 1}}/>}
         {status === 'go_ahead' ? null :
             <TouchableOpacity
-                activeOpacity={1}
                 onPress={() => {
-                    if(stockPer){
-
-                    }else{
-                       if (type === 'crowd_detail') {
+                    if (type === 'crowd_detail') {
                         global.router.toSelectPlayer(crowd);
                     } else {
-                        global.router.toSubscriptionPage(crowd.id, player, crowd.race)
-                    }
-                        global.router.toVerifiedPage(verified => {
-                            console.log('实名信息：', verified)
-                            global.router.toSubscriptionPage(crowd.id, player, crowd.race,verified)
-                        });
+                        if (isEmptyObject(global.login_user)) {
+                            global.router.toLoginFirstPage()
+                        } else {
+                            global.router.toVerifiedPage(verified => {
+                                console.log('实名信息：', verified)
+                                global.router.toSubscriptionPage(crowd.id, player, race, verified)
+                            });
+                        }
+
 
                     }
-
                 }}
-                style={[styles.btnRight,{backgroundColor: stockPer ? '#ECECEE':Colors._161}]}>
-                <Text style={[styles.txtRight,{color:stockPer?'#666666':'#FFE9AD'}]}>{I18n.t('subscribe')}</Text>
+                style={styles.btnRight}>
+                <Text style={styles.txtRight}>{I18n.t('subscribe')}</Text>
             </TouchableOpacity>
         }
 
     </View>
 
+};
+
+export function _width(status) {
+    if (status === 'go_ahead') {
+        return {
+            paddingTop: 7,
+            paddingBottom: 7,
+            paddingLeft: 84,
+            paddingRight: 84
+        }
+    } else {
+        return {
+            paddingTop: 7,
+            paddingBottom: 7,
+            paddingLeft: 14,
+            paddingRight: 14
+        }
+    }
 }
-    ;
 
-    export function _width(status) {
-        if (status === 'go_ahead') {
-            return {
-                paddingTop: 7,
-                paddingBottom: 7,
-                paddingLeft: 84,
-                paddingRight: 84
-            }
-        } else {
-            return {
-                paddingTop: 7,
-                paddingBottom: 7,
-                paddingLeft: 14,
-                paddingRight: 14
-            }
+export function _justifyContent(status) {
+
+    if (status === 'go_ahead') {
+        return 'center'
+    } else {
+        return 'flex-start'
+    }
+}
+
+
+export default class CrowdDetail extends Component {
+
+    constructor(props) {
+        super(props);
+        const {crowd} = props.params;
+        this.state = {
+            crowd
         }
     }
 
-    export function _justifyContent(status) {
-
-        if (status === 'go_ahead') {
-            return 'center'
-        } else {
-            return 'flex-start'
-        }
-    }
-
-
-    export default class CrowdDetail extends Component {
-
-        constructor(props) {
-            super(props);
-            const {crowd} = props.params;
-            this.state = {
-                crowd
-            }
-        }
-
-        componentDidMount() {
-            const {crowd} = this.state;
-            crowd_detail({id: crowd.id}, data => {
-                this.setState({
-                    crowd: data
-                })
-            }, err => {
-
+    componentDidMount() {
+        const {crowd} = this.state;
+        crowd_detail({id: crowd.id}, data => {
+            this.setState({
+                crowd: data
             })
-        };
+        }, err => {
+
+        })
+    };
 
 
-        render() {
-            const {crowd} = this.state;
-            let url = `crowdfundings/${crowd.id}`;
-            return <View style={ApplicationStyles.bgContainer}>
-                <Navbar
-                    info={crowd}
-                    url={url}/>
-                <DetailChild
-                    info={crowd}/>
-                {crowd.race.status === 'ended' ? null : footer(crowd, 'crowd_detail', null)}
+    render() {
+        const {crowd} = this.state;
+        let url = `crowdfundings/${crowd.id}`;
+        return <View style={ApplicationStyles.bgContainer}>
+            <Navbar
+                info={crowd}
+                url={url}/>
+            <DetailChild
+                info={crowd}/>
 
-            </View>
-        }
+            {crowd.race.status === 'ended' ? null : footer(crowd, 'crowd_detail', null, null)}
 
-
+        </View>
     }
 
-    const styles = StyleSheet.create({
-        footer: {
-            height: 50, width: '100%', flexDirection: 'row', alignItems: 'center',
-            borderTopColor: Colors._ECE, borderTopWidth: 1, position: 'absolute', bottom: 0,
-            paddingLeft: 17, paddingRight: 17, backgroundColor: 'white'
-        },
-        btnLeft: {
-            height: 34, paddingTop: 7, paddingBottom: 7,
-            paddingLeft: 14, paddingRight: 14, borderColor: '#444444', borderWidth: 1, alignItems: 'center',
-            borderRadius: 2, justifyContent: 'center', flexDirection: 'row',
-        },
-        btnRight: {
-            height: 34,
-            paddingTop: 7, paddingBottom: 7,
-            paddingLeft: 84, paddingRight: 84,
 
-            borderRadius: 2,
-            alignItems: 'center',
-            justifyContent: 'center'
+}
 
-        },
-        txtRight: {
-            color: '#FFE9AD',
-            fontSize: 14
-        },
-        txtLeft: {
-            color: '#444444',
-            fontSize: 14
-        }
-    })
+const styles = StyleSheet.create({
+    footer: {
+        height: 50, width: '100%', flexDirection: 'row', alignItems: 'center',
+        borderTopColor: Colors._ECE, borderTopWidth: 1, position: 'absolute', bottom: 0,
+        paddingLeft: 17, paddingRight: 17, backgroundColor: 'white'
+    },
+    btnLeft: {
+        height: 34, paddingTop: 7, paddingBottom: 7,
+        paddingLeft: 14, paddingRight: 14, borderColor: '#444444', borderWidth: 1, alignItems: 'center',
+        borderRadius: 2, justifyContent: 'center', flexDirection: 'row',
+    },
+    btnRight: {
+        height: 34,
+        paddingTop: 7, paddingBottom: 7,
+        paddingLeft: 84, paddingRight: 84,
+        backgroundColor: Colors._161,
+        borderRadius: 2,
+        alignItems: 'center',
+        justifyContent: 'center'
+
+    },
+    txtRight: {
+        color: '#FFE9AD',
+        fontSize: 14
+    },
+    txtLeft: {
+        color: '#444444',
+        fontSize: 14
+    }
+})
