@@ -99,7 +99,7 @@ android {
         renderscriptSupportModeEnabled true
         multiDexEnabled true
         manifestPlaceholders = [
-                JPUSH_APPKEY: "40fc518c7fb0759af5cba44a",   //在此替换你的APPKey
+                JPUSH_APPKEY: "3789f75e5d780c24595607b6",   //在此替换你的APPKey
                 APP_CHANNEL : "developer-default",        //应用渠道号
                 UMENG_APPKEY:"58da17cc1061d26493001174",
         ]

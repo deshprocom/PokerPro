@@ -47,6 +47,10 @@ export default class VerifiedPage extends Component {
                 leftBtnPress={() => {
                     router.pop()
                 }}
+                rightBtnText={I18n.t('confirm')}
+                rightBtnPress={() => {
+
+                }}
             />
             <ScrollableTabView
                 onChangeTab={(page) => {
