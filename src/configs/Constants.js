@@ -12,8 +12,8 @@ export const UMENG_ANDROID_PRODUCTION = '58da162c9f06fd7065000052';//android_pop
 
 export const QQ_SHARE_ID = '1106155543';
 export const QQ_SHARE_KEY = 'kaI7hok5UcxwVaHv';
-export const WX_Secret = 'c97ac34f98acc25335c94ada42669257';
-export const WX_ID = 'wx0a27fb1118713d94';
+export const WX_Secret = 'd6217cd639d4d4e08150505790bef7b1';
+export const WX_ID = 'wxe2e371b8eced0fd7';
 export const WB_ID = '1050957035';
 export const WB_KEY = 'e1049869ddd670771459d154fe1a9207';
 

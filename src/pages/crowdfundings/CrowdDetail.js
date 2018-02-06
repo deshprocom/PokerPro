@@ -19,22 +19,22 @@ import {isEmptyObject} from '../../utils/ComonHelper';
 export const footer = (crowd, type, player) => {
 
     let status = crowd.race.status;
-    return <View style={[styles.footer, {justifyContent: _justifyContent(status,type)}]}>
+    return <View style={[styles.footer, {justifyContent: _justifyContent(status, type)}]}>
         <TouchableOpacity
             activeOpacity={1}
             onPress={() => {
                 global.router.toReportPage(crowd, player)
 
             }}
-            style={[styles.btnLeft, _width(status,type)]}>
+            style={[styles.btnLeft, _width(status, type)]}>
             <Image
                 style={{height: 12, width: 10, marginRight: 5}}
                 source={Images.black_fire}/>
 
             <Text style={styles.txtLeft}>{I18n.t('timely_match')}</Text>
         </TouchableOpacity>
-        {status === 'go_ahead' &&  type === 'poker_info' ? null : <View style={{flex: 1}}/>}
-        {status === 'go_ahead' &&  type === 'poker_info'  ? null :
+        {status === 'go_ahead' && type === 'poker_info' ? null : <View style={{flex: 1}}/>}
+        {status === 'go_ahead' && type === 'poker_info' ? null :
             <TouchableOpacity
                 onPress={() => {
                     if (type === 'crowd_detail') {
@@ -43,11 +43,7 @@ export const footer = (crowd, type, player) => {
                         if (isEmptyObject(global.login_user)) {
                             global.router.toLoginFirstPage()
                         } else {
-                            global.router.toVerifiedPage(verified => {
-                                console.log('实名信息：', verified)
-
-                                global.router.toSubscriptionPage(crowd, player, verified)
-                            });
+                            global.router.toSubscriptionPage(crowd, player)
                         }
 
 
@@ -62,8 +58,8 @@ export const footer = (crowd, type, player) => {
 
 };
 
-export function _width(status,type) {
-    if (status === 'go_ahead' &&  type === 'poker_info' ) {
+export function _width(status, type) {
+    if (status === 'go_ahead' && type === 'poker_info') {
         return {
             paddingTop: 7,
             paddingBottom: 7,
@@ -80,9 +76,9 @@ export function _width(status,type) {
     }
 }
 
-export function _justifyContent(status,type) {
+export function _justifyContent(status, type) {
 
-    if (status === 'go_ahead' &&  type === 'poker_info' ) {
+    if (status === 'go_ahead' && type === 'poker_info') {
         return 'center'
     } else {
         return 'flex-start'
@@ -115,7 +111,7 @@ export default class CrowdDetail extends Component {
     render() {
         const {crowd} = this.state;
         let url = `crowdfundings/${crowd.id}`;
-        return <View style={[ApplicationStyles.bgContainer,{backgroundColor:'white'}]}>
+        return <View style={[ApplicationStyles.bgContainer, {backgroundColor: 'white'}]}>
             <Navbar
                 info={crowd}
                 url={url}/>

@@ -21,7 +21,7 @@
 #import <UMSocialCore/UMSocialCore.h>
 #import <React/RCTLinkingManager.h>
 
-static NSString *appKey = @"40fc518c7fb0759af5cba44a";     //填写Jpush_appkey
+static NSString *appKey = @"3789f75e5d780c24595607b6";     //填写Jpush_appkey
 static NSString *channel = @"";    //填写channel   一般为nil
 static BOOL isProduction = true;  //填写isProdurion  平时测试时为false ，生产时填写true
 

@@ -69,6 +69,29 @@ export function getFileMine(filePath) {
     return ext;
 }
 
+
+//获取实名信息
+export function getVerId() {
+    console.log('实名信息', global.verifies)
+    const {chinese_ids, passport_ids} = global.verifies;
+    let real_name = {};
+    if (!isEmptyObject(chinese_ids) && chinese_ids.length > 0) {
+        chinese_ids.forEach(item => {
+            if (item.default)
+                real_name = item;
+
+        })
+    } else if (!isEmptyObject(passport_ids) && passport_ids.length > 0) {
+        passport_ids.forEach(item => {
+            if (item.default)
+                real_name = item;
+
+        })
+    }
+    return real_name;
+}
+
+
 //取小数点俩位
 export function toDecimal(x) {
     let f = parseFloat(x);

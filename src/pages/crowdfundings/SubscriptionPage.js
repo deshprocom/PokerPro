@@ -142,7 +142,6 @@ export default class SubscriptionPage extends PureComponent {
 
                         <SubscriptionConfirmPage
                             order_info={order}
-                            verified={verified}
                             ref={ref => this.confirm = ref}
                         />
 
