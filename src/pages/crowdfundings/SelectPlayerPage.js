@@ -89,10 +89,11 @@ export default class SelectPlayerPage extends Component {
                             <Text style={styles.leftTxt2}>{I18n.t('address')}：{race.location}</Text>
                         </View>
                         <View style={styles.line}/>
-                        <View style={styles.barRight}>
+                        <View style={{flex: 0.25, alignItems: 'flex-end',marginRight:17}}>
                             <Text style={styles.RightReward}>{this.numToW(race.prize)}</Text>
                             <Text style={styles.RightTxt}>{I18n.t('reward_circle')}</Text>
                         </View>
+
                     </View>
 
                     <View style={styles.listView}>
