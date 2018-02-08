@@ -97,7 +97,7 @@ export default class SubscriptionInfoPage extends PureComponent {
             record_status, order_number, created_at,
             order_stock_money, order_stock_number, total_money
         } = order_info;
-        return <View>
+        return <ScrollView>
             <View style={styles.pageTop}>
                 <Image source={{uri: logo}} style={styles.image}>
                     {strNotNull(ranking) ? <View style={styles.imgRank}>
@@ -169,7 +169,7 @@ export default class SubscriptionInfoPage extends PureComponent {
 
             </View>}
 
-        </View>
+        </ScrollView>
     }
 
 

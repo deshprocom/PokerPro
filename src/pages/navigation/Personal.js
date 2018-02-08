@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    TouchableOpacity,
+    TouchableOpacity,ScrollView,
     StyleSheet, Platform,
     Text, Image,
     View, Animated, findNodeHandle, Linking
@@ -51,8 +51,8 @@ class Personal extends Component {
 
 
     renderItem = () => {
-        return <View>
-
+        return <ScrollView>
+            <View style={{height:10,backgroundColor:'#ECECEE'}}/>
             {this._item(stylesP.item_view, Images.person_dynamic, stylesP.img_dy,
                 I18n.t('person_dynamic'), () => {
                     if (isEmptyObject(login_user)) {
@@ -107,7 +107,7 @@ class Personal extends Component {
                     <Text style={stylesP.personalText}>{I18n.t('customer_service_tel')}：0755-23919844</Text>
                 </View>
             </TouchableOpacity>
-        </View>
+        </ScrollView>
     };
 
 
@@ -151,7 +151,7 @@ class Personal extends Component {
 
     readerMe = () => {
         const {profile} = this.props;
-        return <View style={{marginBottom: 10}}>
+        return <View >
             <View style={stylesP.meView}>
 
 

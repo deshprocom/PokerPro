@@ -35,7 +35,12 @@ export default class Carousel extends PureComponent {
         if (!isEmptyObject(banners) && banners.length > 0)
             return (
                 <View style={{height: 200, marginBottom: 10,marginTop:0,backgroundColor:'transparent'}}>
+                    <StatusBar
+                        barStyle={'light-content'}
+                        translucent={true}
 
+                        animated={true}//产生动画 隐藏 从下往上 收起
+                    />
                     <Swiper
                         activeDotStyle={stylesM.activeDot}
                         dotStyle={stylesM.dot}
