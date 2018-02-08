@@ -79,6 +79,7 @@ class Personal extends Component {
                         global.router.toLoginFirstPage()
                     else
                         global.router.toPokerB()
+
                 })}
 
             <View style={{height: 15, width: '100%'}}/>

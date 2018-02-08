@@ -133,18 +133,17 @@ const styles = StyleSheet.create({
         paddingLeft: 17, paddingRight: 17, backgroundColor: 'white'
     },
     btnLeft: {
-        height: 34, paddingTop: 7, paddingBottom: 7,
-        paddingLeft: 14, paddingRight: 14, borderColor: '#444444', borderWidth: 1, alignItems: 'center',
+        height: 34, borderColor: '#444444', borderWidth: 1, alignItems: 'center',
         borderRadius: 2, justifyContent: 'center', flexDirection: 'row',
+        flex: 2
     },
     btnRight: {
         height: 34,
-        paddingTop: 7, paddingBottom: 7,
-        paddingLeft: 84, paddingRight: 84,
         backgroundColor: Colors._161,
         borderRadius: 2,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        flex: 5
 
     },
     txtRight: {
