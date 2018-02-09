@@ -132,8 +132,7 @@ export default class WebPage extends Component {
         switch (name) {
             case 'race':
                 global.router.toRacesInfoPage(this.props, param, false)
-            case 'mall':
-                global.router.toMa
+
         }
     }
 
