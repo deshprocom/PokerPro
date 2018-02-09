@@ -14,6 +14,7 @@ import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
 import CrowItem from './CrowItem';
 import I18n from 'react-native-i18n';
 import {crowd_list} from '../../services/CrowdDao';
+import Swiper from 'react-native-swiper';
 
 export default class Crowdfunding extends PureComponent {
 
@@ -34,8 +35,29 @@ export default class Crowdfunding extends PureComponent {
             separator={() => <View style={{height: 10, backgroundColor: Colors._ECE}}>
             </View>}
             emptyView={() => {
-                return <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                    <Text>暂无众筹</Text>
+                var banners = [{image:Images.APPbanner}];
+                return <View style={{flex: 1, backgroundColor:'#ECECEE'}}>
+                    <View style={{height: 201, marginBottom: 10,marginTop:0,backgroundColor:'transparent'}}>
+                        <Swiper
+                            activeDotStyle={styles.activeDot}
+                            dotStyle={styles.dot}
+                            autoplayTimeout={2}
+                            autoplay>
+                            {banners.map((item,key)=>{
+                                return    <TouchableOpacity
+                                    key={key}
+                                    activeOpacity={1}
+                                >
+                                    <Image style={{height: 201, width: '100%'}} source={item.image}/>
+                                </TouchableOpacity>
+                            })}
+                        </Swiper>
+                    </View>
+
+                    <View style={{marginTop:85,alignItems:'center'}}>
+                        <Image style={{height: 80, width: 62}} source={Images.none}/>
+                        <Text style={{fontSize:18,color:'#BBBBBB',marginTop:15}}>暂无众筹相关赛事</Text>
+                    </View>
 
                 </View>
             }}
@@ -59,4 +81,21 @@ export default class Crowdfunding extends PureComponent {
 
     }
 }
+const styles = StyleSheet.create({
+    activeDot: {
+        backgroundColor: 'white',
+        width: 18,
+        height: 4,
+        borderRadius: 2,
+        marginBottom: 0
+    },
+    dot: {
+        backgroundColor: 'rgba(0,0,0,.2)',
+        width: 9,
+        height: 4,
+        borderRadius: 2,
+        marginBottom: 0
+    }
+
+});
 
