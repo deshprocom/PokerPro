@@ -184,7 +184,7 @@ class SettingPage extends Component {
                     width: Metrics.screenWidth, height: 59,
                     justifyContent: 'center', backgroundColor: 'white'
                 }}
-                textStyle={[{color: Colors._333}, Fonts.H17]}>
+                textStyle={[{color: Colors._333,fontWeight:'normal'}, Fonts.H17]}>
                 {I18n.t('exit_login')}
             </Button>)
         }
