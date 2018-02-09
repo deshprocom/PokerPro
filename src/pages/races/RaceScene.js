@@ -290,6 +290,7 @@ class RaceScene extends Component {
                     }}>
                         <MarkdownPlat
                             markdownStr={raceInfo.description}/>
+                        <View style={{height: 70}}/>
                     </Animated.View>
                 </Animated.ScrollView>
 

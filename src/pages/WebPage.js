@@ -132,9 +132,22 @@ export default class WebPage extends Component {
         switch (name) {
             case 'race':
                 global.router.toRacesInfoPage(this.props, param, false)
+                break;
+            case 'mall':
+                global.router.toMallInfoPage({id: param})
+                break;
+            case 'news':
+                global.router.toNewsInfo(param);
+                break;
+            case 'video':
+                global.router.toVideoInfo(param);
+                break;
+            case 'crowd':
+                global.router.toCrowdDetailPage({id: param})
+                break;
 
         }
-    }
+    };
 
     render() {
         const {nativeData, url} = this.state;

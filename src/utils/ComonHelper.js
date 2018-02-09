@@ -598,6 +598,7 @@ export function showToast(msg) {
     if (strNotNull(msg)) {
         const toast = Toast.show(msg, {
             testID: 'deshproToast', position: 200, duration: Toast.durations.SHORT,
+            shadow: false,
             onHidden: (siblingManager) => {
                 Toast.hide(toast)
             }
