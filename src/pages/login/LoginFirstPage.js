@@ -199,6 +199,7 @@ class LoginFirstPage extends Component {
                     </View>
                     {/*登录*/}
                     <TouchableOpacity
+                        activeOpacity={1}
                         testID="btn_login"
                         style={[styles.btn_sign_in, {marginTop: 43}]}
                         onPress={this.doLogin}>

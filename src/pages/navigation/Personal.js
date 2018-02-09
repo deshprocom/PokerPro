@@ -98,7 +98,9 @@ class Personal extends Component {
                 })}
 
 
-            <TouchableOpacity style={[stylesP.personalView, {marginTop: 20}]} onPress={() => {
+            <TouchableOpacity
+                activeOpacity={1}
+                style={[stylesP.personalView, {marginTop: 20}]} onPress={() => {
                 Linking.openURL('tel:0755-23919844');
 
             }}>
@@ -113,7 +115,9 @@ class Personal extends Component {
 
     _item = (itemStyle, img, imgStyle, title, onPress) => {
         const {profile} = this.props;
-        return <TouchableOpacity style={itemStyle} onPress={onPress}>
+        return <TouchableOpacity
+            activeOpacity={1}
+            style={itemStyle} onPress={onPress}>
             <Image style={imgStyle} source={img}/>
             <Text style={stylesP.personalText}>{title}</Text>
             <View style={{flex: 1}}/>
@@ -179,7 +183,9 @@ class Personal extends Component {
                     </TouchableOpacity>
 
                 </View>
-                <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}}
+                <TouchableOpacity
+                    activeOpacity={1}
+                    style={{flexDirection: 'row', alignItems: 'center'}}
                                   onPress={() => {
                                       if (!isEmptyObject(login_user))
                                           router.toPersonPage();
@@ -209,6 +215,7 @@ class Personal extends Component {
 
             <View style={stylesP.orderView}>
                 <TouchableOpacity
+                    activeOpacity={1}
                     onPress={() => {
                         umengEvent('more_order');
                         if (strNotNull(getLoginUser().user_id))
@@ -223,6 +230,7 @@ class Personal extends Component {
                 </TouchableOpacity>
                 <View style={{width: 1, backgroundColor: Colors._ECE, marginBottom: 5, marginTop: 5}}/>
                 <TouchableOpacity style={stylesP.btnOrder}
+                                  activeOpacity={1}
                                   onPress={() => {
                                       if (strNotNull(getLoginUser().user_id))
                                           global.router.toMallOrderPage();
