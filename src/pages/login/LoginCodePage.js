@@ -165,6 +165,7 @@ class LoginCodeView extends React.Component {
                                    placeholder={I18n.t('vcode')}/>
 
                         <TouchableOpacity
+                            activeOpacity={1}
                             style={{
                                 alignItems: 'center',
                                 justifyContent: 'center',
