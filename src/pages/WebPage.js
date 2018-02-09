@@ -17,7 +17,7 @@ import {
 import {NavigationBar} from '../components';
 import {Colors, Fonts, Images, ApplicationStyles} from '../Themes';
 import {getAccessToken, getDpLang} from '../services/RequestHelper';
-import {strNotNull, isEmptyObject, shareHost} from "../utils/ComonHelper";
+import {strNotNull, isEmptyObject, shareHost, util} from "../utils/ComonHelper";
 import {CommentBottom} from './comment';
 
 class PostRoute {
@@ -26,7 +26,10 @@ class PostRoute {
     static RepliesComment = 'replies';
     static ADD_COMMENT = 'addComment';
     static ClickAvatar = 'ClickAvatar';
+    static NATIVE_ROUTE = 'NATIVE_ROUTE';//H5想跳app的route
 }
+
+let Web2NativeTag = 'approuter://';
 
 
 export default class WebPage extends Component {
@@ -61,10 +64,11 @@ export default class WebPage extends Component {
 
     onNavigationStateChange(navState) {
         console.log('onNavigationStateChange', navState);
-        this.setState({
-            canGoBack: navState.canGoBack,
-            title: Platform.OS === 'ios' ? navState.title : 'PokerPro'
-        });
+        if (!util.startsWith(navState.url, Web2NativeTag))
+            this.setState({
+                canGoBack: navState.canGoBack,
+                title: Platform.OS === 'ios' ? navState.title : 'PokerPro'
+            });
 
     }
 
@@ -104,6 +108,12 @@ export default class WebPage extends Component {
 
                             global.router.toPersonDynamic(param);
                             break;
+                        case PostRoute.NATIVE_ROUTE:
+                            this.web2native(param);
+                            this.webRefesh();
+                            break;
+
+
                     }
                 }
             }
@@ -113,6 +123,19 @@ export default class WebPage extends Component {
 
 
     };
+
+    web2native = (route) => {
+        let arr = route.replace(Web2NativeTag, '').split('/')
+        console.log('routes', arr)
+        let name = arr[0];
+        let param = arr[1];
+        switch (name) {
+            case 'race':
+                global.router.toRacesInfoPage(this.props, param, false)
+            case 'mall':
+                global.router.toMa
+        }
+    }
 
     render() {
         const {nativeData, url} = this.state;
