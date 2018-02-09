@@ -253,9 +253,10 @@ export default class VideoListView extends Component {
     }
 
     _pressItem = (item) => {
+        this.setPause()
         // router.toVideoInfoPage(this.props, item)
         let url = `videos/${item.id}`;
-        global.router.toWebPage(url, {bottomNav: 'commentNav', info: item,topic_type:'video'})
+        global.router.toWebPage(url, {bottomNav: 'commentNav', info: item, topic_type: 'video'})
     };
 
 }

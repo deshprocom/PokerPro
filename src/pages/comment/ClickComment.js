@@ -31,7 +31,7 @@ export default class ClickComment extends Component {
         if (comment_count && comment_count > 0)
             return <View
                 style={styles.badge}>
-                <Text style={{fontSize: 10, color: Colors.white}}>{comment_count > 99 ? '99+' : comment_count}</Text>
+                <Text style={{fontSize: 10, color: Colors.white}}>{comment_count > 99 ? '99' : comment_count}</Text>
             </View>
     };
 
