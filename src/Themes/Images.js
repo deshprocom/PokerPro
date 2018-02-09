@@ -284,7 +284,10 @@ const images = {
     timely_matchRed: require('../../source/crowd/timely_matchRed.png'),
     pay_help: require('../../source/mall/pay_help.png'),
     wx_pay: require('../../source/buy/weixin.png'),
-    ranking: require('../../source/navigation/ranking.png')
+    ranking: require('../../source/navigation/ranking.png'),
+
+    APPbanner: require('../../source/crowd/APPbanner.png'),
+    none: require('../../source/crowd/none.png')
 
 
 };

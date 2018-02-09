@@ -69,10 +69,9 @@ class ModifyPwdPage extends Component {
                     eyeTestID="btn_new_eye"/>
 
 
-                <Button
+                <TouchableOpacity
+                    activeOpacity={1}
                     onPress={this._certain}
-                    textStyle={[Fonts.H17,{color:Colors._F4E}]}
-                    testID="btn_certain"
                     style={{
                     height:50,
                     marginRight:17,
@@ -80,10 +79,12 @@ class ModifyPwdPage extends Component {
                     backgroundColor:Colors._161,
                     justifyContent:'center',
                     marginTop:60,
-                    borderRadius:4
+                    borderRadius:4,
+                    alignItems:'center',
+
                 }}>
-                    {I18n.t('certain')}
-                </Button>
+                    <Text style={{fontSize:17,color:Colors._F4E}}>{I18n.t('certain')}</Text>
+                </TouchableOpacity>
 
             </View>
         )
