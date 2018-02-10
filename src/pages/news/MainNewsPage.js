@@ -21,7 +21,7 @@ import {getNewsTypes} from '../../services/NewsDao';
 
 export default class MainNewsPage extends Component {
 
-    componentDidMount() {
+    componentWillMount() {
         this.refresh()
     }
 
