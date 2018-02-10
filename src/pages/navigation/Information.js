@@ -20,6 +20,11 @@ export default class Information extends Component {
         hot_infos: []
     };
 
+
+    refresh = (infos) => {
+        this.setState({hot_infos: infos})
+    }
+
     setInfos = (infos) => {
         console.log('hot_infos', infos);
         let {hot_infos} = this.state;
@@ -140,17 +145,6 @@ export default class Information extends Component {
         );
     }
 
-    onEndReached = () => {
-        console.log('information onEndReached')
-        getHotInfos(data => {
-
-            let {hot_infos} = this.state;
-            hot_infos = util.unionBy(hot_infos, data.hot_infos, 'id');
-            this.setInfos(hot_infos)
-
-        }, err => {
-        }, {page: 1, page_size: 20})
-    }
 }
 
 const styleI = StyleSheet.create({

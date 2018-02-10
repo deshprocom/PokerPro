@@ -155,7 +155,7 @@ class TabHomePage extends Component {
                     info_page: ++this.state.info_page,
                     load_more: 'success'
                 });
-                this.infosView && this.infosView.setInfos(data.hot_infos)
+                this.infosView && this.infosView.refresh(data.hot_infos)
             } else {
                 this.setState({
                     load_more: 'load_all'
