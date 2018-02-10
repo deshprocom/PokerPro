@@ -9,13 +9,13 @@ import {
     TouchableOpacity, View, FlatList,
     StyleSheet, Image, Text
 } from 'react-native';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes/index';
+import UltimateFlatList from '../../../components/ultimate/UltimateFlatList';
 import I18n from 'react-native-i18n';
-import {timely_match} from '../../services/CrowdDao';
-import {utcDate, convertDate, isEmptyObject} from '../../utils/ComonHelper';
+import {timely_match} from '../../../services/CrowdDao';
+import {utcDate, convertDate, isEmptyObject} from '../../../utils/ComonHelper';
 import _ from 'lodash';
-import {MarkdownPlat} from '../../components'
+import {MarkdownPlat} from '../../../components/index'
 
 const styles = StyleSheet.create({
     race: {

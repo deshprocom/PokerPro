@@ -107,7 +107,6 @@ export default class IntroRecord extends PureComponent {
     };
 
     render() {
-        console.log("hhh:", this.props)
         const {description, race_rank} = this.props;
         return <View style={{backgroundColor: 'white'}}>
             <View style={styles.tab_menu}>

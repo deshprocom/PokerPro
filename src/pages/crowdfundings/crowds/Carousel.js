@@ -9,11 +9,11 @@ import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text,StatusBar
 } from 'react-native';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import Swiper from 'react-native-swiper';
-import {crowd_banner} from '../../services/CrowdDao';
-import {isEmptyObject} from '../../utils/ComonHelper';
-import {_clickBanner} from '../navigation/MainBanner';
+import {crowd_banner} from '../../../services/CrowdDao';
+import {isEmptyObject} from '../../../utils/ComonHelper';
+import {_clickBanner} from '../../navigation/MainBanner';
 
 export default class Carousel extends PureComponent {
     state = {

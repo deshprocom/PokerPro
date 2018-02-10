@@ -9,7 +9,7 @@ import {
     TouchableOpacity, View, StatusBar,
     StyleSheet, Image, Text
 } from 'react-native';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes/index';
 import ReportTimely from './ReportTimely';
 import ReportPlayer from './ReportPlayer';
 
