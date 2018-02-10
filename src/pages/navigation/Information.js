@@ -22,6 +22,7 @@ export default class Information extends Component {
 
 
     refresh = (infos) => {
+        console.log('hot_infos', infos);
         this.setState({hot_infos: infos})
     }
 
