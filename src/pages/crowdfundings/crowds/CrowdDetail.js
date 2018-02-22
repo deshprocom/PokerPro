@@ -9,13 +9,13 @@ import {
     TouchableOpacity, View, ScrollView, FlatList,
     StyleSheet, Image, Text
 } from 'react-native';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import Navbar from './Navbar';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes/index';
+import Navbar from './NavTimebar';
 import DetailChild from './DetailChild';
-import {crowd_detail} from '../../services/CrowdDao'
+import {crowd_detail} from '../../../services/CrowdDao'
 import I18n from 'react-native-i18n';
-import {isEmptyObject} from '../../utils/ComonHelper';
-import {LoadingView} from '../../components/load'
+import {isEmptyObject} from '../../../utils/ComonHelper';
+import {LoadingView} from '../../../components/load/index'
 
 export const footer = (crowd, type, player) => {
 

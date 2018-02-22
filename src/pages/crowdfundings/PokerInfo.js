@@ -11,7 +11,7 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {NavigationBar, ImageLoad, ProgressBar} from '../../components';
 import IntroRecord from './IntroRecord';
-import {footer} from './CrowdDetail';
+import {footer} from './crowds/CrowdDetail';
 import {poker_info} from '../../services/CrowdDao';
 import {isEmptyObject, strNotNull} from '../../utils/ComonHelper';
 import I18n from 'react-native-i18n';

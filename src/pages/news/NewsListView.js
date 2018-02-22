@@ -20,6 +20,7 @@ import {fetchNewsList} from '../../actions/NewsAction';
 const headerStyle = {height: 35, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.bg_f5};
 import {getNewsList} from '../../services/NewsDao';
 import ReadLike from '../comment/ReadLike';
+import {isEqual} from 'lodash'
 
 class NewsListView extends Component {
 
@@ -39,6 +40,12 @@ class NewsListView extends Component {
             error: false
         }
 
+
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (isEqual(nextProps, this.props)) return
+        this.listView && this.listView.refresh()
 
     }
 
@@ -180,7 +187,7 @@ class NewsListView extends Component {
                         <ReadLike
                             read={rowData.total_views}
                             like={rowData.total_likes}/>
-                        <View style={{flex:1}}/>
+                        <View style={{flex: 1}}/>
 
                         <Text style={styles.listTime}>{convertDate(date, 'MM-DD')}</Text>
 
@@ -289,9 +296,9 @@ const styles = StyleSheet.create({
     pullView: {
         flex: 1
     },
-    readView:{
-        marginRight:10,
-        flexDirection:'row',
-        alignItems:'center'
+    readView: {
+        marginRight: 10,
+        flexDirection: 'row',
+        alignItems: 'center'
     }
 });

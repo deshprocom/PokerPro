@@ -9,10 +9,10 @@ import {
     StyleSheet, Image, Text, Platform
 } from 'react-native';
 import I18n from 'react-native-i18n';
-import UltimateFlatList from '../../components/ultimate';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {user_crowd_orders} from '../../services/CrowdDao';
-import {CrowdStatus} from '../../configs/Status'
+import UltimateFlatList from '../../../components/ultimate/index';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes/index';
+import {user_crowd_orders} from '../../../services/CrowdDao';
+import {CrowdStatus} from '../../../configs/Status'
 
 const styles = StyleSheet.create({
     view1: {

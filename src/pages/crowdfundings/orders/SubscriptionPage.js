@@ -9,14 +9,14 @@ import {
     TouchableOpacity, View, ScrollView, Platform,
     StyleSheet, Image, Text
 } from 'react-native';
-import {NavigationBar} from '../../components';
-import {Colors, Images, ApplicationStyles} from '../../Themes';
-import {showToast} from '../../utils/ComonHelper';
+import {NavigationBar} from '../../../components/index';
+import {Colors, Images, ApplicationStyles} from '../../../Themes/index';
+import {showToast} from '../../../utils/ComonHelper';
 import I18n from 'react-native-i18n';
 import SubscriptionConfirmPage from './SubscriptionConfirmPage';
-import {user_crowd_count} from '../../services/CrowdDao';
-import {isEmptyObject} from '../../utils/ComonHelper';
-import OrderBottom from '../malls/order/OrderBottom';
+import {user_crowd_count} from '../../../services/CrowdDao';
+import {isEmptyObject} from '../../../utils/ComonHelper';
+import OrderBottom from '../../malls/order/OrderBottom';
 
 export default class SubscriptionPage extends PureComponent {
     state = {

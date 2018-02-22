@@ -10,9 +10,9 @@ import {
     StyleSheet, Image, Text
 } from 'react-native';
 import I18n from 'react-native-i18n';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar} from '../../components';
-import OrderBottom from '../malls/order/OrderBottom';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes/index';
+import {NavigationBar} from '../../../components/index';
+import OrderBottom from '../../malls/order/OrderBottom';
 
 export default class RiskWarningPage extends PureComponent {
     state={
