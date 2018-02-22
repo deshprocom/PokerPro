@@ -17,6 +17,7 @@ export const Navigation = () => {
 
     return (
         <Tabs
+            type="reset"
             style={styles.tabs}
             lazy
             key="Navigation"
