@@ -81,7 +81,7 @@ export default class Loading extends Component {
         overlayColor: 'rgba(0, 0, 0, 0)'
     };
 
-    close() {
+    close = () => {
         this.setState({visible: false});
     }
 
@@ -94,31 +94,22 @@ export default class Loading extends Component {
         this.setState({visible, textContent});
     }
 
-    _handleOnRequestClose() {
+    _handleOnRequestClose = () => {
         if (this.props.cancelable) {
             this.close();
         }
     }
 
-    _renderDefaultContent() {
+    _renderDefaultContent = () => {
         return (
             <View style={styles.background}>
                 <Image
                     source={Images.loading}
                     style={{height: 115, width: 115}}/>
-                {/*<ActivityIndicator*/}
-                {/*color={this.props.color}*/}
-                {/*size={this.props.size}*/}
-                {/*style={{flex: 1}}*/}
-                {/*/>*/}
-                {/*<View style={styles.textContainer}>*/}
-                {/*<Text*/}
-                {/*style={[styles.textContent, this.props.textStyle]}>{I18n.t('loading')}</Text>*/}
-                {/*</View>*/}
             </View>);
     }
 
-    _renderSpinner() {
+    _renderSpinner = () => {
         const {visible} = this.state;
 
 
