@@ -9,9 +9,9 @@ import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text
 } from 'react-native';
-import {CrowdCountDown, ImageLoad, ProgressBar} from '../../components';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {RaceStatus} from '../../configs/Status';
+import {CrowdCountDown, ImageLoad, ProgressBar} from '../../../components/index';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes/index';
+import {RaceStatus} from '../../../configs/Status';
 import moment from 'moment';
 import _ from 'lodash';
 import I18n from 'react-native-i18n';

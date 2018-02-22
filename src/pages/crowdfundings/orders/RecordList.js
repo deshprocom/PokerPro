@@ -9,13 +9,13 @@ import {
     TouchableOpacity, View, StatusBar,
     StyleSheet, Image, Text, Platform
 } from 'react-native';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar} from '../../components';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes/index';
+import {NavigationBar} from '../../../components/index';
 import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
 import I18n from 'react-native-i18n';
-import {CrowdStatus} from '../../configs/Status';
+import {CrowdStatus} from '../../../configs/Status';
 import CrowdList from './CrowdList';
-import {user_crowd_orders} from '../../services/CrowdDao';
+import {user_crowd_orders} from '../../../services/CrowdDao';
 
 export default class RecordList extends PureComponent {
 

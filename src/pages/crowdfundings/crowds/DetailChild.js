@@ -8,10 +8,10 @@ import {
     TouchableOpacity, View, StatusBar,
     StyleSheet, Image, Text, ScrollView
 } from 'react-native';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {ImageLoad, ProgressBar, MarkdownPlat} from '../../components';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes/index';
+import {ImageLoad, ProgressBar, MarkdownPlat} from '../../../components/index';
 import moment from 'moment';
-import {isEmptyObject} from '../../utils/ComonHelper';
+import {isEmptyObject} from '../../../utils/ComonHelper';
 import _ from 'lodash';
 import I18n from 'react-native-i18n';
 

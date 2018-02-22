@@ -484,7 +484,7 @@
   "mall_completed": "退换成功",
   "agree_transaction_refund": "同意本次交易支持退款",
   "img_load_fail": "图片上传失败",
-  "ticket_order": "票务订单",
+  "ticket_order": "Ticket Order",
   "refund_price": "请输入退款金额",
   "refund_explain": "请输入退换说明",
   "leaveMessage1": "给商家留言：",
@@ -494,7 +494,7 @@
   "write_comment": "写下评论....",
   "comment_info": "评论详情",
   "reply": "回复",
-  "person_dynamic": "我的动态",
+  "person_dynamic": "Moments",
   "Poker": "扑客Poker",
   "comment": "评论",
   "release": "发布",
@@ -527,7 +527,7 @@
   "comment_success": "评论成功",
   "comment_failed": "评论失败",
   "reply_success": "回复成功",
-  "hot": "热点",
+  "hot": "Hot",
   "crowdfunding": "众筹",
   "select_player": "选择牌手",
   "subscription": "认购",
@@ -570,6 +570,6 @@
   "unpublish": "待公布",
   "success": "成功",
   "unsuccess": "未成功",
-  "crowAddress":"地址"
+  "crowAddress": "地址"
 }
 

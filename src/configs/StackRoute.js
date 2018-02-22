@@ -82,17 +82,17 @@ import PersonDynamicPage from '../pages/comment/PersonDynamicPage';
 import CommentInfoPage from '../pages/comment/CommentInfoPage';
 import ReceivedReplyPage from '../pages/comment/ReceivedReplyPage';
 import DeletePage from '../pages/comment/DeletePage';
-import Crowdfunding from '../pages/crowdfundings/Crowdfunding';
-import CrowdDetail from '../pages/crowdfundings/CrowdDetail';
-import ReportPage from '../pages/crowdfundings/ReportPage';
+import Crowdfunding from '../pages/crowdfundings/crowds/Crowdfunding';
+import CrowdDetail from '../pages/crowdfundings/crowds/CrowdDetail';
+import ReportPage from '../pages/crowdfundings/reports/ReportPage';
 import PokerInfo from '../pages/crowdfundings/PokerInfo';
 import SelectPlayerPage from '../pages/crowdfundings/SelectPlayerPage';
 import PokerB from '../pages/crowdfundings/PokerB';
-import SubscriptionPage from '../pages/crowdfundings/SubscriptionPage';
-import SubscriptionConfirmPage from '../pages/crowdfundings/SubscriptionConfirmPage';
-import RiskWarningPage from '../pages/crowdfundings/RiskWarningPage';
-import RecordList from '../pages/crowdfundings/RecordList';
-import SubscriptionInfoPage from '../pages/crowdfundings/SubscriptionInfoPage';
+import SubscriptionPage from '../pages/crowdfundings/orders/SubscriptionPage';
+import SubscriptionConfirmPage from '../pages/crowdfundings/orders/SubscriptionConfirmPage';
+import RiskWarningPage from '../pages/crowdfundings/orders/RiskWarningPage';
+import RecordList from '../pages/crowdfundings/orders/RecordList';
+import SubscriptionInfoPage from '../pages/crowdfundings/orders/SubscriptionInfoPage';
 
 
 export const Stacks = Actions.create(

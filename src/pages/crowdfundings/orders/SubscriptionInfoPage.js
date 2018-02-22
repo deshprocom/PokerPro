@@ -9,13 +9,13 @@ import {
     TouchableOpacity, View, TextInput, Platform, FlatList,
     StyleSheet, Image, Text, ScrollView
 } from 'react-native';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar, SecurityText} from '../../components';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
+import {NavigationBar, SecurityText} from '../../../components';
 import I18n from 'react-native-i18n';
-import {utcDate, isEmptyObject, convertDate, strNotNull, getLoginUser} from '../../utils/ComonHelper';
-import {get_crowd_info} from '../../services/CrowdDao';
-import {CrowdStatus} from '../../configs/Status';
-import {LoadingView} from '../../components/load'
+import {utcDate, isEmptyObject, convertDate, strNotNull, getLoginUser} from '../../../utils/ComonHelper';
+import {get_crowd_info} from '../../../services/CrowdDao';
+import {CrowdStatus} from '../../../configs/Status';
+import {LoadingView} from '../../../components/load'
 
 export default class SubscriptionInfoPage extends PureComponent {
     state = {

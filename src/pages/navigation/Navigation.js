@@ -9,7 +9,7 @@ import VideoNewsTab from './VideoNewsTab';
 import DrawerRank from '../rank/DrawerRank';
 import CustomTabBar from './BottomNavigation';
 import MallPage from '../malls/MallPage';
-import Crowdfunding from '../crowdfundings/Crowdfunding';
+import Crowdfunding from '../crowdfundings/crowds/Crowdfunding';
 
 
 export const Navigation = () => {
@@ -17,6 +17,7 @@ export const Navigation = () => {
 
     return (
         <Tabs
+            type="reset"
             style={styles.tabs}
             lazy
             key="Navigation"

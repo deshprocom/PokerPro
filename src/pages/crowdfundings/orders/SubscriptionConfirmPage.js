@@ -10,11 +10,11 @@ import {
     StyleSheet, Image, Text
 } from 'react-native';
 import I18n from 'react-native-i18n';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {SecurityText, ActionPay, Loading} from '../../components';
-import {crowd_order, crowd_wx_pay, crowd_wx_paid_result} from '../../services/CrowdDao';
-import {isWXAppInstalled, showToast, getVerId, isEmptyObject, idCardStatus} from '../../utils/ComonHelper';
-import {Verified} from '../../configs/Status'
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes/index';
+import {SecurityText, ActionPay, Loading} from '../../../components/index';
+import {crowd_order, crowd_wx_pay, crowd_wx_paid_result} from '../../../services/CrowdDao';
+import {isWXAppInstalled, showToast, getVerId, isEmptyObject, idCardStatus} from '../../../utils/ComonHelper';
+import {Verified} from '../../../configs/Status'
 
 export default class SubscriptionConfirmPage extends PureComponent {
     state = {

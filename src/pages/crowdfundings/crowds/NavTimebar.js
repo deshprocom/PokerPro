@@ -9,11 +9,11 @@ import {
     TouchableOpacity, View, StatusBar,
     StyleSheet, Image, Text
 } from 'react-native';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {CrowdCountDown} from '../../components';
-import {RaceStatus} from '../../configs/Status';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes/index';
+import {CrowdCountDown} from '../../../components/index';
+import {RaceStatus} from '../../../configs/Status';
 import moment from 'moment';
-import {sharePage} from '../../utils/ComonHelper';
+import {sharePage} from '../../../utils/ComonHelper';
 
 const styles = StyleSheet.create({
     btnLeft: {

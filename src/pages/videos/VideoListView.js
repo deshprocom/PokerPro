@@ -16,6 +16,7 @@ import {ImageLoad, VideoPlayer, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {getVideoList} from '../../services/NewsDao';
 import ReadLike from '../comment/ReadLike';
+import {isEqual} from 'lodash'
 
 export default class VideoListView extends Component {
 
@@ -32,6 +33,12 @@ export default class VideoListView extends Component {
             video_link: '',
             cover_link: ''
         }
+
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (isEqual(nextProps, this.props)) return
+        this.listView && this.listView.refresh()
 
     }
 

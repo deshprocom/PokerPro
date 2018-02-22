@@ -9,13 +9,13 @@ import {
     TouchableOpacity, View, FlatList,
     StyleSheet, Image, Text
 } from 'react-native';
-import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {poker_list, player_match} from '../../services/CrowdDao';
-import UltimateFlatList from '../../components/ultimate/UltimateFlatList';
+import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
+import {poker_list, player_match} from '../../../services/CrowdDao';
+import UltimateFlatList from '../../../components/ultimate/UltimateFlatList';
 import I18n from 'react-native-i18n';
-import {MarkdownPlat} from '../../components';
+import {MarkdownPlat} from '../../../components';
 import _ from 'lodash';
-import {isEmptyObject, utcDate, convertDate} from '../../utils/ComonHelper';
+import {isEmptyObject, utcDate, convertDate} from '../../../utils/ComonHelper';
 
 const styles = StyleSheet.create({
     list: {
