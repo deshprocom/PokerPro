@@ -63,6 +63,7 @@ class EmailRegisterPage extends React.Component {
                 testID="page_email_register"
                 style={{flex: 1, backgroundColor: Colors.bg_f5}}>
                 <TouchableOpacity
+                    activeOpacity={1}
                     testID="btn_home_page"
                     onPress={() => router.popToTop()}/>
                 <View style={{backgroundColor: Colors.bg_09}}>
@@ -100,6 +101,7 @@ class EmailRegisterPage extends React.Component {
 
                 {/*下一步按钮*/}
                 <TouchableOpacity
+                    activeOpacity={1}
                     testID="btn_complete"
                     style={{
                         marginTop: 19, alignSelf: 'center',
@@ -122,6 +124,7 @@ class EmailRegisterPage extends React.Component {
                 </TouchableOpacity>
 
                 <TouchableOpacity
+                    activeOpacity={1}
                     style={{
                         borderBottomWidth: 0.5,
                         borderBottomColor: Colors._999,
@@ -148,7 +151,9 @@ class EmailRegisterPage extends React.Component {
 
                 <View style={{flex: 1}}/>
 
-                <TouchableOpacity onPress={() => {
+                <TouchableOpacity
+                    activeOpacity={1}
+                    onPress={() => {
                     router.toProtocol(this.props, this._protocol)
                 }}
                                   style={{marginBottom: 49}}>
