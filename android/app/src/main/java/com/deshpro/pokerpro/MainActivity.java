@@ -48,9 +48,4 @@ JPushInterface.onResume(this);
             intent.putExtra("newConfig", newConfig);
             this.sendBroadcast(intent);
         }
-
-        @Override
-        public void invokeDefaultOnBackPressed() {
-            moveTaskToBack(true);
-        }
 }
