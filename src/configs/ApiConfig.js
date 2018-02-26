@@ -138,6 +138,7 @@ export default {
     timely_match: timely_match,//及时赛报
     player_match: player_match,//牌手赛报
     crowd_user_count: crowd_user_count,//获取用户历史购买份数
+    releases_show:'releases',//功能开启或隐藏控制
 
 }
 

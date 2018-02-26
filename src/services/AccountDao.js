@@ -8,6 +8,13 @@ import JpushHelp from './JpushHelper';
 import {isEmptyObject, showToast} from '../utils/ComonHelper';
 import {getAddressList} from './OrderDao';
 
+export function releases_show(resolve, reject) {
+    helper.get(Api.releases_show, ret => {
+        resolve(ret.data);
+    }, err => {
+        reject(err)
+    })
+}
 
 export function getPreferential(body, resolve, reject) {
     helper.get(Api.preferential(body), ret => {

@@ -6,7 +6,6 @@ import {
     StyleSheet
 } from 'react-native';
 import VideoNewsTab from './VideoNewsTab';
-import DrawerRank from '../rank/DrawerRank';
 import CustomTabBar from './BottomNavigation';
 import MallPage from '../malls/MallPage';
 import Crowdfunding from '../crowdfundings/crowds/Crowdfunding';

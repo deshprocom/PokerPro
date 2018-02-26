@@ -6,7 +6,7 @@ import TabIcon from './TabIcon';
 import {showTabTop, hideTabTop, onPressBackTop, videoPause} from '../../actions/AccountAction';
 import {SHOW_BACK_TOP, HIDE_BACK_TOP, VIDEO_PAUSE, BACK_TOP} from '../../actions/ActionTypes';
 import {connect} from 'react-redux';
-import {setDispatchAction} from '../../utils/ComonHelper';
+import {isEmptyObject, setDispatchAction} from '../../utils/ComonHelper';
 
 
 class BottomNavigation extends Component {
@@ -61,7 +61,7 @@ class BottomNavigation extends Component {
                     <TabIcon tab={'news'} focused={index === 1}/>
                 </TouchableOpacity>
 
-                <TouchableOpacity
+                {global.menuReleases === undefined || global.menuReleases.crowdfunding ? <TouchableOpacity
                     onPress={() => {
                         this.props._videoPause();
 
@@ -70,7 +70,8 @@ class BottomNavigation extends Component {
                     }}
                     style={styleBN.navigations}>
                     <TabIcon tab={'rank'} focused={index === 2}/>
-                </TouchableOpacity>
+                </TouchableOpacity> : null}
+
                 <TouchableOpacity
                     onPress={() => {
                         this.props._videoPause();
@@ -95,6 +96,8 @@ class BottomNavigation extends Component {
 
         )
     }
+
+
 }
 
 const styleBN = StyleSheet.create({

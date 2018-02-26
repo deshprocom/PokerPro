@@ -6,9 +6,9 @@ import {Router} from 'react-native-router-flux';
 import {Stacks} from '../configs/StackRoute';
 import StorageKey from '../configs/StorageKey';
 import {setAccessToken, getBaseURL} from '../services/RequestHelper';
-import {putLoginUser, getUserData, updateApp, setDispatchAction, isEmptyObject} from '../utils/ComonHelper';
+import {putLoginUser, getUserData, updateApp, setDispatchAction, isEmptyObject,getDispatchAction} from '../utils/ComonHelper';
 import {init} from '../services/ConfigDao';
-import {getActivityPush, getUpdate} from '../services/AccountDao';
+import {releases_show, getUpdate} from '../services/AccountDao';
 import {
     GET_CERTIFICATION,
     GET_RECENT_RACES,
@@ -80,6 +80,11 @@ class Root extends Component {
     _getUpdate = () => {
         getUpdate(data => {
             updateApp(data);
+            releases_show(data => {
+                global.menuReleases = data;
+                getDispatchAction()['BACK_TOP']();
+            }, err => {
+            })
         }, err => {
 
         })
