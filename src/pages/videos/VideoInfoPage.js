@@ -233,7 +233,8 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.white
     },
     video: {
-        height: 216
+        height: 216,
+        marginTop:0
     },
     fullVideo: {
         flex: 1
