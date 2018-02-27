@@ -1,16 +1,11 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import I18n from 'react-native-i18n';
 
 import {Colors, Images} from '../../Themes';
 
 class RankCheck extends Component {
-    static propTypes = {
-        checkTitle: PropTypes.string,
-        checkData: PropTypes.array,
-        checkType: PropTypes.func,
-        checkList: PropTypes.func
-    };
+
 
     constructor(props) {
         super(props);

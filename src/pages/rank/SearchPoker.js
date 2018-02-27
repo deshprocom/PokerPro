@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/8/1.
  */
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet, Text, View, TextInput,
     TouchableOpacity, Image, StatusBar,

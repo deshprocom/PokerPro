@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {View, Text, StyleSheet, ScrollView, TouchableOpacity, Image} from 'react-native';
 import I18n from 'react-native-i18n';
 
@@ -7,9 +7,7 @@ import {Metrics, Colors, Images} from '../../Themes';
 import RankCheck from './RankCheck';
 
 export default class FiltePage extends Component {
-    static propTypes = {
-        cancelDrawer: PropTypes.func
-    };
+
 
     constructor(props) {
         super(props);

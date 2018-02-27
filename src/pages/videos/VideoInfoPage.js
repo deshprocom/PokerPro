@@ -2,7 +2,7 @@
  * Created by lorne on 2017/5/26.
  */
 
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet, Text, View, FlatList,
     TouchableOpacity, Image, StatusBar,

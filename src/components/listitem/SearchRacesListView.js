@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/3/3.
  */
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet, Text, View, ListView,
     TouchableOpacity, Image
@@ -26,10 +26,6 @@ const FUTURE = 'forward',
 
 
 class SearchRacesListView extends Component {
-
-    static propTypes = {
-        router: PropTypes.object
-    };
 
 
     render() {

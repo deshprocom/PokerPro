@@ -6,7 +6,7 @@
  */
 
 
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
     AppRegistry,
     StyleSheet,
@@ -15,11 +15,13 @@ import {
     TextInput,
     TouchableOpacity
 } from 'react-native';
+import PropTypes from 'prop-types';
 
 const LCCountDownButtonState = {
     LCCountDownButtonActive: 0,
     LCCountDownButtonDisable: 1,
 }
+
 
 // {id , startTime, deathCount}
 var timeRecodes = [];  //根据id来记录LCCountDownButton的信息
@@ -36,13 +38,13 @@ export default class CountDownBtn extends Component {
     }
 
     static propTypes = {
-        id: React.PropTypes.string,          //按钮的身份标识,同一个页面的按钮是同一个id
-        beginText: React.PropTypes.string,   //初始状态按钮title
-        endText: React.PropTypes.string,     //读秒结束后按钮的title
-        count: React.PropTypes.number,       //计时数
-        pressAction: React.PropTypes.func,   //按下按钮的事件,但是触发倒数需要你自己来调用方法
-        changeWithCount: React.PropTypes.func,   //读秒变化的函数,该函数带有一个参数count,表示当前的剩余事件
-        end: React.PropTypes.func,           //读秒完毕后的函数
+        id: PropTypes.string,          //按钮的身份标识,同一个页面的按钮是同一个id
+        beginText: PropTypes.string,   //初始状态按钮title
+        endText: PropTypes.string,     //读秒结束后按钮的title
+        count: PropTypes.number,       //计时数
+        pressAction: PropTypes.func,   //按下按钮的事件,但是触发倒数需要你自己来调用方法
+        changeWithCount: PropTypes.func,   //读秒变化的函数,该函数带有一个参数count,表示当前的剩余事件
+        end: PropTypes.func,           //读秒完毕后的函数
         frameStyle: View.propTypes.style    //初始化的位置大小
     }
 
