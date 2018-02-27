@@ -164,13 +164,15 @@ export default class WebPage extends Component {
 
 
                 <WebView
+                    allowUniversalAccessFromFileURLs={true}
+                    domStorageEnabled={false}
+                    javaScriptEnabled={true}
                     ref={ref => this.webView = ref}
                     startInLoadingState={true}
                     renderError={this._renderError}
                     onNavigationStateChange={(e) => this.onNavigationStateChange(e)}
                     source={{uri: url}}
                     mixedContentMode={'always'}
-                    domStorageEnabled={false}
                     scalesPageToFit={true}
                     dataDetectorTypes={'none'}
                     onMessage={this.handleMessage}/>

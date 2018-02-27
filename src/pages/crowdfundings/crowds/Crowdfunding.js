@@ -14,7 +14,6 @@ import UltimateFlatList from '../../../components/ultimate/UltimateFlatList';
 import CrowItem from './CrowItem';
 import I18n from 'react-native-i18n';
 import {crowd_list} from '../../../services/CrowdDao';
-import Swiper from 'react-native-swiper';
 
 export default class Crowdfunding extends PureComponent {
 

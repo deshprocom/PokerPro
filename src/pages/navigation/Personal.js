@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    TouchableOpacity,ScrollView,
+    TouchableOpacity, ScrollView,
     StyleSheet, Platform,
     Text, Image,
     View, Animated, findNodeHandle, Linking
@@ -41,10 +41,12 @@ class Personal extends Component {
     render() {
 
         return (
-            <View>
+            <View style={{flex: 1}}>
                 {this.readerMe()}
 
                 {this.renderItem()}
+
+
             </View>
         )
     }
@@ -52,7 +54,7 @@ class Personal extends Component {
 
     renderItem = () => {
         return <ScrollView>
-            <View style={{height:10,backgroundColor:'#ECECEE'}}/>
+            <View style={{height: 10, backgroundColor: '#ECECEE', flex: 1}}/>
             {this._item(stylesP.item_view, Images.person_dynamic, stylesP.img_dy,
                 I18n.t('person_dynamic'), () => {
                     if (isEmptyObject(login_user)) {
@@ -109,6 +111,8 @@ class Personal extends Component {
                     <Text style={stylesP.personalText}>{I18n.t('customer_service_tel')}：0755-23919844</Text>
                 </View>
             </TouchableOpacity>
+
+            <View style={{height: 50}}/>
         </ScrollView>
     };
 
@@ -155,7 +159,7 @@ class Personal extends Component {
 
     readerMe = () => {
         const {profile} = this.props;
-        return <View >
+        return <View>
             <View style={stylesP.meView}>
 
 
@@ -186,13 +190,13 @@ class Personal extends Component {
                 <TouchableOpacity
                     activeOpacity={1}
                     style={{flexDirection: 'row', alignItems: 'center'}}
-                                  onPress={() => {
-                                      if (!isEmptyObject(login_user))
-                                          router.toPersonPage();
-                                      else
-                                          router.toLoginFirstPage()
+                    onPress={() => {
+                        if (!isEmptyObject(login_user))
+                            router.toPersonPage();
+                        else
+                            router.toLoginFirstPage()
 
-                                  }}>
+                    }}>
                     <View
                         style={stylesP.personRadius2}>
                         <Image style={{width: 72, height: 72, borderRadius: 36}} source={this._avatar()}/>

@@ -16,12 +16,12 @@ import {connect} from 'react-redux';
 import {SearchPage} from './SearchPage';
 import {SHOW_BACK_TOP, HIDE_BACK_TOP, BACK_TOP} from '../../actions/ActionTypes';
 import {getDispatchAction, alertRefresh, getCurrentDate, strNotNull} from '../../utils/ComonHelper';
-import {BaseComponent} from '../../components';
 import ActivityModel from '../message/ActivityModel';
 import {getActivityPush} from '../../services/AccountDao';
 import StorageKey from '../../configs/StorageKey';
 import I18n from 'react-native-i18n';
 import Colors from "../../styles/Colors";
+import {ApplicationStyles} from '../../Themes';
 
 class TabHomePage extends Component {
     state = {
@@ -109,7 +109,6 @@ class TabHomePage extends Component {
     };
 
     _getData = () => {
-        this.container.open();
         this._getPushActivity();
         getMainBanners(data => {
             this.setState({
@@ -249,8 +248,7 @@ class TabHomePage extends Component {
 
         return (
 
-            <BaseComponent
-                ref={ref => this.container = ref}>
+            <View style={ApplicationStyles.bgContainer}>
                 <SearchPage
                     unread={this.props.unread}/>
                 <ScrollView
@@ -295,7 +293,7 @@ class TabHomePage extends Component {
                 <ActivityModel
                     ref={ref => this.activityModel = ref}/>
 
-            </BaseComponent>
+            </View>
 
         );
     }

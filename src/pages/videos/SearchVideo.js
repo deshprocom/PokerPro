@@ -254,7 +254,7 @@ export default class SearchVideo extends Component {
                             autoFocus={true}
                             testID="input_news_search"
                             placeholderTextColor={Colors.txt_666}
-                            placeholder={I18n.t('news_outline')}
+                            placeholder={I18n.t('video_outline')}
                             autoCapitalize="none"
                             autoCorrect={false}
                             clearButtonMode="always"
