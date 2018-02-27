@@ -43,10 +43,10 @@
     "react-native-umshare": "git+https://github.com/dongodngtang/react-native-umshare.git",
     "react-native-video": "git+https://github.com/react-native-community/react-native-video.git#master",
     "react-native-wechat": "^1.9.9",
-    "react-redux": "^5.0.4",
+    "react-redux": "^5.0.7",
     "react-timer-mixin": "^0.13.3",
-    "redux": "^3.6.0",
-    "redux-actions": "^2.0.1",
+    "redux": "^3.7.2",
+    "redux-actions": "^2.2.1",
     "redux-thunk": "^2.2.0",
     "rn-markdown": "^1.1.1",
     "rn-umeng": "^1.0.6"
