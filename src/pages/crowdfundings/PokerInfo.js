@@ -189,7 +189,7 @@ export default class PokerInfo extends PureComponent {
         ;
 
 
-        return <View style={ApplicationStyles.bgContainer}>
+        return <View style={[ApplicationStyles.bgContainer,{backgroundColor:'white'}]}>
             <NavigationBar
                 barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
                 toolbarStyle={{backgroundColor: Colors.white}}
@@ -244,7 +244,7 @@ export default class PokerInfo extends PureComponent {
                         {this.renderItem(this.numberToW(cf_money), I18n.t('total_crowdfunding'))}
                     </View>
                 </View>
-
+                <View style={{height: 7, backgroundColor: '#ECECEE'}}/>
                 <View style={{height: 14, backgroundColor: 'white', marginTop: 7}}/>
 
 
