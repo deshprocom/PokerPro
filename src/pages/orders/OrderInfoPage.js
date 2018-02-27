@@ -9,7 +9,7 @@ import {
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar, SecurityText} from '../../components';
+import {NavigationBar, SecurityText, BtnLong} from '../../components';
 import RaceInfoView from '../buy/RaceInfoView';
 import {GET_ORDER_DETAIL, POST_ORDER_CANCEL} from '../../actions/ActionTypes';
 import {fetchOrderDetail, fetchOrderCancel} from '../../actions/OrderAction'
@@ -19,7 +19,6 @@ import {
     DATA_SS, orderStatus, moneyFormat, isEmptyObject,
     convertDate, strNotNull
 } from '../../utils/ComonHelper';
-import Button from 'react-native-smart-button';
 import {fetchGetRecentRaces, fetchRacesInfo} from '../../actions/RacesAction';
 import {Verified} from '../../configs/Status';
 import PayModal from '../buy/PayModal';
@@ -521,18 +520,16 @@ class OrderInfoPage extends React.Component {
     _serviceBtn = (order_info) => {
         if (!isEmptyObject(order_info) &&
             order_info.status !== 'unpaid')
-            return (<Button
+            return (<BtnLong
+                name={I18n.t('contact_customer_service')}
                 onPress={this._hotLine}
-                touchableType={Button.constants.touchableTypes.fadeContent}
                 testID="btn_refresh"
                 textStyle={{color: Colors.txt_666, fontSize: 17}}
                 style={{
-                    justifyContent: 'center', backgroundColor: Colors.white,
+                   backgroundColor: Colors.white,
                     height: 49, flex: 1, marginLeft: 17, marginRight: 17, marginBottom: 17
                 }}
-            >
-                {I18n.t('contact_customer_service')}
-            </Button>)
+            />)
     };
 
     _exitOrder = () => {

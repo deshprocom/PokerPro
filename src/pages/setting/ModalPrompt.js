@@ -10,12 +10,11 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {CountDownText}from '../../components/countdown/CountDownText';
 import {checkPhone, showToast, clearLoginUser} from '../../utils/ComonHelper';
-import {Password} from '../../components';
+import {Password,SecurityText} from '../../components';
 import {POST_CHANGE_BIND, POST_VERIFY_CODE, POST_V_CODE, POST_CHANGE_PERMISSION} from '../../actions/ActionTypes';
 import {fetchChangBind, fetchPostVCode, fetchPostVerifyCode, fetchChangePermission} from '../../actions/AccountAction';
 import {fetchGetRecentRaces, _getProfileOk} from '../../actions/RacesAction';
 import {connect} from 'react-redux';
-import SecurityText from 'react-native-smart-security-text';
 import Modal from 'react-native-root-modal';
 
 class ModalPrompt extends Component {

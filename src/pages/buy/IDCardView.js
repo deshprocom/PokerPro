@@ -9,8 +9,7 @@ import {
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {InputView} from '../../components';
-import Button from 'react-native-smart-button';
+import {InputView,BtnLong} from '../../components';
 import {fetchPostCertification, fetchPostCardImage} from '../../actions/AccountAction';
 import {POST_CERTIFICATION, GET_CERTIFICATION} from '../../actions/ActionTypes';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -198,41 +197,6 @@ class IDCardView extends Component {
         return (<ScrollView
             testID="page_real_name"
             style={ApplicationStyles.bgContainer}>
-
-            {false ? <View>
-
-                <Text style={{
-                    paddingLeft: 15,
-                    marginTop: 13,
-                    marginBottom: 13,
-                    color: Colors._333,
-                    fontSize: 15
-                }}>{I18n.t('ple_put_password')}</Text>
-
-                <View style={styles.choice_view}>
-                    <Button style={[styles.choice_btn, styles.choice_btn_right,
-                        {backgroundColor: choice_id === 'chinese_id' ? '#16181D' : Colors.bg_f5}]}
-                            textStyle={[styles.choice_text_btn, {color: choice_id === 'chinese_id' ? Colors._FFE : Colors.txt_444}]}
-                            onPress={() => {
-                                this.setState({
-                                    choice_id: 'chinese_id',
-
-                                })
-                            }}>
-                        {I18n.t('identification')}</Button>
-
-                    <Button
-                        style={[styles.choice_btn, {backgroundColor: choice_id === 'passport_id' ? '#16181D' : Colors.bg_f5}]}
-                        textStyle={[styles.choice_text_btn, {color: choice_id === 'passport_id' ? Colors._FFE : Colors.txt_444}]}
-                        onPress={() => {
-                            this.setState({
-                                choice_id: 'passport_id',
-                            })
-                        }}>
-                        {I18n.t('passport')}</Button>
-                </View>
-            </View> : null}
-
 
             <View
                 style={{

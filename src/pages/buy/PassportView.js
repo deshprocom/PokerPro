@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/2/21.
  */
-import React, {Component, PropTypes}from 'react';
+import React, {Component, PropTypes} from 'react';
 import {
     TouchableOpacity, View, TextInput, Alert,
     StyleSheet, Image, Text, ScrollView, Platform
@@ -9,7 +9,6 @@ import {
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import Button from 'react-native-smart-button';
 
 import ActionSheet from '../../components/sheet';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -24,7 +23,7 @@ import {fetchPostCertification, fetchPostPasswordImage} from '../../actions/Acco
 import {postPasswordImage} from '../../services/NewsDao';
 import {umengEvent} from '../../utils/UmengEvent';
 
-import {InputView} from "../../components";
+import {InputView, BtnLong} from "../../components";
 
 
 const picker = {
@@ -34,6 +33,7 @@ const picker = {
     compressImageMaxHeight: 800,
     compressImageQuality: 0.8,
 };
+
 class PassportView extends Component {
     static propTypes = {
         router: PropTypes.object
@@ -284,7 +284,8 @@ class PassportView extends Component {
     _hasRealBtn = () => {
         const {editable} = this.state;
         if (editable) {
-            return ( <Button
+            return ( <BtnLong
+                name={I18n.t('submit')}
                 testID="btn_submit"
                 activeOpacity={1}
                 onPress={this._btnSubmit}
@@ -293,12 +294,10 @@ class PassportView extends Component {
                     alignSelf: 'center', backgroundColor: '#161718',
                     marginTop: 25, justifyContent: 'center', marginBottom: 10
                 }}
-                textStyle={{fontSize: Fonts.size.h17, color: Colors.txt_E0C}}>
-                {I18n.t('submit')}
-
-            </Button>)
+                textStyle={{fontSize: Fonts.size.h17, color: Colors.txt_E0C}}/>)
         } else {
-            return ( <Button
+            return ( <BtnLong
+                name={I18n.t('contact_customer_service')}
                 testID="btn_contact_customer_service"
                 activeOpacity={1}
                 onPress={this._btnService}
@@ -307,10 +306,7 @@ class PassportView extends Component {
                     alignSelf: 'center', backgroundColor: Colors.white,
                     marginTop: 25, justifyContent: 'center', marginBottom: 10
                 }}
-                textStyle={{fontSize: Fonts.size.h17, color: Colors.txt_666}}>
-                {I18n.t('contact_customer_service')}
-
-            </Button>)
+                textStyle={{fontSize: Fonts.size.h17, color: Colors.txt_666}}/>)
         }
     }
 

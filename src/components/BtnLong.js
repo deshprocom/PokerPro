@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/2/10.
  */
-import React,{Component} from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text
@@ -25,11 +25,7 @@ export default class BtnLong extends Component {
             style={[styles.btn_view, this.props.style]}
             onPress={this.props.onPress}>
 
-            <Text style={{
-                alignSelf: 'center',
-                color: Colors._AAA,
-                fontSize: 19
-            }}>
+            <Text style={[styles.txt,this.props.textStyle]}>
                 {this.props.name}</Text>
 
         </TouchableOpacity>)
@@ -44,6 +40,11 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         width: 336,
         borderWidth: 1,
-        borderColor: Colors._AAA
+        borderColor: Colors._AAA,
+        alignItems: 'center'
+    },
+    txt: {
+        color: Colors._AAA,
+        fontSize: 19
     }
 })

@@ -1,14 +1,14 @@
 /**
  * Created by lorne on 2017/3/8.
  */
-import React, { Component}from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {Button} from '../../components'
+import {BtnLong} from '../../components'
 
 
 export default class LoadErrorView extends Component {
@@ -32,7 +32,8 @@ export default class LoadErrorView extends Component {
                     color: Colors._AAA,
                     marginTop: 19
                 }]}>{I18n.t('load_error')}</Text>
-                <Button
+                <BtnLong
+                    name={I18n.t('retry')}
                     testID="btn_retry"
                     onPress={() => {
                         if (this.props.onPress !== undefined)
@@ -42,9 +43,8 @@ export default class LoadErrorView extends Component {
                         backgroundColor: Colors._161817,
                         height: 40, width: 172, marginTop: 37, justifyContent: 'center'
                     }}
-                    textStyle={[Fonts.H17, {color: Colors.txt_E4D}]}>
-                    {I18n.t('retry')}
-                </Button>
+                    textStyle={[Fonts.H17, {color: Colors.txt_E4D}]}/>
+
             </View>
 
 

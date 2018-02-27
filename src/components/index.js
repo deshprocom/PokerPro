@@ -7,7 +7,6 @@ import BtnSoild from './BtnSoild';
 import NavigationBar from './NavigationBar';
 import InputView from './InputView';
 import SetItemView from './setting/SetItemView';
-import Button from 'react-native-smart-button';
 import SecurityText from './SecurityText';
 import SetInputView from './setting/SetInputView';
 import PullListView from 'react-native-smart-pull-to-refresh-listview';
@@ -38,7 +37,6 @@ import ActionPay from './ActionPay';
 export {
     BtnLong, BtnSoild, NavigationBar,
     InputView, SetItemView,
-    Button,
     SecurityText,
     SetInputView,
     PullListView,
