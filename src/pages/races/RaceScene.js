@@ -186,7 +186,7 @@ class RaceScene extends Component {
                         this.props.params.race_id)
                 }}>
                 <Image style={styles.imgShare}
-                       source={Images.share}/>
+                       source={Images.share2}/>
             </TouchableOpacity>
 
 
