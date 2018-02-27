@@ -33,6 +33,13 @@ import com.android.build.OutputFile
  *   // bundleInPaidRelease: true,
  *   // bundleInBeta: true,
  *
+ *   // whether to disable dev mode in custom build variants (by default only disabled in release)
+ *   // for example: to disable dev mode in the staging build type (if configured)
+ *   devDisabledInStaging: true,
+ *   // The configuration property can be in the following formats
+ *   //         'devDisabledIn${productFlavor}${buildType}'
+ *   //         'devDisabledIn${buildType}'
+ *
  *   // the root of your project, i.e. where "package.json" lives
  *   root: "../../",
  *
@@ -64,6 +71,10 @@ import com.android.build.OutputFile
  *   extraPackagerArgs: []
  * ]
  */
+
+project.ext.react = [
+    entryFile: "index.js"
+]
 
 apply from: "../../node_modules/react-native/react.gradle"
 
@@ -166,7 +177,6 @@ dependencies {
     compile project(':react-native-video')
     compile project(':react-native-smart-splash-screen')
     compile project(':react-native-smart-pull-to-refresh-listview')
-    compile project(':react-native-picker')
     compile project(':react-native-image-crop-picker')
     compile project(':react-native-i18n')
     compile project(':react-native-blur')

@@ -1,15 +1,16 @@
 /**
  * Created by lorne on 2017/2/8.
  */
-import React, {PropTypes}from 'react';
+import React, {Component}from 'react';
 import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
+import PropTypes from 'prop-types'
 
-export default class InputView extends React.Component {
+export default class InputView extends Component {
 
     static propTypes = {
         placeholder: PropTypes.string,

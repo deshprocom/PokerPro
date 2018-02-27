@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/3/8.
  */
-import React, {PropTypes, Component}from 'react';
+import React, { Component}from 'react';
 import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text
@@ -9,6 +9,7 @@ import {
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {Button} from '../../components'
+
 
 export default class LoadErrorView extends Component {
 
