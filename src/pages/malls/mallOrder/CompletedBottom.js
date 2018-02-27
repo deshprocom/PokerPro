@@ -159,7 +159,7 @@ export default class CompletedBottom extends Component {
 
                 <TouchableOpacity
                     onPress={() => {
-                        alertOrder('verified_del', () => {
+                        alertOrder(I18n.t('verified_del'), () => {
                             deleteMall({order_number: order_number}, ret => {
                                 if (this.props.pageOrderInfo) {
                                     global.router.pop();
