@@ -24,10 +24,6 @@ import {Verified} from '../../configs/Status';
 
 class ListOrderView extends Component {
 
-    static propTypes = {
-        testViewID: PropTypes.string,
-        status: PropTypes.string
-    };
 
     componentDidMount() {
         this._pullToRefreshListView.beginRefresh()

@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/2/9.
  */
-import React, {PropTypes} from 'react';
+import React from 'react';
 import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, findNodeHandle,
@@ -12,10 +12,6 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {BlurView} from 'react-native-blur';
 
 export default class AndroidBlur extends React.Component {
-
-    static propTypes = {
-        raceInfo: PropTypes.object
-    }
 
 
     render() {

@@ -13,9 +13,7 @@ import {singleOrdouble} from '../../utils/ComonHelper';
 
 export default class RaceResultList extends Component {
 
-    static propTypes = {
-        raceRanks: PropTypes.array
-    }
+
 
     render() {
 

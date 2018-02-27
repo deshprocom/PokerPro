@@ -6,14 +6,14 @@
  */
 
 import React, {
-    Component,
-    PropTypes,
+    Component
 } from 'react'
 import {
     View,
     Text,
     StyleSheet,
-} from 'react-native'
+} from 'react-native';
+import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
     container: {
@@ -52,7 +52,7 @@ export default class Badge extends Component {
     }
 
     // 构造
-    constructor (props) {
+    constructor(props) {
         super(props)
         // 初始状态
         this.state = {}
@@ -60,15 +60,15 @@ export default class Badge extends Component {
         this._width = 0
     }
 
-    render () {
+    render() {
         return (
-            <View ref={ component => this._container = component } style={[styles.container, this.props.style]}>
+            <View ref={component => this._container = component} style={[styles.container, this.props.style]}>
                 {this._renderChildren()}
             </View>
         )
     }
 
-    _renderChildren () {
+    _renderChildren() {
         return React.Children.map(this.props.children, (child) => {
             if (!React.isValidElement(child)) {
                 return (
@@ -88,12 +88,12 @@ export default class Badge extends Component {
         else {
             width = e.nativeEvent.layout.width + this.props.extraPaddingHorizontal
         }
-        width = Math.max(width, this.props.minWidth)-3
+        width = Math.max(width, this.props.minWidth) - 3
         if (this._width == width) {
             return
         }
         this._width = width
-        let height = Math.max(e.nativeEvent.layout.height, this.props.minHeight)-3;
+        let height = Math.max(e.nativeEvent.layout.height, this.props.minHeight) - 3;
         let borderRadius = height / 2
         this._container.setNativeProps({
             style: {
