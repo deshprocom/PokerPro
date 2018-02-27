@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/5/8.
  */
-import React, { Component, PropTypes } from 'react';
+import React, {Component} from 'react';
 import {
     Text,
     TouchableWithoutFeedback,
@@ -13,6 +13,7 @@ import {
     View
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
+import PropTypes from 'prop-types';
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 const containerHeight = 40;
@@ -26,7 +27,7 @@ class Search extends Component {
             keyword: '',
             expanded: false
         };
-        const { width } = Dimensions.get('window');
+        const {width} = Dimensions.get('window');
         this.contentWidth = width;
         this.middleWidth = width / 2;
 
@@ -92,7 +93,7 @@ class Search extends Component {
      * async await
      */
     onChangeText = async (text) => {
-        await this.setState({ keyword: text });
+        await this.setState({keyword: text});
         await new Promise((resolve, reject) => {
             Animated.timing(
                 this.iconDeleteAnimated,
@@ -113,7 +114,7 @@ class Search extends Component {
         this.props.beforeFocus && await this.props.beforeFocus();
         this.refs.input_keyword._component.isFocused && await this.refs.input_keyword._component.focus();
         await this.setState(prevState => {
-            return { expanded: !prevState.expanded };
+            return {expanded: !prevState.expanded};
         });
         await this.expandAnimation();
         this.props.onFocus && await this.props.onFocus(this.state.keyword);
@@ -125,7 +126,7 @@ class Search extends Component {
      * async await
      */
     focus = async (text = '') => {
-        await this.setState({ keyword: text });
+        await this.setState({keyword: text});
         await this.refs.input_keyword._component.focus();
     }
 
@@ -144,7 +145,7 @@ class Search extends Component {
                 }
             ).start(() => resolve());
         });
-        await this.setState({ keyword: '' });
+        await this.setState({keyword: ''});
         this.props.onDelete && await this.props.onDelete();
         this.props.afterDelete && await this.props.afterDelete();
     }
@@ -155,9 +156,9 @@ class Search extends Component {
      */
     onCancel = async () => {
         this.props.beforeCancel && await this.props.beforeCancel();
-        await this.setState({ keyword: '' });
+        await this.setState({keyword: ''});
         await this.setState(prevState => {
-            return { expanded: !prevState.expanded };
+            return {expanded: !prevState.expanded};
         });
         await this.collapseAnimation();
         this.props.onCancel && await this.props.onCancel();
@@ -274,7 +275,7 @@ class Search extends Component {
                 style={
                     [
                         styles.container,
-                        this.props.backgroundColor && { backgroundColor: this.props.backgroundColor }
+                        this.props.backgroundColor && {backgroundColor: this.props.backgroundColor}
                     ]}
                 onLayout={this.onLayout}
             >
@@ -282,16 +283,16 @@ class Search extends Component {
                     ref="input_keyword"
                     style={[
                         styles.input,
-                        this.props.placeholderTextColor && { color: this.props.placeholderTextColor },
+                        this.props.placeholderTextColor && {color: this.props.placeholderTextColor},
                         this.props.inputStyle && this.props.inputStyle,
-                        this.props.inputHeight && { height: this.props.inputHeight },
-                        this.props.inputBorderRadius && { borderRadius: this.props.inputBorderRadius },
+                        this.props.inputHeight && {height: this.props.inputHeight},
+                        this.props.inputBorderRadius && {borderRadius: this.props.inputBorderRadius},
                         {
                             width: this.inputFocusWidthAnimated,
                             paddingLeft: this.inputFocusPlaceholderAnimated
                         },
                         this.props.shadowVisible && {
-                            shadowOffset: { width: this.props.shadowOffsetWidth, height: this.shadowHeight },
+                            shadowOffset: {width: this.props.shadowOffsetWidth, height: this.shadowHeight},
                             shadowColor: this.props.shadowColor,
                             shadowOpacity: this.shadowOpacityAnimated,
                             shadowRadius: this.props.shadowRadius,
@@ -316,7 +317,7 @@ class Search extends Component {
                         source={Images.news_outline}
                         style={[
                             styles.iconSearch,
-                            this.props.tintColorSearch && { tintColor: this.props.tintColorSearch },
+                            this.props.tintColorSearch && {tintColor: this.props.tintColorSearch},
                             {
                                 left: this.iconSearchAnimated,
                             }
@@ -328,15 +329,16 @@ class Search extends Component {
                     <Animated.View
                         style={[
                             styles.cancelButton,
-                            { left: this.btnCancelAnimated }
+                            {left: this.btnCancelAnimated}
                         ]}
                     >
-                        <Text style={[styles.cancelButtonText, this.props.titleCancelColor && { color: this.props.titleCancelColor }]}>
+                        <Text
+                            style={[styles.cancelButtonText, this.props.titleCancelColor && {color: this.props.titleCancelColor}]}>
                             {this.cancelTitle}
                         </Text>
                     </Animated.View>
                 </TouchableWithoutFeedback>
-            </Animated.View >
+            </Animated.View>
         );
     }
 }

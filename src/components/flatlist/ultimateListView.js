@@ -16,7 +16,7 @@ import {
 } from "react-native";
 import {mergeRecursive} from "./util";
 import RefreshableScrollView from "./refreshableScrollView";
-
+import PropTypes from 'prop-types';
 
 const {width, height} = Dimensions.get('window');
 const PaginationStatus = {
@@ -96,71 +96,71 @@ export default class UltimateListView extends Component {
     };
 
     static propTypes = {
-        initialNum: React.PropTypes.number,
-        initialListSize: React.PropTypes.number,
+        initialNum: PropTypes.number,
+        initialListSize: PropTypes.number,
 
-        firstLoader: React.PropTypes.bool,
-        scrollEnabled: React.PropTypes.bool,
-        withSections: React.PropTypes.bool,
-        onFetch: React.PropTypes.func,
-        rowHasChanged: React.PropTypes.func,
-        distinctRows: React.PropTypes.func,
-        enableEmptySections: React.PropTypes.bool,
+        firstLoader: PropTypes.bool,
+        scrollEnabled: PropTypes.bool,
+        withSections: PropTypes.bool,
+        onFetch: PropTypes.func,
+        rowHasChanged: PropTypes.func,
+        distinctRows: PropTypes.func,
+        enableEmptySections: PropTypes.bool,
 
         //new props - true to use ListView, false to use FlatList
-        legacyImplementation: React.PropTypes.bool,
+        legacyImplementation: PropTypes.bool,
 
         //Custom ListView
-        headerView: React.PropTypes.func,
-        rowView: React.PropTypes.func,
-        sectionHeaderView: React.PropTypes.func,
-        paginationFetchingView: React.PropTypes.func,
-        paginationAllLoadedView: React.PropTypes.func,
-        paginationWaitingView: React.PropTypes.func,
-        emptyView: React.PropTypes.func,
-        separator: React.PropTypes.func,
+        headerView: PropTypes.func,
+        rowView: PropTypes.func,
+        sectionHeaderView: PropTypes.func,
+        paginationFetchingView: PropTypes.func,
+        paginationAllLoadedView: PropTypes.func,
+        paginationWaitingView: PropTypes.func,
+        emptyView: PropTypes.func,
+        separator: PropTypes.func,
 
         //Refreshable
-        refreshable: React.PropTypes.bool,
-        refreshableMode: React.PropTypes.string,
+        refreshable: PropTypes.bool,
+        refreshableMode: PropTypes.string,
 
         //RefreshControl
-        refreshableTitle: React.PropTypes.string,
-        refreshableColors: React.PropTypes.array,
-        refreshableProgressBackgroundColor: React.PropTypes.string,
-        refreshableSize: React.PropTypes.string,
-        refreshableTintColor: React.PropTypes.string,
-        customRefreshControl: React.PropTypes.func,
+        refreshableTitle: PropTypes.string,
+        refreshableColors: PropTypes.array,
+        refreshableProgressBackgroundColor:PropTypes.string,
+        refreshableSize: PropTypes.string,
+        refreshableTintColor: PropTypes.string,
+        customRefreshControl: PropTypes.func,
 
         //Advanced RefreshView
-        refreshableTitlePull: React.PropTypes.string,
-        refreshableTitleRefreshing: React.PropTypes.string,
-        refreshableTitleRelease: React.PropTypes.string,
-        customRefreshView: React.PropTypes.func,
-        customRefreshViewHeight: React.PropTypes.number,
-        displayDate: React.PropTypes.bool,
-        dateFormat: React.PropTypes.string,
-        dateTitle: React.PropTypes.string,
-        arrowImage: React.PropTypes.string,
+        refreshableTitlePull: PropTypes.string,
+        refreshableTitleRefreshing:PropTypes.string,
+        refreshableTitleRelease:PropTypes.string,
+        customRefreshView: PropTypes.func,
+        customRefreshViewHeight: PropTypes.number,
+        displayDate: PropTypes.bool,
+        dateFormat:PropTypes.string,
+        dateTitle: PropTypes.string,
+        arrowImage: PropTypes.string,
 
         //Pagination
-        pagination: React.PropTypes.bool,
-        autoPagination: React.PropTypes.bool,
-        allLoadedText: React.PropTypes.string,
+        pagination: PropTypes.bool,
+        autoPagination: PropTypes.bool,
+        allLoadedText:PropTypes.string,
 
         //Spinner
-        spinnerColor: React.PropTypes.string,
-        fetchingSpinnerSize: React.PropTypes.any,
-        waitingSpinnerSize: React.PropTypes.any,
-        waitingSpinnerText: React.PropTypes.string,
+        spinnerColor: PropTypes.string,
+        fetchingSpinnerSize: PropTypes.any,
+        waitingSpinnerSize: PropTypes.any,
+        waitingSpinnerText: PropTypes.string,
 
         //Pagination Button
-        paginationBtnText: React.PropTypes.string,
+        paginationBtnText: PropTypes.string,
 
         //GridView
-        gridColumn: React.PropTypes.number,
-        cellContainerStyle: React.PropTypes.object,
-        rowContainerStyle: React.PropTypes.object
+        gridColumn: PropTypes.number,
+        cellContainerStyle: PropTypes.object,
+        rowContainerStyle: PropTypes.object
     };
 
     constructor(props) {

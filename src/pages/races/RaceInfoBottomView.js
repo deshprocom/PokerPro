@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/2/17.
  */
-import React, {PropTypes} from 'react';
+import React from 'react';
 import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text, ScrollView, Platform
@@ -11,9 +11,7 @@ import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 
 export default class RaceInfoBottomView extends React.Component{
-    static propTypes = {
-        onPress:PropTypes.func
-    };
+
 
     render(){
         return (<TouchableOpacity

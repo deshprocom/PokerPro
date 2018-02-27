@@ -35,9 +35,7 @@ const picker = {
 };
 
 class PassportView extends Component {
-    static propTypes = {
-        router: PropTypes.object
-    };
+
 
     state = {
         editable: true,

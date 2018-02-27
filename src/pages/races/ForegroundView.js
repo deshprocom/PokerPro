@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/3/9.
  */
-import React, {PropTypes, Component} from 'react';
+import React, { Component} from 'react';
 import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text, ScrollView, Platform
@@ -13,9 +13,6 @@ import I18n from 'react-native-i18n';
 
 export default class ForegroundView extends Component {
 
-    static propTypes = {
-        raceInfo: PropTypes.object
-    }
 
     render() {
         const {raceInfo} =  this.props;

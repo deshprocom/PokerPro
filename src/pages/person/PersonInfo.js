@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/1/6.
  */
-import React, {PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet, Image, Platform, ActivityIndicator,
     Dimensions, View, TextInput, Text, TouchableOpacity,
@@ -17,11 +17,8 @@ import {Verified} from '../../configs/Status';
 import {ActionSheet, DatePicker} from '../../components';
 
 
-export default class PersonInfo extends React.Component {
-    static propTypes = {
-        profile: PropTypes.object,
-        postAvatar: PropTypes.func,
-    };
+export default class PersonInfo extends Component {
+
 
     state = {
         visible: false

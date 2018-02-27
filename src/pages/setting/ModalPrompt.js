@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/5/11.
  */
-import React, {Component, PropTypes}from 'react';
+import React, {Component}from 'react';
 import {
     TouchableOpacity, View, TextInput, Alert,
     StyleSheet, Image, Text, KeyboardAvoidingView
@@ -19,10 +19,6 @@ import Modal from 'react-native-root-modal';
 
 class ModalPrompt extends Component {
 
-    static props = {
-        modalVisible: PropTypes.bool.isRequired,
-        modalShow: PropTypes.func.isRequired
-    };
 
     constructor(props) {
         super(props);

@@ -1,8 +1,9 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import {
 	Text, View, StyleSheet, Dimensions,
 	Modal, TouchableHighlight, Animated, ScrollView
-} from 'react-native'
+} from 'react-native';
+import PropTypes from 'prop-types';
 
 import styles, { btnStyle, sheetStyle, hairlineWidth } from './styles'
 

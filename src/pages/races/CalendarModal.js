@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/3/22.
  */
-import React, {Component, PropTypes}from 'react';
+import React, {Component}from 'react';
 import {
     TouchableOpacity, View, TextInput, FlatList,
     StyleSheet, Image, Text, ScrollView, Platform
@@ -25,10 +25,6 @@ const Y_M_D = 'YYYY-MM-DD';
 
 class CalendarModal extends Component {
 
-    static props = {
-        btnOpen: PropTypes.func,
-        selected: PropTypes.func
-    };
 
     componentDidMount() {
         this.props.selected(getCurrentDate().format(Y_M_D));
