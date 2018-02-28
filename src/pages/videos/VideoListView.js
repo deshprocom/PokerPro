@@ -350,8 +350,11 @@ const styles = StyleSheet.create({
         flex: 1
     },
     itemBack: {
-        flex: 1,
-        position: 'absolute'
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 208,
+        width: '100%'
     },
     transparent: {
         paddingLeft: 17,
@@ -371,9 +374,7 @@ const styles = StyleSheet.create({
     },
     btnPlay: {
         height: 68,
-        width: 68,
-        alignSelf: 'center',
-        marginTop: 68
+        width: 68
     },
     viewDesc: {
         backgroundColor: 'white'
