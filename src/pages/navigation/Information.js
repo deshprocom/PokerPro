@@ -100,10 +100,14 @@ export default class Information extends Component {
                             })
                         }}
                         style={{height: 207, marginTop: 14, marginBottom: 14}}>
-                        <Image style={{height: 207, alignItems: 'center', justifyContent: 'center'}}
-                               source={{uri: item.video.cover_link.trim()}}>
-                            <Image style={{width: 70, height: 70}} source={Images.begin}/>
-                        </Image>
+                        <Image style={{height: 207}}
+                               source={{uri: item.video.cover_link.trim()}}/>
+                        <Image style={{
+                            width: 70, height: 70, position: 'absolute',
+                            left: '40%', top: '40%'
+                        }} source={Images.begin}/>
+
+
                     </TouchableOpacity>
                 </View>
 
