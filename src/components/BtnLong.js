@@ -25,7 +25,7 @@ export default class BtnLong extends Component {
             style={[styles.btn_view, this.props.style]}
             onPress={this.props.onPress}>
 
-            <Text style={[styles.txt,this.props.textStyle]}>
+            <Text style={[styles.txt, this.props.textStyle]}>
                 {this.props.name}</Text>
 
         </TouchableOpacity>)
@@ -37,11 +37,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         height: 45,
         justifyContent: 'center',
-        borderRadius: 5,
-        width: 336,
-        borderWidth: 1,
-        borderColor: Colors._AAA,
-        alignItems: 'center'
+        alignItems: 'center',
+        flex: 1
     },
     txt: {
         color: Colors._AAA,

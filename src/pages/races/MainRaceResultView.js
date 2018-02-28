@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/4/29.
  */
-import React, { Component} from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text, ScrollView, Platform
@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {strNotNull, isEmptyObject} from '../../utils/ComonHelper'
 import I18n from 'react-native-i18n';
-import {Button, MarkdownPlat} from '../../components';
+import {BtnLong, MarkdownPlat} from '../../components';
 import RaceResultList from './RaceResultList';
 import ScheduleList from './ScheduleList';
 import BlindsList from './BlindsList';
@@ -53,57 +53,53 @@ export default class MainRaceResultView extends Component {
         this.tabs = [];
 
         if (isSideRace && strNotNull(schedules_markdown)) {
-            this.tabs.push(<Button
+            this.tabs.push(<BtnLong
+                name={I18n.t('Schudel')}
                 onPress={() => this.btnSelectTab(TAB_INFO)}
                 activeOpacity={1}
                 testID="btn_race_info"
                 key={TAB_INFO}
                 style={curTab === TAB_INFO ? styles.btnSelect : styles.btn}
                 textStyle={curTab === TAB_INFO ? styles.txtBtnSelect : styles.txtBtn}
-            >
-                {I18n.t('Schudel')}
-            </Button>)
+            />)
 
         }
         else if (!isSideRace && !isEmptyObject(schedules) &&
             schedules.length > 0 || strNotNull(schedule_memo)) {
-            this.tabs.push(<Button
+            this.tabs.push(<BtnLong
+                name={I18n.t('Schudel')}
                 onPress={() => this.btnSelectTab(TAB_INFO)}
                 activeOpacity={1}
                 testID="btn_race_info"
                 key={TAB_INFO}
                 style={curTab === TAB_INFO ? styles.btnSelect : styles.btn}
                 textStyle={curTab === TAB_INFO ? styles.txtBtnSelect : styles.txtBtn}
-            >
-                {I18n.t('Schudel')}
-            </Button>)
+            />)
 
         }
         if (!isEmptyObject(blinds)
             && blinds.length > 0 || strNotNull(blind_memo)) {
-            this.tabs.push(<Button
+            this.tabs.push(<BtnLong
+                name={I18n.t('Blind')}
                 onPress={() => this.btnSelectTab(TAB_BLINDS)}
                 activeOpacity={1}
                 key={TAB_BLINDS}
                 testID="btn_race_blinds"
                 style={curTab === TAB_BLINDS ? styles.btnSelect : styles.btn}
                 textStyle={curTab === TAB_BLINDS ? styles.txtBtnSelect : styles.txtBtn}
-            >
-                {I18n.t('Blind')}
-            </Button>)
+            />)
         }
         if (!isEmptyObject(raceRanks) &&
             raceRanks.length > 0) {
-            this.tabs.push(<Button
+            this.tabs.push(<BtnLong
+                name={I18n.t('Ranks')}
                 onPress={() => this.btnSelectTab(TAB_RESULT)}
                 activeOpacity={1}
                 key={TAB_RESULT}
                 testID="btn_race_result"
                 style={curTab === TAB_RESULT ? styles.btnSelect : styles.btn1}
                 textStyle={curTab === TAB_RESULT ? styles.txtBtnSelect : styles.txtBtn}
-            >
-                {I18n.t('Ranks')}
-            </Button>)
+            />)
 
 
         }
