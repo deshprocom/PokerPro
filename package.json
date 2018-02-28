@@ -33,7 +33,7 @@
     "react-native-root-modal": "^1.1.1",
     "react-native-root-toast": "^3.0.1",
     "react-native-router-flux": "4.0.0-beta.27",
-    "react-native-scrollable-tab-view": "^0.7.2",
+    "react-native-scrollable-tab-view": "^0.8.0",
     "react-native-smart-pull-to-refresh-listview": "^1.6.11-beta.2",
     "react-native-smart-splash-screen": "^2.3.3",
     "react-native-storage": "^0.1.4",

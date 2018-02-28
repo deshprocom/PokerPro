@@ -16,8 +16,7 @@ import {isEmptyObject, convertDate, strNotNull, uniqueArray, FontSize} from '../
 import {ImageLoad, PullListView, UltimateListView} from '../../components';
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {fetchNewsList} from '../../actions/NewsAction';
-
-const headerStyle = {height: 35, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.bg_f5};
+import PropTypes from 'prop-types';
 import {getNewsList} from '../../services/NewsDao';
 import ReadLike from '../comment/ReadLike';
 import {isEqual} from 'lodash'

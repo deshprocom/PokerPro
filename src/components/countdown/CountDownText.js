@@ -13,64 +13,59 @@
 
 'use strict'
 
-import React, {Component} from 'react'
+import React from 'react'
 import {
     StyleSheet,
     Text,
 } from 'react-native';
-
 var update = require('react-addons-update')
 var countDown = require('./countDown')
+const createReactClass = require('create-react-class');
 
-export default class CountDownText extends Component {
-
-    constructor(props) {
-        super(props)
-        this.counter = null;// 计时器
-    }
-
+export var CountDownText = createReactClass({
+    counter: null, // 计时器
     // 定时回调
-    static defaultProps = {
-        countType: "seconds",
-        onEnd: null, // 结束回调
-        timeLeft: 0,//正向计时 时间起点为0秒
-        step: -1, // 计时步长，以秒为单位，正数则为正计时，负数为倒计时
-        startText: null, // 开始的文本
-        intervalText: null, // 定时的文本，可以是回调函数
-        endText: null, // 结束的文本
-        auto: false, // 是否自动开始
-    };
-
-
-    state = {
-        text: this.props.startText, // 要显示文本
-    }
-
+    getDefaultProps: function(){
+        return {
+            countType: "seconds",
+            onEnd: null, // 结束回调
+            timeLeft: 0,//正向计时 时间起点为0秒
+            step: -1, // 计时步长，以秒为单位，正数则为正计时，负数为倒计时
+            startText: null, // 开始的文本
+            intervalText: null, // 定时的文本，可以是回调函数
+            endText: null, // 结束的文本
+            auto: false, // 是否自动开始
+        };
+    },
+    getInitialState: function(){
+        return {
+            text: this.props.startText, // 要显示文本
+        }
+    },
     // 判断两个时间是否相等，如果两个时间差在阀值之内，则可认为是相等
-    isTimeEquals = (t1, t2) => {
+    isTimeEquals: function(t1, t2){
         var threshold = 2;
         return Math.abs(t1 - t2) < threshold;
-    }
-
+    },
     // 当更新
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps: function(nextProps){
 
         return;
         // 判断是否要重新计时
         var updating = false;
-        if (this.props.step == nextProps.step && this.props.step < 0) { // 倒计时的情况
-            if (this.props.endTime) { // 1 按起始日期来计时
+        if(this.props.step == nextProps.step && this.props.step < 0){ // 倒计时的情况
+            if(this.props.endTime){ // 1 按起始日期来计时
                 // console.log('prev: startTime: ' + this.props.startTime + ' endTime: ' + this.props.endTime)
                 // console.log('next: startTime: ' + nextProps.startTime + ' endTime: ' + nextProps.endTime)
                 updating = /* typeof(this.props.startTime) == 'undefined' && */ !this.isTimeEquals(this.props.endTime, nextProps.endTime); // 如果以当前时间为开始时间，则比较结束时间
-            } else { // 2 按间隔秒数来计时
+            }else{ // 2 按间隔秒数来计时
                 // console.log('prev: timeLeft: ' + this.counter.timePassed)
                 // console.log('next: timeLeft: ' + nextProps.timeLeft)
                 updating = !this.isTimeEquals(nextProps.timeLeft, this.counter.timePassed); // 比较剩余时间
             }
         }
         // console.log('countDown updating: ' + updating);
-        if (updating) {
+        if(updating){
             // 重置：清空计数 + 停止计时
             this.counter.reset();
             // 重新初始化计时器
@@ -83,17 +78,15 @@ export default class CountDownText extends Component {
             this.counter.setData(config);
 
         }
-    }
-
+    },
     // 定时调用 intervalText 来更新状态 text
-    onInterval = () => {
+    onInterval: function(){
         this.setState({text: this.props.intervalText.apply(null, arguments)})
-    }
-    onEnd = (timePassed) => {
+    },
+    onEnd: function(timePassed){
         this.props.afterEnd && this.props.afterEnd(timePassed);
-    }
-
-    componentDidMount() {
+    },
+    componentDidMount: function(){
         /*
          this.counter = countDown({
          countType: "seconds",
@@ -110,45 +103,43 @@ export default class CountDownText extends Component {
                 onEnd: this.onEnd // 结束回调
             }
         });
-        if (this.counter == null)
+        if(this.counter == null)
             this.counter = countDown(config);
 
         // 判断是否结束
-        if (this.counter.timeLeft <= 0 && this.counter.step <= 0) {
+        if(this.counter.timeLeft <= 0 && this.counter.step <= 0){
             this.end();
             return;
         }
 
         // 自动开始
-        if (this.props.auto) {
+        if(this.props.auto){
             this.start();
         }
-    }
-
-    componentWillUnmount() {
+    },
+    componentWillUnmount: function(){
         // 重置倒计时
         this.reset();
-    }
-
+    },
     // 开始计时
-    start = () => {
+    start: function(){
         this.counter.start();
-    }
+    },
     // 结束计时
-    end = () => {
+    end: function(){
         this.counter.end();
         this.setState({text: this.props.endText});
 
-    }
+    },
     // 重置
-    reset = () => {
+    reset: function(){
         this.counter.reset();
-    }
-    render = () => {
+    },
+    render: function(){
         return <Text style={this.props.style}>{this.state.text}</Text>
-    }
-    getTimePassed = () => {
+    },
+    getTimePassed: function(){
         return this.counter.timePassed;
     }
-}
+});
 

@@ -15,10 +15,10 @@ const {
 import Button from 'react-native-scrollable-tab-view/Button';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import PropTypes from 'prop-types'
-
+const createReactClass = require('create-react-class');
 const WINDOW_WIDTH = Dimensions.get('window').width;
 
-const ScrollableTabBar = React.createClass({
+const ScrollableTabBar = createReactClass({
     propTypes: {
         goToPage: PropTypes.func,
         activeTab: PropTypes.number,
