@@ -232,7 +232,7 @@ export default class ReportPlayer extends PureComponent {
             <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 3}}>
                 <Text style={styles.txt_title}>{title}</Text>
 
-                <Text style={[styles.txt_title, {marginLeft: 36, marginRight: 18}]}>{`前注：${ante}/${big_blind}`}</Text>
+                <Text style={[styles.txt_title, {marginLeft: 36, marginRight: 18}]}>{`前注：${ante}`}</Text>
 
                 <Text
                     onPress={() => {

@@ -239,15 +239,7 @@ export default class VideoListView extends Component {
                     read={rowData.total_views}
                     like={rowData.total_likes}/>
 
-                <TouchableOpacity
-                    onPress={() => {
-                        uVideoShare(group_name, title_desc, cover_link, id)
-                    }}>
 
-                    <Image style={styles.imgShare}
-                           source={Images.video_share}/>
-
-                </TouchableOpacity>
             </View>
 
 
