@@ -130,8 +130,8 @@ class RaceScene extends Component {
     }
 
 
-    imageLoaded() {
-        this.setState({viewRef: findNodeHandle(this.refs.backgroundImage)})
+    imageLoaded = () => {
+        this.setState({viewRef: findNodeHandle(this.backgroundImage)});
     }
 
     _renderBlur = () => {
@@ -144,18 +144,27 @@ class RaceScene extends Component {
             overlayColor: 'rgba(255,255,255,.4)'
         };
         const {raceInfo} = this.state;
-        return <Animated.Image source={{uri: raceInfo.logo}} ref={'backgroundImage'}
-                               onLoadEnd={this.imageLoaded.bind(this)}
-                               style={[
-                                   styles.bgBlur,
-                                   {
-                                       transform: [{translateY: this.state.bgY},
-                                           {scale: this.state.bgScale}]
-                                   }
-                               ]}>
-            <BlurView {...props} style={styles.blur}/>
+        return <Animated.View style={[
+            styles.bgBlur,
+            {
+                transform: [{translateY: this.state.bgY},
+                    {scale: this.state.bgScale}]
+            }
+        ]}>
+            <Image
+                ref={(img) => {
+                    this.backgroundImage = img;
+                }}
+                source={{uri: raceInfo.logo}}
+                onLoadEnd={this.imageLoaded.bind(this)}
+                style={styles.blur}/>
 
-        </Animated.Image>
+
+            <BlurView
+                viewRef={this.state.viewRef}
+                {...props}
+                style={styles.blur}/>
+        </Animated.View>
     };
 
     _renderTopNav = () => {
@@ -700,16 +709,14 @@ const styles = StyleSheet.create({
     },
     bgBlur: {
         width,
-        height: width,
-        resizeMode: "cover"
+        height: width
     },
     blur: {
         position: "absolute",
         left: 0,
         right: 0,
         top: 0,
-        width,
-        height: width,
+        bottom: 0
     },
 
 });

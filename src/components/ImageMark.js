@@ -57,13 +57,8 @@ export default class ImageMark extends Component {
                         alignItems: 'center',
                         justifyContent: 'center'
                     }}
-                    onLoad={() => {
-                        this.setState({
-                            success: true
-                        })
-                    }}
                     source={{uri: src}}>
-                    {success ? null : <ActivityIndicator/>}
+
                 </Image>
 
 
