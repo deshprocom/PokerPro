@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/3/24.
  */
-import React, { Component} from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, Platform,
     StyleSheet, Image, Text, TextInput,
@@ -75,7 +75,7 @@ class SearchKeywordPage extends Component {
             keyExtractor={(item, index) => index}
             ref={(ref) => this.listView = ref}
             onFetch={this.onFetch}
-            rowView={this._renderRow}
+            item={this._renderRow}
             refreshableTitlePull={I18n.t('pull_refresh')}
             refreshableTitleRelease={I18n.t('release_refresh')}
             dateTitle={I18n.t('last_refresh')}

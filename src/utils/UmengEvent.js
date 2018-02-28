@@ -94,8 +94,5 @@ export function umengEvent(event) {
             break;
 
     }
-    if (Platform.OS === 'ios')
-        umengClient.onEvent(strEvnet);
-    else
-        umengClient.onEvent(strEvnet, undefined, undefined);
+
 }
