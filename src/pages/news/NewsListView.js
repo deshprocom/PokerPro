@@ -61,7 +61,7 @@ class NewsListView extends Component {
                 keyExtractor={(item, index) => index}
                 ref={(ref) => this.listView = ref}
                 onFetch={this.onFetch}
-                rowView={this._itemNewsView}
+                item={this._itemNewsView}
                 refreshableTitlePull={I18n.t('pull_refresh')}
                 refreshableTitleRelease={I18n.t('release_refresh')}
                 dateTitle={I18n.t('last_refresh')}
@@ -158,16 +158,15 @@ class NewsListView extends Component {
                 <Image
                     source={{uri: image}}
                     style={styles.listTopImg}
-                >
+                />
 
-                    <View style={{flex: 1}}/>
-                    <View style={styles.listTopTxtView}>
-                        <Text
-                            numberOfLines={1}
-                            style={[styles.listTopTxt, {fontSize: FontSize.h15}]}>{title}</Text>
 
-                    </View>
-                </Image>
+                <View style={styles.listTopTxtView}>
+                    <Text
+                        numberOfLines={1}
+                        style={[styles.listTopTxt, {fontSize: FontSize.h15}]}>{title}</Text>
+
+                </View>
 
             </TouchableOpacity>)
         } else {
@@ -245,7 +244,9 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.30)',
         width: Metrics.screenWidth,
         alignItems: 'center',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        position: 'absolute',
+        bottom: 0
     },
     listTopTxt: {
         color: Colors.white,

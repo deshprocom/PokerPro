@@ -18,7 +18,7 @@ import ImageLoad from './ImageLoad';
 import MarkdownPlat from './MarkdownPlat';
 import Search from './Search';
 import Password from './Password';
-import UltimateListView from './flatlist/ultimateListView';
+import UltimateListView from './ultimate/UltimateFlatList';
 import SwipeListView from './swipelist/SwipeListView';
 import VideoPlayer from './VideoPlayer';
 import ActionSide from './ActionSide';
