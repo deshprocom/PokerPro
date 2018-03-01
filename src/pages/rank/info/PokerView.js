@@ -69,9 +69,10 @@ export default class PokerView extends Component {
 
     render() {
         const {name, country, avatar, dpi_total_earning, dpi_total_score, ranking} = this.state.poker;
-        return (<Image
-            source={Images.rank_bg}
-            style={styles.page}>
+        return (<View style={styles.page}>
+            <Image
+                source={Images.rank_bg}
+                style={[styles.page, {position: 'absolute'}]}/>
             {this._topView()}
 
             <TouchableOpacity
@@ -135,7 +136,9 @@ export default class PokerView extends Component {
 
             </View>
 
-        </Image>)
+
+
+        </View>)
     }
 
     _topView = () => {
