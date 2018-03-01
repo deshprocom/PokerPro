@@ -14,7 +14,7 @@ import Navbar from './NavTimebar';
 import DetailChild from './DetailChild';
 import {crowd_detail} from '../../../services/CrowdDao'
 import I18n from 'react-native-i18n';
-import {isEmptyObject} from '../../../utils/ComonHelper';
+import {isEmptyObject,shareHost} from '../../../utils/ComonHelper';
 import {LoadingView} from '../../../components/load/index'
 
 export const footer = (crowd, type, player) => {
@@ -111,7 +111,7 @@ export default class CrowdDetail extends Component {
 
     render() {
         const {crowd} = this.state;
-        let url = `crowdfundings/${crowd.id}`;
+        let url = `${shareHost()}crowdfundings/${crowd.id}`;
         if (crowd.award_date === undefined)
             return <LoadingView/>;
         return <View style={[ApplicationStyles.bgContainer, {backgroundColor: 'white'}]}>
