@@ -28,7 +28,7 @@ export default class SearchVideo extends Component {
             video_link: '',
         };
         this.keyword = ''
-
+        this.viewabilityConfig = {viewAreaCoveragePercentThreshold: 50}
     }
 
 
@@ -45,8 +45,6 @@ export default class SearchVideo extends Component {
 
 
     _content = () => {
-        let {video_link} = this.state;
-        let that = this;
 
         return (<View>
 
@@ -66,23 +64,25 @@ export default class SearchVideo extends Component {
                             this.listView.refresh()
                         }}/> : <NoDataView/>;
                 }}
-                onViewableItemsChanged={info => {
-
-                    const {changed} = info;
-                    changed.forEach(function (x) {
-                        if (!x.isViewable && !isEmptyObject(x.item)
-                            && x.item.video_link === video_link) {
-                            that.setState({
-                                video_link: ''
-                            })
-                        }
-
-                    })
-                }}
+                viewabilityConfig={this.viewabilityConfig}
+                onViewableItemsChanged={this.handleViewableItemsChanged}
             />
 
         </View>)
 
+    }
+
+    handleViewableItemsChanged = (info) => {
+        const {changed} = info;
+        changed.forEach(x => {
+            if (!x.isViewable && !isEmptyObject(x.item)
+                && x.item.video_link === this.state.video_link) {
+                this.setState({
+                    video_link: ''
+                })
+            }
+
+        })
     }
 
 
@@ -159,10 +159,12 @@ export default class SearchVideo extends Component {
                         source={{uri: video_link.trim()}}
 
                     />
-                </View> : <Image
-                    source={{uri: cover_link}}
-                    style={styles.listTopImg}
-                >
+                </View> : <View style={styles.listTopImg}>
+                    <Image
+                        source={{uri: cover_link}}
+                        style={[styles.listTopImg, {position: 'absolute'}]}
+                    />
+
                     <View style={styles.itemBack}>
                         <TouchableOpacity
                             onPress={() => {
@@ -180,8 +182,7 @@ export default class SearchVideo extends Component {
 
 
                     </View>
-
-                </Image>}
+                </View>}
 
 
         </TouchableOpacity>
@@ -238,7 +239,7 @@ export default class SearchVideo extends Component {
 
     _pressItem = (item) => {
         let url = `videos/${item.id}`;
-        global.router.toWebPage(url, {bottomNav: 'commentNav', info: item,topic_type:'video'})
+        global.router.toWebPage(url, {bottomNav: 'commentNav', info: item, topic_type: 'video'})
     };
 
     _navSearchBar = () => {
