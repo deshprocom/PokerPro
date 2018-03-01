@@ -126,7 +126,7 @@ class RankCheck extends Component {
         if (this.props.checkData.length == 0) {
             return (
                 <View
-                    style={{height: 1, backgroundColor: Colors.bg_f5, marginTop: 5, marginBottom: 20, width: 0}}></View>
+                    style={{height: 1, backgroundColor: Colors.bg_f5, marginTop: 5, marginBottom: 20, width: 0}}/>
             )
         } else if (this.props.checkData.length == 1) {
             return (
@@ -136,7 +136,7 @@ class RankCheck extends Component {
                     marginTop: 5,
                     marginBottom: 20,
                     width: 72
-                }}></View>
+                }}/>
             )
         } else if (this.props.checkData.length == 2) {
             return (
@@ -146,7 +146,7 @@ class RankCheck extends Component {
                     marginTop: 5,
                     marginBottom: 20,
                     width: 155
-                }}></View>
+                }}/>
             )
         } else {
             return (
@@ -156,7 +156,7 @@ class RankCheck extends Component {
                     marginTop: 5,
                     marginBottom: 20,
                     width: 239
-                }}></View>
+                }}/>
             )
         }
     };
@@ -172,13 +172,10 @@ class RankCheck extends Component {
                 <Image source={allSelect ? Images.Group : Images.Group_em}
                        style={{
                            width: 72,
-                           height: 30,
-                           alignItems: 'center',
-                           justifyContent: 'center',
-                           backgroundColor: 'transparent'
-                       }}>
-                    <Text style={{color: Colors._333, fontSize: 15}}>{I18n.t('all')}</Text>
-                </Image>
+                           height: 30
+                       }}/>
+
+                <Text style={styles.txt_select}>{I18n.t('all')}</Text>
             </TouchableOpacity>
             {
                 this.props.checkData.map((item, key) => {
@@ -206,9 +203,9 @@ class RankCheck extends Component {
                                        alignItems: 'center',
                                        justifyContent: 'center',
                                        backgroundColor: 'transparent'
-                                   }}>
-                                <Text style={{color: Colors._333, fontSize: 15}}>{item}</Text>
-                            </Image>
+                                   }}/>
+
+                            <Text style={styles.txt_select}>{item}</Text>
                         </TouchableOpacity>
                     )
                 })
@@ -237,5 +234,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginBottom: 16,
         marginRight: 13
+    },
+    txt_select: {
+        position: 'absolute'
     }
 });

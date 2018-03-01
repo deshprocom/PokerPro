@@ -123,7 +123,7 @@ export default class RankList extends Component {
                 keyExtractor={(item, index) => `rank-${index}`}
                 ref={(ref) => this.listView = ref}
                 onFetch={this.onFetch}
-                rowView={(rowData, sectionID, rowID) => listRenderRow(rowData, sectionID, rowID, false)}
+                item={(rowData, sectionID, rowID) => listRenderRow(rowData, sectionID, rowID, false)}
                 refreshableTitlePull={I18n.t('pull_refresh')}
                 refreshableTitleRelease={I18n.t('release_refresh')}
                 dateTitle={I18n.t('last_refresh')}

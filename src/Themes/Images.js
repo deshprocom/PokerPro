@@ -174,7 +174,7 @@ const images = {
     gold: require('../../source/rank/gold.png'),
     silver: require('../../source/rank/silver.png'),
     copper: require('../../source/rank/copper.png'),
-    Group: require('../../source/rank/Group 6.png'),
+    Group: require('../../source/rank/Group6.png'),
     Group_em: require('../../source/rank/Rectangle.png'),
     web_left: require('../../source/news/web_left.png'),
     web_page: require('../../source/news/web_page.png'),

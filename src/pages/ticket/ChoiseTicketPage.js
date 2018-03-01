@@ -209,7 +209,7 @@ export default class ChoiseTicketPage extends Component {
             firstLoader={false}
             onFetch={this.onFetch}
             legacyImplementation
-            rowView={this.itemListView}
+            item={this.itemListView}
             headerView={() => {
                 return (<View>
                     {this.titleView()}
