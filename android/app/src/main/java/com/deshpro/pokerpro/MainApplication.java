@@ -22,7 +22,6 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.pusherman.networkinfo.RNNetworkInfoPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -51,11 +50,9 @@ public class MainApplication extends Application implements ReactApplication {
             new ReactVideoPackage(),
             new RCTSplashScreenPackage(),
             new RCTSwipeRefreshLayoutPackage(),
-            new PickerViewPackage(),
             new PickerPackage(),
             new ReactNativeI18n(),
-            new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
-            new RNNetworkInfoPackage()
+            new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG)
       );
     }
 

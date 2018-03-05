@@ -174,7 +174,6 @@ dependencies {
     compile project(':rn-umeng')
     compile project(':react-native-wechat')
     compile project(':react-native-umshare')
-    compile project(':react-native-network-info')
     compile project(':react-native-orientation')
     compile project(':react-native-video')
     compile project(':react-native-smart-splash-screen')
@@ -194,18 +193,4 @@ dependencies {
 task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
-}
-
-
-repositories {
-    maven { url 'https://github.com/500px/500px-android-blur/raw/master/releases/' }
-}
-
-buildscript {
-    repositories {
-        maven { url 'https://github.com/500px/500px-android-blur/raw/master/releases/' }
-    }
-    dependencies {
-        classpath 'com.fivehundredpx:blurringview:1.0.0'
-    }
 }
