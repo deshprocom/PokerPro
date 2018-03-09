@@ -21,35 +21,14 @@
 #import <UMSocialCore/UMSocialCore.h>
 #import <React/RCTLinkingManager.h>
 
-static NSString *appKey = @"3789f75e5d780c24595607b6";     //填写Jpush_appkey
-static NSString *channel = @"";    //填写channel   一般为nil
-static BOOL isProduction = true;  //填写isProdurion  平时测试时为false ，生产时填写true
-
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {
- #ifdef NSFoundationVersionNumber_iOS_9_x_Max
-    JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
-     entity.types = UNAuthorizationOptionAlert|UNAuthorizationOptionBadge|UNAuthorizationOptionSound;
-     [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
 
-#endif
-} else if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
-    [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
-                                                      UIUserNotificationTypeSound |
-                                                      UIUserNotificationTypeAlert)
-                                          categories:nil];
-  } else {
-    [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
-                                                      UIRemoteNotificationTypeSound |
-                                                      UIRemoteNotificationTypeAlert)
-                                          categories:nil];
-  }
+  [JPUSHService setupWithOption:launchOptions appKey:@"3789f75e5d780c24595607b6"
+                        channel:nil apsForProduction:nil];
 
-  [JPUSHService setupWithOption:launchOptions appKey:appKey
-                        channel:nil apsForProduction:isProduction];
   NSURL *jsCodeLocation;
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
@@ -79,35 +58,6 @@ static BOOL isProduction = true;  //填写isProdurion  平时测试时为false �
     return [Orientation getOrientation];
   }
 
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-[JPUSHService registerDeviceToken:deviceToken];
-}
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-[[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:userInfo];
-}
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)   (UIBackgroundFetchResult))completionHandler {
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:userInfo];
-    completionHandler(UIBackgroundFetchResultNewData);
-  });
-}
-
-- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler {
- NSDictionary * userInfo = notification.request.content.userInfo;
- if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
- [JPUSHService handleRemoteNotification:userInfo];
- [[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:userInfo];
-    }
- completionHandler(UNNotificationPresentationOptionAlert);
-}
-- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler {
-NSDictionary * userInfo = response.notification.request.content.userInfo;
-if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
-[JPUSHService handleRemoteNotification:userInfo];
-[[NSNotificationCenter defaultCenter] postNotificationName:kJPFOpenNotification object:userInfo];
-}
-completionHandler();
-}
 
 
 
@@ -127,4 +77,30 @@ completionHandler();
 }
 
 
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+[JPUSHService registerDeviceToken:deviceToken];
+}
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+[[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:userInfo];
+}
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)   (UIBackgroundFetchResult))completionHandler {
+[[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:userInfo];
+}
+- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler {
+ NSDictionary * userInfo = notification.request.content.userInfo;
+  [JPUSHService handleRemoteNotification:userInfo];
+ [[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:userInfo];
+    
+ completionHandler(UNNotificationPresentationOptionAlert);
+}
+- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler {
+NSDictionary * userInfo = response.notification.request.content.userInfo;
+[JPUSHService handleRemoteNotification:userInfo];
+[[NSNotificationCenter defaultCenter] postNotificationName:kJPFOpenNotification object:userInfo];
+
+completionHandler();
+}
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+[[NSNotificationCenter defaultCenter] postNotificationName:kJPFDidReceiveRemoteNotification object:notification.userInfo];
+}
 @end
