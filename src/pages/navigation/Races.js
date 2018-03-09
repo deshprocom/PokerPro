@@ -122,7 +122,9 @@ const styleB = StyleSheet.create({
     },
     buyButtonPosition2: {
         position: 'absolute', top: 107,
-        left: 80
+        left: 80,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     buyText: {
         backgroundColor: 'transparent',
