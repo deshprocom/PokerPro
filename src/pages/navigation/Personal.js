@@ -54,6 +54,37 @@ class Personal extends Component {
 
     renderItem = () => {
         return <ScrollView>
+            <View style={stylesP.orderView}>
+                <TouchableOpacity
+                    activeOpacity={1}
+                    onPress={() => {
+                        umengEvent('more_order');
+                        if (strNotNull(getLoginUser().user_id))
+                            global.router.toOrderListPage();
+                        else
+                            global.router.toLoginFirstPage()
+                    }}
+                    style={stylesP.btnOrder}>
+                    <Image style={stylesP.imgOrder1}
+                           source={Images.ticket_order}/>
+                    <Text style={stylesP.txtProfile1}>{I18n.t('ticket_order')}</Text>
+                </TouchableOpacity>
+                <View style={{width: 1, backgroundColor: Colors._ECE, marginBottom: 5, marginTop: 5}}/>
+                <TouchableOpacity style={stylesP.btnOrder}
+                                  activeOpacity={1}
+                                  onPress={() => {
+                                      if (strNotNull(getLoginUser().user_id))
+                                          global.router.toMallOrderPage();
+                                      else
+                                          global.router.toLoginFirstPage();
+                                  }}>
+                    <Image style={stylesP.imgOrder2}
+                           source={Images.mall_order}/>
+                    <Text style={stylesP.txtProfile1}>{I18n.t('mall_order')}</Text>
+                </TouchableOpacity>
+
+            </View>
+
             <View style={{height: 10, backgroundColor: '#ECECEE', flex: 1}}/>
             {this._item(stylesP.item_view, Images.person_dynamic, stylesP.img_dy,
                 I18n.t('person_dynamic'), () => {
@@ -214,39 +245,8 @@ class Personal extends Component {
                     <Image style={{marginRight: 17, width: 8, height: 15}} source={Images.rightImg}/>
                 </TouchableOpacity>
 
-
             </View>
 
-            <View style={stylesP.orderView}>
-                <TouchableOpacity
-                    activeOpacity={1}
-                    onPress={() => {
-                        umengEvent('more_order');
-                        if (strNotNull(getLoginUser().user_id))
-                            global.router.toOrderListPage();
-                        else
-                            global.router.toLoginFirstPage()
-                    }}
-                    style={stylesP.btnOrder}>
-                    <Image style={stylesP.imgOrder1}
-                           source={Images.ticket_order}/>
-                    <Text style={stylesP.txtProfile1}>{I18n.t('ticket_order')}</Text>
-                </TouchableOpacity>
-                <View style={{width: 1, backgroundColor: Colors._ECE, marginBottom: 5, marginTop: 5}}/>
-                <TouchableOpacity style={stylesP.btnOrder}
-                                  activeOpacity={1}
-                                  onPress={() => {
-                                      if (strNotNull(getLoginUser().user_id))
-                                          global.router.toMallOrderPage();
-                                      else
-                                          global.router.toLoginFirstPage();
-                                  }}>
-                    <Image style={stylesP.imgOrder2}
-                           source={Images.mall_order}/>
-                    <Text style={stylesP.txtProfile1}>{I18n.t('mall_order')}</Text>
-                </TouchableOpacity>
-
-            </View>
         </View>
 
 

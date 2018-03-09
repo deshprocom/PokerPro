@@ -13,7 +13,7 @@ import {NavigationBar, ImageLoad, ProgressBar} from '../../components';
 import IntroRecord from './IntroRecord';
 import {footer} from './crowds/CrowdDetail';
 import {poker_info} from '../../services/CrowdDao';
-import {isEmptyObject, strNotNull} from '../../utils/ComonHelper';
+import {isEmptyObject, strNotNull,sharePage,shareHost} from '../../utils/ComonHelper';
 import I18n from 'react-native-i18n';
 import Swiper from 'react-native-swiper';
 
@@ -185,11 +185,10 @@ export default class PokerInfo extends PureComponent {
             if (isNaN(percent)) {
                 percent = 0;
             }
-        }
-        ;
+        };
+        let url = `${shareHost()}crowdfunding/${this.props.params.crowd.id}/players/${cf_player_id}`;
 
-
-        return <View style={ApplicationStyles.bgContainer}>
+        return <View style={[ApplicationStyles.bgContainer,{backgroundColor:'white'}]}>
             <NavigationBar
                 barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
                 toolbarStyle={{backgroundColor: Colors.white}}
@@ -197,7 +196,14 @@ export default class PokerInfo extends PureComponent {
                 titleStyle={{color: Colors._161}}
                 leftBtnIcon={Images.mall_return}
                 leftImageStyle={{height: 23, width: 23, marginLeft: 20, marginRight: 20}}
-                leftBtnPress={() => global.router.pop()}/>
+                leftBtnPress={() => global.router.pop()}
+                rightBtnIcon={Images.forward}
+                rightImageStyle={{width:21,height:21,marginRight:16}}
+                rightBtnPress={()=>{
+                    const {name, join_slogan,logo} = this.state.pokerInfo;
+                    sharePage(name, join_slogan, logo,url)
+                }}
+                />
             <ScrollView>
 
                 {this.pokerBanner(logo, player_images)}
@@ -244,7 +250,7 @@ export default class PokerInfo extends PureComponent {
                         {this.renderItem(this.numberToW(cf_money), I18n.t('total_crowdfunding'))}
                     </View>
                 </View>
-
+                <View style={{height: 7, backgroundColor: '#ECECEE'}}/>
                 <View style={{height: 14, backgroundColor: 'white', marginTop: 7}}/>
 
 

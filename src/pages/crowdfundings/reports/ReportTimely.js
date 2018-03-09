@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
     },
     txt_title: {
         fontSize: 12,
-        color: '#444444'
+        color: Colors._666,
+        marginTop: 3
     },
     txt_name: {
         fontSize: 12,
@@ -183,15 +184,16 @@ export default class ReportTimely extends PureComponent {
 
     renderChild = ({item}) => {
         const {
-            created_at, title, ante, big_blind, crowdfunding_player_name, description,
-            crowdfunding_player_id
+            created_at, title, ante, level, big_blind, crowdfunding_player_name, description,
+            crowdfunding_player_id, small_blind
         } = item;
+        let level_blind_ante = `级别：${level}  盲注：${small_blind + '/' + big_blind}  前注：${ante}`;
         return <View>
             <Text style={[styles.itemTime, {marginTop: 7}]}>{utcDate(created_at, 'YYYY.MM.DD HH:mm')}</Text>
-            <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 3}}>
-                <Text style={styles.txt_title}>{title}</Text>
 
-                <Text style={[styles.txt_title, {marginLeft: 36, marginRight: 18}]}>{`前注：${ante}/${big_blind}`}</Text>
+            <Text style={styles.txt_title}>{level_blind_ante}</Text>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 3}}>
+                <Text style={[styles.txt_title, {color: Colors.txt_444, fontWeight: 'bold'}]}>{title}</Text>
 
                 <Text
                     onPress={() => {
