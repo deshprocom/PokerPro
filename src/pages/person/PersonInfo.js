@@ -131,18 +131,23 @@ export default class PersonInfo extends Component {
                         style={{height: 136, flexDirection: 'row', alignItems: 'center'}}
                         onPress={this.selectPhotoTapped}>
                         <Text style={[styles.text_label, {marginRight: '35%'}]}>{I18n.t('user_edit_avatar')}</Text>
-                        <Image style={{
-                            height: 86, width: 86,
-                            alignItems: 'center', justifyContent: 'center', marginRight: '10%'
+
+                        <View style={{ height: 86, width: 86,alignItems: 'center', justifyContent: 'center',
+                            marginRight: '10%'}}>
+
+                            <Image style={{
+                            height: 86, width: 86
+
                         }}
-                               source={Images.mask}>
+                                   source={Images.mask}/>
                             <Image style={{
                                 height: 70, width: 70,
-                                borderRadius: 35
+                                borderRadius: 35,  position:'absolute'
                             }}
                                    source={strNotNull(profile.avatar) ? {uri: profile.avatar} : Images.home_avatar}
                             />
-                        </Image>
+                        </View>
+
 
                         <Image style={{height: 20, width: 11, marginLeft: 5}}
                                source={Images.set_more}/>

@@ -99,12 +99,16 @@ export default class SubscriptionInfoPage extends PureComponent {
         } = order_info;
         return <ScrollView>
             <View style={styles.pageTop}>
-                <Image source={{uri: logo}} style={styles.image}>
-                    {strNotNull(ranking) ? <View style={styles.imgRank}>
-                        <Text style={styles.rankTxt}>{ranking}名</Text>
-                    </View> : null}
+                <View style={styles.img_viwe}>
+                    <Image source={{uri: logo}} style={styles.image}/>
 
-                </Image>
+                    {strNotNull(ranking) ? <View style={styles.imgRank}>
+                            <Text style={styles.rankTxt}>{ranking}名</Text>
+                        </View> : null}
+
+
+                </View>
+
                 <View style={styles.topRight}>
                     <Text style={styles.name}>{name}</Text>
                     <Text style={styles.join_race}>{I18n.t('join_race')}：{race.name}</Text>
@@ -151,23 +155,23 @@ export default class SubscriptionInfoPage extends PureComponent {
 
 
             {isEmptyObject(user_extra) ? null : <View style={{marginLeft: 17, marginRight: 17, marginTop: 17}}>
-                <Text style={styles.readTxt1}>我是投资人本人<Text
-                    style={{textDecorationLine: 'underline'}}>{user_extra.real_name}</Text>，身份证号码<SecurityText
-                    securityOptions={{
+                    <Text style={styles.readTxt1}>我是投资人本人<Text
+                        style={{textDecorationLine: 'underline'}}>{user_extra.real_name}</Text>，身份证号码<SecurityText
+                        securityOptions={{
                         isSecurity: true,
                         startIndex: 4,
                         endIndex: 15,
                     }}>
-                    {user_extra.cert_no}
-                </SecurityText>，我已认真阅读并同意
-                    <Text style={{color: '#438EE6'}}
-                          onPress={() => {
+                        {user_extra.cert_no}
+                    </SecurityText>，我已认真阅读并同意
+                        <Text style={{color: '#438EE6'}}
+                              onPress={() => {
                               global.router.toRiskWarningPage()
                           }}>《风险提示》</Text>
-                    及其他相关条款和协议，自愿认购"{race.name}"赛事众筹项目，并支付众筹款项
-                    <Text style={{color: Colors._F34}}>{total_money}元</Text>。</Text>
+                        及其他相关条款和协议，自愿认购"{race.name}"赛事众筹项目，并支付众筹款项
+                        <Text style={{color: Colors._F34}}>{total_money}元</Text>。</Text>
 
-            </View>}
+                </View>}
 
         </ScrollView>
     }
@@ -185,6 +189,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     image: {
+        width: 95,
+        height: 120,
+        position: 'absolute'
+    },
+    img_viwe: {
         width: 95,
         height: 120,
         marginLeft: 17,
