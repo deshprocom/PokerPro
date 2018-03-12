@@ -27,25 +27,6 @@ class SettingPage extends Component {
         DESTRUCTIVE_INDEX: 1
     }
 
-    _likeView = () => {
-        return (
-            <SetItemView name={I18n.t('like_support')}/>)
-    };
-
-    _noticeView = () => {
-        return (<View>
-            <SetItemView name={I18n.t('game_remind')}
-                         rightType="SWITCH_BTN"/>
-
-            <View
-                style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>
-
-            <SetItemView name={I18n.t('system_inform')}
-                         rightType="SWITCH_BTN"/>
-            <View
-                style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>
-        </View>)
-    };
 
     componentDidMount() {
         storage.load({
