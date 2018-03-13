@@ -25,8 +25,10 @@ export default class Switch extends PureComponent {
     render() {
         return <TouchableOpacity
             onPress={() => {
+                let handle_value = !this.state.handle
+                this.props.handle_value(handle_value)
                 this.setState({
-                    handle: !this.state.handle
+                    handle: handle_value
                 })
             }}>
             <Image

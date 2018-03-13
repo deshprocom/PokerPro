@@ -6,7 +6,7 @@ import {
     TouchableOpacity, View, TextInput, Platform,
     StyleSheet, Image, Text
 } from 'react-native';
-import {get_discount} from '../../services/CrowdDao';
+
 import _ from 'lodash';
 import {Colors} from "../../Themes";
 import Switch from './Switch';
@@ -32,41 +32,17 @@ const styles = StyleSheet.create({
 
 export default class Discount extends PureComponent {
 
-    state = {
-        discount: {}
-    };
-
-    componentWillMount() {
-        get_discount(discount => {
-            this.setState({discount})
-        }, err => {
-
-        })
-    }
-
-    available = () => {
-        const {discount} = this.state;
-        let total = this.props.count * discount.discount * 100
-        if (total < discount.total_poker_coins) {
-            return total
-        } else {
-            return discount.total_poker_coins
-        }
-    }
-
-
-    discount_price = () => {
-        return this.available() / 100;
-    }
-
-
-    btn_switch_value = () => {
-        return this.btn_switch.handle_value()
-    }
-
 
     render() {
-        const {discount} = this.state;
+        const {discount,count} = this.props;
+        let available = count * discount.discount * 100
+        if (available > discount.total_poker_coins) {
+            available = discount.total_poker_coins
+        }
+
+        let discount_price = available / 100;
+
+
         if (_.isEmpty(discount) || discount.discount <= 0) {
             return <View/>
         }
@@ -74,10 +50,13 @@ export default class Discount extends PureComponent {
 
         return <View style={styles.discount}>
 
-            <Text style={styles.txt1}>{`可用${this.available()}扑客币抵：`}<Text
-                style={{color: Colors._F34}}>¥{this.discount_price()}</Text></Text>
+            <Text style={styles.txt1}>{`可用${available}扑客币抵：`}<Text
+                style={{color: Colors._F34}}>¥{discount_price}</Text></Text>
 
-            <Switch ref={ref => this.btn_switch = ref}/>
+            <Switch handle_value={handle_value => {
+                this.props.handle_value(handle_value)
+            }}
+                    ref={ref => this.btn_switch = ref}/>
         </View>
     }
 }

@@ -14,14 +14,16 @@ import {Colors, Images, ApplicationStyles} from '../../../Themes/index';
 import {showToast} from '../../../utils/ComonHelper';
 import I18n from 'react-native-i18n';
 import SubscriptionConfirmPage from './SubscriptionConfirmPage';
-import {user_crowd_count} from '../../../services/CrowdDao';
+import {user_crowd_count, get_discount} from '../../../services/CrowdDao';
 import {isEmptyObject} from '../../../utils/ComonHelper';
 import OrderBottom from '../../malls/order/OrderBottom';
 
 export default class SubscriptionPage extends PureComponent {
     state = {
         number: 1,
-        order_count: 0
+        order_count: 0,
+        discount: {},
+        handle_value: false
     };
 
     componentDidMount() {
@@ -32,6 +34,11 @@ export default class SubscriptionPage extends PureComponent {
                 this.setState(data)
             }, err => {
             })
+        get_discount(discount => {
+            this.setState({discount})
+        }, err => {
+
+        })
     }
 
 
@@ -86,24 +93,45 @@ export default class SubscriptionPage extends PureComponent {
     };
 
 
-    total_prize = (number, stock_unit_price) => {
+    total_prize = (stock_unit_price) => {
+        const {discount, handle_value, number} = this.state
         if (isNaN(number) || isNaN(stock_unit_price)) {
             return 0
         }
-        return number * stock_unit_price;
+        let sumMoney = number * stock_unit_price;
+        let available = sumMoney * discount.discount * 100
+        if (available > discount.total_poker_coins) {
+            available = discount.total_poker_coins
+        }
+
+        let discount_price = available / 100;
+        let dis_num = sumMoney - discount_price;
+        dis_num = Number(dis_num.toString().match(/^\d+(?:\.\d{0,2})?/))
+        return handle_value ? dis_num : sumMoney
     };
+
 
     render() {
         const {player, crowd, verified} = this.props.params;
+        const {discount, number} = this.state;
 
         const {name, logo, stock_unit_price, limit_buy, cf_player_id} = player;
 
+        let sumMoney = number * stock_unit_price;
+        let available = sumMoney * discount.discount * 100
+        if (available > discount.total_poker_coins) {
+            available = discount.total_poker_coins
+        }
         let order = {
-            number: this.state.number, cf_player_id: cf_player_id, stock_unit_price: stock_unit_price,
-            race_name: isEmptyObject(crowd.race) ? '' : crowd.race.name
+            number: number, cf_player_id: cf_player_id, stock_unit_price: stock_unit_price,
+            race_name: isEmptyObject(crowd.race) ? '' : crowd.race.name,
+            deduction: this.state.handle_value,
+            deduction_numbers: available
         };
 
         let limit = limit_buy - this.state.order_count;
+
+
         return (
             <View style={ApplicationStyles.bgContainer}>
                 <NavigationBar
@@ -141,6 +169,9 @@ export default class SubscriptionPage extends PureComponent {
                         </View>
 
                         <SubscriptionConfirmPage
+                            total_prize={this.total_prize(stock_unit_price)}
+                            handle_value={handle_value => this.setState({handle_value})}
+                            discount={this.state.discount}
                             order_info={order}
                             ref={ref => this.confirm = ref}
                         />
@@ -155,7 +186,7 @@ export default class SubscriptionPage extends PureComponent {
                     submitBtn={() => {
                         this.confirm && this.confirm.submitBtn()
                     }}
-                    sumMoney={this.total_prize(this.state.number, stock_unit_price)}/>
+                    sumMoney={this.total_prize(stock_unit_price)}/>
             </View>
 
 

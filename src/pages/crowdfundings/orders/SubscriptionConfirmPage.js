@@ -94,10 +94,12 @@ export default class SubscriptionConfirmPage extends PureComponent {
 
     render() {
 
-        const {order_info} = this.props;
+        const {order_info, discount,total_prize} = this.props;
         const {number, player_id, stock_unit_price, race_name} = order_info;
         let sumMoney = this.total_prize(number, stock_unit_price);
         const {verified} = this.state;
+
+
         return (
             <View style={ApplicationStyles.bgContainer}>
 
@@ -126,6 +128,10 @@ export default class SubscriptionConfirmPage extends PureComponent {
                 </View>
 
                 <Discount
+                    discount={discount}
+                    handle_value={handle_value => {
+                        this.props.handle_value(handle_value)
+                    }}
                     count={sumMoney}/>
 
 
@@ -200,7 +206,7 @@ export default class SubscriptionConfirmPage extends PureComponent {
                                       global.router.toRiskWarningPage(sumMoney, order_info, this.state.clickImg, this.state.order)
                                   }}>《风险提示》</Text>
                             及其他相关条款和协议，自愿认购{race_name}众筹项目，并支付众筹款项
-                            <Text style={{color: Colors._F34}}>{sumMoney}元</Text>。</Text>
+                            <Text style={{color: Colors._F34}}>{total_prize}元</Text>。</Text>
 
                     </View>
                     <TouchableOpacity
