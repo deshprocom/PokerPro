@@ -14,7 +14,8 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes
 import {SecurityText, ActionPay, Loading} from '../../../components/index';
 import {crowd_order, crowd_wx_pay, crowd_wx_paid_result} from '../../../services/CrowdDao';
 import {isWXAppInstalled, showToast, getVerId, isEmptyObject, idCardStatus} from '../../../utils/ComonHelper';
-import {Verified} from '../../../configs/Status'
+import {Verified} from '../../../configs/Status';
+import Discount from '../../comm/Discount'
 
 export default class SubscriptionConfirmPage extends PureComponent {
     state = {
@@ -120,9 +121,12 @@ export default class SubscriptionConfirmPage extends PureComponent {
 
                 <View style={styles.buy}>
                     <Text style={styles.messageTxt2}>¥{sumMoney}</Text>
-                    <Text style={styles.messageTxt1}>{I18n.t('payment')}</Text>
+                    <Text style={styles.messageTxt1}>总额：</Text>
 
                 </View>
+
+                <Discount
+                    count={sumMoney}/>
 
 
                 <TouchableOpacity
