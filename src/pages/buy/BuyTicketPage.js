@@ -168,9 +168,9 @@ export default class BuyTicketPage extends Component {
     };
 
 
-    discounted = (strPrice) => {
+    discounted = (price) => {
         const {discount} = this.state;
-        let price = Number(strPrice.replace(/[,]/g, ''))
+
 
         let available = price * discount.discount * 100
         if (available > discount.total_poker_coins) {
@@ -194,7 +194,7 @@ export default class BuyTicketPage extends Component {
 
             const data = {
                 order_number: order_number,
-                price: handle_value ? this.discounted(tickets.price) : tickets.price
+                price: handle_value ? this.discounted(tickets.unformatted_price) : tickets.price
             };
             this.payModal.setPayUrl(data);
             this.payModal.toggle();
@@ -541,15 +541,15 @@ export default class BuyTicketPage extends Component {
 
                     {this._inviteCode()}
 
+
+                    {this._priceView()}
+
                     {!isEmptyObject(discount) && price ? <Discount
                         discount={discount}
                         handle_value={handle_value => {
                             this.setState({handle_value})
                         }}
                         count={price.replace(/[,]/g, '')}/> : null}
-
-
-                    {this._priceView()}
 
                     <View style={{height: 68, flex: 1}}>
                         <Text style={{
@@ -584,7 +584,7 @@ export default class BuyTicketPage extends Component {
 
                         <Text style={{fontSize: 18, color: Colors._DF1}}
                               testID="txt_ticket_price">
-                            ¥{handle_value ? this.discounted(price) : price}
+                            ¥{handle_value ? this.discounted(unformatted_price) : price}
                         </Text>
                     </View>
                     <View style={{height: 41, width: 1, backgroundColor: Colors.txt_DDD}}/>
@@ -687,7 +687,7 @@ export default class BuyTicketPage extends Component {
                     style={{
                         color: Colors._DF1, fontSize: 14, marginRight: 17,
                         textDecorationLine: this._isDiscount() ? 'line-through' : 'none'
-                    }}>{handle_value ? this.discounted(price) : price}</Text>
+                    }}>{price}</Text>
 
             </View>
             {this._isDiscount() ?
