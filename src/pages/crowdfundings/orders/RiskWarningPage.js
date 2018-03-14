@@ -12,7 +12,7 @@ import {
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes/index';
 import {NavigationBar} from '../../../components/index';
-import OrderBottom from '../../malls/order/OrderBottom';
+import OrderBottom from '../../malls/submitOrder/OrderBottom';
 
 export default class RiskWarningPage extends PureComponent {
     state={

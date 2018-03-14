@@ -5,7 +5,7 @@ import I18n from 'react-native-i18n';
 import OrderStatus from './OrderStatus';
 import Positioning from './Positioning';
 import OrderMessage from './OrderMessage';
-import OrderDetails from '../order/OrderDetails';
+import OrderDetails from '../submitOrder/OrderDetails';
 import CompletedBottom from '../mallOrder/CompletedBottom';
 import {NavigationBar, BaseComponent} from '../../../components';
 import {util} from '../../../utils/ComonHelper';
@@ -84,6 +84,7 @@ export default class MallOrderInfo extends PureComponent {
                 <OrderMessage
                     orderDetail={detail}/>
                 <OrderDetails
+                    sumMoney={detail.total_price}
                     orderDetail={detail}/>
                 <View style={{height: 80}}/>
             </ScrollView>

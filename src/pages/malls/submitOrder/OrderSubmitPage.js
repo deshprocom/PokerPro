@@ -10,9 +10,18 @@ import OrderDetails from './OrderDetails';
 import OrderBottom from './OrderBottom';
 import {NavigationBar, BaseComponent} from '../../../components';
 import ExpiredOrder from './ExpiredOrder';
-import {util, payWx, isWXAppInstalled, deleteProductFromCart, showToast,alertOrderChat} from '../../../utils/ComonHelper';
+import {
+    util,
+    payWx,
+    isWXAppInstalled,
+    deleteProductFromCart,
+    showToast,
+    alertOrderChat
+} from '../../../utils/ComonHelper';
 import {getProductOrders, postMallOrder, postWxPay, getWxPaidResult} from '../../../services/MallDao';
 import {addTimeRecode} from "../../../components/PayCountDown";
+import Discount from '../../comm/Discount';
+import {get_discount} from '../../../services/CrowdDao';
 
 export default class OrderSubmitPage extends PureComponent {
     state = {
@@ -20,7 +29,10 @@ export default class OrderSubmitPage extends PureComponent {
         order_number: {},
         orderData: {},
         invalidProducts: [],
-        isInstall: false
+        isInstall: false,
+        discount: {},
+        handle_value: false
+
     };
     showExpiredInfo = (temp) => {
         if (util.isEmpty(temp)) {
@@ -35,12 +47,19 @@ export default class OrderSubmitPage extends PureComponent {
 
 
     componentDidMount() {
+        this.pokercion = 0;
         let body = this.postParam();
         isWXAppInstalled(isInstall => {
             this.setState({
                 isInstall: isInstall
             })
         });
+
+        get_discount(discount => {
+            this.setState({discount})
+        }, err => {
+
+        })
 
         getProductOrders(body, data => {
 
@@ -66,8 +85,8 @@ export default class OrderSubmitPage extends PureComponent {
             Alert.alert(`${I18n.t('tint')}`, err, [
                 {
                     text: `${I18n.t('certain')}`, onPress: () => {
-                    global.router.pop()
-                }
+                        global.router.pop()
+                    }
                 }])
         });
 
@@ -103,7 +122,13 @@ export default class OrderSubmitPage extends PureComponent {
             memo = leaveMessage
         }
 
-        return {variants, shipping_info, memo};
+        return {
+            variants,
+            shipping_info,
+            memo,
+            deduction: this.state.handle_value,
+            deduction_numbers: this.pokercion
+        };
 
     };
 
@@ -167,9 +192,24 @@ export default class OrderSubmitPage extends PureComponent {
         deleteProductFromCart(carts)
     };
 
+    discounted = (price) => {
+        const {discount, handle_value} = this.state;
+
+
+        let available = price * discount.discount * 100
+        if (available > discount.total_poker_coins) {
+            available = discount.total_poker_coins
+        }
+        this.pokercion = available;
+
+        let discount_num = price * 100 - available;
+
+        return handle_value ? discount_num / 100 : price
+    }
+
     render() {
 
-        const {isExpired, invalidProducts, orderData} = this.state;
+        const {isExpired, invalidProducts, orderData, discount} = this.state;
         const {total_price, total_product_price, shipping_price, items} = orderData;
 
         return (
@@ -193,7 +233,14 @@ export default class OrderSubmitPage extends PureComponent {
 
                     <LeaveMessage
                         ref={ref => this.leaveMessage = ref}/>
+                    <Discount
+                        discount={discount}
+                        handle_value={handle_value => {
+                            this.setState({handle_value})
+                        }}
+                        count={total_price}/>
                     <OrderDetails
+                        sumMoney={this.discounted(total_price)}
                         orderDetail={orderData}/>
                     <View style={{height: 80}}/>
 
@@ -201,7 +248,7 @@ export default class OrderSubmitPage extends PureComponent {
                 <OrderBottom
                     submitBtn={this.submitBtn}
                     showExpiredInfo={this.showExpiredInfo}
-                    sumMoney={total_price}/>
+                    sumMoney={this.discounted(total_price)}/>
 
                 {isExpired ? <ExpiredOrder
                     submitBtn={this.submitBtn}

@@ -29,7 +29,7 @@ export default class OrderDetails extends PureComponent {
                 <View style={styleO.paymentView}>
                     <View style={styleO.paymentPrice}>
                         <Text style={styleO.paymentPriceTxt}>¥</Text><Text
-                        style={[styleO.paymentPriceTxt, {marginLeft: 1}]}>{total_price}</Text>
+                        style={[styleO.paymentPriceTxt, {marginLeft: 1}]}>{this.props.sumMoney}</Text>
                     </View>
                     <Text style={styleO.payment}>{I18n.t('payment')}</Text>
 

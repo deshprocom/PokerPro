@@ -50,6 +50,9 @@ export default class BuyTicketPage extends Component {
 
 
     componentDidMount() {
+
+        this.pokercion = 0;
+
         umengEvent('ticket_buy_info');
         get_discount(discount => {
             this.setState({discount})
@@ -173,7 +176,7 @@ export default class BuyTicketPage extends Component {
         if (available > discount.total_poker_coins) {
             available = discount.total_poker_coins
         }
-
+        this.pokercion = available;
 
         let discount_num = price * 100 - available;
 
@@ -214,7 +217,7 @@ export default class BuyTicketPage extends Component {
         let verified = this.realName.getVerified();
         console.log('RealName', verified);
         umengEvent('ticket_buy_contain');
-        let {isEntity, email, shipping_address, order_number, inviteCode} = this.state;
+        let {isEntity, email, shipping_address, order_number, inviteCode, handle_value} = this.state;
         if (!isEmptyObject(verified)) {
             if (isEntity === ENTITY) {
                 if (isEmptyObject(shipping_address)) {
@@ -232,7 +235,9 @@ export default class BuyTicketPage extends Component {
                     consignee: shipping_address.consignee,
                     address: shipping_address.address + shipping_address.address_detail,
                     invite_code: inviteCode,
-                    cert_id: verified.id
+                    cert_id: verified.id,
+                    deduction: handle_value,
+                    deduction_numbers: this.pokercion
                 };
 
                 if (this.payModal && !isEmptyObject(this.payModal.getPayUrl())) {
@@ -261,7 +266,9 @@ export default class BuyTicketPage extends Component {
                     ticket_type: 'e_ticket',
                     email: email,
                     invite_code: inviteCode,
-                    cert_id: verified.id
+                    cert_id: verified.id,
+                    deduction: handle_value,
+                    deduction_numbers: this.pokercion
                 };
                 if (this.payModal && !isEmptyObject(this.payModal.getPayUrl())) {
                     this.payModal.toggle()

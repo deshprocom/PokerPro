@@ -130,7 +130,6 @@ export default class SubscriptionConfirmPage extends PureComponent {
                 <Discount
                     discount={discount}
                     handle_value={handle_value => {
-                        this.setState({handle_value})
                         this.props.handle_value(handle_value)
                     }}
                     count={sumMoney}/>

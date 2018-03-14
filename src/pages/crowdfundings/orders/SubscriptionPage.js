@@ -16,7 +16,7 @@ import I18n from 'react-native-i18n';
 import SubscriptionConfirmPage from './SubscriptionConfirmPage';
 import {user_crowd_count, get_discount} from '../../../services/CrowdDao';
 import {isEmptyObject} from '../../../utils/ComonHelper';
-import OrderBottom from '../../malls/order/OrderBottom';
+import OrderBottom from '../../malls/submitOrder/OrderBottom';
 
 export default class SubscriptionPage extends PureComponent {
     state = {
