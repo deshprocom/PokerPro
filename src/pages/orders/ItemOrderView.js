@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/8/7.
  */
-import React, {Component, PropTypes}from 'react';
+import React, {Component, PropTypes} from 'react';
 import {
     TouchableOpacity, View,
     StyleSheet, Image, Text, ListView, Alert
@@ -108,8 +108,8 @@ export default class ItemOrderView extends Component {
                         },
                             {
                                 text: I18n.t('call'), onPress: () => {
-                                Communications.phonecall(I18n.t('hot_phone'), false)
-                            }
+                                    Communications.phonecall(I18n.t('hot_phone'), false)
+                                }
                             }])
                 }}
                 style={styles.btnCancel}>
@@ -132,7 +132,7 @@ export default class ItemOrderView extends Component {
                         {
                             text: I18n.t('I_known'), onPress: () => {
 
-                        }
+                            }
                         }])
             } else {
                 let courierInfo = courier + '\n' + I18n.t('tracking_no') + ': ' + tracking_no;
@@ -141,7 +141,7 @@ export default class ItemOrderView extends Component {
                         {
                             text: I18n.t('I_known'), onPress: () => {
 
-                        }
+                            }
                         }])
             }
 
@@ -207,7 +207,7 @@ export default class ItemOrderView extends Component {
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={() => {
-                    router.toOrderInfo(this.props, orderInfo.order_id, orderInfo.price, true)
+                    router.toOrderInfo(this.props, orderInfo.order_id, orderInfo.final_price, true)
                 }}
                 style={styles.btnPay}>
                 <Text style={styles.pay}>{I18n.t('pay')}</Text>

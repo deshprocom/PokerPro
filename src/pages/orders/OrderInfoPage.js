@@ -21,7 +21,7 @@ import {
 } from '../../utils/ComonHelper';
 import Button from 'react-native-smart-button';
 import {fetchGetRecentRaces, fetchRacesInfo} from '../../actions/RacesAction';
-import {Verified} from '../../configs/Status';
+import {Verified, OrderStatus} from '../../configs/Status';
 import PayModal from '../buy/PayModal';
 import {postOrderCancel, postInvite, postOrderComplete} from '../../services/OrderDao';
 
@@ -239,9 +239,8 @@ class OrderInfoPage extends React.Component {
                     style={{
                         fontSize: 14, color: Colors._AAA, marginRight: 18,
                         textDecorationLine: 'line-through'
-                    }}>{order_info.original_price}</Text>
+                    }}>¥{order_info.original_price}</Text>
             </View>
-
 
 
             <View
@@ -252,7 +251,7 @@ class OrderInfoPage extends React.Component {
                     style={{
                         fontSize: 14, color: '#DF1D0F', marginRight: 18,
                         textDecorationLine: this.state.isDiscount ? 'line-through' : 'none'
-                    }}>{ticket.price}</Text>
+                    }}>¥{ticket.price}</Text>
             </View>
 
             {deduction ? <View
@@ -262,14 +261,14 @@ class OrderInfoPage extends React.Component {
                     testID="txt_original_price"
                     style={{
                         fontSize: 14, color: '#DF1D0F', marginRight: 18
-                    }}>-{deduction_numbers / 100}</Text>
+                    }}>¥-{deduction_numbers / 100}</Text>
             </View> : null}
-            {this.state.isDiscount ? <View
+            {deduction && order_info.status === OrderStatus.paid ? <View
                 style={styles.viewPrice}>
                 <Text style={{fontSize: 14, color: Colors.txt_666}}>{I18n.t('discount')}</Text>
                 <Text
                     testID="txt_price"
-                    style={{fontSize: 14, color: '#DF1D0F', marginRight: 18}}>{order_info.price}</Text>
+                    style={{fontSize: 14, color: '#DF1D0F', marginRight: 18}}>¥{order_info.final_price}</Text>
             </View> : null}
 
 
@@ -485,7 +484,7 @@ class OrderInfoPage extends React.Component {
 
             const data = {
                 order_number: order_id,
-                price: order_info.price
+                price: order_info.final_price
             };
 
             this.payModal.setPayUrl(data);
