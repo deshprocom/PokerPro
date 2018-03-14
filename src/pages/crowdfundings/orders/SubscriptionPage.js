@@ -104,10 +104,10 @@ export default class SubscriptionPage extends PureComponent {
             available = discount.total_poker_coins
         }
 
-        let discount_price = available / 100;
-        let dis_num = sumMoney - discount_price;
-        dis_num = Number(dis_num.toString().match(/^\d+(?:\.\d{0,2})?/))
-        return handle_value ? dis_num : sumMoney
+
+        let dis_num = sumMoney * 100 - available;
+
+        return handle_value ? dis_num / 100 : sumMoney
     };
 
 

@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes/index';
-import {SecurityText, ActionPay, Loading} from '../../../components/index';
+import {SecurityText, ActionPay, Loading} from '../../../components';
 import {crowd_order, crowd_wx_pay, crowd_wx_paid_result} from '../../../services/CrowdDao';
 import {isWXAppInstalled, showToast, getVerId, isEmptyObject, idCardStatus} from '../../../utils/ComonHelper';
 import {Verified} from '../../../configs/Status';
@@ -47,8 +47,8 @@ export default class SubscriptionConfirmPage extends PureComponent {
     }
 
     submitBtn = () => {
-        const {order_info} = this.props;
-        const {verified} = this.state;
+        const {order_info, total_prize} = this.props;
+        const {verified,} = this.state;
         const {number, stock_unit_price} = order_info;
         order_info.user_extra_id = verified.id;
 
@@ -61,7 +61,7 @@ export default class SubscriptionConfirmPage extends PureComponent {
                 crowd_wx_pay(data, ret => {
                     this.loading.close();
                     let order = {
-                        price: stock_unit_price * number,
+                        price: total_prize,
                         order_number: data.order_number
                     };
 
@@ -94,7 +94,7 @@ export default class SubscriptionConfirmPage extends PureComponent {
 
     render() {
 
-        const {order_info, discount,total_prize} = this.props;
+        const {order_info, discount, total_prize} = this.props;
         const {number, player_id, stock_unit_price, race_name} = order_info;
         let sumMoney = this.total_prize(number, stock_unit_price);
         const {verified} = this.state;
@@ -130,6 +130,7 @@ export default class SubscriptionConfirmPage extends PureComponent {
                 <Discount
                     discount={discount}
                     handle_value={handle_value => {
+                        this.setState({handle_value})
                         this.props.handle_value(handle_value)
                     }}
                     count={sumMoney}/>

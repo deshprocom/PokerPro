@@ -23,6 +23,8 @@ import {umengEvent} from '../../utils/UmengEvent';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import PayModal from './PayModal';
 import {CouponType} from '../../configs/Status';
+import Discount from '../comm/Discount';
+import {get_discount} from '../../services/CrowdDao';
 
 
 const E_TICKET = 'e_ticket',
@@ -41,13 +43,19 @@ export default class BuyTicketPage extends Component {
         shipping_address: {},
         order_number: '',
         inviteCode: '',
-        invitePrice: {}
+        invitePrice: {},
+        discount: {},
+        handle_value: false
     };
 
 
     componentDidMount() {
         umengEvent('ticket_buy_info');
+        get_discount(discount => {
+            this.setState({discount})
+        }, err => {
 
+        })
         storage.load({
             key: StorageKey.BuyEmail
         }).then(email => {
@@ -150,24 +158,40 @@ export default class BuyTicketPage extends Component {
             },
                 {
                     text: I18n.t('call'), onPress: () => {
-                    Communications.phonecall(I18n.t('hot_phone'), false)
-                }
+                        Communications.phonecall(I18n.t('hot_phone'), false)
+                    }
                 }])
 
     };
 
+
+    discounted = (strPrice) => {
+        const {discount} = this.state;
+        let price = Number(strPrice.replace(/[,]/g, ''))
+
+        let available = price * discount.discount * 100
+        if (available > discount.total_poker_coins) {
+            available = discount.total_poker_coins
+        }
+
+
+        let discount_num = price * 100 - available;
+
+        return discount_num / 100
+    }
 
     _postOrderOk = (order_number) => {
         // Alert.alert(`${I18n.t('buy_success')}`, `${I18n.t('keep_phone')}`);
         this.setState({
             order_number: order_number
         });
-        const {tickets} = this.state;
+        const {tickets, handle_value} = this.state;
 
         if (this.payModal) {
+
             const data = {
                 order_number: order_number,
-                price: tickets.price
+                price: handle_value ? this.discounted(tickets.price) : tickets.price
             };
             this.payModal.setPayUrl(data);
             this.payModal.toggle();
@@ -329,7 +353,7 @@ export default class BuyTicketPage extends Component {
     _entityView = () => {
 
         const {isEntity} = this.state;
-        return (   <TouchableOpacity
+        return (<TouchableOpacity
             onPress={() => {
                 this.setState({
                     isEntity: ENTITY
@@ -362,7 +386,7 @@ export default class BuyTicketPage extends Component {
         let entity_num = entity_ticket_number - entity_ticket_sold_number;
 
 
-        return (   <View style={{
+        return (<View style={{
             height: 140,
             backgroundColor: Colors.white,
             marginTop: 8
@@ -405,7 +429,7 @@ export default class BuyTicketPage extends Component {
 
     render() {
 
-        const {race, tickets, ordered, isEntity, knowRed, email, order} = this.state;
+        const {race, tickets, ordered, isEntity, knowRed, email, order, discount, handle_value} = this.state;
         const {ticket_info, price, unformatted_price} = tickets;
 
         return (
@@ -510,6 +534,14 @@ export default class BuyTicketPage extends Component {
 
                     {this._inviteCode()}
 
+                    {!isEmptyObject(discount) && price ? <Discount
+                        discount={discount}
+                        handle_value={handle_value => {
+                            this.setState({handle_value})
+                        }}
+                        count={price.replace(/[,]/g, '')}/> : null}
+
+
                     {this._priceView()}
 
                     <View style={{height: 68, flex: 1}}>
@@ -545,7 +577,7 @@ export default class BuyTicketPage extends Component {
 
                         <Text style={{fontSize: 18, color: Colors._DF1}}
                               testID="txt_ticket_price">
-                            ¥{this._isDiscount() ? this.couponPrice(unformatted_price) : price}
+                            ¥{handle_value ? this.discounted(price) : price}
                         </Text>
                     </View>
                     <View style={{height: 41, width: 1, backgroundColor: Colors.txt_DDD}}/>
@@ -614,7 +646,7 @@ export default class BuyTicketPage extends Component {
     };
 
     _priceView = () => {
-        const {tickets} = this.state;
+        const {tickets, handle_value} = this.state;
         if (isEmptyObject(tickets))
             return;
         const {original_price, price, unformatted_price} = tickets;
@@ -648,7 +680,7 @@ export default class BuyTicketPage extends Component {
                     style={{
                         color: Colors._DF1, fontSize: 14, marginRight: 17,
                         textDecorationLine: this._isDiscount() ? 'line-through' : 'none'
-                    }}>{price}</Text>
+                    }}>{handle_value ? this.discounted(price) : price}</Text>
 
             </View>
             {this._isDiscount() ?
@@ -699,7 +731,7 @@ export default class BuyTicketPage extends Component {
 
 
     _emailViwe = (email) => {
-        return (  <View
+        return (<View
             style={{
                 height: 44, alignItems: 'center', flexDirection: 'row',
                 marginTop: 8, backgroundColor: Colors.white
@@ -738,7 +770,7 @@ export default class BuyTicketPage extends Component {
 
 
         if (isEmptyObject(shipping_address))
-            return (  <TouchableOpacity
+            return (<TouchableOpacity
                 activeOpacity={1}
                 onPress={() => {
                     router.toAdrListPage(this.props, this._selectAdr, {});
