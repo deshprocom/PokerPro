@@ -261,7 +261,7 @@ class OrderInfoPage extends React.Component {
                     testID="txt_original_price"
                     style={{
                         fontSize: 14, color: '#DF1D0F', marginRight: 18
-                    }}>¥-{deduction_numbers / 100}</Text>
+                    }}>-¥{deduction_numbers / 100}</Text>
             </View> : null}
             {deduction && order_info.status === OrderStatus.paid ? <View
                 style={styles.viewPrice}>
