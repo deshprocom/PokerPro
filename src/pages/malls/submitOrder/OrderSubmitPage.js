@@ -192,19 +192,19 @@ export default class OrderSubmitPage extends PureComponent {
         deleteProductFromCart(carts)
     };
 
-    discounted = (price) => {
+    discounted = (orderData) => {
         const {discount, handle_value} = this.state;
+        const {total_price, total_product_price} = orderData;
 
-
-        let available = price * discount.discount * 100
+        let available = total_product_price * discount.discount * 100
         if (available > discount.total_poker_coins) {
             available = discount.total_poker_coins
         }
         this.pokercion = available;
 
-        let discount_num = price * 100 - available;
+        let discount_num = total_price * 100 - available;
 
-        return handle_value ? discount_num / 100 : price
+        return handle_value ? discount_num / 100 : total_price
     }
 
     render() {
@@ -238,9 +238,9 @@ export default class OrderSubmitPage extends PureComponent {
                         handle_value={handle_value => {
                             this.setState({handle_value})
                         }}
-                        count={total_price}/>
+                        count={total_product_price}/>
                     <OrderDetails
-                        sumMoney={this.discounted(total_price)}
+                        sumMoney={this.discounted(orderData)}
                         orderDetail={orderData}/>
                     <View style={{height: 80}}/>
 
@@ -248,7 +248,7 @@ export default class OrderSubmitPage extends PureComponent {
                 <OrderBottom
                     submitBtn={this.submitBtn}
                     showExpiredInfo={this.showExpiredInfo}
-                    sumMoney={this.discounted(total_price)}/>
+                    sumMoney={this.discounted(orderData)}/>
 
                 {isExpired ? <ExpiredOrder
                     submitBtn={this.submitBtn}

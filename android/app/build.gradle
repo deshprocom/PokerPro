@@ -90,8 +90,8 @@ android {
         applicationId "com.deshpro.pokerpro"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 5
-        versionName "3.3"
+        versionCode 8
+        versionName "3.4"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
