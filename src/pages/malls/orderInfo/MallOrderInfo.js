@@ -65,7 +65,7 @@ export default class MallOrderInfo extends PureComponent {
     renderContent = () => {
         const {detail} = this.state;
 
-        const {address, order_items, status} = detail;
+        const {address, order_items, status,deduction_result,final_price,total_price} = detail;
         return <View style={{flex: 1}}>
             <ScrollView style={styleC.orderView}>
                 <OrderStatus
@@ -84,7 +84,7 @@ export default class MallOrderInfo extends PureComponent {
                 <OrderMessage
                     orderDetail={detail}/>
                 <OrderDetails
-                    sumMoney={detail.total_price}
+                    sumMoney={deduction_result === 'success'?final_price:total_price}
                     orderDetail={detail}/>
                 <View style={{height: 80}}/>
             </ScrollView>

@@ -43,7 +43,7 @@ export default class Discount extends PureComponent {
         let discount_price = available / 100;
 
 
-        if (_.isEmpty(discount) || discount.discount <= 0) {
+        if (_.isEmpty(discount) || discount.total_poker_coins <= 0) {
             return <View/>
         }
 
@@ -51,7 +51,7 @@ export default class Discount extends PureComponent {
         return <View style={styles.discount}>
 
             <Text style={styles.txt1}>{`可用${available}扑客币抵：`}<Text
-                style={{color: Colors._F34}}>¥{discount_price}</Text></Text>
+                style={{color: Colors._F34}}>-¥{discount_price}</Text></Text>
 
             <Switch handle_value={handle_value => {
                 this.props.handle_value(handle_value)
