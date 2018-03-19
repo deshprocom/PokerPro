@@ -563,7 +563,7 @@
   "sponsor_player": "赞助牌手",
   "slogan": "口号",
   "give_up_hares": "让出股份",
-  "share_division": "股份划分",
+  "share_division": "股份my_coins划分",
   "total_crowdfunding": "众筹总额",
   "currently_there": "目前已有",
   "people": "人",
@@ -572,5 +572,7 @@
   "unsuccess": "未成功",
   "crowAddress": "地址",
   "video_outline": "搜索视频",
-  "poker_discount": "扑客币抵扣"
+  "poker_discount": "扑客币抵扣",
+  "sponsored":"赞助记录",
+  "my_coins":"我的扑客币"
 }

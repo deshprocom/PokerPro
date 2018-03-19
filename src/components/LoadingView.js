@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import PullToRefreshListView from 'react-native-smart-pull-to-refresh-listview';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
+import I18n from 'react-native-i18n'
 
 export function _renderHeader(viewState, headerStyle) {
     let {pullState, pullDistancePercent} = viewState
@@ -21,14 +22,14 @@ export function _renderHeader(viewState, headerStyle) {
             return (
                 <View
                     style={headerStyle}>
-                    <Text style={[Fonts.H15,{color:Colors._AAA}]}>下拉刷新</Text>
+                    <Text style={[Fonts.H15,{color:Colors._AAA}]}>{I18n.t('pull_refresh')}</Text>
                 </View>
             )
         case refresh_idle:
             return (
                 <View
                     style={headerStyle}>
-                    <Text style={[Fonts.H15,{color:Colors._AAA}]}>下拉刷新</Text>
+                    <Text style={[Fonts.H15,{color:Colors._AAA}]}>{I18n.t('pull_refresh')}</Text>
                 </View>
             )
         case will_refresh:
@@ -42,7 +43,7 @@ export function _renderHeader(viewState, headerStyle) {
             return (
                 <View
                     style={[headerStyle,{flexDirection: 'row'}]}>
-                    {_renderActivityIndicator()}<Text style={[Fonts.H15,{color:Colors._AAA}]}>加载中</Text>
+                    {_renderActivityIndicator()}<Text style={[Fonts.H15,{color:Colors._AAA}]}>{I18n.t('loading')}</Text>
                 </View>
             )
     }
@@ -78,7 +79,7 @@ export function _renderFooter(viewState, footerStyle) {
             return (
                 <View
                     style={[{flexDirection: 'row'},footerStyle]}>
-                    {_renderActivityIndicator()}<Text style={[Fonts.H15,{color:Colors._AAA}]}>加载中</Text>
+                    {_renderActivityIndicator()}<Text style={[Fonts.H15,{color:Colors._AAA}]}>{I18n.t('loading')}</Text>
                 </View>
             )
         case loaded_all:
