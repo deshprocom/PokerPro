@@ -14,6 +14,7 @@ import {NavigationBar} from '../../components';
 import {poker_coins} from '../../services/CrowdDao';
 import {isEmptyObject, convertDate} from '../../utils/ComonHelper';
 import moment from 'moment';
+import I18n from 'react-native-i18n'
 
 const styles = StyleSheet.create({
     view1: {
@@ -76,7 +77,7 @@ export default class PokerB extends PureComponent {
         return <View style={ApplicationStyles.bgContainer}>
             <NavigationBar
                 toolbarStyle={{backgroundColor: Colors.bg_09}}
-                title={'扑客币'}
+                title={I18n.t("poker_coins")}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}/>

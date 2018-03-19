@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/3/3.
  */
-import React, {Component}from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text, ListView, Platform,
@@ -22,28 +22,29 @@ export function _renderHeader(viewState, headerStyle) {
             return (
                 <View
                     style={headerStyle}>
-                    <Text style={[Fonts.H15,{color:Colors._AAA}]}>{I18n.t('pull_refresh')}</Text>
+                    <Text style={[Fonts.H15, {color: Colors._AAA}]}>{I18n.t('pull_refresh')}</Text>
                 </View>
             )
         case refresh_idle:
             return (
                 <View
                     style={headerStyle}>
-                    <Text style={[Fonts.H15,{color:Colors._AAA}]}>{I18n.t('pull_refresh')}</Text>
+                    <Text style={[Fonts.H15, {color: Colors._AAA}]}>{I18n.t('pull_refresh')}</Text>
                 </View>
             )
         case will_refresh:
             return (
                 <View
                     style={headerStyle}>
-                    <Text style={[Fonts.H15,{color:Colors._AAA}]}>释放刷新</Text>
+                    <Text style={[Fonts.H15, {color: Colors._AAA}]}>释放刷新</Text>
                 </View>
             )
         case refreshing:
             return (
                 <View
-                    style={[headerStyle,{flexDirection: 'row'}]}>
-                    {_renderActivityIndicator()}<Text style={[Fonts.H15,{color:Colors._AAA}]}>{I18n.t('loading')}</Text>
+                    style={[headerStyle, {flexDirection: 'row'}]}>
+                    {_renderActivityIndicator()}<Text
+                    style={[Fonts.H15, {color: Colors._AAA}]}>{I18n.t('loading')}</Text>
                 </View>
             )
     }
@@ -58,35 +59,36 @@ export function _renderFooter(viewState, footerStyle) {
             return (
                 <View
                     style={footerStyle}>
-                    <Text style={[Fonts.H15,{color:Colors._AAA}]}>上拉加载</Text>
+                    <Text style={[Fonts.H15, {color: Colors._AAA}]}>{I18n.t("pull_up_refresh")}</Text>
                 </View>
             )
         case load_more_idle:
             return (
                 <View
                     style={footerStyle}>
-                    <Text style={[Fonts.H15,{color:Colors._AAA}]}>上拉加载</Text>
+                    <Text style={[Fonts.H15, {color: Colors._AAA}]}>{I18n.t("pull_up_refresh")}</Text>
                 </View>
             )
         case will_load_more:
             return (
                 <View
                     style={footerStyle}>
-                    <Text style={[Fonts.H15,{color:Colors._AAA}]}>释放加载</Text>
+                    <Text style={[Fonts.H15, {color: Colors._AAA}]}>释放加载</Text>
                 </View>
             )
         case loading_more:
             return (
                 <View
-                    style={[{flexDirection: 'row'},footerStyle]}>
-                    {_renderActivityIndicator()}<Text style={[Fonts.H15,{color:Colors._AAA}]}>{I18n.t('loading')}</Text>
+                    style={[{flexDirection: 'row'}, footerStyle]}>
+                    {_renderActivityIndicator()}<Text
+                    style={[Fonts.H15, {color: Colors._AAA}]}>{I18n.t('loading')}</Text>
                 </View>
             )
         case loaded_all:
             return (
                 <View
                     style={footerStyle}>
-                    <Text style={[Fonts.H15,{color:Colors._AAA}]}>no more</Text>
+                    <Text style={[Fonts.H15, {color: Colors._AAA}]}>no more</Text>
                 </View>
             )
     }
@@ -94,23 +96,23 @@ export function _renderFooter(viewState, footerStyle) {
 
 function _renderActivityIndicator() {
     return ActivityIndicator ? (
-            <ActivityIndicator
+        <ActivityIndicator
+            style={{marginRight: 10,}}
+            animating={true}
+            color={'#AAAAAA'}
+            size={'small'}/>
+    ) : Platform.OS == 'android' ?
+        (
+            <ProgressBarAndroid
+                style={{marginRight: 10,}}
+                color={'#AAAAAA'}
+                styleAttr={'Small'}/>
+
+        ) : (
+            <ActivityIndicatorIOS
                 style={{marginRight: 10,}}
                 animating={true}
                 color={'#AAAAAA'}
                 size={'small'}/>
-        ) : Platform.OS == 'android' ?
-            (
-                <ProgressBarAndroid
-                    style={{marginRight: 10,}}
-                    color={'#AAAAAA'}
-                    styleAttr={'Small'}/>
-
-            ) : (
-                <ActivityIndicatorIOS
-                    style={{marginRight: 10,}}
-                    animating={true}
-                    color={'#AAAAAA'}
-                    size={'small'}/>
-            )
+        )
 }

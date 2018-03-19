@@ -574,5 +574,7 @@
   "video_outline": "搜索视频",
   "poker_discount": "扑客币抵扣",
   "sponsored":"赞助记录",
-  "my_coins":"我的扑客币"
+  "my_coins":"我的扑客币",
+  "pull_up_refresh":"上拉加载",
+  "poker_coins":"扑客币"
 }
