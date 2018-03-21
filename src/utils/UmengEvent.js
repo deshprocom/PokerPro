@@ -1,7 +1,6 @@
 /**
  * Created by lorne on 2017/6/21.
  */
-import MobclickAgent from 'rn-umeng';
 
 export function umengEvent(event) {
     let strEvnet = '';
@@ -91,7 +90,5 @@ export function umengEvent(event) {
             break;
 
     }
-
-    MobclickAgent.onEvent(strEvnet)
 
 }

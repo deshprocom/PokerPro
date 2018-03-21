@@ -171,7 +171,6 @@ dependencies {
     compile project(':react-native-blur')
     compile project(':react-native-picker')
     compile project(':react-native-linear-gradient')
-    compile project(':rn-umeng')
     compile project(':react-native-wechat')
     compile project(':react-native-umshare')
     compile project(':react-native-orientation')

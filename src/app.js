@@ -11,7 +11,6 @@ import PuKe from './pages/Root'
 import './configs/StorageConfig';
 import './I18n/I18n';
 import SplashScreen from 'react-native-smart-splash-screen';
-import MobclickAgent from 'rn-umeng';
 import {
     UMENG_ANDROID, UMENG_IOS, WX_ID, WX_Secret,
     QQ_SHARE_ID, QQ_SHARE_KEY, WX_URL, WB_URL,
@@ -90,7 +89,6 @@ export default class App extends Component {
             console.log(err)
         });
 
-        MobclickAgent.startWithAppkey(Platform.OS === 'ios' ? UMENG_IOS : UMENG_ANDROID);
 
     }
 

@@ -6,7 +6,6 @@ import com.facebook.react.ReactApplication;
 import com.cmcewen.blurview.BlurViewPackage;
 import com.beefe.picker.PickerViewPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
-import in.esseak.react_native_umeng.UmengPackage;
 import com.theweflex.react.WeChatPackage;
 import com.zzy.umshare.UMShareModulePackage;
 import com.github.yamill.orientation.OrientationPackage;
@@ -43,7 +42,6 @@ public class MainApplication extends Application implements ReactApplication {
             new BlurViewPackage(),
             new PickerViewPackage(),
             new LinearGradientPackage(),
-            new UmengPackage(),
             new WeChatPackage(),
             new UMShareModulePackage(),
             new OrientationPackage(),
