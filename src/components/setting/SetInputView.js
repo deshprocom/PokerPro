@@ -1,13 +1,13 @@
 /**
  * Created by lorne on 2017/3/1.
  */
-import React, {Component, PropTypes}from 'react';
+import React, {Component}from 'react';
 import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text, ScrollView, Platform
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-
+import PropTypes from 'prop-types';
 
 export default class SetInputView extends Component {
 

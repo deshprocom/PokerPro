@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/2/9.
  */
-import React, {PropTypes}from 'react';
+import React from 'react';
 import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text
@@ -9,12 +9,6 @@ import {
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
 export default class InputPwdView extends React.Component {
-
-    static propTypes = {
-        placeholder: PropTypes.string,
-        stateText: PropTypes.func,
-        testID: PropTypes.string
-    };
 
     state = {
         pwdEye: true

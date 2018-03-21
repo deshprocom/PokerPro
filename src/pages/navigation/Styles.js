@@ -106,16 +106,13 @@ export const styles = StyleSheet.create({
     },
     button: {
         width: 68,
-        height: 28,
-        alignItems: 'center',
-        justifyContent: 'center'
+        height: 28
 
     },
     oval: {
         width: 317,
         height: 165,
-        marginLeft: 17,
-        flexDirection: 'row'
+        marginLeft: 17
     },
     ovalText: {
         fontSize: 12,

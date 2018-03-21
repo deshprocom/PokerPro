@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import I18n from 'react-native-i18n';
 
@@ -8,9 +8,6 @@ import RankList from './RankList';
 import {isLoginUser} from '../../utils/ComonHelper';
 
 export default class MainRankPage extends Component {
-    static propTypes = {
-        openRank: PropTypes.func
-    };
 
     isLogin = () => {
         if (isLoginUser()) {

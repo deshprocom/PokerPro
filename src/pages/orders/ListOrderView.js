@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/2/23.
  */
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text, ListView, Platform,
@@ -24,10 +24,6 @@ import {Verified} from '../../configs/Status';
 
 class ListOrderView extends Component {
 
-    static propTypes = {
-        testViewID: PropTypes.string,
-        status: PropTypes.string
-    };
 
     componentDidMount() {
         this._pullToRefreshListView.beginRefresh()

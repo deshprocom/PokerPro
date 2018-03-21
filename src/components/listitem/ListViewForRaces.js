@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/1/19.
  */
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet, Text, View, ListView,
     TouchableOpacity, Image
@@ -13,10 +13,7 @@ import RaceRowView from './RaceRowView';
 
 
 export default class ListViewForRaces extends Component {
-    static propTypes = {
-        dataSource: PropTypes.array,
-        router: PropTypes.object
-    };
+
 
     constructor(props) {
         super(props);

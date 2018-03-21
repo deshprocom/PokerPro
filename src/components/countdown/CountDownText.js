@@ -13,15 +13,16 @@
 
 'use strict'
 
-import React,{Component} from 'react'
+import React from 'react'
 import {
     StyleSheet,
     Text,
 } from 'react-native';
 var update = require('react-addons-update')
 var countDown = require('./countDown')
+const createReactClass = require('create-react-class');
 
-export var CountDownText = React.createClass({
+export var CountDownText = createReactClass({
     counter: null, // 计时器
     // 定时回调
     getDefaultProps: function(){
@@ -49,7 +50,7 @@ export var CountDownText = React.createClass({
     // 当更新
     componentWillReceiveProps: function(nextProps){
 
-            return;
+        return;
         // 判断是否要重新计时
         var updating = false;
         if(this.props.step == nextProps.step && this.props.step < 0){ // 倒计时的情况
@@ -103,7 +104,7 @@ export var CountDownText = React.createClass({
             }
         });
         if(this.counter == null)
-        this.counter = countDown(config);
+            this.counter = countDown(config);
 
         // 判断是否结束
         if(this.counter.timeLeft <= 0 && this.counter.step <= 0){

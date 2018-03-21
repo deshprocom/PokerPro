@@ -98,7 +98,7 @@ class Personal extends Component {
 
             <View style={{height: 3, width: '100%'}}/>
             {this._item(stylesP.item_view, Images.crowd, stylesP.img_dy,
-                '赞助记录', () => {
+                I18n.t('sponsored'), () => {
                     if (isEmptyObject(global.login_user))
                         global.router.toLoginFirstPage()
                     else
@@ -107,7 +107,7 @@ class Personal extends Component {
                 })}
             <View style={{height: 1, marginLeft: 69}}/>
             {this._item(stylesP.item_view, Images.poker_P, stylesP.img_dy,
-                '我的扑客币', () => {
+                I18n.t('my_coins'), () => {
                     if (isEmptyObject(global.login_user))
                         global.router.toLoginFirstPage()
                     else
@@ -156,7 +156,7 @@ class Personal extends Component {
             <Image style={imgStyle} source={img}/>
             <Text style={stylesP.personalText}>{title}</Text>
             <View style={{flex: 1}}/>
-            {title === '我的扑客币' ? <Text
+            {title === I18n.t('my_coins') ? <Text
                     style={{
                         fontSize: 16,
                         color: '#AAAAAA',

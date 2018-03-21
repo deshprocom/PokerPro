@@ -3,9 +3,7 @@
  */
 import JPushModule from 'jpush-react-native';
 import {DeviceEventEmitter, NativeAppEventEmitter, Platform} from 'react-native'
-const receiveNotificationEvent = "receiveNotification";
-const openNotificationEvent = "openNotification";
-const getRegistrationIdEvent = "getRegistrationId";
+
 
 export default class JpushHelper {
     static setTags(array, successCallback, failedCallback) {
@@ -22,32 +20,15 @@ export default class JpushHelper {
     }
 
     static addPushListener(receiveCb, openCb) {
-        if (Platform.OS === 'ios') {
-            this.iosReceiveNotification(receiveCb);
-            this.iosOpenNotification(openCb);
-            var subscription = NativeAppEventEmitter.addListener(
-                'networkDidReceiveMessage',
-                (message) => console.log('networkDidReceiveMessage', message)
-            );
-        } else {
+        JPushModule.addReceiveCustomMsgListener(openCb)
+        JPushModule.addReceiveNotificationListener(receiveCb);
 
-            JPushModule.addReceiveNotificationListener(receiveCb);
-            JPushModule.addReceiveOpenNotificationListener(openCb)
-        }
     }
 
 
     static removePushListener() {
-        if (Platform.OS === 'ios') {
-            DeviceEventEmitter.removeAllListeners();
-            NativeAppEventEmitter.removeAllListeners();
-        } else {
-            JPushModule.removeReceiveNotificationListener(receiveNotificationEvent);
-            JPushModule.removeGetRegistrationIdListener(getRegistrationIdEvent);
-            JPushModule.removeReceiveOpenNotificationListener(openNotificationEvent);
-
-            JPushModule.clearAllNotifications();
-        }
+        JPushModule.removeReceiveCustomMsgListener();
+        JPushModule.removeReceiveNotificationListener();
         console.log("Will clear all notifications");
     }
 

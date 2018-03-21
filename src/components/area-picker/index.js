@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import {
     View,
     Text,
@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import BaseComponent from './BaseComponent';
 import {PROVINCE_LIST, CITY_LIST, AREA_LIST} from './regionJson';
+import PropTypes from 'prop-types';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;

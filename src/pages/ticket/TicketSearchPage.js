@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/5/31.
  */
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet, Text, View, TextInput,
     TouchableOpacity, Image, StatusBar,
@@ -38,7 +38,7 @@ export default class TicketSearchPage extends Component {
                 keyExtractor={(item, index) => `${this.state.layout} - ${item.race_id}`}
                 onFetch={this.onFetch}
                 legacyImplementation
-                rowView={itemListView}
+                item={itemListView}
                 refreshableTitlePull={I18n.t('pull_refresh')}
                 refreshableTitleRelease={I18n.t('release_refresh')}
                 dateTitle={I18n.t('last_refresh')}

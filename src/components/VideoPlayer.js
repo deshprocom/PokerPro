@@ -823,16 +823,16 @@ export default class VideoPlayer extends Component {
                 <Image
                     source={require('./assets/img/top-vignette.png')}
                     style={[styles.controls.column, styles.controls.vignette,
-                    ]}>
-                    <View style={styles.controls.topControlGroup}>
-                        {this.renderBack()}
-                        <View style={styles.controls.pullRight}>
-                            {/*{ this.renderVolume() }*/}
-                            {this.renderTitle()}
-                            {true ? null : this.renderFullscreen()}
-                        </View>
+                        {position: 'absolute'}]}/>
+
+                <View style={styles.controls.topControlGroup}>
+                    {this.renderBack()}
+                    <View style={styles.controls.pullRight}>
+                        {/*{ this.renderVolume() }*/}
+                        {this.renderTitle()}
+                        {true ? null : this.renderFullscreen()}
                     </View>
-                </Image>
+                </View>
             </Animated.View>
         );
     }
@@ -913,24 +913,23 @@ export default class VideoPlayer extends Component {
                 <Image
                     source={require('./assets/img/bottom-vignette.png')}
                     style={[styles.controls.column, styles.controls.vignette,
-                    ]}>
+                        {position: 'absolute'}]}/>
 
+                <View style={[
+                    styles.controls.column,
+                    styles.controls.bottomControlGroup
+                ]}>
+                    {/*{this.renderPlayPause()}*/}
+                    {this.renderTimer()}
                     <View style={[
-                        styles.controls.column,
-                        styles.controls.bottomControlGroup
+                        styles.player.container,
+                        styles.controls.seekbar
                     ]}>
-                        {/*{this.renderPlayPause()}*/}
-                        {this.renderTimer()}
-                        <View style={[
-                            styles.player.container,
-                            styles.controls.seekbar
-                        ]}>
-                            {this.renderSeekbar()}
-                        </View>
-                        {this.renderTimerLenght()}
-                        {this.renderZoom()}
+                        {this.renderSeekbar()}
                     </View>
-                </Image>
+                    {this.renderTimerLenght()}
+                    {this.renderZoom()}
+                </View>
             </Animated.View>
         );
     }

@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/1/6.
  */
-import React, {PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet, Image, Platform, ActivityIndicator,
     Dimensions, View, TextInput, Text, TouchableOpacity,
@@ -17,11 +17,8 @@ import {Verified} from '../../configs/Status';
 import {ActionSheet, DatePicker} from '../../components';
 
 
-export default class PersonInfo extends React.Component {
-    static propTypes = {
-        profile: PropTypes.object,
-        postAvatar: PropTypes.func,
-    };
+export default class PersonInfo extends Component {
+
 
     state = {
         visible: false
@@ -134,18 +131,23 @@ export default class PersonInfo extends React.Component {
                         style={{height: 136, flexDirection: 'row', alignItems: 'center'}}
                         onPress={this.selectPhotoTapped}>
                         <Text style={[styles.text_label, {marginRight: '35%'}]}>{I18n.t('user_edit_avatar')}</Text>
-                        <Image style={{
-                            height: 86, width: 86,
-                            alignItems: 'center', justifyContent: 'center', marginRight: '10%'
+
+                        <View style={{ height: 86, width: 86,alignItems: 'center', justifyContent: 'center',
+                            marginRight: '10%'}}>
+
+                            <Image style={{
+                            height: 86, width: 86
+
                         }}
-                               source={Images.mask}>
+                                   source={Images.mask}/>
                             <Image style={{
                                 height: 70, width: 70,
-                                borderRadius: 35
+                                borderRadius: 35,  position:'absolute'
                             }}
                                    source={strNotNull(profile.avatar) ? {uri: profile.avatar} : Images.home_avatar}
                             />
-                        </Image>
+                        </View>
+
 
                         <Image style={{height: 20, width: 11, marginLeft: 5}}
                                source={Images.set_more}/>

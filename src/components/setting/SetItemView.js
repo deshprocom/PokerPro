@@ -1,15 +1,16 @@
 /**
  * Created by lorne on 2017/2/28.
  */
-import React, {Component, PropTypes}from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text, ScrollView, Platform
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {strNotNull} from '../../utils/ComonHelper';
-import SecurityText from 'react-native-smart-security-text';
+import {SecurityText} from '../index';
 const SWITCH_BTN = 'SWITCH_BTN';
+import PropTypes from 'prop-types';
 
 export default class SetItemView extends Component {
 
@@ -27,22 +28,26 @@ export default class SetItemView extends Component {
         const {rightText, securityOptions, rightType} = this.props;
 
         if (rightType === SWITCH_BTN) {
-            return (<Image style={{width:51,height:31}}
+            return (<Image style={{width: 51, height: 31}}
                            source={Images.set_closed}/>)
         } else if (strNotNull(this.props.rightText))
-            return (<View style={{alignItems:'center',justifyContent:'center',
-            flexDirection:'row'}}>
+            return (<View style={{
+                alignItems: 'center', justifyContent: 'center',
+                flexDirection: 'row'
+            }}>
                 <SecurityText
                     securityOptions={securityOptions}
-                    style={[Fonts.H16,{color:Colors._AAA,
-                marginRight:10}]}>
+                    style={[Fonts.H16, {
+                        color: Colors._AAA,
+                        marginRight: 10
+                    }]}>
                     {rightText}
                 </SecurityText>
-                <Image style={{height:15,width:8}}
+                <Image style={{height: 15, width: 8}}
                        source={Images.set_more}/>
             </View>)
         else
-            return (<Image style={{height:15,width:8}}
+            return (<Image style={{height: 15, width: 8}}
                            source={Images.set_more}/>)
     };
 
@@ -53,11 +58,15 @@ export default class SetItemView extends Component {
             onPress={onPress}
             activeOpacity={1}
             testID={testID}
-            style={[{height:50,justifyContent:'space-between',
-            alignItems:'center',flexDirection:'row',backgroundColor:Colors.setting,
-            width:Metrics.screenWidth,paddingRight:17,paddingLeft:17},styles]}>
-            <Text  style={[Fonts.H17,{color:Colors._333,
-                marginRight:24}]}>
+            style={[{
+                height: 50, justifyContent: 'space-between',
+                alignItems: 'center', flexDirection: 'row', backgroundColor: Colors.setting,
+                width: Metrics.screenWidth, paddingRight: 17, paddingLeft: 17
+            }, styles]}>
+            <Text style={[Fonts.H17, {
+                color: Colors._333,
+                marginRight: 24
+            }]}>
                 {name}
             </Text>
 

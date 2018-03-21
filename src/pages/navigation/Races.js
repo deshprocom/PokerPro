@@ -30,8 +30,11 @@ export default class Races extends Component {
             <TouchableOpacity
                 onPress={() => global.router.toRacesInfoPage(this.props, item.race_id, false)}
                 activeOpacity={1}>
-
-                <Image style={styles.oval} source={Images.oval}>
+                <Image style={styles.oval} source={Images.oval}/>
+                <View style={{
+                    flexDirection: 'row',
+                    position: 'absolute'
+                }}>
                     <Image style={styleB.ovalImg} source={{uri: item.big_logo}}/>
 
                     <View style={{marginLeft: 17, marginTop: 14}}>
@@ -53,17 +56,19 @@ export default class Races extends Component {
                             onPress={() => router.toChoiseTicketPage(this.props, item.race_id)}
                             activeOpacity={1}
                             style={Platform.OS == 'ios' ? styleB.buyButtonPosition : styleB.buyButtonPosition2}>
+
                             <Image
                                 style={styles.button}
                                 source={Images.button}
-                            >
-                                <Text
-                                    style={styleB.buyText}>{I18n.t('home_buy')}</Text>
-                            </Image>
+                            />
+                            <Text
+                                style={styleB.buyText}>{I18n.t('home_buy')}</Text>
 
                         </TouchableOpacity>
                     </View>
-                </Image>
+                </View>
+
+
             </TouchableOpacity>
         )
     };
@@ -111,21 +116,26 @@ const styleB = StyleSheet.create({
     },
     buyButtonPosition: {
         position: 'absolute', top: 105,
-        left: 80, right: 16, bottom: 18
+        left: 80, right: 16, bottom: 18,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     buyButtonPosition2: {
         position: 'absolute', top: 107,
-        left: 80
+        left: 80,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     buyText: {
         backgroundColor: 'transparent',
         color: '#ffffff',
         fontSize: 14,
         fontWeight: 'bold',
-        marginBottom: 5
+        marginBottom: 5,
+        position: 'absolute'
     },
     ovalImg: {
-        width: 116, height: 158,  marginTop: 1
+        width: 116, height: 158, marginTop: 1
     },
     ovalInner: {
         flexDirection: 'row', alignItems: 'center'

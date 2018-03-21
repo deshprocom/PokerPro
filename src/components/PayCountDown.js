@@ -71,7 +71,7 @@ export default class PayCountDown extends Component {
         pressAction: PropTypes.func,   //按下按钮的事件,但是触发倒数需要你自己来调用方法
         changeWithCount: PropTypes.func,   //读秒变化的函数,该函数带有一个参数count,表示当前的剩余事件
         end: PropTypes.func,           //读秒完毕后的函数
-        frameStyle: View.propTypes.style    //初始化的位置大小
+        frameStyle: PropTypes.any    //初始化的位置大小
     }
 
     buttonState = LCCountDownButtonState.LCCountDownButtonActive;

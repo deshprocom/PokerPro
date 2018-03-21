@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/4/24.
  */
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet, Text, View, FlatList,
     TouchableOpacity, Image, TextInput,
@@ -52,7 +52,7 @@ export default class SearchNewsPage extends Component {
                 keyExtractor={(item, index) => index}
                 ref={(ref) => this.listView = ref}
                 onFetch={this.onFetch}
-                rowView={this._itemNewsView}
+                item={this._itemNewsView}
                 refreshableTitlePull={I18n.t('pull_refresh')}
                 refreshableTitleRelease={I18n.t('release_refresh')}
                 dateTitle={I18n.t('last_refresh')}

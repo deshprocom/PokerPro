@@ -69,7 +69,7 @@ import {Navigation} from '../pages/navigation/Navigation';
 import ShoppingCart from "../pages/malls/shoppingCart/ShoppingCart";
 import EmptyCart from "../pages/malls/shoppingCart/EmptyCart";
 import MallSearchResult from "../pages/malls/MallSearchResult";
-import OrderSubmitPage from '../pages/malls/order/OrderSubmitPage';
+import OrderSubmitPage from '../pages/malls/submitOrder/OrderSubmitPage';
 import MallOrderInfo from '../pages/malls/orderInfo/MallOrderInfo';
 import ReturnPage from '../pages/malls/return/ReturnPage';
 import ReturnSucceedPage from '../pages/malls/return/ReturnSucceedPage';

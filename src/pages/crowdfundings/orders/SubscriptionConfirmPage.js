@@ -11,10 +11,11 @@ import {
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes/index';
-import {SecurityText, ActionPay, Loading} from '../../../components/index';
+import {SecurityText, ActionPay, Loading} from '../../../components';
 import {crowd_order, crowd_wx_pay, crowd_wx_paid_result} from '../../../services/CrowdDao';
 import {isWXAppInstalled, showToast, getVerId, isEmptyObject, idCardStatus} from '../../../utils/ComonHelper';
-import {Verified} from '../../../configs/Status'
+import {Verified} from '../../../configs/Status';
+import Discount from '../../comm/Discount'
 
 export default class SubscriptionConfirmPage extends PureComponent {
     state = {
@@ -46,8 +47,8 @@ export default class SubscriptionConfirmPage extends PureComponent {
     }
 
     submitBtn = () => {
-        const {order_info} = this.props;
-        const {verified} = this.state;
+        const {order_info, total_prize} = this.props;
+        const {verified,} = this.state;
         const {number, stock_unit_price} = order_info;
         order_info.user_extra_id = verified.id;
 
@@ -60,7 +61,7 @@ export default class SubscriptionConfirmPage extends PureComponent {
                 crowd_wx_pay(data, ret => {
                     this.loading.close();
                     let order = {
-                        price: stock_unit_price * number,
+                        price: total_prize,
                         order_number: data.order_number
                     };
 
@@ -93,10 +94,12 @@ export default class SubscriptionConfirmPage extends PureComponent {
 
     render() {
 
-        const {order_info} = this.props;
+        const {order_info, discount, total_prize} = this.props;
         const {number, player_id, stock_unit_price, race_name} = order_info;
         let sumMoney = this.total_prize(number, stock_unit_price);
         const {verified} = this.state;
+
+
         return (
             <View style={ApplicationStyles.bgContainer}>
 
@@ -120,9 +123,16 @@ export default class SubscriptionConfirmPage extends PureComponent {
 
                 <View style={styles.buy}>
                     <Text style={styles.messageTxt2}>¥{sumMoney}</Text>
-                    <Text style={styles.messageTxt1}>{I18n.t('payment')}</Text>
+                    <Text style={styles.messageTxt1}>总额：</Text>
 
                 </View>
+
+                <Discount
+                    discount={discount}
+                    handle_value={handle_value => {
+                        this.props.handle_value(handle_value)
+                    }}
+                    count={sumMoney}/>
 
 
                 <TouchableOpacity
@@ -196,7 +206,7 @@ export default class SubscriptionConfirmPage extends PureComponent {
                                       global.router.toRiskWarningPage(sumMoney, order_info, this.state.clickImg, this.state.order)
                                   }}>《风险提示》</Text>
                             及其他相关条款和协议，自愿认购{race_name}众筹项目，并支付众筹款项
-                            <Text style={{color: Colors._F34}}>{sumMoney}元</Text>。</Text>
+                            <Text style={{color: Colors._F34}}>{total_prize}元</Text>。</Text>
 
                     </View>
                     <TouchableOpacity

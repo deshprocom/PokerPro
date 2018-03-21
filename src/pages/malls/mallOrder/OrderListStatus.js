@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
-import propTypes from 'prop-types';
 import ProductItem from './ProductItem';
 import CompletedBottom from './CompletedBottom';
 import {getMallOrders} from '../../../services/MallDao';
@@ -14,7 +13,7 @@ export default class OrderListStatus extends Component {
 
     renderItem = (item, index) => {
 
-        const {order_number, status, total_price, order_items} = item;
+        const {order_number, status, total_price, order_items, final_price, deduction_result} = item;
         return (
             <TouchableOpacity
                 activeOpacity={1}
@@ -32,7 +31,7 @@ export default class OrderListStatus extends Component {
                     disabled={true}
                     lists={order_items}/>
                 <View style={styles.viewTotal}>
-                    <Text style={styles.txtTotal2}>{total_price}</Text>
+                    <Text style={styles.txtTotal2}>{deduction_result === 'success' ? final_price : total_price}</Text>
                     <Text
                         style={styles.txtTotal1}>{order_items.length}{I18n.t('pieces')}{I18n.t('malls')} {I18n.t('order_total')}：¥</Text>
                 </View>

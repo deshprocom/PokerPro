@@ -88,7 +88,7 @@ class FocusPlayer extends Component {
                     ref={(ref) => this.listView = ref}
                     onFetch={this.onFetch}
                     legacyImplementation
-                    rowView={this.focusRow}
+                    item={this.focusRow}
                     refreshableTitlePull={I18n.t('pull_refresh')}
                     refreshableTitleRelease={I18n.t('release_refresh')}
                     dateTitle={I18n.t('last_refresh')}

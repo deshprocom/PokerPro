@@ -2,7 +2,7 @@
  * Created by lorne on 2016/12/20.
  */
 
-import {Actions} from 'react-native-router-flux';
+import {ActionConst, Actions} from 'react-native-router-flux';
 import {NavigationActions} from 'react-navigation';
 import {getDispatchAction} from '../utils/ComonHelper';
 
@@ -224,7 +224,7 @@ export default class Router {
     }
 
     toTabNews() {
-        Actions.tab_2();
+        Actions.tab_news({type: ActionConst.REPLACE})
     }
 
     toSearchVideo() {

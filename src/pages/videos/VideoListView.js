@@ -34,6 +34,7 @@ export default class VideoListView extends Component {
             cover_link: ''
         }
 
+        this.viewabilityConfig = {viewAreaCoveragePercentThreshold: 50}
     }
 
     componentWillReceiveProps(nextProps) {
@@ -42,10 +43,21 @@ export default class VideoListView extends Component {
 
     }
 
+    handleViewableItemsChanged = (info) => {
+        const {changed} = info;
+        changed.forEach((x) => {
+            if (!x.isViewable && !isEmptyObject(x.item)
+                && x.item.video_link === this.state.video_link) {
+                this.setState({
+                    video_link: ''
+                })
+            }
+
+        })
+    }
+
 
     render() {
-        let {video_link} = this.state;
-        let that = this;
 
         return (<View
             style={styles.pullView}
@@ -56,7 +68,7 @@ export default class VideoListView extends Component {
                 keyExtractor={(item, index) => index}
                 ref={(ref) => this.listView = ref}
                 onFetch={this.onFetch}
-                rowView={this._itemNewsView}
+                item={this._itemNewsView}
                 refreshableTitlePull={I18n.t('pull_refresh')}
                 refreshableTitleRelease={I18n.t('release_refresh')}
                 dateTitle={I18n.t('last_refresh')}
@@ -68,24 +80,19 @@ export default class VideoListView extends Component {
                             this.listView.refresh()
                         }}/> : <NoDataView/>;
                 }}
-                onViewableItemsChanged={info => {
-
-                    const {changed} = info;
-                    changed.forEach(function (x) {
-                        if (!x.isViewable && !isEmptyObject(x.item)
-                            && x.item.video_link === video_link) {
-                            that.setState({
-                                video_link: ''
-                            })
-                        }
-
-                    })
-                }}
+                viewabilityConfig={this.viewabilityConfig}
+                onViewableItemsChanged={this.handleViewableItemsChanged}
 
             />
 
 
         </View>)
+    }
+
+    pairs = () => {
+        return {
+            onViewableItemsChanged: {}
+        }
     }
 
 
@@ -179,10 +186,11 @@ export default class VideoListView extends Component {
                         source={{uri: video_link.trim()}}
 
                     />
-                </View> : <Image
-                    source={{uri: cover_link}}
-                    style={styles.listTopImg}
-                >
+                </View> : <View>
+                    <Image
+                        source={{uri: cover_link}}
+                        style={styles.listTopImg}
+                    />
                     <View style={styles.itemBack}>
                         <TouchableOpacity
                             onPress={() => {
@@ -198,8 +206,7 @@ export default class VideoListView extends Component {
                         </TouchableOpacity>
 
                     </View>
-
-                </Image>}
+                </View>}
 
 
         </TouchableOpacity>
@@ -335,7 +342,11 @@ const styles = StyleSheet.create({
         flex: 1
     },
     itemBack: {
-        flex: 1
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 208,
+        width: '100%'
     },
     transparent: {
         paddingLeft: 17,
@@ -355,9 +366,7 @@ const styles = StyleSheet.create({
     },
     btnPlay: {
         height: 68,
-        width: 68,
-        alignSelf: 'center',
-        marginTop: 68
+        width: 68
     },
     viewDesc: {
         backgroundColor: 'white'

@@ -3,7 +3,6 @@
  */
 import React, {
     Component,
-    PropTypes,
 } from 'react';
 import {
     StyleSheet,
@@ -14,13 +13,14 @@ import {
     Text,
     KeyboardAvoidingView
 } from 'react-native';
+import PropTypes from 'prop-types';
 
 export default class Password extends Component {
     static propTypes = {
-        style: View.propTypes.style,
-        inputItemStyle: View.propTypes.style,
-        iconStyle: View.propTypes.style,
-        maxLength: TextInput.propTypes.maxLength.isRequired,
+        style: PropTypes.any,
+        inputItemStyle: PropTypes.any,
+        iconStyle: PropTypes.any,
+        maxLength: PropTypes.any,
         onChange: PropTypes.func,
         onEnd: PropTypes.func,
         autoFocus: PropTypes.bool,
@@ -48,22 +48,22 @@ export default class Password extends Component {
 
     render() {
         return (
-            <View style={[styles.container,this.props.style]}>
+            <View style={[styles.container, this.props.style]}>
                 <TextInput
                     testID="input_bind_code"
-                    style={{height:45,zIndex:99,position:'absolute',width:45*6,opacity:0}}
+                    style={{height: 45, zIndex: 99, position: 'absolute', width: 45 * 6, opacity: 0}}
                     ref='textInput'
                     maxLength={this.props.maxLength}
                     keyboardType="number-pad"
                     onChangeText={
-              (text) => {
-                this.setState({text});
-                this.props.onChange(text);
-                if (text.length === this.props.maxLength) {
-                  this.props.onEnd(text);
-                }
-              }
-            }
+                        (text) => {
+                            this.setState({text});
+                            this.props.onChange(text);
+                            if (text.length === this.props.maxLength) {
+                                this.props.onEnd(text);
+                            }
+                        }
+                    }
                 />
                 {
                     this._getInputItem()
@@ -75,17 +75,18 @@ export default class Password extends Component {
 
     _getInputItem() {
         let inputItem = [];
-        let {text}=this.state;
+        let {text} = this.state;
         for (let i = 0; i < parseInt(this.props.maxLength); i++) {
             if (i == 0) {
                 inputItem.push(
-                    <View key={i} style={[styles.inputItem,this.props.inputItemStyle]}>
+                    <View key={i} style={[styles.inputItem, this.props.inputItemStyle]}>
                         {i < text.length ? <Text style={styles.txt}>{text[i]}</Text> : null}
                     </View>)
             }
             else {
                 inputItem.push(
-                    <View key={i} style={[styles.inputItem,styles.inputItemBorderLeftWidth,this.props.inputItemStyle]}>
+                    <View key={i}
+                          style={[styles.inputItem, styles.inputItemBorderLeftWidth, this.props.inputItemStyle]}>
                         {i < text.length ?
                             <Text style={styles.txt}>{text[i]}</Text> : null}
                     </View>)

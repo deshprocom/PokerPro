@@ -1,8 +1,7 @@
 'use strict';
 
 import React, {
-	Component,
-	PropTypes,
+	Component
 } from 'react';
 import {
 	Animated,
@@ -12,6 +11,7 @@ import {
 	TouchableOpacity,
 	View
 } from 'react-native';
+import PropTypes from 'prop-types';
 
 const PREVIEW_OPEN_DELAY = 700;
 const PREVIEW_CLOSE_DELAY = 300;
@@ -360,7 +360,7 @@ SwipeRow.propTypes = {
 	/**
 	 * Styles for the parent wrapper View of the SwipeRow
 	 */
-	style: View.propTypes.style,
+	style: PropTypes.any,
 	/**
 	 * Should the row do a slide out preview to show that it is swipeable
 	 */

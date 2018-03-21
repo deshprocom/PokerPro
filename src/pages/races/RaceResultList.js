@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/4/10.
  */
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, TextInput, Alert,
     StyleSheet, Image, Text, FlatList, ScrollView
@@ -13,9 +13,7 @@ import {singleOrdouble} from '../../utils/ComonHelper';
 
 export default class RaceResultList extends Component {
 
-    static propTypes = {
-        raceRanks: PropTypes.array
-    }
+
 
     render() {
 

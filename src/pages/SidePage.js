@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/1/3.
  */
-import React, {PropTypes} from 'react';
+import React from 'react';
 import {
     StyleSheet, View, Text, Image,
     TouchableOpacity
@@ -16,9 +16,6 @@ import {umengEvent} from '../utils/UmengEvent';
 
 class SidePage extends React.Component {
 
-    static propTypes = {
-        router: PropTypes.object
-    };
 
     componentWillReceiveProps(newProps) {
 

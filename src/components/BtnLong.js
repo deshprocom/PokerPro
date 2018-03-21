@@ -1,15 +1,15 @@
 /**
  * Created by lorne on 2017/2/10.
  */
-import React, {PropTypes}from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text
 } from 'react-native';
-import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
+import PropTypes from 'prop-types';
 
-export default class BtnLong extends React.Component {
+export default class BtnLong extends Component {
 
     static propTypes = {
         name: PropTypes.string,
@@ -22,12 +22,10 @@ export default class BtnLong extends React.Component {
         return ( <TouchableOpacity
             activeOpacity={1}
             testID={this.props.testID}
-            style={[styles.btn_view,this.props.style]}
+            style={[styles.btn_view, this.props.style]}
             onPress={this.props.onPress}>
 
-            <Text style={{ alignSelf: 'center',
-        color: Colors._AAA,
-        fontSize: 19}}>
+            <Text style={[styles.txt, this.props.textStyle]}>
                 {this.props.name}</Text>
 
         </TouchableOpacity>)
@@ -39,9 +37,11 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         height: 45,
         justifyContent: 'center',
-        borderRadius: 5,
-        width: 336,
-        borderWidth: 1,
-        borderColor: Colors._AAA
+        alignItems: 'center',
+        flex: 1
+    },
+    txt: {
+        color: Colors._AAA,
+        fontSize: 19
     }
 })

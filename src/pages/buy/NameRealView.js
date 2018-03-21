@@ -9,7 +9,7 @@ import {
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import {isEmptyObject, idCardStatus} from '../../utils/ComonHelper';
-import SecurityText from 'react-native-smart-security-text';
+import {SecurityText} from '../../components';
 import {Verified} from '../../configs/Status';
 import {umengEvent} from '../../utils/UmengEvent';
 

@@ -1,4 +1,8 @@
 rootProject.name = 'PokerPro'
+include ':react-native-blur'
+project(':react-native-blur').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-blur/android')
+include ':react-native-picker'
+project(':react-native-picker').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-picker/android')
 include ':react-native-linear-gradient'
 project(':react-native-linear-gradient').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-linear-gradient/android')
 include ':rn-umeng'
@@ -7,8 +11,6 @@ include ':react-native-wechat'
 project(':react-native-wechat').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-wechat/android')
 include ':react-native-umshare'
 project(':react-native-umshare').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-umshare/android')
-include ':react-native-network-info'
-project(':react-native-network-info').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-network-info/android')
 include ':react-native-orientation'
 project(':react-native-orientation').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-orientation/android')
 include ':react-native-video'
@@ -17,14 +19,10 @@ include ':react-native-smart-splash-screen'
 project(':react-native-smart-splash-screen').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-smart-splash-screen/android')
 include ':react-native-smart-pull-to-refresh-listview'
 project(':react-native-smart-pull-to-refresh-listview').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-smart-pull-to-refresh-listview/android')
-include ':react-native-picker'
-project(':react-native-picker').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-picker/android')
 include ':react-native-image-crop-picker'
 project(':react-native-image-crop-picker').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-image-crop-picker/android')
 include ':react-native-i18n'
 project(':react-native-i18n').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-i18n/android')
-include ':react-native-blur'
-project(':react-native-blur').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-blur/android')
 
 include ':app', ':jpush-react-native', ':jcore-react-native'
 project(':jpush-react-native').projectDir = new File(rootProject.projectDir, '../node_modules/jpush-react-native/android')

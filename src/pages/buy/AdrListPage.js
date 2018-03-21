@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/7/7.
  */
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, TextInput, Alert,
     StyleSheet, Image, Text, ListView, Platform

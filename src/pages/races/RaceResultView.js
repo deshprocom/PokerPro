@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/4/6.
  */
-import React, {PropTypes, Component} from 'react';
+import React, { Component} from 'react';
 import {
     TouchableOpacity, View, TextInput,
     StyleSheet, Image, Text, ScrollView, Platform
@@ -18,11 +18,6 @@ import {MarkdownPlat} from '../../components'
 
 class RaceResultView extends Component {
 
-    static propTypes = {
-        race_id: PropTypes.number,
-        schedule: PropTypes.string,
-        isSub: PropTypes.bool
-    }
 
     render() {
         const {btnRight, btnLeft} = this.state;

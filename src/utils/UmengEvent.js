@@ -1,10 +1,7 @@
 /**
  * Created by lorne on 2017/6/21.
  */
-
-import {NativeModules, Platform} from 'react-native';
-
-const umengClient = NativeModules.Umeng;
+import MobclickAgent from 'rn-umeng';
 
 export function umengEvent(event) {
     let strEvnet = '';
@@ -94,8 +91,7 @@ export function umengEvent(event) {
             break;
 
     }
-    if (Platform.OS === 'ios')
-        umengClient.onEvent(strEvnet);
-    else
-        umengClient.onEvent(strEvnet, undefined, undefined);
+
+    MobclickAgent.onEvent(strEvnet)
+
 }
