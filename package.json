@@ -3,8 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "configureJPush": "node node_modules/jpush-react-native/JPushConfiguration.js",
-    "start": "react-native start",
+    "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest"
   },
   "dependencies": {
@@ -51,10 +50,10 @@
     "rn-umeng": "^1.0.6"
   },
   "devDependencies": {
-    "babel-jest": "20.0.3",
-    "babel-preset-react-native": "1.9.2",
-    "jest": "20.0.3",
-    "react-test-renderer": "16.0.0-alpha.6"
+    "babel-jest": "23.0.0-alpha.0",
+    "babel-preset-react-native": "4.0.0",
+    "jest": "22.4.2",
+    "react-test-renderer": "^16.3.0-alpha.1"
   },
   "jest": {
     "preset": "react-native"
