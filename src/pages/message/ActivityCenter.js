@@ -27,7 +27,7 @@ export default class ActivityCenter extends Component {
                 leftBtnPress={() => router.pop()}/>
 
             <FlatList
-                keyExtractor={(item, index) => index}
+                keyExtractor={(item, index) => index+"item"}
                 renderItem={this._renderItem}
                 data={activities}
 

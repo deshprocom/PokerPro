@@ -58,7 +58,7 @@ class NewsListView extends Component {
 
             <UltimateListView
                 arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
-                keyExtractor={(item, index) => index}
+                keyExtractor={(item, index) => index+"item"}
                 ref={(ref) => this.listView = ref}
                 onFetch={this.onFetch}
                 item={this._itemNewsView}

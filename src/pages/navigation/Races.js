@@ -104,7 +104,7 @@ export default class Races extends Component {
                         horizontal
                         data={this.props.raceTickets}
                         renderItem={this._renderItem}
-                        keyExtractor={(item, index) => index}
+                        keyExtractor={(item, index) => index+"item"}
                     /> : null}
 
 

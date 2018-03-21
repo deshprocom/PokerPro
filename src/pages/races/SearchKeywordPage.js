@@ -72,7 +72,7 @@ class SearchKeywordPage extends Component {
 
     content = () => {
         return <UltimateListView
-            keyExtractor={(item, index) => index}
+            keyExtractor={(item, index) => index+"item"}
             ref={(ref) => this.listView = ref}
             onFetch={this.onFetch}
             item={this._renderRow}
