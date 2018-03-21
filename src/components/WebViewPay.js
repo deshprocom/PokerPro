@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
 import NavigationBar from './NavigationBar';
-import theme from '../styles/theme';
+import theme from '../Themes/styles/theme';
 import I18n from 'react-native-i18n';
 
 export default class WebViewPay extends Component {

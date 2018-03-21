@@ -7,7 +7,7 @@
 import {
     AppRegistry
 } from 'react-native';
-import PokerPro from './src/container/app'
+import PokerPro from './src/app'
 
 
 AppRegistry.registerComponent('PokerPro', () => PokerPro);

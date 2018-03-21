@@ -5,18 +5,18 @@
 import React, {Component} from 'react';
 import {Platform} from 'react-native';
 import {Provider} from 'react-redux';
-import configureStore from '../store/ConfigureStore';
-import './GlobalVariables';
-import PuKe from '../pages/Root'
-import '../configs/StorageConfig';
-import '../I18n/I18n';
+import configureStore from './store/ConfigureStore';
+import './configs/GlobalVariables';
+import PuKe from './pages/Root'
+import './configs/StorageConfig';
+import './I18n/I18n';
 import SplashScreen from 'react-native-smart-splash-screen';
 import MobclickAgent from 'rn-umeng';
 import {
     UMENG_ANDROID, UMENG_IOS, WX_ID, WX_Secret,
     QQ_SHARE_ID, QQ_SHARE_KEY, WX_URL, WB_URL,
     WB_ID, WB_KEY
-} from '../configs/Constants';
+} from './configs/Constants';
 import Orientation from 'react-native-orientation';
 import UMShare from 'react-native-umshare';
 import * as WeChat from 'react-native-wechat';

@@ -6,7 +6,7 @@ import {
     StyleSheet, Platform, View, Text, StatusBar, TouchableOpacity,
     Image, Animated
 } from 'react-native';
-import theme from '../styles/theme';
+import theme from '../Themes/styles/theme';
 import TestRouter from './TestRouter';
 import PropTypes from 'prop-types'
 
