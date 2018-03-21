@@ -11,10 +11,11 @@ import PuKe from './pages/Root'
 import './configs/StorageConfig';
 import './I18n/I18n';
 import SplashScreen from 'react-native-smart-splash-screen';
+import JAnalyticsModule from 'janalytics-react-native';
 import {
     UMENG_ANDROID, UMENG_IOS, WX_ID, WX_Secret,
     QQ_SHARE_ID, QQ_SHARE_KEY, WX_URL, WB_URL,
-    WB_ID, WB_KEY
+    WB_ID, WB_KEY, JPUSH_IOS
 } from './configs/Constants';
 import Orientation from 'react-native-orientation';
 import UMShare from 'react-native-umshare';
@@ -89,7 +90,7 @@ export default class App extends Component {
             console.log(err)
         });
 
-
+        JAnalyticsModule.setup({appKey: JPUSH_IOS});
     }
 
 }

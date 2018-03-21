@@ -1,6 +1,7 @@
 /**
  * Created by lorne on 2017/6/21.
  */
+import JAnalyticsModule from 'janalytics-react-native';
 
 export function umengEvent(event) {
     let strEvnet = '';
@@ -90,5 +91,5 @@ export function umengEvent(event) {
             break;
 
     }
-
+    JAnalyticsModule.postEvent(strEvnet);
 }
