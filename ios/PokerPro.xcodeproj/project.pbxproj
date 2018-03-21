@@ -1704,7 +1704,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = JAB7AT8F22;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-umshare/ios/RCTUMShareModule/RCTUMShareModule/UMSocial/SocialFrameworks";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1732,6 +1732,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.deshpro.PokerPro;
 				PRODUCT_NAME = PokerPro;
+				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1745,7 +1746,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = JAB7AT8F22;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-umshare/ios/RCTUMShareModule/RCTUMShareModule/UMSocial/SocialFrameworks";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1773,6 +1774,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.deshpro.PokerPro;
 				PRODUCT_NAME = PokerPro;
+				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
