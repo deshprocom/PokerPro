@@ -20,7 +20,7 @@ import ActivityModel from '../message/ActivityModel';
 import {getActivityPush} from '../../services/AccountDao';
 import StorageKey from '../../configs/StorageKey';
 import I18n from 'react-native-i18n';
-import Colors from "../../styles/Colors";
+import Colors from "../../Themes/styles/Colors";
 import {ApplicationStyles} from '../../Themes';
 
 class TabHomePage extends Component {
