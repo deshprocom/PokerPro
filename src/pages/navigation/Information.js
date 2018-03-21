@@ -142,7 +142,7 @@ export default class Information extends Component {
                     ItemSeparatorComponent={this._separator}
                     data={this.state.hot_infos}
                     renderItem={this._renderItem}
-                    keyExtractor={(item, index) => index}
+                    keyExtractor={(item, index) =>'info'+ index}
                 />
                 <View style={styleI.informationLine}/>
 

@@ -69,7 +69,7 @@ export default class Coming extends Component {
                         horizontal
                         data={this.props.listRace}
                         renderItem={this._renderItem}
-                        keyExtractor={(item, index) => index}
+                        keyExtractor={(item, index) => index+''}
                     />
 
                 </View>

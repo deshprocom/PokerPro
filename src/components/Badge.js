@@ -21,10 +21,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
+        width:20,
+        height:20,
+        borderRadius:10,
     },
     text: {
-        paddingVertical: 2,
-        paddingHorizontal: 4,
+        padding:2,
         color: '#fff',
         fontFamily: '.HelveticaNeueInterface-MediumP4',
         backgroundColor: 'transparent',
@@ -32,7 +34,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',         //for android
         textAlignVertical: 'center', //for android
     },
-})
+});
 
 export default class Badge extends Component {
 
@@ -40,7 +42,7 @@ export default class Badge extends Component {
         extraPaddingHorizontal: 10,
         minHeight: 0,
         minWidth: 0,
-    }
+    };
 
     static propTypes = {
         //borderRadius: PropTypes.number,   //number 18, null 5
@@ -49,13 +51,13 @@ export default class Badge extends Component {
         textStyle: PropTypes.any,
         minHeight: PropTypes.number,
         minWidth: PropTypes.number,
-    }
+    };
 
     // 构造
     constructor(props) {
-        super(props)
+        super(props);
         // 初始状态
-        this.state = {}
+        this.state = {};
 
         this._width = 0
     }
@@ -72,36 +74,13 @@ export default class Badge extends Component {
         return React.Children.map(this.props.children, (child) => {
             if (!React.isValidElement(child)) {
                 return (
-                    <Text onLayout={this._onLayout} style={[styles.text, this.props.textStyle]}>{child}</Text>
+                    <Text adjustsFontSizeToFit={true} style={[styles.text, this.props.textStyle]}>{child}</Text>
                 )
             }
-            return child
+            return child;
         })
     }
 
-    _onLayout = (e) => {
-        let width
 
-        if (e.nativeEvent.layout.width <= e.nativeEvent.layout.height) {
-            width = e.nativeEvent.layout.height
-        }
-        else {
-            width = e.nativeEvent.layout.width + this.props.extraPaddingHorizontal
-        }
-        width = Math.max(width, this.props.minWidth) - 3
-        if (this._width == width) {
-            return
-        }
-        this._width = width
-        let height = Math.max(e.nativeEvent.layout.height, this.props.minHeight) - 3;
-        let borderRadius = height / 2
-        this._container.setNativeProps({
-            style: {
-                width,
-                height,
-                borderRadius,
-            },
-        });
-    }
 
 }
