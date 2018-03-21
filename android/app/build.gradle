@@ -109,6 +109,7 @@ android {
         renderscriptTargetApi 20
         renderscriptSupportModeEnabled true
         multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
         manifestPlaceholders = [
                 JPUSH_APPKEY: "3789f75e5d780c24595607b6",   //在此替换你的APPKey
                 APP_CHANNEL : "developer-default",        //应用渠道号
