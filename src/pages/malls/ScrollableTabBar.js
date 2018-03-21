@@ -14,25 +14,26 @@ const {
 } = ReactNative;
 import Button from 'react-native-scrollable-tab-view/Button';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-
+import PropTypes from 'prop-types'
+const createReactClass = require('create-react-class');
 const WINDOW_WIDTH = Dimensions.get('window').width;
 
-const ScrollableTabBar = React.createClass({
+const ScrollableTabBar = createReactClass({
     propTypes: {
-        goToPage: React.PropTypes.func,
-        activeTab: React.PropTypes.number,
-        tabs: React.PropTypes.array,
-        backgroundColor: React.PropTypes.string,
-        activeTextColor: React.PropTypes.string,
-        inactiveTextColor: React.PropTypes.string,
-        scrollOffset: React.PropTypes.number,
+        goToPage: PropTypes.func,
+        activeTab: PropTypes.number,
+        tabs: PropTypes.array,
+        backgroundColor: PropTypes.string,
+        activeTextColor: PropTypes.string,
+        inactiveTextColor: PropTypes.string,
+        scrollOffset: PropTypes.number,
         style: View.propTypes.style,
         tabStyle: View.propTypes.style,
         tabsContainerStyle: View.propTypes.style,
         textStyle: Text.propTypes.style,
-        renderTab: React.PropTypes.func,
+        renderTab: PropTypes.func,
         underlineStyle: View.propTypes.style,
-        onScroll: React.PropTypes.func,
+        onScroll: PropTypes.func,
     },
 
     getDefaultProps() {

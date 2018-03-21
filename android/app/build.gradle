@@ -33,6 +33,13 @@ import com.android.build.OutputFile
  *   // bundleInPaidRelease: true,
  *   // bundleInBeta: true,
  *
+ *   // whether to disable dev mode in custom build variants (by default only disabled in release)
+ *   // for example: to disable dev mode in the staging build type (if configured)
+ *   devDisabledInStaging: true,
+ *   // The configuration property can be in the following formats
+ *   //         'devDisabledIn${productFlavor}${buildType}'
+ *   //         'devDisabledIn${buildType}'
+ *
  *   // the root of your project, i.e. where "package.json" lives
  *   root: "../../",
  *
@@ -65,6 +72,10 @@ import com.android.build.OutputFile
  * ]
  */
 
+project.ext.react = [
+    entryFile: "index.js"
+]
+
 apply from: "../../node_modules/react-native/react.gradle"
 
 /**
@@ -84,14 +95,14 @@ def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "com.deshpro.pokerpro"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 8
-        versionName "3.4"
+        versionCode 6
+        versionName "3.3"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -157,19 +168,18 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-blur')
+    compile project(':react-native-picker')
     compile project(':react-native-linear-gradient')
     compile project(':rn-umeng')
     compile project(':react-native-wechat')
     compile project(':react-native-umshare')
-    compile project(':react-native-network-info')
     compile project(':react-native-orientation')
     compile project(':react-native-video')
     compile project(':react-native-smart-splash-screen')
     compile project(':react-native-smart-pull-to-refresh-listview')
-    compile project(':react-native-picker')
     compile project(':react-native-image-crop-picker')
     compile project(':react-native-i18n')
-    compile project(':react-native-blur')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile project(':jpush-react-native')
     compile project(':jcore-react-native')
@@ -183,18 +193,4 @@ dependencies {
 task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
-}
-
-
-repositories {
-    maven { url 'https://github.com/500px/500px-android-blur/raw/master/releases/' }
-}
-
-buildscript {
-    repositories {
-        maven { url 'https://github.com/500px/500px-android-blur/raw/master/releases/' }
-    }
-    dependencies {
-        classpath 'com.fivehundredpx:blurringview:1.0.0'
-    }
 }

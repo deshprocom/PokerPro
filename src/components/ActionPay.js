@@ -7,7 +7,7 @@
 /**
  * Created by lorne on 2017/8/4.
  */
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, Modal,
     StyleSheet, Image, Text, ScrollView, Platform

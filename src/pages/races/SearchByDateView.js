@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/3/24.
  */
-import React, {PropTypes, Component} from 'react';
+import React, { Component} from 'react';
 import {
     TouchableOpacity, View,
     StyleSheet, Image, Text, ListView
@@ -18,11 +18,6 @@ import {NoDataView, NoNetWorkView, LoadErrorView} from '../../components/load';
 import RaceRowView from '../../components/listitem/RaceRowView';
 
 class SearchByDateView extends Component {
-
-    static propTypes = {
-        date: PropTypes.string,
-        router: PropTypes.object
-    }
 
     constructor(props) {
         super(props);

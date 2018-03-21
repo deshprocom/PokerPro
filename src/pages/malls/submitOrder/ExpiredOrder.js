@@ -4,14 +4,10 @@ import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, FlatList, L
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import I18n from 'react-native-i18n';
 import RenderItem from './RenderItem';
-import PropTypes from 'prop-types';
+
 
 export default class ExpiredOrder extends PureComponent {
 
-    static propTypes = {
-        invalidProducts: PropTypes.array,
-        orderData: PropTypes.object
-    };
 
     orderBottom = () => {
         const {total_price} = this.props.orderData;

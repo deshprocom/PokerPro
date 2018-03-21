@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
     Dimensions,
     ScrollView,
@@ -21,6 +21,8 @@ function getNumberOfWeeks(month, weekStart) {
     const days = moment(month).daysInMonth();
     return Math.ceil((offset + days) / 7);
 }
+
+import PropTypes from 'prop-types';
 
 export default class Calendar extends Component {
 
@@ -210,8 +212,8 @@ export default class Calendar extends Component {
                         isWeekend={isoWeekday === 0 || isoWeekday === 6}
                         key={`${renderIndex}`}
                         onPress={() => {
-              this.selectDate(moment(startOfArgMonthMoment).set('date', dayIndex + 1));
-            }}
+                            this.selectDate(moment(startOfArgMonthMoment).set('date', dayIndex + 1));
+                        }}
                         caption={`${dayIndex + 1}`}
                         isToday={argMonthIsToday && (dayIndex === todayIndex)}
                         isSelected={selectedMonthIsArg && (dayIndex === selectedIndex)}
@@ -251,8 +253,8 @@ export default class Calendar extends Component {
                 <Text
                     key={i}
                     style={j === 0 || j === 6 ?
-            [styles.weekendHeading, this.props.customStyle.weekendHeading] :
-            [styles.dayHeading, this.props.customStyle.dayHeading]}
+                        [styles.weekendHeading, this.props.customStyle.weekendHeading] :
+                        [styles.dayHeading, this.props.customStyle.dayHeading]}
                 >
                     {this.props.dayHeadings[j]}
                 </Text>
@@ -320,8 +322,8 @@ export default class Calendar extends Component {
                         automaticallyAdjustContentInsets
                         onMomentumScrollEnd={(event) => this.scrollEnded(event)}
                         style={{
-              height: this.state.rowHeight ? this.state.rowHeight * numOfWeeks : null,
-            }}
+                            height: this.state.rowHeight ? this.state.rowHeight * numOfWeeks : null,
+                        }}
                     >
                         {calendarDates.map((date) => this.renderMonthView(moment(date), eventDatesMap))}
                     </ScrollView>

@@ -9,7 +9,7 @@ import {
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar, SetItemView, Button, ActionSheet} from '../../components';
+import {NavigationBar, SetItemView, BtnLong, ActionSheet} from '../../components';
 import {
     clearLoginUser, getLoginUser, strNotNull,
     isLoginUser, share, setSize, loadApp
@@ -27,25 +27,6 @@ class SettingPage extends Component {
         DESTRUCTIVE_INDEX: 1
     }
 
-    _likeView = () => {
-        return (
-            <SetItemView name={I18n.t('like_support')}/>)
-    };
-
-    _noticeView = () => {
-        return (<View>
-            <SetItemView name={I18n.t('game_remind')}
-                         rightType="SWITCH_BTN"/>
-
-            <View
-                style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>
-
-            <SetItemView name={I18n.t('system_inform')}
-                         rightType="SWITCH_BTN"/>
-            <View
-                style={{height: 1, marginLeft: 17, backgroundColor: Colors.bg_black}}/>
-        </View>)
-    };
 
     componentDidMount() {
         storage.load({
@@ -177,16 +158,16 @@ class SettingPage extends Component {
 
     _exitView = () => {
         if (strNotNull(getLoginUser().user_id)) {
-            return ( <Button
+            return ( <BtnLong
+                name={I18n.t('exit_login')}
                 testID="btn_exit"
                 onPress={this._exitApp}
                 style={{
                     width: Metrics.screenWidth, height: 59,
-                    justifyContent: 'center', backgroundColor: 'white'
+                    justifyContent: 'center', backgroundColor: 'white',
+                    flex:0
                 }}
-                textStyle={[{color: Colors._333,fontWeight:'normal'}, Fonts.H17]}>
-                {I18n.t('exit_login')}
-            </Button>)
+                textStyle={[{color: Colors._333,fontWeight:'normal'}, Fonts.H17]}/>)
         }
     };
 

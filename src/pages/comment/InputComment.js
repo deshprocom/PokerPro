@@ -5,7 +5,6 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import propTypes from 'prop-types';
 import {postComment, postRelaies, postRepliesReplies} from '../../services/CommentDao';
 import {isEmptyObject, showToast, strNotNull} from "../../utils/ComonHelper";
 import CommentBottom from "./CommentBottom";
@@ -19,11 +18,6 @@ export default class InputComment extends Component {
         height: 0
     };
 
-    static propTypes = {
-        _showInput: propTypes.func.isRequired,
-        repliesItem: propTypes.object,
-        refreshCommentInfo: propTypes.func
-    };
 
 
     onChange = (event) => {

@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {View, Text, StyleSheet, ScrollView, TouchableOpacity, Image} from 'react-native';
 import I18n from 'react-native-i18n';
 
@@ -7,9 +7,7 @@ import {Metrics, Colors, Images} from '../../Themes';
 import RankCheck from './RankCheck';
 
 export default class FiltePage extends Component {
-    static propTypes = {
-        cancelDrawer: PropTypes.func
-    };
+
 
     constructor(props) {
         super(props);
@@ -87,7 +85,7 @@ export default class FiltePage extends Component {
             <Text style={{lineHeight: 21, fontSize: 15, color: Colors._888}}>{I18n.t('rank_filte_adr')}</Text>
             <View style={{height: 1, backgroundColor: Colors.bg_f5, marginTop: 5, marginBottom: 20, width: 155}}></View>
             <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-start'}}>
-                <TouchableOpacity key="1" style={{marginBottom: 16, marginRight: 13}}
+                <TouchableOpacity key="1" style={[styles.btn_select, {marginBottom: 16, marginRight: 13}]}
                                   onPress={() => {
                                       this.setState({
                                           adrSelected: 1,
@@ -95,17 +93,11 @@ export default class FiltePage extends Component {
                                       });
                                   }}>
                     <Image source={adrSelected == 1 ? Images.Group : Images.Group_em}
-                           style={{
-                               width: 72,
-                               height: 30,
-                               alignItems: 'center',
-                               justifyContent: 'center',
-                               backgroundColor: 'transparent'
-                           }}>
-                        <Text>{I18n.t('rank_filte_global')}</Text>
-                    </Image>
+                           style={styles.img_select}/>
+
+                    <Text style={styles.txt_select}>{I18n.t('rank_filte_global')}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity key="2" style={{marginBottom: 16}}
+                <TouchableOpacity key="2" style={[styles.btn_select, {marginBottom: 16}]}
                                   onPress={() => {
                                       this.setState({
                                           adrSelected: 2,
@@ -113,15 +105,9 @@ export default class FiltePage extends Component {
                                       })
                                   }}>
                     <Image source={adrSelected == 2 ? Images.Group : Images.Group_em}
-                           style={{
-                               width: 72,
-                               height: 30,
-                               alignItems: 'center',
-                               justifyContent: 'center',
-                               backgroundColor: 'transparent'
-                           }}>
-                        <Text>{I18n.t('rank_filte_country')}</Text>
-                    </Image>
+                           style={styles.img_select}/>
+
+                    <Text style={styles.txt_select}>{I18n.t('rank_filte_country')}</Text>
                 </TouchableOpacity>
             </View>
         </View>)
@@ -133,7 +119,7 @@ export default class FiltePage extends Component {
             <Text style={{lineHeight: 21, fontSize: 15, color: Colors._888}}>{I18n.t('rank_filte_rank')}</Text>
             <View style={{height: 1, backgroundColor: Colors.bg_f5, marginTop: 5, marginBottom: 20, width: 239}}></View>
             <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-start'}}>
-                <TouchableOpacity key="1" style={{marginBottom: 16, marginRight: 13}}
+                <TouchableOpacity key="1" style={[styles.btn_select, {marginBottom: 16, marginRight: 13}]}
                                   onPress={() => {
                                       this.setState({
                                           scoreSelected: 0,
@@ -141,17 +127,12 @@ export default class FiltePage extends Component {
                                       });
                                   }}>
                     <Image source={scoreSelected === 0 ? Images.Group : Images.Group_em}
-                           style={{
-                               width: 72,
-                               height: 30,
-                               alignItems: 'center',
-                               justifyContent: 'center',
-                               backgroundColor: 'transparent'
-                           }}>
-                        <Text>{I18n.t('all')}</Text>
-                    </Image>
+                           style={styles.img_select}/>
+
+                    <Text style={styles.txt_select}>{I18n.t('all')}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity key="2" style={{marginBottom: 16, marginRight: 13}}
+                <TouchableOpacity key="2"
+                                  style={[styles.btn_select, {marginBottom: 16, marginRight: 13}]}
                                   onPress={() => {
                                       this.setState({
                                           scoreSelected: 1,
@@ -159,17 +140,12 @@ export default class FiltePage extends Component {
                                       })
                                   }}>
                     <Image source={scoreSelected === 1 ? Images.Group : Images.Group_em}
-                           style={{
-                               width: 72,
-                               height: 30,
-                               alignItems: 'center',
-                               justifyContent: 'center',
-                               backgroundColor: 'transparent'
-                           }}>
-                        <Text>1-100</Text>
-                    </Image>
+                           style={styles.img_select}/>
+
+                    <Text style={styles.txt_select}>1-100</Text>
                 </TouchableOpacity>
-                <TouchableOpacity key="3" style={{marginBottom: 16}}
+                <TouchableOpacity key="3"
+                                  style={[styles.btn_select, {marginBottom: 16}]}
                                   onPress={() => {
                                       this.setState({
                                           scoreSelected: 2,
@@ -177,17 +153,12 @@ export default class FiltePage extends Component {
                                       })
                                   }}>
                     <Image source={scoreSelected === 2 ? Images.Group : Images.Group_em}
-                           style={{
-                               width: 72,
-                               height: 30,
-                               alignItems: 'center',
-                               justifyContent: 'center',
-                               backgroundColor: 'transparent'
-                           }}>
-                        <Text>100-200</Text>
-                    </Image>
+                           style={styles.img_select}/>
+
+                    <Text style={styles.txt_select}>100-200</Text>
                 </TouchableOpacity>
-                <TouchableOpacity key="4" style={{marginBottom: 16, marginRight: 13}}
+                <TouchableOpacity key="4"
+                                  style={[styles.btn_select, {marginBottom: 16, marginRight: 13}]}
                                   onPress={() => {
                                       this.setState({
                                           scoreSelected: 3,
@@ -195,17 +166,11 @@ export default class FiltePage extends Component {
                                       })
                                   }}>
                     <Image source={scoreSelected === 3 ? Images.Group : Images.Group_em}
-                           style={{
-                               width: 72,
-                               height: 30,
-                               alignItems: 'center',
-                               justifyContent: 'center',
-                               backgroundColor: 'transparent'
-                           }}>
-                        <Text>200-300</Text>
-                    </Image>
+                           style={styles.img_select}/>
+                    <Text style={styles.txt_select}>200-300</Text>
                 </TouchableOpacity>
-                <TouchableOpacity key="5" style={{marginBottom: 16, marginRight: 13}}
+                <TouchableOpacity key="5"
+                                  style={[styles.btn_select, {marginBottom: 16, marginRight: 13}]}
                                   onPress={() => {
                                       this.setState({
                                           scoreSelected: 4,
@@ -213,17 +178,12 @@ export default class FiltePage extends Component {
                                       })
                                   }}>
                     <Image source={scoreSelected === 4 ? Images.Group : Images.Group_em}
-                           style={{
-                               width: 72,
-                               height: 30,
-                               alignItems: 'center',
-                               justifyContent: 'center',
-                               backgroundColor: 'transparent'
-                           }}>
-                        <Text>300-600</Text>
-                    </Image>
+                           style={styles.img_select}/>
+
+                    <Text style={styles.txt_select}>300-600</Text>
                 </TouchableOpacity>
-                <TouchableOpacity key="6" style={{marginBottom: 16}}
+                <TouchableOpacity key="6"
+                                  style={[styles.btn_select, {marginBottom: 16}]}
                                   onPress={() => {
                                       this.setState({
                                           scoreSelected: 7,
@@ -231,15 +191,9 @@ export default class FiltePage extends Component {
                                       })
                                   }}>
                     <Image source={scoreSelected == 7 ? Images.Group : Images.Group_em}
-                           style={{
-                               width: 72,
-                               height: 30,
-                               alignItems: 'center',
-                               justifyContent: 'center',
-                               backgroundColor: 'transparent'
-                           }}>
-                        <Text>600以上</Text>
-                    </Image>
+                           style={styles.img_select}/>
+
+                    <Text style={styles.txt_select}>600以上</Text>
                 </TouchableOpacity>
             </View>
         </View>)
@@ -258,5 +212,16 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    btn_select: {
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    img_select: {
+        width: 72,
+        height: 30,
+    },
+    txt_select: {
+        position: 'absolute'
     }
 });

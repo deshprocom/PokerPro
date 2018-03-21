@@ -2,7 +2,7 @@
  * Created by lorne on 2017/6/1.
  */
 
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet, Text, View, TextInput,
     TouchableOpacity, ScrollView,
@@ -209,7 +209,7 @@ export default class ChoiseTicketPage extends Component {
             firstLoader={false}
             onFetch={this.onFetch}
             legacyImplementation
-            rowView={this.itemListView}
+            item={this.itemListView}
             headerView={() => {
                 return (<View>
                     {this.titleView()}

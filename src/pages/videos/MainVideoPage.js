@@ -4,7 +4,7 @@
 /**
  * Created by lorne on 2017/4/20.
  */
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
     View
 } from 'react-native';

@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/5/23.
  */
-import React, {PropTypes, Component} from 'react';
+import React, { Component} from 'react';
 import {
     StyleSheet, Image, Platform, ActivityIndicator,
     Dimensions, View, Text, ListView, TouchableOpacity,

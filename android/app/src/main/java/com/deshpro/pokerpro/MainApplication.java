@@ -3,6 +3,8 @@ package com.deshpro.pokerpro;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.cmcewen.blurview.BlurViewPackage;
+import com.beefe.picker.PickerViewPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import in.esseak.react_native_umeng.UmengPackage;
 import com.theweflex.react.WeChatPackage;
@@ -10,18 +12,16 @@ import com.zzy.umshare.UMShareModulePackage;
 import com.github.yamill.orientation.OrientationPackage;
 import com.brentvatne.react.ReactVideoPackage;
 
-import cn.jpush.reactnativejpush.JPushPackage;
 import com.reactnativecomponent.splashscreen.RCTSplashScreenPackage;
 import com.reactnativecomponent.swiperefreshlayout.RCTSwipeRefreshLayoutPackage;
 import com.beefe.picker.PickerViewPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.i18n.reactnativei18n.ReactNativeI18n;
-import com.cmcewen.blurview.BlurViewPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.pusherman.networkinfo.RNNetworkInfoPackage;
+import cn.jpush.reactnativejpush.JPushPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -40,6 +40,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new BlurViewPackage(),
+            new PickerViewPackage(),
             new LinearGradientPackage(),
             new UmengPackage(),
             new WeChatPackage(),
@@ -48,13 +50,15 @@ public class MainApplication extends Application implements ReactApplication {
             new ReactVideoPackage(),
             new RCTSplashScreenPackage(),
             new RCTSwipeRefreshLayoutPackage(),
-            new PickerViewPackage(),
             new PickerPackage(),
             new ReactNativeI18n(),
-            new BlurViewPackage(),
-            new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
-            new RNNetworkInfoPackage()
+            new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG)
       );
+    }
+
+    @Override
+    protected String getJSMainModuleName() {
+      return "index";
     }
   };
 

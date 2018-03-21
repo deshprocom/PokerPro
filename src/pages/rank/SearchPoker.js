@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/8/1.
  */
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet, Text, View, TextInput,
     TouchableOpacity, Image, StatusBar,
@@ -90,7 +90,7 @@ export default class SearchPoker extends Component {
                 keyExtractor={(item, index) => `${index}`}
                 ref={(ref) => this.listView = ref}
                 legacyImplementation
-                rowView={(rowData, sectionID, rowID) => listRenderRow(rowData, sectionID, rowID, true)}
+                item={(rowData, sectionID, rowID) => listRenderRow(rowData, sectionID, rowID, true)}
                 refreshableTitlePull={I18n.t('pull_refresh')}
                 refreshableTitleRelease={I18n.t('release_refresh')}
                 dateTitle={I18n.t('last_refresh')}

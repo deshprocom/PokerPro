@@ -1,13 +1,14 @@
 /**
  * Created by wangdi on 23/11/16.
  */
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet, Platform, View, Text, StatusBar, TouchableOpacity,
     Image, Animated
 } from 'react-native';
 import theme from '../styles/theme';
 import TestRouter from './TestRouter';
+import PropTypes from 'prop-types'
 
 export default class NavigationBar extends Component {
     static propTypes = {

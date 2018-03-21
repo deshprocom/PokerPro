@@ -10,9 +10,8 @@ import {
 
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar, SetInputView, Button} from '../../components';
+import {NavigationBar, SecurityText, Button} from '../../components';
 import ModalPrompt from './ModalPrompt';
-import SecurityText from 'react-native-smart-security-text';
 import {strNotNull} from '../../utils/ComonHelper';
 
 export default class ChangePhonePage extends Component {

@@ -5,8 +5,6 @@ import {create, SERVER_ERROR, TIMEOUT_ERROR, NETWORK_ERROR} from 'apisauce';
 import Api from '../configs/ApiConfig';
 import {clearLoginUser, showToast, strNotNull} from '../utils/ComonHelper';
 import StorageKey from '../configs/StorageKey';
-import {NetworkInfo} from 'react-native-network-info';
-import {Platform} from 'react-native';
 import I18n from 'react-native-i18n';
 
 
@@ -45,24 +43,8 @@ export function getApiType() {
     return type;
 }
 
-function setDpIp() {
-    if (Platform.OS === 'ios')
-        NetworkInfo.getIPAddress(ip => {
-            if (ip !== 'error') {
-                client.setHeader('X-DP-CLIENT-IP', ip);
-            }
-        });
-    else
-        NetworkInfo.getIPV4Address(ip => {
-            if (ip !== 'error') {
-                client.setHeader('X-DP-CLIENT-IP', ip);
-            }
-        });
-}
 
 export function getBaseURL(callback) {
-
-    setDpIp();
     storage.load({
         key: StorageKey.ApiSever,
         autoSync: true,

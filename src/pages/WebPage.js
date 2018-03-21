@@ -137,10 +137,21 @@ export default class WebPage extends Component {
                 global.router.toMallInfoPage({id: param})
                 break;
             case 'news':
-                global.router.toNewsInfo(param);
+                let urlNews = `news/${param}`;
+                global.router.toWebPage(urlNews, {
+                    bottomNav: 'commentNav',
+                    info: {id: param},
+                    topic_type: 'info'
+                });
                 break;
             case 'video':
-                global.router.toVideoInfo(param);
+
+                let urlVideo = `videos/${param}`;
+                global.router.toWebPage(urlVideo, {
+                    bottomNav: 'commentNav',
+                    info: {id: param},
+                    topic_type: 'video'
+                });
                 break;
             case 'crowd':
                 global.router.toCrowdDetailPage({id: param})

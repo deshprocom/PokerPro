@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/4/25.
  */
-import React, {Component, PropTypes}from 'react';
+import React, {Component}from 'react';
 import {
     TouchableOpacity, View, TextInput, FlatList,
     StyleSheet, Image, Text, Platform
@@ -11,13 +11,6 @@ import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 
 export default class RaceTypeView extends Component {
 
-    static propTypes = {
-        dataHosts: PropTypes.array,
-        pressItem: PropTypes.func,
-        pressAll: PropTypes.func,
-        pressHostOk: PropTypes.func,
-        selectAll: PropTypes.bool
-    };
 
 
     render() {
