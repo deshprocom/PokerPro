@@ -129,7 +129,7 @@ export default class Information extends Component {
                     <View style={{flex: 1}}/>
                     <TouchableOpacity
                         onPress={() => {
-                            router.toTabNews()
+                            global.router.toTabNews()
                         }}
                         style={[styles.racesTwo, {marginRight: 14}]}>
                         <Text style={[styles.raceText]}>{I18n.t('more')}</Text>

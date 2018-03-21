@@ -8,6 +8,12 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 
+export function get_discount(resolve, reject) {
+    helper.get(Api.poker_coins_discount, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
 export function user_crowd_count(body, resolve, reject) {
     helper.get(Api.crowd_user_count(body), ret => {
         resolve(ret.data)

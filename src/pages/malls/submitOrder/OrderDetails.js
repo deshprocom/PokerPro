@@ -6,7 +6,7 @@ import I18n from 'react-native-i18n';
 export default class OrderDetails extends PureComponent {
 
     render() {
-        const {shipping_price, total_price, total_product_price} = this.props.orderDetail;
+        const {shipping_price, total_price, total_product_price, deduction_result, deduction_price} = this.props.orderDetail;
         return (
             <View style={styleO.detailsView}>
                 <View style={styleO.detailsName}>
@@ -25,11 +25,20 @@ export default class OrderDetails extends PureComponent {
                         <Text style={styleO.price}>¥</Text><Text
                         style={[styleO.price, {marginLeft: 1, marginRight: 17}]}>{shipping_price}</Text>
                     </View>
+                    {deduction_result === 'success' ? <View style={styleO.costsView}>
+                        <Text style={styleO.costsName}>{I18n.t('poker_discount')}</Text>
+                        <View style={{flex: 1}}/>
+                        <Text style={styleO.price}>-¥</Text><Text
+                        style={[styleO.price, {marginLeft: 1, marginRight: 17}]}>{deduction_price}</Text>
+                    </View> : null}
+
+                    <View style={{height: 10}}/>
+
                 </View>
                 <View style={styleO.paymentView}>
                     <View style={styleO.paymentPrice}>
                         <Text style={styleO.paymentPriceTxt}>¥</Text><Text
-                        style={[styleO.paymentPriceTxt, {marginLeft: 1}]}>{total_price}</Text>
+                        style={[styleO.paymentPriceTxt, {marginLeft: 1}]}>{this.props.sumMoney}</Text>
                     </View>
                     <Text style={styleO.payment}>{I18n.t('payment')}</Text>
 
@@ -68,7 +77,7 @@ const styleO = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: 6,
-        marginBottom: 13
+
     },
     priceName: {
         fontSize: 14,

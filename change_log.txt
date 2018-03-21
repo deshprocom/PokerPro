@@ -1,8 +1,14 @@
+
+2018年3月11日-2月24日
+1、升级React Native在Debug模式下正常，Release模式闪退
+2、完成扑客币对购票、众筹、商城的使用
+
 2018年2月25日-3月2日
 1、调整部分UI
 2、发布IOS和android 版本3.3
 3、招聘React Native
 4、已升级React native版本，但是部分第三方插件还需跟新（jpush、Umeng统计、Umeng分享、微信）
+
 
 
 2018年2月11日-2月24日

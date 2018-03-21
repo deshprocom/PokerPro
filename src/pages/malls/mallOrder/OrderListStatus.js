@@ -13,7 +13,7 @@ export default class OrderListStatus extends Component {
 
     renderItem = (item, index) => {
 
-        const {order_number, status, total_price, order_items} = item;
+        const {order_number, status, total_price, order_items, final_price, deduction_result} = item;
         return (
             <TouchableOpacity
                 activeOpacity={1}
@@ -31,7 +31,7 @@ export default class OrderListStatus extends Component {
                     disabled={true}
                     lists={order_items}/>
                 <View style={styles.viewTotal}>
-                    <Text style={styles.txtTotal2}>{total_price}</Text>
+                    <Text style={styles.txtTotal2}>{deduction_result === 'success' ? final_price : total_price}</Text>
                     <Text
                         style={styles.txtTotal1}>{order_items.length}{I18n.t('pieces')}{I18n.t('malls')} {I18n.t('order_total')}：¥</Text>
                 </View>

@@ -111,7 +111,7 @@ class Button extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: { //in order to display the shadow on home tab
+    container: { //in submitOrder to display the shadow on home tab
         height: Platform.OS === 'android' ? 44 : 64,
         width: theme.screenWidth
     },

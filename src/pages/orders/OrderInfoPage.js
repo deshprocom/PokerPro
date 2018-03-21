@@ -20,7 +20,7 @@ import {
     convertDate, strNotNull
 } from '../../utils/ComonHelper';
 import {fetchGetRecentRaces, fetchRacesInfo} from '../../actions/RacesAction';
-import {Verified} from '../../configs/Status';
+import {Verified, OrderStatus} from '../../configs/Status';
 import PayModal from '../buy/PayModal';
 import {postOrderCancel, postInvite, postOrderComplete} from '../../services/OrderDao';
 
@@ -130,8 +130,8 @@ class OrderInfoPage extends React.Component {
                 },
                     {
                         text: I18n.t('contact_customer_service'), onPress: () => {
-                        Communications.phonecall(I18n.t('hot_phone'), false)
-                    }
+                            Communications.phonecall(I18n.t('hot_phone'), false)
+                        }
                     }])
         } else
             Alert.alert(I18n.t('hot_line'), I18n.t('hot_phone') + '\n' + I18n.t('work_time'),
@@ -141,8 +141,8 @@ class OrderInfoPage extends React.Component {
                 },
                     {
                         text: I18n.t('call'), onPress: () => {
-                        Communications.phonecall(I18n.t('hot_phone'), false)
-                    }
+                            Communications.phonecall(I18n.t('hot_phone'), false)
+                        }
                     }])
     };
 
@@ -162,7 +162,11 @@ class OrderInfoPage extends React.Component {
                         <View>
                             <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                 <Text
-                                    style={{fontSize: 14, color: Colors.txt_666, marginRight: 18}}>{I18n.t('order_num')}:</Text>
+                                    style={{
+                                        fontSize: 14,
+                                        color: Colors.txt_666,
+                                        marginRight: 18
+                                    }}>{I18n.t('order_num')}:</Text>
                                 <Text
                                     testID="txt_ticket_type"
                                     style={{fontSize: 15, color: Colors._888}}>{order_info.order_id}</Text>
@@ -217,6 +221,7 @@ class OrderInfoPage extends React.Component {
 
     _orderPrice = () => {
         const {race_info, order_info, ticket} = this.props.orderDetail;
+        const {deduction, deduction_numbers,} = order_info;
         return <View style={{backgroundColor: Colors.white, paddingLeft: 17, marginTop: 5}}>
 
             <View style={{height: 40, alignItems: 'center', flexDirection: 'row'}}>
@@ -233,8 +238,10 @@ class OrderInfoPage extends React.Component {
                     style={{
                         fontSize: 14, color: Colors._AAA, marginRight: 18,
                         textDecorationLine: 'line-through'
-                    }}>{order_info.original_price}</Text>
+                    }}>¥{order_info.original_price}</Text>
             </View>
+
+
             <View
                 style={styles.viewPrice}>
                 <Text style={{fontSize: 14, color: Colors.txt_666}}>{I18n.t('order_pay')}</Text>
@@ -243,15 +250,24 @@ class OrderInfoPage extends React.Component {
                     style={{
                         fontSize: 14, color: '#DF1D0F', marginRight: 18,
                         textDecorationLine: this.state.isDiscount ? 'line-through' : 'none'
-                    }}>{ticket.price}</Text>
+                    }}>¥{ticket.price}</Text>
             </View>
 
-            {this.state.isDiscount ? <View
+            {deduction ? <View
+                style={styles.viewPrice}>
+                <Text style={{fontSize: 14, color: Colors.txt_666}}>{I18n.t('poker_discount')}</Text>
+                <Text
+                    testID="txt_original_price"
+                    style={{
+                        fontSize: 14, color: '#DF1D0F', marginRight: 18
+                    }}>-¥{deduction_numbers / 100}</Text>
+            </View> : null}
+            {deduction && order_info.status === OrderStatus.paid ? <View
                 style={styles.viewPrice}>
                 <Text style={{fontSize: 14, color: Colors.txt_666}}>{I18n.t('discount')}</Text>
                 <Text
                     testID="txt_price"
-                    style={{fontSize: 14, color: '#DF1D0F', marginRight: 18}}>{order_info.price}</Text>
+                    style={{fontSize: 14, color: '#DF1D0F', marginRight: 18}}>¥{order_info.final_price}</Text>
             </View> : null}
 
 
@@ -290,7 +306,7 @@ class OrderInfoPage extends React.Component {
                     style={styles.txtAdr}>{legalValue(order_info.email)}</Text>
             </View>;
         else
-            return ( <View style={{paddingTop: 10, paddingBottom: 10}}>
+            return (<View style={{paddingTop: 10, paddingBottom: 10}}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <Text style={[{marginRight: 18}, styles.txtAdr]}>{consignee}</Text>
                     <SecurityText
@@ -323,7 +339,7 @@ class OrderInfoPage extends React.Component {
         if (!isEmptyObject(order_info) &&
             (order_info.status === 'unpaid'
                 || order_info.status === 'delivered'))
-            return ( <View
+            return (<View
                 activeOpacity={1}
                 testID="btn_buy"
                 onPress={this.props.onPress}
@@ -362,7 +378,7 @@ class OrderInfoPage extends React.Component {
                         {
                             text: I18n.t('I_known'), onPress: () => {
 
-                        }
+                            }
                         }])
             } else {
                 let courierInfo = courier + '\n' + I18n.t('tracking_no') + ': ' + tracking_no;
@@ -371,7 +387,7 @@ class OrderInfoPage extends React.Component {
                         {
                             text: I18n.t('I_known'), onPress: () => {
 
-                        }
+                            }
                         }])
             }
 
@@ -432,7 +448,7 @@ class OrderInfoPage extends React.Component {
                 <Text
                     testID="txt_total_price"
                     style={{fontSize: 18, color: Colors._DF1}}>
-                    ¥{isEmptyObject(order_info) ? '' : order_info.price}</Text>
+                    ¥{isEmptyObject(order_info) ? '' : order_info.final_price}</Text>
             </View>
             <View style={{flex: 1}}/>
 
@@ -467,7 +483,7 @@ class OrderInfoPage extends React.Component {
 
             const data = {
                 order_number: order_id,
-                price: order_info.price
+                price: order_info.final_price
             };
 
             this.payModal.setPayUrl(data);

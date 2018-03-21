@@ -20,7 +20,7 @@ import _ from 'lodash';
 
 
 export const YYYY_MM_DD = 'YYYY.MM.DD';
-export const DATA_SS = 'YYYY-MM-DD hh:mm:ss';
+export const DATA_SS = 'YYYY-MM-DD HH:mm:ss';
 export const YYYY_MM = 'YYYY-MM';
 export const YYYY年MM月 = 'YYYY年MM月';
 export const YYYYMMDD = 'YYYYMMDD';

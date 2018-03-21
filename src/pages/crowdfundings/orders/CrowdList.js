@@ -88,7 +88,7 @@ export default class CrowdList extends PureComponent {
             order_info,
             race
         } = item;
-        const {order_number, record_status, order_stock_money, order_stock_number, total_money} = order_info;
+        const {order_number, record_status, order_stock_money, order_stock_number, total_money, final_price} = order_info;
         const {
             logo, name, nick_name,
         } = crowdfunding_player;
@@ -120,12 +120,21 @@ export default class CrowdList extends PureComponent {
 
             <View style={styles.view4}>
                 <Text style={styles.txt_order}>合计：
-                    <Text style={{fontSize: 18}}>{total_money}</Text></Text>
+                    <Text style={{fontSize: 18}}>{this.total_pay(order_info)}</Text></Text>
             </View>
 
         </TouchableOpacity>
 
     };
+
+    total_pay = (order_info) => {
+
+        const {
+            total_money,
+            final_price, deduction_result
+        } = order_info;
+        return deduction_result === 'success' ? final_price : total_money
+    }
 
     _tabLabel = (status) => {
         switch (status) {

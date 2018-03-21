@@ -86,6 +86,15 @@ export default class SubscriptionInfoPage extends PureComponent {
     }
 
 
+    total_pay = () => {
+        const {order_info} = this.state.crowd_info;
+        const {
+            total_money,
+            final_price, deduction_result
+        } = order_info;
+        return deduction_result === 'success' ? final_price : total_money
+    }
+
     content = () => {
         const {
             crowdfunding, crowdfunding_player, order_info, race,
@@ -95,8 +104,10 @@ export default class SubscriptionInfoPage extends PureComponent {
         const {publish_date, award_date} = crowdfunding;
         const {
             record_status, order_number, created_at,
-            order_stock_money, order_stock_number, total_money
+            order_stock_money, order_stock_number, total_money,
+            final_price, deduction_price, deduction_result
         } = order_info;
+
         return <ScrollView>
             <View style={styles.pageTop}>
                 <View style={styles.img_viwe}>
@@ -146,10 +157,16 @@ export default class SubscriptionInfoPage extends PureComponent {
                     <View style={{flex: 1}}/>
                     <Text style={styles.price_per}>{order_stock_number}</Text>
                 </View>
+                {deduction_result === 'success' ? <View style={[styles.view1, {marginTop: 6}]}>
+                    <Text style={styles.price_per}>{I18n.t('poker_discount')}</Text>
+                    <View style={{flex: 1}}/>
+                    <Text style={styles.price}>-¥{deduction_price}</Text>
+                </View> : null}
+
             </View>
 
             <View style={styles.totalPrice}>
-                <Text style={styles.payment}>¥{total_money}</Text>
+                <Text style={styles.payment}>¥{this.total_pay()}</Text>
                 <Text style={styles.price_per}>{I18n.t('payment')}</Text>
             </View>
 
@@ -168,8 +185,9 @@ export default class SubscriptionInfoPage extends PureComponent {
                               onPress={() => {
                               global.router.toRiskWarningPage()
                           }}>《风险提示》</Text>
-                        及其他相关条款和协议，自愿认购"{race.name}"赛事众筹项目，并支付众筹款项
-                        <Text style={{color: Colors._F34}}>{total_money}元</Text>。</Text>
+                    及其他相关条款和协议，自愿认购"{race.name}"赛事众筹项目，并支付众筹款项
+                    <Text style={{color: Colors._F34}}>{this.total_pay()}元</Text>。</Text>
+
 
                 </View>}
 

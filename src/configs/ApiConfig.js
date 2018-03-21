@@ -139,6 +139,9 @@ export default {
     player_match: player_match,//牌手赛报
     crowd_user_count: crowd_user_count,//获取用户历史购买份数
     releases_show:'releases',//功能开启或隐藏控制
+    poker_coins_discount:'poker_coins/numbers',//获取用户扑客币数量和以及扑客币对应折扣
+
+
 
 }
 

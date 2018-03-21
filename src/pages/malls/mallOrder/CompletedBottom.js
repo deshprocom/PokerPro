@@ -116,7 +116,7 @@ export default class CompletedBottom extends Component {
 
                 <Text
                     onPress={() => {//`${I18n.t('confirm_cancel')}`
-                        alertOrder('confirm_cancel', () => {
+                        alertOrder(I18n.t('confirm_cancel'), () => {
                             cancelMallOrder({order_number: order_number}, ret => {
                                 if (this.props.refresh)
                                     this.props.refresh();
