@@ -17,10 +17,10 @@ import PropTypes from 'prop-types';
 
 export default class Password extends Component {
     static propTypes = {
-        style: View.propTypes.style,
-        inputItemStyle: View.propTypes.style,
-        iconStyle: View.propTypes.style,
-        maxLength: TextInput.propTypes.maxLength.isRequired,
+        style: PropTypes.any,
+        inputItemStyle: PropTypes.any,
+        iconStyle: PropTypes.any,
+        maxLength: PropTypes.any,
         onChange: PropTypes.func,
         onEnd: PropTypes.func,
         autoFocus: PropTypes.bool,

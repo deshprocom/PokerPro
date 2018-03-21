@@ -55,14 +55,14 @@ class CrowdCountDown extends Component {
         segs: PropTypes.string,
         onEnd: PropTypes.func,
 
-        containerStyle: View.propTypes.style,
-        timeStyle: View.propTypes.style,
-        daysStyle: Text.propTypes.style,
-        hoursStyle: Text.propTypes.style,
-        minsStyle: Text.propTypes.style,
-        secsStyle: Text.propTypes.style,
-        firstColonStyle: Text.propTypes.style,
-        secondColonStyle: Text.propTypes.style,
+        containerStyle: PropTypes.any,
+        timeStyle: PropTypes.any,
+        daysStyle: PropTypes.any,
+        hoursStyle: PropTypes.any,
+        minsStyle: PropTypes.any,
+        secsStyle: PropTypes.any,
+        firstColonStyle: PropTypes.any,
+        secondColonStyle: PropTypes.any,
 
     };
     static defaultProps = {
