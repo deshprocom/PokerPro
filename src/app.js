@@ -18,7 +18,6 @@ import {
     WB_ID, WB_KEY, JPUSH_IOS
 } from './configs/Constants';
 import Orientation from 'react-native-orientation';
-import UMShare from 'react-native-umshare';
 import * as WeChat from 'react-native-wechat';
 
 
@@ -62,26 +61,26 @@ export default class App extends Component {
         });
 
 
-        // 第二个参数决定在分享界面的排序1_、2_、3_为前缀
-        UMShare.initShare(Platform.OS === 'ios' ? UMENG_IOS : UMENG_ANDROID,
-            {
-                "1_weixin": {
-                    appKey: WX_ID,
-                    appSecret: Platform.OS === 'ios' ? '' : WX_Secret,
-                    redirectURL: WX_URL,
-                },
-                "2_qq": {
-                    appKey: QQ_SHARE_ID,
-                    appSecret: QQ_SHARE_KEY,
-                    redirectURL: WX_URL,
-                },
-                "3_sina": {
-                    appKey: WB_ID,
-                    appSecret: WB_KEY,
-                    redirectURL: WB_URL,
-                },
-            },
-            false);
+        // // 第二个参数决定在分享界面的排序1_、2_、3_为前缀
+        // UMShare.initShare(Platform.OS === 'ios' ? UMENG_IOS : UMENG_ANDROID,
+        //     {
+        //         "1_weixin": {
+        //             appKey: WX_ID,
+        //             appSecret: Platform.OS === 'ios' ? '' : WX_Secret,
+        //             redirectURL: WX_URL,
+        //         },
+        //         "2_qq": {
+        //             appKey: QQ_SHARE_ID,
+        //             appSecret: QQ_SHARE_KEY,
+        //             redirectURL: WX_URL,
+        //         },
+        //         "3_sina": {
+        //             appKey: WB_ID,
+        //             appSecret: WB_KEY,
+        //             redirectURL: WB_URL,
+        //         },
+        //     },
+        //     false);
 
 
         WeChat.registerApp(WX_ID).then(ret => {
@@ -90,7 +89,7 @@ export default class App extends Component {
             console.log(err)
         });
 
-        JAnalyticsModule.setup({appKey: JPUSH_IOS});
+        JAnalyticsModule.setup({appKey:JPUSH_IOS});
     }
 
 }

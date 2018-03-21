@@ -168,11 +168,11 @@ android {
 }
 
 dependencies {
+    compile project(':janalytics-react-native')
     compile project(':react-native-blur')
     compile project(':react-native-picker')
     compile project(':react-native-linear-gradient')
     compile project(':react-native-wechat')
-    compile project(':react-native-umshare')
     compile project(':react-native-orientation')
     compile project(':react-native-video')
     compile project(':react-native-smart-splash-screen')

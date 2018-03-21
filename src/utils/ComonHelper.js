@@ -12,7 +12,7 @@ import StorageKey from '../configs/StorageKey';
 import {Verified, SellStatus} from '../configs/Status';
 import Communications from 'react-native-communications';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
-import UMShare from 'react-native-umshare';
+// import UMShare from 'react-native-umshare';
 import *as wechat from 'react-native-wechat'
 import * as Constants from '../configs/Constants';
 import {getApiType} from '../services/RequestHelper';
@@ -49,14 +49,15 @@ export const picker = {
     compressImageQuality: 0.5,
 };
 
+
 export function uShareMallInfo(title, desc, icon, id) {
 
-    UMShare.share(title, I18n.t('ads_poker'), getShareIcon(icon), shareHost() + "products/" + id + "/" + Lang)
-        .then(() => {
-            showToast(`${I18n.t('show_success')}`)
-        }, (error) => {
-            showToast(error)
-        })
+    // share(title, I18n.t('ads_poker'), getShareIcon(icon), shareHost() + "products/" + id + "/" + Lang)
+    //     .then(() => {
+    //         showToast(`${I18n.t('show_success')}`)
+    //     }, (error) => {
+    //         showToast(error)
+    //     })
 }
 
 //根据路径获取后缀名
@@ -355,12 +356,12 @@ export function getDateDiff(dateTimeStamp) {
 export function sharePage(title, location, icon, url) {
 
     let thumb = getShareIcon(icon);
-    UMShare.share(title, location, thumb, url)
-        .then(() => {
-            showToast(`${I18n.t('show_success')}`)
-        }, (error) => {
-            showToast(error)
-        })
+    // share(title, location, thumb, url)
+    //     .then(() => {
+    //         showToast(`${I18n.t('show_success')}`)
+    //     }, (error) => {
+    //         showToast(error)
+    //     })
 }
 
 
@@ -392,22 +393,13 @@ export function isWXAppInstalled(resolve) {
 
 
 export function loginWX(resolve, reject) {
+    wechat.sendAuthRequest('snsapi_userinfo', 'pokerpro')
+        .then(data => {
 
-    if (Platform.OS === 'ios')
-        wechat.sendAuthRequest('snsapi_userinfo', 'pokerpro')
-            .then(data => {
-
-                resolve(data)
-            }).catch(err => {
-            reject(err)
-        });
-    else
-        UMShare.loginWX().then(data => {
             resolve(data)
         }).catch(err => {
-            reject(err)
-        })
-
+        reject(err)
+    });
 }
 
 function shareTxt(msg) {
@@ -417,82 +409,82 @@ function shareTxt(msg) {
 
 export function uShareTicket(title, desc, icon, id, ticket_id) {
 
-    UMShare.share(title, shareTxt(desc), getShareIcon(icon), shareHost() + "races/" + id + '/tickets/' + ticket_id + "/" + Lang)
-        .then(() => {
-            showToast(`${I18n.t('show_success')}`)
-        }, (error) => {
-            showToast(error)
-        })
+    // share(title, shareTxt(desc), getShareIcon(icon), shareHost() + "races/" + id + '/tickets/' + ticket_id + "/" + Lang)
+    //     .then(() => {
+    //         showToast(`${I18n.t('show_success')}`)
+    //     }, (error) => {
+    //         showToast(error)
+    //     })
 }
 
 export function uShareChoiseTicket(name, location, time, logo, race_id) {
     let des = time + "\n" + location;
     let url = `${shareHost()}raceTickets/${race_id}/${Lang}?x=${new Date().getTime()}`
-    UMShare.share(name, shareTxt(des), getShareIcon(logo), url)
-        .then(() => {
-            showToast(`${I18n.t('show_success')}`)
-        }, (error) => {
-            showToast(error)
-        })
+    // share(name, shareTxt(des), getShareIcon(logo), url)
+    //     .then(() => {
+    //         showToast(`${I18n.t('show_success')}`)
+    //     }, (error) => {
+    //         showToast(error)
+    //     })
 }
 
 export function uShareActivity(title, desc, icon, id) {
 
-    UMShare.share(title, shareTxt(desc), getShareIcon(icon), shareHost() + "activities/" + id + "/" + Lang)
-        .then(() => {
-            showToast(`${I18n.t('show_success')}`)
-        }, (error) => {
-            showToast(error)
-        })
+    // share(title, shareTxt(desc), getShareIcon(icon), shareHost() + "activities/" + id + "/" + Lang)
+    //     .then(() => {
+    //         showToast(`${I18n.t('show_success')}`)
+    //     }, (error) => {
+    //         showToast(error)
+    //     })
 }
 
 export function uShareRace(title, location, icon, raceId) {
 
-    UMShare.share(title, location, getShareIcon(icon), shareHost() + "race/" + raceId + "/" + Lang)
-        .then(() => {
-            showToast(`${I18n.t('show_success')}`)
-        }, (error) => {
-            showToast(error)
-        })
+    // share(title, location, getShareIcon(icon), shareHost() + "race/" + raceId + "/" + Lang)
+    //     .then(() => {
+    //         showToast(`${I18n.t('show_success')}`)
+    //     }, (error) => {
+    //         showToast(error)
+    //     })
 }
 
 export function newShare(title, location, icon, newsId) {
 
     let thumb = getShareIcon(icon)
-    UMShare.share(title, location, thumb, shareHost() + "news/" + newsId + "/" + Lang)
-        .then(() => {
-            showToast(`${I18n.t('show_success')}`)
-        }, (error) => {
-            showToast(error)
-        })
+    // share(title, location, thumb, shareHost() + "news/" + newsId + "/" + Lang)
+    //     .then(() => {
+    //         showToast(`${I18n.t('show_success')}`)
+    //     }, (error) => {
+    //         showToast(error)
+    //     })
 }
 
 export function rankPlayerShare(title, location, icon, playerId) {
 
-    UMShare.share(title, location, getShareIcon(icon), shareHost() + "rankPlayer/" + playerId + "/" + Lang)
-        .then(() => {
-            showToast(`${I18n.t('show_success')}`)
-        }, (error) => {
-            showToast(error)
-        })
+    // share(title, location, getShareIcon(icon), shareHost() + "rankPlayer/" + playerId + "/" + Lang)
+    //     .then(() => {
+    //         showToast(`${I18n.t('show_success')}`)
+    //     }, (error) => {
+    //         showToast(error)
+    //     })
 }
 
 export function rankGameShare(title, location, icon, gameId) {
-    UMShare.share(title, location, getShareIcon(icon), shareHost() + "rankGame/" + gameId + "/" + Lang)
-        .then(() => {
-            showToast(`${I18n.t('show_success')}`)
-        }, (error) => {
-            showToast(error)
-        })
+    // share(title, location, getShareIcon(icon), shareHost() + "rankGame/" + gameId + "/" + Lang)
+    //     .then(() => {
+    //         showToast(`${I18n.t('show_success')}`)
+    //     }, (error) => {
+    //         showToast(error)
+    //     })
 }
 
 export function uVideoShare(title, desc, icon, videoId) {
-    UMShare.share(title, shareTxt(desc), getShareIcon(icon), shareHost() + "videos/" + videoId + "/" + Lang)
-        .then(() => {
-            showToast(`${I18n.t('show_success')}`)
-        }, (error) => {
-            showToast(error)
-        })
+    // share(title, shareTxt(desc), getShareIcon(icon), shareHost() + "videos/" + videoId + "/" + Lang)
+    //     .then(() => {
+    //         showToast(`${I18n.t('show_success')}`)
+    //     }, (error) => {
+    //         showToast(error)
+    //     })
 }
 
 function getShareIcon(icon) {

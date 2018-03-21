@@ -3,11 +3,11 @@ package com.deshpro.pokerpro;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import cn.jpush.reactnativejanalytics.JAnalyticsPackage;
 import com.cmcewen.blurview.BlurViewPackage;
 import com.beefe.picker.PickerViewPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.theweflex.react.WeChatPackage;
-import com.zzy.umshare.UMShareModulePackage;
 import com.github.yamill.orientation.OrientationPackage;
 import com.brentvatne.react.ReactVideoPackage;
 
@@ -39,11 +39,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new JAnalyticsPackage(),
             new BlurViewPackage(),
             new PickerViewPackage(),
             new LinearGradientPackage(),
             new WeChatPackage(),
-            new UMShareModulePackage(),
             new OrientationPackage(),
             new ReactVideoPackage(),
             new RCTSplashScreenPackage(),
