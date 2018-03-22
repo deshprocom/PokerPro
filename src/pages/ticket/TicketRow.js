@@ -30,41 +30,42 @@ export const itemListView = (item, index) => {
 
             <Image source={Images.item_sale}
                    resizeMode="cover"
-                   style={styles.bg_img}>
-                <View style={styles.itemView}>
-                    <ImageLoad defaultSource={Images.empty_ticket}
-                               source={{uri: logo}}
-                               style={styles.itemImg}/>
-                    <View style={styles.itemInfo}>
-                        <Text
-                            numberOfLines={2}
-                            style={[styles.itemTitle]}>{name}</Text>
+                   style={styles.bg_img}/>
 
-                        <View style={styles.viewLocation}>
-                            <Image source={Images.home_adr}
-                                   style={styles.img_ico}/>
-                            <Text numberOfLines={1}
-                                  style={styles.itemAddr}>{location}</Text>
-                        </View>
 
-                        <View style={styles.view_time}>
-                            <Image source={Images.home_clock}
-                                   style={{width: 10, height: 10}}/>
-                            <Text style={[styles.itemTime]}>
-                                {convertDate(begin_date, 'YYYY.MM.DD') + '-' + convertDate(end_date, 'YYYY.MM.DD')}</Text>
-                        </View>
+            <View style={styles.itemView}>
+                <ImageLoad defaultSource={Images.empty_ticket}
+                           source={{uri: logo}}
+                           style={styles.itemImg}/>
+                <View style={styles.itemInfo}>
+                    <Text
+                        numberOfLines={2}
+                        style={[styles.itemTitle]}>{name}</Text>
 
-                        {this.prizeView(min_price)}
-
+                    <View style={styles.viewLocation}>
+                        <Image source={Images.home_adr}
+                               style={styles.img_ico}/>
+                        <Text numberOfLines={1}
+                              style={styles.itemAddr}>{location}</Text>
                     </View>
-                    {ticket_sellable ? <TouchableOpacity
-                        activeOpacity={1}
-                        onPress={() => this._buyTicket(item)}
-                        style={sellStyle(ticket_status)}>
-                        <Text style={sellTxt(ticket_status)}>{this._txtTicketStatus(ticket_status)}</Text>
-                    </TouchableOpacity> : null}
+
+                    <View style={styles.view_time}>
+                        <Image source={Images.home_clock}
+                               style={{width: 10, height: 10}}/>
+                        <Text style={[styles.itemTime]}>
+                            {convertDate(begin_date, 'YYYY.MM.DD') + '-' + convertDate(end_date, 'YYYY.MM.DD')}</Text>
+                    </View>
+
+                    {this.prizeView(min_price)}
+
                 </View>
-            </Image>
+                {ticket_sellable ? <TouchableOpacity
+                    activeOpacity={1}
+                    onPress={() => this._buyTicket(item)}
+                    style={sellStyle(ticket_status)}>
+                    <Text style={sellTxt(ticket_status)}>{this._txtTicketStatus(ticket_status)}</Text>
+                </TouchableOpacity> : null}
+            </View>
 
         </TouchableOpacity>
     )
@@ -136,7 +137,8 @@ const styles = StyleSheet.create({
         height: 140,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        position: 'absolute'
     },
     bg_img: {
         backgroundColor: 'transparent',

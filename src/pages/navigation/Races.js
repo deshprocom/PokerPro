@@ -28,43 +28,48 @@ export default class Races extends Component {
         return (
 
             <TouchableOpacity
+                style={{flexDirection: 'row'}}
                 onPress={() => global.router.toRacesInfoPage(this.props, item.race_id, false)}
                 activeOpacity={1}>
-                <Image style={styles.oval} source={Images.oval}/>
-                <View style={{
-                    flexDirection: 'row',
-                    position: 'absolute'
-                }}>
-                    <Image style={styleB.ovalImg} source={{uri: item.big_logo}}/>
+                <View style={{height: 1, width: 17}}/>
+                <View>
+                    <Image style={styles.oval}
+                           source={Images.oval}/>
+                    <View style={{
+                        flexDirection: 'row',
+                        position: 'absolute'
+                    }}>
+                        <Image style={styleB.ovalImg} source={{uri: item.big_logo}}/>
 
-                    <View style={{marginLeft: 17, marginTop: 14}}>
-                        <Text
-                            numberOfLines={2}
-                            style={{maxWidth: 160, height: 35}}>{item.name}</Text>
-                        <View style={[styleB.ovalInner, {marginTop: 19}]}>
-                            <Image style={{width: 10, height: 12, marginRight: 7}} source={Images.location}/>
-                            <Text style={styles.ovalText}>{item.location}</Text>
-                        </View>
-                        <View style={[styleB.ovalInner, {marginTop: 9}]}>
-                            <Image style={{width: 11, height: 11, marginRight: 7}} source={Images.time}/>
-                            <Text style={styles.ovalText}>{this.races_time(item)}</Text>
-                        </View>
-                        <View style={[styleB.ovalInner, {marginTop: 15}]}>
-                            <Text style={styles.ovalPrice}>￥{item.min_price}</Text>
-                        </View>
-                        <TouchableOpacity
-                            onPress={() => router.toChoiseTicketPage(this.props, item.race_id)}
-                            activeOpacity={1}
-                            style={Platform.OS == 'ios' ? styleB.buyButtonPosition : styleB.buyButtonPosition2}>
-
-                            <Image
-                                style={styles.button}
-                                source={Images.button}
-                            />
+                        <View style={{marginLeft: 17, marginTop: 14}}>
                             <Text
-                                style={styleB.buyText}>{I18n.t('home_buy')}</Text>
+                                numberOfLines={2}
+                                style={{maxWidth: 160, height: 35}}>{item.name}</Text>
+                            <View style={[styleB.ovalInner, {marginTop: 19}]}>
+                                <Image style={{width: 10, height: 12, marginRight: 7}} source={Images.location}/>
+                                <Text style={styles.ovalText}>{item.location}</Text>
+                            </View>
+                            <View style={[styleB.ovalInner, {marginTop: 9}]}>
+                                <Image style={{width: 11, height: 11, marginRight: 7}} source={Images.time}/>
+                                <Text style={styles.ovalText}>{this.races_time(item)}</Text>
+                            </View>
+                            <View style={[styleB.ovalInner, {marginTop: 15}]}>
+                                <Text style={styles.ovalPrice}>￥{item.min_price}</Text>
+                            </View>
+                            <TouchableOpacity
+                                onPress={() => router.toChoiseTicketPage(this.props, item.race_id)}
+                                activeOpacity={1}
+                                style={Platform.OS == 'ios' ? styleB.buyButtonPosition : styleB.buyButtonPosition2}>
 
-                        </TouchableOpacity>
+                                <Image
+                                    style={styles.button}
+                                    source={Images.button}
+                                />
+                                <Text
+                                    style={styleB.buyText}>{I18n.t('home_buy')}</Text>
+
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
 
@@ -99,7 +104,7 @@ export default class Races extends Component {
                         horizontal
                         data={this.props.raceTickets}
                         renderItem={this._renderItem}
-                        keyExtractor={(item, index) => index}
+                        keyExtractor={(item, index) => index+"item"}
                     /> : null}
 
 
