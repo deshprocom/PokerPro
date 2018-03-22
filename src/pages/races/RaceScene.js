@@ -19,7 +19,6 @@ import RaceInfoBottomView from './RaceInfoBottomView';
 import {
     strNotNull, sellable, isEmptyObject, YYYY_MM_DD,
     raceStatusConvert, ticketStatusConvert, convertDate,
-    strValid, uShareRace
 } from '../../utils/ComonHelper';
 import TestRouter from '../../components/TestRouter';
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
@@ -28,6 +27,7 @@ import {MarkdownPlat, ImageLoad} from '../../components';
 import MainRaceResultView from './MainRaceResultView';
 import {umengEvent} from '../../utils/UmengEvent';
 import {BlurView} from 'react-native-blur';
+import ShareToast from "../comm/ShareToast";
 
 let {width, height} = Dimensions.get('window');
 //顶部内容高度
@@ -50,7 +50,8 @@ class RaceScene extends Component {
         bgScale: 1,
         headOpacity: 1,
         viewRef: 0,
-        titleOpacity: 0
+        titleOpacity: 0,
+        showShare:false,
     };
 
 
@@ -104,8 +105,7 @@ class RaceScene extends Component {
 
 
     render() {
-
-
+        const {raceInfo} = this.state;
         return (
             <View
                 style={{
@@ -124,7 +124,10 @@ class RaceScene extends Component {
 
                 {this._renderTopNav()}
 
-
+                {this.state.showShare ? <ShareToast hiddenShareAction={() => {this.setState({showShare:!this.state.showShare})}}
+                                         shareLink={"race/"+this.props.params.race_id}
+                                         shareTitle={raceInfo.name}
+                                         shareImage={raceInfo.logo}/>:null}
             </View>
         )
     }
@@ -189,10 +192,7 @@ class RaceScene extends Component {
                 testID="btn_bar_right"
                 style={styles.popBtn}
                 onPress={() => {
-                    uShareRace(raceInfo.name, raceInfo.location +
-                        '\n' + this.race_time(raceInfo),
-                        raceInfo.logo,
-                        this.props.params.race_id)
+                    this.setState({showShare:true});
                 }}>
                 <Image style={styles.imgShare}
                        source={Images.share2}/>

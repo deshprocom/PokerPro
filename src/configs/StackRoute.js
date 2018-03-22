@@ -13,7 +13,6 @@ import PersonPage from '../pages/person/PersonPage';
 import SettingPage from '../pages/setting/SettingPage';
 import RegisterPage from '../pages/account/RegisterPage';
 import ForgetPage from '../pages/account/ForgetPage';
-import RacesInfoPage from '../pages/races/RacesInfoPage';
 import LoginFirstPage from '../pages/login/LoginFirstPage';
 import LoginCodePage from '../pages/login/LoginCodePage';
 import EmailRegisterPage from '../pages/account/EmailRegisterPage';
@@ -132,7 +131,6 @@ export const Stacks = Actions.create(
         <Scene key="SettingPage" component={SettingPage} hideNavBar/>
         <Scene key="RegisterPage" component={RegisterPage} hideNavBar/>
         <Scene key="ForgetPage" component={ForgetPage} hideNavBar/>
-        <Scene key="RacesInfoPage" component={RacesInfoPage} hideNavBar/>
         <Scene key="LoginFirstPage" component={LoginFirstPage} hideNavBar/>
         <Scene key="LoginCodePage" component={LoginCodePage} hideNavBar/>
         <Scene key="EmailRegisterPage" component={EmailRegisterPage} hideNavBar/>

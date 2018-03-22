@@ -11,7 +11,7 @@ import MallInfoBottom from './MallInfoBottom';
 import ProductSpecificationInfo from './ProductSpecificationInfo';
 import {getProductDetail} from '../../../services/MallDao';
 import {util} from '../../../utils/ComonHelper';
-import ShareToast from "../../../../ShareToast";
+import ShareToast from "../../comm/ShareToast";
 
 
 export default class MallInfoPage extends Component {
@@ -97,11 +97,9 @@ export default class MallInfoPage extends Component {
                         showSpecInfo={this.showSpecInfo}/> : null}
 
                 {showShare ? <ShareToast hiddenShareAction={() => {this.setState({showShare:!this.state.showShare})}}
-                                         shareLink={"https://www.baidu.com"}
+                                         shareLink={"products/"+product.id}
                                          shareTitle={product.title}
-                                         shareText={product.description}
-                                         icon={product.icon}
-                                         id={product.id}/>:null}
+                                         shareImage={product.icon}/>:null}
 
             </View>
 

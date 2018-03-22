@@ -57,7 +57,7 @@ export function jShareMallInfo(platform,title, desc, icon, id) {
         type: "link",
         url:shareHost() + "products/" + id + "/" + Lang,
         title:title,
-        imagePath: getShareIcon(icon),
+        imageUrl: getShareIcon(icon),
     };
     JShareModule.share(message, (map) => {
         console.log(map);
@@ -239,7 +239,7 @@ export function strNotNull(str) {
         return true;
 }
 
-let Lang = 'zh';
+export let Lang = 'zh';
 
 export function setLang(lang) {
     Lang = lang;
@@ -443,7 +443,8 @@ export function uShareActivity(title, desc, icon, id) {
     //     })
 }
 
-export function uShareRace(title, location, icon, raceId) {
+export function uShareRace(platform,title, location, icon, raceId) {
+
 
     // share(title, location, getShareIcon(icon), shareHost() + "race/" + raceId + "/" + Lang)
     //     .then(() => {

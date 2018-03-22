@@ -102,7 +102,8 @@ export default class ChoiseTicketPage extends Component {
                     if (!isEmptyObject(race) && !isEmptyObject(tickets)) {
                         const {name, location,logo, race_id,begin_date,end_date} = race;
                         var time=convertDate(begin_date, 'YYYY.MM.DD') + "-" + convertDate(end_date, 'YYYY.MM.DD');
-                        uShareChoiseTicket(name, I18n.t('address') + location , time, logo, race_id)
+                        alert(11);
+                        // uShareChoiseTicket(name, I18n.t('address') + location , time, logo, race_id)
                     }
 
                 }}/>
