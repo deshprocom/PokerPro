@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>appKey</key>
+	<string>3789f75e5d780c24595607b6</string>
+	<key>channel</key>
+	<string>deshpro-app</string>
+	<key>advertisingId</key>
+	<string></string>
+	<key>isProduction</key>
+	<true/>
+	<key>wechatAppId</key>
+	<string>wxe2e371b8eced0fd7</string>
+	<key>wechatAppSecret</key>
+	<string>d6217cd639d4d4e08150505790bef7b1</string>
+	<key>qqAppId</key>
+	<string>1106155543</string>
+	<key>qqAppKey</key>
+	<string>kaI7hok5UcxwVaHv</string>
+	<key>sinaWeiboAppKey</key>
+	<string>1050957035</string>
+	<key>sinaWeiboAppSecret</key>
+	<string>e1049869ddd670771459d154fe1a9207</string>
+	<key>sinaRedirectUri</key>
+	<string>https://sns.whalecloud.com/sina2/callback</string>
+	<key>facebookAppId</key>
+	<string></string>
+	<key>facebookDisplayName</key>
+	<string></string>
+	<key>isSupportWebSina</key>
+	<true/>
+</dict>
+</plist>

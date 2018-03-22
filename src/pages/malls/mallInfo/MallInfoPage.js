@@ -11,7 +11,7 @@ import MallInfoBottom from './MallInfoBottom';
 import ProductSpecificationInfo from './ProductSpecificationInfo';
 import {getProductDetail} from '../../../services/MallDao';
 import {util} from '../../../utils/ComonHelper';
-import {uShareMallInfo} from '../../../utils/ComonHelper';
+import ShareToast from "../../../../ShareToast";
 
 
 export default class MallInfoPage extends Component {
@@ -19,7 +19,8 @@ export default class MallInfoPage extends Component {
         specShow: false,
         opacity: 0,
         product: {},
-        selectProduct: {}
+        selectProduct: {},
+        showShare:false,
     };
 
     componentDidMount() {
@@ -50,8 +51,7 @@ export default class MallInfoPage extends Component {
                 testID="btn_bar_right"
                 style={styleM.popBtn}
                 onPress={() => {
-                    const{title,icon,description,id} = this.state.product;
-                    uShareMallInfo(title, description, icon,id)
+                    this.setState({showShare:true});
                 }}>
                 <Image style={styleM.imgShare}
                        source={Images.mall_share}/>
@@ -63,7 +63,7 @@ export default class MallInfoPage extends Component {
 
 
     render() {
-        const {specShow, product, selectProduct} = this.state;
+        const {specShow, product, selectProduct,showShare} = this.state;
         return (
             <View style={{flex:1}}>
                 <BaseComponent
@@ -95,6 +95,14 @@ export default class MallInfoPage extends Component {
                         selectProduct={selectProduct}
                         product={product}
                         showSpecInfo={this.showSpecInfo}/> : null}
+
+                {showShare ? <ShareToast hiddenShareAction={() => {this.setState({showShare:!this.state.showShare})}}
+                                         shareLink={"https://www.baidu.com"}
+                                         shareTitle={product.title}
+                                         shareText={product.description}
+                                         icon={product.icon}
+                                         id={product.id}/>:null}
+
             </View>
 
         );

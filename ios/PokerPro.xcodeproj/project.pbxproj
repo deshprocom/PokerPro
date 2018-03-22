@@ -57,6 +57,7 @@
 		7702AE2C74B844969904F9F8 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7563725BDAFE4588853C8821 /* libz.tbd */; };
 		829F5F420D6A41D39A1AAD85 /* libRNI18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB4024AE644343769EFDB725 /* libRNI18n.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		8BB3028C20635D860099FBD1 /* RCTJShareConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BB3025420635D860099FBD1 /* RCTJShareConfig.plist */; };
 		8C2F01E590684A19B90EBE21 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9934670E83094A2B80DA3717 /* CoreTelephony.framework */; };
 		909710108EBF4664AF7E3883 /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F65F9BBF16D94397A8309064 /* libRCTVideo.a */; };
 		A2D4672512D14CC49D8F5FAE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FC5B193421F4B229738D062 /* CFNetwork.framework */; };
@@ -545,6 +546,7 @@
 		790AC6ACF7EA486FBF06ECCB /* UserNotifications.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		8875F8CAF7E64377A0A35972 /* RCTJPushModule.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTJPushModule.xcodeproj; path = "../node_modules/jpush-react-native/ios/RCTJPushModule.xcodeproj"; sourceTree = "<group>"; };
+		8BB3025420635D860099FBD1 /* RCTJShareConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RCTJShareConfig.plist; sourceTree = "<group>"; };
 		8ED1B075C2E04332AAD5CFC2 /* libRCTJShareModule.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTJShareModule.a; sourceTree = "<group>"; };
 		91F2E8210BDE4075AF866771 /* libRCTBEEPickerManager.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTBEEPickerManager.a; sourceTree = "<group>"; };
 		9934670E83094A2B80DA3717 /* CoreTelephony.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -730,6 +732,7 @@
 		13B07FAE1A68108700A75B9A /* PokerPro */ = {
 			isa = PBXGroup;
 			children = (
+				8BB3025420635D860099FBD1 /* RCTJShareConfig.plist */,
 				48358EB81ED2D97600997A6D /* PokerPro.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -1662,6 +1665,7 @@
 				48CB71771F68D5060079E438 /* InfoPlist.strings in Resources */,
 				485E1F791F03B481005615DE /* splash.png in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				8BB3028C20635D860099FBD1 /* RCTJShareConfig.plist in Resources */,
 				48358DFC1ED2C9B100997A6D /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
