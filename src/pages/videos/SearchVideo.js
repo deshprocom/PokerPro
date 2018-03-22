@@ -49,7 +49,7 @@ export default class SearchVideo extends Component {
         return (<View>
 
             <UltimateListView
-                keyExtractor={(item, index) => index}
+                keyExtractor={(item, index) => index+"item"}
                 ref={(ref) => this.listView = ref}
                 onFetch={this.onFetch}
                 item={this._itemNewsView}

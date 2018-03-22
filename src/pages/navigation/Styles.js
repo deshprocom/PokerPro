@@ -111,8 +111,7 @@ export const styles = StyleSheet.create({
     },
     oval: {
         width: 317,
-        height: 165,
-        marginLeft: 17
+        height: 165
     },
     ovalText: {
         fontSize: 12,

@@ -100,7 +100,7 @@ export default class VideoInfoPage extends Component {
 
                 <FlatList
                     horizontal
-                    keyExtractor={(item, index) => index}
+                    keyExtractor={(item, index) => index+"item"}
                     renderItem={this.renderVideoItem}
                     data={this.state.subVideos}/>
 
