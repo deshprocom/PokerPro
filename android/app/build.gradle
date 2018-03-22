@@ -113,6 +113,7 @@ android {
         }
         renderscriptTargetApi 20
         renderscriptSupportModeEnabled true
+        vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         manifestPlaceholders = [
                 JPUSH_APPKEY: "3789f75e5d780c24595607b6",   //在此替换你的APPKey
@@ -173,6 +174,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-i18n')
     compile project(':jshare-react-native')
     compile project(':jcore-react-native')
     compile project(':jpush-react-native')
@@ -186,10 +188,7 @@ dependencies {
     compile project(':react-native-smart-splash-screen')
     compile project(':react-native-smart-pull-to-refresh-listview')
     compile project(':react-native-image-crop-picker')
-    compile project(':react-native-i18n')
     compile fileTree(dir: "libs", include: ["*.jar"])
-    compile project(':jpush-react-native')
-    compile project(':jcore-react-native')
     //noinspection GradleCompatible
     compile "com.android.support:appcompat-v7:23.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules
