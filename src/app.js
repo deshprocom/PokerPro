@@ -15,10 +15,11 @@ import JAnalyticsModule from 'janalytics-react-native';
 import {
     UMENG_ANDROID, UMENG_IOS, WX_ID, WX_Secret,
     QQ_SHARE_ID, QQ_SHARE_KEY, WX_URL, WB_URL,
-    WB_ID, WB_KEY, JPUSH_IOS
+    WB_ID, WB_KEY, JPUSH_APPKEY
 } from './configs/Constants';
 import Orientation from 'react-native-orientation';
 import * as WeChat from 'react-native-wechat';
+import JShareModule from 'jshare-react-native';
 
 
 console.disableYellowBox = true;
@@ -61,6 +62,30 @@ export default class App extends Component {
         });
 
 
+        ///极光统计
+        JAnalyticsModule.setup({appKey:JPUSH_APPKEY});
+
+        ///极光分享
+        let config =
+            {
+                appKey:JPUSH_APPKEY,
+                channel:'deshpro-app',
+                advertisingId:'',
+                isProduction:false,
+                wechatAppId: WX_ID,
+                wechatAppSecret: WX_Secret,
+                qqAppId: QQ_SHARE_ID,
+                qqAppKey: QQ_SHARE_KEY,
+                sinaWeiboAppKey: WB_ID,
+                sinaWeiboAppSecret: WB_KEY,
+                sinaRedirectUri: WB_URL,
+                facebookAppId: '',
+                facebookDisplayName: '',
+                isSupportWebSina: true
+            };
+
+        JShareModule.setup(config);
+
         // // 第二个参数决定在分享界面的排序1_、2_、3_为前缀
         // UMShare.initShare(Platform.OS === 'ios' ? UMENG_IOS : UMENG_ANDROID,
         //     {
@@ -89,7 +114,6 @@ export default class App extends Component {
             console.log(err)
         });
 
-        JAnalyticsModule.setup({appKey:JPUSH_IOS});
     }
 
 }

@@ -3,6 +3,7 @@ package com.deshpro.pokerpro;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import cn.jiguang.share.reactnative.JSharePackage;
 import cn.jpush.reactnativejanalytics.JAnalyticsPackage;
 import com.cmcewen.blurview.BlurViewPackage;
 import com.beefe.picker.PickerViewPackage;
@@ -39,6 +40,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new JSharePackage(),
             new JAnalyticsPackage(),
             new BlurViewPackage(),
             new PickerViewPackage(),

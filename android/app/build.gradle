@@ -103,6 +103,11 @@ android {
         targetSdkVersion 22
         versionCode 6
         versionName "3.3"
+        manifestPlaceholders = [
+                JPUSH_APPKEY: "",
+                APP_CHANNEL : "default"
+        ]
+
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -168,6 +173,9 @@ android {
 }
 
 dependencies {
+    compile project(':jshare-react-native')
+    compile project(':jcore-react-native')
+    compile project(':jpush-react-native')
     compile project(':janalytics-react-native')
     compile project(':react-native-blur')
     compile project(':react-native-picker')
