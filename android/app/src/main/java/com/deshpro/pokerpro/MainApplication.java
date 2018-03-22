@@ -1,7 +1,8 @@
 package com.deshpro.pokerpro;
 
 import android.app.Application;
-
+import cn.jiguang.share.android.api.JShareInterface;
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 import com.facebook.react.ReactApplication;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import cn.jiguang.share.reactnative.JSharePackage;
@@ -28,7 +29,7 @@ import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
 
-    private boolean SHUTDOWN_TOAST = true;
+    private boolean SHUTDOWN_TOAST = false;
     private boolean SHUTDOWN_LOG = true;
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
@@ -41,8 +42,8 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new RNI18nPackage(),
-            new JSharePackage(),
-            new JAnalyticsPackage(),
+            new JSharePackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
+            new JAnalyticsPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
             new BlurViewPackage(),
             new PickerViewPackage(),
             new LinearGradientPackage(),
@@ -71,5 +72,7 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+     JAnalyticsInterface.init(this);
+       JShareInterface.init(this);
   }
 }

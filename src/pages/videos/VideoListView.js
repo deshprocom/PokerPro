@@ -65,7 +65,7 @@ export default class VideoListView extends Component {
 
             <UltimateListView
                 arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
-                keyExtractor={(item, index) => index+"item"}
+                keyExtractor={(item, index) => index + "item"}
                 ref={(ref) => this.listView = ref}
                 onFetch={this.onFetch}
                 item={this._itemNewsView}
@@ -232,7 +232,7 @@ export default class VideoListView extends Component {
             </TouchableOpacity>
 
             {this._playView(rowData)}
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{flexDirection: 'row', alignItems: 'center', height: 40}}>
                 <Text
                     numberOfLines={1}
                     style={{fontSize: 12, color: Colors._AAA}}>{getDateDiff(created_at)}</Text>

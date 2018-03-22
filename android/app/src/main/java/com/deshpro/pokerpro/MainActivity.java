@@ -3,10 +3,10 @@ package com.deshpro.pokerpro;
 import com.facebook.react.ReactActivity;
 import android.os.Bundle;
 import com.reactnativecomponent.splashscreen.RCTSplashScreen;    //import RCTSplashScreen
-import com.umeng.analytics.MobclickAgent;
 import cn.jpush.android.api.JPushInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
 public class MainActivity extends ReactActivity {
 
@@ -30,15 +30,17 @@ public class MainActivity extends ReactActivity {
     @Override
     protected void onResume() {
     	super.onResume();
-    	MobclickAgent.onResume(this);
+
 JPushInterface.onResume(this);
+JAnalyticsInterface.onPageStart(this, this.getClass().getCanonicalName());
     }
 
     @Override
     protected void onPause() {
     	super.onPause();
-    	MobclickAgent.onPause(this);
+
     	 JPushInterface.onPause(this);
+
     }
 
     @Override
@@ -48,4 +50,11 @@ JPushInterface.onResume(this);
             intent.putExtra("newConfig", newConfig);
             this.sendBroadcast(intent);
         }
+
+
+         @Override
+            protected void onDestroy() {
+                super.onDestroy();
+                JAnalyticsInterface.onPageEnd(this, this.getClass().getCanonicalName());
+            }
 }

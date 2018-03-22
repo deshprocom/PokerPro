@@ -118,9 +118,16 @@ android {
         manifestPlaceholders = [
                 JPUSH_APPKEY: "3789f75e5d780c24595607b6",   //在此替换你的APPKey
                 APP_CHANNEL : "developer-default",        //应用渠道号
-                UMENG_APPKEY:"58da17cc1061d26493001174",
+                TENCENT_APPID:"1106155543",//腾讯qqKey
+
         ]
     }
+
+     sourceSets {      // <--   必须添加 sourceSet 这段。因为 JGShareSDK.xml 放在 assets 下，不加上会报错。
+        main {
+            assets.srcDirs = ['assets']
+        }
+      }
     splits {
         abi {
             reset()

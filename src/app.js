@@ -40,14 +40,13 @@ if (!__DEV__) {
 }
 
 
-
 export default class App extends Component {
 
     render() {
         return (
 
             <Provider store={store}>
-               <PuKe/>
+                <PuKe/>
             </Provider>
         )
     }
@@ -63,15 +62,15 @@ export default class App extends Component {
 
 
         ///极光统计
-        JAnalyticsModule.setup({appKey:JPUSH_APPKEY});
+        JAnalyticsModule.setup({appKey: JPUSH_APPKEY});
 
         ///极光分享
         let config =
             {
-                appKey:JPUSH_APPKEY,
-                channel:'deshpro-app',
-                advertisingId:'',
-                isProduction:false,
+                appKey: JPUSH_APPKEY,
+                channel: 'deshpro-app',
+                advertisingId: '',
+                isProduction: false,
                 wechatAppId: WX_ID,
                 wechatAppSecret: WX_Secret,
                 qqAppId: QQ_SHARE_ID,
@@ -84,28 +83,9 @@ export default class App extends Component {
                 isSupportWebSina: true
             };
 
-        JShareModule.setup(config);
 
-        // // 第二个参数决定在分享界面的排序1_、2_、3_为前缀
-        // UMShare.initShare(Platform.OS === 'ios' ? UMENG_IOS : UMENG_ANDROID,
-        //     {
-        //         "1_weixin": {
-        //             appKey: WX_ID,
-        //             appSecret: Platform.OS === 'ios' ? '' : WX_Secret,
-        //             redirectURL: WX_URL,
-        //         },
-        //         "2_qq": {
-        //             appKey: QQ_SHARE_ID,
-        //             appSecret: QQ_SHARE_KEY,
-        //             redirectURL: WX_URL,
-        //         },
-        //         "3_sina": {
-        //             appKey: WB_ID,
-        //             appSecret: WB_KEY,
-        //             redirectURL: WB_URL,
-        //         },
-        //     },
-        //     false);
+        if (Platform.OS === 'ios')
+            JShareModule.setup(config);
 
 
         WeChat.registerApp(WX_ID).then(ret => {
