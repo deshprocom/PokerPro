@@ -47,6 +47,13 @@
         <data android:scheme="deshpro-app"/>
       </intent-filter>
     </activity>
+    <meta-data
+        android:name="JPUSH_APPKEY"
+        android:value="${JPUSH_APPKEY}" />
+    <meta-data
+        android:name="JPUSH_CHANNEL"
+        android:value="${APP_CHANNEL}" />
+
 
     <activity
             android:name="com.umeng.qq.tencent.AuthActivity"

@@ -103,13 +103,17 @@ android {
         targetSdkVersion 22
         versionCode 6
         versionName "3.3"
+        manifestPlaceholders = [
+                JPUSH_APPKEY: "",
+                APP_CHANNEL : "default"
+        ]
+
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
         renderscriptTargetApi 20
         renderscriptSupportModeEnabled true
         multiDexEnabled true
-        vectorDrawables.useSupportLibrary = true
         manifestPlaceholders = [
                 JPUSH_APPKEY: "3789f75e5d780c24595607b6",   //在此替换你的APPKey
                 APP_CHANNEL : "developer-default",        //应用渠道号
@@ -169,18 +173,20 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-i18n')
+    compile project(':jshare-react-native')
+    compile project(':jcore-react-native')
+    compile project(':jpush-react-native')
+    compile project(':janalytics-react-native')
     compile project(':react-native-blur')
     compile project(':react-native-picker')
     compile project(':react-native-linear-gradient')
-    compile project(':rn-umeng')
     compile project(':react-native-wechat')
-    compile project(':react-native-umshare')
     compile project(':react-native-orientation')
     compile project(':react-native-video')
     compile project(':react-native-smart-splash-screen')
     compile project(':react-native-smart-pull-to-refresh-listview')
     compile project(':react-native-image-crop-picker')
+    compile project(':react-native-i18n')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile project(':jpush-react-native')
     compile project(':jcore-react-native')
