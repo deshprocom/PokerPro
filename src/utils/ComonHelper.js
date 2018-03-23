@@ -355,7 +355,6 @@ export function getDateDiff(dateTimeStamp) {
 }
 
 export function sharePage(title, location, icon, url) {
-
     let thumb = getShareIcon(icon);
     let param = {
         shareTitle:title,
