@@ -8,7 +8,7 @@ import {
     GET_PLAYER_INFO, POST_BIND_ACCOUNT, POST_CHANGE_BIND,
     POST_CHANGE_PERMISSION, GET_NOTIFICATIONS, DEL_NOTIFICATIONS,SWITCH_LANGUAGE,
     GET_UNREAND_MSG, SHOW_BACK_TOP, HIDE_BACK_TOP, BACK_TOP, VIDEO_PAUSE,
-    FETCH_SUCCESS, FETCHING, FETCH_FAIL
+    FETCH_SUCCESS, FETCHING, FETCH_FAIL,SHARE_CLOSE,SHARE_OPEN,
 } from '../actions/ActionTypes';
 
 const initialState = {
@@ -19,7 +19,8 @@ const initialState = {
     actionType: '',
     player: {},
     notices: {},
-    unread: {}
+    unread: {},
+    share_param: {},
 };
 
 export default function accountState(state = initialState, action) {
@@ -82,6 +83,18 @@ export default function accountState(state = initialState, action) {
             return {
                 ...state,
                 actionType: SWITCH_LANGUAGE
+            };
+        case SHARE_CLOSE:
+            return {
+                ...state,
+                actionType:SHARE_CLOSE,
+                share_param:{},
+            };
+        case SHARE_OPEN:
+            return {
+                ...state,
+                actionType:SHARE_OPEN,
+                share_param:action.share_param,
             };
         default:
             return state;
