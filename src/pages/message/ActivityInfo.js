@@ -42,7 +42,7 @@ export default class ActivityInfo extends Component {
                 rightBtnIcon={Images.share}
                 rightImageStyle={{height: 22, width: 23, marginRight: 24.8}}
                 rightBtnPress={() => {
-                    alert(11);
+                    alert(22);
                     // uShareActivity(activity.title,activity.tag,activity.banner,activity.id)
                 }}/>
             <MarkdownPlat

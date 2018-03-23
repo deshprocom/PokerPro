@@ -55,14 +55,26 @@ export default class ShareItem extends Component{
         }
 
         if (isAllowShare){
-            let message = {
-                platform: item.platform,
-                type: "link",
-                url:this.props.dotNeedSpell ? this.props.shareLink : shareHost() + this.props.shareLink+ "/" + Lang,
-                title:this.props.shareTitle,
-                text:this.props.shareText,
-                imageUrl: this.getShareIcon(this.props.shareImage),
-            };
+            let message;
+            if (Platform.OS === 'ios')
+                message = {
+                    platform: item.platform,
+                    type: "link",
+                    url:this.props.dotNeedSpell ? this.props.shareLink : shareHost() + this.props.shareLink+ "/" + Lang,
+                    title:this.props.shareTitle,
+                    text:this.props.shareText,
+                    imagePath: this.getShareIcon(this.props.shareImage),
+                };
+            else
+                message = {
+                    platform: item.platform,
+                    type: "link",
+                    url:this.props.dotNeedSpell ? this.props.shareLink : shareHost() + this.props.shareLink+ "/" + Lang,
+                    title:this.props.shareTitle,
+                    text:this.props.shareText,
+                    imageUrl: this.getShareIcon(this.props.shareImage),
+                };
+
 
             JShareModule.share(message, (map) => {
                 console.log(map);

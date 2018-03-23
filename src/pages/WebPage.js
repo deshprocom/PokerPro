@@ -17,9 +17,8 @@ import {
 import {NavigationBar} from '../components';
 import {Colors, Fonts, Images, ApplicationStyles} from '../Themes';
 import {getAccessToken, getDpLang} from '../services/RequestHelper';
-import {strNotNull, isEmptyObject, shareHost, util} from "../utils/ComonHelper";
+import {strNotNull, isEmptyObject, shareHost, util,getDispatchAction} from "../utils/ComonHelper";
 import {CommentBottom} from './comment';
-import ShareToast from "./comm/ShareToast";
 
 class PostRoute {
     static NewsInfo = 'NewsInfo';
@@ -50,7 +49,6 @@ export default class WebPage extends Component {
             title: 'PokerPro',
             news_info: {},
             nativeData: '',
-            showShare:false,
         };
         this.webMsg = '';
 
@@ -194,13 +192,6 @@ export default class WebPage extends Component {
                     {this._renderBottomNav()}
                 </View>
 
-                {this.state.showShare ? <ShareToast hiddenShareAction={() => {this.setState({showShare:false})}}
-                                                    shareLink={this.state.shareInfo.link}
-                                                    shareTitle={this.state.shareInfo.title}
-                                                    shareImage={this.state.shareInfo.image}
-                                                    shareText={this.state.shareInfo.text}
-                                                    dotNeedSpell={true}/>:null}
-
             </View>
         );
     };
@@ -223,7 +214,13 @@ export default class WebPage extends Component {
                             info={info}
                             url={this.url}
                             shareInfo={(shareInfo) => {
-                                this.setState({shareInfo:shareInfo,showShare:true});
+                                let param = {
+                                    shareLink: shareInfo.link,
+                                    shareImage: shareInfo.image,
+                                    shareTitle: shareInfo.title,
+                                    shareText: shareInfo.text,
+                                };
+                                getDispatchAction()['SHARE_OPEN'](param);
                             }}
                         />
 

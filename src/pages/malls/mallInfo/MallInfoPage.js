@@ -10,8 +10,7 @@ import MallIntroduction from './MallIntroduction';
 import MallInfoBottom from './MallInfoBottom';
 import ProductSpecificationInfo from './ProductSpecificationInfo';
 import {getProductDetail} from '../../../services/MallDao';
-import {util} from '../../../utils/ComonHelper';
-import ShareToast from "../../comm/ShareToast";
+import {util, getDispatchAction} from '../../../utils/ComonHelper';
 
 
 export default class MallInfoPage extends Component {
@@ -20,7 +19,6 @@ export default class MallInfoPage extends Component {
         opacity: 0,
         product: {},
         selectProduct: {},
-        showShare:false,
     };
 
     componentDidMount() {
@@ -51,21 +49,25 @@ export default class MallInfoPage extends Component {
                 testID="btn_bar_right"
                 style={styleM.popBtn}
                 onPress={() => {
-                    this.setState({showShare:true});
+                    const {id, title, icon} = this.state.product;
+                    let param = {
+                        shareLink: `products/${id}`,
+                        shareImage: icon,
+                        shareTitle: title
+                    };
+                    getDispatchAction()['SHARE_OPEN'](param)
                 }}>
                 <Image style={styleM.imgShare}
                        source={Images.mall_share}/>
             </TouchableOpacity>
-
-
         </View>)
     };
 
 
     render() {
-        const {specShow, product, selectProduct,showShare} = this.state;
+        const {specShow, product, selectProduct} = this.state;
         return (
-            <View style={{flex:1}}>
+            <View style={{flex: 1}}>
                 <BaseComponent
                     ref={ref => this.container = ref}>
 
@@ -92,14 +94,9 @@ export default class MallInfoPage extends Component {
                     showSpecInfo={this.showSpecInfo}/>
 
                 {specShow ? <ProductSpecificationInfo
-                        selectProduct={selectProduct}
-                        product={product}
-                        showSpecInfo={this.showSpecInfo}/> : null}
-
-                {showShare ? <ShareToast hiddenShareAction={() => {this.setState({showShare:!this.state.showShare})}}
-                                         shareLink={"products/"+product.id}
-                                         shareTitle={product.title}
-                                         shareImage={product.icon}/>:null}
+                    selectProduct={selectProduct}
+                    product={product}
+                    showSpecInfo={this.showSpecInfo}/> : null}
 
             </View>
 
@@ -146,7 +143,7 @@ const styleM = StyleSheet.create({
         position: 'absolute',
         top: 0,
         width: '100%',
-        zIndex:999
+        zIndex: 999
     },
     popBtn: {
         height: 44,

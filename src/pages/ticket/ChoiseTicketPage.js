@@ -15,7 +15,7 @@ import {UltimateListView, NavigationBar, ImageLoad, ActionSide} from '../../comp
 import {NoDataView, LoadErrorView, LoadingView} from '../../components/load';
 import {getSelectRaceTicket, getUnpaidOrder} from '../../services/OrderDao';
 import {subRaces} from '../../services/RacesDao';
-import {isEmptyObject, convertDate, strNotNull, uShareChoiseTicket} from '../../utils/ComonHelper';
+import {isEmptyObject, convertDate, strNotNull, getDispatchAction} from '../../utils/ComonHelper';
 import {umengEvent} from '../../utils/UmengEvent';
 
 const RACE_MAIN = 'RACE_MAIN',
@@ -102,8 +102,15 @@ export default class ChoiseTicketPage extends Component {
                     if (!isEmptyObject(race) && !isEmptyObject(tickets)) {
                         const {name, location,logo, race_id,begin_date,end_date} = race;
                         var time=convertDate(begin_date, 'YYYY.MM.DD') + "-" + convertDate(end_date, 'YYYY.MM.DD');
-                        alert(11);
-                        // uShareChoiseTicket(name, I18n.t('address') + location , time, logo, race_id)
+                        let des = time + "\n" + I18n.t('address') + location;
+                        let url = `raceTickets/${race_id}/`;
+                        let param = {
+                            shareLink: url,
+                            shareImage: strNotNull(logo) ? encodeURI(logo) : logo,
+                            shareTitle: name,
+                            shareText: strNotNull(des) ? des : I18n.t('ads_poker')
+                        };
+                        getDispatchAction()['SHARE_OPEN'](param);
                     }
 
                 }}/>
