@@ -16,9 +16,11 @@ export default class ClickComment extends Component {
     };
     static propTypes = {
         _showInput: propTypes.func.isRequired,
-        comment_count: propTypes.number
+        comment_count: propTypes.number,
     };
-
+    static props = {
+        shareInfo:null,
+    };
 
     setUserLike = (current_user_like) => {
         this.setState({
@@ -95,10 +97,13 @@ export default class ClickComment extends Component {
                             if (!isEmptyObject(info)) {
                                 if (topic_type === 'info') {
                                     const {title, date, image_thumb, id} = info;
+                                    if(this.props.shareInfo === null)return;
+                                    this.props.shareInfo({"title":title,"text":date,"image":image_thumb,"link":url});
                                     sharePage(title, date, image_thumb, url)
                                 } else if (topic_type === 'video') {
                                     const {name, created_at, cover_link, id} = info;
-                                    sharePage(name, utcDate(created_at, 'YYYY-MM-DD'), cover_link, url)
+                                    if(this.props.shareInfo === null)return;
+                                    this.props.shareInfo({"title":name,"text": utcDate(created_at, 'YYYY-MM-DD'),"image":cover_link,"link":url});
                                 }
                             }
 

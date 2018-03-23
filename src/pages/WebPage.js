@@ -17,7 +17,7 @@ import {
 import {NavigationBar} from '../components';
 import {Colors, Fonts, Images, ApplicationStyles} from '../Themes';
 import {getAccessToken, getDpLang} from '../services/RequestHelper';
-import {strNotNull, isEmptyObject, shareHost, util} from "../utils/ComonHelper";
+import {strNotNull, isEmptyObject, shareHost, util,getDispatchAction} from "../utils/ComonHelper";
 import {CommentBottom} from './comment';
 
 class PostRoute {
@@ -48,7 +48,7 @@ export default class WebPage extends Component {
             canGoBack: false,
             title: 'PokerPro',
             news_info: {},
-            nativeData: ''
+            nativeData: '',
         };
         this.webMsg = '';
 
@@ -192,7 +192,6 @@ export default class WebPage extends Component {
                     {this._renderBottomNav()}
                 </View>
 
-
             </View>
         );
     };
@@ -214,6 +213,15 @@ export default class WebPage extends Component {
                             topic_type={topic_type}
                             info={info}
                             url={this.url}
+                            shareInfo={(shareInfo) => {
+                                let param = {
+                                    shareLink: shareInfo.link,
+                                    shareImage: shareInfo.image,
+                                    shareTitle: shareInfo.title,
+                                    shareText: shareInfo.text,
+                                };
+                                getDispatchAction()['SHARE_OPEN'](param);
+                            }}
                         />
 
                 }

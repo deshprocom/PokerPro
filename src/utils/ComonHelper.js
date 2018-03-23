@@ -17,6 +17,7 @@ import *as wechat from 'react-native-wechat'
 import * as Constants from '../configs/Constants';
 import {getApiType} from '../services/RequestHelper';
 import _ from 'lodash';
+import JShareModule from "jshare-react-native";
 
 
 export const YYYY_MM_DD = 'YYYY.MM.DD';
@@ -50,14 +51,18 @@ export const picker = {
 };
 
 
-export function uShareMallInfo(title, desc, icon, id) {
-
-    // share(title, I18n.t('ads_poker'), getShareIcon(icon), shareHost() + "products/" + id + "/" + Lang)
-    //     .then(() => {
-    //         showToast(`${I18n.t('show_success')}`)
-    //     }, (error) => {
-    //         showToast(error)
-    //     })
+export function jShareMallInfo(platform,title, desc, icon, id) {
+    let message = {
+        platform: platform,
+        type: "link",
+        url:shareHost() + "products/" + id + "/" + Lang,
+        title:title,
+        imageUrl: getShareIcon(icon),
+    };
+    JShareModule.share(message, (map) => {
+        console.log(map);
+    }, (map) => {
+    });
 }
 
 //根据路径获取后缀名
@@ -234,7 +239,7 @@ export function strNotNull(str) {
         return true;
 }
 
-let Lang = 'zh';
+export let Lang = 'zh';
 
 export function setLang(lang) {
     Lang = lang;
@@ -438,7 +443,8 @@ export function uShareActivity(title, desc, icon, id) {
     //     })
 }
 
-export function uShareRace(title, location, icon, raceId) {
+export function uShareRace(platform,title, location, icon, raceId) {
+
 
     // share(title, location, getShareIcon(icon), shareHost() + "race/" + raceId + "/" + Lang)
     //     .then(() => {

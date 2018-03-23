@@ -188,8 +188,8 @@ export default class TicketInfoPage extends Component {
                     const {race, tickets} = this.state;
                     if (!isEmptyObject(race) && !isEmptyObject(tickets)) {
                         const {id, title, price, banner} = tickets;
-
-                        uShareTicket(title, I18n.t('price') + ":" + price, banner, race.race_id, id)
+                        alert(222);
+                        // uShareTicket(title, I18n.t('price') + ":" + price, banner, race.race_id, id)
                     }
 
                 }}
