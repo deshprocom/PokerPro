@@ -20,7 +20,7 @@ const images = {
     icon_cancel: require('../../source/icon_cancel.png'),
     icon_closed: require('../../source/icon_closed.png'),
     icon_deshpro: require('../../source/icon_deshpro.png'),
-    icon_exclamation: require('../../source/icon_exclamation.png'),
+    icon_exclaRmation: require('../../source/icon_exclamation.png'),
     icon_longframe: require('../../source/icon_longframe.png'),
     icon_love: require('../../source/icon_love.png'),
     icon_match: require('../../source/icon_match.png'),
@@ -288,7 +288,12 @@ const images = {
     ranking: require('../../source/navigation/ranking.png'),
 
     APPbanner: require('../../source/crowd/APPbanner.png'),
-    none: require('../../source/crowd/none.png')
+    none: require('../../source/crowd/none.png'),
+
+    icon_share_qq: require('../../source/share/icon_share_qq.png'),
+    icon_share_sina: require('../../source/share/icon_share_sina.png'),
+    icon_share_wechat: require('../../source/share/icon_share_wechat.png'),
+    icon_share_wxcircle: require('../../source/share/icon_share_wxcircle.png')
 
 
 };
