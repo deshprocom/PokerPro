@@ -61,9 +61,6 @@ export default class App extends Component {
         });
 
 
-        ///极光统计
-        JAnalyticsModule.setup({appKey: JPUSH_APPKEY});
-
         ///极光分享
         let config =
             {
@@ -84,8 +81,11 @@ export default class App extends Component {
             };
 
 
-        if (Platform.OS === 'ios')
+        if (Platform.OS === 'ios') {
+            ///极光统计
+            JAnalyticsModule.setup({appKey: JPUSH_APPKEY});
             JShareModule.setup(config);
+        }
 
 
         WeChat.registerApp(WX_ID).then(ret => {
