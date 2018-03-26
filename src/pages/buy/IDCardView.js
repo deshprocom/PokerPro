@@ -147,7 +147,7 @@ class IDCardView extends Component {
                 formData.append("image", file);
                 this.props._postCardImage(formData);
             }
-            // router.log(choice_id);
+            // console.log(choice_id);
             const body = {
                 real_name: real_name.trim(),
                 cert_no: cert_no.trim(),
