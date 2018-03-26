@@ -53,6 +53,7 @@ export default class ShareItem extends Component{
             });
         }
 
+
         if (isAllowShare){
             let message = {
                 platform: item.platform,
@@ -63,7 +64,8 @@ export default class ShareItem extends Component{
                 imageUrl: this.getShareIcon(this.props.shareImage),
                 imagePath: this.getShareIcon(this.props.shareImage),
             };
-
+            console.log("============");
+            console.log(message);
             JShareModule.share(message, (map) => {
                 console.log(map);
             }, (map) => {
