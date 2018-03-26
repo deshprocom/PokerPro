@@ -103,22 +103,17 @@ android {
         targetSdkVersion 22
         versionCode 6
         versionName "3.3"
-        manifestPlaceholders = [
-                JPUSH_APPKEY: "",
-                APP_CHANNEL : "default"
-        ]
-
-        ndk {
-            abiFilters "armeabi-v7a", "x86"
-        }
         renderscriptTargetApi 20
         renderscriptSupportModeEnabled true
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
+
+        ndk {
+            abiFilters "armeabi-v7a", "x86"
+        }
         manifestPlaceholders = [
-                JPUSH_APPKEY : "3789f75e5d780c24595607b6",   //在此替换你的APPKey
-                APP_CHANNEL  : "developer-default",        //应用渠道号
-                TENCENT_APPID: "1106155543",//腾讯qqKey
+                JPUSH_APPKEY: "3789f75e5d780c24595607b6",   //在此替换你的APPKey
+                APP_CHANNEL : "developer-default",        //应用渠道号
 
         ]
     }
@@ -163,6 +158,9 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+        debug {
+            signingConfig signingConfigs.debug
         }
     }
 

@@ -20,7 +20,6 @@ import com.brentvatne.react.ReactVideoPackage;
 
 import com.reactnativecomponent.splashscreen.RCTSplashScreenPackage;
 import com.reactnativecomponent.swiperefreshlayout.RCTSwipeRefreshLayoutPackage;
-import com.beefe.picker.PickerViewPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
