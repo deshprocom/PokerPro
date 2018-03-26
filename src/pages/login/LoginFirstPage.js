@@ -240,15 +240,8 @@ class LoginFirstPage extends Component {
                 onPress={() => {
 
                     loginWX(data => {
-                        let body = {};
-                        if (Platform.OS === 'ios')
-                            body = {
-                                code: data.code
-                            };
-                        else
-                            body = {
-                                refresh_token: data.refresh_token
-                            };
+                        let body = {code: data.code};
+
                         postWxAuth(body, ret => {
                             const {type, info} = ret;
                             if (type === 'register')

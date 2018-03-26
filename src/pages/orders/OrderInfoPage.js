@@ -542,8 +542,8 @@ class OrderInfoPage extends React.Component {
                 testID="btn_refresh"
                 textStyle={{color: Colors.txt_666, fontSize: 17}}
                 style={{
-                   backgroundColor: Colors.white,
-                    height: 49, flex: 1, marginLeft: 17, marginRight: 17, marginBottom: 17
+                    backgroundColor: Colors.white, width: '80%',
+                    height: 49, marginBottom: 17
                 }}
             />)
     };

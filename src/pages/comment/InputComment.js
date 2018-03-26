@@ -19,16 +19,6 @@ export default class InputComment extends Component {
     };
 
 
-
-    onChange = (event) => {
-
-        this.setState({
-            comment: event.nativeEvent.text,
-            height: event.nativeEvent.contentSize.height
-        });
-    };
-
-
     inputComment = () => {
         return <View>
             <Modal
@@ -53,8 +43,8 @@ export default class InputComment extends Component {
                         <View style={{width: '80%', marginLeft: 5, borderWidth: 0, padding: 5}}>
                             <TextInput
                                 underlineColorAndroid="transparent"
-                                style={[styles.inputComment,
-                                    {height: Math.max(Platform.OS === 'ios' ? 30 : 40, this.state.height)}]}
+                                style={styles.inputComment}
+                                autoGrow={true}
                                 placeholder={this.txtPlaceholder()}
                                 placeholderTextColor={Colors._CCC}
                                 returnKeyType={'done'}
@@ -63,7 +53,10 @@ export default class InputComment extends Component {
                                     this.releaseComment()
                                 }}
                                 multiline={true}
-                                onChange={this.onChange}
+                                maxHeight={70}
+                                onChangeText={comment => this.setState({
+                                    comment
+                                })}
                             />
 
                         </View>
