@@ -62,7 +62,7 @@ export default class ShareItem extends Component{
                 title:this.props.shareTitle,
                 text:this.props.shareText,
                 imageUrl: this.getShareIcon(this.props.shareImage),
-                imagePath: this.getShareIcon(this.props.shareImage),
+                // imagePath: this.getShareIcon(this.props.shareImage),
             };
             console.log("============");
             console.log(message);

@@ -96,7 +96,7 @@ if (__DEV__) {
 
 export function post(url, body, resolve, reject) {
 
-    router.log(url, body)
+    console.log(url, body)
     client.post(url, body)
         .then((response) => {
             if (response.ok) {
@@ -112,7 +112,7 @@ export function post(url, body, resolve, reject) {
 
 
         }).catch((error) => {
-        router.log(TAG, error);
+        console.log(TAG, error);
         showToast(error);
         reject('Network response was not ok.');
     });
@@ -120,7 +120,7 @@ export function post(url, body, resolve, reject) {
 
 
 export function del(url, body, resolve, reject) {
-    router.log(url, body);
+    console.log(url, body);
     client.delete(url, body)
         .then((response) => {
             if (response.ok) {
@@ -136,14 +136,14 @@ export function del(url, body, resolve, reject) {
 
         }).catch((error) => {
         showToast(error);
-        router.log(TAG, error);
+        console.log(TAG, error);
         reject('Network response was not ok.');
     });
 }
 
 
 export function put(url, body, resolve, reject) {
-    router.log(url, body)
+    console.log(url, body)
     client.put(url, body)
         .then((response) => {
             if (response.ok) {
@@ -158,13 +158,13 @@ export function put(url, body, resolve, reject) {
             }
 
         }).catch((error) => {
-        router.log(TAG, error);
+        console.log(TAG, error);
         reject('Network response was not ok.');
     });
 }
 
 export function get(url, resolve, reject, params = {}) {
-    router.log(url)
+    console.log(url)
     client.get(url, params)
         .then((response) => {
             if (response.ok) {
@@ -180,7 +180,7 @@ export function get(url, resolve, reject, params = {}) {
 
         }).catch((error) => {
         showToast(error);
-        router.log(TAG, error);
+        console.log(TAG, error);
         reject('Network response was not ok.');
     });
 }

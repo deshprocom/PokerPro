@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
     Platform,
     StyleSheet,
@@ -20,47 +20,48 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 ///分享平台列表
 let shareList = [
     {
-        platform:"wechat_session",
-        icon:Images.icon_share_wechat,
-        name:"微信",
+        platform: "wechat_session",
+        icon: Images.icon_share_wechat,
+        name: "微信",
     },
     {
-        platform:"wechat_timeLine",
-        icon:Images.icon_share_wxcircle,
-        name:"朋友圈",
+        platform: "wechat_timeLine",
+        icon: Images.icon_share_wxcircle,
+        name: "朋友圈",
     },
     {
-        platform:"qq",
-        icon:Images.icon_share_qq,
-        name:"QQ",
+        platform: "qq",
+        icon: Images.icon_share_qq,
+        name: "QQ",
     },
     {
-        platform:"sina_weibo",
-        icon:Images.icon_share_sina,
-        name:"微博",
+        platform: "sina_weibo",
+        icon: Images.icon_share_sina,
+        name: "微博",
     },
 ];
 
-export default class ShareToast extends Component{
+export default class ShareToast extends Component {
     static props = {
-        hiddenShareAction:null,//关闭弹窗回调
-        shareTitle:null,//分享标题
-        shareText:null,//分享内容
-        shareLink:null,//分享链接
-        shareImage:null,//分享图片
+        hiddenShareAction: null,//关闭弹窗回调
+        shareTitle: null,//分享标题
+        shareText: null,//分享内容
+        shareLink: null,//分享链接
+        shareImage: null,//分享图片
     };
 
     ///关闭分享弹窗
     hiddenShare = () => {
-        if(this.props.hiddenShareAction === null) return;
+        if (this.props.hiddenShareAction === null) return;
         this.props.hiddenShareAction();
     };
 
-    render(){
-        return(
-            <Modal onrequestclose={this.hiddenShare}
-                   transparent={true}
-                   visible={true}>
+    render() {
+        return (
+            <Modal
+                onRequestClose={this.hiddenShare}
+                transparent={true}
+                visible={true}>
 
                 {/*顶部遮罩*/}
                 <TouchableOpacity onPress={this.hiddenShare}>
@@ -69,17 +70,17 @@ export default class ShareToast extends Component{
 
                 {/*标题*/}
                 <View style={styles.titleView}>
-                    <Text style={{fontSize:16}}>选择要分享到的平台</Text>
+                    <Text style={{fontSize: 16}}>选择要分享到的平台</Text>
                 </View>
 
                 {/*分享平台*/}
-                <View style={[{backgroundColor:"#eaeff3"},{flex:1},{width:DEVICE_WIDTH},{alignItems:"center"}]}>
+                <View style={[{backgroundColor: "#eaeff3"}, {flex: 1}, {width: DEVICE_WIDTH}, {alignItems: "center"}]}>
                     <FlatList data={shareList}
-                              style={[{backgroundColor:"#eaeff3"},{width:DEVICE_WIDTH-40}]}
-                              numColumns = {4}
-                              bounces = {false}
-                              keyExtractor={(item,index) => index}
-                              renderItem = {(item) => {
+                              style={[{backgroundColor: "#eaeff3"}, {width: DEVICE_WIDTH - 40}]}
+                              numColumns={4}
+                              bounces={false}
+                              keyExtractor={(item, index) => index}
+                              renderItem={(item) => {
                                   return (
                                       <ShareItem item={item.item}
                                                  itemClick={this.hiddenShare}
@@ -96,7 +97,7 @@ export default class ShareToast extends Component{
                 {/*取消分享*/}
                 <TouchableOpacity onPress={this.hiddenShare}>
                     <View style={styles.closeView}>
-                        <Text style={{fontSize:15}}>取消分享</Text>
+                        <Text style={{fontSize: 15}}>取消分享</Text>
                     </View>
                 </TouchableOpacity>
             </Modal>
@@ -105,29 +106,29 @@ export default class ShareToast extends Component{
 }
 const styles = StyleSheet.create({
     container: {
-        width:DEVICE_WIDTH,
-        height:DEVICE_HEIGHT,
-        position:"absolute",
-        zIndex:9999,
-        alignItems:"center",
+        width: DEVICE_WIDTH,
+        height: DEVICE_HEIGHT,
+        position: "absolute",
+        zIndex: 9999,
+        alignItems: "center",
     },
-    hideView:{
-        height:DEVICE_HEIGHT - (DEVICE_WIDTH)/ 4 - 180,
-        width:DEVICE_WIDTH,
-        backgroundColor:"rgba(58,58,58,0.5)"
+    hideView: {
+        height: DEVICE_HEIGHT - (DEVICE_WIDTH) / 4 - 180,
+        width: DEVICE_WIDTH,
+        backgroundColor: "rgba(58,58,58,0.5)"
     },
-    titleView:{
-        alignItems:"center",
-        justifyContent:"center",
-        width:DEVICE_WIDTH,
-        height:90,
-        backgroundColor:"#eaeff3",
+    titleView: {
+        alignItems: "center",
+        justifyContent: "center",
+        width: DEVICE_WIDTH,
+        height: 90,
+        backgroundColor: "#eaeff3",
     },
-    closeView:{
-        height:60,
-        width:DEVICE_WIDTH,
-        alignItems:"center",
-        justifyContent:"center",
-        backgroundColor:"white",
+    closeView: {
+        height: 60,
+        width: DEVICE_WIDTH,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "white",
     },
 });
