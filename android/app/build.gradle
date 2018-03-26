@@ -73,7 +73,7 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    entryFile: "index.js"
+        entryFile: "index.js"
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -116,18 +116,19 @@ android {
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         manifestPlaceholders = [
-                JPUSH_APPKEY: "3789f75e5d780c24595607b6",   //在此替换你的APPKey
-                APP_CHANNEL : "developer-default",        //应用渠道号
-                TENCENT_APPID:"1106155543",//腾讯qqKey
+                JPUSH_APPKEY : "3789f75e5d780c24595607b6",   //在此替换你的APPKey
+                APP_CHANNEL  : "developer-default",        //应用渠道号
+                TENCENT_APPID: "1106155543",//腾讯qqKey
 
         ]
     }
 
-     sourceSets {      // <--   必须添加 sourceSet 这段。因为 JGShareSDK.xml 放在 assets 下，不加上会报错。
+    sourceSets {      // 必须添加 sourceSet 这段。因为 JGShareSDK.xml 放在 assets 下，不加上会报错。
         main {
             assets.srcDirs = ['assets']
         }
-      }
+    }
+
     splits {
         abi {
             reset()
@@ -139,20 +140,20 @@ android {
 
     signingConfigs {
         release {
-          if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
-                          storeFile file(MYAPP_RELEASE_STORE_FILE)
-                          storePassword MYAPP_RELEASE_STORE_PASSWORD
-                          keyAlias MYAPP_RELEASE_KEY_ALIAS
-                          keyPassword MYAPP_RELEASE_KEY_PASSWORD
-                      }
+            if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
+                storeFile file(MYAPP_RELEASE_STORE_FILE)
+                storePassword MYAPP_RELEASE_STORE_PASSWORD
+                keyAlias MYAPP_RELEASE_KEY_ALIAS
+                keyPassword MYAPP_RELEASE_KEY_PASSWORD
+            }
         }
 
-         debug {
-                   storeFile file(MYAPP_RELEASE_STORE_FILE)
-                   storePassword MYAPP_RELEASE_STORE_PASSWORD
-                   keyAlias MYAPP_RELEASE_KEY_ALIAS
-                   keyPassword MYAPP_RELEASE_KEY_PASSWORD
-                }
+        debug {
+            storeFile file(MYAPP_RELEASE_STORE_FILE)
+            storePassword MYAPP_RELEASE_STORE_PASSWORD
+            keyAlias MYAPP_RELEASE_KEY_ALIAS
+            keyPassword MYAPP_RELEASE_KEY_PASSWORD
+        }
 
 
     }

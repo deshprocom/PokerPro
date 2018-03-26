@@ -1,11 +1,16 @@
 package com.deshpro.pokerpro;
 
 import com.facebook.react.ReactActivity;
+
 import android.os.Bundle;
+
 import com.reactnativecomponent.splashscreen.RCTSplashScreen;    //import RCTSplashScreen
+
 import cn.jpush.android.api.JPushInterface;
+
 import android.content.Intent;
 import android.content.res.Configuration;
+
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
 public class MainActivity extends ReactActivity {
@@ -24,37 +29,37 @@ public class MainActivity extends ReactActivity {
         RCTSplashScreen.openSplashScreen(this);   //open splashscreen
         //RCTSplashScreen.openSplashScreen(this, true, ImageView.ScaleType.FIT_XY);   //open splashscreen fullscreen
         super.onCreate(savedInstanceState);
-          JPushInterface.init(this);
+        JPushInterface.init(this);
     }
 
     @Override
     protected void onResume() {
-    	super.onResume();
+        super.onResume();
 
-JPushInterface.onResume(this);
-JAnalyticsInterface.onPageStart(this, this.getClass().getCanonicalName());
+        JPushInterface.onResume(this);
+        JAnalyticsInterface.onPageStart(this, this.getClass().getCanonicalName());
     }
 
     @Override
     protected void onPause() {
-    	super.onPause();
+        super.onPause();
 
-    	 JPushInterface.onPause(this);
+        JPushInterface.onPause(this);
 
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-            super.onConfigurationChanged(newConfig);
-            Intent intent = new Intent("onConfigurationChanged");
-            intent.putExtra("newConfig", newConfig);
-            this.sendBroadcast(intent);
-        }
+        super.onConfigurationChanged(newConfig);
+        Intent intent = new Intent("onConfigurationChanged");
+        intent.putExtra("newConfig", newConfig);
+        this.sendBroadcast(intent);
+    }
 
 
-         @Override
-            protected void onDestroy() {
-                super.onDestroy();
-                JAnalyticsInterface.onPageEnd(this, this.getClass().getCanonicalName());
-            }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        JAnalyticsInterface.onPageEnd(this, this.getClass().getCanonicalName());
+    }
 }

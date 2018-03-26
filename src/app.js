@@ -85,6 +85,10 @@ export default class App extends Component {
             ///极光统计
             JAnalyticsModule.setup({appKey: JPUSH_APPKEY});
             JShareModule.setup(config);
+        } else {
+            JShareModule.getPlatformList(list => {
+                console.log('android share list:', list)
+            })
         }
 
 
