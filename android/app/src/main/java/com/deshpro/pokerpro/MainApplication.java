@@ -6,6 +6,7 @@ import cn.jiguang.share.android.api.JShareInterface;
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
 import com.facebook.react.ReactApplication;
+import io.jchat.android.JMessageReactPackage;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 
 import cn.jiguang.share.reactnative.JSharePackage;
@@ -46,6 +47,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+            new JMessageReactPackage(),
                     new RNI18nPackage(),
                     new JSharePackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
                     new JAnalyticsPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
