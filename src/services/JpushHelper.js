@@ -20,8 +20,16 @@ export default class JpushHelper {
     }
 
     static addPushListener(receiveCb, openCb) {
-        JPushModule.addReceiveCustomMsgListener(openCb)
+        JPushModule.notifyJSDidLoad((resultCode) => {
+            console.log('Jpush',resultCode)
+        });
+        JPushModule.addReceiveCustomMsgListener(openCb);
         JPushModule.addReceiveNotificationListener(receiveCb);
+        JPushModule.addReceiveOpenNotificationListener(map => {
+            console.log('Opening notification!')
+            console.log('map.extra: ' + map.extras)
+
+        })
 
     }
 
@@ -29,7 +37,8 @@ export default class JpushHelper {
     static removePushListener() {
         JPushModule.removeReceiveCustomMsgListener();
         JPushModule.removeReceiveNotificationListener();
-        console.log("Will clear all notifications");
+        JPushModule.removeReceiveOpenNotificationListener(openNotificationEvent)
+
     }
 
 //设置 badge 值

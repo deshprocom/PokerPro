@@ -168,18 +168,18 @@ class PassportView extends Component {
     //             formData.append("image", file);
     //             this.state.cardImage = formData;
     //         }
-    //         router.log(22222)
-    //         router.log(cardImage);
-    //         router.log(22222)
+    //         console.log(22222)
+    //         console.log(cardImage);
+    //         console.log(22222)
     //         const body = {
     //             password_img:cardImage,
     //             real_name: realName,
     //             cert_no: passwordCard
     //         };
     //         postPasswordImage(body, data => {
-    //             router.log(1111)
-    //             router.log(data);
-    //             router.log(1111)
+    //             console.log(1111)
+    //             console.log(data);
+    //             console.log(1111)
     //         },err => {
     //
     //         })
@@ -191,7 +191,7 @@ class PassportView extends Component {
 
     render() {
         const {editable, realName, passwordCard} = this.state;
-        router.log(this.state);
+        console.log(this.state);
         return (<ScrollView
             testID="page_real_name"
             style={ApplicationStyles.bgContainer}>

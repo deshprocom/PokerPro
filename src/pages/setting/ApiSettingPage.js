@@ -21,7 +21,7 @@ export default class ApiSettingPage extends Component {
     componentDidMount() {
         storage.load({key: StorageKey.ApiSever})
             .then((ret) => {
-                router.log(ret);
+                console.log(ret);
                 this._select(ret);
             }).catch(err => {
             this._select(Api.production);

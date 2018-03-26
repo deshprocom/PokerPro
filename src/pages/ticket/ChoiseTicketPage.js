@@ -132,7 +132,7 @@ export default class ChoiseTicketPage extends Component {
             race_id: race_id
         };
         getSelectRaceTicket(body, (data) => {
-            router.log('subData', data);
+            console.log('subData', data);
             this.setState({
                 selectSub: data
             });

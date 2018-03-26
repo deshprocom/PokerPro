@@ -255,7 +255,7 @@ class SearchRacesPage extends Component {
             race_hosts.map(function (x) {
                 x['select'] = false;
             });
-            router.log('race_hosts', race_hosts)
+            console.log('race_hosts', race_hosts)
             this.setState({
                 dataHosts: race_hosts
             })
@@ -269,7 +269,7 @@ class SearchRacesPage extends Component {
 
         if (actionType === GET_SEARCH_RACES && !isEmptyObject(listRaces)) {
 
-            router.log(actionType, listRaces)
+            console.log(actionType, listRaces)
             const {dataRaces} = this.state;
             const {first_id, items, last_id} = listRaces;
 
@@ -280,7 +280,7 @@ class SearchRacesPage extends Component {
                     return;
                 let newData = arrayUnique(items.concat(dataRaces));
                 let datas = dataBlob(newData);
-                router.log('newData', datas)
+                console.log('newData', datas)
                 this.setState({
                     componentDataSource: this._dataSource.cloneWithRowsAndSections(datas),
                     dataRaces: newData,
@@ -304,7 +304,7 @@ class SearchRacesPage extends Component {
 
                 let newData = arrayUnique(dataRaces.concat(items));
                 let datas = dataBlob(newData);
-                router.log('newData', datas)
+                console.log('newData', datas)
                 this.setState({
                     componentDataSource: this._dataSource.cloneWithRowsAndSections(datas),
                     dataRaces: newData,

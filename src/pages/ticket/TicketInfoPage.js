@@ -26,7 +26,7 @@ export default class TicketInfoPage extends Component {
 
     componentDidMount() {
         const {race_id, ticket_id} = this.props.params;
-        router.log('ticket', race_id, ticket_id);
+        console.log('ticket', race_id, ticket_id);
         const body = {
             race_id: race_id,
             ticket_id: ticket_id
