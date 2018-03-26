@@ -7,8 +7,9 @@ import {
     POST_CHANGE_PWD, POST_V_CODE, POST_CERTIFICATION, GET_CERTIFICATION,
     POST_CARD_IMAGE, GET_PLAYER_INFO, POST_BIND_ACCOUNT, POST_CHANGE_BIND,
     POST_CHANGE_PERMISSION, GET_NOTIFICATIONS, DEL_NOTIFICATIONS, GET_UNREAND_MSG,
-    SHOW_BACK_TOP, HIDE_BACK_TOP,BACK_TOP,VIDEO_PAUSE,SWITCH_LANGUAGE,SHARE_CLOSE,SHARE_OPEN,
-    FETCH_SUCCESS, FETCHING, FETCH_FAIL, FETCH_PASS, FETCH_PASS_SUCCESS, FETCH_PASS_FAIL
+    SHOW_BACK_TOP, HIDE_BACK_TOP,BACK_TOP,VIDEO_PAUSE,SWITCH_LANGUAGE,
+    FETCH_SUCCESS, FETCHING, FETCH_FAIL, FETCH_PASS, FETCH_PASS_SUCCESS, FETCH_PASS_FAIL,
+    SHARE_CLOSE,SHARE_OPEN,
 } from '../actions/ActionTypes';
 import {showToast} from '../utils/ComonHelper';
 import I18n from 'react-native-i18n';
@@ -25,17 +26,17 @@ import {
 } from '../services/AccountDao';
 
 export function shareOpen(share_param) {
-    return {
+    return{
         type:SHARE_OPEN,
         share_param
     }
 }
-
 export function shareClose() {
     return{
         type:SHARE_CLOSE,
         share_param:{}
     }
+    
 }
 
 export function switchLanguage() {

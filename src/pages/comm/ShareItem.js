@@ -21,7 +21,6 @@ export default class ShareItem extends Component{
         shareText:null,//分享内容
         shareLink:null,//分享链接
         shareImage:null,//分享图片
-        dotNeedSpell:false,//是否需要拼接地址
     };
 
     getShareIcon =(icon)=> {
@@ -54,28 +53,19 @@ export default class ShareItem extends Component{
             });
         }
 
+
         if (isAllowShare){
-            let message;
-            if (Platform.OS === 'ios')
-                message = {
-                    platform: item.platform,
-                    type: "link",
-                    url:this.props.dotNeedSpell ? this.props.shareLink : shareHost() + this.props.shareLink+ "/" + Lang,
-                    title:this.props.shareTitle,
-                    text:this.props.shareText,
-                    imagePath: this.getShareIcon(this.props.shareImage),
-                };
-            else
-                message = {
-                    platform: item.platform,
-                    type: "link",
-                    url:this.props.dotNeedSpell ? this.props.shareLink : shareHost() + this.props.shareLink+ "/" + Lang,
-                    title:this.props.shareTitle,
-                    text:this.props.shareText,
-                    imageUrl: this.getShareIcon(this.props.shareImage),
-                };
-
-
+            let message = {
+                platform: item.platform,
+                type: "link",
+                url:this.props.shareLink,
+                title:this.props.shareTitle,
+                text:this.props.shareText,
+                imageUrl: this.getShareIcon(this.props.shareImage),
+                imagePath: this.getShareIcon(this.props.shareImage),
+            };
+            console.log("============");
+            console.log(message);
             JShareModule.share(message, (map) => {
                 console.log(map);
             }, (map) => {

@@ -10,7 +10,7 @@ import MallIntroduction from './MallIntroduction';
 import MallInfoBottom from './MallInfoBottom';
 import ProductSpecificationInfo from './ProductSpecificationInfo';
 import {getProductDetail} from '../../../services/MallDao';
-import {util, getDispatchAction} from '../../../utils/ComonHelper';
+import {util,uShareMallInfo} from '../../../utils/ComonHelper';
 
 
 export default class MallInfoPage extends Component {
@@ -49,17 +49,14 @@ export default class MallInfoPage extends Component {
                 testID="btn_bar_right"
                 style={styleM.popBtn}
                 onPress={() => {
-                    const {id, title, icon} = this.state.product;
-                    let param = {
-                        shareLink: `products/${id}`,
-                        shareImage: icon,
-                        shareTitle: title
-                    };
-                    getDispatchAction()['SHARE_OPEN'](param)
+                    const{title,icon,description,id} = this.state.product;
+                    uShareMallInfo(title, description, icon,id)
                 }}>
                 <Image style={styleM.imgShare}
                        source={Images.mall_share}/>
             </TouchableOpacity>
+
+
         </View>)
     };
 
@@ -67,7 +64,7 @@ export default class MallInfoPage extends Component {
     render() {
         const {specShow, product, selectProduct} = this.state;
         return (
-            <View style={{flex: 1}}>
+            <View style={{flex:1}}>
                 <BaseComponent
                     ref={ref => this.container = ref}>
 
@@ -94,9 +91,9 @@ export default class MallInfoPage extends Component {
                     showSpecInfo={this.showSpecInfo}/>
 
                 {specShow ? <ProductSpecificationInfo
-                    selectProduct={selectProduct}
-                    product={product}
-                    showSpecInfo={this.showSpecInfo}/> : null}
+                        selectProduct={selectProduct}
+                        product={product}
+                        showSpecInfo={this.showSpecInfo}/> : null}
 
             </View>
 
@@ -143,7 +140,7 @@ const styleM = StyleSheet.create({
         position: 'absolute',
         top: 0,
         width: '100%',
-        zIndex: 999
+        zIndex:999
     },
     popBtn: {
         height: 44,

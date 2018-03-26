@@ -6,10 +6,9 @@ import {
     POST_VERIFY_CODE, POST_RESET_PASSWORD, POST_REGISTER,
     POST_CHANGE_PWD, POST_V_CODE, POST_CARD_IMAGE,
     GET_PLAYER_INFO, POST_BIND_ACCOUNT, POST_CHANGE_BIND,
-    POST_CHANGE_PERMISSION, GET_NOTIFICATIONS, DEL_NOTIFICATIONS, SWITCH_LANGUAGE,
+    POST_CHANGE_PERMISSION, GET_NOTIFICATIONS, DEL_NOTIFICATIONS,SWITCH_LANGUAGE,
     GET_UNREAND_MSG, SHOW_BACK_TOP, HIDE_BACK_TOP, BACK_TOP, VIDEO_PAUSE,
-    SHARE_CLOSE, SHARE_OPEN,
-    FETCH_SUCCESS, FETCHING, FETCH_FAIL
+    FETCH_SUCCESS, FETCHING, FETCH_FAIL,SHARE_CLOSE,SHARE_OPEN,
 } from '../actions/ActionTypes';
 
 const initialState = {
@@ -21,7 +20,7 @@ const initialState = {
     player: {},
     notices: {},
     unread: {},
-    share_param: {}
+    share_param: {},
 };
 
 export default function accountState(state = initialState, action) {
@@ -85,18 +84,18 @@ export default function accountState(state = initialState, action) {
                 ...state,
                 actionType: SWITCH_LANGUAGE
             };
-        case SHARE_OPEN:
-            return {
-                ...state,
-                actionType: action.type,
-                share_param: action.share_param
-            };
         case SHARE_CLOSE:
             return {
                 ...state,
-                actionType: action.type,
-                share_param: {}
-            }
+                actionType:SHARE_CLOSE,
+                share_param:{},
+            };
+        case SHARE_OPEN:
+            return {
+                ...state,
+                actionType:SHARE_OPEN,
+                share_param:action.share_param,
+            };
         default:
             return state;
     }
