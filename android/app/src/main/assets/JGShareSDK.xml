@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DevInfor>
+
+    <!-- 如果不需要支持某平台，可缺省该平台的配置-->
+
+    <SinaWeibo
+            AppKey="1050957035"
+            AppSecret="e1049869ddd670771459d154fe1a9207"
+            RedirectUrl="https://sns.whalecloud.com/sina2/callback"/>
+
+    <QQ
+            AppId="1106155543"
+            AppKey="kaI7hok5UcxwVaHv"/>
+
+    <Wechat
+            AppId="wxe2e371b8eced0fd7"
+            AppSecret="d6217cd639d4d4e08150505790bef7b1"/>
+
+    <!--<Facebook-->
+            <!--AppId="facebook 的 appId"-->
+            <!--AppName="facebook 后台填写的名称"-->
+    <!--/>-->
+
+</DevInfor>

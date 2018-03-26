@@ -19,8 +19,11 @@ export default class CommentBottom extends Component {
         repliesShow: false,
         repliesType: '',
         comment_count: 0,
-        news_info: {}
+        news_info: {},
+    };
 
+    static props = {
+        shareInfo:null,
     };
 
     _showInput = () => {
@@ -81,6 +84,10 @@ export default class CommentBottom extends Component {
                     sendMessageToWeb={this.sendMessageToWeb}
                     info={news_info}
                     url={url}
+                    shareInfo={(shareInfo) => {
+                        if (this.props.shareInfo === null)return;
+                        this.props.shareInfo(shareInfo);
+                    }}
                 />
 
                 {this.state.showInput ? <InputComment
@@ -93,6 +100,7 @@ export default class CommentBottom extends Component {
 
 
                 {this.renderRelies()}
+
             </View>
         );
     }

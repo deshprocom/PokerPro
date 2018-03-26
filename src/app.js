@@ -40,14 +40,13 @@ if (!__DEV__) {
 }
 
 
-
 export default class App extends Component {
 
     render() {
         return (
 
             <Provider store={store}>
-               <PuKe/>
+                <PuKe/>
             </Provider>
         )
     }
@@ -62,16 +61,13 @@ export default class App extends Component {
         });
 
 
-        ///极光统计
-        JAnalyticsModule.setup({appKey:JPUSH_APPKEY});
-
         ///极光分享
         let config =
             {
-                appKey:JPUSH_APPKEY,
-                channel:'deshpro-app',
-                advertisingId:'',
-                isProduction:false,
+                appKey: JPUSH_APPKEY,
+                channel: 'deshpro-app',
+                advertisingId: '',
+                isProduction: false,
                 wechatAppId: WX_ID,
                 wechatAppSecret: WX_Secret,
                 qqAppId: QQ_SHARE_ID,
@@ -84,7 +80,16 @@ export default class App extends Component {
                 isSupportWebSina: true
             };
 
-        JShareModule.setup(config);
+
+        if (Platform.OS === 'ios') {
+            ///极光统计
+            JAnalyticsModule.setup({appKey: JPUSH_APPKEY});
+            JShareModule.setup(config);
+        } else {
+            JShareModule.getPlatformList(list => {
+                console.log('android share list:', list)
+            })
+        }
 
 
         WeChat.registerApp(WX_ID).then(ret => {
