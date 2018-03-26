@@ -28,7 +28,6 @@ class BottomNavigation extends Component {
         const {index} = this.props.navigationState;
         const {jumpToIndex, actionType,share_param} = this.props;
         const {shareLink,shareTitle,shareImage,shareText} = share_param;
-        console.log(share_param);
         return (
             <View style={styleBN.navigation}>
                 <StatusBar barStyle={Platform.OS === 'ios' && index === 3 ? "dark-content" : "light-content"}/>
@@ -88,9 +87,7 @@ class BottomNavigation extends Component {
                 <TouchableOpacity
                     onPress={() => {
                         this.props._videoPause();
-
                         jumpToIndex(4)
-
                     }}
                     style={styleBN.navigations}>
                     <TabIcon tab={'me'} focused={index === 4}/>
