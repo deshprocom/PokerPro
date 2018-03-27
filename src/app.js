@@ -20,6 +20,7 @@ import {
 import Orientation from 'react-native-orientation';
 import * as WeChat from 'react-native-wechat';
 import JShareModule from 'jshare-react-native';
+import JMessage from "jmessage-react-plugin";
 
 
 console.disableYellowBox = true;
@@ -90,6 +91,15 @@ export default class App extends Component {
                 console.log('android share list:', list)
             })
         }
+
+        ///jMessage
+        JMessage.init({
+            appkey:JPUSH_APPKEY,
+            isProduction:false,//是否为生产模式
+            isOpenMessageRoaming:false,//是否开启消息漫游
+        });
+        //开启Debug模式
+        JMessage.setDebugMode({ enable: false });
 
 
         WeChat.registerApp(WX_ID).then(ret => {
