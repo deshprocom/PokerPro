@@ -94,8 +94,8 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 25
+    buildToolsVersion "25.3.1"
 
     defaultConfig {
         applicationId "com.deshpro.pokerpro"
@@ -180,6 +180,7 @@ android {
 }
 
 dependencies {
+    compile project(':aurora-imui-react-native')
     compile project(':jmessage-react-plugin')
     compile project(':react-native-i18n')
     compile project(':jshare-react-native')
