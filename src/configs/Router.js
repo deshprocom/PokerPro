@@ -813,6 +813,20 @@ export default class Router {
         })
     }
 
+    toChatLogin(props){
+        this.push(props, {
+            name: 'ChatLogin',
+        })
+    }
+    toFriendList(userInfo){
+        this.stackPush({
+            name: 'FriendList',
+            params:{
+                userInfo
+            }
+        })
+    }
+
     popToLogin() {
         Actions.popTo('LoginFirstPage')
     }

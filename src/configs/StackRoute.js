@@ -92,7 +92,8 @@ import SubscriptionConfirmPage from '../pages/crowdfundings/orders/SubscriptionC
 import RiskWarningPage from '../pages/crowdfundings/orders/RiskWarningPage';
 import RecordList from '../pages/crowdfundings/orders/RecordList';
 import SubscriptionInfoPage from '../pages/crowdfundings/orders/SubscriptionInfoPage';
-
+import ChatLogin from "../pages/chat/ChatLogin";
+import FriendList from "../pages/chat/FriendList";
 
 export const Stacks = Actions.create(
     <Scene key="root">
@@ -183,6 +184,9 @@ export const Stacks = Actions.create(
         <Scene key="EmptyCart" component={EmptyCart} hideNavBar/>
         <Scene key="MallSearchResult" component={MallSearchResult} hideNavBar/>
         <Scene key="OrderSubmitPage" component={OrderSubmitPage} hideNavBar/>
+
+            <Scene key="ChatLogin" component={ChatLogin} hideNavBar/>
+            <Scene key="FriendList" component={FriendList} hideNavBar/>
 
         <Scene type={ActionConst.RESET}
                initial={true}

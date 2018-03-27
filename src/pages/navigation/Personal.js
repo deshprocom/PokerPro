@@ -143,10 +143,23 @@ class Personal extends Component {
                 </View>
             </TouchableOpacity>
 
+
+            <TouchableOpacity
+                activeOpacity={1}
+                style={[stylesP.personalView, {marginTop: 20}]} onPress={this.visitChat}>
+                <View style={stylesP.personalView2}>
+                    <Text style={stylesP.personalText}>测试入口</Text>
+                </View>
+            </TouchableOpacity>
+
             <View style={{height: 50}}/>
         </ScrollView>
     };
 
+    ///聊天测试入口
+    visitChat = () => {
+        router.toChatLogin();
+    };
 
     _item = (itemStyle, img, imgStyle, title, onPress) => {
         const {profile} = this.props;
