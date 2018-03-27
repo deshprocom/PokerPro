@@ -180,6 +180,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-fs')
     compile project(':jmessage-react-plugin')
     compile project(':react-native-i18n')
     compile project(':jshare-react-native')
