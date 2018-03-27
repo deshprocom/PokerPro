@@ -46,7 +46,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
-            new JMessageReactPackage(),
+            new JMessageReactPackage(SHUTDOWN_TOAST),
                     new RNI18nPackage(),
                     new JSharePackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
                     new JAnalyticsPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
