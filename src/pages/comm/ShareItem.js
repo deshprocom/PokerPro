@@ -55,7 +55,7 @@ export default class ShareItem extends Component {
         if (isAllowShare) {
             let rootPath = fs.DocumentDirectoryPath;
             let savePath = rootPath + '/temp_share.png';
-            console.log(savePath);
+            console.log(this.props.shareImage);
 
             /*
              * savePath on iOS may be:
