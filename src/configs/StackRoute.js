@@ -94,6 +94,8 @@ import RecordList from '../pages/crowdfundings/orders/RecordList';
 import SubscriptionInfoPage from '../pages/crowdfundings/orders/SubscriptionInfoPage';
 import ChatLogin from "../pages/chat/ChatLogin";
 import FriendList from "../pages/chat/FriendList";
+import ChatMessage from "../pages/chat/ChatMessage";
+
 
 export const Stacks = Actions.create(
     <Scene key="root">
@@ -187,6 +189,7 @@ export const Stacks = Actions.create(
 
             <Scene key="ChatLogin" component={ChatLogin} hideNavBar/>
             <Scene key="FriendList" component={FriendList} hideNavBar/>
+            <Scene key="ChatMessage" component={ChatMessage} hideNavBar/>
 
         <Scene type={ActionConst.RESET}
                initial={true}

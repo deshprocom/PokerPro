@@ -826,6 +826,14 @@ export default class Router {
             }
         })
     }
+    toMessageList(userInfo){
+        this.stackPush({
+            name: 'ChatMessage',
+            params:{
+                userInfo
+            }
+        })
+    }
 
     popToLogin() {
         Actions.popTo('LoginFirstPage')

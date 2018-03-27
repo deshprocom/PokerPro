@@ -115,12 +115,17 @@ export default class FriendList extends Component<{}> {
     ///渲染好友列表
     _renderItem = (item) => {
         return(
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => {this.visitChatMessage(item.item)}}>
                 <View style={[{height:60},{backgroundColor:"white"},{justifyContent:"center"}]}>
                     <Text style={{marginLeft:15}}>{item.item.username}</Text>
                 </View>
             </TouchableOpacity>
         );
+    };
+
+    ///聊天页面
+    visitChatMessage = (item) => {
+        router.toMessageList(item);
     };
 
     render(){
