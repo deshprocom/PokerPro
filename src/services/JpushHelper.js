@@ -20,10 +20,12 @@ export default class JpushHelper {
     }
 
     static addPushListener(receiveCb, openCb) {
+
         if (Platform.OS !== 'ios')
             JPushModule.notifyJSDidLoad((resultCode) => {
                 console.log('Jpush', resultCode)
             });
+
         JPushModule.addReceiveCustomMsgListener(openCb);
         JPushModule.addReceiveNotificationListener(receiveCb);
         JPushModule.addReceiveOpenNotificationListener(map => {
