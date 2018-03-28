@@ -62,26 +62,6 @@ export default class App extends Component {
         });
 
 
-        ///极光分享
-        let config =
-            {
-                appKey: JPUSH_APPKEY,
-                channel: 'deshpro-app',
-                advertisingId: '',
-                isProduction: false,
-                wechatAppId: WX_ID,
-                wechatAppSecret: WX_Secret,
-                qqAppId: QQ_SHARE_ID,
-                qqAppKey: QQ_SHARE_KEY,
-                sinaWeiboAppKey: WB_ID,
-                sinaWeiboAppSecret: WB_KEY,
-                sinaRedirectUri: WB_URL,
-                facebookAppId: '',
-                facebookDisplayName: '',
-                isSupportWebSina: true
-            };
-
-
         ///极光统计
         JAnalyticsModule.setup({appKey: JPUSH_APPKEY});
 
