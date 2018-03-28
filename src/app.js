@@ -82,15 +82,8 @@ export default class App extends Component {
             };
 
 
-        if (Platform.OS === 'ios') {
-            ///极光统计
-            JAnalyticsModule.setup({appKey: JPUSH_APPKEY});
-            JShareModule.setup(config);
-        } else {
-            JShareModule.getPlatformList(list => {
-                console.log('android share list:', list)
-            })
-        }
+        ///极光统计
+        JAnalyticsModule.setup({appKey: JPUSH_APPKEY});
 
         ///jMessage
         JMessage.init({
