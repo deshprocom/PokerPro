@@ -11,8 +11,9 @@ import {
 import JShareModule from "jshare-react-native";
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
-import {shareHost, Lang, strNotNull, showToast} from '../../utils/ComonHelper';
+import {Lang, strNotNull, showToast} from '../../utils/ComonHelper';
 import fs from 'react-native-fs';
+import ImageResizer from 'react-native-image-resizer';
 
 export default class ShareItem extends Component {
 
@@ -27,7 +28,7 @@ export default class ShareItem extends Component {
 
 
     //分享
-    shareAction = () => {
+    shareAction = async () => {
         let item = this.props.item;
         //是否允许分享
         let isAllowShare = true;
@@ -53,24 +54,32 @@ export default class ShareItem extends Component {
 
 
         if (isAllowShare) {
+
             let rootPath = fs.DocumentDirectoryPath;
-            let savePath = rootPath + '/temp_share.png';
+            let savePath = rootPath + '/temp_share.jpg';
+
             console.log(this.props.shareImage);
 
-            /*
-             * savePath on iOS may be:
-             *  /var/mobile/Containers/Data/Application/B1308E13-35F1-41AB-A20D-3117BE8EE8FE/Documents/email-signature-262x100.png
-             *
-             * savePath on Android may be:
-             *  /data/data/com.wechatsample/files/email-signature-262x100.png
-             **/
+
             if (strNotNull(this.props.shareImage)) {
                 fs.downloadFile({
                     fromUrl: this.props.shareImage,
                     toFile: savePath
                 }).promise.then(resp => {
                     if (resp.statusCode === 200) {
-                        this.shareUrl(item.platform, savePath)
+                        if (Platform.OS === 'ios') {
+                            ImageResizer
+                                .createResizedImage(savePath, 100, 100, 'JPEG', 0.7)
+                                .then((response) => {
+                                    this.shareUrl(item.platform, response.path)
+                                }).catch((err) => {
+                                console.log('ImageResizer错误', err)
+                            });
+                        } else {
+                            this.shareUrl(item.platform, savePath)
+                        }
+
+
                     }
                 });
             } else {

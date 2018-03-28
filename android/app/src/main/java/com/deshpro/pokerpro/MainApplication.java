@@ -6,6 +6,7 @@ import cn.jiguang.share.android.api.JShareInterface;
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
 import com.facebook.react.ReactApplication;
+import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import com.rnfs.RNFSPackage;
 import io.jchat.android.JMessageReactPackage;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
@@ -47,6 +48,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+            new ImageResizerPackage(),
             new RNFSPackage(),
             new JMessageReactPackage(SHUTDOWN_TOAST),
                     new RNI18nPackage(),
