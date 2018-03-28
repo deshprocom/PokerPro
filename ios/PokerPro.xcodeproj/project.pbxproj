@@ -506,6 +506,13 @@
 			remoteGlobalIDString = 62CBDDCE1F27394300C1C703;
 			remoteInfo = RCTJShareModule;
 		};
+		8BC21DDD206B65C20071E29A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C86DF451ADF2C930047B81A;
+			remoteInfo = RCTWebSocket;
+		};
 		8BD030032068EB6700290C9B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 10CD1131598743E48264F5C9 /* RCTJMessageModule.xcodeproj */;
@@ -1157,6 +1164,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				8BC21DDE206B65C20071E29A /* PBXTargetDependency */,
 				8BACC4AA206A36C5003FF20C /* PBXTargetDependency */,
 			);
 			name = PokerPro;
@@ -1905,6 +1913,11 @@
 			name = RCTAuroraIMUI;
 			targetProxy = 8BACC4A9206A36C5003FF20C /* PBXContainerItemProxy */;
 		};
+		8BC21DDE206B65C20071E29A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = RCTWebSocket;
+			targetProxy = 8BC21DDD206B65C20071E29A /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -2023,7 +2036,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = JAB7AT8F22;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../node_modules/jmessage-react-plugin/ios/RCTJMessageModule";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = (
@@ -2072,7 +2085,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = JAB7AT8F22;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../node_modules/jmessage-react-plugin/ios/RCTJMessageModule";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

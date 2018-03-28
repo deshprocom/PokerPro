@@ -94,17 +94,7 @@ export default class ChatLogin extends Component<{}> {
 
     ///创建聊天消息
     createSendMessage = () => {
-        let msgInfo = {
-            type:"single",//会话类型。可以为 'single' 或 'group'。
-            username:"",//对方用户的用户名。当 type 为 'single' 时，username 为必填。
-            appKey:"",//对方用户所属应用的 AppKey。如果不填，默认为当前应用。
-            groupId:"", //对象群组 id。当 type 为 'group' 时，groupId 为必填。
-            messageType:"text",//text,path,latitude,longitude,scale,address,customObject,extras
-        };
 
-        JMessage.createSendMessage({
-
-        });
     };
 
 

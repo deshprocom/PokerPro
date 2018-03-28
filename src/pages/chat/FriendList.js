@@ -148,7 +148,7 @@ export default class FriendList extends Component<{}> {
                 {/*好友列表*/}
                 <FlatList data={this.state.friendList}
                           renderItem = {this._renderItem}
-                          keyExtractor={(item,index) => index}
+                          keyExtractor={(item,index) => index + ""}
                 />
 
 
