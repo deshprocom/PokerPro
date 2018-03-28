@@ -30,8 +30,8 @@ export default class ChatLogin extends Component<{}> {
     constructor(props){
         super(props);
         this.state = {
-            userName:"QQ1049260505",
-            password:"QQ1049260505",
+            userName:"QQ104926050",
+            password:"QQ104926050",
         }
     }
 
@@ -101,8 +101,8 @@ export default class ChatLogin extends Component<{}> {
     render() {
         return (
             <View style={styles.container}>
-                <TextInput placeholder={"账号"} style={styles.textInput} onChangeText={(text) => this.setState({userName:text})}/>
-                <TextInput placeholder={"密码"} style={[styles.textInput,{marginTop:20}]} onChangeText={(text) => this.setState({password:text})}/>
+                <TextInput placeholder={"账号"} style={styles.textInput} onChangeText={(text) => this.setState({userName:text})} defaultValue={"QQ104926050"}/>
+                <TextInput placeholder={"密码"} style={[styles.textInput,{marginTop:20}]} onChangeText={(text) => this.setState({password:text})}  defaultValue={"QQ104926050"}/>
 
 
                 <View style={styles.actionView}>

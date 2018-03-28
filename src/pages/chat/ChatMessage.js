@@ -12,10 +12,14 @@ import IMUI from "aurora-imui-react-native";
 import JMessage from "jmessage-react-plugin";
 import NavigationBar from "../../components/NavigationBar";
 
+
 let MessageList = IMUI.MessageList;
 let ChatInput = IMUI.ChatInput;
 const AuroraIController = IMUI.AuroraIMUIController;
 const window = Dimensions.get('window');
+
+
+let imagesList = [];
 
 export default class ChatMessage extends Component{
     constructor(props){
@@ -45,18 +49,71 @@ export default class ChatMessage extends Component{
         this.resetMenu();
         this.setState({messageListLayout: { flex: 1, margin: 0, width: window.width }});
 
+        AuroraIController.addMessageListDidLoadListener(() => {
+
+            ///历史消息
+            this.getHistoryMessage()
+        });
+
         ///添加消息监听
         JMessage.addReceiveMessageListener(this.receiveMessage);
     }
     componentWillUnmount(){
         ///移除消息监听
         JMessage.removeReceiveMessageListener(this.receiveMessage);
+        AuroraIController.removeMessageListDidLoadListener("IMUIMessageListDidLoad");
     }
+
+    ///历史消息
+    getHistoryMessage = () =>{
+        let userInfo = this.props.params.userInfo;
+        let parma = {
+            type:"single",
+            username:userInfo.username,
+            appKey:userInfo.appKey,
+            from:0,
+            limit:10,
+        };
+        JMessage.getHistoryMessages(parma,
+            (messageArray) => { // 以参数形式返回消息对象数组
+                // do something.
+                messageArray.reverse();
+                messageArray.forEach((item,index)=>{
+                    let message = this.convertJMessageToAuroraMsg(item);
+                    AuroraIController.appendMessages([message]);
+                })
+
+
+            }, (error) => {
+                console.log("获取历史消息失败");
+            });
+    };
+
 
     //收到消息
     receiveMessage = (message) => {
         console.log(message);
         if (message.target.type === 'user') {
+            let userInfo = this.props.params.userInfo;
+            let parma = {
+                type:"single",
+                username:userInfo.username,
+                messageId:message.id,
+            };
+            //如果是文件类型 进行下载
+            if (message.type === "file"){
+                JMessage.downloadFile(parma,
+                    (result) => {
+                        let imgPath = result.filePath;
+                        console.log("下载文件成功");
+                        console.log(imgPath);
+                        message.path = imgPath;
+
+                    }, (error) => {
+                        console.log("下载文件失败");
+                    })
+            }
+
             let msg = this.convertJMessageToAuroraMsg(message);
             AuroraIController.appendMessages([msg]);
         }
@@ -82,7 +139,13 @@ export default class ChatMessage extends Component{
 
     //消息点击
     onMsgClick = (message) => {
-        console.log(message)
+        if (message.msgType === "video"){
+            let url = message.mediaPath;
+        }
+        if (message.msgType === "image"){
+            let images = [{url:message.mediaPath}];
+            router.toImageGalleryPage(images, 0);
+        };
     };
 
     //点击消息状态按钮触发
