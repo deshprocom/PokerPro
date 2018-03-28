@@ -425,7 +425,7 @@ export function uShareChoiseTicket(name, location, time, logo, race_id) {
     let param = {
         shareTitle:name,
         shareText:shareTxt(des),
-        shareImage:getShareIcon(icon),
+        shareImage:getShareIcon(logo),
         shareLink:url,
     };
     getDispatchAction()["SHARE_OPEN"](param);

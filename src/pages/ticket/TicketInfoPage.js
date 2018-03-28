@@ -45,7 +45,7 @@ export default class TicketInfoPage extends Component {
 
 
     render() {
-        return ( <View
+        return (<View
             testID="page_ticket"
             style={styles.bgPage}>
 
@@ -107,7 +107,7 @@ export default class TicketInfoPage extends Component {
     _viewGoBuy = () => {
 
         if (this._showBuy())
-            return ( <TouchableOpacity
+            return (<TouchableOpacity
                 onPress={this._buy}
                 style={styles.btnBuy}>
                 <Text style={styles.txtGoBuy}>{I18n.t('goBuy')}</Text>
@@ -119,7 +119,7 @@ export default class TicketInfoPage extends Component {
         const {race, tickets, ordered} = this.state;
         const {description, title, price, banner} = tickets;
         const {name, logo} = race;
-        return (  <ScrollView
+        return (<ScrollView
             style={this._showBuy() ? {marginBottom: 70} : {}}
             iosalwaysBounceVertical={false}
             scrollEventThrottle={16}
@@ -160,7 +160,7 @@ export default class TicketInfoPage extends Component {
 
     _topBar = () => {
         const {opacity} = this.state;
-        return ( <View style={[styles.topBar, {backgroundColor: 'rgba(0,0,0,' + opacity + ')'}]}>
+        return (<View style={[styles.topBar, {backgroundColor: 'rgba(0,0,0,' + opacity + ')'}]}>
             <StatusBar/>
             <TouchableOpacity
                 testID="btn_bar_left"
@@ -188,8 +188,7 @@ export default class TicketInfoPage extends Component {
                     const {race, tickets} = this.state;
                     if (!isEmptyObject(race) && !isEmptyObject(tickets)) {
                         const {id, title, price, banner} = tickets;
-                        alert(222);
-                        // uShareTicket(title, I18n.t('price') + ":" + price, banner, race.race_id, id)
+                        uShareTicket(title, I18n.t('price') + ":" + price, banner, race.race_id, id)
                     }
 
                 }}
@@ -275,7 +274,7 @@ const styles = StyleSheet.create({
         bottom: 22,
         backgroundColor: '#161718',
         alignItems: 'center',
-        justifyContent:  'center',
+        justifyContent: 'center',
         borderRadius: 3,
         alignSelf: 'center',
         width: '90%'
