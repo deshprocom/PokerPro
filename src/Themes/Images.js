@@ -1,5 +1,3 @@
-import {China} from '../configs/Constants';
-
 const images = {
     month: require('../../source/month.png'),
     monthE: require('../../source/monthE.png'),
@@ -293,8 +291,14 @@ const images = {
     icon_share_qq: require('../../source/share/icon_share_qq.png'),
     icon_share_sina: require('../../source/share/icon_share_sina.png'),
     icon_share_wechat: require('../../source/share/icon_share_wechat.png'),
-    icon_share_wxcircle: require('../../source/share/icon_share_wxcircle.png')
+    icon_share_wxcircle: require('../../source/share/icon_share_wxcircle.png'),
+    social: {
+        close: require('../../source/social/close.png'),
+        article: require('../../source/social/article.png'),
+        moment: require('../../source/social/moment.png'),
+        close_blue: require('../../source/social/close_blue.png')
 
+    }
 
 };
 
