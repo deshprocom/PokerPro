@@ -16,8 +16,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     release: {
-        flexDirection: 'row', height: 120, width: '100%', justifyContent: 'space-around',
-        position: 'absolute', bottom: 110
+        flexDirection: 'row', height: 100, width: '100%', justifyContent: 'space-around',
+        position: 'absolute', bottom: 80
     }
 })
 
@@ -36,7 +36,6 @@ export default class PopRelease extends PureComponent {
     render() {
         const {visible} = this.state;
         return (<Modal
-            animationType="slide"
             transparent={true}
             visible={visible}
             onRequestClose={() => {
