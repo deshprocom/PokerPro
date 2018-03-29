@@ -22,8 +22,6 @@ export default class ArticleRelease extends PureComponent {
                 rightBtnText={I18n.t('draft_box')}
                 btnTextStyle={{fontSize: 14, color: Colors._333}}
                 leftBtnPress={() => {
-                    if (this.props.params.selectAdr)
-                        this.props.params.selectAdr(selectAdrData);
                     router.pop()
                 }}/>
 
