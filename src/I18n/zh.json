@@ -579,5 +579,14 @@
   "poker_coins":"扑客币",
   "release_article":"发长贴",
   "release_moment":"说说",
-  "draft_box":"草稿箱"
+  "draft_box":"草稿箱",
+  "socials_content":"文字",
+  "socials_picture":"图片",
+  "socials_takephoto":"拍照",
+  "socials_edit":"编辑",
+  "show_address":"显示地点",
+  "social_title":"请填写标题或简单描述",
+  "social_content":"请填写详细内容",
+  "social_save":"保存到草稿箱",
+  "social_send":"发布"
 }

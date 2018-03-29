@@ -296,7 +296,10 @@ const images = {
         close: require('../../source/social/close.png'),
         article: require('../../source/social/article.png'),
         moment: require('../../source/social/moment.png'),
-        close_blue: require('../../source/social/close_blue.png')
+        close_blue: require('../../source/social/close_blue.png'),
+        row_delete: require('../../source/social/row_delete.png'),
+        row_arrange: require('../../source/social/row_arrange.png'),
+        address: require('../../source/social/address.png'),
 
     }
 

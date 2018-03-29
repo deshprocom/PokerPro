@@ -97,7 +97,7 @@ export default class FriendList extends Component<{}> {
     ///发送添加好友请求
     sendAddFriendRequrest = () => {
         let param = {
-          username:"QQ1049260506",
+          username:"QQ1049260505",
             reason:"请求添加好友",
             appKey:"3789f75e5d780c24595607b6",
         };

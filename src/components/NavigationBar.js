@@ -31,9 +31,7 @@ export default class NavigationBar extends Component {
         btnTextStyle: PropTypes.object,
         toolbarStyle: PropTypes.object,
         router: PropTypes.object,
-        refreshPage: PropTypes.func,
-        titleStyle: null,
-        barStyle: null
+        refreshPage: PropTypes.func
     };
 
     constructor(props) {
