@@ -4,11 +4,18 @@
 import React, {Component} from 'react';
 import {
     StyleSheet, Platform, View, Text, StatusBar, TouchableOpacity,
-    Image, Animated
+    Image, Animated,Dimensions
 } from 'react-native';
 import theme from '../Themes/styles/theme';
 import TestRouter from './TestRouter';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+
+///屏幕宽高
+const ScreenWidth = Dimensions.get('window').width;
+const ScreenHeight = Dimensions.get('window').height;
+
+const navBarHeight = Platform.OS === "ios" ? ScreenWidth===375 && ScreenHeight === 812 ? 88 : 64 : 44;
+const toolMargin = Platform.OS === "ios" ? ScreenWidth===375 && ScreenHeight === 812 ? 44 : 20 : 0;
 
 export default class NavigationBar extends Component {
     static propTypes = {
@@ -61,7 +68,7 @@ export default class NavigationBar extends Component {
                         <TestRouter
                             refreshPage={this.props.refreshPage}/>
                     </View>
-                    <View style={[styles.fixedCell, {justifyContent: 'flex-end'}]}>
+                    <View style={[styles.fixedCell, {justifyContent: 'flex-end'},{alignItems:"flex-end"}]}>
                         {(rightBtnIcon || rightBtnText) ?
                             <Button
                                 testID="btn_bar_right"
@@ -114,13 +121,13 @@ class Button extends Component {
 
 const styles = StyleSheet.create({
     container: { //in submitOrder to display the shadow on home tab
-        height: Platform.OS === 'android' ? 44 : 64,
+        height: navBarHeight,
         width: theme.screenWidth
     },
     toolbar: {
-        height: Platform.OS === 'android' ? 44 : 64,
+        height: 44,
         flexDirection: 'row',
-        paddingTop: Platform.OS === 'android' ? 0 : 20
+        marginTop:toolMargin,
     },
     fixedCell: {
         flexDirection: 'row',
@@ -141,18 +148,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1,
-        height: theme.toolbar.height
+        height: theme.toolbar.height,
     },
     btnText: {
         color: theme.toolbar.titleColor,
         fontSize: theme.toolbar.textBtnSize,
         marginLeft: 20,
-        marginRight: 20
+        marginRight: 20,
     },
     btnTextView: {
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1,
-        height: theme.toolbar.height
+        height: theme.toolbar.height,
     }
 });
