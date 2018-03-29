@@ -40,21 +40,21 @@ const colors = {
     _161817: '#161718',
     txt_E4D: '#E4D57F',
     txt_race_type: '#CAC6CA',
-    txt_price:'#DF1D0F',
+    txt_price: '#DF1D0F',
 
     _FFE: '#FFE9AD',
 
-    bg_ec:'#ECECEE',
-    _F4E:'#F4E3A1',
-    _DF1:'#DF1D0F',
+    bg_ec: '#ECECEE',
+    _F4E: '#F4E3A1',
+    _DF1: '#DF1D0F',
     _161: '#161718',
-    _333:'#333333',
+    _333: '#333333',
     _666: '#666666',
     _999: '#999999',
     _CCC: '#CCCCCC',
     _ECE: '#ECECEE',
     _000: '#000000',
-    _F34:'#F34A4A'
+    _F34: '#F34A4A'
 
 };
 

@@ -3,11 +3,12 @@ import {StyleSheet, View, Text, TouchableOpacity, StatusBar, Image, Platform} fr
 import I18n from 'react-native-i18n';
 import {Images, Colors} from '../../Themes';
 import TabIcon from './TabIcon';
-import {showTabTop, hideTabTop, onPressBackTop, videoPause,shareClose,shareOpen} from '../../actions/AccountAction';
-import {SHOW_BACK_TOP, HIDE_BACK_TOP, VIDEO_PAUSE, BACK_TOP,SHARE_OPEN,SHARE_CLOSE} from '../../actions/ActionTypes';
+import {showTabTop, hideTabTop, onPressBackTop, videoPause, shareClose, shareOpen} from '../../actions/AccountAction';
+import {SHOW_BACK_TOP, HIDE_BACK_TOP, VIDEO_PAUSE, BACK_TOP, SHARE_OPEN, SHARE_CLOSE} from '../../actions/ActionTypes';
 import {connect} from 'react-redux';
-import {isEmptyObject, setDispatchAction,getDispatchAction} from '../../utils/ComonHelper';
+import {isEmptyObject, setDispatchAction, getDispatchAction} from '../../utils/ComonHelper';
 import ShareToast from "../comm/ShareToast";
+import PopRelease from '../socials/PopRelease'
 
 
 class BottomNavigation extends Component {
@@ -17,8 +18,8 @@ class BottomNavigation extends Component {
         setDispatchAction(SHOW_BACK_TOP, this.props._showBackTop);
         setDispatchAction(HIDE_BACK_TOP, this.props._hideBackTop);
         setDispatchAction(BACK_TOP, this.props._backTop);
-        setDispatchAction(SHARE_OPEN,this.props._showShare);
-        setDispatchAction(SHARE_CLOSE,this.props._closeShare);
+        setDispatchAction(SHARE_OPEN, this.props._showShare);
+        setDispatchAction(SHARE_CLOSE, this.props._closeShare);
 
     }
 
@@ -26,8 +27,8 @@ class BottomNavigation extends Component {
     render() {
 
         const {index} = this.props.navigationState;
-        const {jumpToIndex, actionType,share_param} = this.props;
-        const {shareLink,shareTitle,shareImage,shareText} = share_param;
+        const {jumpToIndex, actionType, share_param} = this.props;
+        const {shareLink, shareTitle, shareImage, shareText} = share_param;
         return (
             <View style={styleBN.navigation}>
                 <StatusBar barStyle={Platform.OS === 'ios' && index === 3 ? "dark-content" : "light-content"}/>
@@ -67,11 +68,13 @@ class BottomNavigation extends Component {
                     onPress={() => {
                         this.props._videoPause();
 
-                        jumpToIndex(2)
+                        // jumpToIndex(2)
+                        this.popRelease && this.popRelease.toggle()
 
                     }}
                     style={styleBN.navigations}>
-                    <TabIcon tab={'rank'} focused={index === 2}/>
+                    <Image source={Images.social.close_blue}
+                           style={{height: 46, width: 46}}/>
                 </TouchableOpacity> : null}
 
                 <TouchableOpacity
@@ -93,11 +96,15 @@ class BottomNavigation extends Component {
                     <TabIcon tab={'me'} focused={index === 4}/>
                 </TouchableOpacity>
 
-                {!isEmptyObject(share_param)? <ShareToast hiddenShareAction={()=>{getDispatchAction()[SHARE_CLOSE]()}}
-                                                         shareTitle={shareTitle}
-                                                         shareText={shareText}
-                                                         shareLink={shareLink}
-                                                         shareImage={shareImage}/> : null}
+                {!isEmptyObject(share_param) ? <ShareToast hiddenShareAction={() => {
+                    getDispatchAction()[SHARE_CLOSE]()
+                }}
+                                                           shareTitle={shareTitle}
+                                                           shareText={shareText}
+                                                           shareLink={shareLink}
+                                                           shareImage={shareImage}/> : null}
+
+                <PopRelease ref={ref => this.popRelease = ref}/>
             </View>
 
         )
@@ -175,7 +182,7 @@ const bindAction = dispatch => ({
 const mapStateToProps = state => ({
 
     actionType: state.AccountState.actionType,
-    share_param:state.AccountState.share_param,
+    share_param: state.AccountState.share_param,
 });
 
 export default connect(mapStateToProps, bindAction)(BottomNavigation);
