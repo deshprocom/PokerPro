@@ -5,12 +5,12 @@ import {
     StyleSheet,
     Text,
     View,
-    NativeModules,
     Dimensions
 } from 'react-native';
 import IMUI from "aurora-imui-react-native";
 import JMessage from "jmessage-react-plugin";
 import NavigationBar from "../../components/NavigationBar";
+import VideoToast from "./VideoToast";
 
 let MessageList = IMUI.MessageList;
 let ChatInput = IMUI.ChatInput;
@@ -18,7 +18,6 @@ const AuroraIController = IMUI.AuroraIMUIController;
 const window = Dimensions.get('window');
 
 
-let imagesList = [];
 
 export default class ChatMessage extends Component{
     constructor(props){
@@ -36,6 +35,7 @@ export default class ChatMessage extends Component{
             inputViewLayout: { width: window.width, height: initHeight},
             menuContainerHeight: 625,
             currentIndex:0,
+            videoUrl:"",
         };
 
         //获取当前用户自己的信息
@@ -59,7 +59,6 @@ export default class ChatMessage extends Component{
     componentWillUnmount(){
         ///移除消息监听
         JMessage.removeReceiveMessageListener(this.receiveMessage);
-        // AuroraIController.removeMessageListDidLoadListener("IMUIMessageListDidLoad");
     }
 
     ///历史消息
@@ -150,6 +149,7 @@ export default class ChatMessage extends Component{
     onMsgClick = (message) => {
         if (message.msgType === "video"){
             let url = message.mediaPath;
+            this.setState({videoUrl:url});
         }
         if (message.msgType === "image"){
             let images = [{url:message.mediaPath}];
@@ -513,6 +513,8 @@ export default class ChatMessage extends Component{
                            onRecoverScreen={this.onRecoverScreen} //半屏显示拍照
                            onSizeChange={this.onInputViewSizeChange}
                 />
+
+                {this.state.videoUrl !== "" ? <VideoToast videoUrl={this.state.videoUrl} hiddenVideoAction={() => {this.setState({videoUrl:""})}}/> : null}
             </View>
         );
     }
