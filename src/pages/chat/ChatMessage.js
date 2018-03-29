@@ -5,18 +5,19 @@ import {
     StyleSheet,
     Text,
     View,
-    NativeModules,
     Dimensions
 } from 'react-native';
 import IMUI from "aurora-imui-react-native";
 import JMessage from "jmessage-react-plugin";
 import NavigationBar from "../../components/NavigationBar";
-import {showToast} from "../../utils/ComonHelper";
+import VideoToast from "./VideoToast";
 
 let MessageList = IMUI.MessageList;
 let ChatInput = IMUI.ChatInput;
 const AuroraIController = IMUI.AuroraIMUIController;
 const window = Dimensions.get('window');
+
+
 
 export default class ChatMessage extends Component{
     constructor(props){
@@ -33,6 +34,8 @@ export default class ChatMessage extends Component{
             messageListLayout:{},
             inputViewLayout: { width: window.width, height: initHeight},
             menuContainerHeight: 625,
+            currentIndex:0,
+            videoUrl:"",
         };
 
         //获取当前用户自己的信息
@@ -40,10 +43,86 @@ export default class ChatMessage extends Component{
             this.myInfo = myInfo
         })
     }
+
+
     componentDidMount() {
         this.resetMenu();
         this.setState({messageListLayout: { flex: 1, margin: 0, width: window.width }});
+
+
+        ///历史消息
+        this.getHistoryMessage();
+
+        ///添加消息监听
+        JMessage.addReceiveMessageListener(this.receiveMessage);
     }
+    componentWillUnmount(){
+        ///移除消息监听
+        JMessage.removeReceiveMessageListener(this.receiveMessage);
+    }
+
+    ///历史消息
+    getHistoryMessage = () =>{
+        let userInfo = this.props.params.userInfo;
+        let parma = {
+            type:"single",
+            username:userInfo.username,
+            appKey:userInfo.appKey,
+            from:this.state.currentIndex,
+            limit:10,
+        };
+        JMessage.getHistoryMessages(parma,
+            (messageArray) => { // 以参数形式返回消息对象数组
+                // do something.
+                this.setState({currentIndex:this.state.currentIndex + 10});
+                let resultArray = [];
+                messageArray.forEach((message)=>{
+                    let msg = this.convertJMessageToAuroraMsg(message);
+                    resultArray.push(msg);
+                });
+
+                AuroraIController.insertMessagesToTop(resultArray);
+            }, (error) => {
+                console.log("获取历史消息失败");
+            });
+    };
+
+
+    //收到消息
+    receiveMessage = (message) => {
+        console.log(message);
+        if (message.target.type === 'user') {
+            let userInfo = this.props.params.userInfo;
+            let parma = {
+                type:"single",
+                username:userInfo.username,
+                messageId:message.id,
+            };
+            //如果是文件类型 进行下载
+            if (message.type === "file"){
+                JMessage.downloadFile(parma,
+                    (result) => {
+                        let imgPath = result.filePath;
+                        console.log("下载文件成功");
+                        console.log(imgPath);
+                        message.path = imgPath;
+
+                        let msg = this.convertJMessageToAuroraMsg(message);
+                        AuroraIController.appendMessages([msg]);
+
+                    }, (error) => {
+                        console.log("下载文件失败");
+                    })
+            }
+            else
+            {
+                let msg = this.convertJMessageToAuroraMsg(message);
+                AuroraIController.appendMessages([msg]);
+            }
+        }
+    };
+
+
 
 
     //重置菜单栏
@@ -55,108 +134,52 @@ export default class ChatMessage extends Component{
             this.setState({inputViewLayout: { width: window.width, height: 86 }});
         }
     };
+    ///下拉加载更多
+    onPullToRefresh = () => {
+        this.getHistoryMessage();
+    };
 
+
+    //头像点击
     onAvatarClick = (message) => {
         console.log(message)
     };
 
+    //消息点击
     onMsgClick = (message) => {
-        console.log(message)
-        // alert(JSON.stringify(message))
-        Alert.alert('onSendGalleryFiles',JSON.stringify(message))
+        if (message.msgType === "video"){
+            let url = message.mediaPath;
+            this.setState({videoUrl:url});
+        }
+        if (message.msgType === "image"){
+            let images = [{url:message.mediaPath}];
+            router.toImageGalleryPage(images, 0);
+        };
     };
 
+    //点击消息状态按钮触发
     onStatusViewClick = (message) => {
-        console.log(message)
-        message.status = 'send_succeed'
-        message.fromUser.avatarPath = message.mediaPath
+        console.log(message);
+        message.status = 'send_succeed';
+        message.fromUser.avatarPath = message.mediaPath;
         AuroraIController.updateMessage(message)
     };
 
+    //点击消息列表
     onTouchMsgList = () => {
         AuroraIController.hidenFeatureView(true)
     };
 
+    //开始滑动消息列表的时候触发，用于调整布局
     onBeginDragMessageList = () => {
-        this.updateLayout({ width: window.width, height: 86, })
+        this.updateLayout({ width: window.width, height: 86, });
         AuroraIController.hidenFeatureView(true)
     };
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    onSwitchToMicrophoneMode = () => {
-        AuroraIController.scrollToBottom(true)
-    }
-
-    onSwitchToGalleryMode = () => {
-        AuroraIController.scrollToBottom(true)
-    }
-
-    onSwitchToCameraMode = () => {
-        AuroraIController.scrollToBottom(true)
-    }
-
-
-    //
-    onShowKeyboard = (keyboard_height) => {
-        var inputViewHeight = keyboard_height + 86
-        this.updateLayout({ width: window.width, height: inputViewHeight, })
-    }
-
-
-
-    onTouchEditText = () => {
-        console.log("scroll to bottom")
-        this.refs["ChatInput"].showMenu(false)
-        this.setState({
-            inputViewLayout: { width: window.width, height: this.state.inputLayoutHeight }
-        })
-    }
-
-    onFullScreen = () => {
-        var navigationBar = 50
-        this.setState({
-            messageListLayout: { flex: 0, width: 0, height: 0 },
-            inputViewLayout: { flex: 1, width: window.width, height: window.height }
-        })
-    }
-
-    onRecoverScreen = () => {
-        this.setState({
-            messageListLayout: { flex: 1, width: window.width, margin: 0 },
-            inputViewLayout: { flex: 0, width: window.width, height: this.state.inputLayoutHeight }
-        })
-    }
-
-
-    getNormalMessage() {
-        var msg = {}
-        if (this.conversation.type === 'single') {
-            msg.username = this.conversation.username
-        } else if (this.conversation.type === "group") {
-            msg.groupId = this.conversation.groupId
-        } else {
-            msg.roomId = this.conversation.roomId
-        }
-        msg.type = this.conversation.type
-        return msg
-    }
-
-    ///进入编辑状态改变组件高度
+    ///进入编辑状态改变组件布局
     onInputViewSizeChange = (size) => {
         if (this.state.inputLayoutHeight !== size.height) {
             this.setState({
@@ -167,13 +190,61 @@ export default class ChatMessage extends Component{
         }
     };
 
-    ///更新
+    ///更新组件布局
     updateLayout = (layout) => {
         this.setState({ inputViewLayout: layout });
     };
 
+    //键盘显示
+    onShowKeyboard = (keyboard_height) => {
+        let inputViewHeight = keyboard_height + 86;
+        this.updateLayout({ width: window.width, height: inputViewHeight});
+    };
 
 
+
+    //点击输入框
+    onTouchEditText = () => {
+        this.refs["ChatInput"].showMenu(false);
+        this.setState({inputViewLayout: { width: window.width, height: this.state.inputLayoutHeight }});
+    };
+
+    //全屏显示拍照
+    onFullScreen = () => {
+        let navigationBar = 50;
+        this.setState({
+            messageListLayout: { flex: 0, width: 0, height: 0 },
+            inputViewLayout: { flex: 1, width: window.width, height: window.height }
+        })
+    };
+
+    //半屏显示拍照
+    onRecoverScreen = () => {
+        this.setState({
+            messageListLayout: { flex: 1, width: window.width, margin: 0 },
+            inputViewLayout: { flex: 0, width: window.width, height: this.state.inputLayoutHeight }
+        })
+    };
+
+    //点击菜单栏麦克风按钮触发
+    onSwitchToMicrophoneMode = () => {
+        AuroraIController.scrollToBottom(true)
+    };
+
+    //点击菜单栏图片按钮触发。
+    onSwitchToGalleryMode = () => {
+        AuroraIController.scrollToBottom(true)
+    };
+
+    //点击菜单栏拍照按钮触发。
+    onSwitchToCameraMode = () => {
+        AuroraIController.scrollToBottom(true)
+    };
+
+    ///发送表情
+    onSwitchToEmojiMode = () => {
+        AuroraIController.scrollToBottom(true)
+    };
 
     ///发送文字消息
     onSendText = (text) => {
@@ -218,32 +289,27 @@ export default class ChatMessage extends Component{
     };
 
 
-    ///发送表情
-    onSwitchToEmojiMode = () => {
-        AuroraIController.scrollToBottom(true)
-    };
-
     /*
         创建消息
         msg 消息
         messageType 消息类型
-            text    messageType为text时必传
-            path    messageType为voice时必传
+        text    messageType为text时必传
+        path    messageType为voice、image、file时必传
     */
     createMessage = (msg) => {
-        // let userInfo = this.props.params.userInfo;
-        let userInfo = {
-            appKey:"3789f75e5d780c24595607b6",
-            avatarThumbPath:"",
-            gender:"unknown",
-            isFriend:true,
-            isInBlackList:false,
-            isNoDisturb:false,
-            noteName:"",
-            noteText:"",
-            type:"user",
-            username:"QQ1049260506"
-        };
+        let userInfo = this.props.params.userInfo;
+        // let userInfo = {
+        //     appKey:"3789f75e5d780c24595607b6",
+        //     avatarThumbPath:"",
+        //     gender:"unknown",
+        //     isFriend:true,
+        //     isInBlackList:false,
+        //     isNoDisturb:false,
+        //     noteName:"",
+        //     noteText:"",
+        //     type:"user",
+        //     username:"QQ1049260506"
+        // };
 
         let msgInfo = {
             type:"single",//会话类型。可以为 'single' 或 'group'。
@@ -316,6 +382,8 @@ export default class ChatMessage extends Component{
 
     ///消息发送完成，更新UI
     sendFinshMessage = (message) => {
+        console.log("===========");
+        console.log(message);
         let auroraMsg = this.convertJMessageToAuroraMsg(message);
         AuroraIController.updateMessage(auroraMsg);
     };
@@ -325,7 +393,6 @@ export default class ChatMessage extends Component{
         var auroraMsg = {};
         auroraMsg.msgType = jmessage.type;
         auroraMsg.msgId = jmessage.id;
-        console.log(jmessage);
         if (jmessage.type === 'text') {
             auroraMsg.text = jmessage.text
         }
@@ -345,19 +412,11 @@ export default class ChatMessage extends Component{
             auroraMsg.msgType = "video"
         }
 
-        if (jmessage.type === 'event') {
-            // auroraMsg.mediaPath = jmessage.path
-            // auroraMsg.duration = jmessage.duration
-            Alert.alert('event' , jmessage.eventType);
-            auroraMsg.text = jmessage.eventType
-        }
-
         let user = {
             userId: "1",
             displayName: "",
             avatarPath: "1111111"
         };
-        console.log("from user: " + jmessage.from.avatarThumbPath);
         user.userId = jmessage.from.username;
         user.displayName = jmessage.from.nickname;
         user.avatarPath = jmessage.from.avatarThumbPath;
@@ -368,7 +427,6 @@ export default class ChatMessage extends Component{
             user.avatarPath = "ironman";
         }
         auroraMsg.fromUser = user;
-        console.log("from user11111: " + JSON.stringify(auroraMsg.fromUser));
         auroraMsg.status = "send_succeed";
 
         auroraMsg.isOutgoing = true;
@@ -382,25 +440,25 @@ export default class ChatMessage extends Component{
         auroraMsg.timeString = "";
 
         return auroraMsg;
-    }
+    };
 
 
 
 
 
     render(){
-        // let userInfo = this.props.params.userInfo;
-        let userInfo = {appKey:"3789f75e5d780c24595607b6",
-            avatarThumbPath:"",
-            gender:"unknown",
-            isFriend:true,
-            isInBlackList:false,
-            isNoDisturb:false,
-            noteName:"",
-            noteText:"",
-            type:"user",
-            username:"QQ1049260506"
-        };
+        let userInfo = this.props.params.userInfo;
+        // let userInfo = {appKey:"3789f75e5d780c24595607b6",
+        //     avatarThumbPath:"",
+        //     gender:"unknown",
+        //     isFriend:true,
+        //     isInBlackList:false,
+        //     isNoDisturb:false,
+        //     noteName:"",
+        //     noteText:"",
+        //     type:"user",
+        //     username:"QQ1049260506"
+        // };
         console.log(userInfo);
         return (
             <View style={styles.container}>
@@ -429,6 +487,8 @@ export default class ChatMessage extends Component{
                              sendBubbleTextSize={18}
                              sendBubbleTextColor={"#000000"}
                              sendBubblePadding={{ left: 10, top: 10, right: 15, bottom: 10 }}
+                             isAllowPullToRefresh={true}
+                             isShowOutgoingDisplayName={true}
                 />
 
                 <ChatInput style={this.state.inputViewLayout}
@@ -449,10 +509,12 @@ export default class ChatMessage extends Component{
                            onSwitchToCameraMode={this.onSwitchToCameraMode} //点击菜单栏拍照按钮触发。
                            onShowKeyboard={this.onShowKeyboard}
                            onTouchEditText={this.onTouchEditText}
-                           onFullScreen={this.onFullScreen}
-                           onRecoverScreen={this.onRecoverScreen}
+                           onFullScreen={this.onFullScreen} //全屏显示拍照
+                           onRecoverScreen={this.onRecoverScreen} //半屏显示拍照
                            onSizeChange={this.onInputViewSizeChange}
                 />
+
+                {this.state.videoUrl !== "" ? <VideoToast videoUrl={this.state.videoUrl} hiddenVideoAction={() => {this.setState({videoUrl:""})}}/> : null}
             </View>
         );
     }
@@ -477,5 +539,5 @@ const styles = StyleSheet.create({
         borderColor: '#3e83d7',
         borderRadius: 8,
         backgroundColor: '#3e83d7'
-    }
+    },
 });
