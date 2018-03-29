@@ -12,7 +12,6 @@ import IMUI from "aurora-imui-react-native";
 import JMessage from "jmessage-react-plugin";
 import NavigationBar from "../../components/NavigationBar";
 
-
 let MessageList = IMUI.MessageList;
 let ChatInput = IMUI.ChatInput;
 const AuroraIController = IMUI.AuroraIMUIController;
@@ -36,6 +35,7 @@ export default class ChatMessage extends Component{
             messageListLayout:{},
             inputViewLayout: { width: window.width, height: initHeight},
             menuContainerHeight: 625,
+            currentIndex:0,
         };
 
         //获取当前用户自己的信息
@@ -49,11 +49,9 @@ export default class ChatMessage extends Component{
         this.resetMenu();
         this.setState({messageListLayout: { flex: 1, margin: 0, width: window.width }});
 
-        AuroraIController.addMessageListDidLoadListener(() => {
 
-            ///历史消息
-            this.getHistoryMessage()
-        });
+        ///历史消息
+        this.getHistoryMessage();
 
         ///添加消息监听
         JMessage.addReceiveMessageListener(this.receiveMessage);
@@ -61,7 +59,7 @@ export default class ChatMessage extends Component{
     componentWillUnmount(){
         ///移除消息监听
         JMessage.removeReceiveMessageListener(this.receiveMessage);
-        AuroraIController.removeMessageListDidLoadListener("IMUIMessageListDidLoad");
+        // AuroraIController.removeMessageListDidLoadListener("IMUIMessageListDidLoad");
     }
 
     ///历史消息
@@ -71,19 +69,20 @@ export default class ChatMessage extends Component{
             type:"single",
             username:userInfo.username,
             appKey:userInfo.appKey,
-            from:0,
+            from:this.state.currentIndex,
             limit:10,
         };
         JMessage.getHistoryMessages(parma,
             (messageArray) => { // 以参数形式返回消息对象数组
                 // do something.
-                messageArray.reverse();
-                messageArray.forEach((item,index)=>{
-                    let message = this.convertJMessageToAuroraMsg(item);
-                    AuroraIController.appendMessages([message]);
-                })
+                this.setState({currentIndex:this.state.currentIndex + 10});
+                let resultArray = [];
+                messageArray.forEach((message)=>{
+                    let msg = this.convertJMessageToAuroraMsg(message);
+                    resultArray.push(msg);
+                });
 
-
+                AuroraIController.insertMessagesToTop(resultArray);
             }, (error) => {
                 console.log("获取历史消息失败");
             });
@@ -109,13 +108,18 @@ export default class ChatMessage extends Component{
                         console.log(imgPath);
                         message.path = imgPath;
 
+                        let msg = this.convertJMessageToAuroraMsg(message);
+                        AuroraIController.appendMessages([msg]);
+
                     }, (error) => {
                         console.log("下载文件失败");
                     })
             }
-
-            let msg = this.convertJMessageToAuroraMsg(message);
-            AuroraIController.appendMessages([msg]);
+            else
+            {
+                let msg = this.convertJMessageToAuroraMsg(message);
+                AuroraIController.appendMessages([msg]);
+            }
         }
     };
 
@@ -131,6 +135,11 @@ export default class ChatMessage extends Component{
             this.setState({inputViewLayout: { width: window.width, height: 86 }});
         }
     };
+    ///下拉加载更多
+    onPullToRefresh = () => {
+        this.getHistoryMessage();
+    };
+
 
     //头像点击
     onAvatarClick = (message) => {
@@ -373,6 +382,8 @@ export default class ChatMessage extends Component{
 
     ///消息发送完成，更新UI
     sendFinshMessage = (message) => {
+        console.log("===========");
+        console.log(message);
         let auroraMsg = this.convertJMessageToAuroraMsg(message);
         AuroraIController.updateMessage(auroraMsg);
     };
@@ -476,6 +487,8 @@ export default class ChatMessage extends Component{
                              sendBubbleTextSize={18}
                              sendBubbleTextColor={"#000000"}
                              sendBubblePadding={{ left: 10, top: 10, right: 15, bottom: 10 }}
+                             isAllowPullToRefresh={true}
+                             isShowOutgoingDisplayName={true}
                 />
 
                 <ChatInput style={this.state.inputViewLayout}
@@ -524,5 +537,5 @@ const styles = StyleSheet.create({
         borderColor: '#3e83d7',
         borderRadius: 8,
         backgroundColor: '#3e83d7'
-    }
+    },
 });
