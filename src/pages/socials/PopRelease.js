@@ -46,6 +46,10 @@ export default class PopRelease extends PureComponent {
                 <View style={styles.release}>
 
                     <AniTouchableOpacity
+                        onPress={() => {
+                            this.toggle();
+                            global.router.toArticleRelease()
+                        }}
                         style={styles.btn}
                         delay={500}
                         animation={'zoomIn'}>

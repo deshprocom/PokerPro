@@ -44,6 +44,11 @@ export default class Router {
 
     }
 
+    toArticleRelease(){
+        this.stackPush({
+            name:"ArticleRelease"
+        })
+    }
 
     replaceCrowdOrder(order_number) {
         this.replace({
