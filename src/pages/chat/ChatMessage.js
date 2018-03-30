@@ -15,7 +15,8 @@ let MessageList = IMUI.MessageList;
 let ChatInput = IMUI.ChatInput;
 const AuroraIController = IMUI.AuroraIMUIController;
 const window = Dimensions.get('window');
-
+import ImagePicker from 'react-native-image-crop-picker';
+let IS_HTTP = /(http:\/\/|https:\/\/)((\w|=|\?|\.|\/|&|-)+)/g;
 
 export default class ChatMessage extends Component {
     constructor(props) {
@@ -153,10 +154,13 @@ export default class ChatMessage extends Component {
             this.setState({videoUrl: url});
         }
         if (message.msgType === "image") {
-            let images = [{url: message.mediaPath}];
+            let image_url = message.mediaPath;
+            if(!IS_HTTP.test(image_url) && Platform.OS !=='ios')
+                image_url = 'file://'+image_url;
+            let images = [{url: image_url}];
             router.toImageGalleryPage(images, 0);
         }
-        ;
+
     };
 
     //点击消息状态按钮触发
@@ -278,6 +282,20 @@ export default class ChatMessage extends Component {
         this.createMessage({messageType: "image", path: mediaPath.mediaPath});
     };
 
+    onClickSelectAlbum = () => {
+        ImagePicker.openPicker({
+            compressImageQuality: 0.5,
+            compressImageMaxWidth: 1024,
+            compressImageMaxHeight: 1024,
+            mediaType: 'photo'
+        }).then(image => {
+            let image_path = image.path;
+            if (Platform.OS !== "ios")
+                image_path = image.path.replace(/^file:\/\//g, "")
+            this.createMessage({messageType: "image", path: image_path});
+        });
+    }
+
     ///开始录制视频
     onStartRecordVideo = () => {
         console.log("on start record video")
@@ -297,6 +315,7 @@ export default class ChatMessage extends Component {
         path    messageType为voice、image、file时必传
     */
     createMessage = (msg) => {
+
         let userInfo = this.props.params.userInfo;
         // let userInfo = {
         //     appKey:"3789f75e5d780c24595607b6",
@@ -395,6 +414,8 @@ export default class ChatMessage extends Component {
 
     ///处理发送的消息
     convertJMessageToAuroraMsg = (jmessage) => {
+        console.log(jmessage)
+
         let auroraMsg = {};
         auroraMsg.msgType = jmessage.type;
         auroraMsg.msgId = jmessage.id;
@@ -513,6 +534,7 @@ export default class ChatMessage extends Component {
                            onFullScreen={this.onFullScreen} //全屏显示拍照
                            onRecoverScreen={this.onRecoverScreen} //半屏显示拍照
                            onSizeChange={this.onInputViewSizeChange}
+                           onClickSelectAlbum={this.onClickSelectAlbum}
                 />
 
                 {this.state.videoUrl !== "" ? <VideoToast videoUrl={this.state.videoUrl} hiddenVideoAction={() => {
