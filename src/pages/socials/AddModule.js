@@ -13,6 +13,9 @@ import I18n from "react-native-i18n";
 export default class ImageView extends Component{
     static props = {
         insertImage:null,//插入图片
+        insertTakePhoto:null,//拍照
+        insertText:null,//插入文字
+        edit:null,//编辑
     };
 
     render(){
@@ -21,7 +24,10 @@ export default class ImageView extends Component{
                 <View style={[styles.subView,{justifyContent:"space-between"}]}>
                     <View style={{flexDirection:"row"}}>
 
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => {
+                            if (this.props.insertText === null) return;
+                            this.props.insertText();
+                        }}>
                             <View style={styles.textView}>
                                 <Text style={styles.text}>{I18n.t('socials_content')}</Text>
                             </View>
@@ -36,7 +42,10 @@ export default class ImageView extends Component{
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => {
+                            if (this.props.insertTakePhoto === null) return;
+                            this.props.insertTakePhoto();
+                        }}>
                             <View style={styles.textView}>
                                 <Text style={styles.text}>{I18n.t('socials_takephoto')}</Text>
                             </View>
@@ -44,9 +53,15 @@ export default class ImageView extends Component{
 
                     </View>
 
-                    <View style={[styles.textView,{marginRight:reallySize(9)}]}>
-                        <Text style={styles.text}>{I18n.t('socials_edit')}</Text>
-                    </View>
+
+                    <TouchableOpacity onPress={() => {
+                        if (this.props.edit === null) return;
+                        this.props.edit();
+                    }}>
+                        <View style={[styles.textView,{marginRight:reallySize(9)}]}>
+                            <Text style={styles.text}>{I18n.t('socials_edit')}</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.subView}>
                     <Image source={Images.social.address} style={[{width:reallySize(7)},{height:reallySize(9)}]}/>

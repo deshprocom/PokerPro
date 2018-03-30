@@ -39,26 +39,54 @@ export default class ArticleRelease extends PureComponent {
         let newData = [...this.state.data];
         ImagePicker.openPicker({
             width: screenWidth,
-            height: screenHeight,
+            height: screenWidth+1,
             cropping: true
         }).then(image => {
-            console.log(image);
             let rowData = {
                 type:"image",
             };
             rowData.imagePath = image.path;
             rowData.imageWidth = image.width;
             rowData.imageHeight = image.height;
-            // newData.push(rowData);
-            // console.log("============");
-            // console.log(newData);
+            newData.splice(newData.length-1,0,rowData);
+            this.setState({data:newData});
+        });
+    };
+
+
+    ///拍照
+    insertTakePhotoAction = () => {
+        let newData = [...this.state.data];
+        ImagePicker.openCamera({
+            width: screenWidth,
+            height: screenWidth+1,
+            cropping: true
+        }).then(image => {
+            let rowData = {
+                type:"image",
+            };
+            rowData.imagePath = image.path;
+            rowData.imageWidth = image.width;
+            rowData.imageHeight = image.height;
             newData.splice(newData.length-1,0,rowData);
             this.setState({data:newData});
         });
     };
 
     ///插入文本
-    // insertText
+    insertTextAction = () => {
+        let newData = [...this.state.data];
+        let rowData = {
+            type:"content",
+        };
+        newData.splice(newData.length-1,0,rowData);
+        this.setState({data:newData});
+    };
+
+    ///打开、关闭侧滑
+    editAction = () => {
+
+    };
 
 
     ///创建侧滑左侧编辑按钮
@@ -90,20 +118,25 @@ export default class ArticleRelease extends PureComponent {
         else if(type === "addModule"){
             ///添加模块
             return (
-                <AddModule insertImage={this.insetrtImageAction}/>
+                <AddModule insertImage={this.insetrtImageAction}
+                           insertTakePhoto={this.insertTakePhotoAction}
+                           insertText={this.insertTextAction}
+                           edit={this.editAction}
+                />
             );
         }
         else
         {
-            console.log(item.item);
             return (
                 <Swipeout
                     right={[{component:this.createArrangeComponent()},{text:"删除",backgroundColor:"red"}]}
                     left={[{component:this.createEditComponent(),backgroundColor:"#ECECEE"}]}
                     backgroundColor={"#ECECEE"}
-                    onClose={() => console.log('===close') }
-                    scroll={event => console.log('scroll event') }
+                    onClose={() => console.log('===close') } ///关闭
+                    onOpen={(sectionId,rowID) => console.log('===open'+sectionId+"==="+rowID)} ///打开
+                    scroll={event => console.log('scroll event') } ///滑动
                     buttonWidth={reallySize(25)}
+                    autoClose={true} ///点击按钮关闭
                 >
                     {/*文字*/}
                     {type === "content"?<ContentView/>:null}
