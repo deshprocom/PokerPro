@@ -16,6 +16,7 @@ export default class ImageView extends Component{
         insertTakePhoto:null,//拍照
         insertText:null,//插入文字
         edit:null,//编辑
+        editState:false,//编辑状态
     };
 
     render(){
@@ -59,7 +60,7 @@ export default class ImageView extends Component{
                         this.props.edit();
                     }}>
                         <View style={[styles.textView,{marginRight:reallySize(9)}]}>
-                            <Text style={styles.text}>{I18n.t('socials_edit')}</Text>
+                            {!this.props.editState?<Text style={styles.text}>{I18n.t('socials_edit')}</Text>:<Text style={styles.text}>{I18n.t('socials_finsh')}</Text>}
                         </View>
                     </TouchableOpacity>
                 </View>

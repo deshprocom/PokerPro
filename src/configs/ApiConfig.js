@@ -140,6 +140,8 @@ export default {
     crowd_user_count: crowd_user_count,//获取用户历史购买份数
     releases_show:'releases',//功能开启或隐藏控制
     poker_coins_discount:'poker_coins/numbers',//获取用户扑客币数量和以及扑客币对应折扣
+    release_topic:release_topic,//发说说/长帖的接口
+    upload_image:"uploaders/tmp_image",//长贴上传图片
 
 
 
@@ -156,10 +158,16 @@ function getUserId() {
 const page_size = 10;
 
 
+function release_topic() {
+    return `users/${login_user.user_id}/user_topics`
+}
+
 function crowd_user_count(body) {
     const {crowdfunding_id, crowdfunding_player_id} = body;
     return `crowdfundings/${crowdfunding_id}/players/${crowdfunding_player_id}/user_order_count`
 }
+
+
 
 function player_match(body) {
     const {cf_id, cf_player_id} = body;

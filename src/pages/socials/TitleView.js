@@ -10,11 +10,21 @@ import I18n from "react-native-i18n";
 
 export default class TitleView extends Component{
 
+    static props = {
+        callbackTitle:null,
+    };
+
+    updateText = (text) => {
+        if (this.props.callbackTitle === null) return;
+        this.props.callbackTitle(text);
+    };
+
     render(){
         return(
             <View style={styles.container}>
                 <TextInput placeholder={I18n.t('social_title')}
                            style={styles.textInput}
+                           onEndEditing={(event) => this.updateText(event.nativeEvent.text)}
                 />
             </View>
         )
