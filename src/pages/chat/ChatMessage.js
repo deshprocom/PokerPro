@@ -16,6 +16,7 @@ let ChatInput = IMUI.ChatInput;
 const AuroraIController = IMUI.AuroraIMUIController;
 const window = Dimensions.get('window');
 import ImagePicker from 'react-native-image-crop-picker';
+
 let IS_HTTP = /(http:\/\/|https:\/\/)((\w|=|\?|\.|\/|&|-)+)/g;
 
 export default class ChatMessage extends Component {
@@ -35,7 +36,9 @@ export default class ChatMessage extends Component {
             menuContainerHeight: 625,
             currentIndex: 0,
             videoUrl: "",
-        };
+            navigationBar: 64
+        }
+
 
         //获取当前用户自己的信息
         JMessage.getMyInfo((myInfo) => {
@@ -155,8 +158,8 @@ export default class ChatMessage extends Component {
         }
         if (message.msgType === "image") {
             let image_url = message.mediaPath;
-            if(!IS_HTTP.test(image_url) && Platform.OS !=='ios')
-                image_url = 'file://'+image_url;
+            if (!IS_HTTP.test(image_url) && Platform.OS !== 'ios')
+                image_url = 'file://' + image_url;
             let images = [{url: image_url}];
             router.toImageGalleryPage(images, 0);
         }
@@ -214,10 +217,11 @@ export default class ChatMessage extends Component {
 
     //全屏显示拍照
     onFullScreen = () => {
-        let navigationBar = 50;
+
         this.setState({
             messageListLayout: {flex: 0, width: 0, height: 0},
-            inputViewLayout: {flex: 1, width: window.width, height: window.height}
+            inputViewLayout: {flex: 1, width: window.width, height: window.height},
+            navigationBar:0
         })
     };
 
@@ -225,7 +229,8 @@ export default class ChatMessage extends Component {
     onRecoverScreen = () => {
         this.setState({
             messageListLayout: {flex: 1, width: window.width, margin: 0},
-            inputViewLayout: {flex: 0, width: window.width, height: this.state.inputLayoutHeight}
+            inputViewLayout: {flex: 0, width: window.width, height: this.state.inputLayoutHeight},
+            navigationBar: 64
         })
     };
 
@@ -241,7 +246,8 @@ export default class ChatMessage extends Component {
 
     //点击菜单栏拍照按钮触发。
     onSwitchToCameraMode = () => {
-        AuroraIController.scrollToBottom(true)
+        this.refs["ChatInput"].onFullScreen()
+        // AuroraIController.scrollToBottom(true)
     };
 
     ///发送表情
@@ -303,7 +309,8 @@ export default class ChatMessage extends Component {
 
     ///结束录制视频
     onFinishRecordVideo = (mediaPath) => {
-        this.createMessage({messageType: "file", path: mediaPath.mediaPath});
+        console.log('视频',mediaPath)
+        // this.createMessage({messageType: "file", path: mediaPath.mediaPath});
     };
 
 
@@ -488,7 +495,7 @@ export default class ChatMessage extends Component {
                 {/*导航栏*/}
                 <NavigationBar
                     barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
-                    toolbarStyle={{backgroundColor: "white"}}
+                    toolbarStyle={{backgroundColor: "white",height:this.state.navigationBar}}
                     title={userInfo.username}
                     titleStyle={{color: "red"}}
                     leftBtnText={"返回"}
