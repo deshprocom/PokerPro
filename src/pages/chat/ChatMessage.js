@@ -221,7 +221,7 @@ export default class ChatMessage extends Component {
         this.setState({
             messageListLayout: {flex: 0, width: 0, height: 0},
             inputViewLayout: {flex: 1, width: window.width, height: window.height},
-            navigationBar:0
+            navigationBar: 0
         })
     };
 
@@ -246,8 +246,7 @@ export default class ChatMessage extends Component {
 
     //点击菜单栏拍照按钮触发。
     onSwitchToCameraMode = () => {
-        this.refs["ChatInput"].onFullScreen()
-        // AuroraIController.scrollToBottom(true)
+        AuroraIController.scrollToBottom(true)
     };
 
     ///发送表情
@@ -277,8 +276,9 @@ export default class ChatMessage extends Component {
 
     ///发送图片
     onSendGalleryFiles = (mediaFiles) => {
+
         mediaFiles.forEach(item => {
-            this.createMessage({messageType: "image", path: item.mediaPath});
+            this.createMessage({messageType: item.mediaType === 'video' ? 'file' : 'image', path: item.mediaPath});
         })
     };
 
@@ -309,8 +309,7 @@ export default class ChatMessage extends Component {
 
     ///结束录制视频
     onFinishRecordVideo = (mediaPath) => {
-        console.log('视频',mediaPath)
-        // this.createMessage({messageType: "file", path: mediaPath.mediaPath});
+        console.log('视频', mediaPath)
     };
 
 
@@ -363,6 +362,9 @@ export default class ChatMessage extends Component {
 
         ///文件类型 消息体拼接path字段
         if (msg.messageType === "file") {
+            msgInfo.path = msg.path;
+        }
+        if (msg.messageType === "video") {
             msgInfo.path = msg.path;
         }
 
@@ -495,7 +497,7 @@ export default class ChatMessage extends Component {
                 {/*导航栏*/}
                 <NavigationBar
                     barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
-                    toolbarStyle={{backgroundColor: "white",height:this.state.navigationBar}}
+                    toolbarStyle={{backgroundColor: "white", height: this.state.navigationBar}}
                     title={userInfo.username}
                     titleStyle={{color: "red"}}
                     leftBtnText={"返回"}
