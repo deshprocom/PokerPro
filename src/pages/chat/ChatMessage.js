@@ -4,19 +4,18 @@ import {
     StyleSheet,
     Text,
     View,
+    NativeModules,
     Dimensions
 } from 'react-native';
 import IMUI from "aurora-imui-react-native";
 import JMessage from "jmessage-react-plugin";
 import NavigationBar from "../../components/NavigationBar";
-import VideoToast from "./VideoToast";
 
 let MessageList = IMUI.MessageList;
 let ChatInput = IMUI.ChatInput;
 const AuroraIController = IMUI.AuroraIMUIController;
 const window = Dimensions.get('window');
 import ImagePicker from 'react-native-image-crop-picker';
-
 let IS_HTTP = /(http:\/\/|https:\/\/)((\w|=|\?|\.|\/|&|-)+)/g;
 
 export default class ChatMessage extends Component {
@@ -35,10 +34,7 @@ export default class ChatMessage extends Component {
             inputViewLayout: {width: window.width, height: initHeight},
             menuContainerHeight: 625,
             currentIndex: 0,
-            videoUrl: "",
-            navigationBar: 64
-        }
-
+        };
 
         //获取当前用户自己的信息
         JMessage.getMyInfo((myInfo) => {
@@ -64,6 +60,7 @@ export default class ChatMessage extends Component {
     componentWillUnmount() {
         ///移除消息监听
         JMessage.removeReceiveMessageListener(this.receiveMessage);
+        // AuroraIController.removeMessageListDidLoadListener("IMUIMessageListDidLoad");
         ///移除离线消息
         JMessage.removeSyncOfflineMessageListener(this.receiveMessage);
     }
@@ -81,7 +78,6 @@ export default class ChatMessage extends Component {
         JMessage.getHistoryMessages(parma,
             (messageArray) => { // 以参数形式返回消息对象数组
                 // do something.
-                console.log(messageArray)
                 this.setState({currentIndex: this.state.currentIndex + 10});
                 let resultArray = [];
                 messageArray.forEach((message) => {
@@ -94,6 +90,20 @@ export default class ChatMessage extends Component {
                 console.log("获取历史消息失败");
             });
     };
+
+    onClickSelectAlbum = () => {
+        ImagePicker.openPicker({
+            compressImageQuality: 0.5,
+            compressImageMaxWidth: 1024,
+            compressImageMaxHeight: 1024,
+            mediaType: 'photo'
+        }).then(image => {
+            let image_path = image.path;
+            if (Platform.OS !== "ios")
+                image_path = image.path.replace(/^file:\/\//g, "")
+            this.createMessage({messageType: "image", path: image_path});
+        });
+    }
 
 
     //收到消息
@@ -154,7 +164,6 @@ export default class ChatMessage extends Component {
     onMsgClick = (message) => {
         if (message.msgType === "video") {
             let url = message.mediaPath;
-            this.setState({videoUrl: url});
         }
         if (message.msgType === "image") {
             let image_url = message.mediaPath;
@@ -163,7 +172,6 @@ export default class ChatMessage extends Component {
             let images = [{url: image_url}];
             router.toImageGalleryPage(images, 0);
         }
-
     };
 
     //点击消息状态按钮触发
@@ -217,11 +225,10 @@ export default class ChatMessage extends Component {
 
     //全屏显示拍照
     onFullScreen = () => {
-
+        let navigationBar = 50;
         this.setState({
             messageListLayout: {flex: 0, width: 0, height: 0},
-            inputViewLayout: {flex: 1, width: window.width, height: window.height},
-            navigationBar: 0
+            inputViewLayout: {flex: 1, width: window.width, height: window.height}
         })
     };
 
@@ -229,8 +236,7 @@ export default class ChatMessage extends Component {
     onRecoverScreen = () => {
         this.setState({
             messageListLayout: {flex: 1, width: window.width, margin: 0},
-            inputViewLayout: {flex: 0, width: window.width, height: this.state.inputLayoutHeight},
-            navigationBar: 64
+            inputViewLayout: {flex: 0, width: window.width, height: this.state.inputLayoutHeight}
         })
     };
 
@@ -256,7 +262,7 @@ export default class ChatMessage extends Component {
 
     ///发送文字消息
     onSendText = (text) => {
-        this.createMessage({messageType: "text", text: text});
+        let msg = this.createMessage({messageType: "text", text: text});
     };
 
     ///开始录音
@@ -276,31 +282,15 @@ export default class ChatMessage extends Component {
 
     ///发送图片
     onSendGalleryFiles = (mediaFiles) => {
-
-        mediaFiles.forEach(item => {
-            this.createMessage({messageType: item.mediaType === 'video' ? 'file' : 'image', path: item.mediaPath});
-        })
+        for (let index in mediaFiles) {
+            this.createMessage({messageType: "image", path: mediaFiles[index].mediaPath});
+        }
     };
 
     ///拍照
     onTakePicture = (mediaPath) => {
-        console.log(mediaPath)
         this.createMessage({messageType: "image", path: mediaPath.mediaPath});
     };
-
-    onClickSelectAlbum = () => {
-        ImagePicker.openPicker({
-            compressImageQuality: 0.5,
-            compressImageMaxWidth: 1024,
-            compressImageMaxHeight: 1024,
-            mediaType: 'photo'
-        }).then(image => {
-            let image_path = image.path;
-            if (Platform.OS !== "ios")
-                image_path = image.path.replace(/^file:\/\//g, "")
-            this.createMessage({messageType: "image", path: image_path});
-        });
-    }
 
     ///开始录制视频
     onStartRecordVideo = () => {
@@ -309,7 +299,7 @@ export default class ChatMessage extends Component {
 
     ///结束录制视频
     onFinishRecordVideo = (mediaPath) => {
-        console.log('视频', mediaPath)
+        this.createMessage({messageType: "file", path: mediaPath.mediaPath});
     };
 
 
@@ -321,7 +311,6 @@ export default class ChatMessage extends Component {
         path    messageType为voice、image、file时必传
     */
     createMessage = (msg) => {
-
         let userInfo = this.props.params.userInfo;
         // let userInfo = {
         //     appKey:"3789f75e5d780c24595607b6",
@@ -362,9 +351,6 @@ export default class ChatMessage extends Component {
 
         ///文件类型 消息体拼接path字段
         if (msg.messageType === "file") {
-            msgInfo.path = msg.path;
-        }
-        if (msg.messageType === "video") {
             msgInfo.path = msg.path;
         }
 
@@ -423,9 +409,7 @@ export default class ChatMessage extends Component {
 
     ///处理发送的消息
     convertJMessageToAuroraMsg = (jmessage) => {
-        console.log(jmessage)
-
-        let auroraMsg = {};
+        var auroraMsg = {};
         auroraMsg.msgType = jmessage.type;
         auroraMsg.msgId = jmessage.id;
         if (jmessage.type === 'text') {
@@ -497,7 +481,7 @@ export default class ChatMessage extends Component {
                 {/*导航栏*/}
                 <NavigationBar
                     barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
-                    toolbarStyle={{backgroundColor: "white", height: this.state.navigationBar}}
+                    toolbarStyle={{backgroundColor: "white"}}
                     title={userInfo.username}
                     titleStyle={{color: "red"}}
                     leftBtnText={"返回"}
@@ -512,6 +496,7 @@ export default class ChatMessage extends Component {
                              onMsgClick={this.onMsgClick}
                              onStatusViewClick={this.onStatusViewClick}
                              onTouchMsgList={this.onTouchMsgList}
+                             onTapMessageCell={this.onTapMessageCell}
                              onBeginDragMessageList={this.onBeginDragMessageList}
                              onPullToRefresh={this.onPullToRefresh}
                              avatarSize={{width: 40, height: 40}}
@@ -545,10 +530,6 @@ export default class ChatMessage extends Component {
                            onSizeChange={this.onInputViewSizeChange}
                            onClickSelectAlbum={this.onClickSelectAlbum}
                 />
-
-                {this.state.videoUrl !== "" ? <VideoToast videoUrl={this.state.videoUrl} hiddenVideoAction={() => {
-                    this.setState({videoUrl: ""})
-                }}/> : null}
             </View>
         );
     }
@@ -559,6 +540,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: 'red',
     },
     inputView: {
         backgroundColor: 'green',
