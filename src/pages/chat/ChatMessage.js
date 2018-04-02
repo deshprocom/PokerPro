@@ -489,7 +489,7 @@ export default class ChatMessage extends Component {
                     barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
                     toolbarStyle={{backgroundColor: "white"}}
                     title={userInfo.username}
-                    titleStyle={{color: "red"}}
+                    titleStyle={{color: Colors._333}}
                     leftBtnText={"返回"}
                     leftImageStyle={{height: 23, width: 23, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => global.router.pop()}
