@@ -28,6 +28,8 @@ export default class PopAction extends PureComponent {
 
         return btnArray.map((item, index) => {
             return <TouchableOpacity
+                onPress={() => item.onPress && item.onPress()}
+                activeOpacity={1}
                 key={'action' + index}
                 style={{
                     height: 50,
@@ -36,7 +38,7 @@ export default class PopAction extends PureComponent {
                     borderBottomWidth: 1,
                     justifyContent: 'center',
                     alignItems: 'center',
-                    flex: 1
+                    width: '100%'
                 }}>
 
                 <Text style={[{fontSize: 17, fontWeight: 'bold'}, item.txtStyle]}>{item.name}</Text>
@@ -59,9 +61,8 @@ export default class PopAction extends PureComponent {
             onRequestClose={() => {
             }}>
             <View style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.8)'}}>
-                <View style={{position: 'absolute', bottom: 0, width: '100%'}}>
-                    {this.btnArrayView()}
-                </View>
+                <View style={{flex: 1}}/>
+                {this.btnArrayView()}
 
             </View>
 
