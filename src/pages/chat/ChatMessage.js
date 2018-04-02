@@ -17,6 +17,8 @@ let ChatInput = IMUI.ChatInput;
 const AuroraIController = IMUI.AuroraIMUIController;
 const window = Dimensions.get('window');
 import ImagePicker from 'react-native-image-crop-picker';
+import {Colors} from "../../Themes";
+import I18n from "react-native-i18n";
 
 let IS_HTTP = /(http:\/\/|https:\/\/)((\w|=|\?|\.|\/|&|-)+)/g;
 
@@ -538,7 +540,8 @@ export default class ChatMessage extends Component {
                 <PopAction
                     ref={ref => this.popAction = ref}
                     btnArray={[{name: '举报该人', txtStyle: {color: '#4A90E2'}},
-                        {name: '拉黑该人', txtStyle: {color: '#F24A4A'}}]}/>
+                        {name: '拉黑该人', txtStyle: {color: '#F24A4A'}},
+                        {name: I18n.t('cancel'), txtStyle: {color: Colors._AAA}}]}/>
             </View>
         );
     }

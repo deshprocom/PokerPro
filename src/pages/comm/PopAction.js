@@ -21,15 +21,10 @@ export default class PopAction extends PureComponent {
         })
     }
 
-    componentWillMount() {
-        this.props.btnArray.push({name: I18n.t('cancel'), txtStyle: {color: Colors._AAA}});
-    }
-
 
     btnArrayView = () => {
 
         const {btnArray} = this.props;
-
 
         return btnArray.map((item, index) => {
             return <TouchableOpacity
