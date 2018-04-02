@@ -33,6 +33,7 @@ export default class Square extends PureComponent {
                 />}>
                 {this.state.square_types.map((item, index) => {
                     return <MomentList
+                        key={item}
                         tabLabel={this.tabLabel(item)}
                         type={item}/>
                 })}

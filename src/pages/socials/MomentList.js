@@ -12,6 +12,7 @@ import I18n from "react-native-i18n";
 import {NoDataView, LoadErrorView} from '../../components/load';
 import {Colors, Images} from '../../Themes';
 import {agoDynamicDate} from '../../utils/ComonHelper';
+import {topics_recommends, topics} from '../../services/SocialDao';
 
 const styles = StyleSheet.create({
     avatar: {
@@ -28,11 +29,12 @@ const styles = StyleSheet.create({
         height: reallySize(60),
         width: '100%',
         alignItems: 'center',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        paddingRight: reallySize(17),
+        paddingLeft: reallySize(17)
     },
     item: {
-        backgroundColor: 'white', paddingLeft: reallySize(17),
-        paddingRight: reallySize(17)
+        backgroundColor: 'white'
     },
     more_3: {
         height: reallySize(4),
@@ -40,13 +42,19 @@ const styles = StyleSheet.create({
     },
     body: {
         color: Colors.txt_444,
-        fontSize: reallySize(16)
+        fontSize: reallySize(16),
+        paddingRight: reallySize(17),
+        paddingLeft: reallySize(17),
+        paddingBottom:reallySize(20),
+        paddingTop:reallySize(8)
     },
     bottom: {
         height: reallySize(55),
         width: '100%',
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingRight: reallySize(17),
+        paddingLeft: reallySize(17)
     },
     time: {
         fontSize: reallySize(12),
@@ -60,6 +68,10 @@ const styles = StyleSheet.create({
     like: {
         height: reallySize(15),
         width: reallySize(15)
+    },
+    long_cover: {
+        height: 200,
+        width: '100%'
     }
 })
 
@@ -116,61 +128,78 @@ export default class MomentList extends PureComponent {
     }
 
     onFetch = (page = 1, startFetch, abortFetch) => {
-        startFetch([1, 2, 3, 4, 5, 6], 5)
+        if (this.props.type === 'topics')
+            topics({page, page_size: 20}, data => {
+                startFetch(data.items, 15)
+            })
+        if (this.props.type === 'recommends')
+            topics_recommends({page, page_size: 20}, data => {
+                startFetch(data.items, 15)
+            })
+
     }
 
     itemView = (item) => {
-        const {user, created_at, likes, comments} = this.state.rowData;
-        return <View>
+        const {user, created_at, likes, comments} = item;
+        return <View style={styles.item}>
             <View style={styles.separator}/>
-            <View style={styles.item}>
-                <View/>
-                {/*用户数据*/}
-                <View style={styles.user}>
-                    <ImageLoad
-                        style={styles.avatar}
-                        source={{uri: user.avatar}}/>
+            <View/>
+            {/*用户数据*/}
+            <View style={styles.user}>
+                <ImageLoad
+                    style={styles.avatar}
+                    source={{uri: user.avatar}}/>
 
-                    <Text style={styles.nick_name}>{user.nick_name}</Text>
-                    <View style={{flex: 1}}/>
+                <Text style={styles.nick_name}>{user.nick_name}</Text>
+                <View style={{flex: 1}}/>
 
-                    <Image
-                        style={styles.more_3}
-                        source={Images.social.more_3}/>
-                </View>
+                <Image
+                    style={styles.more_3}
+                    source={Images.social.more_3}/>
+            </View>
 
-                {/*内容*/}
-                {this.text(this.state.rowData)}
+            {/*内容*/}
+            {this.bodyTypes(item)}
 
-                {/*帖子时间、地点*/}
-                <View style={styles.bottom}>
-                    <Text style={styles.time}>{agoDynamicDate(created_at)}·深圳</Text>
+            {/*帖子时间、地点*/}
+            <View style={styles.bottom}>
+                <Text style={styles.time}>{agoDynamicDate(created_at)}·深圳</Text>
 
-                    <View style={{flex: 1}}/>
-                    <Image
-                        style={styles.like}
-                        source={Images.social.like_gray}/>
-                    <Text style={[styles.time, {marginLeft: 4, marginRight: 25}]}>{likes}</Text>
-                    <Image
-                        style={styles.like}
-                        source={Images.social.comment_gray}/>
-                    <Text style={[styles.time, {marginLeft: 4}]}>{comments}</Text>
+                <View style={{flex: 1}}/>
+                <Image
+                    style={styles.like}
+                    source={Images.social.like_gray}/>
+                <Text style={[styles.time, {marginLeft: 4, marginRight: 25}]}>{likes}</Text>
+                <Image
+                    style={styles.like}
+                    source={Images.social.comment_gray}/>
+                <Text style={[styles.time, {marginLeft: 4}]}>{comments}</Text>
 
-                </View>
             </View>
         </View>
+
     }
 
     bodyTypes = (item) => {
         switch (item.body_type) {
             case "long":
-                return this.text(item)
+                return this.long(item)
             case "short":
-                return this.text(item)
+                return this.short(item)
         }
     }
 
-    text = (item) => {
+    long = (item) => {
+        return <View>
+            <Text style={styles.body}>{item.title}</Text>
+
+            <ImageLoad
+                style={styles.long_cover}
+                source={{uri: ""}}/>
+        </View>
+    }
+
+    short = (item) => {
         return <View>
             <Text style={styles.body}>{item.body}</Text>
 
