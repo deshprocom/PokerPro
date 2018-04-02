@@ -10,6 +10,7 @@ import {
 import IMUI from "aurora-imui-react-native";
 import JMessage from "jmessage-react-plugin";
 import NavigationBar from "../../components/NavigationBar";
+import PopAction from '../comm/PopAction';
 
 let MessageList = IMUI.MessageList;
 let ChatInput = IMUI.ChatInput;
@@ -480,17 +481,19 @@ export default class ChatMessage extends Component {
         return (
             <View style={styles.container}>
                 {/*导航栏*/}
-                {/*<NavigationBar*/}
-                {/*barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}*/}
-                {/*toolbarStyle={{backgroundColor: "white"}}*/}
-                {/*title={userInfo.username}*/}
-                {/*titleStyle={{color: "red"}}*/}
-                {/*leftBtnText={"返回"}*/}
-                {/*leftImageStyle={{height: 23, width: 23, marginLeft: 20, marginRight: 20}}*/}
-                {/*leftBtnPress={() => global.router.pop()}*/}
-                {/*rightBtnText={"添加好友"}*/}
-                {/*rightBtnPress={this.sendAddFriendRequrest}*/}
-                {/*/>*/}
+                <NavigationBar
+                    barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
+                    toolbarStyle={{backgroundColor: "white"}}
+                    title={userInfo.username}
+                    titleStyle={{color: "red"}}
+                    leftBtnText={"返回"}
+                    leftImageStyle={{height: 23, width: 23, marginLeft: 20, marginRight: 20}}
+                    leftBtnPress={() => global.router.pop()}
+                    rightBtnText={"添加好友"}
+                    rightBtnPress={() => {
+                        this.popAction && this.popAction.toggle()
+                    }}
+                />
                 <MessageList style={this.state.messageListLayout}
                              ref="MessageList"
                              onAvatarClick={this.onAvatarClick}
@@ -531,6 +534,11 @@ export default class ChatMessage extends Component {
                            onSizeChange={this.onInputViewSizeChange}
                            onClickSelectAlbum={this.onClickSelectAlbum}
                 />
+
+                <PopAction
+                    ref={ref => this.popAction = ref}
+                    btnArray={[{name: '举报该人', txtStyle: {color: '#4A90E2'}},
+                        {name: '拉黑该人', txtStyle: {color: '#F24A4A'}}]}/>
             </View>
         );
     }
