@@ -5,6 +5,7 @@
 import {ActionConst, Actions} from 'react-native-router-flux';
 import {NavigationActions} from 'react-navigation';
 import {getDispatchAction} from '../utils/ComonHelper';
+import MapPosition from "../pages/socials/MapPosition";
 
 
 const customFloatFromRight = '';
@@ -44,9 +45,15 @@ export default class Router {
 
     }
 
-    toArticleRelease(){
+    toMapPosition() {
         this.stackPush({
-            name:"ArticleRelease"
+            name: 'MapPosition'
+        })
+    }
+
+    toArticleRelease() {
+        this.stackPush({
+            name: "ArticleRelease"
         })
     }
 
@@ -818,23 +825,25 @@ export default class Router {
         })
     }
 
-    toChatLogin(props){
+    toChatLogin(props) {
         this.push(props, {
             name: 'ChatLogin',
         })
     }
-    toFriendList(userInfo){
+
+    toFriendList(userInfo) {
         this.stackPush({
             name: 'FriendList',
-            params:{
+            params: {
                 userInfo
             }
         })
     }
-    toMessageList(userInfo){
+
+    toMessageList(userInfo) {
         this.stackPush({
             name: 'ChatMessage',
-            params:{
+            params: {
                 userInfo
             }
         })

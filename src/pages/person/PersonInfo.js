@@ -104,7 +104,8 @@ export default class PersonInfo extends Component {
         const {postAvatar} = this.props;
         let formData = new FormData();
         let file = {
-            uri: image.path, type: 'multipart/form-data',
+            uri: image.path,
+            type: 'multipart/form-data',
             name: this._fileName(image.fileName)
         };
         formData.append("avatar", file);
