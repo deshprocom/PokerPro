@@ -11,6 +11,7 @@ import IMUI from "aurora-imui-react-native";
 import JMessage from "jmessage-react-plugin";
 import NavigationBar from "../../components/NavigationBar";
 import VideoToast from "./VideoToast";
+import Swipeout from "react-native-swipeout";
 
 let MessageList = IMUI.MessageList;
 let ChatInput = IMUI.ChatInput;
@@ -55,10 +56,14 @@ export default class ChatMessage extends Component{
 
         ///添加消息监听
         JMessage.addReceiveMessageListener(this.receiveMessage);
+        ///监听离线消息
+        JMessage.addSyncOfflineMessageListener(this.receiveMessage);
     }
     componentWillUnmount(){
         ///移除消息监听
         JMessage.removeReceiveMessageListener(this.receiveMessage);
+        ///移除离线消息
+        JMessage.removeSyncOfflineMessageListener(this.receiveMessage);
     }
 
     ///历史消息
@@ -74,6 +79,7 @@ export default class ChatMessage extends Component{
         JMessage.getHistoryMessages(parma,
             (messageArray) => { // 以参数形式返回消息对象数组
                 // do something.
+                console.log(messageArray);
                 this.setState({currentIndex:this.state.currentIndex + 10});
                 let resultArray = [];
                 messageArray.forEach((message)=>{
@@ -525,7 +531,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'red',
     },
     inputView: {
         backgroundColor: 'green',
