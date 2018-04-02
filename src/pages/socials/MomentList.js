@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
         fontSize: reallySize(16),
         paddingRight: reallySize(17),
         paddingLeft: reallySize(17),
-        paddingBottom:reallySize(20),
-        paddingTop:reallySize(8)
+        paddingBottom:reallySize(15),
+        paddingTop:reallySize(5)
     },
     bottom: {
         height: reallySize(55),
