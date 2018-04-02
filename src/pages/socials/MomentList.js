@@ -77,36 +77,7 @@ const styles = StyleSheet.create({
 
 export default class MomentList extends PureComponent {
 
-    state = {
-        rowData: {
-            "user": {
-                "user_id": "014b58eac7cf2955a78b64393872fbda",
-                "nick_name": "Ricky",
-                "avatar": "https://cdn-upyun.deshpro.com/faces/e2c/807/e2c8071236d3c5b913d6f98872d0112c.jpg",
-                "signature": "这个人很懒，什么都没写。",
-                "official": false
-            },
-            "title": "haha",
-            "body": "这是一个长帖",
-            "body_type": "long",
-            "recommended": false,
-            "published": true,
-            "published_time": 1522297250,
-            "abnormal": false,
-            "location": {
-                "lat": 43.9,
-                "lng": 98.6
-            },
-            "deleted": false,
-            "deleted_at": 0,
-            "deleted_reason": "",
-            "created_at": 1522297250,
-            "page_views": 0,
-            "likes": 0,
-            "comments": 0,
-            "reports": 0
-        }
-    }
+
 
     render() {
         return <UltimateListView
