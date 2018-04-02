@@ -16,6 +16,7 @@ let ChatInput = IMUI.ChatInput;
 const AuroraIController = IMUI.AuroraIMUIController;
 const window = Dimensions.get('window');
 import ImagePicker from 'react-native-image-crop-picker';
+
 let IS_HTTP = /(http:\/\/|https:\/\/)((\w|=|\?|\.|\/|&|-)+)/g;
 
 export default class ChatMessage extends Component {
@@ -225,7 +226,6 @@ export default class ChatMessage extends Component {
 
     //全屏显示拍照
     onFullScreen = () => {
-        let navigationBar = 50;
         this.setState({
             messageListLayout: {flex: 0, width: 0, height: 0},
             inputViewLayout: {flex: 1, width: window.width, height: window.height}
@@ -356,6 +356,7 @@ export default class ChatMessage extends Component {
 
 
         console.log("创建一条" + msg.messageType + "类型的消息");
+        console.log('消息对象', msgInfo)
 
         ///创建消息
         JMessage.createSendMessage(msgInfo, (message) => {
@@ -479,17 +480,17 @@ export default class ChatMessage extends Component {
         return (
             <View style={styles.container}>
                 {/*导航栏*/}
-                <NavigationBar
-                    barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
-                    toolbarStyle={{backgroundColor: "white"}}
-                    title={userInfo.username}
-                    titleStyle={{color: "red"}}
-                    leftBtnText={"返回"}
-                    leftImageStyle={{height: 23, width: 23, marginLeft: 20, marginRight: 20}}
-                    leftBtnPress={() => global.router.pop()}
-                    rightBtnText={"添加好友"}
-                    rightBtnPress={this.sendAddFriendRequrest}
-                />
+                {/*<NavigationBar*/}
+                {/*barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}*/}
+                {/*toolbarStyle={{backgroundColor: "white"}}*/}
+                {/*title={userInfo.username}*/}
+                {/*titleStyle={{color: "red"}}*/}
+                {/*leftBtnText={"返回"}*/}
+                {/*leftImageStyle={{height: 23, width: 23, marginLeft: 20, marginRight: 20}}*/}
+                {/*leftBtnPress={() => global.router.pop()}*/}
+                {/*rightBtnText={"添加好友"}*/}
+                {/*rightBtnPress={this.sendAddFriendRequrest}*/}
+                {/*/>*/}
                 <MessageList style={this.state.messageListLayout}
                              ref="MessageList"
                              onAvatarClick={this.onAvatarClick}
@@ -540,7 +541,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'red',
     },
     inputView: {
         backgroundColor: 'green',
