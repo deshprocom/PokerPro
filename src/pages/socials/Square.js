@@ -15,6 +15,10 @@ import MomentList from './MomentList'
 
 export default class Square extends PureComponent {
 
+    state = {
+        square_types: ['topics', 'recommends', 'follows']
+    }
+
     render() {
 
         return <View style={ApplicationStyles.bgContainer}>
@@ -27,10 +31,23 @@ export default class Square extends PureComponent {
                     style={{borderColor: Colors._EEE}}
                     underlineStyle={{backgroundColor: '#F34A4A', height: 2}}
                 />}>
-                <MomentList tabLable={'广场'}/>
+                {this.state.square_types.map((item, index) => {
+                    return <MomentList
+                        tabLabel={this.tabLabel(item)}
+                        type={item}/>
+                })}
+
             </ScrollableTabView>
 
         </View>
+    }
+
+    tabLabel = (type) => {
+        if (type === 'topics')
+            return '广场'
+        if (type === 'recommends')
+            return '精华'
+        return '关注'
     }
 }
 
