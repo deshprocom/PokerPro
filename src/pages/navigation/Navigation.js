@@ -8,7 +8,7 @@ import {
 import VideoNewsTab from './VideoNewsTab';
 import CustomTabBar from './BottomNavigation';
 import MallPage from '../malls/MallPage';
-import Crowdfunding from '../crowdfundings/crowds/Crowdfunding';
+import Square from '../socials/Square';
 
 
 export const Navigation = () => {
@@ -43,14 +43,14 @@ export const Navigation = () => {
             </Stack>
             <Stack key="tab_3">
                 <Scene key="tab_rank"
-                       component={Crowdfunding}
+                       component={MallPage}
                        hideNavBar
 
                 />
             </Stack>
             <Stack key="tab_4">
                 <Scene key="tab_mall"
-                       component={MallPage}
+                       component={Square}
                        hideNavBar
                 />
             </Stack>

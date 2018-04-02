@@ -155,7 +155,7 @@ class ModalPrompt extends Component {
                             activeOpacity={1}
                             style={styles.btnClose}>
                             <Image style={styles.imgBack}
-                                   source={Images.set_back}/>
+                                   source={Images.ic_back}/>
 
                         </TouchableOpacity>
 
@@ -272,7 +272,7 @@ class ModalPrompt extends Component {
                             activeOpacity={1}
                             style={styles.btnClose}>
                             <Image style={styles.imgBack}
-                                   source={Images.set_back}/>
+                                   source={Images.ic_back}/>
 
                         </TouchableOpacity>
 

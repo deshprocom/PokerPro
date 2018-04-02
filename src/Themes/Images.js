@@ -135,7 +135,6 @@ const images = {
     race_type_selected: require('../../source/races/race_type_selected.png'),
     race_type_unselect: require('../../source/races/race_type_unselect.png'),
     load_error: require('../../source/load/load_error.png'),
-    set_back: require('../../source/setting/set_back.png'),
     home_badge: require('../../source/home/home_badge.png'),
     dark_back: require('../../source/home/dark_back.png'),
     up_triangle: require('../../source/order/up_triangle.png'),
@@ -300,6 +299,10 @@ const images = {
         row_delete: require('../../source/social/row_delete.png'),
         row_arrange: require('../../source/social/row_arrange.png'),
         address: require('../../source/social/address.png'),
+        more_3: require('../../source/social/more_3.png'),
+        like_red: require('../../source/social/like_red.png'),
+        like_gray: require('../../source/social/like_gray.png'),
+        comment_gray: require('../../source/social/comment_gray.png')
 
     }
 

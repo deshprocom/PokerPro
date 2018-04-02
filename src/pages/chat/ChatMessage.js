@@ -84,7 +84,7 @@ export default class ChatMessage extends Component {
             (messageArray) => { // 以参数形式返回消息对象数组
                 // do something.
                 console.log(messageArray);
-                this.setState({currentIndex:this.state.currentIndex + 10});
+                this.setState({currentIndex: this.state.currentIndex + 10});
                 let resultArray = [];
                 messageArray.forEach((message) => {
                     let msg = this.convertJMessageToAuroraMsg(message);
@@ -489,7 +489,7 @@ export default class ChatMessage extends Component {
                     barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
                     toolbarStyle={{backgroundColor: "white"}}
                     title={userInfo.username}
-                    titleStyle={{color: "red"}}
+                    titleStyle={{color: Colors._333}}
                     leftBtnText={"返回"}
                     leftImageStyle={{height: 23, width: 23, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => global.router.pop()}
@@ -541,11 +541,15 @@ export default class ChatMessage extends Component {
 
                 <PopAction
                     ref={ref => this.popAction = ref}
-                    btnArray={[{name: '举报该人', txtStyle: {color: '#4A90E2'}},
-                        {name: '拉黑该人', txtStyle: {color: '#F24A4A'}},
-                        {name: I18n.t('cancel'), txtStyle: {color: Colors._AAA}}]}/>
+                    btnArray={this.popActions()}/>
             </View>
         );
+    }
+
+    popActions = () => {
+        return [{name: '举报该人', txtStyle: {color: '#4A90E2'}},
+            {name: '拉黑该人', txtStyle: {color: '#F24A4A'}},
+            {name: I18n.t('cancel'), txtStyle: {color: Colors._AAA}, onPress: () => this.popAction.toggle()}]
     }
 }
 
