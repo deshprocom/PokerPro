@@ -11,6 +11,8 @@ import IMUI from "aurora-imui-react-native";
 import JMessage from "jmessage-react-plugin";
 import NavigationBar from "../../components/NavigationBar";
 import PopAction from '../comm/PopAction';
+import VideoToast from "./VideoToast";
+import Swipeout from "react-native-swipeout";
 
 let MessageList = IMUI.MessageList;
 let ChatInput = IMUI.ChatInput;
@@ -64,7 +66,6 @@ export default class ChatMessage extends Component {
     componentWillUnmount() {
         ///移除消息监听
         JMessage.removeReceiveMessageListener(this.receiveMessage);
-        // AuroraIController.removeMessageListDidLoadListener("IMUIMessageListDidLoad");
         ///移除离线消息
         JMessage.removeSyncOfflineMessageListener(this.receiveMessage);
     }
@@ -82,7 +83,8 @@ export default class ChatMessage extends Component {
         JMessage.getHistoryMessages(parma,
             (messageArray) => { // 以参数形式返回消息对象数组
                 // do something.
-                this.setState({currentIndex: this.state.currentIndex + 10});
+                console.log(messageArray);
+                this.setState({currentIndex:this.state.currentIndex + 10});
                 let resultArray = [];
                 messageArray.forEach((message) => {
                     let msg = this.convertJMessageToAuroraMsg(message);
