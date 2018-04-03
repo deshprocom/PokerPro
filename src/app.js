@@ -62,8 +62,11 @@ export default class App extends Component {
         });
 
 
-        ///极光统计
-        JAnalyticsModule.setup({appKey: JPUSH_APPKEY});
+        if(Platform.OS === 'ios'){
+            ///极光统计
+            JAnalyticsModule.setup({appKey: JPUSH_APPKEY});
+        }
+
 
         ///jMessage
         JMessage.init({

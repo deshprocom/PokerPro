@@ -7,25 +7,7 @@ import {Images} from '../Themes';
 import {strNotNull} from '../utils/ComonHelper'
 
 class ImageLoad extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLoaded: false,
-            isError: false
-        };
-    }
 
-    onLoadEnd() {
-        this.setState({
-            isLoaded: true
-        });
-    }
-
-    onError() {
-        this.setState({
-            isError: true
-        });
-    }
 
     render() {
         const {uri} = this.props.source;
@@ -35,23 +17,14 @@ class ImageLoad extends React.Component {
             return (
                 <Image
                     {...this.props}
-                    onLoadEnd={this.onLoadEnd.bind(this)}
-                    onError={this.onError.bind(this)}
                     defaultSource={emptyBg ? emptyBg : Images.empty_image}
-                >
-                    {
-                        emptyBg && this.state.isError ? <View style={{flex: 1, backgroundColor: '#cccccc'}}/> : null
-
-                    }
-
-                </Image>
-
-            );
-        else {
-            return (<Image
-                style={[this.props.style, {alignItems: 'center'}]}
-                source={emptyBg ? emptyBg : Images.empty_image}/>)
-        }
+                    loadingIndicatorSource={Images.empty_image}
+                />)
+        else
+            return <Image
+                {...this.props}
+                source={Images.empty_image}
+            />
     }
 }
 

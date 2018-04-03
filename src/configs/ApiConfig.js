@@ -142,6 +142,8 @@ export default {
     poker_coins_discount:'poker_coins/numbers',//获取用户扑客币数量和以及扑客币对应折扣
     release_topic:release_topic,//发说说/长帖的接口
     upload_image:"uploaders/tmp_image",//长贴上传图片
+    topics:'topics',//获取广场列表
+    topics_recommends:'/topics/recommends', //获取精华列表
 
 
 

@@ -51,7 +51,7 @@ export default class PopRelease extends PureComponent {
                             global.router.toArticleRelease()
                         }}
                         style={styles.btn}
-                        delay={500}
+                        delay={200}
                         animation={'zoomIn'}>
                         <Image source={Images.social.article}
                                style={styles.icon}/>
@@ -64,7 +64,11 @@ export default class PopRelease extends PureComponent {
                             global.router.toSendMood()
                         }}
                         style={styles.btn}
-                        delay={500}
+                        delay={200}
+                        onPress={() => {
+                            this.toggle();
+                            global.router.toMapPosition()
+                        }}
                         animation={'zoomIn'}>
                         <Image source={Images.social.moment}
                                style={styles.icon}/>
