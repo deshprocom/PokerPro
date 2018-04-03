@@ -12,9 +12,9 @@ import I18n from "react-native-i18n";
 import {NoDataView, LoadErrorView} from '../../components/load';
 import {Colors, Images} from '../../Themes';
 import {agoDynamicDate} from '../../utils/ComonHelper';
-import {topics_recommends, topics} from '../../services/SocialDao';
+import {topics_recommends, topics, topics_like} from '../../services/SocialDao';
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
     avatar: {
         height: reallySize(38),
         width: reallySize(38),
@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
         fontSize: reallySize(16),
         paddingRight: reallySize(17),
         paddingLeft: reallySize(17),
-        paddingBottom:reallySize(15),
-        paddingTop:reallySize(5)
+        paddingBottom: reallySize(15),
+        paddingTop: reallySize(5)
     },
     bottom: {
         height: reallySize(55),
@@ -70,13 +70,28 @@ const styles = StyleSheet.create({
         width: reallySize(15)
     },
     long_cover: {
-        height: 200,
+        height: reallySize(200),
         width: '100%'
+    },
+    btn_like: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    txt_long: {
+        color: '#F07F4D',
+        borderRadius: 2,
+        fontSize: reallySize(12),
+        borderColor: '#F07F4D',
+        borderWidth: 1,
+        paddingLeft: 5,
+        paddingRight: 5,
+        paddingTop: 2,
+        paddingBottom: 2,
+        marginRight: 12
     }
 })
 
 export default class MomentList extends PureComponent {
-
 
 
     render() {
@@ -91,10 +106,7 @@ export default class MomentList extends PureComponent {
             allLoadedText={I18n.t('no_more')}
             waitingSpinnerText={I18n.t('loading')}
             emptyView={() => {
-                return this.state.error ? <LoadErrorView
-                    onPress={() => {
-                        this.listView.refresh()
-                    }}/> : <NoDataView/>;
+                return <NoDataView/>
             }}/>
     }
 
@@ -102,17 +114,24 @@ export default class MomentList extends PureComponent {
         if (this.props.type === 'topics')
             topics({page, page_size: 20}, data => {
                 startFetch(data.items, 15)
+            }, err => {
             })
         if (this.props.type === 'recommends')
             topics_recommends({page, page_size: 20}, data => {
                 startFetch(data.items, 15)
+            }, err => {
             })
 
     }
 
     itemView = (item) => {
-        const {user, created_at, likes, comments} = item;
-        return <View style={styles.item}>
+        const {user, created_at, likes, comments, id, body_type} = item;
+        return <TouchableOpacity
+            onPress={() => {
+                router.toLongArticle(item)
+            }}
+            activeOpacity={1}
+            style={styles.item}>
             <View style={styles.separator}/>
             <View/>
             {/*用户数据*/}
@@ -123,6 +142,8 @@ export default class MomentList extends PureComponent {
 
                 <Text style={styles.nick_name}>{user.nick_name}</Text>
                 <View style={{flex: 1}}/>
+
+                {body_type === 'long' ? <Text style={styles.txt_long}>长帖</Text> : null}
 
                 <Image
                     style={styles.more_3}
@@ -137,17 +158,32 @@ export default class MomentList extends PureComponent {
                 <Text style={styles.time}>{agoDynamicDate(created_at)}·深圳</Text>
 
                 <View style={{flex: 1}}/>
-                <Image
-                    style={styles.like}
-                    source={Images.social.like_gray}/>
-                <Text style={[styles.time, {marginLeft: 4, marginRight: 25}]}>{likes}</Text>
-                <Image
-                    style={styles.like}
-                    source={Images.social.comment_gray}/>
-                <Text style={[styles.time, {marginLeft: 4}]}>{comments}</Text>
+                <TouchableOpacity
+                    onPress={() => {
+                        topics_like(id, data => {
+                            item.likes = data.total_likes;
+                            this.listView && this.listView.updateDataSource(this.listView.getRows())
 
+                        }, err => {
+                            console.log(err)
+                        })
+                    }}
+                    style={styles.btn_like}>
+                    <Image
+                        style={styles.like}
+                        source={Images.social.like_gray}/>
+                    <Text style={[styles.time, {marginLeft: 4, marginRight: 25}]}>{likes}</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={styles.btn_like}>
+                    <Image
+                        style={styles.like}
+                        source={Images.social.comment_gray}/>
+                    <Text style={[styles.time, {marginLeft: 4}]}>{comments}</Text>
+                </TouchableOpacity>
             </View>
-        </View>
+        </TouchableOpacity>
 
     }
 

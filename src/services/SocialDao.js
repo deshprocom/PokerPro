@@ -4,11 +4,19 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
+export function topics_like(topic_id, resolve, reject) {
+    helper.post(Api.topics_like(topic_id), {}, ret => {
+        resolve(ret.data)
+    }, err => {
+        reject(err)
+    })
+}
+
 export function topics(params, resolve, reject) {
     helper.get(Api.topics, ret => {
         resolve(ret.data)
     }, err => {
-        reject(err)
+        reject && reject(err)
     }, params)
 }
 
@@ -16,7 +24,7 @@ export function topics_recommends(params, resolve, reject) {
     helper.get(Api.topics_recommends, ret => {
         resolve(ret.data)
     }, err => {
-        reject(err)
+        reject && reject(err)
     }, params)
 }
 

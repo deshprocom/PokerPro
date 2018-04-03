@@ -31,7 +31,7 @@ export default class Square extends PureComponent {
                     style={{borderColor: Colors._EEE}}
                     underlineStyle={{backgroundColor: '#F34A4A', height: 2}}
                 />}>
-                {this.state.square_types.map((item, index) => {
+                {this.state.square_types.map(item => {
                     return <MomentList
                         key={item}
                         tabLabel={this.tabLabel(item)}
