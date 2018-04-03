@@ -155,8 +155,42 @@ export default class ArticleRelease extends PureComponent {
             location:'',
         };
         postTopic(body, data => {
+
             showToast("发布成功");
-            router.pop();
+
+            ///草稿箱已经存在当前长帖 将其删除
+            if (articleKey !== undefined){
+
+                ///获取草稿列表
+                storage.load({key: "articleList"}).then(ret => {
+
+                    let articleList = ret;
+
+                    articleList.forEach((article,index) => {
+                        let key = article.key;
+                        ///删除当前草稿
+                        if (key === articleKey){
+                            articleList.splice(index,1);
+                        }
+                    });
+
+
+                    ///存储草稿列表
+                    storage.save({
+                        key: 'articleList',
+                        data: articleList,
+                    }).then(() => {
+
+                        router.popToTop();
+                    }).catch(err => {
+                        showToast("异常错误");
+                    });
+                }).catch(err => {
+                    showToast("异常错误");
+                });
+            }
+
+
         }, err => {
 
         })

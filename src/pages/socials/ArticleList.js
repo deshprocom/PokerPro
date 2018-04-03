@@ -75,11 +75,10 @@ export default class ArticleList extends Component{
         ///取出title content image
         let data = item.item.data;
         let itemInfo = this.createData(data);
-        console.log(itemInfo);
         return (
             <View style={{backgroundColor:"white"}}>
                 <View style={styles.subRow}>
-                    <Text style={styles.dateText}>2018.09.12</Text>
+                    <Text style={styles.dateText}>{utcDate(item.item.key,"YY.MM.DD")}</Text>
                     <TouchableOpacity onPress={() => this.editArticle(item.item)}>
                         <Image source={Images.social.icon_articleedit} style={styles.editImage}/>
                     </TouchableOpacity>
@@ -87,7 +86,7 @@ export default class ArticleList extends Component{
                 {strNotNull(itemInfo.title)?<Text style={styles.title} numberOfLines={1}>{itemInfo.title}</Text>:null}
                 {strNotNull(itemInfo.content)?<Text style={styles.content} numberOfLines={6}>{itemInfo.content}</Text>:null}
                 {!isEmptyObject(itemInfo.images)?<Image source={{uri:itemInfo.images[0]}} style={styles.image}/>:null}
-                <View style={{height:reallySize(33)}}/>
+                <View style={{height:reallySize(16)}}/>
             </View>
         );
 
@@ -158,6 +157,7 @@ const styles = StyleSheet.create({
         marginTop:reallySize(16),
     },
     image:{
+        marginTop:reallySize(16),
         width:reallySize(375),
         height:reallySize(200),
         resizeMode:"cover",
