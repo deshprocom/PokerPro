@@ -106,10 +106,7 @@ export default class MomentList extends PureComponent {
             allLoadedText={I18n.t('no_more')}
             waitingSpinnerText={I18n.t('loading')}
             emptyView={() => {
-                return this.state.error ? <LoadErrorView
-                    onPress={() => {
-                        this.listView.refresh()
-                    }}/> : <NoDataView/>;
+                return <NoDataView/>
             }}/>
     }
 
