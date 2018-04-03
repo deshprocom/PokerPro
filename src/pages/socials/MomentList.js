@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         width: reallySize(15)
     },
     long_cover: {
-        height: 200,
+        height: reallySize(200),
         width: '100%'
     },
     btn_like: {
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     txt_long: {
         color: '#F07F4D',
         borderRadius: 2,
-        fontSize: 12,
+        fontSize: reallySize(12),
         borderColor: '#F07F4D',
         borderWidth: 1,
         paddingLeft: 5,
@@ -114,10 +114,12 @@ export default class MomentList extends PureComponent {
         if (this.props.type === 'topics')
             topics({page, page_size: 20}, data => {
                 startFetch(data.items, 15)
+            }, err => {
             })
         if (this.props.type === 'recommends')
             topics_recommends({page, page_size: 20}, data => {
                 startFetch(data.items, 15)
+            }, err => {
             })
 
     }

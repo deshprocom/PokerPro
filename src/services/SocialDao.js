@@ -16,7 +16,7 @@ export function topics(params, resolve, reject) {
     helper.get(Api.topics, ret => {
         resolve(ret.data)
     }, err => {
-        reject(err)
+        reject && reject(err)
     }, params)
 }
 
@@ -24,7 +24,7 @@ export function topics_recommends(params, resolve, reject) {
     helper.get(Api.topics_recommends, ret => {
         resolve(ret.data)
     }, err => {
-        reject(err)
+        reject && reject(err)
     }, params)
 }
 
