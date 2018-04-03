@@ -45,6 +45,13 @@ export default class Router {
 
     }
 
+    toLongArticle(article) {
+        this.stackPush({
+            name: 'LongArticle',
+            params: {article}
+        })
+    }
+
     toMapPosition() {
         this.stackPush({
             name: 'MapPosition'

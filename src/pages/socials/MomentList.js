@@ -14,7 +14,7 @@ import {Colors, Images} from '../../Themes';
 import {agoDynamicDate} from '../../utils/ComonHelper';
 import {topics_recommends, topics, topics_like} from '../../services/SocialDao';
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
     avatar: {
         height: reallySize(38),
         width: reallySize(38),
@@ -126,7 +126,12 @@ export default class MomentList extends PureComponent {
 
     itemView = (item) => {
         const {user, created_at, likes, comments, id, body_type} = item;
-        return <View style={styles.item}>
+        return <TouchableOpacity
+            onPress={() => {
+                router.toLongArticle(item)
+            }}
+            activeOpacity={1}
+            style={styles.item}>
             <View style={styles.separator}/>
             <View/>
             {/*用户数据*/}
@@ -178,7 +183,7 @@ export default class MomentList extends PureComponent {
                     <Text style={[styles.time, {marginLeft: 4}]}>{comments}</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </TouchableOpacity>
 
     }
 
