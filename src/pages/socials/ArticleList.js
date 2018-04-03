@@ -69,11 +69,13 @@ export default class ArticleList extends Component{
         return rowInfo;
     };
 
+
     ///渲染item
     _renderItem = (item) =>{
         ///取出title content image
         let data = item.item.data;
         let itemInfo = this.createData(data);
+        console.log(itemInfo);
         return (
             <View style={{backgroundColor:"white"}}>
                 <View style={styles.subRow}>

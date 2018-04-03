@@ -54,11 +54,19 @@ export default class Router {
         })
     }
 
+    toSendMood(){
+        this.stackPush({
+            name:"MoodRelease"
+        })
+    }
+
     toArticleList(){
         this.stackPush({
             name:"ArticleList",
         })
     }
+
+
 
     replaceCrowdOrder(order_number) {
         this.replace({

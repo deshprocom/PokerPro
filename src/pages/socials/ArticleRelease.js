@@ -106,6 +106,7 @@ export default class ArticleRelease extends PureComponent {
                 title = rowData.text;
             }
         });
+
         let resultString = body.join("<br/>");
         this.fetchData(title,resultString);
     };
@@ -188,6 +189,8 @@ export default class ArticleRelease extends PureComponent {
         ///长帖信息
         let articleInfo = {data:resultData};
 
+        console.log(articleInfo);
+
         ///获取草稿列表
         storage.load({key: "articleList"}).then(ret => {
 
@@ -231,7 +234,20 @@ export default class ArticleRelease extends PureComponent {
                 showToast("保存失败，请重试")
             });
         }).catch(err => {
-
+            console.log(err.name);
+            ///存储草稿列表
+            let articleList = [];
+            let currentKey = moment().format('X');//当前时间戳
+            articleInfo.key = currentKey;
+            articleList.push(articleInfo);
+            storage.save({
+                key: 'articleList',
+                data: articleList,
+            }).then(() => {
+                  articleKey = currentKey;
+            }).catch(err => {
+                showToast("保存失败，请重试")
+            });
         });
 
     };

@@ -4,6 +4,7 @@ import {
     View, StatusBar
 } from 'react-native';
 //Pages
+import MoodRelease from '../pages/socials/MoodRelease';
 import ArticleRelease from '../pages/socials/ArticleRelease';
 import ArticleList from "../pages/socials/ArticleList";
 import SearchMallPage from '../pages/malls/SearchMallPage';
@@ -101,6 +102,7 @@ import ChatMessage from "../pages/chat/ChatMessage";
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="MoodRelease" component={MoodRelease} hideNavBar/>
         <Scene key="ArticleRelease" component={ArticleRelease} hideNavBar/>
         <Scene key="ArticleList" component={ArticleList} hideNavBar/>
         <Scene key="RecordList" component={RecordList} hideNavBar/>
