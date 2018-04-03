@@ -11,6 +11,7 @@ import I18n from "react-native-i18n";
 export default class ContentView extends Component{
     static props = {
         callbackText:null,
+        defaultValue:null,
     };
 
     updateText = (text) => {
@@ -25,6 +26,7 @@ export default class ContentView extends Component{
                            style={styles.textInput}
                            multiline={true}
                            onEndEditing={(event) => this.updateText(event.nativeEvent.text)}
+                           defaultValue={this.props.defaultValue}
                 />
             </View>
         );
@@ -33,13 +35,13 @@ export default class ContentView extends Component{
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#ECECEE",
-        height:reallySize(74),
+        height:reallySize(148),
         justifyContent: "center",
         alignItems:"center",
     },
     textInput:{
-        height:reallySize(66),
-        width:reallySize(171),
+        height:reallySize(132),
+        width:reallySize(342),
         backgroundColor:"white",
         padding:10,
     }

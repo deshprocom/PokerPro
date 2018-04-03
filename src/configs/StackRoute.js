@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 //Pages
 import ArticleRelease from '../pages/socials/ArticleRelease';
+import ArticleList from "../pages/socials/ArticleList";
 import SearchMallPage from '../pages/malls/SearchMallPage';
 import SearchVideo from '../pages/videos/SearchVideo';
 import HomePage from '../pages/HomePage';
@@ -101,6 +102,7 @@ import ChatMessage from "../pages/chat/ChatMessage";
 export const Stacks = Actions.create(
     <Scene key="root">
         <Scene key="ArticleRelease" component={ArticleRelease} hideNavBar/>
+        <Scene key="ArticleList" component={ArticleList} hideNavBar/>
         <Scene key="RecordList" component={RecordList} hideNavBar/>
         <Scene key="SubscriptionInfoPage" component={SubscriptionInfoPage} hideNavBar/>
         <Scene key="PokerB" component={PokerB} hideNavBar/>

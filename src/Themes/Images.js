@@ -300,7 +300,7 @@ const images = {
         row_delete: require('../../source/social/row_delete.png'),
         row_arrange: require('../../source/social/row_arrange.png'),
         address: require('../../source/social/address.png'),
-
+        icon_articleedit:require('../../source/social/icon_articleedit.png'),
     }
 
 };

@@ -12,6 +12,7 @@ export default class TitleView extends Component{
 
     static props = {
         callbackTitle:null,
+        defaultValue:null,
     };
 
     updateText = (text) => {
@@ -25,6 +26,7 @@ export default class TitleView extends Component{
                 <TextInput placeholder={I18n.t('social_title')}
                            style={styles.textInput}
                            onEndEditing={(event) => this.updateText(event.nativeEvent.text)}
+                           defaultValue={this.props.defaultValue}
                 />
             </View>
         )
@@ -33,13 +35,13 @@ export default class TitleView extends Component{
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#ECECEE",
-        height:reallySize(38),
+        height:reallySize(76),
         justifyContent: "center",
         alignItems:"center",
     },
     textInput:{
-        height:reallySize(27),
-        width:reallySize(171),
+        height:reallySize(54),
+        width:reallySize(342),
         backgroundColor:"white",
         padding:10,
     }

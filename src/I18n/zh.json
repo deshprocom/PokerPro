@@ -589,5 +589,6 @@
   "social_title":"请填写标题或简单描述",
   "social_content":"请填写详细内容",
   "social_save":"保存到草稿箱",
-  "social_send":"发布"
+  "social_send":"发布",
+  "article_list":"草稿箱"
 }

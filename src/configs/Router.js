@@ -44,9 +44,19 @@ export default class Router {
 
     }
 
-    toArticleRelease(){
+    toArticleRelease(articleKey,articleInfo){
         this.stackPush({
-            name:"ArticleRelease"
+            name:"ArticleRelease",
+            params:{
+                articleKey,
+                articleInfo,
+            },
+        })
+    }
+
+    toArticleList(){
+        this.stackPush({
+            name:"ArticleList",
         })
     }
 
