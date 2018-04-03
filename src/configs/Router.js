@@ -68,12 +68,6 @@ export default class Router {
         })
     }
 
-    toArticleRelease() {
-        this.stackPush({
-            name: "ArticleRelease"
-        })
-    }
-
     toArticleList(){
         this.stackPush({
             name:"ArticleList",
