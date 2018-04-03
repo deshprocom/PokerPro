@@ -11,7 +11,7 @@ import {UltimateListView, ImageLoad} from '../../components'
 import I18n from "react-native-i18n";
 import {NoDataView, LoadErrorView} from '../../components/load';
 import {Colors, Images} from '../../Themes';
-import {agoDynamicDate} from '../../utils/ComonHelper';
+import {getDateDiff} from '../../utils/ComonHelper';
 import {topics_recommends, topics, topics_like} from '../../services/SocialDao';
 
 export const styles = StyleSheet.create({
@@ -155,7 +155,7 @@ export default class MomentList extends PureComponent {
 
             {/*帖子时间、地点*/}
             <View style={styles.bottom}>
-                <Text style={styles.time}>{agoDynamicDate(created_at)}·深圳</Text>
+                <Text style={styles.time}>{getDateDiff(created_at)}·深圳</Text>
 
                 <View style={{flex: 1}}/>
                 <TouchableOpacity

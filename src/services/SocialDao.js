@@ -4,6 +4,15 @@
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
+
+export function topics_details(topic_id) {
+    helper.get(Api.topics_detail(topic_id), ret => {
+
+    }, err => {
+
+    })
+}
+
 export function topics_like(topic_id, resolve, reject) {
     helper.post(Api.topics_like(topic_id), {}, ret => {
         resolve(ret.data)
