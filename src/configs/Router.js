@@ -45,6 +45,23 @@ export default class Router {
 
     }
 
+
+    toArticleRelease(articleKey,articleInfo){
+        this.stackPush({
+            name:"ArticleRelease",
+            params:{
+                articleKey,
+                articleInfo,
+            },
+        })
+    }
+
+    toSendMood() {
+        this.stackPush({
+            name: "MoodRelease"
+        })
+    }
+
     toMapPosition() {
         this.stackPush({
             name: 'MapPosition'
@@ -56,6 +73,14 @@ export default class Router {
             name: "ArticleRelease"
         })
     }
+
+    toArticleList(){
+        this.stackPush({
+            name:"ArticleList",
+        })
+    }
+
+
 
     replaceCrowdOrder(order_number) {
         this.replace({

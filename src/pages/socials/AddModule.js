@@ -59,13 +59,13 @@ export default class ImageView extends Component{
                         if (this.props.edit === null) return;
                         this.props.edit();
                     }}>
-                        <View style={[styles.textView,{marginRight:reallySize(9)}]}>
+                        <View style={[styles.textView,{marginRight:reallySize(18)}]}>
                             {!this.props.editState?<Text style={styles.text}>{I18n.t('socials_edit')}</Text>:<Text style={styles.text}>{I18n.t('socials_finsh')}</Text>}
                         </View>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.subView}>
-                    <Image source={Images.social.address} style={[{width:reallySize(7)},{height:reallySize(9)}]}/>
+                    <Image source={Images.social.address} style={[{width:reallySize(14)},{height:reallySize(18)}]}/>
                     <Text style={[{color:"#AAAAAA"},{fontSize:14},{marginLeft:5}]}>{I18n.t('show_address')}</Text>
                 </View>
             </View>
@@ -77,27 +77,27 @@ const styles = StyleSheet.create({
         // backgroundColor: "#ECECEE",
         justifyContent: "flex-start",
         alignItems:"flex-start",
-        height:reallySize(50),
+        height:reallySize(100),
 
     },
     subView:{
         flexDirection:"row",
         alignItems:"center",
         flex:1,
-        width:reallySize(188),
-        paddingLeft:reallySize(9),
+        width:reallySize(375),
+        paddingLeft:reallySize(18),
     },
     textView:{
         backgroundColor:"#4A90E2",
-        height:reallySize(14),
-        borderRadius:reallySize(7),
+        height:reallySize(28),
+        borderRadius:reallySize(14),
         justifyContent: "center",
         alignItems:"center",
         marginRight:15,
     },
     text:{
         color:"white",
-        paddingLeft:reallySize(5),
-        paddingRight:reallySize(5),
+        paddingLeft:reallySize(10),
+        paddingRight:reallySize(10),
     }
 });
