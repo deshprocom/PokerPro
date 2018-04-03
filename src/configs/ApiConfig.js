@@ -144,6 +144,7 @@ export default {
     upload_image:"uploaders/tmp_image",//长贴上传图片
     topics:'topics',//获取广场列表
     topics_recommends:'/topics/recommends', //获取精华列表
+    topics_like:topics_like
 
 
 
@@ -158,6 +159,11 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+
+function topics_like(topic_id) {
+    return `topic/user_topics/${topic_id}/likes`
+}
 
 
 function release_topic() {
