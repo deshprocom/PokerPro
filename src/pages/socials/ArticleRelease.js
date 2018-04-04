@@ -487,6 +487,7 @@ export default class ArticleRelease extends PureComponent {
                                            router.pop();
                                        }
                                        else{
+
                                            Alert.alert(
                                                '是否保存草稿',
                                                '',
@@ -506,10 +507,12 @@ export default class ArticleRelease extends PureComponent {
                     />
 
 
-                    <FlatList data={data}
-                              keyExtractor={(item, index) => index + ""}
-                              renderItem={this._renderItem}
-                    />
+                    <KeyboardAvoidingView behavior={"padding"} style={{flex:1}}>
+                        <FlatList data={data}
+                                  keyExtractor={(item, index) => index + ""}
+                                  renderItem={this._renderItem}
+                        />
+                    </KeyboardAvoidingView>
                 </View>
 
 
