@@ -591,5 +591,15 @@
   "social_save":"保存到草稿箱",
   "social_send":"发布",
   "article_list":"草稿箱",
-  "article_mode":"发说说"
+  "article_mode":"发说说",
+  "article_title_null":"请输入长帖标题",
+  "article_content_null":"请编辑长贴内容",
+  "article_release_success":"发布成功",
+  "article_null":"内容不能为空",
+  "article_save_success":"保存成功",
+  "article_save_failure":"保存失败,请重试",
+  "delete":"删除",
+  "save_title":"是否保存草稿",
+  "save_n":"不保存",
+  "save_s":"保存"
 }

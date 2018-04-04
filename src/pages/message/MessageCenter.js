@@ -36,7 +36,6 @@ export default class MessageCenter extends Component {
 
     componentDidMount() {
 
-
         getActivities(data => {
             const {activities} = data;
             if (activities.length <= 0)

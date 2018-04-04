@@ -87,7 +87,7 @@ export default class MoodRelease extends Component {
         let images = this.state.images;
 
         if (mood === "" && images.length === 1) {
-            showToast("没有编辑任何内容");
+            showToast(I18n.t('article_null'));
             return;
         }
         //无需上传图片
@@ -123,7 +123,7 @@ export default class MoodRelease extends Component {
             location: '',
         };
         postTopic(body, data => {
-            showToast("发布成功");
+            showToast(I18n.t('article_release_success'));
             router.popToTop();
         }, err => {
 
@@ -235,13 +235,13 @@ export default class MoodRelease extends Component {
 
     popActions = () => {
         return [
-            {name: '拍照', txtStyle: {color: '#4A90E2'},onPress:() => {
+            {name: I18n.t('socials_takephoto'), txtStyle: {color: '#4A90E2'},onPress:() => {
                 this.insertTakePhotoAction();
             }},
-            {name: '从相册选择', txtStyle: {color: '#4A90E2'},onPress:() => {
+            {name: I18n.t('pictures'), txtStyle: {color: '#4A90E2'},onPress:() => {
                 this.insetrtImageAction();
             }},
-            {name: '取消', txtStyle: {color: '#F24A4A'},onPress: () => this.popAction.toggle()}
+            {name: I18n.t('cancel'), txtStyle: {color: '#F24A4A'},onPress: () => this.popAction.toggle()}
         ];
     };
 }

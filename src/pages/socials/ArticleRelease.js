@@ -100,7 +100,6 @@ export default class ArticleRelease extends PureComponent {
                 body.push(`<p>${rowData.text}/</p>`);
             }
             if (type === "title"){
-                body.push(`<h2>${rowData.text}</h2>`);
                 title = rowData.text;
             }
         });
@@ -135,11 +134,11 @@ export default class ArticleRelease extends PureComponent {
     ///请求发长贴接口
     fetchData = (title,content) =>{
         if (title === ""){
-            showToast("请输入长帖标题");
+            showToast(I18n.t('article_title_null'));
             return;
         }
         if (content === ""){
-            showToast("请编辑长贴帖内容");
+            showToast(I18n.t('article_content_null'));
             return;
         }
 
@@ -154,7 +153,7 @@ export default class ArticleRelease extends PureComponent {
         };
         postTopic(body, data => {
 
-            showToast("发布成功");
+            showToast(I18n.t('article_release_success'));
 
             ///草稿箱已经存在当前长帖 将其删除
             if (articleKey !== undefined){
@@ -181,10 +180,10 @@ export default class ArticleRelease extends PureComponent {
 
                         router.popToTop();
                     }).catch(err => {
-                        showToast("异常错误");
+                        showToast("error");
                     });
                 }).catch(err => {
-                    showToast("异常错误");
+                    showToast("error");
                 });
             }
 
@@ -214,25 +213,19 @@ export default class ArticleRelease extends PureComponent {
             }
         });
         if (title === "" && !image && content === ""){
-            showToast("内容不能为空");
+            showToast(I18n.t('article_null'));
             return;
         }
 
         ///长帖信息
         let articleInfo = {data:resultData};
 
-        console.log(articleInfo);
 
         ///获取草稿列表
         storage.load({key: "articleList"}).then(ret => {
 
             let articleList = ret;
             let currentKey = moment().format('X');//当前时间戳
-
-            console.log("当前文章标识",articleKey);
-
-            console.log("获取草稿列表后",articleList);
-
 
             //如果是新文章
             if (articleKey === undefined){
@@ -253,20 +246,18 @@ export default class ArticleRelease extends PureComponent {
                 });
             }
 
-            console.log("添加、插入新数据后",articleList);
 
             ///存储草稿列表
             storage.save({
                 key: 'articleList',
                 data: articleList,
             }).then(() => {
-                showToast("保存成功");
+                showToast(I18n.t('article_save_success'));
                 articleKey = currentKey;
             }).catch(err => {
-                showToast("保存失败，请重试")
+                showToast(I18n.t('article_save_failure'));
             });
         }).catch(err => {
-            console.log(err.name);
             ///存储草稿列表
             let articleList = [];
             let currentKey = moment().format('X');//当前时间戳
@@ -278,7 +269,7 @@ export default class ArticleRelease extends PureComponent {
             }).then(() => {
                   articleKey = currentKey;
             }).catch(err => {
-                showToast("保存失败，请重试")
+                showToast(I18n.t('article_save_failure'))
             });
         });
 
@@ -361,6 +352,7 @@ export default class ArticleRelease extends PureComponent {
         let rowData = {
             type: "content",
             swipeOpen: false,
+            text:"",
         };
         this.insertRow(rowData);
     };
@@ -422,7 +414,7 @@ export default class ArticleRelease extends PureComponent {
             return (
                 <Swipeout
                     right={[{component: this.createArrangeComponent()}, {
-                        text: "删除",
+                        text: I18n.t('delete'),
                         backgroundColor: "red",
                         onPress:() => this.deleteRow(item.index)
                     }]}
@@ -487,13 +479,12 @@ export default class ArticleRelease extends PureComponent {
                                            router.pop();
                                        }
                                        else{
-
                                            Alert.alert(
-                                               '是否保存草稿',
+                                               I18n.t("save_title"),
                                                '',
                                                [
-                                                   {text: '不保存', onPress: () => router.pop()},
-                                                   {text: '保存', onPress: () => {
+                                                   {text: I18n.t("save_n"), onPress: () => router.pop()},
+                                                   {text:  I18n.t("save_s"), onPress: () => {
                                                        this.saveDraft();
                                                        router.pop();
                                                    }},
