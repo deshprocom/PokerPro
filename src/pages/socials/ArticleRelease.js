@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {
     StyleSheet, Image, Platform,
     View, TextInput, Text, TouchableOpacity,
-    KeyboardAvoidingView, AsyncStorage, FlatList
+    KeyboardAvoidingView, AsyncStorage, FlatList,Alert
 } from 'react-native';
 import {NavigationBar} from '../../components'
 import {Colors, Images} from "../../Themes";
@@ -467,8 +467,42 @@ export default class ArticleRelease extends PureComponent {
                                        global.router.toArticleList();
                                    }}
                                    leftBtnPress={() => {
-                                       router.pop();
+                                       let resultData = this.state.data;
+                                       let title = "";
+                                       let content = "";
+                                       let image = false;
+                                       resultData.forEach((rowData) => {
+                                           let type = rowData.type;
+                                           if (type === "title"){
+                                               title = rowData.text;
+                                           }
+                                           if (type === "image"){
+                                               image = true;
+                                           }
+                                           if (type === "content"){
+                                               content = rowData.text;
+                                           }
+                                       });
+                                       if (title === "" && !image && content === ""){
+                                           router.pop();
+                                       }
+                                       else{
+                                           Alert.alert(
+                                               '是否保存草稿',
+                                               '',
+                                               [
+                                                   {text: '不保存', onPress: () => router.pop()},
+                                                   {text: '保存', onPress: () => {
+                                                       this.saveDraft();
+                                                       router.pop();
+                                                   }},
+                                               ],
+                                               { cancelable: false }
+                                           );
+                                       }
+
                                    }}
+
                     />
 
 
