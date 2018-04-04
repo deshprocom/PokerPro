@@ -7,7 +7,7 @@ import {
 import {NavigationBar} from '../../components'
 import {Colors, Images} from "../../Themes";
 import I18n from "react-native-i18n";
-import {reallySize, screenWidth, screenHeight, toolBarHeight} from "./Header";
+import {reallySize, screenWidth, toolBarHeight} from "./Header";
 import TitleView from "./TitleView";
 import ContentView from "./ContentView";
 import ImageView from "./ImageView";
@@ -15,10 +15,15 @@ import AddModule from "./AddModule";
 import Swipeout from "react-native-swipeout";
 import ImagePicker from 'react-native-image-crop-picker';
 import {uploadImage,postTopic} from '../../services/SocialDao'
-import {getFileName} from "../../utils/ComonHelper";
+import {getFileName,showToast} from "../../utils/ComonHelper";
+import moment from 'moment';
 
+
+let articleKey = "";
 
 export default class ArticleRelease extends PureComponent {
+
+
     constructor(props) {
         super(props);
         this.state = {
@@ -40,6 +45,14 @@ export default class ArticleRelease extends PureComponent {
         };
     }
 
+    componentDidMount(){
+        //长帖id
+        articleKey = this.props.params.articleKey;
+        if (articleKey !== undefined){
+            this.setState({data:this.props.params.articleInfo})
+        }
+    }
+
     ///拼接图片上传后数据源
     createNewData = () => {
         let resultData = this.state.data;
@@ -47,6 +60,7 @@ export default class ArticleRelease extends PureComponent {
         let successCount = 0;//上传成功数
 
         resultData.forEach((rowData,index) => {
+
             let type = rowData.type;
             if (type === "image"){
 
@@ -54,7 +68,8 @@ export default class ArticleRelease extends PureComponent {
 
                 this.uploadImageAction(rowData.imagePath,((data)=>{
                     ///上传成功
-                    let imageUrl = `![](${data.image_path})`;
+                    // let imageUrl = `![](${data.image_path})`;
+                    let imageUrl = `<img src="${data.image_path}">`;
                     rowData.imagePath = imageUrl;
 
                     successCount ++;
@@ -76,6 +91,7 @@ export default class ArticleRelease extends PureComponent {
     ///拼接body
     createBody = () => {
         let resultData = this.state.data;
+        let title = "";
         let body = [];
         resultData.forEach((rowData) => {
             let type = rowData.type;
@@ -83,15 +99,26 @@ export default class ArticleRelease extends PureComponent {
                 body.push(rowData.imagePath);
             }
             if (type === "content"){
-                body.push(rowData.text);
+                body.push(`<p>${rowData.text}/</p>`);
+            }
+            if (type === "title"){
+                body.push(`<h2>${rowData.text}</h2>`);
+                title = rowData.text;
             }
         });
-        let resultString = body.join("<br/>");
-        console.log(resultString);
+        let resultString = body.join("");
+        this.fetchData(title,resultString);
     };
 
     ///上传图片
     uploadImageAction = (imagePath,successCallBack) => {
+
+        ///未登录先登录
+        if (login_user.user_id === undefined){
+            router.toLoginFirstPage();
+            return;
+        }
+
         let formData = new FormData();
         let file = {uri: imagePath, type: "multipart/form-data", name: getFileName(imagePath)};
         formData.append("image",file);
@@ -105,36 +132,158 @@ export default class ArticleRelease extends PureComponent {
     ///发布长贴
     postTopic = () => {
         this.createNewData();
-        // let body = {
-        //     body_type: 'long',
-        //     body: 'woaalskdjflkajlskdjflkajskldf',
-        //     title: '长贴标题',
-        //     published: true,
-        //     lat:'',
-        //     lng:'',
-        //     location:'',
-        // };
-        // postTopic(body, data => {
-        //     console.log(data);
-        // }, err => {
-        //
-        // })
+    };
+
+    ///请求发长贴接口
+    fetchData = (title,content) =>{
+        if (title === ""){
+            showToast("请输入长帖标题");
+            return;
+        }
+        if (content === ""){
+            showToast("请编辑长贴帖内容");
+            return;
+        }
+
+        let body = {
+            body_type: 'long',
+            body: content,
+            title: title,
+            published: true,
+            lat:'',
+            lng:'',
+            location:'',
+        };
+        postTopic(body, data => {
+
+            showToast("发布成功");
+
+            ///草稿箱已经存在当前长帖 将其删除
+            if (articleKey !== undefined){
+
+                ///获取草稿列表
+                storage.load({key: "articleList"}).then(ret => {
+
+                    let articleList = ret;
+
+                    articleList.forEach((article,index) => {
+                        let key = article.key;
+                        ///删除当前草稿
+                        if (key === articleKey){
+                            articleList.splice(index,1);
+                        }
+                    });
+
+
+                    ///存储草稿列表
+                    storage.save({
+                        key: 'articleList',
+                        data: articleList,
+                    }).then(() => {
+
+                        router.popToTop();
+                    }).catch(err => {
+                        showToast("异常错误");
+                    });
+                }).catch(err => {
+                    showToast("异常错误");
+                });
+            }
+
+
+        }, err => {
+
+        })
     };
 
     ///保存草稿
     saveDraft = () => {
-        storage.save({
-            key: 'loginState',   // Note: Do not use underscore("_") in key!
-            data: {
-                from: 'some other site',
-                userid: 'some userid',
-                token: 'some token'
-            },
 
-            // if not specified, the defaultExpires will be applied instead.
-            // if set to null, then it will never expire.
-            expires: 1000 * 3600
+        let resultData = this.state.data;
+        let title = "";
+        let content = "";
+        let image = false;
+        resultData.forEach((rowData) => {
+            let type = rowData.type;
+            if (type === "title"){
+                title = rowData.text;
+            }
+            if (type === "image"){
+                image = true;
+            }
+            if (type === "content"){
+                content = rowData.text;
+            }
         });
+        if (title === "" && !image && content === ""){
+            showToast("内容不能为空");
+            return;
+        }
+
+        ///长帖信息
+        let articleInfo = {data:resultData};
+
+        console.log(articleInfo);
+
+        ///获取草稿列表
+        storage.load({key: "articleList"}).then(ret => {
+
+            let articleList = ret;
+            let currentKey = moment().format('X');//当前时间戳
+
+            console.log("当前文章标识",articleKey);
+
+            console.log("获取草稿列表后",articleList);
+
+
+            //如果是新文章
+            if (articleKey === undefined){
+                ///如果是新文章，设置一个key,并添加进草稿列表
+                articleInfo.key = currentKey;
+                articleList.push(articleInfo);
+            }
+            ///从草稿箱编辑
+            else
+            {
+                articleList.forEach((article,index) => {
+                    let key = article.key;
+                    ///替换当前的草稿,并覆盖时间戳
+                    if (key === articleKey){
+                        articleInfo.key = currentKey;
+                        articleList.splice(index,1,articleInfo);
+                    }
+                });
+            }
+
+            console.log("添加、插入新数据后",articleList);
+
+            ///存储草稿列表
+            storage.save({
+                key: 'articleList',
+                data: articleList,
+            }).then(() => {
+                showToast("保存成功");
+                articleKey = currentKey;
+            }).catch(err => {
+                showToast("保存失败，请重试")
+            });
+        }).catch(err => {
+            console.log(err.name);
+            ///存储草稿列表
+            let articleList = [];
+            let currentKey = moment().format('X');//当前时间戳
+            articleInfo.key = currentKey;
+            articleList.push(articleInfo);
+            storage.save({
+                key: 'articleList',
+                data: articleList,
+            }).then(() => {
+                  articleKey = currentKey;
+            }).catch(err => {
+                showToast("保存失败，请重试")
+            });
+        });
+
     };
 
 
@@ -250,12 +399,13 @@ export default class ArticleRelease extends PureComponent {
         if (type === "title") {
             ///标题
             return (
-                <TitleView callbackTitle={(text) => {
-                    let newData = [...this.state.data];
-                    let titleData = newData[item.index];
-                    titleData.text = text;
-                    this.setState({data:newData});
-                }}/>
+                <TitleView defaultValue={item.item.text}
+                           callbackTitle={(text) => {
+                               let newData = [...this.state.data];
+                               let titleData = newData[item.index];
+                               titleData.text = text;
+                               this.setState({data:newData});
+                           }}/>
             );
         }
         else if (type === "addModule") {
@@ -285,9 +435,10 @@ export default class ArticleRelease extends PureComponent {
                     autoClose={true} ///点击按钮关闭
                     openRight={swipeOpen}
                     close={!swipeOpen}
+                    disabled = {true}
                 >
                     {/*文字*/}
-                    {type === "content" ? <ContentView callbackText={(text) =>{
+                    {type === "content" ? <ContentView defaultValue={item.item.text} callbackText={(text) =>{
                         let newData = [...this.state.data];
                         let titleData = newData[item.index];
                         titleData.text = text;
@@ -313,8 +464,12 @@ export default class ArticleRelease extends PureComponent {
                                leftBtnText={I18n.t('cancel')}
                                rightBtnText={I18n.t('draft_box')}
                                btnTextStyle={{fontSize: 14, color: Colors._333}}
+                               rightBtnPress={() =>{
+                                   ///草稿箱
+                                   global.router.toArticleList();
+                               }}
                                leftBtnPress={() => {
-                                   router.pop()
+                                   router.pop();
                                }}
                 />
 
@@ -329,7 +484,7 @@ export default class ArticleRelease extends PureComponent {
 
                 {/*保存到草稿箱、发布*/}
                 <View style={styles.toolBar}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={this.saveDraft}>
                         <View style={styles.save}>
                             <Text style={[{color: "#444444"}, {fontSize: 15}]}>{I18n.t("social_save")}</Text>
                         </View>
@@ -358,8 +513,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     imageIcon: {
-        width: reallySize(13),
-        height: reallySize(13),
+        width: reallySize(26),
+        height: reallySize(26),
         resizeMode: "contain",
     },
     toolBar: {
@@ -369,22 +524,22 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     save: {
-        width: reallySize(93),
-        height: reallySize(17),
+        width: reallySize(186),
+        height: reallySize(34),
         backgroundColor: "#ECECEE",
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 4,
-        marginLeft: reallySize(9),
-        marginTop: reallySize(4),
-        marginRight: reallySize(7),
+        marginLeft: reallySize(18),
+        marginTop: reallySize(8),
+        marginRight: reallySize(14),
     },
     send: {
-        width: reallySize(71),
-        height: reallySize(17),
+        width: reallySize(142),
+        height: reallySize(34),
         backgroundColor: "#4A90E2",
         borderRadius: 4,
-        marginTop: reallySize(4),
+        marginTop: reallySize(8),
         justifyContent: "center",
         alignItems: "center",
     }

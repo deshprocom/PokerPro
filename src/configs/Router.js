@@ -45,6 +45,21 @@ export default class Router {
 
     }
 
+    toArticleRelease(articleKey,articleInfo){
+        this.stackPush({
+            name:"ArticleRelease",
+            params:{
+                articleKey,
+                articleInfo,
+            },
+        })
+    }
+
+    toSendMood() {
+        this.stackPush({
+            name: "MoodRelease"
+        })
+    }
     toLongArticle(article) {
         this.stackPush({
             name: 'LongArticle',
@@ -58,11 +73,13 @@ export default class Router {
         })
     }
 
-    toArticleRelease() {
+    toArticleList(){
         this.stackPush({
-            name: "ArticleRelease"
+            name:"ArticleList",
         })
     }
+
+
 
     replaceCrowdOrder(order_number) {
         this.replace({

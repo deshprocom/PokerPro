@@ -16,10 +16,10 @@ export default class ImageView extends Component{
         const {imagePath,imageWidth,imageHeight} = this.props.imageInfo;
 
         ///真实图片高度
-        let reallyHeight = imageHeight * reallySize(171) / imageWidth;
+        let reallyHeight = imageHeight * reallySize(342) / imageWidth;
         return(
             <View style={[styles.container,{height:reallyHeight + 8}]}>
-                <Image source={{uri:imagePath}} style={[{backgroundColor:"yellow"},{width:reallySize(171)},{height:reallyHeight}]}/>
+                <Image source={{uri:imagePath}} style={[{backgroundColor:"yellow"},{width:reallySize(342)},{height:reallyHeight}]}/>
             </View>
         );
     }
