@@ -59,6 +59,10 @@ const styles = StyleSheet.create({
         height: reallySize(15),
         width: reallySize(15)
     },
+    comment: {
+        fontSize: 14,
+        color: Colors._AAA
+    }
 })
 
 export default class LongArticle extends PureComponent {
@@ -72,7 +76,7 @@ export default class LongArticle extends PureComponent {
 
         const {user, created_at, likes, comments, id, body_type, body, title, page_views} = this.props.params.article;
 
-        return <View style={{flex: 1, backgroundColor: 'white'}}>
+        return <View style={{flex: 1}}>
             <NavigationBar
                 barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
                 toolbarStyle={{backgroundColor: Colors.white, borderBottomWidth: 1, borderBottomColor: Colors._ECE}}
@@ -83,7 +87,7 @@ export default class LongArticle extends PureComponent {
                 leftBtnPress={() => router.pop()}
                 rightBtnIcon={Images.social.more_3}
                 rightImageStyle={{height: 4, width: 20, marginLeft: 20, marginRight: 20}}/>
-            <View style={{marginRight: 17, marginLeft: 17}}>
+            <View style={{marginRight: 17, marginLeft: 17, backgroundColor: 'white'}}>
                 <View style={styles.info}>
                     <Text style={styles.title}>{title}</Text>
                     <View style={styles.btn_like}>
@@ -139,6 +143,10 @@ export default class LongArticle extends PureComponent {
                         <Text style={[styles.time, {marginLeft: 4}]}>{likes}</Text>
                     </TouchableOpacity>
 
+                </View>
+
+                <View>
+                    <Text>全部评论</Text>
                 </View>
 
             </View>
