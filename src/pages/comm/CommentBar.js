@@ -10,7 +10,8 @@ import InputModal from './InputModal'
 
 const styles = StyleSheet.create({
     bar: {
-        height: 48, width: Metrics.screenWidth, backgroundColor: 'white',
+        height: 48, width: Metrics.screenWidth,
+        backgroundColor: 'white',
         alignItems: 'center', flexDirection: 'row'
     },
     comment: {
@@ -24,7 +25,8 @@ const styles = StyleSheet.create({
     },
     c_comment: {
         height: 19,
-        width: 22
+        width: 22,
+        marginTop: 7
     },
     c_like: {
         height: 19,
@@ -51,9 +53,8 @@ export default class CommentBar extends PureComponent {
     static propTypes = {
         send: propType.func,
         like: propType.func,
-        topic_id:propType.string,
-
-
+        share: propType.func,
+        count: propType.number
     }
 
     render() {
@@ -71,18 +72,46 @@ export default class CommentBar extends PureComponent {
             </TouchableOpacity>
 
             <View style={{flexDirection: 'row', alignItems: 'center', flex: 1, justifyContent: 'space-around'}}>
-                <TouchableOpacity>
+                <View style={{
+                    height: 30, width: 30
+                }}>
+
+
                     <Image style={styles.c_comment}
                            source={Images.commentWhite}/>
-                </TouchableOpacity>
 
-                <TouchableOpacity>
+                    {this.props.count > 0 ? <View style={{
+                        backgroundColor: '#F24A4A',
+                        height: 20,
+                        width: 20,
+                        borderRadius: 10,
+                        position: 'absolute',
+                        top: 0,
+                        right: 0,
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}>
+                        <Text style={{
+                            color: 'white',
+                            fontSize: 10
+                        }}>{this.props.count}</Text>
+                    </View> : null}
+
+                </View>
+
+                <TouchableOpacity
+                    onPress={() => {
+                        this.props.like && this.props.like()
+                    }}>
                     <Image style={styles.c_like}
                            source={Images.like}/>
 
                 </TouchableOpacity>
 
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => {
+                        this.props.share && this.props.share()
+                    }}>
                     <Image style={styles.c_share}
                            source={Images.forward}/>
                 </TouchableOpacity>
@@ -90,7 +119,9 @@ export default class CommentBar extends PureComponent {
 
             </View>
 
-            <InputModal ref={ref => this.inputModal = ref}/>
+            <InputModal
+                send={(comment) => this.props.send && this.props.send(comment)}
+                ref={ref => this.inputModal = ref}/>
 
 
         </View>
