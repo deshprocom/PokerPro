@@ -231,6 +231,9 @@ export default class PersonInfo extends Component {
 
 
                 <Modal
+                    onRequestClose={() => {
+
+                    }}
                     transparent={true}
                     visible={this.state.visible}>
                     <View style={{

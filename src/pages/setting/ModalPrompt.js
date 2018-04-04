@@ -38,6 +38,9 @@ class ModalPrompt extends Component {
 
     render() {
         return (<Modal
+            onRequestClose={() => {
+
+            }}
             style={styles.page}
             transparent={true}
             visible={this.props.modalVisible}>

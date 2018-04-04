@@ -22,6 +22,9 @@ export default class InputComment extends Component {
     inputComment = () => {
         return <View>
             <Modal
+                onRequestClose={() => {
+
+                }}
                 animationType={"slide"}
                 transparent
                 visible={this.props.visible}
