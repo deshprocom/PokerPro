@@ -48,7 +48,6 @@ export default class ArticleRelease extends PureComponent {
     componentDidMount(){
         //长帖id
         articleKey = this.props.params.articleKey;
-        console.log(this.props.params.articleInfo);
         if (articleKey !== undefined){
             this.setState({data:this.props.params.articleInfo})
         }
@@ -62,7 +61,6 @@ export default class ArticleRelease extends PureComponent {
 
         resultData.forEach((rowData,index) => {
 
-
             let type = rowData.type;
             if (type === "image"){
 
@@ -70,7 +68,8 @@ export default class ArticleRelease extends PureComponent {
 
                 this.uploadImageAction(rowData.imagePath,((data)=>{
                     ///上传成功
-                    let imageUrl = `![](${data.image_path})`;
+                    // let imageUrl = `![](${data.image_path})`;
+                    let imageUrl = `<img src="${data.image_path}">`;
                     rowData.imagePath = imageUrl;
 
                     successCount ++;
@@ -100,14 +99,14 @@ export default class ArticleRelease extends PureComponent {
                 body.push(rowData.imagePath);
             }
             if (type === "content"){
-                body.push(rowData.text);
+                body.push(`<p>${rowData.text}/</p>`);
             }
             if (type === "title"){
+                body.push(`<h2>${rowData.text}</h2>`);
                 title = rowData.text;
             }
         });
-
-        let resultString = body.join("<br/>");
+        let resultString = body.join("");
         this.fetchData(title,resultString);
     };
 
@@ -156,7 +155,42 @@ export default class ArticleRelease extends PureComponent {
             location:'',
         };
         postTopic(body, data => {
-            console.log(data);
+
+            showToast("发布成功");
+
+            ///草稿箱已经存在当前长帖 将其删除
+            if (articleKey !== undefined){
+
+                ///获取草稿列表
+                storage.load({key: "articleList"}).then(ret => {
+
+                    let articleList = ret;
+
+                    articleList.forEach((article,index) => {
+                        let key = article.key;
+                        ///删除当前草稿
+                        if (key === articleKey){
+                            articleList.splice(index,1);
+                        }
+                    });
+
+
+                    ///存储草稿列表
+                    storage.save({
+                        key: 'articleList',
+                        data: articleList,
+                    }).then(() => {
+
+                        router.popToTop();
+                    }).catch(err => {
+                        showToast("异常错误");
+                    });
+                }).catch(err => {
+                    showToast("异常错误");
+                });
+            }
+
+
         }, err => {
 
         })

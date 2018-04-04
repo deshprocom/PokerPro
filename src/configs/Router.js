@@ -45,7 +45,6 @@ export default class Router {
 
     }
 
-
     toArticleRelease(articleKey,articleInfo){
         this.stackPush({
             name:"ArticleRelease",
@@ -61,16 +60,16 @@ export default class Router {
             name: "MoodRelease"
         })
     }
+    toLongArticle(article) {
+        this.stackPush({
+            name: 'LongArticle',
+            params: {article}
+        })
+    }
 
     toMapPosition() {
         this.stackPush({
             name: 'MapPosition'
-        })
-    }
-
-    toArticleRelease() {
-        this.stackPush({
-            name: "ArticleRelease"
         })
     }
 

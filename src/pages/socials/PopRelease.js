@@ -65,10 +65,6 @@ export default class PopRelease extends PureComponent {
                         }}
                         style={styles.btn}
                         delay={200}
-                        onPress={() => {
-                            this.toggle();
-                            global.router.toMapPosition()
-                        }}
                         animation={'zoomIn'}>
                         <Image source={Images.social.moment}
                                style={styles.icon}/>
