@@ -236,7 +236,7 @@ end
 And(/^上传图片$/) do
   id('btn_picker_image').click
   wait(10) do
-    id('图库').click
+    id('Z图库').click
   end
   wait(10) do
     id('好').click

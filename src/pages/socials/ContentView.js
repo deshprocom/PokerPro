@@ -25,8 +25,8 @@ export default class ContentView extends Component{
                 <TextInput placeholder={I18n.t('social_content')}
                            style={styles.textInput}
                            multiline={true}
-                           onEndEditing={(event) => this.updateText(event.nativeEvent.text)}
                            defaultValue={this.props.defaultValue}
+                           onChangeText={(text) => {this.updateText(text)}}
                 />
             </View>
         );

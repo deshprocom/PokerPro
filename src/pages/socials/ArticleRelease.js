@@ -2,12 +2,12 @@ import React, {PureComponent} from 'react';
 import {
     StyleSheet, Image, Platform,
     View, TextInput, Text, TouchableOpacity,
-    KeyboardAvoidingView, AsyncStorage, FlatList
+    KeyboardAvoidingView, AsyncStorage, FlatList,Alert
 } from 'react-native';
 import {NavigationBar} from '../../components'
 import {Colors, Images} from "../../Themes";
 import I18n from "react-native-i18n";
-import {reallySize, screenWidth, toolBarHeight} from "./Header";
+import {reallySize, screenWidth, toolBarHeight,screenHeight} from "./Header";
 import TitleView from "./TitleView";
 import ContentView from "./ContentView";
 import ImageView from "./ImageView";
@@ -22,8 +22,6 @@ import moment from 'moment';
 let articleKey = "";
 
 export default class ArticleRelease extends PureComponent {
-
-
     constructor(props) {
         super(props);
         this.state = {
@@ -324,9 +322,9 @@ export default class ArticleRelease extends PureComponent {
     ///插入图片
     insetrtImageAction = () => {
         ImagePicker.openPicker({
-            width: screenWidth,
-            height: screenWidth + 1,
-            cropping: true
+            compressImageMaxWidth:1024,
+            compressImageMaxHeight:1024,
+            compressImageQuality:0.5
         }).then(image => {
             let rowData = {
                 type: "image",
@@ -343,9 +341,9 @@ export default class ArticleRelease extends PureComponent {
     ///拍照
     insertTakePhotoAction = () => {
         ImagePicker.openCamera({
-            width: screenWidth,
-            height: screenWidth + 1,
-            cropping: true
+            compressImageMaxWidth:1024,
+            compressImageMaxHeight:1024,
+            compressImageQuality:0.5
         }).then(image => {
             let rowData = {
                 type: "image",
@@ -431,7 +429,7 @@ export default class ArticleRelease extends PureComponent {
                     backgroundColor={"#ECECEE"}
                     onClose={() =>{}} ///关闭
                     onOpen={() => {}} ///打开
-                    scroll={event => console.log('scroll event') } ///滑动
+                    scroll={event =>{}} ///滑动
                     autoClose={true} ///点击按钮关闭
                     openRight={swipeOpen}
                     close={!swipeOpen}
@@ -455,31 +453,64 @@ export default class ArticleRelease extends PureComponent {
         let data = this.state.data;
         return (
             <View style={styles.container}>
+                <View style={{height:screenHeight - toolBarHeight}}>
+                    {/*导航栏*/}
+                    <NavigationBar barStyle={'dark-content'}
+                                   titleStyle={{fontSize: 17, color: Colors._333}}
+                                   toolbarStyle={{backgroundColor: 'white'}}
+                                   title={I18n.t('release_article')}
+                                   leftBtnText={I18n.t('cancel')}
+                                   rightBtnText={I18n.t('draft_box')}
+                                   btnTextStyle={{fontSize: 14, color: Colors._333}}
+                                   rightBtnPress={() =>{
+                                       ///草稿箱
+                                       global.router.toArticleList();
+                                   }}
+                                   leftBtnPress={() => {
+                                       let resultData = this.state.data;
+                                       let title = "";
+                                       let content = "";
+                                       let image = false;
+                                       resultData.forEach((rowData) => {
+                                           let type = rowData.type;
+                                           if (type === "title"){
+                                               title = rowData.text;
+                                           }
+                                           if (type === "image"){
+                                               image = true;
+                                           }
+                                           if (type === "content"){
+                                               content = rowData.text;
+                                           }
+                                       });
+                                       if (title === "" && !image && content === ""){
+                                           router.pop();
+                                       }
+                                       else{
+                                           Alert.alert(
+                                               '是否保存草稿',
+                                               '',
+                                               [
+                                                   {text: '不保存', onPress: () => router.pop()},
+                                                   {text: '保存', onPress: () => {
+                                                       this.saveDraft();
+                                                       router.pop();
+                                                   }},
+                                               ],
+                                               { cancelable: false }
+                                           );
+                                       }
 
-                {/*导航栏*/}
-                <NavigationBar barStyle={'dark-content'}
-                               titleStyle={{fontSize: 17, color: Colors._333}}
-                               toolbarStyle={{backgroundColor: 'white'}}
-                               title={I18n.t('release_article')}
-                               leftBtnText={I18n.t('cancel')}
-                               rightBtnText={I18n.t('draft_box')}
-                               btnTextStyle={{fontSize: 14, color: Colors._333}}
-                               rightBtnPress={() =>{
-                                   ///草稿箱
-                                   global.router.toArticleList();
-                               }}
-                               leftBtnPress={() => {
-                                   router.pop();
-                               }}
-                />
+                                   }}
+
+                    />
 
 
-                <KeyboardAvoidingView style={{flex: 1}}>
                     <FlatList data={data}
                               keyExtractor={(item, index) => index + ""}
                               renderItem={this._renderItem}
                     />
-                </KeyboardAvoidingView>
+                </View>
 
 
                 {/*保存到草稿箱、发布*/}
@@ -505,6 +536,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: "#ECECEE",
         flex: 1,
+        justifyContent:"space-between",
     },
     editIcon: {
         flex: 1,
