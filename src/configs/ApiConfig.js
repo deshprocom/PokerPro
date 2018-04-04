@@ -138,15 +138,15 @@ export default {
     timely_match: timely_match,//及时赛报
     player_match: player_match,//牌手赛报
     crowd_user_count: crowd_user_count,//获取用户历史购买份数
-    releases_show:'releases',//功能开启或隐藏控制
-    poker_coins_discount:'poker_coins/numbers',//获取用户扑客币数量和以及扑客币对应折扣
-    release_topic:release_topic,//发说说/长帖的接口
-    upload_image:"uploaders/tmp_image",//长贴上传图片
-    topics:'topics',//获取广场列表
-    topics_recommends:'/topics/recommends', //获取精华列表
-    topics_like:topics_like,
-    topics_detail:topics_detail
-
+    releases_show: 'releases',//功能开启或隐藏控制
+    poker_coins_discount: 'poker_coins/numbers',//获取用户扑客币数量和以及扑客币对应折扣
+    release_topic: release_topic,//发说说/长帖的接口
+    upload_image: "uploaders/tmp_image",//长贴上传图片
+    topics: 'topics',//获取广场列表
+    topics_recommends: '/topics/recommends', //获取精华列表
+    topics_like: topics_like,//说手长帖点赞
+    topics_detail: topics_detail,//查看帖子详情
+    topics_comments: topics_comments,//获取说说长帖评论列表
 
 
 }
@@ -161,6 +161,10 @@ function getUserId() {
 
 const page_size = 10;
 
+
+function topics_comments(topic_id) {
+    return `topic/user_topics/${topic_id}/comments`
+}
 
 function topics_like(topic_id) {
     return `topic/user_topics/${topic_id}/likes`
@@ -179,7 +183,6 @@ function crowd_user_count(body) {
     const {crowdfunding_id, crowdfunding_player_id} = body;
     return `crowdfundings/${crowdfunding_id}/players/${crowdfunding_player_id}/user_order_count`
 }
-
 
 
 function player_match(body) {

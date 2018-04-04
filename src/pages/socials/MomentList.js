@@ -115,11 +115,13 @@ export default class MomentList extends PureComponent {
             topics({page, page_size: 20}, data => {
                 startFetch(data.items, 15)
             }, err => {
+                abortFetch()
             })
         if (this.props.type === 'recommends')
             topics_recommends({page, page_size: 20}, data => {
                 startFetch(data.items, 15)
             }, err => {
+                abortFetch()
             })
 
     }

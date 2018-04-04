@@ -5,6 +5,15 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 
+export function topics_comments(topic_id, resolve, reject) {
+    helper.get(Api.topics_comments(topic_id), ret => {
+        resolve(ret.data)
+    }, err => {
+        reject(err)
+    })
+}
+
+
 export function topics_details(topic_id) {
     helper.get(Api.topics_detail(topic_id), ret => {
 

@@ -300,8 +300,13 @@ const images = {
         row_delete: require('../../source/social/row_delete.png'),
         row_arrange: require('../../source/social/row_arrange.png'),
         address: require('../../source/social/address.png'),
-        icon_articleedit:require('../../source/social/icon_articleedit.png'),
-        icon_send_mood:require('../../source/social/icon_send_mood.jpg'),
+        icon_articleedit: require('../../source/social/icon_articleedit.png'),
+        icon_send_mood: require('../../source/social/icon_send_mood.jpg'),
+        reply: require('../../source/social/reply.png'),
+        more_3: require('../../source/social/more_3.png'),
+        like_red: require('../../source/social/like_red.png'),
+        like_gray: require('../../source/social/like_gray.png'),
+        comment_gray: require('../../source/social/comment_gray.png')
     }
 
 };

@@ -80,6 +80,9 @@ export default class PayModal extends Component {
 
     render() {
         return (<Modal
+            onRequestClose={() => {
+
+            }}
             animationType={"slide"}
             transparent={true}
             visible={this.state.visible}
