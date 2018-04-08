@@ -53,10 +53,10 @@ export const picker = {
 
 export function uShareMallInfo(title, desc, icon, id) {
     let param = {
-        shareTitle:title,
-        shareText:I18n.t('ads_poker'),
-        shareImage:getShareIcon(icon),
-        shareLink:shareHost() + "products/" + id + "/" + Lang,
+        shareTitle: title,
+        shareText: I18n.t('ads_poker'),
+        shareImage: getShareIcon(icon),
+        shareLink: shareHost() + "products/" + id + "/" + Lang,
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
@@ -69,6 +69,13 @@ export function getFileMine(filePath) {
     let ext = filePath.substr(index + 1);
     console.log(ext)
     return ext;
+}
+
+
+export function isFollowed(user_id) {
+    const {followings} = global.followships;
+    let follow = followings.filter(item => user_id === item.id)
+    return follow.length === 1
 }
 
 
@@ -103,7 +110,6 @@ export function toDecimal(x) {
     f = Math.round(x * 100) / 100;
     return f;
 }
-
 
 
 //根据路径获取文件名
@@ -357,10 +363,10 @@ export function getDateDiff(dateTimeStamp) {
 export function sharePage(title, location, icon, url) {
     let thumb = getShareIcon(icon);
     let param = {
-        shareTitle:title,
-        shareText:location,
-        shareImage:thumb,
-        shareLink:url,
+        shareTitle: title,
+        shareText: location,
+        shareImage: thumb,
+        shareLink: url,
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
@@ -411,10 +417,10 @@ function shareTxt(msg) {
 export function uShareTicket(title, desc, icon, id, ticket_id) {
 
     let param = {
-        shareTitle:title,
-        shareText:shareTxt(desc),
-        shareImage:getShareIcon(icon),
-        shareLink:shareHost() + "races/" + id + '/tickets/' + ticket_id + "/" + Lang,
+        shareTitle: title,
+        shareText: shareTxt(desc),
+        shareImage: getShareIcon(icon),
+        shareLink: shareHost() + "races/" + id + '/tickets/' + ticket_id + "/" + Lang,
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
@@ -423,30 +429,30 @@ export function uShareChoiseTicket(name, location, time, logo, race_id) {
     let des = time + "\n" + location;
     let url = `${shareHost()}raceTickets/${race_id}/${Lang}?x=${new Date().getTime()}`
     let param = {
-        shareTitle:name,
-        shareText:shareTxt(des),
-        shareImage:getShareIcon(logo),
-        shareLink:url,
+        shareTitle: name,
+        shareText: shareTxt(des),
+        shareImage: getShareIcon(logo),
+        shareLink: url,
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
 
 export function uShareActivity(title, desc, icon, id) {
     let param = {
-        shareTitle:title,
-        shareText:shareTxt(desc),
-        shareImage:getShareIcon(icon),
-        shareLink:shareHost() + "activities/" + id + "/" + Lang,
+        shareTitle: title,
+        shareText: shareTxt(desc),
+        shareImage: getShareIcon(icon),
+        shareLink: shareHost() + "activities/" + id + "/" + Lang,
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
 
 export function uShareRace(title, location, icon, raceId) {
     let param = {
-        shareTitle:title,
-        shareText:location,
-        shareImage:getShareIcon(icon),
-        shareLink:shareHost() + "race/" + raceId + "/" + Lang,
+        shareTitle: title,
+        shareText: location,
+        shareImage: getShareIcon(icon),
+        shareLink: shareHost() + "race/" + raceId + "/" + Lang,
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
@@ -455,40 +461,40 @@ export function newShare(title, location, icon, newsId) {
 
     let thumb = getShareIcon(icon);
     let param = {
-        shareTitle:title,
-        shareText:location,
-        shareImage:thumb,
-        shareLink:shareHost() + "news/" + newsId + "/" + Lang,
+        shareTitle: title,
+        shareText: location,
+        shareImage: thumb,
+        shareLink: shareHost() + "news/" + newsId + "/" + Lang,
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
 
 export function rankPlayerShare(title, location, icon, playerId) {
     let param = {
-        shareTitle:title,
-        shareText:location,
-        shareImage:getShareIcon(icon),
-        shareLink:shareHost() + "rankPlayer/" + playerId + "/" + Lang,
+        shareTitle: title,
+        shareText: location,
+        shareImage: getShareIcon(icon),
+        shareLink: shareHost() + "rankPlayer/" + playerId + "/" + Lang,
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
 
 export function rankGameShare(title, location, icon, gameId) {
     let param = {
-        shareTitle:title,
-        shareText:location,
-        shareImage:getShareIcon(icon),
-        shareLink:shareHost() + "rankGame/" + gameId + "/" + Lang,
+        shareTitle: title,
+        shareText: location,
+        shareImage: getShareIcon(icon),
+        shareLink: shareHost() + "rankGame/" + gameId + "/" + Lang,
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }
 
 export function uVideoShare(title, desc, icon, videoId) {
     let param = {
-        shareTitle:title,
-        shareText:shareTxt(desc),
-        shareImage:getShareIcon(icon),
-        shareLink:shareHost() + "videos/" + videoId + "/" + Lang,
+        shareTitle: title,
+        shareText: shareTxt(desc),
+        shareImage: getShareIcon(icon),
+        shareLink: shareHost() + "videos/" + videoId + "/" + Lang,
     };
     getDispatchAction()["SHARE_OPEN"](param);
 }

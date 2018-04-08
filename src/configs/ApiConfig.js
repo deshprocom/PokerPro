@@ -148,6 +148,9 @@ export default {
     topics_detail: topics_detail,//查看帖子详情
     topics_comments: topics_comments,//获取说说长帖评论列表
     topics_image:topics_image,//上传话题相关的图片
+    followships:followships,//获取关注及粉丝列表
+
+
 
 
 }
@@ -162,6 +165,10 @@ function getUserId() {
 
 const page_size = 10;
 
+
+function followships() {
+    return `users/${login_user.user_id}/followships`
+}
 
 function topics_image(topic_id) {
     return `topic/user_topics/${topic_id}/image`

@@ -13,10 +13,13 @@ import {ImageLoad, NavigationBar, UltimateListView} from '../../components'
 import I18n from "react-native-i18n";
 import {Colors, Images, Metrics} from '../../Themes';
 import HTML from 'react-native-render-html';
-import {topics_like, topics_details, topics_comments} from "../../services/SocialDao";
+import {
+    topics_like, topics_details, topics_comments,
+    follow
+} from "../../services/SocialDao";
 import {
     getDateDiff, isEmptyObject, showToast, strNotNull,
-    alertOrder
+    alertOrder, isFollowed
 } from "../../utils/ComonHelper";
 import CommentBar from '../comm/CommentBar';
 import {postComment, postRelaies, delDeleteComment} from '../../services/CommentDao'
@@ -133,19 +136,23 @@ export default class LongArticle extends PureComponent {
 
     state = {
         comments_count: 0,
-        article: this.props.params.article
+        article: this.props.params.article,
+        followed: false
     }
 
     componentDidMount() {
         this.comment_id = '';
         const {article, isComment} = this.props.params;
-        topics_details(article.id)
+        topics_details(article.id);
         if (isComment) {
             setTimeout(() => {
                 this.commentBar && this.commentBar.showInput()
             }, 500)
 
         }
+        this.setState({
+            followed: isFollowed(article.user.user_id)
+        })
     }
 
     render() {
@@ -234,6 +241,7 @@ export default class LongArticle extends PureComponent {
         </View>
     }
 
+    //长帖 个人信息
     flatHeader = () => {
 
 
@@ -253,7 +261,20 @@ export default class LongArticle extends PureComponent {
 
                         <View style={{flex: 1}}/>
 
-                        <Text style={styles.focus}>关注</Text>
+                        {this.isMine(user.user_id) ? null : <Text
+                            onPress={() => {
+                                follow(this.state.followed, {target_id: user.user_id}, data => {
+                                        this.setState({
+                                            followed: !this.state.followed
+                                        })
+                                    },
+                                    err => {
+                                    }
+                                )
+                            }}
+                            style={styles.focus}>{this.state.followed ?
+                            I18n.t('rank_focused') : I18n.t('rank_focus')}</Text>}
+
 
                     </View>
 

@@ -7,6 +7,7 @@ import StorageKey from '../configs/StorageKey';
 import JpushHelp from './JpushHelper';
 import {isEmptyObject, showToast} from '../utils/ComonHelper';
 import {getAddressList} from './OrderDao';
+import {followships} from './SocialDao'
 
 export function releases_show(resolve, reject) {
     helper.get(Api.releases_show, ret => {
@@ -255,6 +256,15 @@ export function setLoginUser(ret) {
 
             //统计登陆用户
             postLoginCount();
+
+            //获取关注及粉丝列表
+            followships(data => {
+
+
+            }, err => {
+
+            })
+
 
         }, 100);
 
