@@ -52,7 +52,9 @@ const styles = StyleSheet.create({
         borderColor: Colors.txt_444
     },
     info: {
-        width: '100%'
+        width: '100%',
+        paddingLeft: 17,
+        paddingRight: 17
     },
     btn_like: {
         flexDirection: 'row',
@@ -104,6 +106,22 @@ const styles = StyleSheet.create({
         color: Colors.txt_444,
         marginLeft: 54,
         marginTop: 6
+    },
+    long_cover: {
+        height: reallySize(200),
+        width: '100%'
+    },
+    short_image: {
+        height: 108,
+        width: 108,
+        marginTop: 9,
+        marginLeft: 9
+    },
+    body: {
+        color: Colors.txt_444,
+        fontSize: 16,
+        marginLeft: 17,
+        marginRight: 17
     }
 })
 
@@ -115,8 +133,14 @@ export default class LongArticle extends PureComponent {
     }
 
     componentDidMount() {
-        const {id} = this.props.params.article;
-        topics_details(id)
+        const {article, isComment} = this.props.params;
+        topics_details(article.id)
+        if (isComment) {
+            setTimeout(() => {
+                this.commentBar && this.commentBar.showInput()
+            }, 500)
+
+        }
     }
 
     render() {
@@ -154,6 +178,7 @@ export default class LongArticle extends PureComponent {
 
             <View style={{position: 'absolute', bottom: 0}}>
                 <CommentBar
+                    ref={ref => this.commentBar = ref}
                     count={this.state.comments_count}
                     send={comment => {
                         let body = {
@@ -197,7 +222,7 @@ export default class LongArticle extends PureComponent {
 
         const {user, created_at, likes, comments, id, body_type, body, title, page_views} = this.state.article;
         return <View>
-            <View style={{paddingLeft: 17, paddingRight: 17, backgroundColor: 'white'}}>
+            <View style={{backgroundColor: 'white'}}>
                 <View style={styles.info}>
                     <Text style={styles.title}>{title}</Text>
                     <View style={styles.btn_like}>
@@ -218,20 +243,23 @@ export default class LongArticle extends PureComponent {
                 </View>
 
 
-                <HTML
-                    imagesMaxWidth={Metrics.screenWidth - 34}
-                    html={body}
-                    tagsStyles={{
-                        p: {
-                            color: Colors.txt_444,
-                            fontSize: 15,
-                            lineHeight: 25,
-                            marginTop: 14,
-                            marginBottom: 14
-                        }
-                    }}/>
+                {body_type === 'long' ? <View style={{paddingLeft: 17, paddingRight: 17}}>
+                    <HTML
+                        imagesMaxWidth={Metrics.screenWidth - 34}
+                        html={body}
+                        tagsStyles={{
+                            p: {
+                                color: Colors.txt_444,
+                                fontSize: 15,
+                                lineHeight: 25,
+                                marginTop: 14,
+                                marginBottom: 14
+                            }
+                        }}/>
+                </View> : this.short(this.state.article)}
 
-                <View style={[styles.btn_like, {marginTop: 15}]}>
+
+                <View style={[styles.btn_like, {marginTop: 15, paddingLeft: 17, paddingRight: 17}]}>
                     <View style={{flex: 1}}/>
 
                     <Text style={styles.time}>阅读</Text>
@@ -247,9 +275,11 @@ export default class LongArticle extends PureComponent {
                 </View>
 
                 <View style={[styles.btn_like, {
-                    height: 44, width: '100%',
+                    height: 44, width: Metrics.screenWidth - 34,
                     borderTopWidth: 1, borderTopColor: Colors._ECE,
-                    marginTop: 10
+                    marginTop: 10,
+                    marginLeft: 17,
+                    marginRight: 17
                 }]}>
                     <Text style={styles.comment}>{`全部评论 (${this.state.comments_count})`}</Text>
                 </View>
@@ -257,6 +287,40 @@ export default class LongArticle extends PureComponent {
             </View>
             <View style={{height: 1, backgroundColor: Colors._ECE}}/>
         </View>
+    }
+
+    short = (item) => {
+        const {images, body} = item;
+        return <View style={{marginTop: 14}}>
+            <Text style={styles.body}>{body}</Text>
+            {images && images.length > 0 ? this.shortImage(images) : null}
+
+
+        </View>
+    }
+
+    shortImage = (images) => {
+        if (images.length === 1) {
+            return <ImageLoad
+                style={[styles.long_cover, {marginTop: 14}]}
+                source={{uri: images[0].image_url}}/>
+        }
+
+        let imageViews = images.map((item, index) => {
+            return <ImageLoad
+                key={'short' + index}
+                style={styles.short_image}
+                source={{uri: item.image_url}}/>
+        });
+
+        return <View style={{
+            flexWrap: 'wrap', flexDirection: 'row',
+            alignItems: 'center', marginTop: 14,
+            marginLeft: 8
+        }}>
+            {imageViews}
+        </View>
+
     }
 
     onFetch = (page = 1, startFetch, abortFetch) => {

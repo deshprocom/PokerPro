@@ -60,10 +60,12 @@ export default class Router {
             name: "MoodRelease"
         })
     }
-    toLongArticle(article) {
+    toLongArticle(article,isComment) {
         this.stackPush({
             name: 'LongArticle',
-            params: {article}
+            params: {article,
+                isComment
+            }
         })
     }
 

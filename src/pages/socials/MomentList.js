@@ -136,8 +136,7 @@ export default class MomentList extends PureComponent {
         const {user, created_at, likes, comments, id, body_type} = item;
         return <TouchableOpacity
             onPress={() => {
-                if (body_type === 'long')
-                    router.toLongArticle(item)
+                router.toLongArticle(item)
             }}
             activeOpacity={1}
             style={styles.item}>
@@ -185,6 +184,9 @@ export default class MomentList extends PureComponent {
                 </TouchableOpacity>
 
                 <TouchableOpacity
+                    onPress={() => {
+                        router.toLongArticle(item, true)
+                    }}
                     style={styles.btn_like}>
                     <Image
                         style={styles.like}
