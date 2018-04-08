@@ -46,7 +46,7 @@ class TabIcon extends PureComponent {
             case 'me':
                 return I18n.t('mine');
             case 'mall':
-                return I18n.t('mall');
+                return I18n.t('discover');
         }
 
     };

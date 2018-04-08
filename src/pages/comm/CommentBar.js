@@ -57,13 +57,16 @@ export default class CommentBar extends PureComponent {
         count: propType.number
     }
 
+
+    showInput = () => {
+        this.inputModal && this.inputModal.toggle()
+    }
+
     render() {
         return <View style={styles.bar}>
 
             <TouchableOpacity
-                onPress={() => {
-                    this.inputModal && this.inputModal.toggle()
-                }}
+                onPress={this.showInput}
                 style={styles.comment}>
                 <Image
                     style={styles.c_pen}
