@@ -235,6 +235,8 @@ export function postLogin(body, resolve, reject) {
 export var LoginUser = {};
 
 function getJmessageInfo(avatar) {
+
+
     ///获取极光登录信息
     helper.post(Api.jmessage_info(),{},(ret) => {
         let {username,password} = ret.data;
@@ -244,46 +246,45 @@ function getJmessageInfo(avatar) {
         }
         ///登录极光
         JMessage.login({
-                // username:username,
-                // password:password,
-                username:"QQ1049260506",
-                password:"QQ1049260506",
+                username:username,
+                password:password,
             },
             //登录成功回调
             () => {
-                jmsgUserName = "QQ1049260506";
+                jmsgUserName = username;
                 //下载网络图片
-                let rootPath = fs.DocumentDirectoryPath;
-                let savePath = rootPath + '/temp_icon.jpg';
-                fs.downloadFile({
-                    fromUrl: avatar,
-                    toFile: savePath
-                }).promise.then(resp => {
-                    console.log(savePath);
-                    if (resp.statusCode === 200) {
-                        ///下载成功后更新用户头像
-                        JMessage.updateMyAvatar(
-                            {
-                                imgPath:savePath
-                            },
-                            () => {
-                                // success do something.
-                                console.log("更新头像成功");
-                            }, (error) => {
-                                console.log("更新头像失败",error);
-                            }
-                        );
-                    }
-                });
+                // let rootPath = fs.DocumentDirectoryPath;
+                // let savePath = rootPath + '/temp_icon.jpg';
+                // fs.downloadFile({
+                //     fromUrl: avatar,
+                //     toFile: savePath
+                // }).promise.then(resp => {
+                //     console.log(savePath);
+                //     if (resp.statusCode === 200) {
+                //         ///下载成功后更新用户头像
+                //         JMessage.updateMyAvatar(
+                //             {
+                //                 imgPath:savePath
+                //             },
+                //             () => {
+                //                 // success do something.
+                //                 console.log("更新头像成功");
+                //
+                //             }, (error) => {
+                //                 console.log("更新头像失败",error);
+                //             }
+                //         );
+                //     }
+                // });
 
             },
             //登录失败回调
             (error) => {
-                console.log("登录失败"+error);
+                console.log("极光IM登录失败",error);
             }
         );
     },(err) => {
-
+        console.log("获取极光IM用户名和密码失败:",err);
     });
 }
 

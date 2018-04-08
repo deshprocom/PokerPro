@@ -64,55 +64,69 @@ export default class MessageCenter extends Component {
 
         });
 
-        ///获取会话列表
-        JMessage.getConversations((conArr) => { // conArr: 会话数组。
-            console.log(conArr);
-            this.setState({conversations:conArr});
-        }, (error) => {
-            console.log("获取会话列表失败");
-        });
+        this.getConversations();
     }
 
+    getConversations = () => {
+        ///获取会话列表
+        JMessage.getConversations((conArr) => { // conArr: 会话数组。
+            this.setState({conversations:conArr});
+        }, (error) => {
+            console.log("获取会话列表失败",error);
+        });
+    };
+
     _renderItem = (item) => {
+        let lastMessage =  item.item.latestMessage;//最后一条消息
+        let target = item.item.target;//目标用户
 
-        let lastMessage =  item.item.latestMessage;
-        let username = lastMessage.from.username;
-        let avatar = lastMessage.from.avatarThumbPath;
-        let createTime = lastMessage.createTime;
-        let type = lastMessage.type;
-        let text = lastMessage.text;
-        if(type === "image"){
-            text = "[图片]";
-        }
-        if (type === "file"){
-            text = "[视频]"
-        }
-        console.log("====",jmsgUserName);
-        if (jmsgUserName === lastMessage.from.username){
-            username = lastMessage.target.username;
-            avatar = lastMessage.target.avatarThumbPath;
-            text = "我："+text;
+        let nickname = target.nickname;
+        let username = target.username;
+        let avatar = target.avatarThumbPath;
+        let createTime = "";
+        let type = "";
+        let text = "";
+        //有最后一条消息
+        if (lastMessage !== undefined){
+            createTime = lastMessage.createTime;
+            type = lastMessage.type;
+            text = lastMessage.text;
+            if (type === "voice"){
+                text = "[语音]";
+            }
+            if(type === "image"){
+                text = "[图片]";
+            }
+            if (type === "file"){
+                text = "[视频]"
+            }
         }
 
-        // console.log();
-          return(
-              <TouchableOpacity
-                  onPress={() => {
 
-                  }}
-                  keyExtractor={(item, index) => index + ""}
-                  style={{backgroundColor: 'white'}}>
-                  <View style={styles.flatItem}>
-                      <Image style={styles.msgIcon}
-                             source={{uri:avatar}}/>
-                      <View>
-                          <Text style={styles.msgTitle}>{username}</Text>
-                          <Text style={styles.msgDesc}>{text}</Text>
-                      </View>
-                      <Text style={styles.msgTime}>{this.formatDate(createTime)}</Text>
-                  </View>
-              </TouchableOpacity>
-          );
+        if (createTime !== undefined && createTime !== ""){
+            createTime = this.formatDate(createTime);
+        }
+
+        return(
+            <TouchableOpacity
+                onPress={() => {
+                    router.toMessageList({username:username,nickName:nickname,reloadPage:() => {
+                        this.getConversations();
+                    }});
+                }}
+                keyExtractor={(item, index) => index + ""}
+                style={{backgroundColor: 'white'}}>
+                <View style={styles.flatItem}>
+                    <Image style={styles.msgIcon}
+                           source={{uri:avatar}}/>
+                    <View>
+                        <Text style={styles.msgTitle}>{nickname}</Text>
+                        <Text style={styles.msgDesc}>{text}</Text>
+                    </View>
+                    <Text style={styles.msgTime}>{createTime}</Text>
+                </View>
+            </TouchableOpacity>
+        );
     };
 
     render() {
@@ -133,8 +147,16 @@ export default class MessageCenter extends Component {
                           <View>
                               {this.readerItem(0, I18n.t('order_notice'), notice.title, notice.created_at, msgUnRead)}
                               {this.readerItem(1, I18n.t('ads_activity'), activity.title, activity.activity_time, 0)}
+                              <View style={[{height:10,backgroundColor:"#ECECEE"}]}/>
                           </View>
                       }
+                      ItemSeparatorComponent= {() => {
+                          return(
+                              <View style={[{height:1},{backgroundColor:"white"}]}>
+                                  <View style={[{height:1},{backgroundColor:"#ECECEE"},{marginLeft:15}]}/>
+                              </View>
+                          );
+                      }}
             />
 
         </View>)
