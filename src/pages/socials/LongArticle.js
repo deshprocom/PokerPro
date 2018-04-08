@@ -172,9 +172,6 @@ export default class LongArticle extends PureComponent {
                 dateTitle={I18n.t('last_refresh')}
                 allLoadedText={I18n.t('no_more')}
                 waitingSpinnerText={I18n.t('loading')}
-                emptyView={() => {
-                    return <NoDataView/>
-                }}
             />
 
             <View style={{position: 'absolute', bottom: 0}}>
@@ -407,7 +404,9 @@ export default class LongArticle extends PureComponent {
                     marginLeft: 54,
                     marginTop: 8
                 }}>
-                <Text style={[styles.c_nick, {marginLeft: 6}]}>{`查看${total_count}条回复>`}</Text>
+                {total_count > 0 ?
+                    <Text style={[styles.c_nick, {marginLeft: 6}]}>{`查看${total_count}条回复>`}</Text> : null}
+
 
             </TouchableOpacity>
 
