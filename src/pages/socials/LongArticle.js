@@ -14,10 +14,10 @@ import I18n from "react-native-i18n";
 import {Colors, Images, Metrics} from '../../Themes';
 import HTML from 'react-native-render-html';
 import {topics_like, topics_details, topics_comments} from "../../services/SocialDao";
-import {getDateDiff, showToast} from "../../utils/ComonHelper";
+import {getDateDiff, showToast, strNotNull} from "../../utils/ComonHelper";
 import {NoDataView} from '../../components/load';
 import CommentBar from '../comm/CommentBar';
-import {postComment} from '../../services/CommentDao'
+import {postComment, postRelaies} from '../../services/CommentDao'
 
 const styles = StyleSheet.create({
     title: {
@@ -133,6 +133,7 @@ export default class LongArticle extends PureComponent {
     }
 
     componentDidMount() {
+        this.comment_id = '';
         const {article, isComment} = this.props.params;
         topics_details(article.id)
         if (isComment) {
@@ -181,17 +182,32 @@ export default class LongArticle extends PureComponent {
                     ref={ref => this.commentBar = ref}
                     count={this.state.comments_count}
                     send={comment => {
-                        let body = {
-                            topic_type: 'user_topic',
-                            topic_id: id,
-                            body: comment
+
+                        if (strNotNull(this.comment_id)) {
+
+                            postRelaies({comment_id: this.comment_id, body: comment},
+                                data => {
+                                    this.comment_id = '';
+                                    showToast(I18n.t('reply_success'));
+                                    this.listView && this.listView.refresh()
+                                }, err => {
+                                })
+
+
+                        } else {
+                            let body = {
+                                topic_type: 'user_topic',
+                                topic_id: id,
+                                body: comment
+                            };
+                            postComment(body, data => {
+                                showToast(I18n.t('comment_success'));
+                                this.listView && this.listView.refresh()
+                            }, err => {
+                                showToast(err)
+                            })
                         }
-                        postComment(body, data => {
-                            showToast(I18n.t('comment_success'));
-                            this.listView && this.listView.refresh()
-                        }, err => {
-                            showToast(err)
-                        })
+
                     }}
                     share={() => {
 
@@ -338,7 +354,7 @@ export default class LongArticle extends PureComponent {
     itemView = (item) => {
         const {
             avatar, nick_name, created_at, official,
-            recommended, body
+            recommended, body, id, total_count
         } = item;
         return <View style={{
             width: '100%', paddingLeft: 17, paddingRight: 17,
@@ -365,23 +381,33 @@ export default class LongArticle extends PureComponent {
 
                 <View style={{flex: 1}}/>
 
-                <Image style={styles.c_comment}
-                       source={Images.social.reply}/>
+                <TouchableOpacity
+                    onPress={() => {
+                        this.comment_id = id;
+                        this.commentBar && this.commentBar.showInput()
+                    }}>
+                    <Image style={styles.c_comment}
+                           source={Images.social.reply}/>
+                </TouchableOpacity>
 
 
             </View>
 
             <Text style={styles.c_body}>{body}</Text>
 
-            <TouchableOpacity style={{
-                height: 20,
-                backgroundColor: '#ECECEE',
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginLeft: 54,
-                marginTop: 8
-            }}>
-                <Text style={[styles.c_nick, {marginLeft: 6}]}>查看34条回复></Text>
+            <TouchableOpacity
+                onPress={() => {
+                    global.router.toCommentInfoPage(item);
+                }}
+                style={{
+                    height: 20,
+                    backgroundColor: '#ECECEE',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginLeft: 54,
+                    marginTop: 8
+                }}>
+                <Text style={[styles.c_nick, {marginLeft: 6}]}>{`查看${total_count}条回复>`}</Text>
 
             </TouchableOpacity>
 
