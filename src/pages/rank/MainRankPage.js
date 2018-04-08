@@ -46,13 +46,13 @@ export default class MainRankPage extends Component {
                     <Image source={Images.race_type}
                            style={styles.right_image1}/>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    this.isLogin()
-                }}
-                                  style={styles.topBtn}>
-                    <Image source={Images.shape}
-                           style={styles.right_image2}/>
-                </TouchableOpacity>
+                {/*<TouchableOpacity onPress={() => {*/}
+                    {/*this.isLogin()*/}
+                {/*}}*/}
+                                  {/*style={styles.topBtn}>*/}
+                    {/*<Image source={Images.shape}*/}
+                           {/*style={styles.right_image2}/>*/}
+                {/*</TouchableOpacity>*/}
             </View>
         </View>)
     };
