@@ -14,9 +14,10 @@ import I18n from "react-native-i18n";
 import {Colors, Images, Metrics} from '../../Themes';
 import HTML from 'react-native-render-html';
 import {topics_like, topics_details, topics_comments} from "../../services/SocialDao";
-import {getDateDiff} from "../../utils/ComonHelper";
+import {getDateDiff, showToast} from "../../utils/ComonHelper";
 import {NoDataView} from '../../components/load';
-import CommentBar from '../comm/CommentBar'
+import CommentBar from '../comm/CommentBar';
+import {postComment} from '../../services/CommentDao'
 
 const styles = StyleSheet.create({
     title: {
@@ -67,7 +68,8 @@ const styles = StyleSheet.create({
     },
     c_avatar: {
         height: 38,
-        width: 38
+        width: 38,
+        borderRadius: 19
     },
     c_nick: {
         color: '#4A90E2',
@@ -96,13 +98,20 @@ const styles = StyleSheet.create({
     c_reply: {
         height: 20,
         width: '100%'
+    },
+    c_body: {
+        fontSize: 16,
+        color: Colors.txt_444,
+        marginLeft: 54,
+        marginTop: 6
     }
 })
 
 export default class LongArticle extends PureComponent {
 
     state = {
-        comments_count: 0
+        comments_count: 0,
+        article: this.props.params.article
     }
 
     componentDidMount() {
@@ -111,9 +120,9 @@ export default class LongArticle extends PureComponent {
     }
 
     render() {
+        const {id} = this.state.article;
 
-
-        return <View style={{flex: 1}}>
+        return <View style={{flex: 1, backgroundColor: 'white'}}>
             <NavigationBar
                 barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
                 toolbarStyle={{backgroundColor: Colors.white, borderBottomWidth: 1, borderBottomColor: Colors._ECE}}
@@ -127,6 +136,7 @@ export default class LongArticle extends PureComponent {
 
 
             <UltimateListView
+                style={{marginBottom: 50}}
                 header={() => this.flatHeader()}
                 keyExtractor={(item, index) => index + "longArticle"}
                 ref={(ref) => this.listView = ref}
@@ -144,6 +154,37 @@ export default class LongArticle extends PureComponent {
 
             <View style={{position: 'absolute', bottom: 0}}>
                 <CommentBar
+                    count={this.state.comments_count}
+                    send={comment => {
+                        let body = {
+                            topic_type: 'user_topic',
+                            topic_id: id,
+                            body: comment
+                        }
+                        postComment(body, data => {
+                            showToast(I18n.t('comment_success'));
+                            this.listView && this.listView.refresh()
+                        }, err => {
+                            showToast(err)
+                        })
+                    }}
+                    share={() => {
+
+                    }}
+                    like={() => {
+
+                        topics_like(id, data => {
+                            let article = {...this.state.article};
+                            article.likes = data.total_likes;
+                            this.setState({
+                                article
+                            })
+
+                        }, err => {
+                            console.log(err)
+                        })
+
+                    }}
                 />
             </View>
 
@@ -154,73 +195,67 @@ export default class LongArticle extends PureComponent {
     flatHeader = () => {
 
 
-        const {user, created_at, likes, comments, id, body_type, body, title, page_views} = this.props.params.article;
-        return <View style={{paddingLeft: 17, paddingRight: 17, backgroundColor: 'white'}}>
-            <View style={styles.info}>
-                <Text style={styles.title}>{title}</Text>
-                <View style={styles.btn_like}>
-                    <ImageLoad style={styles.avatar}
-                               source={{uri: user.avatar}}/>
+        const {user, created_at, likes, comments, id, body_type, body, title, page_views} = this.state.article;
+        return <View>
+            <View style={{paddingLeft: 17, paddingRight: 17, backgroundColor: 'white'}}>
+                <View style={styles.info}>
+                    <Text style={styles.title}>{title}</Text>
+                    <View style={styles.btn_like}>
+                        <ImageLoad style={styles.avatar}
+                                   source={{uri: user.avatar}}/>
 
-                    <View style={{marginLeft: 12}}>
-                        <Text style={styles.nick_name}>{user.nick_name}</Text>
-                        <Text style={[styles.time, {marginTop: 5}]}>{getDateDiff(created_at)}·深圳</Text>
+                        <View style={{marginLeft: 12}}>
+                            <Text style={styles.nick_name}>{user.nick_name}</Text>
+                            <Text style={[styles.time, {marginTop: 5}]}>{getDateDiff(created_at)}·深圳</Text>
+                        </View>
+
+                        <View style={{flex: 1}}/>
+
+                        <Text style={styles.focus}>关注</Text>
+
                     </View>
-
-                    <View style={{flex: 1}}/>
-
-                    <Text style={styles.focus}>关注</Text>
 
                 </View>
 
+
+                <HTML
+                    imagesMaxWidth={Metrics.screenWidth - 34}
+                    html={body}
+                    tagsStyles={{
+                        p: {
+                            color: Colors.txt_444,
+                            fontSize: 15,
+                            lineHeight: 25,
+                            marginTop: 14,
+                            marginBottom: 14
+                        }
+                    }}/>
+
+                <View style={[styles.btn_like, {marginTop: 15}]}>
+                    <View style={{flex: 1}}/>
+
+                    <Text style={styles.time}>阅读</Text>
+                    <Text style={[styles.time, {marginLeft: 4, marginRight: 20}]}>{page_views}</Text>
+                    <View
+                        style={styles.btn_like}>
+                        <Image
+                            style={styles.like}
+                            source={Images.social.like_gray}/>
+                        <Text style={[styles.time, {marginLeft: 4}]}>{likes}</Text>
+                    </View>
+
+                </View>
+
+                <View style={[styles.btn_like, {
+                    height: 44, width: '100%',
+                    borderTopWidth: 1, borderTopColor: Colors._ECE,
+                    marginTop: 10
+                }]}>
+                    <Text style={styles.comment}>{`全部评论 (${this.state.comments_count})`}</Text>
+                </View>
+
             </View>
-
-
-            <HTML
-                imagesMaxWidth={Metrics.screenWidth - 34}
-                html={body}
-                tagsStyles={{
-                    p: {
-                        color: Colors.txt_444,
-                        fontSize: 15,
-                        lineHeight: 25,
-                        marginTop: 14,
-                        marginBottom: 14
-                    }
-                }}/>
-
-            <View style={[styles.btn_like, {marginTop: 15}]}>
-                <View style={{flex: 1}}/>
-
-                <Text style={styles.time}>阅读</Text>
-                <Text style={[styles.time, {marginLeft: 4, marginRight: 20}]}>{page_views}</Text>
-                <TouchableOpacity
-                    onPress={() => {
-                        topics_like(id, data => {
-                            item.likes = data.total_likes;
-                            this.listView && this.listView.updateDataSource(this.listView.getRows())
-
-                        }, err => {
-                            console.log(err)
-                        })
-                    }}
-                    style={styles.btn_like}>
-                    <Image
-                        style={styles.like}
-                        source={Images.social.like_gray}/>
-                    <Text style={[styles.time, {marginLeft: 4}]}>{likes}</Text>
-                </TouchableOpacity>
-
-            </View>
-
-            <View style={[styles.btn_like, {
-                height: 44, width: '100%',
-                borderTopWidth: 1, borderTopColor: Colors._ECE,
-                marginTop: 10
-            }]}>
-                <Text style={styles.comment}>{`全部评论 (${this.state.comments_count})`}</Text>
-            </View>
-
+            <View style={{height: 1, backgroundColor: Colors._ECE}}/>
         </View>
     }
 
@@ -239,16 +274,19 @@ export default class LongArticle extends PureComponent {
     itemView = (item) => {
         const {
             avatar, nick_name, created_at, official,
-            recommended
+            recommended, body
         } = item;
-        return <View style={{width: '100%'}}>
+        return <View style={{
+            width: '100%', paddingLeft: 17, paddingRight: 17,
+            paddingTop: 12
+        }}>
             <View style={styles.btn_like}>
                 <ImageLoad style={styles.c_avatar}
                            source={{uri: avatar}}/>
 
-                <View>
+                <View style={{marginLeft: 10}}>
                     <Text style={styles.c_nick}>{nick_name}</Text>
-                    <Text style={styles.c_time}>{getDateDiff(created_at)}</Text>
+                    <Text style={[styles.c_time, {marginTop: 5}]}>{getDateDiff(created_at)}</Text>
                 </View>
 
                 {official ? <Text style={[styles.c_tag, {
@@ -268,6 +306,22 @@ export default class LongArticle extends PureComponent {
 
 
             </View>
+
+            <Text style={styles.c_body}>{body}</Text>
+
+            <TouchableOpacity style={{
+                height: 20,
+                backgroundColor: '#ECECEE',
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginLeft: 54,
+                marginTop: 8
+            }}>
+                <Text style={[styles.c_nick, {marginLeft: 6}]}>查看34条回复></Text>
+
+            </TouchableOpacity>
+
+            <View style={{height: 1, backgroundColor: Colors._ECE, marginTop: 8}}/>
 
 
         </View>

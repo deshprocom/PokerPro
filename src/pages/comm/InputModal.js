@@ -63,6 +63,10 @@ export default class InputModal extends Component {
                     </View>
 
                     <TouchableOpacity
+                        onPress={() => {
+                            this.props.send(this.state.comment);
+                            this.toggle()
+                        }}
                         style={styles.release}>
                         <Text style={{color: Colors.txt_444, fontSize: 15}}>发送</Text>
                     </TouchableOpacity>
