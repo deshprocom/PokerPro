@@ -51,6 +51,7 @@ class SquareBar extends PureComponent {
         const {tabs, activeTab, goToPage} = this.props;
 
         let tabs_views = tabs.map((item, index) => <TouchableOpacity
+            key={'bar' + index}
             onPress={() => {
                 goToPage(index)
             }}

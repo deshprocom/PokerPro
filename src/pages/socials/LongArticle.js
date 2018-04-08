@@ -14,10 +14,12 @@ import I18n from "react-native-i18n";
 import {Colors, Images, Metrics} from '../../Themes';
 import HTML from 'react-native-render-html';
 import {topics_like, topics_details, topics_comments} from "../../services/SocialDao";
-import {getDateDiff, showToast, strNotNull} from "../../utils/ComonHelper";
-import {NoDataView} from '../../components/load';
+import {
+    getDateDiff, isEmptyObject, showToast, strNotNull,
+    alertOrder
+} from "../../utils/ComonHelper";
 import CommentBar from '../comm/CommentBar';
-import {postComment, postRelaies} from '../../services/CommentDao'
+import {postComment, postRelaies, delDeleteComment} from '../../services/CommentDao'
 
 const styles = StyleSheet.create({
     title: {
@@ -95,7 +97,9 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 10,
         paddingTop: 2,
-        paddingBottom: 2
+        paddingBottom: 2,
+        marginLeft: 8,
+        borderRadius: 2
     },
     c_reply: {
         height: 20,
@@ -346,12 +350,21 @@ export default class LongArticle extends PureComponent {
         }, err => {
             abortFetch()
         }, {page, page_size: 20})
+    };
+
+
+    isMine = (user_id) => {
+        if (isEmptyObject(global.login_user)) {
+            return false
+        }
+
+        return global.login_user.user_id === user_id
     }
 
     itemView = (item) => {
         const {
             avatar, nick_name, created_at, official,
-            recommended, body, id, total_count
+            recommended, body, id, total_count, user_id
         } = item;
         return <View style={{
             width: '100%', paddingLeft: 17, paddingRight: 17,
@@ -362,19 +375,38 @@ export default class LongArticle extends PureComponent {
                            source={{uri: avatar}}/>
 
                 <View style={{marginLeft: 10}}>
-                    <Text style={styles.c_nick}>{nick_name}</Text>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text style={styles.c_nick}>{nick_name}</Text>
+
+                        {official ? <Text style={[styles.c_tag, {
+                            backgroundColor: '#161718',
+                            color: '#FFE9AD'
+                        }]}>官方</Text> : null}
+
+                        {recommended ? <Text style={[styles.c_tag, {
+                            backgroundColor: '#161718',
+                            color: '#FFE9AD'
+                        }]}>精选</Text> : null}
+
+                        {this.isMine(user_id) ? <Text
+                            onPress={() => {
+                                alertOrder('确认删除', () => {
+                                    delDeleteComment({comment_id: id}, data => {
+                                        this.listView && this.listView.refresh()
+                                    }, err => {
+
+                                    })
+                                })
+
+                            }}
+                            style={{color: Colors._CCC, marginLeft: 8}}>删除</Text> : null}
+
+
+                    </View>
+
                     <Text style={[styles.c_time, {marginTop: 5}]}>{getDateDiff(created_at)}</Text>
                 </View>
 
-                {official ? <Text style={[styles.c_tag, {
-                    backgroundColor: '#161718',
-                    color: '#FFE9AD'
-                }]}>官方</Text> : null}
-
-                {recommended ? <Text style={[styles.c_tag, {
-                    backgroundColor: '#161718',
-                    color: '#FFE9AD'
-                }]}>精选</Text> : null}
 
                 <View style={{flex: 1}}/>
 
