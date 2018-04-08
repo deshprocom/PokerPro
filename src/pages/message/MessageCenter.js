@@ -5,13 +5,14 @@ import React, {Component} from 'react';
 import {
     StyleSheet, Image, Platform, ActivityIndicator,
     Dimensions, View, Text, ScrollView, TouchableOpacity,
-    InteractionManager
+    InteractionManager,FlatList
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {NavigationBar} from '../../components';
 import {isEmptyObject, utcDate} from '../../utils/ComonHelper';
 import {getActivities, getMsgUnRead} from '../../services/AccountDao';
+import JMessage from "jmessage-react-plugin";
 
 const icons = [
     require('../../../source/message/ic_order.png'),
@@ -31,7 +32,8 @@ export default class MessageCenter extends Component {
         activity: {},
         notice: {},
         activities: [],
-        msgUnRead: 0
+        msgUnRead: 0,
+        conversations:[],//会話列表
     };
 
     componentDidMount() {
@@ -60,11 +62,39 @@ export default class MessageCenter extends Component {
 
         }, err => {
 
-        })
+        });
+
+        ///获取会话列表
+        JMessage.getConversations((conArr) => { // conArr: 会话数组。
+            console.log(conArr);
+            this.setState({conversations:conArr});
+        }, (error) => {
+            console.log("获取会话列表失败");
+        });
     }
 
-    render() {
+    _renderItem = (item) => {
+        // item.item.latestMessage.from/target.username //用户名
+        // item.item.latestMessage.from.avatarThumbPath //头像
+        // item.item.latestMessage.createTime 时间
+        // item.item.latestMessage.text 消息
 
+        // let username =
+
+        // console.log();
+          return(
+              <TouchableOpacity
+                  onPress={() => {
+
+                  }}
+                  style={{backgroundColor: 'white'}}>
+                  <View style={styles.flatItem}>
+                  </View>
+              </TouchableOpacity>
+          );
+    };
+
+    render() {
         const {activity, notice, msgUnRead} = this.state;
         return (<View style={ApplicationStyles.bgContainer}>
             <NavigationBar
@@ -75,19 +105,22 @@ export default class MessageCenter extends Component {
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}/>
 
-            <ScrollView>
-                {this.readerItem(0, I18n.t('order_notice'), notice.title, notice.created_at, msgUnRead)}
-                {this.readerItem(1, I18n.t('ads_activity'), activity.title, activity.activity_time, 0)}
 
-            </ScrollView>
-
+            <FlatList data={this.state.conversations}
+                      renderItem={this._renderItem}
+                      ListHeaderComponent = {
+                          <View>
+                              {this.readerItem(0, I18n.t('order_notice'), notice.title, notice.created_at, msgUnRead)}
+                              {this.readerItem(1, I18n.t('ads_activity'), activity.title, activity.activity_time, 0)}
+                          </View>
+                      }
+            />
 
         </View>)
     }
 
 
     readerItem = (index, title, desc, time, msgUnRead) => {
-
 
         return (
             <TouchableOpacity
