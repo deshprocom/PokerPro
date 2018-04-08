@@ -74,12 +74,25 @@ export default class MessageCenter extends Component {
     }
 
     _renderItem = (item) => {
-        // item.item.latestMessage.from/target.username //用户名
-        // item.item.latestMessage.from.avatarThumbPath //头像
-        // item.item.latestMessage.createTime 时间
-        // item.item.latestMessage.text 消息
 
-        // let username =
+        let lastMessage =  item.item.latestMessage;
+        let username = lastMessage.from.username;
+        let avatar = lastMessage.from.avatarThumbPath;
+        let createTime = lastMessage.createTime;
+        let type = lastMessage.type;
+        let text = lastMessage.text;
+        if(type === "image"){
+            text = "[图片]";
+        }
+        if (type === "file"){
+            text = "[视频]"
+        }
+        console.log("====",jmsgUserName);
+        if (jmsgUserName === lastMessage.from.username){
+            username = lastMessage.target.username;
+            avatar = lastMessage.target.avatarThumbPath;
+            text = "我："+text;
+        }
 
         // console.log();
           return(
@@ -87,8 +100,16 @@ export default class MessageCenter extends Component {
                   onPress={() => {
 
                   }}
+                  keyExtractor={(item, index) => index + ""}
                   style={{backgroundColor: 'white'}}>
                   <View style={styles.flatItem}>
+                      <Image style={styles.msgIcon}
+                             source={{uri:avatar}}/>
+                      <View>
+                          <Text style={styles.msgTitle}>{username}</Text>
+                          <Text style={styles.msgDesc}>{text}</Text>
+                      </View>
+                      <Text style={styles.msgTime}>{this.formatDate(createTime)}</Text>
                   </View>
               </TouchableOpacity>
           );
@@ -149,6 +170,31 @@ export default class MessageCenter extends Component {
             </TouchableOpacity>)
     };
 
+
+    formatDate(timestamp, formater) {
+        let date = new Date();
+        date.setTime(parseInt(timestamp));
+        formater = (formater != null)? formater : 'yyyy-MM-dd hh:mm';
+        Date.prototype.Format = function (fmt) {
+            var o = {
+                "M+": this.getMonth() + 1, //月
+                "d+": this.getDate(), //日
+                "h+": this.getHours(), //小时
+                "m+": this.getMinutes(), //分
+                "s+": this.getSeconds(), //秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                "S": this.getMilliseconds() //毫秒
+            };
+
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o) {
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ?
+                    (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            }
+            return fmt;
+        }
+        return date.Format(formater);
+    }
 
 }
 

@@ -11,12 +11,14 @@ import {
 import I18n from "react-native-i18n";
 import {Colors,Images} from "../../Themes";
 import {NavigationBar} from '../../components';
-import {isEmptyObject,utcDate,strNotNull} from '../../utils/ComonHelper';
 import {reallySize,screenWidth,toolBarHeight} from "./Header";
 import ImagePicker from 'react-native-image-crop-picker';
 import PopAction from "../comm/PopAction";
 import {getFileName,showToast} from "../../utils/ComonHelper";
-import {uploadImage,postTopic} from '../../services/SocialDao'
+import {uploadImage,postTopic} from '../../services/SocialDao';
+import Loading from "../../components/Loading";
+
+let lastUpload = false;//是否需要上传最后一张
 
 export default class MoodRelease extends Component {
     constructor(props) {
@@ -44,9 +46,16 @@ export default class MoodRelease extends Component {
 
             this.popAction.toggle();
             let imagePath = newImages[currentIndex];
+
+            //需要上传最后一张
+            if (currentIndex === 8){
+                lastUpload = true;
+            }
+
             ///插入图片
             if (imagePath.imagePath === Images.social.icon_send_mood && currentIndex !== 8) {
                 newImages.splice(currentIndex, 0, {imagePath: image.path});
+
             }
             ///覆盖图片
             else {
@@ -69,6 +78,12 @@ export default class MoodRelease extends Component {
 
             this.popAction.toggle();
             let imagePath = newImages[currentIndex];
+
+            //需要上传最后一张
+            if (currentIndex === 8){
+                lastUpload = true;
+            }
+
             ///插入图片
             if (imagePath.imagePath === Images.social.icon_send_mood && currentIndex !== 8) {
                 newImages.splice(currentIndex, 0, {imagePath: image.path});
@@ -83,6 +98,8 @@ export default class MoodRelease extends Component {
 
     ///请求发说说接口
     fetchData = () => {
+        this.loading && this.loading.open();
+
         let mood = this.state.mood;
         let images = this.state.images;
 
@@ -99,14 +116,23 @@ export default class MoodRelease extends Component {
         let imageIds = [];
         images.forEach((image, index) => {
             let imagePath = image.imagePath;
+            //不上传占位图
             if (imagePath !== Images.social.icon_send_mood) {
                 this.uploadImageAction(imagePath, (data) => {
                     imageIds.push(data.id);
+                    ///需要上传最后一张，等待所有图片上传完成
+                    if (lastUpload){
+                        if (images.length === imageIds.length){
+                            this.sendMood(mood,imageIds);
+                        }
+                    }
+                    ///不需要上传最后一张，等待除占位图外所有图片上传完成
+                    else{
+                        if (images.length - 1 === imageIds.length){
+                            this.sendMood(mood,imageIds);
+                        }
+                    }
                 })
-            }
-            // 最后一张
-            if (index === images.length - 1) {
-                this.sendMood(mood,imageIds);
             }
         });
 
@@ -124,6 +150,7 @@ export default class MoodRelease extends Component {
         };
         postTopic(body, data => {
             showToast(I18n.t('article_release_success'));
+            this.loading && this.loading.close();
             router.popToTop();
         }, err => {
 
@@ -132,7 +159,6 @@ export default class MoodRelease extends Component {
 
     ///上传图片
     uploadImageAction = (imagePath,successCallBack) => {
-
         ///未登录先登录
         if (login_user.user_id === undefined){
             router.toLoginFirstPage();
@@ -228,6 +254,8 @@ export default class MoodRelease extends Component {
                 <PopAction
                     ref={ref => this.popAction = ref}
                     btnArray={this.popActions()}/>
+
+                <Loading ref={ref => this.loading = ref}/>
 
             </View>
         )

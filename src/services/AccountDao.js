@@ -251,7 +251,7 @@ function getJmessageInfo(avatar) {
             },
             //登录成功回调
             () => {
-                jmsgUserName = username;
+                jmsgUserName = "QQ1049260506";
                 //下载网络图片
                 let rootPath = fs.DocumentDirectoryPath;
                 let savePath = rootPath + '/temp_icon.jpg';
