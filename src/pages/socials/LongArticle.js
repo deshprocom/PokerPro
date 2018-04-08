@@ -392,7 +392,7 @@ export default class LongArticle extends PureComponent {
 
             <Text style={styles.c_body}>{body}</Text>
 
-            <TouchableOpacity
+            {total_count > 0 ? <TouchableOpacity
                 onPress={() => {
                     global.router.toCommentInfoPage(item);
                 }}
@@ -404,11 +404,11 @@ export default class LongArticle extends PureComponent {
                     marginLeft: 54,
                     marginTop: 8
                 }}>
-                {total_count > 0 ?
-                    <Text style={[styles.c_nick, {marginLeft: 6}]}>{`查看${total_count}条回复>`}</Text> : null}
+                <Text style={[styles.c_nick, {marginLeft: 6}]}>{`查看${total_count}条回复>`}</Text>
 
 
-            </TouchableOpacity>
+            </TouchableOpacity> : null}
+
 
             <View style={{height: 1, backgroundColor: Colors._ECE, marginTop: 8}}/>
 
