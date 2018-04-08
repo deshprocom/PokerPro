@@ -88,6 +88,12 @@ export const styles = StyleSheet.create({
         paddingTop: 2,
         paddingBottom: 2,
         marginRight: 12
+    },
+    short_image: {
+        height: reallySize(108),
+        width: reallySize(108),
+        marginTop: reallySize(9),
+        marginLeft: reallySize(9)
     }
 })
 
@@ -130,7 +136,8 @@ export default class MomentList extends PureComponent {
         const {user, created_at, likes, comments, id, body_type} = item;
         return <TouchableOpacity
             onPress={() => {
-                router.toLongArticle(item)
+                if (body_type === 'long')
+                    router.toLongArticle(item)
             }}
             activeOpacity={1}
             style={styles.item}>
@@ -204,14 +211,40 @@ export default class MomentList extends PureComponent {
 
             <ImageLoad
                 style={styles.long_cover}
-                source={{uri: ""}}/>
+                source={{uri: item.cover_link}}/>
         </View>
     }
 
     short = (item) => {
+        const {images, body} = item;
         return <View>
-            <Text style={styles.body}>{item.body}</Text>
+            <Text style={styles.body}>{body}</Text>
+            {images && images.length > 0 ? this.shortImage(images) : null}
+
 
         </View>
+    }
+
+    shortImage = (images) => {
+        if (images.length === 1) {
+            return <ImageLoad
+                style={styles.long_cover}
+                source={{uri: images[0].image_url}}/>
+        }
+
+        let imageViews = images.map((item, key) => {
+            return <ImageLoad
+                key={'short' + key}
+                style={styles.short_image}
+                source={{uri: item.image_url}}/>
+        });
+
+        return <View style={{
+            flexWrap: 'wrap', flexDirection: 'row',
+            alignItems: 'center', marginLeft: 8
+        }}>
+            {imageViews}
+        </View>
+
     }
 }

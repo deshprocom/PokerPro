@@ -52,5 +52,14 @@ export default class Square extends PureComponent {
     }
 }
 
+class SquareBar extends PureComponent{
+
+    render(){
+        return <View>
+
+        </View>
+    }
+}
+
 
 

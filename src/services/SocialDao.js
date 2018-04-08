@@ -54,6 +54,14 @@ export function postTopic(body, resolve, reject) {
     })
 }
 
+export function uploadTopicImage(topic_id,body,resolve,reject) {
+    helper.post(Api.topics_image(topic_id), body, (ret) => {
+        resolve(ret.data)
+    }, err => {
+        reject(err)
+    })
+}
+
 export function uploadImage(body, resolve, reject) {
     helper.post(Api.upload_image, body, (ret) => {
         resolve(ret.data)

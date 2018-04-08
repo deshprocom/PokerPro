@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet,
     View,
@@ -9,14 +9,14 @@ import {
     Text,
 } from 'react-native';
 import I18n from "react-native-i18n";
-import {Colors,Images} from "../../Themes";
+import {Colors, Images} from "../../Themes";
 import {NavigationBar} from '../../components';
-import {isEmptyObject,utcDate,strNotNull} from '../../utils/ComonHelper';
-import {reallySize,screenWidth,toolBarHeight} from "./Header";
+import {isEmptyObject, utcDate, strNotNull} from '../../utils/ComonHelper';
+import {reallySize, screenWidth, toolBarHeight} from "./Header";
 import ImagePicker from 'react-native-image-crop-picker';
 import PopAction from "../comm/PopAction";
-import {getFileName,showToast} from "../../utils/ComonHelper";
-import {uploadImage,postTopic} from '../../services/SocialDao'
+import {getFileName, showToast} from "../../utils/ComonHelper";
+import {uploadImage, postTopic} from '../../services/SocialDao'
 
 export default class MoodRelease extends Component {
     constructor(props) {
@@ -85,43 +85,45 @@ export default class MoodRelease extends Component {
     fetchData = () => {
         let mood = this.state.mood;
         let images = this.state.images;
-
+        let imageIds = [];
         if (mood === "" && images.length === 1) {
             showToast("没有编辑任何内容");
             return;
         }
         //无需上传图片
         if (images.length === 1) {
-            this.sendMood(mood,[]);
+            this.sendMood(mood, imageIds);
             return;
         }
 
-        let imageIds = [];
+
         images.forEach((image, index) => {
             let imagePath = image.imagePath;
             if (imagePath !== Images.social.icon_send_mood) {
                 this.uploadImageAction(imagePath, (data) => {
                     imageIds.push(data.id);
+                    // 最后一张
+                    if (imageIds.length === images.length - 1) {
+                        this.sendMood(mood, imageIds);
+                    }
                 })
             }
-            // 最后一张
-            if (index === images.length - 1) {
-                this.sendMood(mood,imageIds);
-            }
+
         });
 
     };
     ///发说说
-    sendMood = (mood,images) => {
+    sendMood = (mood, images) => {
         let body = {
             body_type: 'short',
             body: mood,
-            images: images,
+            images,
             published: true,
             lat: '',
             lng: '',
             location: '',
         };
+
         postTopic(body, data => {
             showToast("发布成功");
             router.popToTop();
@@ -131,39 +133,41 @@ export default class MoodRelease extends Component {
     };
 
     ///上传图片
-    uploadImageAction = (imagePath,successCallBack) => {
+    uploadImageAction = (imagePath, successCallBack) => {
 
         ///未登录先登录
-        if (login_user.user_id === undefined){
+        if (login_user.user_id === undefined) {
             router.toLoginFirstPage();
             return;
         }
 
         let formData = new FormData();
         let file = {uri: imagePath, type: "multipart/form-data", name: getFileName(imagePath)};
-        formData.append("image",file);
-        uploadImage(formData,data=>{
+        formData.append("image", file);
+        uploadImage(formData, data => {
             successCallBack(data);
-        },err =>{
-            this.uploadImageAction(imagePath,successCallBack);
+        }, err => {
+            this.uploadImageAction(imagePath, successCallBack);
         });
     };
 
     ///渲染图片
     _renderItem = (item) => {
-        return(
+        return (
             <View style={styles.item}>
                 <TouchableOpacity onPress={() => {
-                    this.setState({currentIndex:item.index})
+                    this.setState({currentIndex: item.index})
                     this.popAction && this.popAction.toggle()
                 }}>
-                    {item.item.imagePath === Images.social.icon_send_mood?<Image style={styles.itemImage} source={item.item.imagePath}/>:<Image style={styles.itemImage} source={{uri:item.item.imagePath}}/>}
+                    {item.item.imagePath === Images.social.icon_send_mood ?
+                        <Image style={styles.itemImage} source={item.item.imagePath}/> :
+                        <Image style={styles.itemImage} source={{uri: item.item.imagePath}}/>}
                 </TouchableOpacity>
             </View>
         )
     };
 
-    render(){
+    render() {
         let images = this.state.images;
         let imageLine = images.length / 3;
         if (images.length % 3 !== 0) {
@@ -171,7 +175,7 @@ export default class MoodRelease extends Component {
         }
         let height = imageLine * (((screenWidth - reallySize(50)) / 3) + reallySize(8));
 
-        return(
+        return (
             <View style={styles.container}>
                 <View>
                     {/*导航栏*/}
@@ -186,14 +190,14 @@ export default class MoodRelease extends Component {
                                    }}
                     />
 
-                    <TextInput  placeholder={I18n.t('social_content')}
-                                style={styles.textInput}
-                                multiline={true}
-                                onChangeText={(text) => {
-                                    this.setState({
-                                        mood: text
-                                    })
-                                }}
+                    <TextInput placeholder={I18n.t('social_content')}
+                               style={styles.textInput}
+                               multiline={true}
+                               onChangeText={(text) => {
+                                   this.setState({
+                                       mood: text
+                                   })
+                               }}
                     />
 
                     <FlatList data={images}
@@ -206,8 +210,10 @@ export default class MoodRelease extends Component {
                     />
 
                     <View style={styles.subView}>
-                        <Image source={Images.social.address} style={[{width:reallySize(14)},{height:reallySize(18)}]}/>
-                        <Text style={[{color:"#AAAAAA"},{fontSize:14},{marginLeft:5}]}>{I18n.t('show_address')}</Text>
+                        <Image source={Images.social.address}
+                               style={[{width: reallySize(14)}, {height: reallySize(18)}]}/>
+                        <Text
+                            style={[{color: "#AAAAAA"}, {fontSize: 14}, {marginLeft: 5}]}>{I18n.t('show_address')}</Text>
                     </View>
                 </View>
 
@@ -235,51 +241,55 @@ export default class MoodRelease extends Component {
 
     popActions = () => {
         return [
-            {name: '拍照', txtStyle: {color: '#4A90E2'},onPress:() => {
-                this.insertTakePhotoAction();
-            }},
-            {name: '从相册选择', txtStyle: {color: '#4A90E2'},onPress:() => {
-                this.insetrtImageAction();
-            }},
-            {name: '取消', txtStyle: {color: '#F24A4A'},onPress: () => this.popAction.toggle()}
+            {
+                name: '拍照', txtStyle: {color: '#4A90E2'}, onPress: () => {
+                    this.insertTakePhotoAction();
+                }
+            },
+            {
+                name: '从相册选择', txtStyle: {color: '#4A90E2'}, onPress: () => {
+                    this.insetrtImageAction();
+                }
+            },
+            {name: '取消', txtStyle: {color: '#F24A4A'}, onPress: () => this.popAction.toggle()}
         ];
     };
 }
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#ECECEE",
-        flex:1,
-        justifyContent:"space-between",
+        flex: 1,
+        justifyContent: "space-between",
     },
-    textInput:{
-        width:reallySize(341),
-        height:reallySize(132),
-        marginTop:reallySize(15),
-        marginLeft:reallySize(17),
-        backgroundColor:"white",
-        padding:10,
+    textInput: {
+        width: reallySize(341),
+        height: reallySize(132),
+        marginTop: reallySize(15),
+        marginLeft: reallySize(17),
+        backgroundColor: "white",
+        padding: 10,
     },
-    flatList:{
-        marginLeft:reallySize(17),
-        marginTop:reallySize(14),
-        marginRight:reallySize(17),
+    flatList: {
+        marginLeft: reallySize(17),
+        marginTop: reallySize(14),
+        marginRight: reallySize(17),
     },
-    item:{
-        width:(screenWidth - reallySize(50)) / 3,
-        height:(screenWidth - reallySize(50)) / 3,
-        marginRight:reallySize(8),
-        marginBottom:reallySize(8),
+    item: {
+        width: (screenWidth - reallySize(50)) / 3,
+        height: (screenWidth - reallySize(50)) / 3,
+        marginRight: reallySize(8),
+        marginBottom: reallySize(8),
     },
-    itemImage:{
-        width:(screenWidth - reallySize(50)) / 3,
-        height:(screenWidth - reallySize(50)) / 3,
+    itemImage: {
+        width: (screenWidth - reallySize(50)) / 3,
+        height: (screenWidth - reallySize(50)) / 3,
     },
-    subView:{
-        flexDirection:"row",
-        alignItems:"center",
-        width:reallySize(375),
-        paddingLeft:reallySize(18),
-        height:reallySize(30),
+    subView: {
+        flexDirection: "row",
+        alignItems: "center",
+        width: reallySize(375),
+        paddingLeft: reallySize(18),
+        height: reallySize(30),
     },
     toolBar: {
         width: screenWidth,
@@ -290,12 +300,12 @@ const styles = StyleSheet.create({
     save: {
         width: reallySize(160),
         height: reallySize(34),
-        backgroundColor:"white",
+        backgroundColor: "white",
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 4,
         borderColor: "#ECECEE",
-        borderWidth:1,
+        borderWidth: 1,
         marginLeft: reallySize(17),
         marginTop: reallySize(8),
         marginRight: reallySize(11),
