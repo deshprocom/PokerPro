@@ -3,7 +3,7 @@
  */
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
-
+import _ from 'lodash'
 
 export function follow(followed, body, resolve, reject) {
     if (followed) {
@@ -15,6 +15,8 @@ export function follow(followed, body, resolve, reject) {
 }
 
 export function followships(resolve, reject) {
+    if (_.isEmpty(global.login_user))
+        return;
     helper.get(Api.followships(), ret => {
         console.log('获取关注及粉丝列表', ret.data)
         global.followships = ret.data;

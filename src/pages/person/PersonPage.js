@@ -1,20 +1,20 @@
 /**
  * Created by lorne on 2017/1/4.
  */
-import React from 'react';
+import React, {Component} from 'react';
 import {
-    StyleSheet, Image, Platform, ActivityIndicator,
-    Dimensions, View, Text
+    ActivityIndicator, View, Text
 } from 'react-native';
 import {connect} from 'react-redux';
-import {Colors, Fonts, Images} from '../../Themes';
+import {Colors, Images} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {fetchGetProfile, fetchPutProfile, fetchPostAvatar} from '../../actions/PersonAction'
 import PersonInfo from './PersonInfo';
 import {NavigationBar} from '../../components'
 import {getLoginUser, strNotNull} from '../../utils/ComonHelper';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-class PersonPage extends React.Component {
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+
+class PersonPage extends Component {
 
     state = {
         user_id: null
@@ -44,11 +44,11 @@ class PersonPage extends React.Component {
     _renderLoading() {
         return (
             <View style={{
-        flex:1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop:20
-    }}>
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 20
+            }}>
                 <ActivityIndicator
                     color={Colors._E0C294}
                 />
@@ -56,7 +56,6 @@ class PersonPage extends React.Component {
             </View>
         );
     }
-
 
 
     render() {
@@ -67,21 +66,21 @@ class PersonPage extends React.Component {
         return (
             <View
                 testID="page_profile"
-                style={{backgroundColor:'#ECECEE',flex:1}}>
+                style={{backgroundColor: '#ECECEE', flex: 1}}>
                 <NavigationBar
                     toolbarStyle={{backgroundColor: '#161718'}}
                     title={I18n.t('edit_info')}
                     rightBtnText={I18n.t('complete')}
                     leftBtnIcon={Images.sign_return}
-                    leftImageStyle={{height:19,width:11,marginLeft:20,marginRight:20}}
-                    leftBtnPress={()=>router.pop()}
+                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                    leftBtnPress={() => router.pop()}
                     rightBtnPress={this._putProfile}/>
 
                 <KeyboardAwareScrollView>
                     {loading ? this._renderLoading() : null}
                     <PersonInfo
                         postAvatar={this.props._postAvatar}
-                        ref={ref=>this.Profile = ref}
+                        ref={ref => this.Profile = ref}
                         profile={profile}/>
 
 
