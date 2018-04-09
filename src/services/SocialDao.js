@@ -6,6 +6,12 @@ import Api from '../configs/ApiConfig';
 import _ from 'lodash'
 
 
+export function topics_delete(topic_id, resolve, reject) {
+    helper.del(Api.topics_delete(topic_id), {}, ret => {
+        resolve(ret.data)
+    }, err => reject(err))
+}
+
 export function user_topics(body, resolve, reject) {
     helper.get(Api.user_topics(body), ret => {
         resolve(ret.data)

@@ -151,6 +151,7 @@ export default {
     topics_image: topics_image,//上传话题相关的图片
     followships: followships,//获取关注及粉丝列表
     user_topics: user_topics,//获取用户个人动态(说说和长帖)¶
+    topics_delete: topics_delete,//删除说说或长帖
 
 }
 
@@ -164,6 +165,10 @@ function getUserId() {
 
 const page_size = 10;
 
+
+function topics_delete(topic_id) {
+    return `users/${getUserId()}/user_topics/${topic_id}`
+}
 
 function user_topics(body) {
     const {user_id} = body;
