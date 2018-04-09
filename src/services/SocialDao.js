@@ -5,6 +5,25 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 
 
+export function follow(followed, body, resolve, reject) {
+    if (followed) {
+        helper.del(Api.followships(), body,
+            ret => resolve(ret.data), err => reject(err))
+    } else
+        helper.post(Api.followships(), body,
+            ret => resolve(ret.data), err => reject(err))
+}
+
+export function followships(resolve, reject) {
+    helper.get(Api.followships(), ret => {
+        console.log('获取关注及粉丝列表', ret.data)
+        global.followships = ret.data;
+        resolve(ret.data)
+    }, err => {
+        reject(err)
+    })
+}
+
 export function topics_comments(topic_id, resolve, reject) {
     helper.get(Api.topics_comments(topic_id), ret => {
         resolve(ret.data)
@@ -48,6 +67,14 @@ export function topics_recommends(params, resolve, reject) {
 
 export function postTopic(body, resolve, reject) {
     helper.post(Api.release_topic(), body, (ret) => {
+        resolve(ret.data)
+    }, err => {
+        reject(err)
+    })
+}
+
+export function uploadTopicImage(topic_id, body, resolve, reject) {
+    helper.post(Api.topics_image(topic_id), body, (ret) => {
         resolve(ret.data)
     }, err => {
         reject(err)

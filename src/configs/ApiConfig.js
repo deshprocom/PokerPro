@@ -148,6 +148,8 @@ export default {
     topics_detail: topics_detail,//查看帖子详情
     topics_comments: topics_comments,//获取说说长帖评论列表
     jmessage_info:jmessage_info,//极光IM用户登录
+    topics_image:topics_image,//上传话题相关的图片
+    followships:followships,//获取关注及粉丝列表
 
 
 }
@@ -164,6 +166,14 @@ const page_size = 10;
 
 function jmessage_info() {
     return `users/${login_user.user_id}/jmessage`
+}
+
+function followships() {
+    return `users/${login_user.user_id}/followships`
+}
+
+function topics_image(topic_id) {
+    return `topic/user_topics/${topic_id}/image`
 }
 
 function topics_comments(topic_id) {

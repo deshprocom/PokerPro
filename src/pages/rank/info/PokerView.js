@@ -98,12 +98,12 @@ export default class PokerView extends Component {
                 <Text style={styles.location}>{country}</Text>
             </View>
 
-            <TouchableOpacity
-                activeOpacity={1}
-                onPress={this._btnFocus}
-                style={styles.btnFocus}>
-                <Text style={styles.focus}>{this.state.followed ? I18n.t('rank_focused') : I18n.t('rank_focus')}</Text>
-            </TouchableOpacity>
+            {/*<TouchableOpacity*/}
+                {/*activeOpacity={1}*/}
+                {/*onPress={this._btnFocus}*/}
+                {/*style={styles.btnFocus}>*/}
+                {/*<Text style={styles.focus}>{this.state.followed ? I18n.t('rank_focused') : I18n.t('rank_focus')}</Text>*/}
+            {/*</TouchableOpacity>*/}
 
             <View style={{flex: 1}}/>
 

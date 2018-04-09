@@ -13,11 +13,16 @@ import {ImageLoad, NavigationBar, UltimateListView} from '../../components'
 import I18n from "react-native-i18n";
 import {Colors, Images, Metrics} from '../../Themes';
 import HTML from 'react-native-render-html';
-import {topics_like, topics_details, topics_comments} from "../../services/SocialDao";
-import {getDateDiff, showToast} from "../../utils/ComonHelper";
-import {NoDataView} from '../../components/load';
+import {
+    topics_like, topics_details, topics_comments,
+    follow
+} from "../../services/SocialDao";
+import {
+    getDateDiff, isEmptyObject, showToast, strNotNull,
+    alertOrder, isFollowed
+} from "../../utils/ComonHelper";
 import CommentBar from '../comm/CommentBar';
-import {postComment} from '../../services/CommentDao'
+import {postComment, postRelaies, delDeleteComment} from '../../services/CommentDao'
 
 const styles = StyleSheet.create({
     title: {
@@ -52,7 +57,9 @@ const styles = StyleSheet.create({
         borderColor: Colors.txt_444
     },
     info: {
-        width: '100%'
+        width: '100%',
+        paddingLeft: 17,
+        paddingRight: 17
     },
     btn_like: {
         flexDirection: 'row',
@@ -93,7 +100,9 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 10,
         paddingTop: 2,
-        paddingBottom: 2
+        paddingBottom: 2,
+        marginLeft: 8,
+        borderRadius: 2
     },
     c_reply: {
         height: 20,
@@ -104,6 +113,22 @@ const styles = StyleSheet.create({
         color: Colors.txt_444,
         marginLeft: 54,
         marginTop: 6
+    },
+    long_cover: {
+        height: reallySize(200),
+        width: '100%'
+    },
+    short_image: {
+        height: 108,
+        width: 108,
+        marginTop: 9,
+        marginLeft: 9
+    },
+    body: {
+        color: Colors.txt_444,
+        fontSize: 16,
+        marginLeft: 17,
+        marginRight: 17
     }
 })
 
@@ -111,12 +136,23 @@ export default class LongArticle extends PureComponent {
 
     state = {
         comments_count: 0,
-        article: this.props.params.article
+        article: this.props.params.article,
+        followed: false
     }
 
     componentDidMount() {
-        const {id} = this.props.params.article;
-        topics_details(id)
+        this.comment_id = '';
+        const {article, isComment} = this.props.params;
+        topics_details(article.id);
+        if (isComment) {
+            setTimeout(() => {
+                this.commentBar && this.commentBar.showInput()
+            }, 500)
+
+        }
+        this.setState({
+            followed: isFollowed(article.user.user_id)
+        })
     }
 
     render() {
@@ -147,26 +183,39 @@ export default class LongArticle extends PureComponent {
                 dateTitle={I18n.t('last_refresh')}
                 allLoadedText={I18n.t('no_more')}
                 waitingSpinnerText={I18n.t('loading')}
-                emptyView={() => {
-                    return <NoDataView/>
-                }}
             />
 
             <View style={{position: 'absolute', bottom: 0}}>
                 <CommentBar
+                    ref={ref => this.commentBar = ref}
                     count={this.state.comments_count}
                     send={comment => {
-                        let body = {
-                            topic_type: 'user_topic',
-                            topic_id: id,
-                            body: comment
+
+                        if (strNotNull(this.comment_id)) {
+
+                            postRelaies({comment_id: this.comment_id, body: comment},
+                                data => {
+                                    this.comment_id = '';
+                                    showToast(I18n.t('reply_success'));
+                                    this.listView && this.listView.refresh()
+                                }, err => {
+                                })
+
+
+                        } else {
+                            let body = {
+                                topic_type: 'user_topic',
+                                topic_id: id,
+                                body: comment
+                            };
+                            postComment(body, data => {
+                                showToast(I18n.t('comment_success'));
+                                this.listView && this.listView.refresh()
+                            }, err => {
+                                showToast(err)
+                            })
                         }
-                        postComment(body, data => {
-                            showToast(I18n.t('comment_success'));
-                            this.listView && this.listView.refresh()
-                        }, err => {
-                            showToast(err)
-                        })
+
                     }}
                     share={() => {
 
@@ -192,12 +241,13 @@ export default class LongArticle extends PureComponent {
         </View>
     }
 
+    //长帖 个人信息
     flatHeader = () => {
 
 
         const {user, created_at, likes, comments, id, body_type, body, title, page_views} = this.state.article;
         return <View>
-            <View style={{paddingLeft: 17, paddingRight: 17, backgroundColor: 'white'}}>
+            <View style={{backgroundColor: 'white'}}>
                 <View style={styles.info}>
                     <Text style={styles.title}>{title}</Text>
                     <View style={styles.btn_like}>
@@ -211,27 +261,43 @@ export default class LongArticle extends PureComponent {
 
                         <View style={{flex: 1}}/>
 
-                        <Text style={styles.focus}>关注</Text>
+                        {this.isMine(user.user_id) ? null : <Text
+                            onPress={() => {
+                                follow(this.state.followed, {target_id: user.user_id}, data => {
+                                        this.setState({
+                                            followed: !this.state.followed
+                                        })
+                                    },
+                                    err => {
+                                    }
+                                )
+                            }}
+                            style={styles.focus}>{this.state.followed ?
+                            I18n.t('rank_focused') : I18n.t('rank_focus')}</Text>}
+
 
                     </View>
 
                 </View>
 
 
-                <HTML
-                    imagesMaxWidth={Metrics.screenWidth - 34}
-                    html={body}
-                    tagsStyles={{
-                        p: {
-                            color: Colors.txt_444,
-                            fontSize: 15,
-                            lineHeight: 25,
-                            marginTop: 14,
-                            marginBottom: 14
-                        }
-                    }}/>
+                {body_type === 'long' ? <View style={{paddingLeft: 17, paddingRight: 17}}>
+                    <HTML
+                        imagesMaxWidth={Metrics.screenWidth - 34}
+                        html={body}
+                        tagsStyles={{
+                            p: {
+                                color: Colors.txt_444,
+                                fontSize: 15,
+                                lineHeight: 25,
+                                marginTop: 14,
+                                marginBottom: 14
+                            }
+                        }}/>
+                </View> : this.short(this.state.article)}
 
-                <View style={[styles.btn_like, {marginTop: 15}]}>
+
+                <View style={[styles.btn_like, {marginTop: 15, paddingLeft: 17, paddingRight: 17}]}>
                     <View style={{flex: 1}}/>
 
                     <Text style={styles.time}>阅读</Text>
@@ -247,9 +313,11 @@ export default class LongArticle extends PureComponent {
                 </View>
 
                 <View style={[styles.btn_like, {
-                    height: 44, width: '100%',
+                    height: 44, width: Metrics.screenWidth - 34,
                     borderTopWidth: 1, borderTopColor: Colors._ECE,
-                    marginTop: 10
+                    marginTop: 10,
+                    marginLeft: 17,
+                    marginRight: 17
                 }]}>
                     <Text style={styles.comment}>{`全部评论 (${this.state.comments_count})`}</Text>
                 </View>
@@ -257,6 +325,40 @@ export default class LongArticle extends PureComponent {
             </View>
             <View style={{height: 1, backgroundColor: Colors._ECE}}/>
         </View>
+    }
+
+    short = (item) => {
+        const {images, body} = item;
+        return <View style={{marginTop: 14}}>
+            <Text style={styles.body}>{body}</Text>
+            {images && images.length > 0 ? this.shortImage(images) : null}
+
+
+        </View>
+    }
+
+    shortImage = (images) => {
+        if (images.length === 1) {
+            return <ImageLoad
+                style={[styles.long_cover, {marginTop: 14}]}
+                source={{uri: images[0].image_url}}/>
+        }
+
+        let imageViews = images.map((item, index) => {
+            return <ImageLoad
+                key={'short' + index}
+                style={styles.short_image}
+                source={{uri: item.image_url}}/>
+        });
+
+        return <View style={{
+            flexWrap: 'wrap', flexDirection: 'row',
+            alignItems: 'center', marginTop: 14,
+            marginLeft: 8
+        }}>
+            {imageViews}
+        </View>
+
     }
 
     onFetch = (page = 1, startFetch, abortFetch) => {
@@ -269,12 +371,21 @@ export default class LongArticle extends PureComponent {
         }, err => {
             abortFetch()
         }, {page, page_size: 20})
+    };
+
+
+    isMine = (user_id) => {
+        if (isEmptyObject(global.login_user)) {
+            return false
+        }
+
+        return global.login_user.user_id === user_id
     }
 
     itemView = (item) => {
         const {
             avatar, nick_name, created_at, official,
-            recommended, body
+            recommended, body, id, total_count, user_id
         } = item;
         return <View style={{
             width: '100%', paddingLeft: 17, paddingRight: 17,
@@ -285,41 +396,72 @@ export default class LongArticle extends PureComponent {
                            source={{uri: avatar}}/>
 
                 <View style={{marginLeft: 10}}>
-                    <Text style={styles.c_nick}>{nick_name}</Text>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text style={styles.c_nick}>{nick_name}</Text>
+
+                        {official ? <Text style={[styles.c_tag, {
+                            backgroundColor: '#161718',
+                            color: '#FFE9AD'
+                        }]}>官方</Text> : null}
+
+                        {recommended ? <Text style={[styles.c_tag, {
+                            backgroundColor: '#161718',
+                            color: '#FFE9AD'
+                        }]}>精选</Text> : null}
+
+                        {this.isMine(user_id) ? <Text
+                            onPress={() => {
+                                alertOrder('确认删除', () => {
+                                    delDeleteComment({comment_id: id}, data => {
+                                        this.listView && this.listView.refresh()
+                                    }, err => {
+
+                                    })
+                                })
+
+                            }}
+                            style={{color: Colors._CCC, marginLeft: 8}}>删除</Text> : null}
+
+
+                    </View>
+
                     <Text style={[styles.c_time, {marginTop: 5}]}>{getDateDiff(created_at)}</Text>
                 </View>
 
-                {official ? <Text style={[styles.c_tag, {
-                    backgroundColor: '#161718',
-                    color: '#FFE9AD'
-                }]}>官方</Text> : null}
-
-                {recommended ? <Text style={[styles.c_tag, {
-                    backgroundColor: '#161718',
-                    color: '#FFE9AD'
-                }]}>精选</Text> : null}
 
                 <View style={{flex: 1}}/>
 
-                <Image style={styles.c_comment}
-                       source={Images.social.reply}/>
+                <TouchableOpacity
+                    onPress={() => {
+                        this.comment_id = id;
+                        this.commentBar && this.commentBar.showInput()
+                    }}>
+                    <Image style={styles.c_comment}
+                           source={Images.social.reply}/>
+                </TouchableOpacity>
 
 
             </View>
 
             <Text style={styles.c_body}>{body}</Text>
 
-            <TouchableOpacity style={{
-                height: 20,
-                backgroundColor: '#ECECEE',
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginLeft: 54,
-                marginTop: 8
-            }}>
-                <Text style={[styles.c_nick, {marginLeft: 6}]}>查看34条回复></Text>
+            {total_count > 0 ? <TouchableOpacity
+                onPress={() => {
+                    global.router.toCommentInfoPage(item);
+                }}
+                style={{
+                    height: 20,
+                    backgroundColor: '#ECECEE',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginLeft: 54,
+                    marginTop: 8
+                }}>
+                <Text style={[styles.c_nick, {marginLeft: 6}]}>{`查看${total_count}条回复>`}</Text>
 
-            </TouchableOpacity>
+
+            </TouchableOpacity> : null}
+
 
             <View style={{height: 1, backgroundColor: Colors._ECE, marginTop: 8}}/>
 

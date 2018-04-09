@@ -4,20 +4,13 @@ import {Dimensions, Platform} from 'react-native'
 
 const {width, height} = Dimensions.get('window')
 
-///屏幕宽高
-export const screenWidth = Dimensions.get('window').width;
-export const screenHeight = Dimensions.get('window').height;
 
-const iOS = Platform.OS === "ios" ? "1" : "0";
-
-const iPhone_X = iOS === "1" && screenWidth === 375 && screenHeight === 812 ? "1" : "0";
-
-export const toolBarHeight = iPhone_X === "1" ? 83 : 49;
-
+const navBarHeight = Platform.OS === "ios" ? width===375 && height === 812 ? 88 : 64 : 44;
+const toolMargin = Platform.OS === "ios" ? width===375 && height === 812 ? 44 : 20 : 0;
 
 //真实尺寸
 export function reallySize(size) {
-    return size / 375 * screenWidth;
+    return size / 375 * width;
 }
 
 // Used via Metrics.baseMargin
@@ -33,7 +26,7 @@ const metrics = {
     searchBarHeight: 30,
     screenWidth: width < height ? width : height,
     screenHeight: width < height ? height : width,
-    navBarHeight: (Platform.OS === 'ios') ? 64 : 44,
+    navBarHeight: navBarHeight,
     buttonRadius: 4,
     icons: {
         tiny: 15,
@@ -48,7 +41,7 @@ const metrics = {
         large: 60,
         logo: 300
     },
-    statusBarHeight: Platform.OS === 'ios' ? 20 : 0,
+    statusBarHeight: toolMargin,
     homeBar: 44,
 }
 

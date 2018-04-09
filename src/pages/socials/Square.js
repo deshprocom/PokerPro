@@ -23,14 +23,7 @@ export default class Square extends PureComponent {
 
         return <View style={ApplicationStyles.bgContainer}>
             <ScrollableTabView
-                renderTabBar={() => <ScrollableTabBar
-                    backgroundColor={Colors.white}
-                    activeTextColor="#F34A4A"
-                    inactiveTextColor={Colors.txt_444}
-                    textStyle={{fontSize: 15}}
-                    style={{borderColor: Colors._EEE}}
-                    underlineStyle={{backgroundColor: '#F34A4A', height: 2}}
-                />}>
+                renderTabBar={() => <SquareBar/>}>
                 {this.state.square_types.map(item => {
                     return <MomentList
                         key={item}
@@ -49,6 +42,42 @@ export default class Square extends PureComponent {
         if (type === 'recommends')
             return '精华'
         return '关注'
+    }
+}
+
+class SquareBar extends PureComponent {
+
+    render() {
+        const {tabs, activeTab, goToPage} = this.props;
+
+        let tabs_views = tabs.map((item, index) => <TouchableOpacity
+            key={'bar' + index}
+            onPress={() => {
+                goToPage(index)
+            }}
+            style={{
+                height: Metrics.navBarHeight - Metrics.statusBarHeight,
+                marginTop: Metrics.statusBarHeight,
+                alignItems: 'center', justifyContent: 'center',
+                width: 80,
+            }}>
+            <Text style={[{fontSize: 15},
+                activeTab === index ? {color: '#F24A4A', fontWeight: 'bold'} : {color: '#333333'}]}>{item}</Text>
+            {activeTab === index ? <View style={{
+                height: 2, width: 48, backgroundColor: '#F24A4A',
+                position: 'absolute', bottom: 0
+            }}/> : null}
+
+        </TouchableOpacity>);
+
+
+        return <View style={{
+            height: Metrics.navBarHeight, width: '100%',
+            flexDirection: 'row', justifyContent: 'center',
+            backgroundColor: 'white'
+        }}>
+            {tabs_views}
+        </View>
     }
 }
 

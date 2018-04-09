@@ -5,6 +5,8 @@ global.addressList = [];//地址管理
 global.timeRecodes = [];//商城倒计时
 global.menuReleases = {};
 global.jmsgUserName = "";//极光用户名
+global.menuReleases = {};//首页菜单众筹隐藏
+global.followships = {};//关注及粉丝列
 
 
 
