@@ -48,7 +48,10 @@ function handleFetch(state, action) {
             error: false,
             profile: action.profile,
             actionType: action.type,
-            followships: action.followships
+            followships: action.followships ? action.followships : {
+                following_count: 0,
+                follower_count: 0
+            }
         }
     } else {
         return {
