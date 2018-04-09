@@ -163,9 +163,15 @@ export default class MomentList extends PureComponent {
             <View/>
             {/*用户数据*/}
             <View style={styles.user}>
-                <ImageLoad
-                    style={styles.avatar}
-                    source={{uri: user.avatar}}/>
+                <TouchableOpacity
+                    onPress={() => {
+                        global.router.toUserTopicPage()
+                    }}>
+                    <ImageLoad
+                        style={styles.avatar}
+                        source={{uri: user.avatar}}/>
+                </TouchableOpacity>
+
 
                 <Text style={styles.nick_name}>{user.nick_name}</Text>
                 <View style={{flex: 1}}/>
