@@ -12,13 +12,25 @@ import I18n from 'react-native-i18n';
 import JpushHelp from '../../services/JpushHelper';
 import {connect} from 'react-redux';
 import {FETCH_SUCCESS, GET_PROFILE, GET_UNREAND_MSG} from '../../actions/ActionTypes';
+import {followships} from '../../services/SocialDao';
 
 
 class Personal extends Component {
 
     state = {
-        viewRef: 0
+        viewRef: 0,
+        followships: {
+            following_count: 0,
+            follower_count: 0
+        }
     };
+
+    componentDidMount() {
+        followships(followships => {
+            this.setState({followships})
+        }, err => {
+        })
+    }
 
 
     componentWillReceiveProps(newProps) {
@@ -203,62 +215,81 @@ class Personal extends Component {
 
     readerMe = () => {
         const {profile} = this.props;
-        return <View>
-            <View style={stylesP.meView}>
+        const {following_count, follower_count} = this.state.followships;
+        return <View style={stylesP.meView}>
 
 
-                <View style={{
-                    height: Metrics.navBarHeight,
-                    width: '100%',
-                    paddingTop: Metrics.statusBarHeight,
-                    flexDirection: 'row-reverse'
-                }}>
-                    <TouchableOpacity
-                        style={{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            height: 44
-                        }}
-                        onPress={this.toMessagePage}>
-                        <Image
-                            source={this._imgNotice()}
-                            style={{
-                                height: 22,
-                                width: 21,
-                                marginRight: 20
-                            }}/>
-
-                    </TouchableOpacity>
-
-                </View>
+            <View style={{
+                height: Metrics.navBarHeight,
+                width: '100%',
+                paddingTop: Metrics.statusBarHeight,
+                flexDirection: 'row-reverse'
+            }}>
                 <TouchableOpacity
-                    activeOpacity={1}
-                    style={{flexDirection: 'row', alignItems: 'center'}}
-                    onPress={() => {
-                        if (!isEmptyObject(login_user))
-                            router.toPersonPage();
-                        else
-                            router.toLoginFirstPage()
+                    style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        height: 44
+                    }}
+                    onPress={this.toMessagePage}>
+                    <Image
+                        source={this._imgNotice()}
+                        style={{
+                            height: 22,
+                            width: 21,
+                            marginRight: 20
+                        }}/>
 
-                    }}>
-                    <View
-                        style={stylesP.personRadius2}>
-                        <Image style={{width: 72, height: 72, borderRadius: 36}} source={this._avatar()}/>
-                    </View>
-
-                    <View style={{marginLeft: 20}}>
-
-                        <Text
-                            style={stylesP.personSignature2}>{profile.nick_name ? profile.nick_name : I18n.t('log_register')}</Text>
-                        <Text style={stylesP.personSignature}>{this._signature()}</Text>
-
-
-                    </View>
-                    <View style={{flex: 1}}/>
-                    <Image style={{marginRight: 17, width: 8, height: 15}} source={Images.rightImg}/>
                 </TouchableOpacity>
 
             </View>
+
+
+            <TouchableOpacity
+                activeOpacity={1}
+                style={{flexDirection: 'row', alignItems: 'center'}}
+                onPress={() => {
+                    if (!isEmptyObject(login_user))
+                        router.toPersonPage();
+                    else
+                        router.toLoginFirstPage()
+
+                }}>
+                <View
+                    style={stylesP.personRadius2}>
+                    <Image style={{width: 72, height: 72, borderRadius: 36}} source={this._avatar()}/>
+                </View>
+
+                <View style={{marginLeft: 20}}>
+
+                    <Text
+                        style={stylesP.personSignature2}>{profile.nick_name ? profile.nick_name : I18n.t('log_register')}</Text>
+                    <Text style={stylesP.personSignature}>{this._signature()}</Text>
+
+                    <View style={{
+                        backgroundColor: '#434343', height: 1,
+                        width: Metrics.reallySize(248),
+                        marginTop: 18
+                    }}/>
+
+                    <View style={{height: 49, flexDirection: 'row', alignItems: 'center'}}>
+
+                        <Text style={{color: Colors._CCC, fontSize: 14}}>{`关注   ${following_count}`}</Text>
+                        <View
+                            style={{
+                                height: 12,
+                                width: 1,
+                                backgroundColor: '#979797',
+                                marginLeft: 28,
+                                marginRight: 28
+                            }}/>
+                        <Text style={{color: Colors._CCC, fontSize: 14}}>{`粉丝   ${follower_count}`}</Text>
+                    </View>
+                </View>
+                <View style={{marginRight: 17}}/>
+                {/*<Image style={{marginRight: 17, width: 8, height: 15}} source={Images.rightImg}/>*/}
+            </TouchableOpacity>
+
 
         </View>
 
@@ -358,7 +389,8 @@ const stylesP = StyleSheet.create({
         backgroundColor: '#FFE9AD',
         alignItems: 'center',
         justifyContent: 'center',
-        marginLeft: 25
+        marginLeft: 25,
+        marginBottom: 54
     },
     personID: {
         fontSize: 12,
@@ -394,8 +426,7 @@ const stylesP = StyleSheet.create({
     meView: {
         backgroundColor: '#090909',
         alignItems: 'center',
-        justifyContent: 'center',
-        paddingBottom: 37
+        justifyContent: 'center'
     },
     orderView: {flexDirection: 'row', height: 82, width: '100%', backgroundColor: 'white'},
     btnOrder: {flex: 1, justifyContent: 'center', alignItems: 'center'},

@@ -576,6 +576,25 @@
   "sponsored": "Sponsored",
   "my_coins": "My coins",
   "pull_up_refresh": "Pull up loading",
-  "poker_coins": "Poker Coins"
+  "poker_coins": "Poker Coins",
+  "release_article": "发长贴",
+  "release_moment": "说说",
+  "draft_box": "草稿箱",
+  "socials_content": "文字",
+  "socials_picture": "图片",
+  "socials_takephoto": "拍照",
+  "socials_edit": "编辑",
+  "socials_finsh": "完成",
+  "show_address": "显示地点",
+  "social_title": "请填写标题或简单描述",
+  "social_content": "请填写详细内容",
+  "social_save": "保存到草稿箱",
+  "social_send": "发布",
+  "article_list": "草稿箱",
+  "article_mode": "发说说",
+  "discover": "发现",
+  "usertopic_comment": "在动态评论了一个话题",
+  "usertopic_topiclike": "在动态点赞了一个话题",
+  "usertopic_reply": "在动态回复了一个话题"
 }
 
