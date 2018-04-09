@@ -234,12 +234,14 @@ export default class MoodRelease extends Component {
                               bounces={false}
                     />
 
-                    <View style={styles.subView}>
-                        <Image source={Images.social.address}
-                               style={[{width: reallySize(14)}, {height: reallySize(18)}]}/>
-                        <Text
-                            style={[{color: "#AAAAAA"}, {fontSize: 14}, {marginLeft: 5}]}>{I18n.t('show_address')}</Text>
-                    </View>
+                    <TouchableOpacity onPress={() => {global.router.toLocation();}}>
+                        <View style={styles.subView}>
+                            <Image source={Images.social.address}
+                                   style={[{width: reallySize(14)}, {height: reallySize(18)}]}/>
+                            <Text
+                                style={[{color: "#AAAAAA"}, {fontSize: 14}, {marginLeft: 5}]}>{I18n.t('show_address')}</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
 
                 {/*取消、发布*/}

@@ -13,6 +13,12 @@ const customFloatFromRight = '';
 
 export default class Router {
 
+    toLocation(){
+        this.stackPush({
+            name:"Location",
+        })
+    }
+
 
     log(...msg) {
         if (__DEV__)

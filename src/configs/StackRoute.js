@@ -101,10 +101,12 @@ import SubscriptionInfoPage from '../pages/crowdfundings/orders/SubscriptionInfo
 import ChatLogin from "../pages/chat/ChatLogin";
 import FriendList from "../pages/chat/FriendList";
 import ChatMessage from "../pages/chat/ChatMessage";
+import Location from "../pages/socials/Location";
 
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="Location" component={Location} hideNavBar/>
         <Scene key="MoodRelease" component={MoodRelease} hideNavBar/>
         <Scene key="LongArticle" component={LongArticle} hideNavBar/>
         <Scene key="MapPosition" component={MapPosition} hideNavBar/>

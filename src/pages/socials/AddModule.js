@@ -65,8 +65,12 @@ export default class ImageView extends Component{
                     </TouchableOpacity>
                 </View>
                 <View style={styles.subView}>
-                    <Image source={Images.social.address} style={[{width:reallySize(14)},{height:reallySize(18)}]}/>
-                    <Text style={[{color:"#AAAAAA"},{fontSize:14},{marginLeft:5}]}>{I18n.t('show_address')}</Text>
+                    <TouchableOpacity onPress={() => {global.router.toLocation();}}>
+                        <View style={[{flexDirection:"row"}]}>
+                            <Image source={Images.social.address} style={[{width:reallySize(14)},{height:reallySize(18)}]}/>
+                            <Text style={[{color:"#AAAAAA"},{fontSize:14},{marginLeft:5}]}>{I18n.t('show_address')}</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </View>
         );

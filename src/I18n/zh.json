@@ -605,5 +605,6 @@
   "discover":"发现",
   "usertopic_comment": "在动态评论了一个话题",
   "usertopic_topiclike": "在动态点赞了一个话题",
-  "usertopic_reply":"在动态回复了一个话题"
+  "usertopic_reply":"在动态回复了一个话题",
+  "location":"位置"
 }
