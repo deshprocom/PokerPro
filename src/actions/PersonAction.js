@@ -7,6 +7,7 @@ import {
 } from '../actions/ActionTypes';
 import {getProfile, putProfile, postAvatar, localLoginUser} from '../services/AccountDao';
 import {showToast} from '../utils/ComonHelper';
+import {followships} from '../services/SocialDao';
 
 function _putProfile() {
     return {
@@ -38,11 +39,12 @@ function _getProfile() {
     }
 }
 
-function _getProfileOk(profile) {
+function _getProfileOk(profile, followships) {
     return {
         type: GET_PROFILE,
         fetching: FETCH_SUCCESS,
-        profile: profile
+        profile: profile,
+        followships:followships
     }
 }
 
@@ -80,8 +82,12 @@ function _PostAvatarFail(error) {
 export function fetchGetProfile(user_id) {
     return (dispatch) => {
         dispatch(_getProfile());
-        getProfile(user_id, (ret) => {
-            dispatch(_getProfileOk(ret))
+        getProfile(user_id, (profile) => {
+            followships(followships => {
+                dispatch(_getProfileOk(profile, followships))
+            }, err => {
+            })
+
         }, (err) => {
             showToast(err);
             dispatch(_getProfileFail(err))

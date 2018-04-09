@@ -12,25 +12,14 @@ import I18n from 'react-native-i18n';
 import JpushHelp from '../../services/JpushHelper';
 import {connect} from 'react-redux';
 import {FETCH_SUCCESS, GET_PROFILE, GET_UNREAND_MSG} from '../../actions/ActionTypes';
-import {followships} from '../../services/SocialDao';
+
 
 
 class Personal extends Component {
 
     state = {
-        viewRef: 0,
-        followships: {
-            following_count: 0,
-            follower_count: 0
-        }
+        viewRef: 0
     };
-
-    componentDidMount() {
-        followships(followships => {
-            this.setState({followships})
-        }, err => {
-        })
-    }
 
 
     componentWillReceiveProps(newProps) {
@@ -214,8 +203,8 @@ class Personal extends Component {
 
 
     readerMe = () => {
-        const {profile} = this.props;
-        const {following_count, follower_count} = this.state.followships;
+        const {profile, followships} = this.props;
+        const {following_count, follower_count} = followships;
         return <View style={stylesP.meView}>
 
 
@@ -458,6 +447,7 @@ const mapStateToProps = state => ({
     actionType: state.PersonState.actionType,
     unread: state.AccountState.unread,
     actionType1: state.AccountState.actionType,
+    followships: state.PersonState.followships
 
 });
 

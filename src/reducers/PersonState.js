@@ -11,7 +11,11 @@ const initialState = {
     hasData: false,
     error: false,
     profile: {},
-    actionType:''
+    actionType: '',
+    followships: {
+        following_count: 0,
+        follower_count: 0
+    }
 };
 
 export default function profileDataState(state = initialState, action) {
@@ -26,6 +30,7 @@ export default function profileDataState(state = initialState, action) {
             return state;
     }
 }
+
 function handleFetch(state, action) {
     if (action.fetching === FETCHING) {
         return {
@@ -33,7 +38,7 @@ function handleFetch(state, action) {
             hasData: false,
             error: false,
             loading: true,
-            actionType:action.type
+            actionType: action.type
         }
     } else if (action.fetching === FETCH_SUCCESS) {
         return {
@@ -42,14 +47,15 @@ function handleFetch(state, action) {
             hasData: true,
             error: false,
             profile: action.profile,
-            actionType:action.type
+            actionType: action.type,
+            followships: action.followships
         }
     } else {
         return {
             ...state,
             loading: false,
             error: true,
-            actionType:action.type
+            actionType: action.type
         }
     }
 }

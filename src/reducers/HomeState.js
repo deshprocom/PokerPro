@@ -2,7 +2,7 @@
  * Created by lorne on 2017/1/18.
  */
 import {
-    GET_RECENT_RACES, GET_PROFILE,
+    GET_RECENT_RACES,
     FETCH_SUCCESS, FETCHING, FETCH_FAIL
 } from '../actions/ActionTypes';
 
