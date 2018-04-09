@@ -72,6 +72,18 @@ class SettingPage extends Component {
                 }}
                 name={I18n.t('account_security')}
                 styles={{marginTop: 5}}/>
+            {/*黑名单*/}
+
+            <SetItemView
+                testID="blacklist"
+                onPress={() => {
+                    if (isLoginUser())
+                        router.toBlackList();
+                    else
+                        router.toLoginFirstPage();
+                }}
+                name={I18n.t('blacklist')}
+                styles={{marginTop: 1}}/>
 
 
             <View style={{backgroundColor: Colors.setting, marginTop: 10}}>

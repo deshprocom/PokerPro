@@ -13,6 +13,12 @@ const customFloatFromRight = '';
 
 export default class Router {
 
+    toBlackList(){
+        this.stackPush({
+            name:"Blacklist",
+        })
+    }
+
     toLocation(){
         this.stackPush({
             name:"Location",

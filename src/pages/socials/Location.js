@@ -73,7 +73,7 @@ export default class Location extends Component{
                 <NavigationBar barStyle={'dark-content'}
                                titleStyle={{fontSize: 17, color: Colors._333}}
                                toolbarStyle={{backgroundColor: 'white'}}
-                               title={I18n.t('location')}
+                               title={I18n.t('location_title')}
                                leftBtnIcon={Images.set_back}
                                leftImageStyle={{height:19,width:11, marginLeft: 20, marginRight: 20}}
                                leftBtnPress={() => {

@@ -15,6 +15,7 @@ import VideoToast from "./VideoToast";
 import ImagePicker from 'react-native-image-crop-picker';
 import {Colors,Images} from "../../Themes";
 import I18n from "react-native-i18n";
+import {showToast} from '../../utils/ComonHelper';
 
 
 let MessageList = IMUI.MessageList;
@@ -497,6 +498,29 @@ export default class ChatMessage extends Component {
         return auroraMsg;
     };
 
+    //弹窗
+    popActions = () => {
+        return [{name: I18n.t('report'), txtStyle: {color: '#4A90E2'},onPress: () => this.report()},
+            {name: I18n.t('add_blacklist'), txtStyle: {color: '#F24A4A'}, onPress: () => this.addBlacklist()},
+            {name: I18n.t('cancel'), txtStyle: {color: Colors._AAA}, onPress: () => this.popAction.toggle()}]
+    };
+
+    //举报
+    report = () => {
+
+    };
+    //拉黑
+    addBlacklist = () => {
+        let userInfo = this.props.params.userInfo;
+        let param = {'usernameArray': [userInfo.username]}
+        JMessage.addUsersToBlacklist(param,(success) => {
+            showToast("添加黑名单成功");
+            this.popAction && this.popAction.toggle();
+        },(error) => {
+            console.log("拉黑失败",error);
+        });
+    };
+
 
     render() {
         let userInfo = this.props.params.userInfo;
@@ -570,11 +594,7 @@ export default class ChatMessage extends Component {
         );
     }
 
-    popActions = () => {
-        return [{name: '举报该人', txtStyle: {color: '#4A90E2'}},
-            {name: '拉黑该人', txtStyle: {color: '#F24A4A'}},
-            {name: I18n.t('cancel'), txtStyle: {color: Colors._AAA}, onPress: () => this.popAction.toggle()}]
-    }
+
 }
 
 const styles = StyleSheet.create({

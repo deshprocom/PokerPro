@@ -78,7 +78,6 @@ export default class ImageView extends Component{
 }
 const styles = StyleSheet.create({
     container: {
-        // backgroundColor: "#ECECEE",
         justifyContent: "flex-start",
         alignItems:"flex-start",
         height:reallySize(100),

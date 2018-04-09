@@ -606,5 +606,9 @@
   "usertopic_comment": "在动态评论了一个话题",
   "usertopic_topiclike": "在动态点赞了一个话题",
   "usertopic_reply":"在动态回复了一个话题",
-  "location":"位置"
+  "location_title":"位置",
+  "blacklist":"黑名单",
+  "add_blacklist":"拉黑该人",
+  "report":"举报该人",
+  "remove_blacklist":"移除黑名单"
 }

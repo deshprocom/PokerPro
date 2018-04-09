@@ -102,10 +102,12 @@ import ChatLogin from "../pages/chat/ChatLogin";
 import FriendList from "../pages/chat/FriendList";
 import ChatMessage from "../pages/chat/ChatMessage";
 import Location from "../pages/socials/Location";
+import Blacklist from "../pages/socials/Blacklist";
 
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="Blacklist" component={Blacklist} hideNavBar/>
         <Scene key="Location" component={Location} hideNavBar/>
         <Scene key="MoodRelease" component={MoodRelease} hideNavBar/>
         <Scene key="LongArticle" component={LongArticle} hideNavBar/>
