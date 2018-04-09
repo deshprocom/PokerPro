@@ -57,8 +57,8 @@ export default class App extends Component {
         //SplashScreen.close(SplashScreen.animationType.scale, 850, 500)
         SplashScreen.close({
             animationType: SplashScreen.animationType.scale,
-            duration: 850,
-            delay: 500,
+            duration: 1000,
+            delay: 1000,
         });
 
 

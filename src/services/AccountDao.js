@@ -7,8 +7,12 @@ import StorageKey from '../configs/StorageKey';
 import JpushHelp from './JpushHelper';
 import {isEmptyObject, showToast} from '../utils/ComonHelper';
 import {getAddressList} from './OrderDao';
-import {followships} from './SocialDao'
+import JMessage from 'jmessage-react-plugin';
+import {Images} from '../Themes';
+import fs from 'react-native-fs'
+import {followships} from './SocialDao';
 
+// let image = require("../../source/home/home_avatar.png")
 export function releases_show(resolve, reject) {
     helper.get(Api.releases_show, ret => {
         resolve(ret.data);
@@ -231,6 +235,59 @@ export function postLogin(body, resolve, reject) {
 
 export var LoginUser = {};
 
+function getJmessageInfo(avatar) {
+
+
+    ///获取极光登录信息
+    helper.post(Api.jmessage_info(),{},(ret) => {
+        let {username,password} = ret.data;
+        ///头像为空 给一个默认地址
+        if (avatar === ""){
+            avatar = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522842568258&di=529776643a0b263b2e479cfded8c13c3&imgtype=jpg&src=http%3A%2F%2Fimg4.imgtn.bdimg.com%2Fit%2Fu%3D2533236184%2C2060511232%26fm%3D214%26gp%3D0.jpg";
+        }
+        ///登录极光
+        JMessage.login({
+                username:username,
+                password:password,
+            },
+            //登录成功回调
+            () => {
+                //下载网络图片
+                // let rootPath = fs.DocumentDirectoryPath;
+                // let savePath = rootPath + '/temp_icon.jpg';
+                // fs.downloadFile({
+                //     fromUrl: avatar,
+                //     toFile: savePath
+                // }).promise.then(resp => {
+                //     console.log(savePath);
+                //     if (resp.statusCode === 200) {
+                //         ///下载成功后更新用户头像
+                //         JMessage.updateMyAvatar(
+                //             {
+                //                 imgPath:savePath
+                //             },
+                //             () => {
+                //                 // success do something.
+                //                 console.log("更新头像成功");
+                //
+                //             }, (error) => {
+                //                 console.log("更新头像失败",error);
+                //             }
+                //         );
+                //     }
+                // });
+
+            },
+            //登录失败回调
+            (error) => {
+                console.log("极光IM登录失败",error);
+            }
+        );
+    },(err) => {
+        console.log("获取极光IM用户名和密码失败:",err);
+    });
+}
+
 export function setLoginUser(ret) {
     LoginUser = ret;
     global.login_user = ret;
@@ -242,7 +299,6 @@ export function setLoginUser(ret) {
 
 
     if (!isEmptyObject(ret)) {
-
         setTimeout(() => {
             //获取实名信息
             listVerified(data => {
@@ -257,6 +313,7 @@ export function setLoginUser(ret) {
             //统计登陆用户
             postLoginCount();
 
+            getJmessageInfo(ret.avatar);
             //获取关注及粉丝列表
             followships(data => {
 
@@ -264,7 +321,6 @@ export function setLoginUser(ret) {
             }, err => {
 
             })
-
 
         }, 100);
 

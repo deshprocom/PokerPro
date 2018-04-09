@@ -30,8 +30,8 @@ export default class ChatLogin extends Component<{}> {
     constructor(props){
         super(props);
         this.state = {
-            userName:"QQ1049260505",
-            password:"QQ1049260505",
+            userName:"lmtd9976144",
+            password:"test123",
         }
     }
 
@@ -56,8 +56,8 @@ export default class ChatLogin extends Component<{}> {
     ///登录
     loginAction = () => {
         JMessage.login({
-                username:this.state.userName,
-                password:this.state.password,
+                username:"Test",
+                password:"test",
             },
             //登录成功回调
             () => {
@@ -87,7 +87,7 @@ export default class ChatLogin extends Component<{}> {
             },
             //登录失败回调
             (error) => {
-                console.log("登录失败"+error);
+                console.log("登录失败",error);
             }
         );
     };
@@ -101,8 +101,8 @@ export default class ChatLogin extends Component<{}> {
     render() {
         return (
             <View style={styles.container}>
-                <TextInput placeholder={"账号"} style={styles.textInput} onChangeText={(text) => this.setState({userName:text})} defaultValue={"QQ1049260506"}/>
-                <TextInput placeholder={"密码"} style={[styles.textInput,{marginTop:20}]} onChangeText={(text) => this.setState({password:text})}  defaultValue={"QQ1049260506"}/>
+                <TextInput placeholder={"账号"} style={styles.textInput} onChangeText={(text) => this.setState({userName:text})} defaultValue={this.state.userName}/>
+                <TextInput placeholder={"密码"} style={[styles.textInput,{marginTop:20}]} onChangeText={(text) => this.setState({password:text})}  defaultValue={this.state.password}/>
 
 
                 <View style={styles.actionView}>
