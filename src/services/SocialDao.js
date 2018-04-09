@@ -5,6 +5,15 @@ import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
 import _ from 'lodash'
 
+
+export function user_topics(body, resolve, reject) {
+    helper.get(Api.user_topics(body), ret => {
+        resolve(ret.data)
+    }, err => {
+        reject(err)
+    }, body)
+}
+
 export function follow(followed, body, resolve, reject) {
     if (followed) {
         helper.del(Api.followships(), body,

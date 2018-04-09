@@ -12,8 +12,30 @@ export default class DynamicTopBar extends PureComponent {
 
 
     render() {
-        const {unreadCount, setUnreadCount, nickname, hideReceived} = this.props;
-        let counts = unreadCount;
+        const {
+            unreadCount, setUnreadCount, nickname,
+            hideReceived, goToPage, tabs, activeTab
+        } = this.props;
+
+        let tabs_views = tabs.map((item, index) => <TouchableOpacity
+            key={'bar' + index}
+            onPress={() => {
+                goToPage(index)
+            }}
+            style={{
+                height: Metrics.navBarHeight - Metrics.statusBarHeight,
+                alignItems: 'center', justifyContent: 'center',
+                width: 80,
+            }}>
+            <Text style={[{fontSize: 15},
+                activeTab === index ? {color: '#F24A4A', fontWeight: 'bold'} : {color: '#333333'}]}>{item}</Text>
+            {activeTab === index ? <View style={{
+                height: 2, width: 48, backgroundColor: '#F24A4A',
+                position: 'absolute', bottom: 0
+            }}/> : null}
+
+        </TouchableOpacity>);
+
         return (<View style={styles.navBar}>
             <StatusBar barStyle={Platform.OS === 'ios' ? "dark-content" : "light-content"}/>
             <View style={styles.navContent}>
@@ -25,8 +47,11 @@ export default class DynamicTopBar extends PureComponent {
                            source={Images.mall_return}/>
                 </TouchableOpacity>
                 <View style={{flex: 1}}/>
-                <Text style={{color: Colors._161, fontWeight: 'bold', fontSize: 17}}
-                >{hideReceived ? I18n.t('person_dynamic') : nickname + '的动态'}</Text>
+
+                {/*<Text style={{color: Colors._161, fontWeight: 'bold', fontSize: 17}}*/}
+                {/*>{hideReceived ? I18n.t('person_dynamic') : nickname + '的动态'}</Text>*/}
+                {tabs_views}
+
                 <View style={{flex: 1}}/>
                 {this.props.hideReceived ? <TouchableOpacity
                     onPress={() => {

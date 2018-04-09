@@ -12,7 +12,7 @@ import I18n from "react-native-i18n";
 import {NoDataView, LoadErrorView} from '../../components/load';
 import {Colors, Images} from '../../Themes';
 import {getDateDiff} from '../../utils/ComonHelper';
-import {topics_recommends, topics, topics_like} from '../../services/SocialDao';
+import {topics_recommends, topics, topics_like, user_topics} from '../../services/SocialDao';
 
 export const styles = StyleSheet.create({
     avatar: {
@@ -129,6 +129,13 @@ export default class MomentList extends PureComponent {
             }, err => {
                 abortFetch()
             })
+        if (this.props.type === 'user_topics') {
+            user_topics({page, page_size: 20, user_id: this.props.userId}, data => {
+                startFetch(data.items, 15)
+            }, err => {
+                abortFetch()
+            })
+        }
 
     }
 
