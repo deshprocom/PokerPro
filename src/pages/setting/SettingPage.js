@@ -18,8 +18,8 @@ import {fetchGetRecentRaces, _getProfileOk, _getRecentRaces} from '../../actions
 import {umengEvent} from '../../utils/UmengEvent';
 import StorageKey from '../../configs/StorageKey';
 import {_getMsgNumOk} from '../../actions/AccountAction';
-
 import {setLocalLanguage} from '../../services/ConfigDao';
+import ƒ from "jmessage-react-plugin";
 
 
 class SettingPage extends Component {
@@ -190,7 +190,7 @@ class SettingPage extends Component {
     };
 
     componentWillReceiveProps(nextProps) {
-        console.log('TABHOME', nextProps)
+        console.log('TABHOME', nextProps);
     }
 
     _switch = (language) => {

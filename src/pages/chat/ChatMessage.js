@@ -12,16 +12,15 @@ import JMessage from "jmessage-react-plugin";
 import NavigationBar from "../../components/NavigationBar";
 import PopAction from '../comm/PopAction';
 import VideoToast from "./VideoToast";
-import Swipeout from "react-native-swipeout";
+import ImagePicker from 'react-native-image-crop-picker';
+import {Colors,Images} from "../../Themes";
+import I18n from "react-native-i18n";
+
 
 let MessageList = IMUI.MessageList;
 let ChatInput = IMUI.ChatInput;
 const AuroraIController = IMUI.AuroraIMUIController;
 const window = Dimensions.get('window');
-import ImagePicker from 'react-native-image-crop-picker';
-import {Colors} from "../../Themes";
-import I18n from "react-native-i18n";
-
 let IS_HTTP = /(http:\/\/|https:\/\/)((\w|=|\?|\.|\/|&|-)+)/g;
 
 export default class ChatMessage extends Component {
@@ -40,12 +39,13 @@ export default class ChatMessage extends Component {
             inputViewLayout: {width: window.width, height: initHeight},
             menuContainerHeight: 625,
             currentIndex: 0,
+            videoPath:"",
         };
 
         //获取当前用户自己的信息
         JMessage.getMyInfo((myInfo) => {
-            this.myInfo = myInfo
-        })
+            this.myInfo = myInfo;
+        });
     }
 
 
@@ -59,15 +59,17 @@ export default class ChatMessage extends Component {
 
         ///添加消息监听
         JMessage.addReceiveMessageListener(this.receiveMessage);
-        ///监听离线消息
-        JMessage.addSyncOfflineMessageListener(this.receiveMessage);
+
+        //停止接收推送
+        JMessage.enterConversation();
     }
 
     componentWillUnmount() {
         ///移除消息监听
         JMessage.removeReceiveMessageListener(this.receiveMessage);
-        ///移除离线消息
-        JMessage.removeSyncOfflineMessageListener(this.receiveMessage);
+
+        //继续接收推送
+        JMessage.exitConversation();
     }
 
     ///历史消息
@@ -76,16 +78,15 @@ export default class ChatMessage extends Component {
         let parma = {
             type: "single",
             username: userInfo.username,
-            appKey: userInfo.appKey,
             from: this.state.currentIndex,
             limit: 10,
         };
         JMessage.getHistoryMessages(parma,
             (messageArray) => { // 以参数形式返回消息对象数组
                 // do something.
-                console.log(messageArray);
                 this.setState({currentIndex: this.state.currentIndex + 10});
                 let resultArray = [];
+
                 messageArray.forEach((message) => {
                     let msg = this.convertJMessageToAuroraMsg(message);
                     resultArray.push(msg);
@@ -93,7 +94,7 @@ export default class ChatMessage extends Component {
 
                 AuroraIController.insertMessagesToTop(resultArray);
             }, (error) => {
-                console.log("获取历史消息失败");
+                console.log("获取历史消息失败",error);
             });
     };
 
@@ -109,26 +110,32 @@ export default class ChatMessage extends Component {
                 image_path = image.path.replace(/^file:\/\//g, "")
             this.createMessage({messageType: "image", path: image_path});
         });
-    }
+    };
 
 
     //收到消息
     receiveMessage = (message) => {
-        console.log(message);
+        console.log("收到消息",message);
         if (message.target.type === 'user') {
+
             let userInfo = this.props.params.userInfo;
+            ///回调，更新上一页数据
+            if (userInfo.reloadPage !== undefined)
+            {
+                userInfo.reloadPage();
+            }
+
             let parma = {
                 type: "single",
                 username: userInfo.username,
                 messageId: message.id,
             };
-            //如果是文件类型 进行下载
+            //如果是文件类型 自动进行下载
             if (message.type === "file") {
                 JMessage.downloadFile(parma,
                     (result) => {
                         let imgPath = result.filePath;
                         console.log("下载文件成功");
-                        console.log(imgPath);
                         message.path = imgPath;
 
                         let msg = this.convertJMessageToAuroraMsg(message);
@@ -168,8 +175,14 @@ export default class ChatMessage extends Component {
 
     //消息点击
     onMsgClick = (message) => {
+        console.log("=====",message);
         if (message.msgType === "video") {
             let url = message.mediaPath;
+            this.setState({videoPath:url});
+            ///视频未下载
+            if (url === ""){
+            }
+
         }
         if (message.msgType === "image") {
             let image_url = message.mediaPath;
@@ -182,7 +195,6 @@ export default class ChatMessage extends Component {
 
     //点击消息状态按钮触发
     onStatusViewClick = (message) => {
-        console.log(message);
         message.status = 'send_succeed';
         message.fromUser.avatarPath = message.mediaPath;
         AuroraIController.updateMessage(message)
@@ -317,25 +329,11 @@ export default class ChatMessage extends Component {
     */
     createMessage = (msg) => {
         let userInfo = this.props.params.userInfo;
-        // let userInfo = {
-        //     appKey:"3789f75e5d780c24595607b6",
-        //     avatarThumbPath:"",
-        //     gender:"unknown",
-        //     isFriend:true,
-        //     isInBlackList:false,
-        //     isNoDisturb:false,
-        //     noteName:"",
-        //     noteText:"",
-        //     type:"user",
-        //     username:"QQ1049260506"
-        // };
-
         let msgInfo = {
             type: "single",//会话类型。可以为 'single' 或 'group'。
             username: userInfo.username,//对方用户的用户名。当 type 为 'single' 时，username 为必填。
-            appKey: userInfo.appKey,//对方用户所属应用的 AppKey。如果不填，默认为当前应用。
             groupId: "", //对象群组 id。当 type 为 'group' 时，groupId 为必填。
-            messageType: msg.messageType,//text,path,latitude,longitude,scale,address,customObject,extras
+            messageType: msg.messageType,
         };
 
         ///发送文字类型消息
@@ -361,7 +359,7 @@ export default class ChatMessage extends Component {
 
 
         console.log("创建一条" + msg.messageType + "类型的消息");
-        console.log('消息对象', msgInfo)
+        console.log('消息对象', msgInfo);
 
         ///创建消息
         JMessage.createSendMessage(msgInfo, (message) => {
@@ -377,11 +375,15 @@ export default class ChatMessage extends Component {
                 id: message.id,
                 type: msgInfo.type,
                 username: msgInfo.username,
-                appKey: msgInfo.appKey
             }, (jmessage) => {
 
                 // 成功回调
                 this.sendFinshMessage(jmessage);
+                ///回调，更新上一页数据
+                if (userInfo.reloadPage !== undefined)
+                {
+                    userInfo.reloadPage();
+                }
 
             }, (error) => {
                 // 失败回调
@@ -407,8 +409,6 @@ export default class ChatMessage extends Component {
 
     ///消息发送完成，更新UI
     sendFinshMessage = (message) => {
-        console.log("===========");
-        console.log(message);
         let auroraMsg = this.convertJMessageToAuroraMsg(message);
         AuroraIController.updateMessage(auroraMsg);
     };
@@ -440,8 +440,9 @@ export default class ChatMessage extends Component {
         let user = {
             userId: "1",
             displayName: "",
-            avatarPath: "1111111"
+            avatarPath: "",
         };
+
         user.userId = jmessage.from.username;
         user.displayName = jmessage.from.nickname;
         user.avatarPath = jmessage.from.avatarThumbPath;
@@ -449,7 +450,7 @@ export default class ChatMessage extends Component {
             user.displayName = jmessage.from.username;
         }
         if (user.avatarPath === "") {
-            user.avatarPath = "ironman";
+            user.avatarPath = "/var/mobile/Containers/Data/Application/2DEEF1FD-C…5607b6/thumb/9C2C5D6B7B3A975EDFDDA4B7C802261D.jpg";
         }
         auroraMsg.fromUser = user;
         auroraMsg.status = "send_succeed";
@@ -470,30 +471,21 @@ export default class ChatMessage extends Component {
 
     render() {
         let userInfo = this.props.params.userInfo;
-        // let userInfo = {appKey:"3789f75e5d780c24595607b6",
-        //     avatarThumbPath:"",
-        //     gender:"unknown",
-        //     isFriend:true,
-        //     isInBlackList:false,
-        //     isNoDisturb:false,
-        //     noteName:"",
-        //     noteText:"",
-        //     type:"user",
-        //     username:"QQ1049260506"
-        // };
-        console.log(userInfo);
         return (
             <View style={styles.container}>
                 {/*导航栏*/}
                 <NavigationBar
                     barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
                     toolbarStyle={{backgroundColor: "white"}}
-                    title={userInfo.username}
+                    title={userInfo.nickName}
                     titleStyle={{color: Colors._333}}
-                    leftBtnText={"返回"}
-                    leftImageStyle={{height: 23, width: 23, marginLeft: 20, marginRight: 20}}
-                    leftBtnPress={() => global.router.pop()}
-                    rightBtnText={"添加好友"}
+                    leftBtnIcon={Images.set_back}
+                    leftImageStyle={{height:19,width:11, marginLeft: 20, marginRight: 20}}
+                    leftBtnPress={() => {
+                        router.pop()
+                    }}
+                    rightBtnIcon={Images.social.more_3}
+                    rightImageStyle={{height:4,width:19, marginLeft: 20, marginRight: 20}}
                     rightBtnPress={() => {
                         this.popAction && this.popAction.toggle()
                     }}
@@ -538,6 +530,8 @@ export default class ChatMessage extends Component {
                            onSizeChange={this.onInputViewSizeChange}
                            onClickSelectAlbum={this.onClickSelectAlbum}
                 />
+
+                {this.state.videoPath !== ""?<VideoToast videoUrl={this.state.videoPath} hiddenVideoAction={() => {this.setState({videoPath:""})}}/>:null}
 
                 <PopAction
                     ref={ref => this.popAction = ref}
