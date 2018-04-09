@@ -75,13 +75,13 @@ export default class ChatMessage extends Component {
     ///历史消息
     getHistoryMessage = () => {
         let userInfo = this.props.params.userInfo;
-        let parma = {
+        let param = {
             type: "single",
             username: userInfo.username,
             from: this.state.currentIndex,
             limit: 10,
         };
-        JMessage.getHistoryMessages(parma,
+        JMessage.getHistoryMessages(param,
             (messageArray) => { // 以参数形式返回消息对象数组
                 // do something.
                 this.setState({currentIndex: this.state.currentIndex + 10});
@@ -90,8 +90,22 @@ export default class ChatMessage extends Component {
                 messageArray.forEach((message) => {
                     let msg = this.convertJMessageToAuroraMsg(message);
                     resultArray.push(msg);
+                    ///消息是视频而且未下载
+                    if (msg.msgType === "video" && msg.mediaPath === ""){
+                        let params = {
+                            type: "single",
+                            username: userInfo.username,
+                            messageId: msg.msgId,
+                        };
+                        JMessage.downloadFile(params,
+                            (result) => {
+                                // msg.mediaPath = result.filePath;
+                                // AuroraIController.updateMessage(msg);
+                            }, (error) => {
+                                console.log("下载文件失败");
+                            });
+                    }
                 });
-
                 AuroraIController.insertMessagesToTop(resultArray);
             }, (error) => {
                 console.log("获取历史消息失败",error);
@@ -115,7 +129,6 @@ export default class ChatMessage extends Component {
 
     //收到消息
     receiveMessage = (message) => {
-        console.log("收到消息",message);
         if (message.target.type === 'user') {
 
             let userInfo = this.props.params.userInfo;
@@ -143,7 +156,7 @@ export default class ChatMessage extends Component {
 
                     }, (error) => {
                         console.log("下载文件失败");
-                    })
+                    });
             }
             else {
                 let msg = this.convertJMessageToAuroraMsg(message);
@@ -175,12 +188,29 @@ export default class ChatMessage extends Component {
 
     //消息点击
     onMsgClick = (message) => {
-        console.log("=====",message);
         if (message.msgType === "video") {
             let url = message.mediaPath;
-            this.setState({videoPath:url});
+
             ///视频未下载
             if (url === ""){
+                let userInfo = this.props.params.userInfo;
+                let parma = {
+                    type: "single",
+                    username: userInfo.username,
+                    messageId: message.msgId,
+                };
+                JMessage.downloadFile(parma,
+                    (result) => {
+                        console.log("下载文件成功");
+                        this.setState({videoPath:result.filePath});
+                        message.mediaPath = result.filePath;
+                        AuroraIController.updateMessage(message);
+                    }, (error) => {
+                        console.log("下载文件失败");
+                    });
+            }
+            else {
+                this.setState({videoPath:url});
             }
 
         }
@@ -316,7 +346,6 @@ export default class ChatMessage extends Component {
 
     ///结束录制视频
     onFinishRecordVideo = (mediaPath) => {
-        this.createMessage({messageType: "file", path: mediaPath.mediaPath});
     };
 
 
@@ -415,7 +444,7 @@ export default class ChatMessage extends Component {
 
     ///处理发送的消息
     convertJMessageToAuroraMsg = (jmessage) => {
-        var auroraMsg = {};
+        let auroraMsg = {};
         auroraMsg.msgType = jmessage.type;
         auroraMsg.msgId = jmessage.id;
         if (jmessage.type === 'text') {
@@ -505,6 +534,7 @@ export default class ChatMessage extends Component {
                              sendBubblePadding={{left: 10, top: 10, right: 15, bottom: 10}}
                              isAllowPullToRefresh={true}
                              isShowOutgoingDisplayName={true}
+                             isShowDisplayName={true}
                 />
 
                 <ChatInput style={this.state.inputViewLayout}

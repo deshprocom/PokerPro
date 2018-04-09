@@ -91,5 +91,5 @@ export function umengEvent(event) {
             break;
 
     }
-    JAnalyticsModule.postEvent({type:strEvnet});
+    // JAnalyticsModule.postEvent({type:strEvnet});
 }
