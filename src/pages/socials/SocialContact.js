@@ -14,9 +14,7 @@ import {NoDataView} from '../../../src/components/load';
 import {isEmptyObject, utcDate, strNotNull} from '../../utils/ComonHelper';
 import {followships} from '../../services/SocialDao';
 import {reallySize} from "./Header";
-
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
-import MomentList from './MomentList'
 
 export default class SocialContact extends Component {
 
@@ -65,6 +63,8 @@ export default class SocialContact extends Component {
     };
 
     render() {
+        let resultData = this.state.resultData;
+        let dataSource = [resultData.followings,resultData.followers];
         return (
             <View style={styles.container}>
                 {/*导航栏*/}
@@ -82,11 +82,11 @@ export default class SocialContact extends Component {
                 <ScrollableTabView
                     style={{marginTop: 1}}
                     renderTabBar={this.renderTabBar}>
-                    {[].map(item => {
-                        return <MomentList
-                            key={item}
-                            tabLabel={this.tabLabel(item)}
-                            type={item}/>
+                    {dataSource.map((item) => {
+                        return (
+                            <FollowList data = {item}/>
+                        );
+
                     })}
 
                 </ScrollableTabView>
@@ -98,10 +98,26 @@ export default class SocialContact extends Component {
 
 export class FollowList extends Component {
     render(){
+        let data = this.props.data;
         return(
-            <View/>
+            <UltimateListView keyExtractor={(item, index) => index + ""}
+                              onFetch={this.onFetch}
+                              refreshableTitlePull={I18n.t('pull_refresh')}
+                              refreshableTitleRelease={I18n.t('release_refresh')}
+                              dateTitle={I18n.t('last_refresh')}
+                              allLoadedText={I18n.t('no_more')}
+                              waitingSpinnerText={I18n.t('loading')}
+                              emptyView={() => {
+                                  return <NoDataView/>
+                              }}
+            />
         );
     }
+
+    onFetch = (page = 1, startFetch, abortFetch) => {
+
+
+    };
 }
 const styles = StyleSheet.create({
     container: {
