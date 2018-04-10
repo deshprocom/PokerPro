@@ -44,15 +44,18 @@ export default class PersonDynamicPage extends Component {
     };
 
     unread = () => {
-        let body = {user_id: this.userInfo.user_id};
-        getUnreadComments(body, data => {
-            console.log("unreadCount:", data.unread)
-            this.setState({
-                unreadCount: data.unread
-            })
-        }, err => {
+        if (this.isMine()) {
+            let body = {user_id: this.userInfo.user_id};
+            getUnreadComments(body, data => {
+                console.log("unreadCount:", data.unread)
+                this.setState({
+                    unreadCount: data.unread
+                })
+            }, err => {
 
-        });
+            });
+        }
+
     };
 
     _avatar = (avatar) => {
@@ -138,7 +141,7 @@ export default class PersonDynamicPage extends Component {
                                           topic_type: topic_type
                                       })
                                   } else {
-                                      console.log('足迹',topic)
+                                      console.log('足迹', topic)
                                       global.router.toDeletePage();
                                   }
 
@@ -247,8 +250,27 @@ export default class PersonDynamicPage extends Component {
             return true;
     };
 
+    tabLabel = (type) => {
+        if (type === 'user_topics')
+            return '动态'
+        else if (type === 'short')
+            return '说说'
+        else if (type === 'long')
+            return '长帖'
+    }
+
     render() {
         const {user_id} = this.userInfo;
+        const lists = this.isMine() ? ['user_topics'] : ['user_topics', 'long', 'short'];
+        let moments = lists.map((item, index) => {
+
+            return <MomentList
+                key={'moments' + index}
+                userId={user_id}
+                tabLabel={this.tabLabel(item)}
+                type={item}/>
+        });
+
         return (
             <BaseComponent style={ApplicationStyles.bgContainer}>
 
@@ -261,10 +283,7 @@ export default class PersonDynamicPage extends Component {
                         hideReceived={this.isMine()}
                         count={this.state.dynamics.length}/>}>
 
-                    <MomentList
-                        userId={user_id}
-                        tabLabel={'动态'}
-                        type={'user_topics'}/>
+                    {moments}
 
                     <UltimateFlatList
                         style={{backgroundColor: 'white'}}

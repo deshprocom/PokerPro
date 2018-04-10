@@ -13,9 +13,7 @@ export default class MapPosition extends PureComponent {
     componentDidMount() {
         navigator.geolocation.getCurrentPosition(data => {
             console.log('位置坐标：', data)
-            this.setState({
-                location: data
-            })
+
         }, err => {
             console.log(err)
         })

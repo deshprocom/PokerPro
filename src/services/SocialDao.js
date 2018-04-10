@@ -16,6 +16,14 @@ export function visit_other(body,resolve, reject) {
     
 }
 
+export function topics_search(user_id, resolve, reject, params) {
+    helper.get(Api.topics_search(user_id), ret => {
+        resolve(ret.data)
+    }, err => {
+        reject(err)
+    }, params)
+}
+
 export function topics_delete(topic_id, resolve, reject) {
     helper.del(Api.topics_delete(topic_id), {}, ret => {
         resolve(ret.data)
