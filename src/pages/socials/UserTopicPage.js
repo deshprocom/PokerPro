@@ -67,6 +67,12 @@ export default class UserTopicPage extends PureComponent {
 
     //私信
     visitChat = () => {
+        ///未登录先登录
+        if (login_user.user_id === undefined){
+            router.toLoginFirstPage();
+            return;
+        }
+
         const {nick_name, user_id} = this.props.params.userInfo;
         ///获取私信用户的用户名
         visit_other({userId: user_id}, (success) => {
