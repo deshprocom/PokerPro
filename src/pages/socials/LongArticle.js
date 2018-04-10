@@ -251,8 +251,10 @@ export default class LongArticle extends PureComponent {
                 <View style={styles.info}>
                     <Text style={styles.title}>{title}</Text>
                     <View style={styles.btn_like}>
-                        <ImageLoad style={styles.avatar}
-                                   source={{uri: user.avatar}}/>
+                        <ImageLoad
+                            emptyBg={Images.home_avatar}
+                            style={styles.avatar}
+                            source={{uri: user.avatar}}/>
 
                         <View style={{marginLeft: 12}}>
                             <Text style={styles.nick_name}>{user.nick_name}</Text>
@@ -337,18 +339,37 @@ export default class LongArticle extends PureComponent {
         </View>
     }
 
+    previewImage = (images, index) => {
+        let gallery = images.map(item => {
+            return {url: item.image_url}
+        })
+        global.router.toImageGalleryPage(gallery, index)
+    }
+
     shortImage = (images) => {
         if (images.length === 1) {
-            return <ImageLoad
-                style={[styles.long_cover, {marginTop: 14}]}
-                source={{uri: images[0].image_url}}/>
+            return <TouchableOpacity
+                onPress={() => {
+                    this.previewImage(images, 0)
+                }}>
+                <ImageLoad
+                    style={[styles.long_cover, {marginTop: 14}]}
+                    source={{uri: images[0].image_url}}/>
+            </TouchableOpacity>
+
         }
 
         let imageViews = images.map((item, index) => {
-            return <ImageLoad
-                key={'short' + index}
-                style={styles.short_image}
-                source={{uri: item.image_url}}/>
+            return <TouchableOpacity
+                onPress={() => {
+                    this.previewImage(images, index)
+                }}
+                key={'short' + index}>
+                <ImageLoad
+                    style={styles.short_image}
+                    source={{uri: item.image_url}}/>
+            </TouchableOpacity>
+
         });
 
         return <View style={{

@@ -3,7 +3,9 @@
  */
 import * as helper from './RequestHelper';
 import Api from '../configs/ApiConfig';
-import _ from 'lodash'
+import _ from 'lodash';
+import {getDispatchAction} from '../utils/ComonHelper';
+import {GET_PROFILE} from "../actions/ActionTypes";
 
 
 export function topics_delete(topic_id, resolve, reject) {
@@ -23,10 +25,16 @@ export function user_topics(body, resolve, reject) {
 export function follow(followed, body, resolve, reject) {
     if (followed) {
         helper.del(Api.followships(), body,
-            ret => resolve(ret.data), err => reject(err))
+            ret => {
+                getDispatchAction()['GET_PROFILE']();
+                resolve(ret.data)
+            }, err => reject(err))
     } else
         helper.post(Api.followships(), body,
-            ret => resolve(ret.data), err => reject(err))
+            ret => {
+                getDispatchAction()['GET_PROFILE']();
+                resolve(ret.data)
+            }, err => reject(err))
 }
 
 export function followships(resolve, reject) {
@@ -34,9 +42,9 @@ export function followships(resolve, reject) {
         return;
     helper.get(Api.followships(), ret => {
         global.followships = ret.data;
-        resolve(ret.data)
+        resolve && resolve(ret.data)
     }, err => {
-        reject(err)
+        reject && reject(err)
     })
 }
 
