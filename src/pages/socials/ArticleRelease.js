@@ -103,7 +103,7 @@ export default class ArticleRelease extends PureComponent {
                 body.push(rowData.imagePath);
             }
             if (type === "content"){
-                body.push(`<p>${rowData.text}/</p>`);
+                body.push(`<p>${rowData.text}</p>`);
             }
             if (type === "title"){
                 title = rowData.text;
@@ -134,7 +134,6 @@ export default class ArticleRelease extends PureComponent {
 
     ///发布长贴
     postTopic = () => {
-        this.loading && this.loading.open();
         this.createNewData();
     };
 
@@ -144,10 +143,11 @@ export default class ArticleRelease extends PureComponent {
             showToast(I18n.t('article_title_null'));
             return;
         }
-        if (content === ""){
+        if (content === "<p></p>"){
             showToast(I18n.t('article_content_null'));
             return;
         }
+        this.loading && this.loading.open();
 
         let body = {
             body_type: 'long',
@@ -434,15 +434,19 @@ export default class ArticleRelease extends PureComponent {
                     autoClose={true} ///点击按钮关闭
                     openRight={swipeOpen}
                     close={!swipeOpen}
-                    disabled = {true}
+                    disabled={true}
                 >
                     {/*文字*/}
-                    {type === "content" ? <ContentView defaultValue={item.item.text} callbackText={(text) =>{
-                        let newData = [...this.state.data];
-                        let titleData = newData[item.index];
-                        titleData.text = text;
-                        this.setState({data:newData});
-                    }}/> : null}
+                    {type === "content" ? <ContentView beginEdit={() => {
+                        this.listView.scrollToIndex({index:item.index,viewPosition: 0.3});
+                    }}
+                                                       defaultValue={item.item.text}
+                                                       callbackText={(text) => {
+                                                           let newData = [...this.state.data];
+                                                           let titleData = newData[item.index];
+                                                           titleData.text = text;
+                                                           this.setState({data: newData});
+                                                       }}/> : null}
                     {/*图片*/}
                     {type === "image" ? <ImageView imageInfo={item.item}/> : null}
                 </Swipeout>
@@ -511,6 +515,7 @@ export default class ArticleRelease extends PureComponent {
                         <FlatList data={data}
                                   keyExtractor={(item, index) => index + ""}
                                   renderItem={this._renderItem}
+                                  ref={ref => this.listView = ref}
                         />
                     </KeyboardAvoidingView>
                 </View>

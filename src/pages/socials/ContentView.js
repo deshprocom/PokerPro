@@ -12,11 +12,16 @@ export default class ContentView extends Component{
     static props = {
         callbackText:null,
         defaultValue:null,
+        beginEdit:null,
     };
 
     updateText = (text) => {
         if (this.props.callbackText === null) return;
         this.props.callbackText(text);
+    };
+    beginEditing = () => {
+        if (this.props.beginEdit === null) return;
+        this.props.beginEdit();
     };
 
     render(){
@@ -27,6 +32,7 @@ export default class ContentView extends Component{
                            multiline={true}
                            defaultValue={this.props.defaultValue}
                            onChangeText={(text) => {this.updateText(text)}}
+                           onFocus={() => this.beginEditing()}
                 />
             </View>
         );
