@@ -9,7 +9,7 @@ import {
 import {reallySize} from "./Header";
 import {Images, ApplicationStyles, Metrics, Colors} from "../../Themes";
 import I18n from "react-native-i18n";
-import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
+import ScrollableTabView from 'react-native-scrollable-tab-view';
 import MomentList from './MomentList'
 
 

@@ -6,6 +6,7 @@ import {ActionConst, Actions} from 'react-native-router-flux';
 import {NavigationActions} from 'react-navigation';
 import {getDispatchAction} from '../utils/ComonHelper';
 import MapPosition from "../pages/socials/MapPosition";
+import UserTopicPage from "../pages/socials/UserTopicPage";
 
 
 const customFloatFromRight = '';
@@ -66,6 +67,15 @@ export default class Router {
 
     }
 
+    toUserTopicPage(userInfo) {
+        this.stackPush({
+            name: 'UserTopicPage',
+            params: {
+                userInfo
+            }
+        })
+    }
+    
     toArticleRelease(articleKey, articleInfo) {
         this.stackPush({
             name: "ArticleRelease",

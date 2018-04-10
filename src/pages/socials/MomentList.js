@@ -11,8 +11,11 @@ import {UltimateListView, ImageLoad} from '../../components'
 import I18n from "react-native-i18n";
 import {NoDataView, LoadErrorView} from '../../components/load';
 import {Colors, Images} from '../../Themes';
-import {getDateDiff} from '../../utils/ComonHelper';
-import {topics_recommends, topics, topics_like} from '../../services/SocialDao';
+import {getDateDiff, alertOrder} from '../../utils/ComonHelper';
+import {
+    topics_recommends, topics,
+    topics_like, user_topics, topics_delete
+} from '../../services/SocialDao';
 
 export const styles = StyleSheet.create({
     avatar: {
@@ -129,8 +132,24 @@ export default class MomentList extends PureComponent {
             }, err => {
                 abortFetch()
             })
+        if (this.props.type === 'user_topics') {
+            user_topics({page, page_size: 20, user_id: this.props.userId}, data => {
+                startFetch(data.items, 15)
+            }, err => {
+                abortFetch()
+            })
+        }
 
-    }
+    };
+
+    isDelete = () => {
+        const {type, userId} = this.props;
+        if (userId && userId === global.login_user.user_id &&
+            type === 'user_topics')
+            return true;
+        else
+            return false;
+    };
 
     itemView = (item) => {
         const {user, created_at, likes, comments, id, body_type} = item;
@@ -144,18 +163,44 @@ export default class MomentList extends PureComponent {
             <View/>
             {/*用户数据*/}
             <View style={styles.user}>
-                <ImageLoad
-                    style={styles.avatar}
-                    source={{uri: user.avatar}}/>
+                <TouchableOpacity
+                    onPress={() => {
+                        global.router.toUserTopicPage(user)
+                    }}>
+                    <ImageLoad
+                        style={styles.avatar}
+                        source={{uri: user.avatar}}/>
+                </TouchableOpacity>
+
 
                 <Text style={styles.nick_name}>{user.nick_name}</Text>
                 <View style={{flex: 1}}/>
 
                 {body_type === 'long' ? <Text style={styles.txt_long}>长帖</Text> : null}
 
-                <Image
-                    style={styles.more_3}
-                    source={Images.social.more_3}/>
+                <TouchableOpacity
+                    onPress={() => {
+                        if (this.isDelete()) {
+
+                            alertOrder(I18n.t('verified_del'), () => {
+                                topics_delete(id, data => {
+
+                                    this.listView && this.listView.refresh()
+                                }, err => {
+                                })
+                            })
+
+                        }
+                    }}
+                >
+                    {this.isDelete() ? <Image style={{height: 24, width: 20}}
+                                              source={Images.social.article_delete}/>
+                        : <Image
+                            style={styles.more_3}
+                            source={Images.social.more_3}/>}
+                </TouchableOpacity>
+
+
             </View>
 
             {/*内容*/}

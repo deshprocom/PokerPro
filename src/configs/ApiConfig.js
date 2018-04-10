@@ -147,10 +147,11 @@ export default {
     topics_like: topics_like,//说手长帖点赞
     topics_detail: topics_detail,//查看帖子详情
     topics_comments: topics_comments,//获取说说长帖评论列表
-    jmessage_info:jmessage_info,//极光IM用户登录
-    topics_image:topics_image,//上传话题相关的图片
-    followships:followships,//获取关注及粉丝列表
-
+    jmessage_info: jmessage_info,//极光IM用户登录
+    topics_image: topics_image,//上传话题相关的图片
+    followships: followships,//获取关注及粉丝列表
+    user_topics: user_topics,//获取用户个人动态(说说和长帖)¶
+    topics_delete: topics_delete,//删除说说或长帖
 
 }
 
@@ -163,6 +164,16 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+
+function topics_delete(topic_id) {
+    return `users/${getUserId()}/user_topics/${topic_id}`
+}
+
+function user_topics(body) {
+    const {user_id} = body;
+    return `users/${user_id}/user_topics`
+}
 
 function jmessage_info() {
     return `users/${login_user.user_id}/jmessage`

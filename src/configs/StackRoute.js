@@ -4,7 +4,7 @@ import {
     View, StatusBar
 } from 'react-native';
 //Pages
-
+import UserTopicPage from '../pages/socials/UserTopicPage';
 import MoodRelease from '../pages/socials/MoodRelease';
 import LongArticle from '../pages/socials/LongArticle';
 import MapPosition from '../pages/socials/MapPosition';
@@ -109,6 +109,7 @@ export const Stacks = Actions.create(
         <Scene key="SocialContact" component={SocialContact} hideNavBar/>
         <Scene key="Blacklist" component={Blacklist} hideNavBar/>
         <Scene key="Location" component={Location} hideNavBar/>
+        <Scene key="UserTopicPage" component={UserTopicPage} hideNavBar/>
         <Scene key="MoodRelease" component={MoodRelease} hideNavBar/>
         <Scene key="LongArticle" component={LongArticle} hideNavBar/>
         <Scene key="MapPosition" component={MapPosition} hideNavBar/>
