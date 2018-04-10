@@ -11,6 +11,7 @@ import {Images, ApplicationStyles, Metrics, Colors} from "../../Themes";
 import I18n from "react-native-i18n";
 import {NavigationBar} from '../../components';
 import PersonDynamicPage from '../comment/PersonDynamicPage'
+import {visit_other} from '../../services/SocialDao';
 import _ from 'lodash';
 
 const styles = StyleSheet.create({
@@ -64,6 +65,17 @@ const styles = StyleSheet.create({
 
 export default class UserTopicPage extends PureComponent {
 
+    //私信
+    visitChat = () => {
+        const {nick_name, user_id} = this.props.params.userInfo;
+        ///获取私信用户的用户名
+        visit_other({userId: user_id}, (success) => {
+            router.toMessageList({username:success.username,nickName:nick_name});
+        }, (error) => {
+            console.log(error);
+        });
+    };
+
     render() {
 
         const {avatar, nick_name, signature} = this.props.params.userInfo;
@@ -106,9 +118,10 @@ export default class UserTopicPage extends PureComponent {
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        style={[styles.btn_follow, styles.row]}>
+                        style={[styles.btn_follow, styles.row]}  onPress={() => this.visitChat()}>
                         <Image style={{height: 14, width: 15, marginRight: 3}}
-                               source={Images.social.reply}/>
+                               source={Images.social.reply}
+                        />
                         <Text style={styles.follow}>私信</Text>
                     </TouchableOpacity>
                 </View>

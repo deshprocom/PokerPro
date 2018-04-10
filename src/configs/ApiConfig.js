@@ -153,6 +153,7 @@ export default {
     user_topics: user_topics,//获取用户个人动态(说说和长帖)¶
     topics_delete: topics_delete,//删除说说或长帖
     topics_search: topics_search,//获取用户的说说或长帖¶
+    jmessage_visit_other:jmessage_visit_other,//极光IM访问其它用户
 
 }
 
@@ -166,6 +167,10 @@ function getUserId() {
 
 const page_size = 10;
 
+function jmessage_visit_other(body) {
+    const {userId} = body;
+    return `users/${userId}/jmessage`
+}
 
 
 function topics_search(user_id) {

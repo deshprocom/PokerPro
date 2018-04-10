@@ -7,6 +7,14 @@ import _ from 'lodash';
 import {getDispatchAction} from '../utils/ComonHelper';
 import {GET_PROFILE} from "../actions/ActionTypes";
 
+export function visit_other(body,resolve, reject) {
+    helper.get(Api.jmessage_visit_other(body),ret => {
+        resolve(ret.data)
+    },err => {
+        reject(err)
+    });
+    
+}
 
 export function topics_search(user_id, resolve, reject, params) {
     helper.get(Api.topics_search(user_id), ret => {
