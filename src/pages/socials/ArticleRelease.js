@@ -21,6 +21,7 @@ import Loading from "../../components/Loading";
 
 
 let articleKey = "";//长贴标识
+let swipeOpen = false;//侧滑是否打开
 
 export default class ArticleRelease extends PureComponent {
     constructor(props) {
@@ -40,7 +41,6 @@ export default class ArticleRelease extends PureComponent {
                     type: "addModule",
                 },
             ],
-            swipeOpen: false,
         };
     }
 
@@ -50,6 +50,12 @@ export default class ArticleRelease extends PureComponent {
         if (articleKey !== undefined){
             this.setState({data:this.props.params.articleInfo})
         }
+
+        navigator.geolocation.getCurrentPosition(data => {
+            console.log('位置坐标：', data);
+        }, err => {
+            console.log(err)
+        })
     }
 
     ///拼接图片上传后数据源
@@ -73,7 +79,7 @@ export default class ArticleRelease extends PureComponent {
                         cover_link = data.image_path;
                     }
 
-                    let imageUrl = `<img src="${data.image_path}">`;
+                    let imageUrl = `<img src="${data.image_path}"></br>`;
                     rowData.imagePath = imageUrl;
 
                     successCount ++;
@@ -134,6 +140,7 @@ export default class ArticleRelease extends PureComponent {
 
     ///发布长贴
     postTopic = () => {
+        this.closeAction();
         this.createNewData();
     };
 
@@ -143,7 +150,7 @@ export default class ArticleRelease extends PureComponent {
             showToast(I18n.t('article_title_null'));
             return;
         }
-        if (content === "<p></p>"){
+        if (content === "<p></p>" || content === "" ){
             showToast(I18n.t('article_content_null'));
             return;
         }
@@ -195,6 +202,9 @@ export default class ArticleRelease extends PureComponent {
                     showToast("error");
                 });
             }
+            else {
+                router.popToTop();
+            }
 
 
         }, err => {
@@ -205,6 +215,7 @@ export default class ArticleRelease extends PureComponent {
     ///保存草稿
     saveDraft = () => {
 
+        this.closeAction();
         let resultData = this.state.data;
         let title = "";
         let content = "";
@@ -321,6 +332,7 @@ export default class ArticleRelease extends PureComponent {
 
     ///插入图片
     insetrtImageAction = () => {
+        this.closeAction();
         ImagePicker.openPicker({
             compressImageMaxWidth:1024,
             compressImageMaxHeight:1024,
@@ -340,6 +352,7 @@ export default class ArticleRelease extends PureComponent {
 
     ///拍照
     insertTakePhotoAction = () => {
+        this.closeAction();
         ImagePicker.openCamera({
             compressImageMaxWidth:1024,
             compressImageMaxHeight:1024,
@@ -358,6 +371,7 @@ export default class ArticleRelease extends PureComponent {
 
     ///插入文本
     insertTextAction = () => {
+        this.closeAction();
         let rowData = {
             type: "content",
             swipeOpen: false,
@@ -369,7 +383,7 @@ export default class ArticleRelease extends PureComponent {
     ///打开、关闭侧滑
     editAction = () => {
         let newData = [...this.state.data];
-        let swipeOpen = !this.state.swipeOpen;
+        swipeOpen = !swipeOpen;
         newData.forEach((rowData, index) => {
             ///不为第一项和最后一项
             if (index !== 0 && index !== newData.length - 1) {
@@ -378,7 +392,20 @@ export default class ArticleRelease extends PureComponent {
         });
         this.setState({
             data: newData,
-            swipeOpen: swipeOpen,
+        });
+    };
+    //关闭侧滑
+    closeAction = () => {
+        let newData = [...this.state.data];
+        swipeOpen = false;
+        newData.forEach((rowData, index) => {
+            ///不为第一项和最后一项
+            if (index !== 0 && index !== newData.length - 1) {
+                rowData.swipeOpen = false;
+            }
+        });
+        this.setState({
+            data: newData,
         });
     };
 
@@ -399,6 +426,9 @@ export default class ArticleRelease extends PureComponent {
             ///标题
             return (
                 <TitleView defaultValue={item.item.text}
+                           beginEdit={() => {
+                               this.closeAction();
+                           }}
                            callbackTitle={(text) => {
                                let newData = [...this.state.data];
                                let titleData = newData[item.index];
@@ -414,7 +444,7 @@ export default class ArticleRelease extends PureComponent {
                            insertTakePhoto={this.insertTakePhotoAction}
                            insertText={this.insertTextAction}
                            edit={this.editAction}
-                           editState={this.state.swipeOpen}
+                           editState={swipeOpen}
                 />
             );
         }
@@ -438,6 +468,7 @@ export default class ArticleRelease extends PureComponent {
                 >
                     {/*文字*/}
                     {type === "content" ? <ContentView beginEdit={() => {
+                        this.closeAction();
                         this.listView.scrollToIndex({index:item.index,viewPosition: 0.3});
                     }}
                                                        defaultValue={item.item.text}
@@ -468,6 +499,7 @@ export default class ArticleRelease extends PureComponent {
                                    rightBtnText={I18n.t('draft_box')}
                                    btnTextStyle={{fontSize: 14, color: Colors._333}}
                                    rightBtnPress={() =>{
+                                       this.closeAction();
                                        ///草稿箱
                                        global.router.toArticleList();
                                    }}
@@ -536,7 +568,7 @@ export default class ArticleRelease extends PureComponent {
 
                 </View>
 
-                <Loading ref={ref => this.loading = ref}/>
+                <Loading ref={ref => this.loading = ref} cancelable={true}/>
 
             </View>
         )
