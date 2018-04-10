@@ -17,9 +17,10 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {uploadImage,postTopic} from '../../services/SocialDao'
 import {getFileName,showToast} from "../../utils/ComonHelper";
 import moment from 'moment';
+import Loading from "../../components/Loading";
 
 
-let articleKey = "";
+let articleKey = "";//长贴标识
 
 export default class ArticleRelease extends PureComponent {
     constructor(props) {
@@ -56,6 +57,7 @@ export default class ArticleRelease extends PureComponent {
         let resultData = this.state.data;
         let imageCount = 0;//图片总数
         let successCount = 0;//上传成功数
+        let cover_link = "";
 
         resultData.forEach((rowData,index) => {
 
@@ -66,7 +68,11 @@ export default class ArticleRelease extends PureComponent {
 
                 this.uploadImageAction(rowData.imagePath,((data)=>{
                     ///上传成功
-                    // let imageUrl = `![](${data.image_path})`;
+                    ///如果封面图为空 取第一张图做封面图
+                    if (cover_link === ""){
+                        cover_link = data.image_path;
+                    }
+
                     let imageUrl = `<img src="${data.image_path}">`;
                     rowData.imagePath = imageUrl;
 
@@ -74,20 +80,20 @@ export default class ArticleRelease extends PureComponent {
 
                     ///图片上传完毕
                     if (imageCount === successCount){
-                        this.createBody();
+                        this.createBody(cover_link);
                     }
                 }));
             }
 
             ///最后一项且没有图片
             if (index === resultData.length - 2 && imageCount === 0){
-                this.createBody();
+                this.createBody(cover_link);
             }
         });
     };
 
     ///拼接body
-    createBody = () => {
+    createBody = (cover_link) => {
         let resultData = this.state.data;
         let title = "";
         let body = [];
@@ -104,7 +110,7 @@ export default class ArticleRelease extends PureComponent {
             }
         });
         let resultString = body.join("");
-        this.fetchData(title,resultString);
+        this.fetchData(title,resultString,cover_link);
     };
 
     ///上传图片
@@ -128,11 +134,12 @@ export default class ArticleRelease extends PureComponent {
 
     ///发布长贴
     postTopic = () => {
+        this.loading && this.loading.open();
         this.createNewData();
     };
 
     ///请求发长贴接口
-    fetchData = (title,content) =>{
+    fetchData = (title,content,cover_link) =>{
         if (title === ""){
             showToast(I18n.t('article_title_null'));
             return;
@@ -147,6 +154,7 @@ export default class ArticleRelease extends PureComponent {
             body: content,
             title: title,
             published: true,
+            cover_link:cover_link,
             lat:'',
             lng:'',
             location:'',
@@ -154,6 +162,7 @@ export default class ArticleRelease extends PureComponent {
         postTopic(body, data => {
 
             showToast(I18n.t('article_release_success'));
+            this.loading && this.loading.close();
 
             ///草稿箱已经存在当前长帖 将其删除
             if (articleKey !== undefined){
@@ -521,6 +530,8 @@ export default class ArticleRelease extends PureComponent {
                     </TouchableOpacity>
 
                 </View>
+
+                <Loading ref={ref => this.loading = ref}/>
 
             </View>
         )
