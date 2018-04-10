@@ -44,7 +44,7 @@ function _getProfileOk(profile, followships) {
         type: GET_PROFILE,
         fetching: FETCH_SUCCESS,
         profile: profile,
-        followships:followships
+        followships: followships
     }
 }
 
@@ -83,10 +83,7 @@ export function fetchGetProfile(user_id) {
     return (dispatch) => {
         dispatch(_getProfile());
         getProfile(user_id, (profile) => {
-            followships(followships => {
-                dispatch(_getProfileOk(profile, followships))
-            }, err => {
-            })
+            dispatch(_getProfileOk(profile))
 
         }, (err) => {
             showToast(err);

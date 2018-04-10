@@ -143,7 +143,7 @@ export default class ArticleRelease extends PureComponent {
             showToast(I18n.t('article_title_null'));
             return;
         }
-        if (content === "<p></p>"){
+        if (content === "<p></p >" || content === "" ){
             showToast(I18n.t('article_content_null'));
             return;
         }
@@ -187,14 +187,16 @@ export default class ArticleRelease extends PureComponent {
                         data: articleList,
                     }).then(() => {
 
-                        router.popToTop();
+
                     }).catch(err => {
                         showToast("error");
                     });
                 }).catch(err => {
                     showToast("error");
                 });
+
             }
+            router.popToTop();
 
 
         }, err => {
