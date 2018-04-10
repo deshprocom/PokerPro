@@ -23,10 +23,16 @@ export function user_topics(body, resolve, reject) {
 export function follow(followed, body, resolve, reject) {
     if (followed) {
         helper.del(Api.followships(), body,
-            ret => resolve(ret.data), err => reject(err))
+            ret => {
+                followships()
+                resolve(ret.data)
+            }, err => reject(err))
     } else
         helper.post(Api.followships(), body,
-            ret => resolve(ret.data), err => reject(err))
+            ret => {
+                followships()
+                resolve(ret.data)
+            }, err => reject(err))
 }
 
 export function followships(resolve, reject) {
@@ -35,9 +41,9 @@ export function followships(resolve, reject) {
     helper.get(Api.followships(), ret => {
         console.log('获取关注及粉丝列表', ret.data)
         global.followships = ret.data;
-        resolve(ret.data)
+        resolve && resolve(ret.data)
     }, err => {
-        reject(err)
+        reject && reject(err)
     })
 }
 

@@ -23,7 +23,7 @@ class ImageLoad extends React.Component {
         else
             return <Image
                 {...this.props}
-                source={Images.empty_image}
+                source={emptyBg ? emptyBg : Images.empty_image}
             />
     }
 }

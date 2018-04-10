@@ -168,6 +168,7 @@ export default class MomentList extends PureComponent {
                         global.router.toUserTopicPage(user)
                     }}>
                     <ImageLoad
+                        emptyBg={Images.home_avatar}
                         style={styles.avatar}
                         source={{uri: user.avatar}}/>
                 </TouchableOpacity>
@@ -256,9 +257,15 @@ export default class MomentList extends PureComponent {
         return <View>
             <Text style={styles.body}>{item.title}</Text>
 
-            <ImageLoad
-                style={styles.long_cover}
-                source={{uri: item.cover_link}}/>
+            <TouchableOpacity
+                onPress={() => {
+                    global.router.toImageGalleryPage([{url: item.cover_link}], 0)
+                }}>
+                <ImageLoad
+                    style={styles.long_cover}
+                    source={{uri: item.cover_link}}/>
+            </TouchableOpacity>
+
         </View>
     }
 
@@ -272,18 +279,39 @@ export default class MomentList extends PureComponent {
         </View>
     }
 
+    previewImage = (images, index) => {
+        let gallery = images.map(item => {
+            return {url: item.image_url}
+        })
+        global.router.toImageGalleryPage(gallery, index)
+    }
+
     shortImage = (images) => {
         if (images.length === 1) {
-            return <ImageLoad
-                style={styles.long_cover}
-                source={{uri: images[0].image_url}}/>
+            return <TouchableOpacity
+                onPress={() => {
+                    this.previewImage(images, 0)
+                }}
+            >
+                <ImageLoad
+                    style={styles.long_cover}
+                    source={{uri: images[0].image_url}}/>
+            </TouchableOpacity>
+
         }
 
         let imageViews = images.map((item, key) => {
-            return <ImageLoad
+            return <TouchableOpacity
                 key={'short' + key}
-                style={styles.short_image}
-                source={{uri: item.image_url}}/>
+                onPress={() => {
+                    this.previewImage(images, key)
+                }}
+            >
+                <ImageLoad
+                    style={styles.short_image}
+                    source={{uri: item.image_url}}/>
+            </TouchableOpacity>
+
         });
 
         return <View style={{
