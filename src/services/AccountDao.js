@@ -237,7 +237,6 @@ export var LoginUser = {};
 
 function getJmessageInfo(avatar) {
 
-
     ///获取极光登录信息
     helper.post(Api.jmessage_info(),{},(ret) => {
         let {username,password} = ret.data;
