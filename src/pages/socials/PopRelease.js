@@ -33,9 +33,21 @@ export default class PopRelease extends PureComponent {
         })
     }
 
+
+    componentDidMount() {
+        navigator.geolocation.getCurrentPosition(data => {
+            console.log('位置坐标：', data)
+
+        }, err => {
+            console.log(err)
+        })
+
+    }
+
     render() {
         const {visible} = this.state;
         return (<Modal
+            animationType="slide"
             transparent={true}
             visible={visible}
             onRequestClose={() => {
@@ -56,7 +68,6 @@ export default class PopRelease extends PureComponent {
                             global.router.toArticleRelease()
                         }}
                         style={styles.btn}
-                        delay={200}
                         animation={'zoomIn'}>
                         <Image source={Images.social.article}
                                style={styles.icon}/>
@@ -74,7 +85,6 @@ export default class PopRelease extends PureComponent {
                             global.router.toSendMood()
                         }}
                         style={styles.btn}
-                        delay={200}
                         animation={'zoomIn'}>
                         <Image source={Images.social.moment}
                                style={styles.icon}/>
