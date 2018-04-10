@@ -44,15 +44,18 @@ export default class PersonDynamicPage extends Component {
     };
 
     unread = () => {
-        let body = {user_id: this.userInfo.user_id};
-        getUnreadComments(body, data => {
-            console.log("unreadCount:", data.unread)
-            this.setState({
-                unreadCount: data.unread
-            })
-        }, err => {
+        if (this.isMine()) {
+            let body = {user_id: this.userInfo.user_id};
+            getUnreadComments(body, data => {
+                console.log("unreadCount:", data.unread)
+                this.setState({
+                    unreadCount: data.unread
+                })
+            }, err => {
 
-        });
+            });
+        }
+
     };
 
     _avatar = (avatar) => {
@@ -138,7 +141,7 @@ export default class PersonDynamicPage extends Component {
                                           topic_type: topic_type
                                       })
                                   } else {
-                                      console.log('足迹',topic)
+                                      console.log('足迹', topic)
                                       global.router.toDeletePage();
                                   }
 
