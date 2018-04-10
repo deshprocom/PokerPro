@@ -612,5 +612,6 @@
   "report":"举报该人",
   "remove_blacklist":"移除黑名单",
   "follow_stalwart":"关注与粉丝",
-  "stalwart":"粉丝"
+  "stalwart":"粉丝",
+  "error_alert":"您的账号在其他设备登录,暂时无法正常使用私信功能,请尝试重启应用"
 }

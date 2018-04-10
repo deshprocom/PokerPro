@@ -45,6 +45,7 @@ export default class ChatMessage extends Component {
 
         //获取当前用户自己的信息
         JMessage.getMyInfo((myInfo) => {
+            console.log(myInfo);
             this.myInfo = myInfo;
         });
     }
@@ -63,6 +64,9 @@ export default class ChatMessage extends Component {
 
         //停止接收推送
         JMessage.enterConversation();
+
+        ///监听登录状态
+        JMessage.addLoginStateChangedListener(this.loginState);
     }
 
     componentWillUnmount() {
@@ -71,7 +75,11 @@ export default class ChatMessage extends Component {
 
         //继续接收推送
         JMessage.exitConversation();
+
+        ///移除登录状态监听
+        JMessage.removeMessageRetractListener(this.loginState)
     }
+
 
     ///历史消息
     getHistoryMessage = () => {
@@ -109,7 +117,12 @@ export default class ChatMessage extends Component {
                 });
                 AuroraIController.insertMessagesToTop(resultArray);
             }, (error) => {
-                console.log("获取历史消息失败",error);
+                ///被挤下线
+                if(error.code === 863004)
+                {
+                    showToast(I18n.t('error_alert'));
+                    router.pop()
+                }
             });
     };
 
@@ -125,6 +138,14 @@ export default class ChatMessage extends Component {
                 image_path = image.path.replace(/^file:\/\//g, "")
             this.createMessage({messageType: "image", path: image_path});
         });
+    };
+
+    //登录状态
+    loginState = (message) => {
+        if (message.type === "user_kicked"){
+            showToast(I18n.t('error_alert'));
+            router.pop()
+        }
     };
 
 
