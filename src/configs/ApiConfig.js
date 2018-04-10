@@ -152,6 +152,7 @@ export default {
     followships: followships,//获取关注及粉丝列表
     user_topics: user_topics,//获取用户个人动态(说说和长帖)¶
     topics_delete: topics_delete,//删除说说或长帖
+    topics_search: topics_search,//获取用户的说说或长帖¶
 
 }
 
@@ -165,6 +166,11 @@ function getUserId() {
 
 const page_size = 10;
 
+
+
+function topics_search(user_id) {
+    return `users/${user_id}/user_topics/search`
+}
 
 function topics_delete(topic_id) {
     return `users/${getUserId()}/user_topics/${topic_id}`

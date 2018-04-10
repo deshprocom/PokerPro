@@ -14,7 +14,8 @@ import {Colors, Images} from '../../Themes';
 import {getDateDiff, alertOrder} from '../../utils/ComonHelper';
 import {
     topics_recommends, topics,
-    topics_like, user_topics, topics_delete
+    topics_like, user_topics, topics_delete,
+    topics_search
 } from '../../services/SocialDao';
 
 export const styles = StyleSheet.create({
@@ -120,24 +121,33 @@ export default class MomentList extends PureComponent {
     }
 
     onFetch = (page = 1, startFetch, abortFetch) => {
-        if (this.props.type === 'topics')
+        const {type, userId} = this.props
+        if (type === 'topics')
             topics({page, page_size: 20}, data => {
                 startFetch(data.items, 15)
             }, err => {
                 abortFetch()
             })
-        if (this.props.type === 'recommends')
+        if (type === 'recommends')
             topics_recommends({page, page_size: 20}, data => {
                 startFetch(data.items, 15)
             }, err => {
                 abortFetch()
             })
-        if (this.props.type === 'user_topics') {
-            user_topics({page, page_size: 20, user_id: this.props.userId}, data => {
+        if (type === 'user_topics') {
+            user_topics({page, page_size: 20, user_id: userId}, data => {
                 startFetch(data.items, 15)
             }, err => {
                 abortFetch()
             })
+        }
+        if (type === 'long' ||
+            type === 'short') {
+            topics_search(userId, data => {
+                startFetch(data.items, 15)
+            }, err => {
+                abortFetch()
+            }, {keyword: type})
         }
 
     };

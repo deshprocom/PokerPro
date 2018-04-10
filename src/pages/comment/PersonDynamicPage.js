@@ -250,8 +250,27 @@ export default class PersonDynamicPage extends Component {
             return true;
     };
 
+    tabLabel = (type) => {
+        if (type === 'user_topics')
+            return '动态'
+        else if (type === 'short')
+            return '说说'
+        else if (type === 'long')
+            return '长帖'
+    }
+
     render() {
         const {user_id} = this.userInfo;
+        const lists = this.isMine() ? ['user_topics'] : ['user_topics', 'long', 'short'];
+        let moments = lists.map((item, index) => {
+
+            return <MomentList
+                key={'moments' + index}
+                userId={user_id}
+                tabLabel={this.tabLabel(item)}
+                type={item}/>
+        });
+
         return (
             <BaseComponent style={ApplicationStyles.bgContainer}>
 
@@ -264,10 +283,7 @@ export default class PersonDynamicPage extends Component {
                         hideReceived={this.isMine()}
                         count={this.state.dynamics.length}/>}>
 
-                    <MomentList
-                        userId={user_id}
-                        tabLabel={'动态'}
-                        type={'user_topics'}/>
+                    {moments}
 
                     <UltimateFlatList
                         style={{backgroundColor: 'white'}}
