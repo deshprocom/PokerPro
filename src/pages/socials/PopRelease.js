@@ -48,6 +48,11 @@ export default class PopRelease extends PureComponent {
                     <AniTouchableOpacity
                         onPress={() => {
                             this.toggle();
+                            ///未登录先登录
+                            if (login_user.user_id === undefined){
+                                router.toLoginFirstPage();
+                                return;
+                            }
                             global.router.toArticleRelease()
                         }}
                         style={styles.btn}
@@ -61,6 +66,11 @@ export default class PopRelease extends PureComponent {
                     <AniTouchableOpacity
                         onPress={() => {
                             this.toggle();
+                            ///未登录先登录
+                            if (login_user.user_id === undefined){
+                                router.toLoginFirstPage();
+                                return;
+                            }
                             global.router.toSendMood()
                         }}
                         style={styles.btn}
