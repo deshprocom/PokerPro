@@ -651,7 +651,7 @@ function paramCheck(param) {
 
 
 export function putProfile(user_id) {
-    return 'account/users/' + user_id + '/profile';
+    return 'account/users/' + getUserId() + '/profile';
 }
 
 function postChangePwd() {
