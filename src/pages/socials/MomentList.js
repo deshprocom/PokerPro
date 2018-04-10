@@ -11,7 +11,7 @@ import {UltimateListView, ImageLoad} from '../../components'
 import I18n from "react-native-i18n";
 import {NoDataView, LoadErrorView} from '../../components/load';
 import {Colors, Images} from '../../Themes';
-import {getDateDiff, alertOrder} from '../../utils/ComonHelper';
+import {getDateDiff, alertOrder, strNotNull} from '../../utils/ComonHelper';
 import {
     topics_recommends, topics,
     topics_like, user_topics, topics_delete,
@@ -104,7 +104,7 @@ export const styles = StyleSheet.create({
 export default class MomentList extends PureComponent {
 
     static props = {
-        showMore:null,
+        showMore: null,
     };
 
 
@@ -208,7 +208,7 @@ export default class MomentList extends PureComponent {
                         }
                         else {
                             if (this.props.showMore === null) return;
-                                this.props.showMore();
+                            this.props.showMore();
                         }
                     }}
                 >
@@ -275,14 +275,15 @@ export default class MomentList extends PureComponent {
         return <View>
             <Text style={styles.body}>{item.title}</Text>
 
-            <TouchableOpacity
+            {strNotNull(item.cover_link) ? <TouchableOpacity
                 onPress={() => {
                     global.router.toImageGalleryPage([{url: item.cover_link}], 0)
                 }}>
                 <ImageLoad
                     style={styles.long_cover}
                     source={{uri: item.cover_link}}/>
-            </TouchableOpacity>
+            </TouchableOpacity> : null}
+
 
         </View>
     }
