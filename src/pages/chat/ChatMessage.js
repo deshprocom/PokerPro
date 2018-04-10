@@ -45,6 +45,7 @@ export default class ChatMessage extends Component {
 
         //获取当前用户自己的信息
         JMessage.getMyInfo((myInfo) => {
+            console.log(myInfo);
             this.myInfo = myInfo;
         });
     }
@@ -52,6 +53,7 @@ export default class ChatMessage extends Component {
 
     componentDidMount() {
         this.resetMenu();
+        this.enterChat();
         this.setState({messageListLayout: {flex: 1, margin: 0, width: window.width}});
 
 
@@ -61,8 +63,10 @@ export default class ChatMessage extends Component {
         ///添加消息监听
         JMessage.addReceiveMessageListener(this.receiveMessage);
 
-        //停止接收推送
-        JMessage.enterConversation();
+
+
+        ///监听登录状态
+        JMessage.addLoginStateChangedListener(this.loginState);
     }
 
     componentWillUnmount() {
@@ -71,7 +75,22 @@ export default class ChatMessage extends Component {
 
         //继续接收推送
         JMessage.exitConversation();
+
+        ///移除登录状态监听
+        JMessage.removeMessageRetractListener(this.loginState)
     }
+
+    enterChat = () => {
+        //停止接收推送
+        let userInfo = this.props.params.userInfo;
+        JMessage.enterConversation({ type: 'single', username: userInfo.username},
+            (conversation) => {
+
+            }, (error) => {
+
+            });
+    };
+
 
     ///历史消息
     getHistoryMessage = () => {
@@ -109,7 +128,12 @@ export default class ChatMessage extends Component {
                 });
                 AuroraIController.insertMessagesToTop(resultArray);
             }, (error) => {
-                console.log("获取历史消息失败",error);
+                ///被挤下线
+                if(error.code === 863004)
+                {
+                    showToast(I18n.t('error_alert'));
+                    router.pop()
+                }
             });
     };
 
@@ -125,6 +149,14 @@ export default class ChatMessage extends Component {
                 image_path = image.path.replace(/^file:\/\//g, "")
             this.createMessage({messageType: "image", path: image_path});
         });
+    };
+
+    //登录状态
+    loginState = (message) => {
+        if (message.type === "user_kicked"){
+            showToast(I18n.t('error_alert'));
+            router.pop()
+        }
     };
 
 

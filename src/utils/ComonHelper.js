@@ -12,12 +12,12 @@ import StorageKey from '../configs/StorageKey';
 import {Verified, SellStatus} from '../configs/Status';
 import Communications from 'react-native-communications';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../Themes';
-// import UMShare from 'react-native-umshare';
 import *as wechat from 'react-native-wechat'
 import * as Constants from '../configs/Constants';
 import {getApiType} from '../services/RequestHelper';
 import _ from 'lodash';
 import JShareModule from "jshare-react-native";
+import JMessage from "jmessage-react-plugin";
 
 
 export const YYYY_MM_DD = 'YYYY.MM.DD';
@@ -786,7 +786,8 @@ export function clearLoginUser() {
     removeToken();
     setLoginUser({});
     global.user_extra = {};
-    global.addressList = []
+    global.addressList = [];
+    JMessage.logout();
 }
 
 /*身份证验证状态*/

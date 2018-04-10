@@ -11,13 +11,31 @@ import {Images, ApplicationStyles, Metrics, Colors} from "../../Themes";
 import I18n from "react-native-i18n";
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import MomentList from './MomentList'
+import PopAction from '../comm/PopAction';
 
 
 export default class Square extends PureComponent {
 
     state = {
         square_types: ['topics', 'recommends', 'follows']
-    }
+    };
+
+    //举报原因
+    report = () => {
+        this.popAction.toggle()
+    };
+
+    //弹窗
+    popActions = () => {
+        return [
+            {name: I18n.t('report_reason1'), txtStyle: {color: '#4A90E2'}, onPress: () => this.report()},
+            {name: I18n.t('report_reason2'), txtStyle: {color: '#4A90E2'}, onPress: () => this.report()},
+            {name: I18n.t('report_reason3'), txtStyle: {color: '#4A90E2'}, onPress: () => this.report()},
+            {name: I18n.t('report_reason4'), txtStyle: {color: '#4A90E2'}, onPress: () => this.report()},
+            {name: I18n.t('report_reason5'), txtStyle: {color: '#4A90E2'}, onPress: () => this.report()},
+            {name: I18n.t('cancel'), txtStyle: {color: Colors._AAA}, onPress: () => this.popAction.toggle()}
+        ];
+    };
 
     render() {
 
@@ -28,19 +46,26 @@ export default class Square extends PureComponent {
                     return <MomentList
                         key={item}
                         tabLabel={this.tabLabel(item)}
-                        type={item}/>
+                        type={item}
+                        showMore={() => {
+                            this.popAction && this.popAction.toggle();
+                        }}/>
                 })}
 
             </ScrollableTabView>
+
+            <PopAction
+                ref={ref => this.popAction = ref}
+                btnArray={this.popActions()}/>
 
         </View>
     }
 
     tabLabel = (type) => {
         if (type === 'topics')
-            return '广场'
+            return '广场';
         if (type === 'recommends')
-            return '精华'
+            return '精华';
         return '关注'
     }
 }
