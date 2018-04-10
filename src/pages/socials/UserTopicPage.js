@@ -70,7 +70,6 @@ export default class UserTopicPage extends PureComponent {
         const {nick_name, user_id} = this.props.params.userInfo;
         ///获取私信用户的用户名
         visit_other({userId: user_id}, (success) => {
-            console.log(success);
             router.toMessageList({username:success.username,nickName:nick_name});
         }, (error) => {
             console.log(error);

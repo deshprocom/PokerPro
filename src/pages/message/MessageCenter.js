@@ -70,6 +70,7 @@ export default class MessageCenter extends Component {
     getConversations = () => {
         ///获取会话列表
         JMessage.getConversations((conArr) => { // conArr: 会话数组。
+            console.log(conArr);
             this.setState({conversations:conArr});
         }, (error) => {
             console.log("获取会话列表失败",error);
@@ -120,8 +121,8 @@ export default class MessageCenter extends Component {
                     <Image style={styles.msgIcon}
                            source={{uri:avatar}}/>
                     <View>
-                        <Text style={styles.msgTitle}>{nickname}</Text>
-                        <Text style={styles.msgDesc}>{text}</Text>
+                        <Text style={styles.msgTitle} numberOfLines={1}>{nickname}</Text>
+                        <Text style={styles.msgDesc} numberOfLines={1}>{text}</Text>
                     </View>
                     <Text style={styles.msgTime}>{createTime}</Text>
                 </View>
