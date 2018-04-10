@@ -9,16 +9,15 @@ import {
 } from 'react-native';
 import {Images, ApplicationStyles, Metrics, Colors} from "../../Themes";
 import I18n from "react-native-i18n";
-import ScrollableTabView from 'react-native-scrollable-tab-view';
-import MomentList from './MomentList';
 import {NavigationBar} from '../../components';
+import PersonDynamicPage from '../comment/PersonDynamicPage'
 
 const styles = StyleSheet.create({
     topBar: {
-        height: 267,
         width: Metrics.screenWidth,
         alignItems: 'center',
-        backgroundColor: Colors._161
+        backgroundColor: Colors._161,
+        height: 280
     },
     person1: {
         width: 74,
@@ -67,8 +66,14 @@ export default class UserTopicPage extends PureComponent {
     render() {
         return <ScrollView>
             <View style={styles.topBar}>
+                <Image
+                    style={{position: 'absolute', height: 280, width: '100%'}}
+                    source={Images.social.user_topic}/>
+
                 <NavigationBar
-                    barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
+                    barStyle={'light-content'}
+                    rightBtnIcon={Images.social.more_4}
+                    rightImageStyle={{height: 4, width: 28}}
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
@@ -88,13 +93,26 @@ export default class UserTopicPage extends PureComponent {
 
                 <Text style={styles.intro}>简介：职业德州教学 WX：2324245</Text>
 
-                <TouchableOpacity
-                    style={styles.btn_follow}>
-                    <Text style={styles.follow}>{I18n.t('rank_focus')}</Text>
-                </TouchableOpacity>
+
+                <View style={[styles.row, {marginTop: 17, marginBottom: 17}]}>
+                    <TouchableOpacity
+                        style={[styles.btn_follow, {marginRight: 26}]}>
+                        <Text style={styles.follow}>{I18n.t('rank_focus')}</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={[styles.btn_follow, styles.row]}>
+                        <Image style={{height: 14, width: 15, marginRight: 3}}
+                               source={Images.social.reply}/>
+                        <Text style={styles.follow}>私信</Text>
+                    </TouchableOpacity>
+                </View>
+
 
             </View>
 
+            <PersonDynamicPage
+                params={this.props.params}/>
 
         </ScrollView>
     }

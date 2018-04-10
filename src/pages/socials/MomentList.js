@@ -165,7 +165,7 @@ export default class MomentList extends PureComponent {
             <View style={styles.user}>
                 <TouchableOpacity
                     onPress={() => {
-                        global.router.toUserTopicPage()
+                        global.router.toUserTopicPage(user)
                     }}>
                     <ImageLoad
                         style={styles.avatar}

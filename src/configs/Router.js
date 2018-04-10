@@ -47,9 +47,12 @@ export default class Router {
     }
 
 
-    toUserTopicPage() {
+    toUserTopicPage(userInfo) {
         this.stackPush({
-            name: 'UserTopicPage'
+            name: 'UserTopicPage',
+            params: {
+                userInfo
+            }
         })
     }
 
