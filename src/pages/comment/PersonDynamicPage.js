@@ -10,7 +10,8 @@ import {agoDynamicDate, isEmptyObject, strNotNull, util, utcDate, convertDate} f
 import DynamicEmpty from './DynamicEmpty';
 import DynamicTopBar from './DynamicTopBar';
 import LinearGradient from 'react-native-linear-gradient';
-import moment from 'moment';
+import ScrollableTabView from 'react-native-scrollable-tab-view';
+import MomentList from '../socials/MomentList'
 
 export default class PersonDynamicPage extends Component {
     state = {
@@ -30,6 +31,7 @@ export default class PersonDynamicPage extends Component {
     }
 
     setUnreadCount = (unreadCount) => {
+        this.unread();
         this.setState({
             unreadCount
         })
@@ -64,34 +66,34 @@ export default class PersonDynamicPage extends Component {
     personTop = () => {
 
         const {avatar, nick_name, signature} = this.userInfo;
+        return <View style={{height: 10, width: '100%', backgroundColor: Colors._ECE}}/>
 
-        return (
-            <View>
-                <LinearGradient
-                    colors={['#DEDEDE', '#FFFFFF', '#FFFFFF']}
-                    style={styles.topPage}>
-                    <TouchableOpacity
-                        onPress={() => {
-                            const images = [{url: avatar}];
-                            global.router.toImageGalleryPage(images, 0)
-                        }}>
-                        <Image style={styles.TopImg} source={this._avatar(avatar)}/>
-                    </TouchableOpacity>
-
-                    <View style={styles.TopTxt}>
-                        <Text style={{fontSize: 20, color: '#444444'}}>{nick_name}</Text>
-                        <Text
-                            style={{
-                                fontSize: 14,
-                                color: '#888888',
-                                marginTop: 5
-                            }}>{isEmptyObject(signature) ? I18n.t('ple_sign') : signature}</Text>
-                    </View>
-                </LinearGradient>
-                <View style={{height: 6, width: '100%', backgroundColor: '#ECECEE'}}/>
-            </View>
-
-        )
+        // return (
+        //     <View>
+        //         <LinearGradient
+        //             colors={['#DEDEDE', '#FFFFFF', '#FFFFFF']}
+        //             style={styles.topPage}>
+        //             <TouchableOpacity
+        //                 onPress={() => {
+        //                     const images = [{url: avatar}];
+        //                     global.router.toImageGalleryPage(images, 0)
+        //                 }}>
+        //                 <Image style={styles.TopImg} source={this._avatar(avatar)}/>
+        //             </TouchableOpacity>
+        //
+        //             <View style={styles.TopTxt}>
+        //                 <Text style={{fontSize: 20, color: '#444444'}}>{nick_name}</Text>
+        //                 <Text
+        //                     style={{
+        //                         fontSize: 14,
+        //                         color: '#888888',
+        //                         marginTop: 5
+        //                     }}>{isEmptyObject(signature) ? I18n.t('ple_sign') : signature}</Text>
+        //             </View>
+        //         </LinearGradient>
+        //         <View style={{height: 6, width: '100%', backgroundColor: '#ECECEE'}}/>
+        //     </View>
+        // )
     };
     _separator = () => {
         return <View
@@ -136,6 +138,7 @@ export default class PersonDynamicPage extends Component {
                                           topic_type: topic_type
                                       })
                                   } else {
+                                      console.log('足迹',topic)
                                       global.router.toDeletePage();
                                   }
 
@@ -155,14 +158,6 @@ export default class PersonDynamicPage extends Component {
                 </View>
             </TouchableOpacity>
         )
-    };
-    _avatar2 = (topic_image) => {
-        if (isEmptyObject(topic_image))
-            return Images.empty_image;
-        else if (strNotNull(topic_image))
-            return {uri: topic_image};
-        else
-            return Images.empty_image;
     };
 
 
@@ -253,24 +248,27 @@ export default class PersonDynamicPage extends Component {
     };
 
     render() {
-
+        const {user_id} = this.userInfo;
         return (
             <BaseComponent style={ApplicationStyles.bgContainer}>
-                <TouchableOpacity onPress={() => {
-                    this.unread();
-                }}>
-                    <DynamicTopBar
+
+
+                <ScrollableTabView
+                    renderTabBar={() => <DynamicTopBar
                         nickname={this.userInfo.nick_name}
                         setUnreadCount={this.setUnreadCount}
                         unreadCount={this.state.unreadCount}
                         hideReceived={this.isMine()}
-                        count={this.state.dynamics.length}/>
-                </TouchableOpacity>
+                        count={this.state.dynamics.length}/>}>
 
-
-                <View style={{backgroundColor: '#FFFFFF', marginBottom: 20}}>
+                    <MomentList
+                        userId={user_id}
+                        tabLabel={'动态'}
+                        type={'user_topics'}/>
 
                     <UltimateFlatList
+                        style={{backgroundColor: 'white'}}
+                        tabLabel={'足迹'}
                         header={() => this.personTop()}
                         arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
                         ref={ref => this.ultimate = ref}
@@ -285,7 +283,9 @@ export default class PersonDynamicPage extends Component {
                         separator={this._separator1}
                         emptyView={() => <DynamicEmpty/>}
                     />
-                </View>
+
+                </ScrollableTabView>
+
 
             </BaseComponent>
         );

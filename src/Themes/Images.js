@@ -306,7 +306,10 @@ const images = {
         more_3: require('../../source/social/more_3.png'),
         like_red: require('../../source/social/like_red.png'),
         like_gray: require('../../source/social/like_gray.png'),
-        comment_gray: require('../../source/social/comment_gray.png')
+        comment_gray: require('../../source/social/comment_gray.png'),
+        article_delete: require('../../source/social/delete.png'),
+        more_4: require('../../source/social/more_4.png'),
+        user_topic: require('../../source/social/user_topic.png')
     }
 
 };

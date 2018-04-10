@@ -31,7 +31,7 @@ import {BlurView} from 'react-native-blur';
 
 let {width, height} = Dimensions.get('window');
 //顶部内容高度
-let headHeight = 200 - Metrics.navBarHeight;
+let headHeight = 220 - Metrics.navBarHeight;
 
 class RaceScene extends Component {
     state = {

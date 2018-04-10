@@ -6,6 +6,7 @@ import {ActionConst, Actions} from 'react-native-router-flux';
 import {NavigationActions} from 'react-navigation';
 import {getDispatchAction} from '../utils/ComonHelper';
 import MapPosition from "../pages/socials/MapPosition";
+import UserTopicPage from "../pages/socials/UserTopicPage";
 
 
 const customFloatFromRight = '';
@@ -45,10 +46,20 @@ export default class Router {
 
     }
 
-    toArticleRelease(articleKey,articleInfo){
+
+    toUserTopicPage(userInfo) {
         this.stackPush({
-            name:"ArticleRelease",
-            params:{
+            name: 'UserTopicPage',
+            params: {
+                userInfo
+            }
+        })
+    }
+
+    toArticleRelease(articleKey, articleInfo) {
+        this.stackPush({
+            name: "ArticleRelease",
+            params: {
                 articleKey,
                 articleInfo,
             },
@@ -60,10 +71,12 @@ export default class Router {
             name: "MoodRelease"
         })
     }
-    toLongArticle(article,isComment) {
+
+    toLongArticle(article, isComment) {
         this.stackPush({
             name: 'LongArticle',
-            params: {article,
+            params: {
+                article,
                 isComment
             }
         })
@@ -75,12 +88,11 @@ export default class Router {
         })
     }
 
-    toArticleList(){
+    toArticleList() {
         this.stackPush({
-            name:"ArticleList",
+            name: "ArticleList",
         })
     }
-
 
 
     replaceCrowdOrder(order_number) {
