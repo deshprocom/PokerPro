@@ -53,6 +53,7 @@ export default class ChatMessage extends Component {
 
     componentDidMount() {
         this.resetMenu();
+        this.enterChat();
         this.setState({messageListLayout: {flex: 1, margin: 0, width: window.width}});
 
 
@@ -62,8 +63,7 @@ export default class ChatMessage extends Component {
         ///添加消息监听
         JMessage.addReceiveMessageListener(this.receiveMessage);
 
-        //停止接收推送
-        JMessage.enterConversation();
+
 
         ///监听登录状态
         JMessage.addLoginStateChangedListener(this.loginState);
@@ -79,6 +79,17 @@ export default class ChatMessage extends Component {
         ///移除登录状态监听
         JMessage.removeMessageRetractListener(this.loginState)
     }
+
+    enterChat = () => {
+        //停止接收推送
+        let userInfo = this.props.params.userInfo;
+        JMessage.enterConversation({ type: 'single', username: userInfo.username},
+            (conversation) => {
+
+            }, (error) => {
+
+            });
+    };
 
 
     ///历史消息

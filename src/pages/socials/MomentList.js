@@ -98,9 +98,13 @@ export const styles = StyleSheet.create({
         marginTop: reallySize(9),
         marginLeft: reallySize(9)
     }
-})
+});
 
 export default class MomentList extends PureComponent {
+
+    static props = {
+        showMore:null,
+    };
 
 
     render() {
@@ -191,6 +195,10 @@ export default class MomentList extends PureComponent {
                                 })
                             })
 
+                        }
+                        else {
+                            if (this.props.showMore === null) return;
+                                this.props.showMore();
                         }
                     }}
                 >
