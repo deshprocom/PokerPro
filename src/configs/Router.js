@@ -13,15 +13,24 @@ const customFloatFromRight = '';
 
 export default class Router {
 
-    toBlackList(){
+    toSocialContact(type) {
         this.stackPush({
-            name:"Blacklist",
+            name: "SocialContact",
+            params: {
+                type: type //0-关注 1-粉丝
+            }
         })
     }
 
-    toLocation(){
+    toBlackList() {
         this.stackPush({
-            name:"Location",
+            name: "Blacklist",
+        })
+    }
+
+    toLocation() {
+        this.stackPush({
+            name: "Location",
         })
     }
 
@@ -57,10 +66,10 @@ export default class Router {
 
     }
 
-    toArticleRelease(articleKey,articleInfo){
+    toArticleRelease(articleKey, articleInfo) {
         this.stackPush({
-            name:"ArticleRelease",
-            params:{
+            name: "ArticleRelease",
+            params: {
                 articleKey,
                 articleInfo,
             },
@@ -72,10 +81,12 @@ export default class Router {
             name: "MoodRelease"
         })
     }
-    toLongArticle(article,isComment) {
+
+    toLongArticle(article, isComment) {
         this.stackPush({
             name: 'LongArticle',
-            params: {article,
+            params: {
+                article,
                 isComment
             }
         })
@@ -87,12 +98,11 @@ export default class Router {
         })
     }
 
-    toArticleList(){
+    toArticleList() {
         this.stackPush({
-            name:"ArticleList",
+            name: "ArticleList",
         })
     }
-
 
 
     replaceCrowdOrder(order_number) {
@@ -863,20 +873,6 @@ export default class Router {
         })
     }
 
-    toChatLogin(props) {
-        this.push(props, {
-            name: 'ChatLogin',
-        })
-    }
-
-    toFriendList(userInfo) {
-        this.stackPush({
-            name: 'FriendList',
-            params: {
-                userInfo
-            }
-        })
-    }
 
     toMessageList(userInfo) {
         this.stackPush({

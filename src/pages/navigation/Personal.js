@@ -14,7 +14,6 @@ import {connect} from 'react-redux';
 import {FETCH_SUCCESS, GET_PROFILE, GET_UNREAND_MSG} from '../../actions/ActionTypes';
 
 
-
 class Personal extends Component {
 
     state = {
@@ -157,9 +156,7 @@ class Personal extends Component {
         </ScrollView>
     };
 
-    ///聊天测试入口
     visitChat = () => {
-        router.toChatLogin();
     };
 
     _item = (itemStyle, img, imgStyle, title, onPress) => {
@@ -171,12 +168,12 @@ class Personal extends Component {
             <Text style={stylesP.personalText}>{title}</Text>
             <View style={{flex: 1}}/>
             {title === I18n.t('my_coins') ? <Text
-                    style={{
-                        fontSize: 16,
-                        color: '#AAAAAA',
-                        marginRight: 12,
-                        lineHeight: 22
-                    }}>{(profile.total_poker_coins === '0.0' || profile.total_poker_coins === '0') ? '0.00' : profile.total_poker_coins}</Text>
+                style={{
+                    fontSize: 16,
+                    color: '#AAAAAA',
+                    marginRight: 12,
+                    lineHeight: 22
+                }}>{(profile.total_poker_coins === '0.0' || profile.total_poker_coins === '0') ? '0.00' : profile.total_poker_coins}</Text>
                 : null}
             <Image style={stylesP.personalImg} source={Images.is}/>
         </TouchableOpacity>
@@ -261,9 +258,12 @@ class Personal extends Component {
                         marginTop: 18
                     }}/>
 
+                    {/*关注与粉丝*/}
                     <View style={{height: 49, flexDirection: 'row', alignItems: 'center'}}>
 
-                        <Text style={{color: Colors._CCC, fontSize: 14}}>{`关注   ${following_count}`}</Text>
+                        <TouchableOpacity onPress={() => {router.toSocialContact(0)}}>
+                            <Text style={{color: Colors._CCC, fontSize: 14}}>{`关注   ${following_count}`}</Text>
+                        </TouchableOpacity>
                         <View
                             style={{
                                 height: 12,
@@ -272,7 +272,9 @@ class Personal extends Component {
                                 marginLeft: 28,
                                 marginRight: 28
                             }}/>
-                        <Text style={{color: Colors._CCC, fontSize: 14}}>{`粉丝   ${follower_count}`}</Text>
+                        <TouchableOpacity onPress={() => {router.toSocialContact(1)}}>
+                            <Text style={{color: Colors._CCC, fontSize: 14}}>{`粉丝   ${follower_count}`}</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
                 <View style={{marginRight: 17}}/>

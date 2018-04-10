@@ -610,5 +610,7 @@
   "blacklist":"黑名单",
   "add_blacklist":"拉黑该人",
   "report":"举报该人",
-  "remove_blacklist":"移除黑名单"
+  "remove_blacklist":"移除黑名单",
+  "follow_stalwart":"关注与粉丝",
+  "stalwart":"粉丝"
 }
