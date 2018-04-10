@@ -11,6 +11,7 @@ import {Images, ApplicationStyles, Metrics, Colors} from "../../Themes";
 import I18n from "react-native-i18n";
 import {NavigationBar} from '../../components';
 import PersonDynamicPage from '../comment/PersonDynamicPage'
+import _ from 'lodash';
 
 const styles = StyleSheet.create({
     topBar: {
@@ -64,7 +65,9 @@ const styles = StyleSheet.create({
 export default class UserTopicPage extends PureComponent {
 
     render() {
-        return <ScrollView>
+
+        const {avatar, nick_name, signature} = this.props.params.userInfo;
+        return <View style={{flex: 1}}>
             <View style={styles.topBar}>
                 <Image
                     style={{position: 'absolute', height: 280, width: '100%'}}
@@ -73,17 +76,19 @@ export default class UserTopicPage extends PureComponent {
                 <NavigationBar
                     barStyle={'light-content'}
                     rightBtnIcon={Images.social.more_4}
-                    rightImageStyle={{height: 4, width: 28}}
+                    rightImageStyle={{height: 4, width: 20, marginLeft: 20, marginRight: 20}}
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
                 <View
                     style={styles.person1}>
-                    <Image style={{width: 72, height: 72, borderRadius: 36}}
-                           source={Images.home_avatar}/>
+                    <Image
+                        defaultSource={Images.home_avatar}
+                        style={{width: 72, height: 72, borderRadius: 36}}
+                        source={{uri: avatar}}/>
                 </View>
 
-                <Text style={styles.name}>Deshpro</Text>
+                <Text style={styles.name}>{nick_name}</Text>
 
                 <View style={[styles.row, {marginTop: 7}]}>
                     <Text style={styles.follow}>关注 2000</Text>
@@ -91,7 +96,7 @@ export default class UserTopicPage extends PureComponent {
                     <Text style={styles.follow}>粉丝 2000</Text>
                 </View>
 
-                <Text style={styles.intro}>简介：职业德州教学 WX：2324245</Text>
+                <Text style={styles.intro}>{_.isEmpty(signature) ? '简介：这家伙很懒' : signature}</Text>
 
 
                 <View style={[styles.row, {marginTop: 17, marginBottom: 17}]}>
@@ -114,6 +119,6 @@ export default class UserTopicPage extends PureComponent {
             <PersonDynamicPage
                 params={this.props.params}/>
 
-        </ScrollView>
+        </View>
     }
 }
