@@ -383,6 +383,7 @@ export default class ChatMessage extends Component {
 
     ///结束录制视频
     onFinishRecordVideo = (mediaPath) => {
+        this.createMessage({messageType: "file", path: mediaPath.mediaPath});
     };
 
 

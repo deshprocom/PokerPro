@@ -41,8 +41,9 @@ export const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     more_3: {
-        height: reallySize(4),
-        width: reallySize(20)
+        height: reallySize(20),
+        width: reallySize(20),
+        resizeMode:"contain",
     },
     body: {
         color: Colors.txt_444,

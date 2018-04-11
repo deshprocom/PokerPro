@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     textContainer: {
         flex: 1,
@@ -116,7 +116,9 @@ export default class Loading extends Component {
         const spinner = (
             <TouchableOpacity
                 onPress={() => {
-                    this.close();
+                    if (!this.props.cancelable) {
+                        this.close();
+                    }
                 }}
                 style={[
                     styles.container,

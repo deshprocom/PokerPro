@@ -13,6 +13,12 @@ export default class TitleView extends Component{
     static props = {
         callbackTitle:null,
         defaultValue:null,
+        beginEdit:null,
+    };
+
+    beginEditing = () => {
+        if (this.props.beginEdit === null) return;
+        this.props.beginEdit();
     };
 
     updateText = (text) => {
@@ -27,6 +33,7 @@ export default class TitleView extends Component{
                            style={styles.textInput}
                            onChangeText={(text) => {this.updateText(text)}}
                            defaultValue={this.props.defaultValue}
+                           onFocus={() => this.beginEditing()}
                 />
             </View>
         )
@@ -46,38 +53,3 @@ const styles = StyleSheet.create({
         padding:10,
     }
 });
-
-/*
- import React, { Component } from 'react';
- import {
- Platform,
- StyleSheet,
- Text,
- View,
- } from 'react-native';
- import header from "../Library/Header";
- import MainNavBar from "../Library/MainNavBar";
-
- export default class Test extends Component{
- ///返回上一页
- backAction = () => {
- this.props.navigator.pop();
- };
- render(){
- return(
- <View style={styles.container}>
- <MainNavBar title={"标题"}
- leftItemClick={() =>{this.backAction()}}
- />
- </View>
- )
- }
- }
- const styles = StyleSheet.create({
- container: {
- backgroundColor: "#f0f0f5",
- flex: 1,
- alignItems: "center",
- },
- });
- */

@@ -23,6 +23,7 @@ import {
 } from "../../utils/ComonHelper";
 import CommentBar from '../comm/CommentBar';
 import {postComment, postRelaies, delDeleteComment} from '../../services/CommentDao'
+import PopAction from '../comm/PopAction';
 
 const styles = StyleSheet.create({
     title: {
@@ -168,7 +169,8 @@ export default class LongArticle extends PureComponent {
                 leftImageStyle={{height: 20, width: 10, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}
                 rightBtnIcon={Images.social.more_3}
-                rightImageStyle={{height: 4, width: 20, marginLeft: 20, marginRight: 20}}/>
+                rightImageStyle={{height: 4, width: 20, marginLeft: 20, marginRight: 20}}
+                rightBtnPress={() => {this.popAction && this.popAction.toggle();}}/>
 
 
             <UltimateListView
@@ -237,9 +239,30 @@ export default class LongArticle extends PureComponent {
                 />
             </View>
 
+            <PopAction
+                ref={ref => this.popAction = ref}
+                btnArray={this.popActions()}/>
+
 
         </View>
     }
+
+    //举报原因
+    report = () => {
+        this.popAction.toggle()
+    };
+
+    //弹窗
+    popActions = () => {
+        return [
+            {name: I18n.t('report_reason1'), txtStyle: {color: '#4A90E2'}, onPress: () => this.report()},
+            {name: I18n.t('report_reason2'), txtStyle: {color: '#4A90E2'}, onPress: () => this.report()},
+            {name: I18n.t('report_reason3'), txtStyle: {color: '#4A90E2'}, onPress: () => this.report()},
+            {name: I18n.t('report_reason4'), txtStyle: {color: '#4A90E2'}, onPress: () => this.report()},
+            {name: I18n.t('report_reason5'), txtStyle: {color: '#4A90E2'}, onPress: () => this.report()},
+            {name: I18n.t('cancel'), txtStyle: {color: Colors._AAA}, onPress: () => this.popAction.toggle()}
+        ];
+    };
 
     //长帖 个人信息
     flatHeader = () => {
