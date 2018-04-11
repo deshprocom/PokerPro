@@ -12,49 +12,32 @@ import {Colors, Images, Metrics} from "../../Themes";
 import {NavigationBar,UltimateListView} from '../../components';
 import {NoDataView} from '../../../src/components/load';
 import {isEmptyObject, utcDate, strNotNull} from '../../utils/ComonHelper';
-import {followships} from '../../services/SocialDao';
+import {follow,followings,followers} from '../../services/SocialDao';
 import {reallySize} from "./Header";
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
 
 export default class SocialContact extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectedIndex:this.props.params.type,
-            resultData:{
-                follower_count:0,//粉丝
-                followers:[],//粉丝列表
-                following_count:0,//关注数
-                followings:[],//关注列表
-            }
-        };
-    }
-
-    componentDidMount(){
-        followships((success) => {
-            this.setState({resultData:success});
-        },(failure) => {
-            console.log("获取关注与粉丝列表失败");
-        });
-    }
-
-    renderTabBar = () => {
-        let type = this.state.selectedIndex;
+    renderTabBar = (props) => {
+        const {goToPage,activeTab} = props;
+        let type = activeTab;
         return (
             <View style={styles.tabbar}>
-                <TouchableOpacity style={{flex:1}} onPress={() => this.setState({selectedIndex:0})}>
+                <TouchableOpacity style={{flex:1}} onPress={() => {
+                    goToPage(0);
+                }}>
                     <View style={styles.subView}>
                         <Text
-                            style={[styles.tabTitle, type === 0 ? {color: "#F24A4A"} : {color: "#666666"}]}>{`${I18n.t('follow')}  ${this.state.resultData.following_count}`}</Text>
+                            style={[styles.tabTitle, type === 0 ? {color: "#F24A4A"} : {color: "#666666"}]}>{`${I18n.t('follow')} 10`}</Text>
                         <View style={type === 0 ? styles.tabLine : {height: 2}}/>
                     </View>
                 </TouchableOpacity>
                 <View style={[{height: reallySize(26)}, {backgroundColor: "#ECECEE"}, {width: 1}]}/>
-                <TouchableOpacity style={{flex:1}} onPress={() => this.setState({selectedIndex:1})}>
+                <TouchableOpacity style={{flex:1}} onPress={() => {
+                    goToPage(1);
+                }}>
                     <View style={styles.subView}>
                         <Text
-                            style={[styles.tabTitle, type === 1 ? {color: "#F24A4A"} : {color: "#666666"}]}>{`${I18n.t('stalwart')}  ${this.state.resultData.follower_count}`}</Text>
+                            style={[styles.tabTitle, type === 1 ? {color: "#F24A4A"} : {color: "#666666"}]}>{`${I18n.t('stalwart')} 10`}</Text>
                         <View style={type === 1 ? styles.tabLine : {height: 2}}/>
                     </View>
                 </TouchableOpacity>
@@ -63,8 +46,7 @@ export default class SocialContact extends Component {
     };
 
     render() {
-        let resultData = this.state.resultData;
-        let dataSource = [resultData.followings,resultData.followers];
+        let data = [{type:"followings"},{type:"followers"}];
         return (
             <View style={styles.container}>
                 {/*导航栏*/}
@@ -80,14 +62,16 @@ export default class SocialContact extends Component {
                 />
 
                 <ScrollableTabView
+                    initialPage={this.props.params.type}
                     style={{marginTop: 1}}
                     renderTabBar={this.renderTabBar}>
-                    {dataSource.map((item) => {
+                    {data.map((item) => {
                         return (
-                            <FollowList data = {item}/>
+                            <FollowList data = {item} key = {item.type}/>
                         );
 
                     })}
+
 
                 </ScrollableTabView>
 
@@ -97,11 +81,19 @@ export default class SocialContact extends Component {
 }
 
 export class FollowList extends Component {
+
     render(){
-        let data = this.props.data;
         return(
             <UltimateListView keyExtractor={(item, index) => index + ""}
+                              ref={(ref) => this.listView = ref}
                               onFetch={this.onFetch}
+                              item={this.renderItem}
+                              header={() => <View style={[{height:7},{backgroundColor:"#ECECEE"}]}/>}
+                              separator={() =>
+                                  <View style={[{backgroundColor: "white"}, {height: 1}]}>
+                                      <View style={[{backgroundColor:"#ECECEE"},{height:1},{marginLeft:reallySize(82)}]}/>
+                                  </View>
+                              }
                               refreshableTitlePull={I18n.t('pull_refresh')}
                               refreshableTitleRelease={I18n.t('release_refresh')}
                               dateTitle={I18n.t('last_refresh')}
@@ -114,8 +106,66 @@ export class FollowList extends Component {
         );
     }
 
-    onFetch = (page = 1, startFetch, abortFetch) => {
+    ///关注 取消关注
+    followAction = (target_id,is_following,callback) => {
+        follow(is_following,{target_id: target_id},(success) => {
+            callback();
+        },(error) => {
 
+        });
+    };
+
+    ///渲染行
+    renderItem = (item) => {
+        const {avatar,follower_count,following_count,nick_name,is_following,id} = item;
+        return (
+            <View style={styles.item}>
+                <View style={styles.subRowItem}>
+                    <Image source={{uri:avatar}} style={styles.iconImage}/>
+                    <View>
+                        <Text style={styles.nickname}>{nick_name}</Text>
+                        <Text style={styles.followText}>{`关注 ${following_count} | 粉丝 ${follower_count}`}</Text>
+                    </View>
+                </View>
+                <TouchableOpacity onPress={() => this.followAction(id,is_following,() => {
+                    item.is_following = !item.is_following;
+                    this.listView && this.listView.updateDataSource(this.listView.getRows())
+                })}>
+                    {!is_following?
+                        <View style={styles.button_n}>
+                            <Text style={styles.btnText}>+关注</Text>
+                        </View>
+                        :
+                        <View style={styles.button_s}>
+                            <Text style={styles.btnText}>取消关注</Text>
+                        </View>
+                    }
+                </TouchableOpacity>
+            </View>
+        );
+    };
+
+
+    onFetch = (page = 1, startFetch, abortFetch) => {
+        let type = this.props.data.type;
+        if (type === "followings"){
+            followings({page,page_size:20},(success) => {
+                success.followings.forEach((item) => {
+                    item.is_following = true;
+                });
+                startFetch(success.followings, 15);
+            },(error) => {
+                abortFetch()
+            });
+        }
+        if (type === "followers"){
+            followers({page,page_size:20},(success) => {
+                startFetch(success.followers, 15)
+                console.log("粉丝",success);
+            },(error) => {
+                abortFetch()
+            });
+        }
 
     };
 }
@@ -145,5 +195,54 @@ const styles = StyleSheet.create({
         backgroundColor: "#F24A4A",
         height: 2,
         width: reallySize(80)
+    },
+    item:{
+        height:reallySize(75),
+        backgroundColor:"white",
+        flexDirection:"row",
+        alignItems:"center",
+        justifyContent:"space-between",
+    },
+    subRowItem:{
+        flexDirection:"row",
+        alignItems:"center",
+    },
+    iconImage:{
+        width:reallySize(54),
+        height:reallySize(54),
+        marginLeft:17,
+        borderRadius:reallySize(27),
+    },
+    nickname:{
+        marginLeft:reallySize(22),
+        fontSize:15,
+        color:"#333333",
+    },
+    followText:{
+        marginTop:reallySize(6),
+        marginLeft:reallySize(22),
+        fontSize:12,
+        color:"#AAAAAA",
+    },
+    button_n:{
+        height:reallySize(26),
+        width:reallySize(80),
+        marginRight:17,
+        borderColor:"#ECECEE",
+        borderWidth:1,
+        alignItems:"center",
+        justifyContent:"center",
+    },
+    button_s:{
+        height:reallySize(26),
+        width:reallySize(80),
+        marginRight:17,
+        backgroundColor:"#ECECEE",
+        alignItems:"center",
+        justifyContent:"center",
+    },
+    btnText:{
+        color:"#444444",
+        fontSize:14,
     }
 });
