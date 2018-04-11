@@ -262,7 +262,7 @@ export default class MoodRelease extends Component {
                     ref={ref => this.popAction = ref}
                     btnArray={this.popActions()}/>
 
-                <Loading ref={ref => this.loading = ref}/>
+                <Loading ref={ref => this.loading = ref}  cancelable={true}/>
 
             </View>
         )

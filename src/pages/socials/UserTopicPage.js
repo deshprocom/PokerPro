@@ -13,6 +13,7 @@ import {NavigationBar} from '../../components';
 import PersonDynamicPage from '../comment/PersonDynamicPage'
 import {visit_other} from '../../services/SocialDao';
 import _ from 'lodash';
+import Loading from "../../components/Loading";
 
 const styles = StyleSheet.create({
     topBar: {
@@ -73,9 +74,13 @@ export default class UserTopicPage extends PureComponent {
             return;
         }
 
+        this.loading && this.loading.open();
+        console.log("点击了按钮");
+
         const {nick_name, user_id} = this.props.params.userInfo;
         ///获取私信用户的用户名
         visit_other({userId: user_id}, (success) => {
+            this.loading && this.loading.close();
             router.toMessageList({username:success.username,nickName:nick_name});
         }, (error) => {
             console.log(error);
@@ -137,6 +142,8 @@ export default class UserTopicPage extends PureComponent {
 
             <PersonDynamicPage
                 params={this.props.params}/>
+
+            <Loading ref={ref => this.loading = ref}  cancelable={true}/>
 
         </View>
     }
