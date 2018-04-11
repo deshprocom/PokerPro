@@ -200,8 +200,8 @@ class Personal extends Component {
 
 
     readerMe = () => {
-        const {profile, followships} = this.props;
-        const {following_count, follower_count} = followships;
+        const {profile} = this.props;
+        const {following_count, follower_count} = profile;
         return <View style={stylesP.meView}>
 
 
