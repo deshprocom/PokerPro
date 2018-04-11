@@ -144,6 +144,7 @@ export default class LongArticle extends PureComponent {
     componentDidMount() {
         this.comment_id = '';
         const {article, isComment} = this.props.params;
+        console.log("====",article);
         topics_details(article.id);
         if (isComment) {
             setTimeout(() => {

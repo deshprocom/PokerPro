@@ -60,16 +60,24 @@ export default class ArticleRelease extends PureComponent {
 
     ///拼接图片上传后数据源
     createNewData = () => {
+        console.log(this.state.data);
         let resultData = this.state.data;
         let imageCount = 0;//图片总数
         let successCount = 0;//上传成功数
         let cover_link = "";
 
-        resultData.forEach((rowData,index) => {
+        let titleData = resultData[0];
+        if (titleData.type === "title"){
+            if (titleData.text === ""){
+                showToast(I18n.t('article_title_null'));
+                setTimeout(() => this.loading && this.loading.close(),500);
+                return;
+            }
+        }
 
+        resultData.forEach((rowData,index) => {
             let type = rowData.type;
             if (type === "image"){
-
                 imageCount ++;
 
                 this.uploadImageAction(rowData.imagePath,((data)=>{
@@ -79,7 +87,7 @@ export default class ArticleRelease extends PureComponent {
                         cover_link = data.image_path;
                     }
 
-                    let imageUrl = `<img src="${data.image_path}"></br>`;
+                    let imageUrl = `<img style="margin-top: 15px" src="${data.image_path}">`;
                     rowData.imagePath = imageUrl;
 
                     successCount ++;
@@ -108,14 +116,14 @@ export default class ArticleRelease extends PureComponent {
             if (type === "image"){
                 body.push(rowData.imagePath);
             }
-            if (type === "content"){
-                body.push(`<p>${rowData.text}</p>`);
+            if (type === "content" && rowData.text !== ""){
+                body.push(`<p style="color:#444444;font-size: 15px;line-height: 25px;">${rowData.text}</p>`);
             }
             if (type === "title"){
                 title = rowData.text;
             }
         });
-        let resultString = body.join("");
+        let resultString = body.join("&nbsp");
         this.fetchData(title,resultString,cover_link);
     };
 
@@ -140,6 +148,7 @@ export default class ArticleRelease extends PureComponent {
 
     ///发布长贴
     postTopic = () => {
+        setTimeout(() => this.loading && this.loading.open(),500);
         this.closeAction();
         this.createNewData();
     };
@@ -148,13 +157,15 @@ export default class ArticleRelease extends PureComponent {
     fetchData = (title,content,cover_link) =>{
         if (title === ""){
             showToast(I18n.t('article_title_null'));
+            setTimeout(() => this.loading && this.loading.close(),500);
             return;
         }
-        if (content === "<p></p>" || content === "" ){
+        console.log(content);
+        if (content === "" ){
             showToast(I18n.t('article_content_null'));
+            setTimeout(() => this.loading && this.loading.close(),500);
             return;
         }
-        this.loading && this.loading.open();
 
         let body = {
             body_type: 'long',
@@ -566,7 +577,7 @@ export default class ArticleRelease extends PureComponent {
                         </View>
                     </TouchableOpacity>
 
-                </View>
+                </View>《
 
                 <Loading ref={ref => this.loading = ref} cancelable={true}/>
 
