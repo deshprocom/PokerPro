@@ -64,6 +64,12 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
+    popToAriticle() {
+        Actions.popTo('tab_home');
+        Actions.tab_mall({type:ActionConst.REPLACE});
+    }
+
+
     toUserTopicPage(userInfo) {
         this.stackPush({
             name: 'UserTopicPage',
@@ -73,12 +79,13 @@ export default class Router {
         })
     }
     
-    toArticleRelease(articleKey, articleInfo) {
+    toArticleRelease(articleKey, articleInfo,reloadInfo) {
         this.stackPush({
             name: "ArticleRelease",
             params: {
                 articleKey,
                 articleInfo,
+                reloadInfo,
             },
         })
     }

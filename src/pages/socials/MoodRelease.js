@@ -152,7 +152,7 @@ export default class MoodRelease extends Component {
         postTopic(body, data => {
             showToast(I18n.t('article_release_success'));
             this.loading && this.loading.close();
-            router.popToTop();
+            router.popToAriticle();
         }, err => {
 
         })

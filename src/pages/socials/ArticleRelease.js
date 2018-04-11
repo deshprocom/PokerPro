@@ -51,11 +51,11 @@ export default class ArticleRelease extends PureComponent {
             this.setState({data:this.props.params.articleInfo})
         }
 
-        navigator.geolocation.getCurrentPosition(data => {
-            console.log('位置坐标：', data);
-        }, err => {
-            console.log(err)
-        })
+        // navigator.geolocation.getCurrentPosition(data => {
+        //     console.log('位置坐标：', data);
+        // }, err => {
+        //     console.log(err)
+        // })
     }
 
     ///拼接图片上传后数据源
@@ -178,9 +178,8 @@ export default class ArticleRelease extends PureComponent {
             location:'',
         };
         postTopic(body, data => {
-
             showToast(I18n.t('article_release_success'));
-            this.loading && this.loading.close();
+            setTimeout(() => this.loading && this.loading.close(),500);
 
             ///草稿箱已经存在当前长帖 将其删除
             if (articleKey !== undefined){
@@ -204,7 +203,7 @@ export default class ArticleRelease extends PureComponent {
                         key: 'articleList',
                         data: articleList,
                     }).then(() => {
-                        router.popToTop();
+                        router.popToAriticle();
                     }).catch(err => {
                         showToast("error");
                     });
@@ -214,7 +213,7 @@ export default class ArticleRelease extends PureComponent {
 
             }
             else {
-                router.popToTop();
+                router.popToAriticle();
             }
 
 
@@ -285,6 +284,9 @@ export default class ArticleRelease extends PureComponent {
             }).then(() => {
                 showToast(I18n.t('article_save_success'));
                 articleKey = currentKey;
+                console.log(this.props.params.reloadInfo);
+                if (this.props.params.reloadInfo === null) return;
+                    this.props.params.reloadInfo();
             }).catch(err => {
                 showToast(I18n.t('article_save_failure'));
             });
@@ -577,7 +579,7 @@ export default class ArticleRelease extends PureComponent {
                         </View>
                     </TouchableOpacity>
 
-                </View>《
+                </View>
 
                 <Loading ref={ref => this.loading = ref} cancelable={true}/>
 

@@ -30,6 +30,7 @@ export default class ArticleList extends Component{
 
     ///获取草稿箱列表数据
     getData = () => {
+        console.log("获取草稿列表");
         ///获取草稿列表
         storage.load({key: "articleList"}).then(ret => {
             this.setState({articleList:ret});
@@ -38,7 +39,9 @@ export default class ArticleList extends Component{
 
     ///编辑长贴
     editArticle = (item) =>{
-        global.router.toArticleRelease(item.key,item.data);
+        global.router.toArticleRelease(item.key,item.data,()=>{
+            this.getData();
+        });
     };
 
     ///处理数据
@@ -73,6 +76,7 @@ export default class ArticleList extends Component{
     ///渲染item
     _renderItem = (item) =>{
         ///取出title content image
+        console.log("=====",item);
         let data = item.item.data;
         let itemInfo = this.createData(data);
         return (
