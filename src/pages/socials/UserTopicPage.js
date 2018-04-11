@@ -87,11 +87,14 @@ export default class UserTopicPage extends PureComponent {
         });
     };
 
+    state = {
+        scrollEnabled: true
+    }
+
     render() {
 
         const {avatar, nick_name, signature} = this.props.params.userInfo;
-        return <ScrollView
-            bounces={true}>
+        return <ScrollView style={{flex: 1}}>
             <View style={styles.topBar}>
                 <Image
                     style={{position: 'absolute', height: 280, width: '100%'}}
@@ -141,9 +144,9 @@ export default class UserTopicPage extends PureComponent {
 
             </View>
 
-
             <PersonDynamicPage
                 params={this.props.params}/>
+
 
             <Loading ref={ref => this.loading = ref} cancelable={true}/>
 

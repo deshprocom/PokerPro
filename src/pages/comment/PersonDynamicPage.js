@@ -276,6 +276,12 @@ export default class PersonDynamicPage extends Component {
 
 
                 <ScrollableTabView
+
+                    onScroll={(e) => {
+
+                        console.log('滚动:', e)
+
+                    }}
                     renderTabBar={() => <DynamicTopBar
                         nickname={this.userInfo.nick_name}
                         setUnreadCount={this.setUnreadCount}
