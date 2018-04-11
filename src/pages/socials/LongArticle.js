@@ -170,7 +170,9 @@ export default class LongArticle extends PureComponent {
                 leftBtnPress={() => router.pop()}
                 rightBtnIcon={Images.social.more_3}
                 rightImageStyle={{height: 4, width: 20, marginLeft: 20, marginRight: 20}}
-                rightBtnPress={() => {this.popAction && this.popAction.toggle();}}/>
+                rightBtnPress={() => {
+                    this.popAction && this.popAction.toggle();
+                }}/>
 
 
             <UltimateListView
@@ -274,13 +276,23 @@ export default class LongArticle extends PureComponent {
                 <View style={styles.info}>
                     <Text style={styles.title}>{title}</Text>
                     <View style={styles.btn_like}>
-                        <ImageLoad
-                            emptyBg={Images.home_avatar}
-                            style={styles.avatar}
-                            source={{uri: user.avatar}}/>
+                        <TouchableOpacity
+                            onPress={() => {
+                                this.toUserPage(user)
+                            }}>
+                            <ImageLoad
+                                emptyBg={Images.home_avatar}
+                                style={styles.avatar}
+                                source={{uri: user.avatar}}/>
+                        </TouchableOpacity>
+
 
                         <View style={{marginLeft: 12}}>
-                            <Text style={styles.nick_name}>{user.nick_name}</Text>
+                            <Text
+                                onPress={() => {
+                                    this.toUserPage(user)
+                                }}
+                                style={styles.nick_name}>{user.nick_name}</Text>
                             <Text style={[styles.time, {marginTop: 5}]}>{getDateDiff(created_at)}·深圳</Text>
                         </View>
 
@@ -425,6 +437,15 @@ export default class LongArticle extends PureComponent {
 
         return global.login_user.user_id === user_id
     }
+
+    toUserPage = (user) => {
+        if (!isEmptyObject(login_user) && user.user_id === login_user.user_id) {
+            global.router.toPersonDynamic(user)
+        } else {
+            global.router.toUserTopicPage(user)
+        }
+
+    };
 
     itemView = (item) => {
         const {

@@ -73,10 +73,10 @@ export function getFileMine(filePath) {
 
 
 export function isFollowed(user_id) {
-    const {followings} = global.followships;
+    const followings = global.followships;
     if (_.isEmpty(followings))
         return false;
-    let follow = followings.filter(item => user_id === item.id)
+    let follow = followings.filter(item => user_id === item)
     return follow.length === 1
 }
 
