@@ -193,8 +193,7 @@ export default class ArticleRelease extends PureComponent {
                         key: 'articleList',
                         data: articleList,
                     }).then(() => {
-
-
+                        router.popToTop();
                     }).catch(err => {
                         showToast("error");
                     });
