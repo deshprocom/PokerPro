@@ -53,15 +53,19 @@ export function follow(followed, body, resolve, reject) {
             }, err => reject(err))
 }
 
-export function followships(resolve, reject) {
-    if (_.isEmpty(global.login_user))
-        return;
-    helper.get(Api.followships(), ret => {
-        global.followships = ret.data;
+export function followings(params,resolve, reject) {
+    helper.get(Api.followings(), ret => {
         resolve && resolve(ret.data)
     }, err => {
         reject && reject(err)
-    })
+    },params)
+}
+export function followers(params,resolve, reject) {
+    helper.get(Api.followers(), ret => {
+        resolve && resolve(ret.data)
+    }, err => {
+        reject && reject(err)
+    },params)
 }
 
 export function topics_comments(topic_id, resolve, reject) {

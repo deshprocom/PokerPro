@@ -150,6 +150,8 @@ export default {
     jmessage_info: jmessage_info,//极光IM用户登录
     topics_image: topics_image,//上传话题相关的图片
     followships: followships,//获取关注及粉丝列表
+    followings: followings,//获取关注列表
+    followers: followers,//获取粉丝列表
     user_topics: user_topics,//获取用户个人动态(说说和长帖)¶
     topics_delete: topics_delete,//删除说说或长帖
     topics_search: topics_search,//获取用户的说说或长帖¶
@@ -192,6 +194,13 @@ function jmessage_info() {
 
 function followships() {
     return `users/${login_user.user_id}/followships`
+}
+function followings() {
+    return `users/${login_user.user_id}/followships/followings`
+}
+
+function followers() {
+    return `users/${login_user.user_id}/followships/followers`
 }
 
 function topics_image(topic_id) {
