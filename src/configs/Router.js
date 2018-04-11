@@ -64,7 +64,6 @@ export default class Router {
     popToTop() {
         getDispatchAction()['BACK_TOP']();
         Actions.popTo('tab_home')
-
     }
 
     toUserTopicPage(userInfo) {

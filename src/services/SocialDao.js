@@ -61,7 +61,23 @@ export function followships(resolve, reject) {
         resolve && resolve(ret.data)
     }, err => {
         reject && reject(err)
-    })
+    },params)
+}
+
+export function followings(params,resolve, reject) {
+    helper.get(Api.followings(), ret => {
+        resolve && resolve(ret.data)
+    }, err => {
+        reject && reject(err)
+    },params)
+}
+
+export function followers(params,resolve, reject) {
+    helper.get(Api.followers(), ret => {
+        resolve && resolve(ret.data)
+    }, err => {
+        reject && reject(err)
+    },params)
 }
 
 export function topics_comments(topic_id, resolve, reject) {

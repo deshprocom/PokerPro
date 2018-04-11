@@ -10,7 +10,6 @@ import {getAddressList} from './OrderDao';
 import JMessage from 'jmessage-react-plugin';
 import {Images} from '../Themes';
 import fs from 'react-native-fs'
-import {followships} from './SocialDao';
 
 // let image = require("../../source/home/home_avatar.png")
 export function releases_show(resolve, reject) {
@@ -313,13 +312,6 @@ export function setLoginUser(ret) {
             postLoginCount();
 
             getJmessageInfo(ret.avatar);
-            //获取关注及粉丝列表
-            followships(data => {
-
-
-            }, err => {
-
-            })
 
         }, 100);
 

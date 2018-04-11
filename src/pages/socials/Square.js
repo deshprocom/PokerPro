@@ -38,7 +38,6 @@ export default class Square extends PureComponent {
     };
 
     render() {
-
         return <View style={ApplicationStyles.bgContainer}>
             <ScrollableTabView
                 renderTabBar={() => <SquareBar/>}>
