@@ -69,7 +69,7 @@ export default class UserTopicPage extends PureComponent {
     //私信
     visitChat = () => {
         ///未登录先登录
-        if (login_user.user_id === undefined){
+        if (login_user.user_id === undefined) {
             router.toLoginFirstPage();
             return;
         }
@@ -81,16 +81,20 @@ export default class UserTopicPage extends PureComponent {
         ///获取私信用户的用户名
         visit_other({userId: user_id}, (success) => {
             this.loading && this.loading.close();
-            router.toMessageList({username:success.username,nickName:nick_name});
+            router.toMessageList({username: success.username, nickName: nick_name});
         }, (error) => {
             console.log(error);
         });
     };
 
+    state = {
+        scrollEnabled: true
+    }
+
     render() {
 
         const {avatar, nick_name, signature} = this.props.params.userInfo;
-        return <View style={{flex: 1}}>
+        return <ScrollView style={{flex: 1}}>
             <View style={styles.topBar}>
                 <Image
                     style={{position: 'absolute', height: 280, width: '100%'}}
@@ -129,7 +133,7 @@ export default class UserTopicPage extends PureComponent {
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        style={[styles.btn_follow, styles.row]}  onPress={() => this.visitChat()}>
+                        style={[styles.btn_follow, styles.row]} onPress={() => this.visitChat()}>
                         <Image style={{height: 14, width: 15, marginRight: 3}}
                                source={Images.social.reply}
                         />
@@ -143,8 +147,10 @@ export default class UserTopicPage extends PureComponent {
             <PersonDynamicPage
                 params={this.props.params}/>
 
-            <Loading ref={ref => this.loading = ref}  cancelable={true}/>
 
-        </View>
+            <Loading ref={ref => this.loading = ref} cancelable={true}/>
+
+
+        </ScrollView>
     }
 }

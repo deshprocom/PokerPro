@@ -11,7 +11,7 @@ import {UltimateListView, ImageLoad} from '../../components'
 import I18n from "react-native-i18n";
 import {NoDataView, LoadErrorView} from '../../components/load';
 import {Colors, Images} from '../../Themes';
-import {getDateDiff, alertOrder, strNotNull} from '../../utils/ComonHelper';
+import {getDateDiff, alertOrder, strNotNull, isEmptyObject} from '../../utils/ComonHelper';
 import {
     topics_recommends, topics,
     topics_like, user_topics, topics_delete,
@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
     more_3: {
         height: reallySize(20),
         width: reallySize(20),
-        resizeMode:"contain",
+        resizeMode: "contain",
     },
     body: {
         color: Colors.txt_444,
@@ -76,7 +76,8 @@ export const styles = StyleSheet.create({
     },
     long_cover: {
         height: reallySize(200),
-        width: '100%'
+        width: '100%',
+        backgroundColor: Colors._ECE
     },
     btn_like: {
         flexDirection: 'row',
@@ -98,7 +99,8 @@ export const styles = StyleSheet.create({
         height: reallySize(108),
         width: reallySize(108),
         marginTop: reallySize(9),
-        marginLeft: reallySize(9)
+        marginLeft: reallySize(9),
+        backgroundColor: Colors._ECE
     }
 });
 
@@ -166,6 +168,15 @@ export default class MomentList extends PureComponent {
             return false;
     };
 
+    toUserPage = (user) => {
+        if (!isEmptyObject(login_user) && user.user_id === login_user.user_id) {
+            global.router.toPersonDynamic(user)
+        } else {
+            global.router.toUserTopicPage(user)
+        }
+
+    };
+
     itemView = (item) => {
         const {user, created_at, likes, comments, id, body_type} = item;
         return <TouchableOpacity
@@ -180,7 +191,7 @@ export default class MomentList extends PureComponent {
             <View style={styles.user}>
                 <TouchableOpacity
                     onPress={() => {
-                        global.router.toUserTopicPage(user)
+                        this.toUserPage(user)
                     }}>
                     <ImageLoad
                         emptyBg={Images.home_avatar}
@@ -189,7 +200,11 @@ export default class MomentList extends PureComponent {
                 </TouchableOpacity>
 
 
-                <Text style={styles.nick_name}>{user.nick_name}</Text>
+                <Text
+                    onPress={() => {
+                        this.toUserPage(user)
+                    }}
+                    style={styles.nick_name}>{user.nick_name}</Text>
                 <View style={{flex: 1}}/>
 
                 {body_type === 'long' ? <Text style={styles.txt_long}>长帖</Text> : null}

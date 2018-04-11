@@ -7,13 +7,13 @@ import _ from 'lodash';
 import {getDispatchAction} from '../utils/ComonHelper';
 import {GET_PROFILE} from "../actions/ActionTypes";
 
-export function visit_other(body,resolve, reject) {
-    helper.get(Api.jmessage_visit_other(body),ret => {
+export function visit_other(body, resolve, reject) {
+    helper.get(Api.jmessage_visit_other(body), ret => {
         resolve(ret.data)
-    },err => {
+    }, err => {
         reject(err)
     });
-    
+
 }
 
 export function topics_search(user_id, resolve, reject, params) {
@@ -42,13 +42,13 @@ export function follow(followed, body, resolve, reject) {
     if (followed) {
         helper.del(Api.followships(), body,
             ret => {
-                getDispatchAction()['GET_PROFILE']();
+                followships()
                 resolve(ret.data)
             }, err => reject(err))
     } else
         helper.post(Api.followships(), body,
             ret => {
-                getDispatchAction()['GET_PROFILE']();
+                followships()
                 resolve(ret.data)
             }, err => reject(err))
 }
@@ -56,8 +56,8 @@ export function follow(followed, body, resolve, reject) {
 export function followships(resolve, reject) {
     if (_.isEmpty(global.login_user))
         return;
-    helper.get(Api.followships(), ret => {
-        global.followships = ret.data;
+    helper.get(Api.followships() + '/following_ids', ret => {
+        global.followships = ret.data.following_ids;
         resolve && resolve(ret.data)
     }, err => {
         reject && reject(err)
