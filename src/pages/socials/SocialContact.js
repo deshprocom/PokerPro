@@ -27,7 +27,7 @@ export default class SocialContact extends Component {
                 }}>
                     <View style={styles.subView}>
                         <Text
-                            style={[styles.tabTitle, type === 0 ? {color: "#F24A4A"} : {color: "#666666"}]}>{`${I18n.t('follow')} 10`}</Text>
+                            style={[styles.tabTitle, type === 0 ? {color: "#F24A4A"} : {color: "#666666"}]}>{`${I18n.t('follow')} ${this.props.params.following_count}`}</Text>
                         <View style={type === 0 ? styles.tabLine : {height: 2}}/>
                     </View>
                 </TouchableOpacity>
@@ -37,7 +37,7 @@ export default class SocialContact extends Component {
                 }}>
                     <View style={styles.subView}>
                         <Text
-                            style={[styles.tabTitle, type === 1 ? {color: "#F24A4A"} : {color: "#666666"}]}>{`${I18n.t('stalwart')} 10`}</Text>
+                            style={[styles.tabTitle, type === 1 ? {color: "#F24A4A"} : {color: "#666666"}]}>{`${I18n.t('stalwart')}  ${this.props.params.follower_count}`}</Text>
                         <View style={type === 1 ? styles.tabLine : {height: 2}}/>
                     </View>
                 </TouchableOpacity>
@@ -161,7 +161,6 @@ export class FollowList extends Component {
         if (type === "followers"){
             followers({page,page_size:20},(success) => {
                 startFetch(success.followers, 15)
-                console.log("粉丝",success);
             },(error) => {
                 abortFetch()
             });

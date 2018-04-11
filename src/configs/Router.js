@@ -14,12 +14,10 @@ const customFloatFromRight = '';
 
 export default class Router {
 
-    toSocialContact(type) {
+    toSocialContact(params) {
         this.stackPush({
             name: "SocialContact",
-            params: {
-                type: type //0-关注 1-粉丝
-            }
+            params: params
         })
     }
 
