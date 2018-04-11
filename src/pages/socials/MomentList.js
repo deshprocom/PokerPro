@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
     more_3: {
         height: reallySize(20),
         width: reallySize(20),
-        resizeMode:"contain",
+        resizeMode: "contain",
     },
     body: {
         color: Colors.txt_444,
@@ -76,7 +76,8 @@ export const styles = StyleSheet.create({
     },
     long_cover: {
         height: reallySize(200),
-        width: '100%'
+        width: '100%',
+        backgroundColor: Colors._ECE
     },
     btn_like: {
         flexDirection: 'row',
@@ -98,7 +99,8 @@ export const styles = StyleSheet.create({
         height: reallySize(108),
         width: reallySize(108),
         marginTop: reallySize(9),
-        marginLeft: reallySize(9)
+        marginLeft: reallySize(9),
+        backgroundColor: Colors._ECE
     }
 });
 
