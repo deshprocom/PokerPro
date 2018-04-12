@@ -154,7 +154,7 @@ export default class MoodRelease extends Component {
             this.loading && this.loading.close();
             router.popToAriticle();
         }, err => {
-
+            this.loading && this.loading.close();
         })
     };
 
