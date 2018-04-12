@@ -5,7 +5,9 @@ import {
     Image,
     Text,
     TouchableOpacity,
-    ScrollView, Platform
+    ScrollView,
+    Animated,
+    PanResponder
 } from 'react-native';
 import {Images, ApplicationStyles, Metrics, Colors} from "../../Themes";
 import I18n from "react-native-i18n";
@@ -72,6 +74,14 @@ export default class UserTopicPage extends PureComponent {
         follow: isFollowed(this.props.params.userInfo.user_id)
     };
 
+    componentWillMount() {
+        this._panResponder = PanResponder.create({
+            onPanResponderMove: (event, gestureState) => {
+                console.log('手势动作', event, gestureState)
+            }
+        });
+    }
+
     //私信
     visitChat = () => {
         ///未登录先登录
@@ -97,7 +107,9 @@ export default class UserTopicPage extends PureComponent {
     render() {
 
         const {avatar, nick_name, signature, user_id} = this.props.params.userInfo;
-        return <ScrollView style={{flex: 1}}>
+        return <Animated.ScrollView
+            {...this._panResponder.panHandlers}
+            style={{flex: 1}}>
             <View style={styles.topBar}>
                 <Image
                     style={{position: 'absolute', height: 280, width: '100%'}}
@@ -163,6 +175,6 @@ export default class UserTopicPage extends PureComponent {
             <Loading ref={ref => this.loading = ref} cancelable={true}/>
 
 
-        </ScrollView>
+        </Animated.ScrollView>
     }
 }

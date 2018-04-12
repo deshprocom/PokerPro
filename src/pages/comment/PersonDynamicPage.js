@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, FlatList, Text, Image, TouchableOpacity, TextInput, Modal, Platform} from 'react-native';
+import {View, StyleSheet, FlatList, Text, Image, TouchableOpacity} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
@@ -276,12 +276,6 @@ export default class PersonDynamicPage extends Component {
 
 
                 <ScrollableTabView
-
-                    onScroll={(e) => {
-
-                        console.log('滚动:', e)
-
-                    }}
                     renderTabBar={() => <DynamicTopBar
                         nickname={this.userInfo.nick_name}
                         setUnreadCount={this.setUnreadCount}
@@ -292,6 +286,10 @@ export default class PersonDynamicPage extends Component {
                     {moments}
 
                     <UltimateFlatList
+                        onScroll={e => {
+                            let scrollY = e.nativeEvent.contentOffset.y;
+                            console.log(scrollY)
+                        }}
                         style={{backgroundColor: 'white'}}
                         tabLabel={'足迹'}
                         header={() => this.personTop()}
