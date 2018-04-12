@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {
     StyleSheet, Image, Platform,
     View, TextInput, Text, TouchableOpacity,
-    KeyboardAvoidingView, AsyncStorage, FlatList,Alert
+    KeyboardAvoidingView, AsyncStorage, FlatList,Alert,PanResponder
 } from 'react-native';
 import {NavigationBar} from '../../components'
 import {Colors, Images} from "../../Themes";
@@ -42,6 +42,17 @@ export default class ArticleRelease extends PureComponent {
                 },
             ],
         };
+        this.touchIndex = 0;
+
+    }
+    componentWillMount(){
+        this._panResponder = PanResponder.create({
+            // 要求成为响应者：
+            onStartShouldSetPanResponder: (evt, gestureState) => true,
+            onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+            onMoveShouldSetPanResponder: (evt, gestureState) => true,
+            onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+        });
     }
 
     componentDidMount(){
@@ -57,6 +68,22 @@ export default class ArticleRelease extends PureComponent {
         //     console.log(err)
         // })
     }
+
+    test = () => {
+        console.log(this.listView);
+
+        // item.setNativeProps({
+        //     style: {
+        //         shadowColor: "#000",
+        //         shadowOpacity: 0.3,
+        //         shadowRadius: 5,
+        //         shadowOffset: {height: 0, width: 2},
+        //         elevation: 5,
+        //         zIndex: 1
+        //     }
+        // });
+    };
+
 
     ///拼接图片上传后数据源
     createNewData = () => {
@@ -433,11 +460,11 @@ export default class ArticleRelease extends PureComponent {
 
     ///渲染行
     _renderItem = (item) => {
-
         let type = item.item.type;
+        let row;
         if (type === "title") {
             ///标题
-            return (
+            row = (
                 <TitleView defaultValue={item.item.text}
                            beginEdit={() => {
                                this.closeAction();
@@ -452,7 +479,7 @@ export default class ArticleRelease extends PureComponent {
         }
         else if (type === "addModule") {
             ///添加模块
-            return (
+            row = (
                 <AddModule insertImage={this.insetrtImageAction}
                            insertTakePhoto={this.insertTakePhotoAction}
                            insertText={this.insertTextAction}
@@ -463,18 +490,24 @@ export default class ArticleRelease extends PureComponent {
         }
         else {
             let swipeOpen = item.item.swipeOpen;
-            return (
+            row = (
                 <Swipeout
-                    right={[{component: this.createArrangeComponent()}, {
-                        text: I18n.t('delete'),
-                        backgroundColor: "red",
-                        onPress:() => this.deleteRow(item.index)
-                    }]}
+                    right={[
+                        {component: this.createArrangeComponent(),onPress:()=>{
+                            this.touchIndex = item.index;
+                            this.test();
+                        }},
+                        {
+                            text: I18n.t('delete'),
+                            backgroundColor: "red",
+                            onPress:() => this.deleteRow(item.index)
+                        }
+                    ]}
                     backgroundColor={"#ECECEE"}
                     onClose={() =>{}} ///关闭
                     onOpen={() => {}} ///打开
                     scroll={event =>{}} ///滑动
-                    autoClose={true} ///点击按钮关闭
+                    autoClose={false} ///点击按钮关闭
                     openRight={swipeOpen}
                     close={!swipeOpen}
                     disabled={true}
@@ -496,6 +529,7 @@ export default class ArticleRelease extends PureComponent {
                 </Swipeout>
             );
         }
+        return row;
     };
 
     render() {

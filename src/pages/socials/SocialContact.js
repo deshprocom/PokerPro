@@ -142,11 +142,15 @@ export class FollowList extends Component {
 
     ///渲染行
     renderItem = (item) => {
+        let icon = "";
         const {avatar,follower_count,following_count,nick_name,is_following,id} = item;
+        if (avatar !== null){
+            icon = avatar;
+        }
         return (
             <View style={styles.item}>
                 <View style={styles.subRowItem}>
-                    <Image source={{uri:avatar}} style={styles.iconImage}/>
+                    <Image source={{uri:icon}} style={styles.iconImage}/>
                     <View>
                         <Text style={styles.nickname}>{nick_name}</Text>
                         <Text style={styles.followText}>{`关注 ${following_count} | 粉丝 ${follower_count}`}</Text>
