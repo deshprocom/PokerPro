@@ -2,20 +2,20 @@ import React, {PureComponent} from 'react';
 import {
     StyleSheet, Image, Platform,
     View, TextInput, Text, TouchableOpacity,
-    KeyboardAvoidingView, AsyncStorage, FlatList,Alert,PanResponder
+    KeyboardAvoidingView, AsyncStorage, FlatList, Alert, PanResponder
 } from 'react-native';
 import {NavigationBar} from '../../components'
 import {Colors, Images} from "../../Themes";
 import I18n from "react-native-i18n";
-import {reallySize, screenWidth, toolBarHeight,screenHeight} from "./Header";
+import {reallySize, screenWidth, toolBarHeight, screenHeight} from "./Header";
 import TitleView from "./TitleView";
 import ContentView from "./ContentView";
 import ImageView from "./ImageView";
 import AddModule from "./AddModule";
 import Swipeout from "react-native-swipeout";
 import ImagePicker from 'react-native-image-crop-picker';
-import {uploadImage,postTopic} from '../../services/SocialDao'
-import {getFileName,showToast} from "../../utils/ComonHelper";
+import {uploadImage, postTopic} from '../../services/SocialDao'
+import {getFileName, showToast} from "../../utils/ComonHelper";
 import moment from 'moment';
 import Loading from "../../components/Loading";
 
@@ -30,12 +30,12 @@ export default class ArticleRelease extends PureComponent {
             data: [
                 {
                     type: "title",
-                    text:"",
+                    text: "",
                 },
                 {
                     type: "content",
                     swipeOpen: false,
-                    text:"",
+                    text: "",
                 },
                 {
                     type: "addModule",
@@ -43,9 +43,10 @@ export default class ArticleRelease extends PureComponent {
             ],
         };
         this.touchIndex = 0;
-
+        this.items = [];
     }
-    componentWillMount(){
+
+    componentWillMount() {
         this._panResponder = PanResponder.create({
             // 要求成为响应者：
             onStartShouldSetPanResponder: (evt, gestureState) => true,
@@ -55,11 +56,11 @@ export default class ArticleRelease extends PureComponent {
         });
     }
 
-    componentDidMount(){
+    componentDidMount() {
         //长帖id
         articleKey = this.props.params.articleKey;
-        if (articleKey !== undefined){
-            this.setState({data:this.props.params.articleInfo})
+        if (articleKey !== undefined) {
+            this.setState({data: this.props.params.articleInfo})
         }
 
         // navigator.geolocation.getCurrentPosition(data => {
@@ -70,64 +71,64 @@ export default class ArticleRelease extends PureComponent {
     }
 
     test = () => {
-        console.log(this.listView);
-
-        // item.setNativeProps({
-        //     style: {
-        //         shadowColor: "#000",
-        //         shadowOpacity: 0.3,
-        //         shadowRadius: 5,
-        //         shadowOffset: {height: 0, width: 2},
-        //         elevation: 5,
-        //         zIndex: 1
-        //     }
-        // });
+        let item = this.swipe1.refs['swipeout'];
+        console.log(this);
+        item.setNativeProps({
+            style: {
+                borderColor: "#000",
+                borderWidth:3,
+                // shadowOpacity: 0.3,
+                // shadowRadius: 15,
+                // shadowOffset: {height: 2, width: 4},
+                // elevation: 5,
+                zIndex: 1
+            }
+        });
     };
 
 
     ///拼接图片上传后数据源
     createNewData = () => {
-        console.log(this.state.data);
         let resultData = this.state.data;
         let imageCount = 0;//图片总数
         let successCount = 0;//上传成功数
         let cover_link = "";
 
         let titleData = resultData[0];
-        if (titleData.type === "title"){
-            if (titleData.text === ""){
+        if (titleData.type === "title") {
+            if (titleData.text === "") {
                 showToast(I18n.t('article_title_null'));
-                setTimeout(() => this.loading && this.loading.close(),500);
+                setTimeout(() => this.loading && this.loading.close(), 500);
                 return;
             }
         }
 
-        resultData.forEach((rowData,index) => {
+        resultData.forEach((rowData, index) => {
             let type = rowData.type;
-            if (type === "image"){
-                imageCount ++;
+            if (type === "image") {
+                imageCount++;
 
-                this.uploadImageAction(rowData.imagePath,((data)=>{
+                this.uploadImageAction(rowData.imagePath, ((data) => {
                     ///上传成功
                     ///如果封面图为空 取第一张图做封面图
-                    if (cover_link === ""){
+                    if (cover_link === "") {
                         cover_link = data.image_path;
                     }
 
                     let imageUrl = `<img style="margin-top: 15px" src="${data.image_path}">`;
                     rowData.imagePath = imageUrl;
 
-                    successCount ++;
+                    successCount++;
 
                     ///图片上传完毕
-                    if (imageCount === successCount){
+                    if (imageCount === successCount) {
                         this.createBody(cover_link);
                     }
                 }));
             }
 
             ///最后一项且没有图片
-            if (index === resultData.length - 2 && imageCount === 0){
+            if (index === resultData.length - 2 && imageCount === 0) {
                 this.createBody(cover_link);
             }
         });
@@ -140,57 +141,56 @@ export default class ArticleRelease extends PureComponent {
         let body = [];
         resultData.forEach((rowData) => {
             let type = rowData.type;
-            if (type === "image"){
+            if (type === "image") {
                 body.push(rowData.imagePath);
             }
-            if (type === "content" && rowData.text !== ""){
+            if (type === "content" && rowData.text !== "") {
                 body.push(`<p style="color:#444444;font-size: 15px;line-height: 25px;">${rowData.text}</p>`);
             }
-            if (type === "title"){
+            if (type === "title") {
                 title = rowData.text;
             }
         });
         let resultString = body.join("&nbsp");
-        this.fetchData(title,resultString,cover_link);
+        this.fetchData(title, resultString, cover_link);
     };
 
     ///上传图片
-    uploadImageAction = (imagePath,successCallBack) => {
+    uploadImageAction = (imagePath, successCallBack) => {
 
         ///未登录先登录
-        if (login_user.user_id === undefined){
+        if (login_user.user_id === undefined) {
             router.toLoginFirstPage();
             return;
         }
 
         let formData = new FormData();
         let file = {uri: imagePath, type: "multipart/form-data", name: getFileName(imagePath)};
-        formData.append("image",file);
-        uploadImage(formData,data=>{
+        formData.append("image", file);
+        uploadImage(formData, data => {
             successCallBack(data);
-        },err =>{
-            this.uploadImageAction(imagePath,successCallBack);
+        }, err => {
+            this.uploadImageAction(imagePath, successCallBack);
         });
     };
 
     ///发布长贴
     postTopic = () => {
-        setTimeout(() => this.loading && this.loading.open(),500);
+        setTimeout(() => this.loading && this.loading.open(), 500);
         this.closeAction();
         this.createNewData();
     };
 
     ///请求发长贴接口
-    fetchData = (title,content,cover_link) =>{
-        if (title === ""){
+    fetchData = (title, content, cover_link) => {
+        if (title === "") {
             showToast(I18n.t('article_title_null'));
-            setTimeout(() => this.loading && this.loading.close(),500);
+            setTimeout(() => this.loading && this.loading.close(), 500);
             return;
         }
-        console.log(content);
-        if (content === "" ){
+        if (content === "") {
             showToast(I18n.t('article_content_null'));
-            setTimeout(() => this.loading && this.loading.close(),500);
+            setTimeout(() => this.loading && this.loading.close(), 500);
             return;
         }
 
@@ -199,28 +199,28 @@ export default class ArticleRelease extends PureComponent {
             body: content,
             title: title,
             published: true,
-            cover_link:cover_link,
-            lat:'',
-            lng:'',
-            location:'',
+            cover_link: cover_link,
+            lat: '',
+            lng: '',
+            location: '',
         };
         postTopic(body, data => {
             showToast(I18n.t('article_release_success'));
-            setTimeout(() => this.loading && this.loading.close(),500);
+            setTimeout(() => this.loading && this.loading.close(), 500);
 
             ///草稿箱已经存在当前长帖 将其删除
-            if (articleKey !== undefined){
+            if (articleKey !== undefined) {
 
                 ///获取草稿列表
                 storage.load({key: "articleList"}).then(ret => {
 
                     let articleList = ret;
 
-                    articleList.forEach((article,index) => {
+                    articleList.forEach((article, index) => {
                         let key = article.key;
                         ///删除当前草稿
-                        if (key === articleKey){
-                            articleList.splice(index,1);
+                        if (key === articleKey) {
+                            articleList.splice(index, 1);
                         }
                     });
 
@@ -259,23 +259,23 @@ export default class ArticleRelease extends PureComponent {
         let image = false;
         resultData.forEach((rowData) => {
             let type = rowData.type;
-            if (type === "title"){
+            if (type === "title") {
                 title = rowData.text;
             }
-            if (type === "image"){
+            if (type === "image") {
                 image = true;
             }
-            if (type === "content"){
+            if (type === "content") {
                 content = rowData.text;
             }
         });
-        if (title === "" && !image && content === ""){
+        if (title === "" && !image && content === "") {
             showToast(I18n.t('article_null'));
             return;
         }
 
         ///长帖信息
-        let articleInfo = {data:resultData};
+        let articleInfo = {data: resultData};
 
 
         ///获取草稿列表
@@ -285,20 +285,19 @@ export default class ArticleRelease extends PureComponent {
             let currentKey = moment().format('X');//当前时间戳
 
             //如果是新文章
-            if (articleKey === undefined){
+            if (articleKey === undefined) {
                 ///如果是新文章，设置一个key,并添加进草稿列表
                 articleInfo.key = currentKey;
                 articleList.push(articleInfo);
             }
             ///从草稿箱编辑
-            else
-            {
-                articleList.forEach((article,index) => {
+            else {
+                articleList.forEach((article, index) => {
                     let key = article.key;
                     ///替换当前的草稿,并覆盖时间戳
-                    if (key === articleKey){
+                    if (key === articleKey) {
                         articleInfo.key = currentKey;
-                        articleList.splice(index,1,articleInfo);
+                        articleList.splice(index, 1, articleInfo);
                     }
                 });
             }
@@ -311,9 +310,8 @@ export default class ArticleRelease extends PureComponent {
             }).then(() => {
                 showToast(I18n.t('article_save_success'));
                 articleKey = currentKey;
-                console.log(this.props.params.reloadInfo);
                 if (this.props.params.reloadInfo === null) return;
-                    this.props.params.reloadInfo();
+                this.props.params.reloadInfo();
             }).catch(err => {
                 showToast(I18n.t('article_save_failure'));
             });
@@ -327,7 +325,7 @@ export default class ArticleRelease extends PureComponent {
                 key: 'articleList',
                 data: articleList,
             }).then(() => {
-                  articleKey = currentKey;
+                articleKey = currentKey;
             }).catch(err => {
                 showToast(I18n.t('article_save_failure'))
             });
@@ -374,9 +372,9 @@ export default class ArticleRelease extends PureComponent {
     insetrtImageAction = () => {
         this.closeAction();
         ImagePicker.openPicker({
-            compressImageMaxWidth:1024,
-            compressImageMaxHeight:1024,
-            compressImageQuality:0.5
+            compressImageMaxWidth: 1024,
+            compressImageMaxHeight: 1024,
+            compressImageQuality: 0.5
         }).then(image => {
             let rowData = {
                 type: "image",
@@ -394,9 +392,9 @@ export default class ArticleRelease extends PureComponent {
     insertTakePhotoAction = () => {
         this.closeAction();
         ImagePicker.openCamera({
-            compressImageMaxWidth:1024,
-            compressImageMaxHeight:1024,
-            compressImageQuality:0.5
+            compressImageMaxWidth: 1024,
+            compressImageMaxHeight: 1024,
+            compressImageQuality: 0.5
         }).then(image => {
             let rowData = {
                 type: "image",
@@ -415,7 +413,7 @@ export default class ArticleRelease extends PureComponent {
         let rowData = {
             type: "content",
             swipeOpen: false,
-            text:"",
+            text: "",
         };
         this.insertRow(rowData);
     };
@@ -461,10 +459,9 @@ export default class ArticleRelease extends PureComponent {
     ///渲染行
     _renderItem = (item) => {
         let type = item.item.type;
-        let row;
         if (type === "title") {
             ///标题
-            row = (
+            return (
                 <TitleView defaultValue={item.item.text}
                            beginEdit={() => {
                                this.closeAction();
@@ -473,13 +470,13 @@ export default class ArticleRelease extends PureComponent {
                                let newData = [...this.state.data];
                                let titleData = newData[item.index];
                                titleData.text = text;
-                               this.setState({data:newData});
+                               this.setState({data: newData});
                            }}/>
             );
         }
         else if (type === "addModule") {
             ///添加模块
-            row = (
+            return (
                 <AddModule insertImage={this.insetrtImageAction}
                            insertTakePhoto={this.insertTakePhotoAction}
                            insertText={this.insertTextAction}
@@ -490,23 +487,29 @@ export default class ArticleRelease extends PureComponent {
         }
         else {
             let swipeOpen = item.item.swipeOpen;
-            row = (
+            return (
                 <Swipeout
+                    ref={(ref) => this['swipe' + item.index] = ref}
                     right={[
-                        {component: this.createArrangeComponent(),onPress:()=>{
+                        {
+                            component: this.createArrangeComponent(), onPress: () => {
                             this.touchIndex = item.index;
                             this.test();
-                        }},
+                        }
+                        },
                         {
                             text: I18n.t('delete'),
                             backgroundColor: "red",
-                            onPress:() => this.deleteRow(item.index)
+                            onPress: () => this.deleteRow(item.index)
                         }
                     ]}
                     backgroundColor={"#ECECEE"}
-                    onClose={() =>{}} ///关闭
-                    onOpen={() => {}} ///打开
-                    scroll={event =>{}} ///滑动
+                    onClose={() => {
+                    }} ///关闭
+                    onOpen={() => {
+                    }} ///打开
+                    scroll={event => {
+                    }} ///滑动
                     autoClose={false} ///点击按钮关闭
                     openRight={swipeOpen}
                     close={!swipeOpen}
@@ -515,7 +518,7 @@ export default class ArticleRelease extends PureComponent {
                     {/*文字*/}
                     {type === "content" ? <ContentView beginEdit={() => {
                         this.closeAction();
-                        this.listView.scrollToIndex({index:item.index,viewPosition: 0.3});
+                        this.listView.scrollToIndex({index: item.index, viewPosition: 0.3});
                     }}
                                                        defaultValue={item.item.text}
                                                        callbackText={(text) => {
@@ -529,14 +532,14 @@ export default class ArticleRelease extends PureComponent {
                 </Swipeout>
             );
         }
-        return row;
     };
 
     render() {
+        this.items.splice(0, this.items.length);
         let data = this.state.data;
         return (
             <View style={styles.container}>
-                <View style={{height:screenHeight - toolBarHeight}}>
+                <View style={{height: screenHeight - toolBarHeight}}>
                     {/*导航栏*/}
                     <NavigationBar barStyle={'dark-content'}
                                    titleStyle={{fontSize: 17, color: Colors._333}}
@@ -545,7 +548,7 @@ export default class ArticleRelease extends PureComponent {
                                    leftBtnText={I18n.t('cancel')}
                                    rightBtnText={I18n.t('draft_box')}
                                    btnTextStyle={{fontSize: 14, color: Colors._333}}
-                                   rightBtnPress={() =>{
+                                   rightBtnPress={() => {
                                        this.closeAction();
                                        ///草稿箱
                                        global.router.toArticleList();
@@ -557,31 +560,33 @@ export default class ArticleRelease extends PureComponent {
                                        let image = false;
                                        resultData.forEach((rowData) => {
                                            let type = rowData.type;
-                                           if (type === "title"){
+                                           if (type === "title") {
                                                title = rowData.text;
                                            }
-                                           if (type === "image"){
+                                           if (type === "image") {
                                                image = true;
                                            }
-                                           if (type === "content"){
+                                           if (type === "content") {
                                                content = rowData.text;
                                            }
                                        });
-                                       if (title === "" && !image && content === ""){
+                                       if (title === "" && !image && content === "") {
                                            router.pop();
                                        }
-                                       else{
+                                       else {
                                            Alert.alert(
                                                I18n.t("save_title"),
                                                '',
                                                [
                                                    {text: I18n.t("save_n"), onPress: () => router.pop()},
-                                                   {text:  I18n.t("save_s"), onPress: () => {
+                                                   {
+                                                       text: I18n.t("save_s"), onPress: () => {
                                                        this.saveDraft();
                                                        router.pop();
-                                                   }},
+                                                   }
+                                                   },
                                                ],
-                                               { cancelable: false }
+                                               {cancelable: false}
                                            );
                                        }
 
@@ -590,7 +595,7 @@ export default class ArticleRelease extends PureComponent {
                     />
 
 
-                    <KeyboardAvoidingView behavior={"padding"} style={{flex:1}}>
+                    <KeyboardAvoidingView behavior={"padding"} style={{flex: 1}}>
                         <FlatList data={data}
                                   keyExtractor={(item, index) => index + ""}
                                   renderItem={this._renderItem}
@@ -625,7 +630,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: "#ECECEE",
         flex: 1,
-        justifyContent:"space-between",
+        justifyContent: "space-between",
     },
     editIcon: {
         flex: 1,
