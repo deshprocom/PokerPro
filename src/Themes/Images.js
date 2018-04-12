@@ -307,10 +307,11 @@ const images = {
         like_red: require('../../source/social/like_red.png'),
         like_gray: require('../../source/social/like_gray.png'),
         comment_gray: require('../../source/social/comment_gray.png'),
-        icon_address_s:require('../../source/social/icon_address_s.png'),
+        icon_address_s: require('../../source/social/icon_address_s.png'),
         article_delete: require('../../source/social/delete.png'),
         more_4: require('../../source/social/more_4.png'),
-        user_topic: require('../../source/social/user_topic.png')
+        user_topic: require('../../source/social/user_topic.png'),
+        mine_moment: require('../../source/social/mine_moment.png')
     }
 
 };
