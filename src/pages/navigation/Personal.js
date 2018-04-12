@@ -445,8 +445,7 @@ const mapStateToProps = state => ({
     hasData: state.PersonState.hasData,
     actionType: state.PersonState.actionType,
     unread: state.AccountState.unread,
-    actionType1: state.AccountState.actionType,
-    followships: state.PersonState.followships
+    actionType1: state.AccountState.actionType
 
 });
 
