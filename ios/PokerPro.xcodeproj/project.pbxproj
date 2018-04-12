@@ -1272,8 +1272,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = JAB7AT8F22;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -2121,10 +2120,10 @@
 				CODE_SIGN_ENTITLEMENTS = PokerPro/PokerPro.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = JAB7AT8F22;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../node_modules/jmessage-react-plugin/ios/RCTJMessageModule";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = (
@@ -2173,8 +2172,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = PokerPro/PokerPro.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = JAB7AT8F22;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../node_modules/jmessage-react-plugin/ios/RCTJMessageModule";
@@ -2211,8 +2210,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.deshpro.PokerPro;
 				PRODUCT_NAME = PokerPro;
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "0fb49369-9cdd-4768-9da4-fb96d81a2640";
+				PROVISIONING_PROFILE_SPECIFIER = ADHOC;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

@@ -564,6 +564,10 @@ export default class ChatMessage extends Component {
             this.popAction && this.popAction.toggle();
         },(error) => {
             console.log("拉黑失败",error);
+            if (error.code === 861101){
+                showToast("无法将自己加入黑名单");
+                this.popAction && this.popAction.toggle();
+            }
         });
     };
 

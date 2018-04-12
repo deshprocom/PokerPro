@@ -17,6 +17,14 @@ import {reallySize} from "./Header";
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
 
 export default class SocialContact extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            following_count:this.props.params.following_count,
+            follower_count:this.props.params.follower_count
+        }
+    }
+
     renderTabBar = (props) => {
         const {goToPage,activeTab} = props;
         let type = activeTab;
@@ -27,7 +35,7 @@ export default class SocialContact extends Component {
                 }}>
                     <View style={styles.subView}>
                         <Text
-                            style={[styles.tabTitle, type === 0 ? {color: "#F24A4A"} : {color: "#666666"}]}>{`${I18n.t('follow')} ${this.props.params.following_count}`}</Text>
+                            style={[styles.tabTitle, type === 0 ? {color: "#F24A4A"} : {color: "#666666"}]}>{`${I18n.t('follow')} ${this.state.following_count}`}</Text>
                         <View style={type === 0 ? styles.tabLine : {height: 2}}/>
                     </View>
                 </TouchableOpacity>
@@ -37,13 +45,14 @@ export default class SocialContact extends Component {
                 }}>
                     <View style={styles.subView}>
                         <Text
-                            style={[styles.tabTitle, type === 1 ? {color: "#F24A4A"} : {color: "#666666"}]}>{`${I18n.t('stalwart')}  ${this.props.params.follower_count}`}</Text>
+                            style={[styles.tabTitle, type === 1 ? {color: "#F24A4A"} : {color: "#666666"}]}>{`${I18n.t('stalwart')}  ${this.state.follower_count}`}</Text>
                         <View style={type === 1 ? styles.tabLine : {height: 2}}/>
                     </View>
                 </TouchableOpacity>
             </View>
         );
     };
+
 
     render() {
         let data = [{type:"followings"},{type:"followers"}];
@@ -67,7 +76,15 @@ export default class SocialContact extends Component {
                     renderTabBar={this.renderTabBar}>
                     {data.map((item) => {
                         return (
-                            <FollowList data = {item} key = {item.type}/>
+                            <FollowList data = {item}
+                                        key = {item.type}
+                                        add = {() => {
+                                            this.setState({following_count:this.state.following_count-1});
+                                        }}
+                                        reduce = {() => {
+                                            this.setState({following_count:this.state.following_count+1});
+                                        }}
+                            />
                         );
 
                     })}
@@ -109,6 +126,14 @@ export class FollowList extends Component {
     ///关注 取消关注
     followAction = (target_id,is_following,callback) => {
         follow(is_following,{target_id: target_id},(success) => {
+            if(is_following){
+                if (this.props.add === null) return;
+                this.props.add();
+            }
+            else {
+                if (this.props.reduce === null) return;
+                this.props.reduce();
+            }
             callback();
         },(error) => {
 
