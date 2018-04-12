@@ -104,7 +104,6 @@ export default class UserTopicPage extends PureComponent {
 
 
     render() {
-        console.log(this)
 
         const {avatar, nick_name, signature, user_id} = this.props.params.userInfo;
         return <ScrollView

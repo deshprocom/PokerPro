@@ -3,8 +3,7 @@ import {View, StyleSheet, FlatList, Text, Image, TouchableOpacity} from 'react-n
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
-import {NavigationBar, BaseComponent, ImageLoad} from '../../components';
-import UltimateFlatList from '../../components/ultimate';
+import {NavigationBar, BaseComponent, ImageLoad,UltimateListView} from '../../components';
 import {getPersonDynamics, getUnreadComments} from '../../services/CommentDao';
 import {agoDynamicDate, isEmptyObject, strNotNull, util, utcDate, convertDate} from '../../utils/ComonHelper';
 import DynamicEmpty from './DynamicEmpty';
@@ -290,12 +289,11 @@ export default class PersonDynamicPage extends Component {
 
                     {moments}
 
-                    <UltimateFlatList
+                    <UltimateListView
                         scrollEnabled={scrollEnabled}
                         style={{backgroundColor: 'white'}}
                         tabLabel={'足迹'}
                         header={() => this.personTop()}
-                        arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
                         ref={ref => this.ultimate = ref}
                         onFetch={this.onFetch}
                         keyExtractor={(item, index) => `replies${index}`}
