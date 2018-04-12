@@ -11,9 +11,10 @@ import {Images, ApplicationStyles, Metrics, Colors} from "../../Themes";
 import I18n from "react-native-i18n";
 import {NavigationBar} from '../../components';
 import PersonDynamicPage from '../comment/PersonDynamicPage'
-import {visit_other} from '../../services/SocialDao';
+import {visit_other, follow} from '../../services/SocialDao';
 import _ from 'lodash';
 import Loading from "../../components/Loading";
+import {isFollowed} from '../../utils/ComonHelper'
 
 const styles = StyleSheet.create({
     topBar: {
@@ -66,6 +67,11 @@ const styles = StyleSheet.create({
 
 export default class UserTopicPage extends PureComponent {
 
+    state = {
+        scrollEnabled: true,
+        follow: isFollowed(this.props.params.userInfo.user_id)
+    };
+
     //私信
     visitChat = () => {
         ///未登录先登录
@@ -87,13 +93,10 @@ export default class UserTopicPage extends PureComponent {
         });
     };
 
-    state = {
-        scrollEnabled: true
-    }
 
     render() {
 
-        const {avatar, nick_name, signature} = this.props.params.userInfo;
+        const {avatar, nick_name, signature, user_id} = this.props.params.userInfo;
         return <ScrollView style={{flex: 1}}>
             <View style={styles.topBar}>
                 <Image
@@ -128,8 +131,17 @@ export default class UserTopicPage extends PureComponent {
 
                 <View style={[styles.row, {marginTop: 17, marginBottom: 17}]}>
                     <TouchableOpacity
+                        onPress={() => {
+                            follow(this.state.follow, {target_id: user_id}, data => {
+                                this.setState({
+                                    follow: !this.state.follow
+                                })
+                            }, err => {
+                            })
+                        }}
                         style={[styles.btn_follow, {marginRight: 26}]}>
-                        <Text style={styles.follow}>{I18n.t('rank_focus')}</Text>
+                        <Text
+                            style={styles.follow}>{this.state.follow ? I18n.t('rank_focused') : I18n.t('rank_focus')}</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity

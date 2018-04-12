@@ -19,7 +19,7 @@ import {
 } from "../../services/SocialDao";
 import {
     getDateDiff, isEmptyObject, showToast, strNotNull,
-    alertOrder, isFollowed
+    alertOrder, isFollowed, sharePage, shareHost
 } from "../../utils/ComonHelper";
 import CommentBar from '../comm/CommentBar';
 import {postComment, postRelaies, delDeleteComment} from '../../services/CommentDao'
@@ -157,7 +157,7 @@ export default class LongArticle extends PureComponent {
     }
 
     render() {
-        const {id} = this.state.article;
+        const {id, title, user, cover_link} = this.state.article;
 
         return <View style={{flex: 1, backgroundColor: 'white'}}>
             <NavigationBar
@@ -222,7 +222,7 @@ export default class LongArticle extends PureComponent {
 
                     }}
                     share={() => {
-
+                        sharePage(title, user.nick_name, cover_link, shareHost() + 'topics/' + id)
                     }}
                     like={() => {
 
