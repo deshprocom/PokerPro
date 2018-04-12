@@ -143,15 +143,6 @@ class Personal extends Component {
                 </View>
             </TouchableOpacity>
 
-
-            <TouchableOpacity
-                activeOpacity={1}
-                style={[stylesP.personalView, {marginTop: 20}]} onPress={this.visitChat}>
-                <View style={stylesP.personalView2}>
-                    <Text style={stylesP.personalText}>测试入口</Text>
-                </View>
-            </TouchableOpacity>
-
             <View style={{height: 50}}/>
         </ScrollView>
     };
@@ -261,7 +252,10 @@ class Personal extends Component {
                     {/*关注与粉丝*/}
                     <View style={{height: 49, flexDirection: 'row', alignItems: 'center'}}>
 
-                        <TouchableOpacity onPress={() => {router.toSocialContact(0)}}>
+                        <TouchableOpacity onPress={() => {router.toSocialContact({
+                            type: 0,
+                            following_count:following_count,
+                            follower_count:follower_count})}}>
                             <Text style={{color: Colors._CCC, fontSize: 14}}>{`关注   ${following_count}`}</Text>
                         </TouchableOpacity>
                         <View
@@ -272,7 +266,10 @@ class Personal extends Component {
                                 marginLeft: 28,
                                 marginRight: 28
                             }}/>
-                        <TouchableOpacity onPress={() => {router.toSocialContact(1)}}>
+                        <TouchableOpacity onPress={() => {router.toSocialContact({
+                            type: 1,
+                            following_count:following_count,
+                            follower_count:follower_count})}}>
                             <Text style={{color: Colors._CCC, fontSize: 14}}>{`粉丝   ${follower_count}`}</Text>
                         </TouchableOpacity>
                     </View>

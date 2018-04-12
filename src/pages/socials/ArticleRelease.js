@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {
     StyleSheet, Image, Platform,
     View, TextInput, Text, TouchableOpacity,
-    KeyboardAvoidingView, AsyncStorage, FlatList,Alert
+    KeyboardAvoidingView, AsyncStorage, FlatList,Alert,PanResponder
 } from 'react-native';
 import {NavigationBar} from '../../components'
 import {Colors, Images} from "../../Themes";
@@ -42,6 +42,17 @@ export default class ArticleRelease extends PureComponent {
                 },
             ],
         };
+        this.touchIndex = 0;
+
+    }
+    componentWillMount(){
+        this._panResponder = PanResponder.create({
+            // 要求成为响应者：
+            onStartShouldSetPanResponder: (evt, gestureState) => true,
+            onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+            onMoveShouldSetPanResponder: (evt, gestureState) => true,
+            onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+        });
     }
 
     componentDidMount(){
@@ -51,25 +62,49 @@ export default class ArticleRelease extends PureComponent {
             this.setState({data:this.props.params.articleInfo})
         }
 
-        navigator.geolocation.getCurrentPosition(data => {
-            console.log('位置坐标：', data);
-        }, err => {
-            console.log(err)
-        })
+        // navigator.geolocation.getCurrentPosition(data => {
+        //     console.log('位置坐标：', data);
+        // }, err => {
+        //     console.log(err)
+        // })
     }
+
+    test = () => {
+        console.log(this.listView);
+
+        // item.setNativeProps({
+        //     style: {
+        //         shadowColor: "#000",
+        //         shadowOpacity: 0.3,
+        //         shadowRadius: 5,
+        //         shadowOffset: {height: 0, width: 2},
+        //         elevation: 5,
+        //         zIndex: 1
+        //     }
+        // });
+    };
+
 
     ///拼接图片上传后数据源
     createNewData = () => {
+        console.log(this.state.data);
         let resultData = this.state.data;
         let imageCount = 0;//图片总数
         let successCount = 0;//上传成功数
         let cover_link = "";
 
-        resultData.forEach((rowData,index) => {
+        let titleData = resultData[0];
+        if (titleData.type === "title"){
+            if (titleData.text === ""){
+                showToast(I18n.t('article_title_null'));
+                setTimeout(() => this.loading && this.loading.close(),500);
+                return;
+            }
+        }
 
+        resultData.forEach((rowData,index) => {
             let type = rowData.type;
             if (type === "image"){
-
                 imageCount ++;
 
                 this.uploadImageAction(rowData.imagePath,((data)=>{
@@ -79,7 +114,7 @@ export default class ArticleRelease extends PureComponent {
                         cover_link = data.image_path;
                     }
 
-                    let imageUrl = `<img src="${data.image_path}"></br>`;
+                    let imageUrl = `<img style="margin-top: 15px" src="${data.image_path}">`;
                     rowData.imagePath = imageUrl;
 
                     successCount ++;
@@ -108,14 +143,14 @@ export default class ArticleRelease extends PureComponent {
             if (type === "image"){
                 body.push(rowData.imagePath);
             }
-            if (type === "content"){
-                body.push(`<p>${rowData.text}</p>`);
+            if (type === "content" && rowData.text !== ""){
+                body.push(`<p style="color:#444444;font-size: 15px;line-height: 25px;">${rowData.text}</p>`);
             }
             if (type === "title"){
                 title = rowData.text;
             }
         });
-        let resultString = body.join("");
+        let resultString = body.join("&nbsp");
         this.fetchData(title,resultString,cover_link);
     };
 
@@ -140,6 +175,7 @@ export default class ArticleRelease extends PureComponent {
 
     ///发布长贴
     postTopic = () => {
+        setTimeout(() => this.loading && this.loading.open(),500);
         this.closeAction();
         this.createNewData();
     };
@@ -148,13 +184,15 @@ export default class ArticleRelease extends PureComponent {
     fetchData = (title,content,cover_link) =>{
         if (title === ""){
             showToast(I18n.t('article_title_null'));
+            setTimeout(() => this.loading && this.loading.close(),500);
             return;
         }
-        if (content === "<p></p>" || content === "" ){
+        console.log(content);
+        if (content === "" ){
             showToast(I18n.t('article_content_null'));
+            setTimeout(() => this.loading && this.loading.close(),500);
             return;
         }
-        this.loading && this.loading.open();
 
         let body = {
             body_type: 'long',
@@ -167,9 +205,8 @@ export default class ArticleRelease extends PureComponent {
             location:'',
         };
         postTopic(body, data => {
-
             showToast(I18n.t('article_release_success'));
-            this.loading && this.loading.close();
+            setTimeout(() => this.loading && this.loading.close(),500);
 
             ///草稿箱已经存在当前长帖 将其删除
             if (articleKey !== undefined){
@@ -193,7 +230,7 @@ export default class ArticleRelease extends PureComponent {
                         key: 'articleList',
                         data: articleList,
                     }).then(() => {
-                        router.popToTop();
+                        router.popToAriticle();
                     }).catch(err => {
                         showToast("error");
                     });
@@ -203,7 +240,7 @@ export default class ArticleRelease extends PureComponent {
 
             }
             else {
-                router.popToTop();
+                router.popToAriticle();
             }
 
 
@@ -274,6 +311,9 @@ export default class ArticleRelease extends PureComponent {
             }).then(() => {
                 showToast(I18n.t('article_save_success'));
                 articleKey = currentKey;
+                console.log(this.props.params.reloadInfo);
+                if (this.props.params.reloadInfo === null) return;
+                    this.props.params.reloadInfo();
             }).catch(err => {
                 showToast(I18n.t('article_save_failure'));
             });
@@ -420,11 +460,11 @@ export default class ArticleRelease extends PureComponent {
 
     ///渲染行
     _renderItem = (item) => {
-
         let type = item.item.type;
+        let row;
         if (type === "title") {
             ///标题
-            return (
+            row = (
                 <TitleView defaultValue={item.item.text}
                            beginEdit={() => {
                                this.closeAction();
@@ -439,7 +479,7 @@ export default class ArticleRelease extends PureComponent {
         }
         else if (type === "addModule") {
             ///添加模块
-            return (
+            row = (
                 <AddModule insertImage={this.insetrtImageAction}
                            insertTakePhoto={this.insertTakePhotoAction}
                            insertText={this.insertTextAction}
@@ -450,18 +490,24 @@ export default class ArticleRelease extends PureComponent {
         }
         else {
             let swipeOpen = item.item.swipeOpen;
-            return (
+            row = (
                 <Swipeout
-                    right={[{component: this.createArrangeComponent()}, {
-                        text: I18n.t('delete'),
-                        backgroundColor: "red",
-                        onPress:() => this.deleteRow(item.index)
-                    }]}
+                    right={[
+                        {component: this.createArrangeComponent(),onPress:()=>{
+                            this.touchIndex = item.index;
+                            this.test();
+                        }},
+                        {
+                            text: I18n.t('delete'),
+                            backgroundColor: "red",
+                            onPress:() => this.deleteRow(item.index)
+                        }
+                    ]}
                     backgroundColor={"#ECECEE"}
                     onClose={() =>{}} ///关闭
                     onOpen={() => {}} ///打开
                     scroll={event =>{}} ///滑动
-                    autoClose={true} ///点击按钮关闭
+                    autoClose={false} ///点击按钮关闭
                     openRight={swipeOpen}
                     close={!swipeOpen}
                     disabled={true}
@@ -483,6 +529,7 @@ export default class ArticleRelease extends PureComponent {
                 </Swipeout>
             );
         }
+        return row;
     };
 
     render() {

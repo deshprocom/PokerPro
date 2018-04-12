@@ -98,8 +98,6 @@ export default class MoodRelease extends Component {
 
     ///请求发说说接口
     fetchData = () => {
-        this.loading && this.loading.open();
-
         let mood = this.state.mood;
         let images = this.state.images;
         let imageIds = [];
@@ -112,6 +110,8 @@ export default class MoodRelease extends Component {
             this.sendMood(mood, imageIds);
             return;
         }
+
+        this.loading && this.loading.open();
 
 
         images.forEach((image, index) => {
@@ -152,9 +152,9 @@ export default class MoodRelease extends Component {
         postTopic(body, data => {
             showToast(I18n.t('article_release_success'));
             this.loading && this.loading.close();
-            router.popToTop();
+            router.popToAriticle();
         }, err => {
-
+            this.loading && this.loading.close();
         })
     };
 
