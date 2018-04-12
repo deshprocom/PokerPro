@@ -261,15 +261,20 @@ export default class PersonDynamicPage extends Component {
 
     render() {
         const {user_id} = this.userInfo;
+        const {scrollEnabled} = this.props;
         const lists = this.isMine() ? ['user_topics'] : ['user_topics', 'long', 'short'];
         let moments = lists.map((item, index) => {
 
             return <MomentList
+                scrollEnabled={scrollEnabled}
+                ref={'MomentList' + index}
                 key={'moments' + index}
                 userId={user_id}
                 tabLabel={this.tabLabel(item)}
                 type={item}/>
         });
+
+
 
         return (
             <BaseComponent style={ApplicationStyles.bgContainer}>
@@ -286,10 +291,7 @@ export default class PersonDynamicPage extends Component {
                     {moments}
 
                     <UltimateFlatList
-                        onScroll={e => {
-                            let scrollY = e.nativeEvent.contentOffset.y;
-                            console.log(scrollY)
-                        }}
+                        scrollEnabled={scrollEnabled}
                         style={{backgroundColor: 'white'}}
                         tabLabel={'足迹'}
                         header={() => this.personTop()}

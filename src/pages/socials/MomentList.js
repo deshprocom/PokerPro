@@ -113,6 +113,7 @@ export default class MomentList extends PureComponent {
 
     render() {
         return <UltimateListView
+            scrollEnabled={this.props.scrollEnabled}
             keyExtractor={(item, index) => index + "_moment"}
             ref={(ref) => this.listView = ref}
             onFetch={this.onFetch}

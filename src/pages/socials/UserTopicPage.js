@@ -70,17 +70,9 @@ const styles = StyleSheet.create({
 export default class UserTopicPage extends PureComponent {
 
     state = {
-        scrollEnabled: true,
+        scrollEnabled: false,
         follow: isFollowed(this.props.params.userInfo.user_id)
     };
-
-    componentWillMount() {
-        this._panResponder = PanResponder.create({
-            onPanResponderMove: (event, gestureState) => {
-                console.log('手势动作', event, gestureState)
-            }
-        });
-    }
 
     //私信
     visitChat = () => {
@@ -103,13 +95,21 @@ export default class UserTopicPage extends PureComponent {
         });
     };
 
+    _onScroll = (e) => {
+        let scrollY = e.nativeEvent.contentOffset.y;
+        this.setState({
+            scrollEnabled: scrollY > 260
+        })
+    };
+
 
     render() {
+        console.log(this)
 
         const {avatar, nick_name, signature, user_id} = this.props.params.userInfo;
-        return <Animated.ScrollView
-            {...this._panResponder.panHandlers}
-            style={{flex: 1}}>
+        return <ScrollView
+            scrollEventThrottle={10}
+            onScroll={this._onScroll}>
             <View style={styles.topBar}>
                 <Image
                     style={{position: 'absolute', height: 280, width: '100%'}}
@@ -168,13 +168,16 @@ export default class UserTopicPage extends PureComponent {
 
             </View>
 
-            <PersonDynamicPage
-                params={this.props.params}/>
+            <View style={{height: Metrics.screenHeight}}>
+                <PersonDynamicPage
+                    scrollEnabled={this.state.scrollEnabled}
+                    params={this.props.params}/>
+            </View>
 
 
             <Loading ref={ref => this.loading = ref} cancelable={true}/>
 
 
-        </Animated.ScrollView>
+        </ScrollView>
     }
 }
