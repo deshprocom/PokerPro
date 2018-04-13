@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         width: Metrics.screenWidth,
         alignItems: 'center',
         backgroundColor: Colors._161,
-        height: 280
+        height: Metrics.iPhone_X ? 300 : 280
     },
     person1: {
         width: 74,
@@ -107,7 +107,7 @@ export default class UserTopicPage extends PureComponent {
         const {avatar, nick_name, signature, user_id} = this.props.params.userInfo;
         return <View style={styles.topBar}>
             <Image
-                style={{position: 'absolute', height: 280, width: '100%'}}
+                style={{position: 'absolute', height: Metrics.iPhone_X ? 300 : 280, width: '100%'}}
                 source={Images.social.user_topic}/>
 
             <NavigationBar
