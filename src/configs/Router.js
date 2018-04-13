@@ -890,7 +890,7 @@ export default class Router {
 
     toMessageList(userInfo) {
         this.stackPush({
-            name: 'ChatMessage',
+            name: 'ChatRoom',
             params: {
                 userInfo
             }
