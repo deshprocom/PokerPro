@@ -99,6 +99,7 @@ import RiskWarningPage from '../pages/crowdfundings/orders/RiskWarningPage';
 import RecordList from '../pages/crowdfundings/orders/RecordList';
 import SubscriptionInfoPage from '../pages/crowdfundings/orders/SubscriptionInfoPage';
 import ChatMessage from "../pages/chat/ChatMessage";
+import ChatRoom from "../pages/chat/ChatRoom";
 import Location from "../pages/socials/Location";
 import Blacklist from "../pages/socials/Blacklist";
 import SocialContact from "../pages/socials/SocialContact";
@@ -202,7 +203,7 @@ export const Stacks = Actions.create(
         <Scene key="EmptyCart" component={EmptyCart} hideNavBar/>
         <Scene key="MallSearchResult" component={MallSearchResult} hideNavBar/>
         <Scene key="OrderSubmitPage" component={OrderSubmitPage} hideNavBar/>
-        <Scene key="ChatMessage" component={ChatMessage} hideNavBar/>
+        <Scene key="ChatRoom" component={ChatRoom} hideNavBar/>
 
         <Scene type={ActionConst.RESET}
                initial={true}
