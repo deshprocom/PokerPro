@@ -311,7 +311,11 @@ const images = {
         article_delete: require('../../source/social/delete.png'),
         more_4: require('../../source/social/more_4.png'),
         user_topic: require('../../source/social/user_topic.png'),
-        mine_moment: require('../../source/social/mine_moment.png')
+        mine_moment: require('../../source/social/mine_moment.png'),
+        self_msg:require('../../source/social/icon_selfmsg.png'),
+        other_msg:require('../../source/social/icon_othermsg.png'),
+        chat_more:require('../../source/social/icon_chat_more.png'),
+        chat_emoji:require('../../source/social/icon_chat_emoji.png'),
     }
 
 };
