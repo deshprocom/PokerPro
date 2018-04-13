@@ -46,15 +46,6 @@ export default class ArticleRelease extends PureComponent {
         this.items = [];
     }
 
-    componentWillMount() {
-        this._panResponder = PanResponder.create({
-            // 要求成为响应者：
-            onStartShouldSetPanResponder: (evt, gestureState) => true,
-            onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
-            onMoveShouldSetPanResponder: (evt, gestureState) => true,
-            onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
-        });
-    }
 
     componentDidMount() {
         //长帖id
@@ -69,23 +60,6 @@ export default class ArticleRelease extends PureComponent {
         //     console.log(err)
         // })
     }
-
-    test = () => {
-        let item = this.swipe1.refs['swipeout'];
-        console.log(this);
-        item.setNativeProps({
-            style: {
-                borderColor: "#000",
-                borderWidth:3,
-                // shadowOpacity: 0.3,
-                // shadowRadius: 15,
-                // shadowOffset: {height: 2, width: 4},
-                // elevation: 5,
-                zIndex: 1
-            }
-        });
-    };
-
 
     ///拼接图片上传后数据源
     createNewData = () => {
@@ -376,14 +350,19 @@ export default class ArticleRelease extends PureComponent {
             compressImageMaxHeight: 1024,
             compressImageQuality: 0.5
         }).then(image => {
-            let rowData = {
-                type: "image",
-                swipeOpen: false,
-            };
-            rowData.imagePath = image.path;
-            rowData.imageWidth = image.width;
-            rowData.imageHeight = image.height;
-            this.insertRow(rowData);
+            if (image.mime === "image/jpeg"){
+                let rowData = {
+                    type: "image",
+                    swipeOpen: false,
+                };
+                rowData.imagePath = image.path;
+                rowData.imageWidth = image.width;
+                rowData.imageHeight = image.height;
+                this.insertRow(rowData);
+            }
+            else {
+                showToast("文件类型错误");
+            }
         });
     };
 
@@ -489,14 +468,10 @@ export default class ArticleRelease extends PureComponent {
             let swipeOpen = item.item.swipeOpen;
             return (
                 <Swipeout
-                    ref={(ref) => this['swipe' + item.index] = ref}
                     right={[
-                        {
-                            component: this.createArrangeComponent(), onPress: () => {
-                            this.touchIndex = item.index;
-                            this.test();
-                        }
-                        },
+                        // {
+                        //     component: this.createArrangeComponent()
+                        // },
                         {
                             text: I18n.t('delete'),
                             backgroundColor: "red",

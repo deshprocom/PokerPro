@@ -216,7 +216,9 @@ export default class ChatMessage extends Component {
     resetMenu = () => {
         if (Platform.OS === "android") {
             this.refs["ChatInput"].showMenu(false);
-            this.setState({messageListLayout: {flex: 1, width: window.width, margin: 0},});
+            this.setState({
+                messageListLayout: {flex: 1, width: window.width, margin: 0},
+            });
         } else {
             this.setState({inputViewLayout: {width: window.width, height: 86}});
         }
@@ -392,7 +394,8 @@ export default class ChatMessage extends Component {
 
     ///结束录制视频
     onFinishRecordVideo = (mediaPath) => {
-        this.createMessage({messageType: "file", path: mediaPath.mediaPath});
+        console.log(mediaPath);
+        // this.createMessage({messageType: "file", path: mediaPath.mediaPath});
     };
 
 
