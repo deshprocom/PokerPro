@@ -67,7 +67,7 @@ export default class ChatMessage extends Component {
         JMessage.addLoginStateChangedListener(this.loginState);
 
         if (Platform.OS === "android") {
-            this.refs["ChatInput"].setMenuContainerHeight(200);
+            this.refs["ChatInput"].setMenuContainerHeight(250);
         }
     }
 

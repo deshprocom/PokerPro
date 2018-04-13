@@ -5,7 +5,9 @@ import {
     Image,
     Text,
     TouchableOpacity,
-    ScrollView, Platform
+    ScrollView,
+    Animated,
+    Platform
 } from 'react-native';
 import {Images, ApplicationStyles, Metrics, Colors} from "../../Themes";
 import I18n from "react-native-i18n";
@@ -68,7 +70,7 @@ const styles = StyleSheet.create({
 export default class UserTopicPage extends PureComponent {
 
     state = {
-        scrollEnabled: true,
+        scrollEnabled: false,
         follow: isFollowed(this.props.params.userInfo.user_id)
     };
 
@@ -93,76 +95,110 @@ export default class UserTopicPage extends PureComponent {
         });
     };
 
+    _onScroll = (e) => {
+        let scrollY = e.nativeEvent.contentOffset.y;
+        this.setState({
+            scrollEnabled: scrollY > 260
+        })
+    };
+
+
+    _renderHead = () => {
+        const {avatar, nick_name, signature, user_id} = this.props.params.userInfo;
+        return <View style={styles.topBar}>
+            <Image
+                style={{position: 'absolute', height: 280, width: '100%'}}
+                source={Images.social.user_topic}/>
+
+            <NavigationBar
+                barStyle={'light-content'}
+                rightBtnIcon={Images.social.more_4}
+                rightImageStyle={{height: 4, width: 20, marginLeft: 20, marginRight: 20}}
+                leftBtnIcon={Images.sign_return}
+                leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
+                leftBtnPress={() => router.pop()}/>
+            <View
+                style={styles.person1}>
+                <Image
+                    defaultSource={Images.home_avatar}
+                    style={{width: 72, height: 72, borderRadius: 36}}
+                    source={{uri: avatar}}/>
+            </View>
+
+            <Text style={styles.name}>{nick_name}</Text>
+
+            <View style={[styles.row, {marginTop: 7}]}>
+                <Text style={styles.follow}>关注 2000</Text>
+                <View style={styles.line}/>
+                <Text style={styles.follow}>粉丝 2000</Text>
+            </View>
+
+            <Text style={styles.intro}>{_.isEmpty(signature) ? '简介：这家伙很懒' : signature}</Text>
+
+
+            <View style={[styles.row, {marginTop: 17, marginBottom: 17}]}>
+                <TouchableOpacity
+                    onPress={() => {
+                        follow(this.state.follow, {target_id: user_id}, data => {
+                            this.setState({
+                                follow: !this.state.follow
+                            })
+                        }, err => {
+                        })
+                    }}
+                    style={[styles.btn_follow, {marginRight: 26}]}>
+                    <Text
+                        style={styles.follow}>{this.state.follow ? I18n.t('rank_focused') : I18n.t('rank_focus')}</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={[styles.btn_follow, styles.row]} onPress={() => this.visitChat()}>
+                    <Image style={{height: 14, width: 15, marginRight: 3}}
+                           source={Images.social.reply}
+                    />
+                    <Text style={styles.follow}>私信</Text>
+                </TouchableOpacity>
+            </View>
+
+
+        </View>
+    }
 
     render() {
 
-        const {avatar, nick_name, signature, user_id} = this.props.params.userInfo;
-        return <ScrollView style={{flex: 1}}>
-            <View style={styles.topBar}>
-                <Image
-                    style={{position: 'absolute', height: 280, width: '100%'}}
-                    source={Images.social.user_topic}/>
+        if (Platform.OS === 'ios')
+            return <ScrollView
+                scrollEventThrottle={10}
+                onScroll={this._onScroll}>
 
-                <NavigationBar
-                    barStyle={'light-content'}
-                    rightBtnIcon={Images.social.more_4}
-                    rightImageStyle={{height: 4, width: 20, marginLeft: 20, marginRight: 20}}
-                    leftBtnIcon={Images.sign_return}
-                    leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                    leftBtnPress={() => router.pop()}/>
-                <View
-                    style={styles.person1}>
-                    <Image
-                        defaultSource={Images.home_avatar}
-                        style={{width: 72, height: 72, borderRadius: 36}}
-                        source={{uri: avatar}}/>
+                {this._renderHead()}
+                <View style={{height: Metrics.screenHeight}}>
+                    <PersonDynamicPage
+                        scrollEnabled={this.state.scrollEnabled}
+                        params={this.props.params}/>
                 </View>
 
-                <Text style={styles.name}>{nick_name}</Text>
 
-                <View style={[styles.row, {marginTop: 7}]}>
-                    <Text style={styles.follow}>关注 2000</Text>
-                    <View style={styles.line}/>
-                    <Text style={styles.follow}>粉丝 2000</Text>
-                </View>
-
-                <Text style={styles.intro}>{_.isEmpty(signature) ? '简介：这家伙很懒' : signature}</Text>
+                <Loading ref={ref => this.loading = ref} cancelable={true}/>
 
 
-                <View style={[styles.row, {marginTop: 17, marginBottom: 17}]}>
-                    <TouchableOpacity
-                        onPress={() => {
-                            follow(this.state.follow, {target_id: user_id}, data => {
-                                this.setState({
-                                    follow: !this.state.follow
-                                })
-                            }, err => {
-                            })
-                        }}
-                        style={[styles.btn_follow, {marginRight: 26}]}>
-                        <Text
-                            style={styles.follow}>{this.state.follow ? I18n.t('rank_focused') : I18n.t('rank_focus')}</Text>
-                    </TouchableOpacity>
+            </ScrollView>
+        else
+            return <View style={{flex: 1}}>
+                <ScrollView
+                    scrollEventThrottle={10}
+                    onScroll={this._onScroll}
+                >
+                    {this._renderHead()}
+                    <PersonDynamicPage
+                        scrollEnabled={this.state.scrollEnabled}
+                        params={this.props.params}/>
 
-                    <TouchableOpacity
-                        style={[styles.btn_follow, styles.row]} onPress={() => this.visitChat()}>
-                        <Image style={{height: 14, width: 15, marginRight: 3}}
-                               source={Images.social.reply}
-                        />
-                        <Text style={styles.follow}>私信</Text>
-                    </TouchableOpacity>
-                </View>
-
+                </ScrollView>
+                <Loading ref={ref => this.loading = ref} cancelable={true}/>
 
             </View>
 
-            <PersonDynamicPage
-                params={this.props.params}/>
 
-
-            <Loading ref={ref => this.loading = ref} cancelable={true}/>
-
-
-        </ScrollView>
     }
 }

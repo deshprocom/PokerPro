@@ -86,7 +86,7 @@ class Personal extends Component {
             </View>
 
             <View style={{height: 10, backgroundColor: '#ECECEE', flex: 1}}/>
-            {this._item(stylesP.item_view, Images.person_dynamic, stylesP.img_dy,
+            {this._item(stylesP.item_view, Images.social.mine_moment, stylesP.img_dy,
                 I18n.t('person_dynamic'), () => {
                     if (isEmptyObject(login_user)) {
                         router.toLoginFirstPage()
@@ -159,12 +159,12 @@ class Personal extends Component {
             <Text style={stylesP.personalText}>{title}</Text>
             <View style={{flex: 1}}/>
             {title === I18n.t('my_coins') ? <Text
-                style={{
-                    fontSize: 16,
-                    color: '#AAAAAA',
-                    marginRight: 12,
-                    lineHeight: 22
-                }}>{(profile.total_poker_coins === '0.0' || profile.total_poker_coins === '0') ? '0.00' : profile.total_poker_coins}</Text>
+                    style={{
+                        fontSize: 16,
+                        color: '#AAAAAA',
+                        marginRight: 12,
+                        lineHeight: 22
+                    }}>{(profile.total_poker_coins === '0.0' || profile.total_poker_coins === '0') ? '0.00' : profile.total_poker_coins}</Text>
                 : null}
             <Image style={stylesP.personalImg} source={Images.is}/>
         </TouchableOpacity>
@@ -257,6 +257,7 @@ class Personal extends Component {
                             following_count:following_count,
                             follower_count:follower_count})}}>
                             <Text style={{color: Colors._CCC, fontSize: 14}}>{`关注   ${following_count}`}</Text>
+
                         </TouchableOpacity>
                         <View
                             style={{
@@ -266,11 +267,13 @@ class Personal extends Component {
                                 marginLeft: 28,
                                 marginRight: 28
                             }}/>
+
                         <TouchableOpacity onPress={() => {router.toSocialContact({
                             type: 1,
                             following_count:following_count,
                             follower_count:follower_count})}}>
                             <Text style={{color: Colors._CCC, fontSize: 14}}>{`粉丝   ${follower_count}`}</Text>
+
                         </TouchableOpacity>
                     </View>
                 </View>

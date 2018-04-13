@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, FlatList, Text, Image, TouchableOpacity, TextInput, Modal, Platform} from 'react-native';
+import {View, StyleSheet, FlatList, Text, Image, TouchableOpacity} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
-import {NavigationBar, BaseComponent, ImageLoad} from '../../components';
-import UltimateFlatList from '../../components/ultimate';
+import {NavigationBar, BaseComponent, ImageLoad,UltimateListView} from '../../components';
 import {getPersonDynamics, getUnreadComments} from '../../services/CommentDao';
 import {agoDynamicDate, isEmptyObject, strNotNull, util, utcDate, convertDate} from '../../utils/ComonHelper';
 import DynamicEmpty from './DynamicEmpty';
@@ -261,27 +260,26 @@ export default class PersonDynamicPage extends Component {
 
     render() {
         const {user_id} = this.userInfo;
+        const {scrollEnabled} = this.props;
         const lists = this.isMine() ? ['user_topics'] : ['user_topics', 'long', 'short'];
         let moments = lists.map((item, index) => {
 
             return <MomentList
+                scrollEnabled={scrollEnabled}
+                ref={'MomentList' + index}
                 key={'moments' + index}
                 userId={user_id}
                 tabLabel={this.tabLabel(item)}
                 type={item}/>
         });
 
+
+
         return (
             <BaseComponent style={ApplicationStyles.bgContainer}>
 
 
                 <ScrollableTabView
-
-                    onScroll={(e) => {
-
-                        console.log('滚动:', e)
-
-                    }}
                     renderTabBar={() => <DynamicTopBar
                         nickname={this.userInfo.nick_name}
                         setUnreadCount={this.setUnreadCount}
@@ -291,11 +289,11 @@ export default class PersonDynamicPage extends Component {
 
                     {moments}
 
-                    <UltimateFlatList
+                    <UltimateListView
+                        scrollEnabled={scrollEnabled}
                         style={{backgroundColor: 'white'}}
                         tabLabel={'足迹'}
                         header={() => this.personTop()}
-                        arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
                         ref={ref => this.ultimate = ref}
                         onFetch={this.onFetch}
                         keyExtractor={(item, index) => `replies${index}`}
