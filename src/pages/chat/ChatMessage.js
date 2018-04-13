@@ -63,8 +63,6 @@ export default class ChatMessage extends Component {
         ///添加消息监听
         JMessage.addReceiveMessageListener(this.receiveMessage);
 
-
-
         ///监听登录状态
         JMessage.addLoginStateChangedListener(this.loginState);
 
@@ -90,6 +88,17 @@ export default class ChatMessage extends Component {
         JMessage.enterConversation({ type: 'single', username: userInfo.username},
             (conversation) => {
 
+            }, (error) => {
+
+            });
+        //重置未读消息
+        JMessage.resetUnreadMessageCount({ type: 'single', username: userInfo.username },
+            (conversation) => {
+                ///回调，更新上一页数据
+                if (userInfo.reloadPage !== undefined)
+                {
+                    userInfo.reloadPage();
+                }
             }, (error) => {
 
             });
@@ -207,7 +216,9 @@ export default class ChatMessage extends Component {
     resetMenu = () => {
         if (Platform.OS === "android") {
             this.refs["ChatInput"].showMenu(false);
-            this.setState({messageListLayout: {flex: 1, width: window.width, margin: 0},});
+            this.setState({
+                messageListLayout: {flex: 1, width: window.width, margin: 0},
+            });
         } else {
             this.setState({inputViewLayout: {width: window.width, height: 86}});
         }
@@ -383,7 +394,8 @@ export default class ChatMessage extends Component {
 
     ///结束录制视频
     onFinishRecordVideo = (mediaPath) => {
-        this.createMessage({messageType: "file", path: mediaPath.mediaPath});
+        console.log(mediaPath);
+        // this.createMessage({messageType: "file", path: mediaPath.mediaPath});
     };
 
 
@@ -555,6 +567,10 @@ export default class ChatMessage extends Component {
             this.popAction && this.popAction.toggle();
         },(error) => {
             console.log("拉黑失败",error);
+            if (error.code === 861101){
+                showToast("无法将自己加入黑名单");
+                this.popAction && this.popAction.toggle();
+            }
         });
     };
 

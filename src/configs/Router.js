@@ -14,12 +14,10 @@ const customFloatFromRight = '';
 
 export default class Router {
 
-    toSocialContact(type) {
+    toSocialContact(params) {
         this.stackPush({
             name: "SocialContact",
-            params: {
-                type: type //0-关注 1-粉丝
-            }
+            params: params
         })
     }
 
@@ -66,6 +64,12 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
+    popToAriticle() {
+        Actions.popTo('tab_home');
+        Actions.tab_mall({type:ActionConst.REPLACE});
+    }
+
+
     toUserTopicPage(userInfo) {
         this.stackPush({
             name: 'UserTopicPage',
@@ -75,12 +79,13 @@ export default class Router {
         })
     }
     
-    toArticleRelease(articleKey, articleInfo) {
+    toArticleRelease(articleKey, articleInfo,reloadInfo) {
         this.stackPush({
             name: "ArticleRelease",
             params: {
                 articleKey,
                 articleInfo,
+                reloadInfo,
             },
         })
     }
@@ -885,7 +890,7 @@ export default class Router {
 
     toMessageList(userInfo) {
         this.stackPush({
-            name: 'ChatMessage',
+            name: 'ChatRoom',
             params: {
                 userInfo
             }

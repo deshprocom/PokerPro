@@ -43,25 +43,29 @@ export default class MoodRelease extends Component {
             compressImageMaxHeight: 1024,
             compressImageQuality: 0.5
         }).then(image => {
-
             this.popAction.toggle();
-            let imagePath = newImages[currentIndex];
+            if (image.mime === "image/jpeg"){
+                let imagePath = newImages[currentIndex];
 
-            //需要上传最后一张
-            if (currentIndex === 8){
-                lastUpload = true;
+                //需要上传最后一张
+                if (currentIndex === 8){
+                    lastUpload = true;
+                }
+
+                ///插入图片
+                if (imagePath.imagePath === Images.social.icon_send_mood && currentIndex !== 8) {
+                    newImages.splice(currentIndex, 0, {imagePath: image.path});
+
+                }
+                ///覆盖图片
+                else {
+                    newImages.splice(currentIndex, 1, {imagePath: image.path});
+                }
+                this.setState({images: newImages});
             }
-
-            ///插入图片
-            if (imagePath.imagePath === Images.social.icon_send_mood && currentIndex !== 8) {
-                newImages.splice(currentIndex, 0, {imagePath: image.path});
-
-            }
-            ///覆盖图片
             else {
-                newImages.splice(currentIndex, 1, {imagePath: image.path});
+                showToast("文件类型错误");
             }
-            this.setState({images: newImages});
         });
     };
 
@@ -98,11 +102,10 @@ export default class MoodRelease extends Component {
 
     ///请求发说说接口
     fetchData = () => {
-        this.loading && this.loading.open();
-
         let mood = this.state.mood;
         let images = this.state.images;
         let imageIds = [];
+
         if (mood === "" && images.length === 1) {
             showToast(I18n.t('article_null'));
             return;
@@ -112,6 +115,8 @@ export default class MoodRelease extends Component {
             this.sendMood(mood, imageIds);
             return;
         }
+
+        this.loading && this.loading.open();
 
 
         images.forEach((image, index) => {
@@ -150,11 +155,13 @@ export default class MoodRelease extends Component {
         };
 
         postTopic(body, data => {
+            console.log(I18n.t('article_release_success'));
             showToast(I18n.t('article_release_success'));
-            this.loading && this.loading.close();
-            router.popToTop();
+            setTimeout(() => this.loading && this.loading.close(),500);
+            router.popToAriticle();
         }, err => {
-
+            console.log(err);
+            this.loading && this.loading.close();
         })
     };
 
