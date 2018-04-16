@@ -1,86 +1,96 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Image, TouchableHighlight, Animated} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity, Animated} from 'react-native';
 
-let minHeight = 160;
+import {RNCamera} from 'react-native-camera';
 
 class ExpandText extends Component {
-    constructor(props) {
-        super(props);
-
-
-        this.state = {
-            label: props.label,
-            expanded: true,
-            animation: new Animated.Value()
-        };
-    }
-
-    toggle = () => {
-        let initialValue = this.state.expanded ? this.state.maxHeight + minHeight : minHeight,
-            finalValue = this.state.expanded ? minHeight : this.state.maxHeight + minHeight;
-
-        this.setState({
-            expanded: !this.state.expanded
-        });
-
-        this.state.animation.setValue(initialValue);
-        Animated.spring(
-            this.state.animation,
-            {
-                toValue: finalValue
-            }
-        ).start();
-    }
-
-    _setMaxHeight = (event) => {
-        console.log('展开', event.nativeEvent.layout.height)
-        this.setState({
-            maxHeight: event.nativeEvent.layout.height
-        });
-    }
-
-
     render() {
         return (
-            <Animated.View
-                style={[styles.container, {height: this.state.animation}]}>
+            <View style={styles.container}>
+                <RNCamera
+                    ref={ref => {
+                        this.camera = ref;
+                    }}
+                    style={styles.preview}
+                    type={RNCamera.Constants.Type.back}
+                    flashMode={RNCamera.Constants.FlashMode.on}
+                    permissionDialogTitle={'Permission to use camera'}
+                    permissionDialogMessage={'We need your permission to use your camera phone'}
+                />
+                <View style={{flex: 0, flexDirection: 'row', justifyContent: 'center',}}>
+                    <TouchableOpacity
+                        onPress={this.takePicture}
+                        style={styles.capture}
+                    >
+                        <Text style={{fontSize: 14}}> SNAP </Text>
+                    </TouchableOpacity>
 
+                    <TouchableOpacity
+                        onPress={this.record}
+                        style={styles.capture}
+                    >
+                        <Text style={{fontSize: 14}}> RECORD </Text>
+                    </TouchableOpacity>
 
-                <View style={styles.body} onLayout={this._setMaxHeight}>
-                    {this.props.children}
+                    <TouchableOpacity
+                        onPress={this.stop}
+                        style={styles.capture}
+                    >
+                        <Text style={{fontSize: 14}}> STOP </Text>
+                    </TouchableOpacity>
                 </View>
-
-                <Text onPress={this.toggle}>{this.state.label}</Text>
-
-            </Animated.View>
+            </View>
         );
     }
+
+    stop = async () => {
+        if (this.camera) {
+
+        this.camera.stopRecording()
+
+        }
+    }
+
+
+    record = async () => {
+        if (this.camera) {
+            const options = {quality: 0.5};
+            const data = await this.camera.recordAsync(options)
+            console.log('视频录制',data);
+        }
+    }
+
+    takePicture = async () => {
+        if (this.camera) {
+            const options = {quality: 0.5, base64: false};
+            const data = await this.camera.takePictureAsync(options)
+            console.log(data.uri);
+        }
+    };
+
 }
+
+
+export default ExpandText;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#fff',
-        margin: 10,
-        overflow: 'hidden'
-    },
-    titleContainer: {
-        flexDirection: 'row'
-    },
-    title: {
         flex: 1,
-        padding: 10,
-        color: '#2a2f43',
-        fontWeight: 'bold'
+        flexDirection: 'column',
+        backgroundColor: 'black'
     },
-    button: {},
-    buttonImage: {
-        width: 30,
-        height: 25
+    preview: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        alignItems: 'center'
     },
-    body: {
-        padding: 10,
-        paddingTop: 0
+    capture: {
+        flex: 0,
+        backgroundColor: '#fff',
+        borderRadius: 5,
+        padding: 15,
+        paddingHorizontal: 20,
+        alignSelf: 'center',
+        margin: 20
     }
 });
-
-export default ExpandText;
