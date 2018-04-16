@@ -102,7 +102,10 @@ export default class UserTopicPage extends PureComponent {
         console.log('滚动:', scrollY)
         this.setState({
             scrollEnabled: scrollY > 250
-        })
+        });
+        if (scrollY > 260) {
+            this.scroll && this.scroll.scrollTo({x: 0, y: HeadHeight, animated: false})
+        }
     };
 
 
@@ -193,7 +196,7 @@ export default class UserTopicPage extends PureComponent {
             </ScrollView>
         else
             return <ScrollView
-                scrollEventThrottle={200}
+                scrollEventThrottle={10}
                 ref={ref => this.scroll = ref}
                 scrollEnabled={!this.state.scrollEnabled}
                 onScroll={this._onScroll}>

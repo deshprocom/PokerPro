@@ -95,8 +95,8 @@ const styles = StyleSheet.create({
         color: '#161718'
     },
     bgHomeStyle: {
-        height: 24,
-        width: 24
+        height: 25,
+        width: 22
     },
     bgInformationStyle: {
         width: 21,

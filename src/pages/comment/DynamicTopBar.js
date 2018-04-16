@@ -73,6 +73,7 @@ export default class DynamicTopBar extends PureComponent {
             </View>)
         } else {
             return <TouchableOpacity
+                activeOpacity={1}
                 onPress={() => {
                     scrollTop && scrollTop()
                 }}
