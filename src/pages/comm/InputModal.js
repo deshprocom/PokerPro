@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
+import {isEmptyObject} from "../../utils/ComonHelper";
 
 
 export default class InputModal extends Component {
@@ -17,9 +18,12 @@ export default class InputModal extends Component {
 
 
     toggle = () => {
-        this.setState({
-            visible: !this.state.visible
-        })
+        if (isEmptyObject(global.login_user)) {
+            global.router.toLoginFirstPage()
+        } else
+            this.setState({
+                visible: !this.state.visible
+            })
     }
 
 
