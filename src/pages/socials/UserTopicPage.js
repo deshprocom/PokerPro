@@ -13,7 +13,7 @@ import {Images, ApplicationStyles, Metrics, Colors} from "../../Themes";
 import I18n from "react-native-i18n";
 import {NavigationBar} from '../../components';
 import PersonDynamicPage from '../comment/PersonDynamicPage'
-import {visit_other, follow} from '../../services/SocialDao';
+import {visit_other, follow, profile} from '../../services/SocialDao';
 import _ from 'lodash';
 import Loading from "../../components/Loading";
 import {isFollowed} from '../../utils/ComonHelper';
@@ -73,8 +73,18 @@ export default class UserTopicPage extends PureComponent {
 
     state = {
         scrollEnabled: false,
-        follow: isFollowed(this.props.params.userInfo.user_id)
+        follow: isFollowed(this.props.params.userInfo.user_id),
+        user: {}
     };
+
+    componentDidMount() {
+        profile(this.props.params.userInfo.user_id, data => {
+            this.setState({
+                user: data
+            })
+        }, err => {
+        })
+    }
 
     //私信
     visitChat = () => {
@@ -99,7 +109,7 @@ export default class UserTopicPage extends PureComponent {
 
     _onScroll = (e) => {
         let scrollY = e.nativeEvent.contentOffset.y;
-        console.log('滚动:', scrollY)
+
         this.setState({
             scrollEnabled: scrollY > 250
         });
@@ -111,6 +121,7 @@ export default class UserTopicPage extends PureComponent {
 
     _renderHead = () => {
         const {avatar, nick_name, signature, user_id} = this.props.params.userInfo;
+        const {following_count, follower_count} = this.state.user;
         return <View style={styles.topBar}>
             <Image
                 style={{position: 'absolute', height: HeadHeight, width: '100%'}}
@@ -134,9 +145,9 @@ export default class UserTopicPage extends PureComponent {
             <Text style={styles.name}>{nick_name}</Text>
 
             <View style={[styles.row, {marginTop: 7}]}>
-                <Text style={styles.follow}>关注 2000</Text>
+                <Text style={styles.follow}>{`关注 ${following_count}`}</Text>
                 <View style={styles.line}/>
-                <Text style={styles.follow}>粉丝 2000</Text>
+                <Text style={styles.follow}>{`粉丝 ${follower_count}`}</Text>
             </View>
 
             <Text style={styles.intro}>{_.isEmpty(signature) ? '简介：这家伙很懒' : signature}</Text>
@@ -185,6 +196,7 @@ export default class UserTopicPage extends PureComponent {
                 {this._renderHead()}
                 <View style={{height: Metrics.screenHeight}}>
                     <PersonDynamicPage
+                        scrollTop={this.scrollTop}
                         scrollEnabled={this.state.scrollEnabled}
                         params={this.props.params}/>
                 </View>

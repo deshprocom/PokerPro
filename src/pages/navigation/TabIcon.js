@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     },
     bgHomeStyle: {
         height: 24,
-        width: 22
+        width: 24
     },
 });
 

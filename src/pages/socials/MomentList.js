@@ -17,6 +17,7 @@ import {
     topics_like, user_topics, topics_delete,
     topics_search
 } from '../../services/SocialDao';
+import ExpandText from '../comm/ExpandText'
 
 export const styles = StyleSheet.create({
     avatar: {
@@ -312,7 +313,10 @@ export default class MomentList extends PureComponent {
     short = (item) => {
         const {images, body} = item;
         return <View>
-            <Text style={styles.body}>{body}</Text>
+            <ExpandText label={'展开'}>
+                <Text style={styles.body}>{body}</Text>
+            </ExpandText>
+
             {images && images.length > 0 ? this.shortImage(images) : null}
 
 

@@ -8,6 +8,14 @@ import {getDispatchAction} from '../utils/ComonHelper';
 import {GET_PROFILE} from "../actions/ActionTypes";
 
 
+export function profile(user_id, resolve, reject) {
+    helper.get(Api.profile(user_id), ret => {
+        resolve(ret.data)
+    }, err => {
+        reject(err)
+    });
+}
+
 export function followships(resolve, reject) {
     if (_.isEmpty(global.login_user))
         return;
