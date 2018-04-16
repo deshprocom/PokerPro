@@ -56,6 +56,8 @@
 		485E1F791F03B481005615DE /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 485E1F781F03B481005615DE /* splash.png */; };
 		48AA2DD31F4BC2CD00A6EEFC /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 48AA2DD21F4BC2CD00A6EEFC /* libsqlite3.0.tbd */; };
 		48CB71771F68D5060079E438 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 48CB71791F68D5060079E438 /* InfoPlist.strings */; };
+		48E31E3D2080BBC600D0B670 /* RCTAuroraIMUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BACC4A4206A32D4003FF20C /* RCTAuroraIMUI.framework */; };
+		48E31E3E2080BBC600D0B670 /* RCTAuroraIMUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8BACC4A4206A32D4003FF20C /* RCTAuroraIMUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C7E94564F514643A32FB0D6 /* libRCTOrientation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B3DFB4A75043F5A7D8217C /* libRCTOrientation.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		6517A2AA82984055A201FCBA /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 790AC6ACF7EA486FBF06ECCB /* UserNotifications.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -64,8 +66,6 @@
 		7702AE2C74B844969904F9F8 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7563725BDAFE4588853C8821 /* libz.tbd */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		8A0852A90E0345E8B3D7D183 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BB93105F9F94FD7B3F0DABF /* AudioToolbox.framework */; };
-		8BACC4A7206A36C5003FF20C /* RCTAuroraIMUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BACC4A4206A32D4003FF20C /* RCTAuroraIMUI.framework */; };
-		8BACC4A8206A36C5003FF20C /* RCTAuroraIMUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8BACC4A4206A32D4003FF20C /* RCTAuroraIMUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8BB3028C20635D860099FBD1 /* RCTJShareConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BB3025420635D860099FBD1 /* RCTJShareConfig.plist */; };
 		8BFA1C2A0145467383371E83 /* RCTAuroraIMUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A89E947DD80745598C8E07FB /* RCTAuroraIMUI.framework */; };
 		8C2F01E590684A19B90EBE21 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9934670E83094A2B80DA3717 /* CoreTelephony.framework */; };
@@ -438,6 +438,20 @@
 			remoteGlobalIDString = EBF21BFA1FC4989A0052F4D5;
 			remoteInfo = "jsinspector-tvOS";
 		};
+		48E31E072080BBB700D0B670 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 414B2DE1496647409712BD8A /* RCTAuroraIMUI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 623EA9A11EE55D0800EC43AE;
+			remoteInfo = RCTAuroraIMUITests;
+		};
+		48E31E3F2080BBC600D0B670 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 414B2DE1496647409712BD8A /* RCTAuroraIMUI.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 623EA9981EE55D0800EC43AE;
+			remoteInfo = RCTAuroraIMUI;
+		};
 		5E9157321DD0AC6500FF2AA8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */;
@@ -478,20 +492,6 @@
 			containerPortal = 414B2DE1496647409712BD8A /* RCTAuroraIMUI.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 623EA9991EE55D0800EC43AE;
-			remoteInfo = RCTAuroraIMUI;
-		};
-		8BACC4A5206A32D4003FF20C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 414B2DE1496647409712BD8A /* RCTAuroraIMUI.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 623EA9A11EE55D0800EC43AE;
-			remoteInfo = RCTAuroraIMUITests;
-		};
-		8BACC4A9206A36C5003FF20C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 414B2DE1496647409712BD8A /* RCTAuroraIMUI.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 623EA9981EE55D0800EC43AE;
 			remoteInfo = RCTAuroraIMUI;
 		};
 		8BAF18D62062604400B4481A /* PBXContainerItemProxy */ = {
@@ -559,7 +559,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				8BACC4A8206A36C5003FF20C /* RCTAuroraIMUI.framework in Embed Frameworks */,
+				48E31E3E2080BBC600D0B670 /* RCTAuroraIMUI.framework in Embed Frameworks */,
 				483DD02620577C5F00E5C97B /* RSKImageCropper.framework in Embed Frameworks */,
 				483DD02A20577C7400E5C97B /* QBImagePicker.framework in Embed Frameworks */,
 			);
@@ -693,7 +693,6 @@
 				909710108EBF4664AF7E3883 /* libRCTVideo.a in Frameworks */,
 				483DD02520577C5F00E5C97B /* RSKImageCropper.framework in Frameworks */,
 				4C7E94564F514643A32FB0D6 /* libRCTOrientation.a in Frameworks */,
-				8BACC4A7206A36C5003FF20C /* RCTAuroraIMUI.framework in Frameworks */,
 				D83113A706314F199DA85A2F /* libBVLinearGradient.a in Frameworks */,
 				7390DC8265B949CAB04EC18B /* libRCTBEEPickerManager.a in Frameworks */,
 				0D6B12179CB9435A9F092552 /* libRNBlur.a in Frameworks */,
@@ -703,6 +702,7 @@
 				6517A2AA82984055A201FCBA /* UserNotifications.framework in Frameworks */,
 				483DD02920577C7400E5C97B /* QBImagePicker.framework in Frameworks */,
 				8C2F01E590684A19B90EBE21 /* CoreTelephony.framework in Frameworks */,
+				48E31E3D2080BBC600D0B670 /* RCTAuroraIMUI.framework in Frameworks */,
 				1B4B6579E1144B17A09452C0 /* Security.framework in Frameworks */,
 				A2D4672512D14CC49D8F5FAE /* CFNetwork.framework in Frameworks */,
 				AD2DFAA9C6104D2E8419B402 /* CoreFoundation.framework in Frameworks */,
@@ -1125,7 +1125,7 @@
 			children = (
 				8BACC4A2206A32D4003FF20C /* libAuroraIMUI.a */,
 				8BACC4A4206A32D4003FF20C /* RCTAuroraIMUI.framework */,
-				8BACC4A6206A32D4003FF20C /* RCTAuroraIMUITests.xctest */,
+				48E31E082080BBB700D0B670 /* RCTAuroraIMUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1215,7 +1215,7 @@
 			);
 			dependencies = (
 				8BC21DDE206B65C20071E29A /* PBXTargetDependency */,
-				8BACC4AA206A36C5003FF20C /* PBXTargetDependency */,
+				48E31E402080BBC600D0B670 /* PBXTargetDependency */,
 			);
 			name = PokerPro;
 			productName = "Hello World";
@@ -1771,6 +1771,13 @@
 			remoteRef = 48C3335220610E1C00860307 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		48E31E082080BBB700D0B670 /* RCTAuroraIMUITests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RCTAuroraIMUITests.xctest;
+			remoteRef = 48E31E072080BBB700D0B670 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1811,13 +1818,6 @@
 			fileType = wrapper.framework;
 			path = RCTAuroraIMUI.framework;
 			remoteRef = 8BACC4A3206A32D4003FF20C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8BACC4A6206A32D4003FF20C /* RCTAuroraIMUITests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RCTAuroraIMUITests.xctest;
-			remoteRef = 8BACC4A5206A32D4003FF20C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		8BAF18D72062604400B4481A /* libRCTJAnalyticsModule.a */ = {
@@ -1987,10 +1987,10 @@
 			target = 2D02E47A1E0B4A5D006451C7 /* PokerPro-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
-		8BACC4AA206A36C5003FF20C /* PBXTargetDependency */ = {
+		48E31E402080BBC600D0B670 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = RCTAuroraIMUI;
-			targetProxy = 8BACC4A9206A36C5003FF20C /* PBXContainerItemProxy */;
+			targetProxy = 48E31E3F2080BBC600D0B670 /* PBXContainerItemProxy */;
 		};
 		8BC21DDE206B65C20071E29A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2173,7 +2173,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = PokerPro/PokerPro.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = JAB7AT8F22;

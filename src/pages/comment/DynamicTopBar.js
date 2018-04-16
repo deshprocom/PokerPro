@@ -14,7 +14,8 @@ export default class DynamicTopBar extends PureComponent {
     render() {
         const {
             unreadCount, setUnreadCount, nickname,
-            hideReceived, goToPage, tabs, activeTab
+            hideReceived, goToPage, tabs, activeTab,
+            scrollTop
         } = this.props;
 
         let tabs_views = tabs.map((item, index) => <TouchableOpacity
@@ -71,14 +72,19 @@ export default class DynamicTopBar extends PureComponent {
 
             </View>)
         } else {
-            return <View style={{
-                height: 40, width: '100%',
-                justifyContent: 'center', flexDirection: 'row',
-                backgroundColor: 'white'
-            }}>
+            return <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => {
+                    scrollTop && scrollTop()
+                }}
+                style={{
+                    height: 40, width: '100%',
+                    justifyContent: 'center', flexDirection: 'row',
+                    backgroundColor: 'white'
+                }}>
                 {tabs_views}
 
-            </View>
+            </TouchableOpacity>
         }
 
 

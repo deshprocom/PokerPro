@@ -156,6 +156,7 @@ export default {
     topics_delete: topics_delete,//删除说说或长帖
     topics_search: topics_search,//获取用户的说说或长帖¶
     jmessage_visit_other:jmessage_visit_other,//极光IM访问其它用户
+    profile:profile
 
 }
 
@@ -168,6 +169,10 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+function profile(user_id) {
+    return `users/${user_id}/profile`
+}
 
 function jmessage_visit_other(body) {
     const {userId} = body;

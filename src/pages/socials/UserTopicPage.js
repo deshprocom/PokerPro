@@ -13,17 +13,19 @@ import {Images, ApplicationStyles, Metrics, Colors} from "../../Themes";
 import I18n from "react-native-i18n";
 import {NavigationBar} from '../../components';
 import PersonDynamicPage from '../comment/PersonDynamicPage'
-import {visit_other, follow} from '../../services/SocialDao';
+import {visit_other, follow, profile} from '../../services/SocialDao';
 import _ from 'lodash';
 import Loading from "../../components/Loading";
-import {isFollowed} from '../../utils/ComonHelper'
+import {isFollowed} from '../../utils/ComonHelper';
+
+const HeadHeight = Platform.OS === 'ios' ? Metrics.iPhone_X ? 300 : 280 : 260
 
 const styles = StyleSheet.create({
     topBar: {
         width: Metrics.screenWidth,
         alignItems: 'center',
         backgroundColor: Colors._161,
-        height: 280
+        height: HeadHeight
     },
     person1: {
         width: 74,
@@ -71,8 +73,18 @@ export default class UserTopicPage extends PureComponent {
 
     state = {
         scrollEnabled: false,
-        follow: isFollowed(this.props.params.userInfo.user_id)
+        follow: isFollowed(this.props.params.userInfo.user_id),
+        user: {}
     };
+
+    componentDidMount() {
+        profile(this.props.params.userInfo.user_id, data => {
+            this.setState({
+                user: data
+            })
+        }, err => {
+        })
+    }
 
     //私信
     visitChat = () => {
@@ -97,17 +109,22 @@ export default class UserTopicPage extends PureComponent {
 
     _onScroll = (e) => {
         let scrollY = e.nativeEvent.contentOffset.y;
+
         this.setState({
-            scrollEnabled: scrollY > 260
-        })
+            scrollEnabled: scrollY > 250
+        });
+        if (scrollY > 260) {
+            this.scroll && this.scroll.scrollTo({x: 0, y: HeadHeight, animated: false})
+        }
     };
 
 
     _renderHead = () => {
         const {avatar, nick_name, signature, user_id} = this.props.params.userInfo;
+        const {following_count, follower_count} = this.state.user;
         return <View style={styles.topBar}>
             <Image
-                style={{position: 'absolute', height: 280, width: '100%'}}
+                style={{position: 'absolute', height: HeadHeight, width: '100%'}}
                 source={Images.social.user_topic}/>
 
             <NavigationBar
@@ -128,9 +145,9 @@ export default class UserTopicPage extends PureComponent {
             <Text style={styles.name}>{nick_name}</Text>
 
             <View style={[styles.row, {marginTop: 7}]}>
-                <Text style={styles.follow}>关注 2000</Text>
+                <Text style={styles.follow}>{`关注 ${following_count}`}</Text>
                 <View style={styles.line}/>
-                <Text style={styles.follow}>粉丝 2000</Text>
+                <Text style={styles.follow}>{`粉丝 ${follower_count}`}</Text>
             </View>
 
             <Text style={styles.intro}>{_.isEmpty(signature) ? '简介：这家伙很懒' : signature}</Text>
@@ -162,18 +179,24 @@ export default class UserTopicPage extends PureComponent {
 
 
         </View>
+    };
+
+    scrollTop = () => {
+        this.scroll && this.scroll.scrollTo({x: 0, y: 0, animated: true})
     }
 
     render() {
 
         if (Platform.OS === 'ios')
             return <ScrollView
+                ref={ref => this.scroll = ref}
                 scrollEventThrottle={10}
                 onScroll={this._onScroll}>
 
                 {this._renderHead()}
                 <View style={{height: Metrics.screenHeight}}>
                     <PersonDynamicPage
+                        scrollTop={this.scrollTop}
                         scrollEnabled={this.state.scrollEnabled}
                         params={this.props.params}/>
                 </View>
@@ -184,20 +207,23 @@ export default class UserTopicPage extends PureComponent {
 
             </ScrollView>
         else
-            return <View style={{flex: 1}}>
-                <ScrollView
-                    scrollEventThrottle={10}
-                    onScroll={this._onScroll}
-                >
-                    {this._renderHead()}
-                    <PersonDynamicPage
-                        scrollEnabled={this.state.scrollEnabled}
-                        params={this.props.params}/>
+            return <ScrollView
+                scrollEventThrottle={10}
+                ref={ref => this.scroll = ref}
+                scrollEnabled={!this.state.scrollEnabled}
+                onScroll={this._onScroll}>
 
-                </ScrollView>
+
+                {this._renderHead()}
+                <View style={{height: Metrics.screenHeight - 20}}>
+                    <PersonDynamicPage
+                        scrollTop={this.scrollTop}
+                        params={this.props.params}/>
+                </View>
+
                 <Loading ref={ref => this.loading = ref} cancelable={true}/>
 
-            </View>
+            </ScrollView>
 
 
     }

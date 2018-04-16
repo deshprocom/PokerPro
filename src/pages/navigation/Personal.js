@@ -312,7 +312,7 @@ class Personal extends Component {
 const stylesP = StyleSheet.create({
     img_dy: {
         width: 23,
-        height: 22,
+        height: 23,
         marginLeft: 20
     },
     item_view: {
