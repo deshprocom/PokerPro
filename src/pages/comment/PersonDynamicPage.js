@@ -3,7 +3,7 @@ import {View, StyleSheet, FlatList, Text, Image, TouchableOpacity} from 'react-n
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
-import {NavigationBar, BaseComponent, ImageLoad,UltimateListView} from '../../components';
+import {NavigationBar, BaseComponent, ImageLoad, UltimateListView} from '../../components';
 import {getPersonDynamics, getUnreadComments} from '../../services/CommentDao';
 import {agoDynamicDate, isEmptyObject, strNotNull, util, utcDate, convertDate} from '../../utils/ComonHelper';
 import DynamicEmpty from './DynamicEmpty';
@@ -118,30 +118,15 @@ export default class PersonDynamicPage extends Component {
         )
     };
 
-    renderItem = ({item}) => {
+    renderItemTopic(item) {
         const {topic, typological_type, topic_type} = item;
-        const {topic_description, topic_id, topic_image, topic_title} = topic;
+        const {topic_description, topic_id, cover_link, title} = topic;
 
         return (
             <TouchableOpacity style={styles.itemPage}
                               onPress={() => {
-                                  if (topic_type === "info") {
-                                      let url = `news/${topic_id}`;
-                                      global.router.toWebPage(url, {
-                                          bottomNav: 'commentNav',
-                                          info: {id: topic_id},
-                                          topic_type: topic_type
-                                      })
-                                  } else if (topic_type === "video") {
-                                      let urlVideo = `videos/${topic_id}`;
-                                      global.router.toWebPage(urlVideo, {
-                                          bottomNav: 'commentNav',
-                                          info: {id: topic_id},
-                                          topic_type: topic_type
-                                      })
-                                  } else {
-                                      console.log('足迹', topic)
-                                      global.router.toDeletePage();
+                                  if (topic_type === "usertopic") {
+                                      global.router.toLongArticle(topic)
                                   }
 
                               }}>
@@ -149,17 +134,67 @@ export default class PersonDynamicPage extends Component {
 
                 <View style={styles.itemView}>
 
-                    <ImageLoad style={styles.image} source={{uri: topic_image}}/>
+                    <ImageLoad style={styles.image} source={{uri: cover_link}}/>
                     <View style={styles.TxtRight}>
 
                         {typological_type === "topiclike" ? null :
                             this.myComment(item)
                         }
-                        <Text style={styles.TxtRight2} numberOfLines={1}>{topic_title}</Text>
+                        <Text style={styles.TxtRight2} numberOfLines={1}>{title}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
         )
+    }
+
+    renderItem = ({item}) => {
+        const {topic, typological_type, topic_type} = item;
+        const {topic_description, topic_id, topic_image, topic_title} = topic;
+
+        if (topic_type === 'usertopic') {
+
+            return this.renderItemTopic(item)
+        } else {
+            return (
+                <TouchableOpacity style={styles.itemPage}
+                                  onPress={() => {
+                                      if (topic_type === "info") {
+                                          let url = `news/${topic_id}`;
+                                          global.router.toWebPage(url, {
+                                              bottomNav: 'commentNav',
+                                              info: {id: topic_id},
+                                              topic_type: topic_type
+                                          })
+                                      } else if (topic_type === "video") {
+                                          let urlVideo = `videos/${topic_id}`;
+                                          global.router.toWebPage(urlVideo, {
+                                              bottomNav: 'commentNav',
+                                              info: {id: topic_id},
+                                              topic_type: topic_type
+                                          })
+                                      } else {
+                                          console.log('足迹', topic)
+                                          global.router.toDeletePage();
+                                      }
+
+                                  }}>
+                    <Text style={[styles.itemTxt1, {marginBottom: 10}]}>{this.txtType(item)}</Text>
+
+                    <View style={styles.itemView}>
+
+                        <ImageLoad style={styles.image} source={{uri: topic_image}}/>
+                        <View style={styles.TxtRight}>
+
+                            {typological_type === "topiclike" ? null :
+                                this.myComment(item)
+                            }
+                            <Text style={styles.TxtRight2} numberOfLines={1}>{topic_title}</Text>
+                        </View>
+                    </View>
+                </TouchableOpacity>
+            )
+        }
+
     };
 
 
@@ -260,7 +295,7 @@ export default class PersonDynamicPage extends Component {
 
     render() {
         const {user_id} = this.userInfo;
-        const {scrollEnabled} = this.props;
+        const {scrollEnabled, scrollTop} = this.props;
         const lists = this.isMine() ? ['user_topics'] : ['user_topics', 'long', 'short'];
         let moments = lists.map((item, index) => {
 
@@ -274,13 +309,13 @@ export default class PersonDynamicPage extends Component {
         });
 
 
-
         return (
             <BaseComponent style={ApplicationStyles.bgContainer}>
 
 
                 <ScrollableTabView
                     renderTabBar={() => <DynamicTopBar
+                        scrollTop={scrollTop}
                         nickname={this.userInfo.nick_name}
                         setUnreadCount={this.setUnreadCount}
                         unreadCount={this.state.unreadCount}

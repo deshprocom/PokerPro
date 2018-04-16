@@ -101,7 +101,11 @@ export const styles = StyleSheet.create({
         marginTop: reallySize(9),
         marginLeft: reallySize(9),
         backgroundColor: Colors._ECE
-    }
+    },
+    comment: {
+        height: reallySize(16),
+        width: reallySize(17)
+    },
 });
 
 export default class MomentList extends PureComponent {
@@ -270,7 +274,7 @@ export default class MomentList extends PureComponent {
                     }}
                     style={styles.btn_like}>
                     <Image
-                        style={styles.like}
+                        style={styles.comment}
                         source={Images.social.comment_gray}/>
                     <Text style={[styles.time, {marginLeft: 4}]}>{comments}</Text>
                 </TouchableOpacity>
@@ -308,7 +312,10 @@ export default class MomentList extends PureComponent {
     short = (item) => {
         const {images, body} = item;
         return <View>
-            <Text style={styles.body}>{body}</Text>
+            <Text
+                numberOfLines={6}
+                style={styles.body}>{body}</Text>
+
             {images && images.length > 0 ? this.shortImage(images) : null}
 
 
