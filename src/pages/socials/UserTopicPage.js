@@ -203,7 +203,7 @@ export default class UserTopicPage extends PureComponent {
 
 
                 {this._renderHead()}
-                <View style={{height: Metrics.screenHeight + 20}}>
+                <View style={{height: Metrics.screenHeight - 20}}>
                     <PersonDynamicPage
                         scrollTop={this.scrollTop}
                         params={this.props.params}/>

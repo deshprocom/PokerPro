@@ -81,7 +81,7 @@ class TabIcon extends PureComponent {
             case 'me':
                 return styles.bgHomeStyle;
             case 'mall':
-                return styles.bgHomeStyle;
+                return styles.discover;
         }
     }
 };
@@ -94,8 +94,8 @@ const styles = StyleSheet.create({
     textStyle2: {
         color: '#161718'
     },
-    bgHomeStyle: {
-        height: 25,
+    discover: {
+        height: 24,
         width: 22
     },
     bgInformationStyle: {
@@ -105,7 +105,11 @@ const styles = StyleSheet.create({
     bgRankStyle2: {
         height: 23,
         width: 26
-    }
+    },
+    bgHomeStyle: {
+        height: 24,
+        width: 22
+    },
 });
 
 const bindAction = dispatch => ({});
