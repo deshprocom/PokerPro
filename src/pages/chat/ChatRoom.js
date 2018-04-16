@@ -329,11 +329,23 @@ export default class ChatRoom extends Component {
     createToolBar = () => {
         return (
             <View style={styles.superView}>
-                <TouchableOpacity>
-                    <Image source={Images.social.chat_more} style={styles.btnIcon}/>
+                <TouchableOpacity style={{flex:1}}>
+                    <View style={styles.subView}>
+                        <Image source={Images.social.chat_picture} style={[{width:Metrics.reallySize(34)},{height:Metrics.reallySize(34)}]}/>
+                        <Text style={styles.text}>图片</Text>
+                    </View>
                 </TouchableOpacity>
-                <TouchableOpacity>
-                    <Image source={Images.social.chat_emoji} style={styles.btnIcon}/>
+                <TouchableOpacity style={{flex:1}}>
+                    <View style={styles.subView}>
+                        <Image source={Images.social.chat_takephoto} style={[{width:Metrics.reallySize(39)},{height:Metrics.reallySize(34)}]}/>
+                        <Text style={styles.text}>拍照</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity style={{flex:1}}>
+                    <View style={styles.subView}>
+                        <Image source={Images.social.chat_picture} style={[{width:Metrics.reallySize(34)},{height:Metrics.reallySize(34)}]}/>
+                        <Text style={styles.text}>语音</Text>
+                    </View>
                 </TouchableOpacity>
             </View>
         );
@@ -425,6 +437,10 @@ const styles = StyleSheet.create({
             ios: 5,
             android: 3,
         }),
+    },
+    text:{
+        marginTop:Metrics.reallySize(9),
+        fontSize:15,
+        color:"#888888",
     }
-
 });
