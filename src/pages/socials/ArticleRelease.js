@@ -53,12 +53,6 @@ export default class ArticleRelease extends PureComponent {
         if (articleKey !== undefined) {
             this.setState({data: this.props.params.articleInfo})
         }
-
-        // navigator.geolocation.getCurrentPosition(data => {
-        //     console.log('位置坐标：', data);
-        // }, err => {
-        //     console.log(err)
-        // })
     }
 
     ///拼接图片上传后数据源
@@ -286,8 +280,6 @@ export default class ArticleRelease extends PureComponent {
                 articleKey = currentKey;
                 if (this.props.params.reloadInfo === null) return;
                 this.props.params.reloadInfo();
-            }).catch(err => {
-                showToast(I18n.t('article_save_failure'));
             });
         }).catch(err => {
             ///存储草稿列表

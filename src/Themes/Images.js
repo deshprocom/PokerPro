@@ -316,6 +316,8 @@ const images = {
         other_msg:require('../../source/social/icon_othermsg.png'),
         chat_more:require('../../source/social/icon_chat_more.png'),
         chat_emoji:require('../../source/social/icon_chat_emoji.png'),
+        chat_picture:require('../../source/social/icon_chat_picture.png'),
+        chat_takephoto:require('../../source/social/icon_chat_takephoto.png'),
     }
 
 };
