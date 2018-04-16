@@ -59,6 +59,12 @@ export default class Router {
 
     }
 
+    toCamera(){
+        this.stackPush({
+            name:'ExpandText'
+        })
+    }
+
     popToTop() {
         getDispatchAction()['BACK_TOP']();
         Actions.popTo('tab_home')
@@ -890,7 +896,7 @@ export default class Router {
 
     toMessageList(userInfo) {
         this.stackPush({
-            name: 'ChatRoom',
+            name: 'ChatMessage',
             params: {
                 userInfo
             }

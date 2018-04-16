@@ -43,7 +43,7 @@ export class SearchPage extends Component {
                        source={Images.search_gray}/>
                 <Text
                     style={styleR.inputSearch}
-                    >
+                >
                     {I18n.t('serachMore')}
                 </Text>
 
@@ -53,7 +53,8 @@ export class SearchPage extends Component {
     toMessagePage = () => {
         umengEvent('home_notification');
         if (isEmptyObject(login_user)) {
-            router.toLoginFirstPage()
+            // router.toLoginFirstPage()
+            router.toCamera()
         } else {
 
             JpushHelp.iosSetBadge(0);
@@ -66,17 +67,17 @@ export class SearchPage extends Component {
         Alert.alert(I18n.t('language_switch'), '', [
             {
                 text: I18n.t('chinese'), onPress: () => {
-                setLocalLanguage('zh');
-                getDispatchAction()['SWITCH_LANGUAGE']()
+                    setLocalLanguage('zh');
+                    getDispatchAction()['SWITCH_LANGUAGE']()
 
-            }
+                }
             },
             {
                 text: I18n.t('english'), onPress: () => {
-                setLocalLanguage('en');
-                getDispatchAction()['SWITCH_LANGUAGE']()
+                    setLocalLanguage('en');
+                    getDispatchAction()['SWITCH_LANGUAGE']()
 
-            }
+                }
             }
         ]);
     };
