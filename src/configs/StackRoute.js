@@ -102,7 +102,7 @@ import ChatRoom from "../pages/chat/ChatRoom";
 import Location from "../pages/socials/Location";
 import Blacklist from "../pages/socials/Blacklist";
 import SocialContact from "../pages/socials/SocialContact";
-import ExpandText from '../pages/comm/ExpandText';
+import ExpandText from '../pages/comm/Record';
 
 
 export const Stacks = Actions.create(
