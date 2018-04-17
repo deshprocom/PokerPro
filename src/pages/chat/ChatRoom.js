@@ -335,7 +335,7 @@ export default class ChatRoom extends Component {
                         <Text style={styles.text}>图片</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={{flex:1}}>
+                <TouchableOpacity style={{flex:1}} onPress={() => {router.toTakePhoto()}}>
                     <View style={styles.subView}>
                         <Image source={Images.social.chat_takephoto} style={[{width:Metrics.reallySize(39)},{height:Metrics.reallySize(34)}]}/>
                         <Text style={styles.text}>拍照</Text>
