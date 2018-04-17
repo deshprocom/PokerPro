@@ -11,11 +11,11 @@ import {
 import I18n from "react-native-i18n";
 import {Colors, Images} from "../../Themes";
 import {NavigationBar} from '../../components';
-import {reallySize,screenWidth,toolBarHeight} from "./Header";
+import {reallySize, screenWidth, toolBarHeight} from "./Header";
 import ImagePicker from 'react-native-image-crop-picker';
 import PopAction from "../comm/PopAction";
-import {getFileName,showToast} from "../../utils/ComonHelper";
-import {uploadImage,postTopic} from '../../services/SocialDao';
+import {getFileName, showToast} from "../../utils/ComonHelper";
+import {uploadImage, postTopic} from '../../services/SocialDao';
 import Loading from "../../components/Loading";
 
 let lastUpload = false;//是否需要上传最后一张
@@ -44,11 +44,11 @@ export default class MoodRelease extends Component {
             compressImageQuality: 0.5
         }).then(image => {
             this.popAction.toggle();
-            if (image.mime === "image/jpeg"){
+            if (image.mime === "image/jpeg") {
                 let imagePath = newImages[currentIndex];
 
                 //需要上传最后一张
-                if (currentIndex === 8){
+                if (currentIndex === 8) {
                     lastUpload = true;
                 }
 
@@ -84,7 +84,7 @@ export default class MoodRelease extends Component {
             let imagePath = newImages[currentIndex];
 
             //需要上传最后一张
-            if (currentIndex === 8){
+            if (currentIndex === 8) {
                 lastUpload = true;
             }
 
@@ -126,15 +126,15 @@ export default class MoodRelease extends Component {
                 this.uploadImageAction(imagePath, (data) => {
                     imageIds.push(data.id);
                     ///需要上传最后一张，等待所有图片上传完成
-                    if (lastUpload){
-                        if (images.length === imageIds.length){
-                            this.sendMood(mood,imageIds);
+                    if (lastUpload) {
+                        if (images.length === imageIds.length) {
+                            this.sendMood(mood, imageIds);
                         }
                     }
                     ///不需要上传最后一张，等待除占位图外所有图片上传完成
-                    else{
-                        if (images.length - 1 === imageIds.length){
-                            this.sendMood(mood,imageIds);
+                    else {
+                        if (images.length - 1 === imageIds.length) {
+                            this.sendMood(mood, imageIds);
                         }
                     }
                 })
@@ -157,7 +157,7 @@ export default class MoodRelease extends Component {
         postTopic(body, data => {
             console.log(I18n.t('article_release_success'));
             showToast(I18n.t('article_release_success'));
-            setTimeout(() => this.loading && this.loading.close(),500);
+            setTimeout(() => this.loading && this.loading.close(), 500);
             router.popToAriticle();
         }, err => {
             console.log(err);
@@ -225,6 +225,7 @@ export default class MoodRelease extends Component {
                     <TextInput placeholder={I18n.t('social_content')}
                                style={styles.textInput}
                                multiline={true}
+                               underlineColorAndroid="transparent"
                                onChangeText={(text) => {
                                    this.setState({
                                        mood: text
@@ -241,7 +242,9 @@ export default class MoodRelease extends Component {
                               bounces={false}
                     />
 
-                    <TouchableOpacity onPress={() => {global.router.toLocation();}}>
+                    <TouchableOpacity onPress={() => {
+                        global.router.toLocation();
+                    }}>
                         <View style={styles.subView}>
                             <Image source={Images.social.address}
                                    style={[{width: reallySize(14)}, {height: reallySize(18)}]}/>
@@ -269,7 +272,7 @@ export default class MoodRelease extends Component {
                     ref={ref => this.popAction = ref}
                     btnArray={this.popActions()}/>
 
-                <Loading ref={ref => this.loading = ref}  cancelable={true}/>
+                <Loading ref={ref => this.loading = ref} cancelable={true}/>
 
             </View>
         )
