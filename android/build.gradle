@@ -16,6 +16,10 @@ buildscript {
 
 allprojects {
     repositories {
+
+      maven { url "https://jitpack.io" }
+      maven { url "https://maven.google.com" }
+
         mavenLocal()
         jcenter()
          google()
@@ -24,12 +28,7 @@ allprojects {
             url "$rootDir/../node_modules/react-native/android"
         }
 
-          maven { url "https://jitpack.io" }
-           maven { url "https://maven.google.com" }
+
     }
 
-     tasks.withType(Javadoc) {
-            options.addStringOption('Xdoclint:none', '-quiet')
-            options.addStringOption('encoding', 'UTF-8')
-        }
 }

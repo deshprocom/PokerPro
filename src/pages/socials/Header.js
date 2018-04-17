@@ -16,5 +16,6 @@ export const toolBarHeight = iPhone_X === "1" ? 83 : 49;
 
 //真实尺寸
 export function reallySize(size) {
+    console.log('真实尺寸',size,size / 375 * screenWidth)
     return size / 375 * screenWidth;
 }
