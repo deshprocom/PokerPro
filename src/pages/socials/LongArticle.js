@@ -144,7 +144,7 @@ export default class LongArticle extends PureComponent {
     componentDidMount() {
         this.comment_id = '';
         const {article, isComment} = this.props.params;
-        console.log("====",article);
+        console.log("====", article);
         topics_details(article.id);
         if (isComment) {
             setTimeout(() => {
@@ -164,7 +164,7 @@ export default class LongArticle extends PureComponent {
             <NavigationBar
                 barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
                 toolbarStyle={{backgroundColor: Colors.white, borderBottomWidth: 1, borderBottomColor: Colors._ECE}}
-                title={'详情'}
+                title={I18n.t('social.detail')}
                 titleStyle={{color: Colors._333}}
                 leftBtnIcon={Images.ic_back}
                 leftImageStyle={{height: 20, width: 10, marginLeft: 20, marginRight: 20}}
@@ -338,7 +338,7 @@ export default class LongArticle extends PureComponent {
                 <View style={[styles.btn_like, {marginTop: 15, paddingLeft: 17, paddingRight: 17}]}>
                     <View style={{flex: 1}}/>
 
-                    <Text style={styles.time}>阅读</Text>
+                    <Text style={styles.time}>{I18n.t('social.read')}</Text>
                     <Text style={[styles.time, {marginLeft: 4, marginRight: 20}]}>{page_views}</Text>
                     <View
                         style={styles.btn_like}>
@@ -357,7 +357,7 @@ export default class LongArticle extends PureComponent {
                     marginLeft: 17,
                     marginRight: 17
                 }]}>
-                    <Text style={styles.comment}>{`全部评论 (${this.state.comments_count})`}</Text>
+                    <Text style={styles.comment}>{`${I18n.t('social.comments')} (${this.state.comments_count})`}</Text>
                 </View>
 
             </View>
@@ -468,16 +468,16 @@ export default class LongArticle extends PureComponent {
                         {official ? <Text style={[styles.c_tag, {
                             backgroundColor: '#161718',
                             color: '#FFE9AD'
-                        }]}>官方</Text> : null}
+                        }]}>{I18n.t('social.official')}</Text> : null}
 
                         {recommended ? <Text style={[styles.c_tag, {
                             backgroundColor: '#161718',
                             color: '#FFE9AD'
-                        }]}>精选</Text> : null}
+                        }]}>{I18n.t('social.select')}</Text> : null}
 
                         {this.isMine(user_id) ? <Text
                             onPress={() => {
-                                alertOrder('确认删除', () => {
+                                alertOrder(I18n.t('confirm_delete'), () => {
                                     delDeleteComment({comment_id: id}, data => {
                                         this.listView && this.listView.refresh()
                                     }, err => {
@@ -486,7 +486,7 @@ export default class LongArticle extends PureComponent {
                                 })
 
                             }}
-                            style={{color: Colors._CCC, marginLeft: 8}}>删除</Text> : null}
+                            style={{color: Colors._CCC, marginLeft: 8}}>{I18n.t('delete')}</Text> : null}
 
 
                     </View>
@@ -523,7 +523,7 @@ export default class LongArticle extends PureComponent {
                     marginLeft: 54,
                     marginTop: 8
                 }}>
-                <Text style={[styles.c_nick, {marginLeft: 6}]}>{`查看${total_count}条回复>`}</Text>
+                <Text style={[styles.c_nick, {marginLeft: 6}]}>{`${I18n.t('look_detail')}${total_count}${I18n.t('social.replay')}`}</Text>
 
 
             </TouchableOpacity> : null}

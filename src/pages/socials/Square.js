@@ -63,10 +63,10 @@ export default class Square extends PureComponent {
 
     tabLabel = (type) => {
         if (type === 'topics')
-            return '广场';
+            return I18n.t('social.square');
         if (type === 'recommends')
-            return '精华';
-        return '关注'
+            return I18n.t('social.essence');
+        return I18n.t('social.follow')
     }
 }
 

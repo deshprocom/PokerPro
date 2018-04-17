@@ -145,9 +145,9 @@ export default class UserTopicPage extends PureComponent {
             <Text style={styles.name}>{nick_name}</Text>
 
             <View style={[styles.row, {marginTop: 7}]}>
-                <Text style={styles.follow}>{`关注 ${following_count}`}</Text>
+                <Text style={styles.follow}>{`${I18n.t('social.follow')} ${following_count}`}</Text>
                 <View style={styles.line}/>
-                <Text style={styles.follow}>{`粉丝 ${follower_count}`}</Text>
+                <Text style={styles.follow}>{`${I18n.t('stalwart')} ${follower_count}`}</Text>
             </View>
 
             <Text style={styles.intro}>{_.isEmpty(signature) ? '简介：这家伙很懒' : signature}</Text>
@@ -173,7 +173,7 @@ export default class UserTopicPage extends PureComponent {
                     <Image style={{height: 14, width: 15, marginRight: 3}}
                            source={Images.social.reply}
                     />
-                    <Text style={styles.follow}>私信</Text>
+                    <Text style={styles.follow}>{I18n.t('social.message')}</Text>
                 </TouchableOpacity>
             </View>
 

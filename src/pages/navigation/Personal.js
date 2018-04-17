@@ -262,7 +262,7 @@ class Personal extends Component {
                             <Text style={{
                                 color: Colors._CCC,
                                 fontSize: 14
-                            }}>{`关注   ${following_count ? following_count : 0}`}</Text>
+                            }}>{`${I18n.t('social.follow')}   ${following_count ? following_count : 0}`}</Text>
 
                         </TouchableOpacity>
                         <View
@@ -284,7 +284,7 @@ class Personal extends Component {
                             <Text style={{
                                 color: Colors._CCC,
                                 fontSize: 14
-                            }}>{`粉丝   ${follower_count ? follower_count : 0}`}</Text>
+                            }}>{`${I18n.t('stalwart')}   ${follower_count ? follower_count : 0}`}</Text>
 
                         </TouchableOpacity>
                     </View>
