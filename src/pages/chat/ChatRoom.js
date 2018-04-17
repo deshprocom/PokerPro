@@ -205,6 +205,11 @@ export default class ChatRoom extends Component {
         }))
     };
 
+    ///发送图片
+    onSendImage = (mediaPath) => {
+        this.createMessage({messageType: "image", path: mediaPath});
+    };
+
 
     ///发送消息
     onSend(messages = []) {
@@ -254,7 +259,6 @@ export default class ChatRoom extends Component {
         JMessage.createSendMessage(msgInfo, (message) => {
 
             console.log("发送一条" + msg.messageType + "类型的消息");
-
             //发送消息
             JMessage.sendMessage({
                 id: message.id,
@@ -335,7 +339,9 @@ export default class ChatRoom extends Component {
                         <Text style={styles.text}>图片</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={{flex:1}} onPress={() => {router.toTakePhoto()}}>
+                <TouchableOpacity style={{flex:1}} onPress={() => {router.toTakePhoto({imageInfo:(images) => {
+                        this.onSendImage(images);
+                    }})}}>
                     <View style={styles.subView}>
                         <Image source={Images.social.chat_takephoto} style={[{width:Metrics.reallySize(39)},{height:Metrics.reallySize(34)}]}/>
                         <Text style={styles.text}>拍照</Text>

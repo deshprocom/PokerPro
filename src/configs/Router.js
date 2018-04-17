@@ -13,9 +13,10 @@ const customFloatFromRight = '';
 
 
 export default class Router {
-    toTakePhoto(){
+    toTakePhoto(params){
         this.stackPush({
             name:"TakePhoto",
+            params
         })
     }
 

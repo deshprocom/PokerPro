@@ -62,7 +62,7 @@ export default class ArticleRelease extends PureComponent {
 
     ///拼接图片上传后数据源
     createNewData = () => {
-        let resultData = this.state.data;
+        let resultData = [...this.state.data];
         let imageCount = 0;//图片总数
         let successCount = 0;//上传成功数
         let cover_link = "";
@@ -78,7 +78,6 @@ export default class ArticleRelease extends PureComponent {
                     if (cover_link === "") {
                         cover_link = data.image_path;
                     }
-
                     let imageUrl = `<img style="margin-top: 15px" src="${data.image_path}">`;
                     rowData.imagePath = imageUrl;
 
@@ -140,6 +139,8 @@ export default class ArticleRelease extends PureComponent {
 
     ///发布长贴
     postTopic = () => {
+
+        ///判断是否输入内容
         let resultData = this.state.data;
         let titleIsNull = true;
         let bodyIsNull = true;
@@ -168,7 +169,7 @@ export default class ArticleRelease extends PureComponent {
             return;
         }
 
-
+        ///开始动画，拼接内容
         setTimeout(() => this.loading && this.loading.open(), 500);
         this.closeAction();
         this.createNewData();
@@ -176,7 +177,6 @@ export default class ArticleRelease extends PureComponent {
 
     ///请求发长贴接口
     fetchData = (title, content, cover_link) => {
-
         let lastObj = this.state.data[this.state.data.length - 1];
         const {name, address, latitude, longtitude} = lastObj.address;
 
@@ -344,25 +344,6 @@ export default class ArticleRelease extends PureComponent {
         newData.splice(index, 1);
         this.setState({data: newData});
     };
-
-    ///打开当前行、关闭其他行
-    closeOtherRow = (currentIndex) => {
-        let newData = [...this.state.data];
-        newData.forEach((rowData, index) => {
-            ///不为第一项和最后一项
-            if (index !== 0 && index !== newData.length - 1) {
-                //当前行
-                if (index === currentIndex) {
-                    rowData.swipeOpen = true;
-                }
-                else {
-                    rowData.swipeOpen = false;
-                }
-            }
-        });
-        this.setState({data: newData});
-    };
-
 
     ///插入图片
     insetrtImageAction = () => {
@@ -618,6 +599,7 @@ export default class ArticleRelease extends PureComponent {
                                   keyExtractor={(item, index) => index + ""}
                                   renderItem={this._renderItem}
                                   ref={ref => this.listView = ref}
+                                  keyboardShouldPersistTaps={"never"}
                         />
                     </KeyboardAvoidingView>
                 </View>

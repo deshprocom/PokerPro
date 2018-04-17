@@ -318,6 +318,9 @@ const images = {
         chat_emoji:require('../../source/social/icon_chat_emoji.png'),
         chat_picture:require('../../source/social/icon_chat_picture.png'),
         chat_takephoto:require('../../source/social/icon_chat_takephoto.png'),
+        close_camera:require('../../source/social/icon_closeCamera.png'),
+        cut_camera:require('../../source/social/icon_cutCamera.png'),
+        take_photo:require('../../source/social/icon_take_photo.png'),
     }
 
 };

@@ -109,7 +109,7 @@ export default class MoodRelease extends Component {
     ///请求发说说接口
     fetchData = () => {
         let mood = this.state.mood;
-        let images = this.state.images;
+        let images = [...this.state.images];
         let imageIds = [];
 
         if (mood === "" && images.length === 1) {
