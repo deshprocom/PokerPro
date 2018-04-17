@@ -36,7 +36,7 @@ export default class ChatRoom extends Component {
             currentIndex: 0,
             myUserName: "",
             messages: [],
-            showToolBar:false,//隐藏显示工具栏
+            showToolBar:true,//隐藏显示工具栏
         };
     }
 

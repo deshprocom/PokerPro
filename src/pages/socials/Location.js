@@ -14,6 +14,8 @@ import {Colors, Images} from "../../Themes";
 import {NavigationBar} from '../../components';
 import I18n from "react-native-i18n";
 import {reallySize} from "./Header";
+import {locations} from '../../services/SocialDao'
+import {isInChina} from './ChinaLocation';
 
 export default class Location extends Component{
     constructor(props){
@@ -21,29 +23,48 @@ export default class Location extends Component{
         this.state = {
             address:[
                 {
-                    title:"不显示位置",
-                    subtitle:"",
-                    id:0,
-                },
-                {
-                    title:"深圳市",
-                    subtitle:"",
-                    id:0,
-                },
-                {
-                    title:"卓越Intown（福田店）",
-                    subtitle:"广东省深圳市福田区金海路2030号",
-                    id:0,
-                },
-                {
-                    title:"海底捞火锅（卓越店）",
-                    subtitle:"广东省深圳市福田区卓越世纪中心4楼L401、L402",
-                    id:0,
+                    name:I18n.t('hide_address'),
+                    address:"",
+                    latitude:"",
+                    longtitude:"",
                 }
             ],
             selectedIndex:0,
         };
     }
+
+    componentDidMount(){
+        navigator.geolocation.getCurrentPosition(data => {
+            let latitude = data.coords.latitude;
+            let longitude = data.coords.longitude;
+            let inChina = isInChina(latitude,longitude);
+
+            let geoType = "amap";
+            if (!inChina) {
+                geoType = "google";
+            }
+            let body = {
+                "latitude": latitude,
+                "longtitude": longitude,
+                "geo_type": geoType,
+            };
+            locations(body,ret => {
+                let address = [...this.state.address];
+                let nearbys = ret.nearbys;
+                nearbys.forEach(item => {
+                    address.push(item);
+                });
+                this.setState({address:address});
+            },err => {
+                console.log("获取附近位置失败");
+            })
+
+        }, err => {
+            console.log(err)
+        })
+    }
+
+
 
     ///选择地址
     selectedAddress = (index) => {
@@ -51,14 +72,14 @@ export default class Location extends Component{
     };
 
     _renderItem = (item) => {
-        let {title,subtitle} = item.item;
+        let {name,address} = item.item;
         let selectedIndex = this.state.selectedIndex;
         return (
             <TouchableOpacity onPress={() => {this.selectedAddress(item.index)}}>
                 <View style={styles.item}>
                     <View>
-                        <Text numberOfLines={1} style={styles.title}>{title}</Text>
-                        {subtitle !== "" ? <Text numberOfLines={1} style={styles.subTitle}>{subtitle}</Text> : null}
+                        <Text numberOfLines={1} style={styles.title}>{name}</Text>
+                        {address !== "" ? <Text numberOfLines={1} style={styles.subTitle}>{address}</Text> : null}
                     </View>
                     {item.index === selectedIndex ? <Image source={Images.social.icon_address_s} style={styles.image}/> : null}
                 </View>
@@ -77,8 +98,15 @@ export default class Location extends Component{
                                leftBtnIcon={Images.set_back}
                                leftImageStyle={{height:19,width:11, marginLeft: 20, marginRight: 20}}
                                leftBtnPress={() => {
-                                   router.pop()
+                                   router.pop();
                                }}
+                               rightBtnText={I18n.t('certain')}
+                               rightBtnPress={() => {
+                                   if (this.props.params.address === null) return;
+                                   this.props.params.address(this.state.address[this.state.selectedIndex]);
+                                   router.pop();
+                               }}
+                               btnTextStyle={{fontSize: 14, color: Colors._333}}
                 />
 
                 <FlatList data={this.state.address}

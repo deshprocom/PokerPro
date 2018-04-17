@@ -32,9 +32,10 @@ export default class Router {
         })
     }
 
-    toLocation() {
+    toLocation(params) {
         this.stackPush({
             name: "Location",
+            params
         })
     }
 

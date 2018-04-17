@@ -17,6 +17,8 @@ export default class ImageView extends Component{
         insertText:null,//插入文字
         edit:null,//编辑
         editState:false,//编辑状态
+        visitLocation:null,//选择位置
+        address:null,
     };
 
     render(){
@@ -65,10 +67,13 @@ export default class ImageView extends Component{
                     </TouchableOpacity>
                 </View>
                 <View style={styles.subView}>
-                    <TouchableOpacity onPress={() => {global.router.toLocation();}}>
+                    <TouchableOpacity onPress={() => {
+                        if (this.props.visitLocation === null)return;
+                        this.props.visitLocation();
+                    }}>
                         <View style={[{flexDirection:"row"}]}>
                             <Image source={Images.social.address} style={[{width:reallySize(14)},{height:reallySize(18)}]}/>
-                            <Text style={[{color:"#AAAAAA"},{fontSize:14},{marginLeft:5}]}>{I18n.t('show_address')}</Text>
+                            <Text style={[{color:"#AAAAAA"},{fontSize:14},{marginLeft:5},{marginRight:17}]}>{this.props.address}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

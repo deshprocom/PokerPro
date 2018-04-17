@@ -39,11 +39,16 @@ export default class ArticleRelease extends PureComponent {
                 },
                 {
                     type: "addModule",
+                    address: {
+                        name: I18n.t('show_address'),
+                        address: "",
+                        latitude: "",
+                        longtitude: "",
+                    }
                 },
             ],
         };
-        this.touchIndex = 0;
-        this.items = [];
+
     }
 
 
@@ -61,15 +66,6 @@ export default class ArticleRelease extends PureComponent {
         let imageCount = 0;//图片总数
         let successCount = 0;//上传成功数
         let cover_link = "";
-
-        let titleData = resultData[0];
-        if (titleData.type === "title") {
-            if (titleData.text === "") {
-                showToast(I18n.t('article_title_null'));
-                setTimeout(() => this.loading && this.loading.close(), 500);
-                return;
-            }
-        }
 
         resultData.forEach((rowData, index) => {
             let type = rowData.type;
@@ -144,6 +140,35 @@ export default class ArticleRelease extends PureComponent {
 
     ///发布长贴
     postTopic = () => {
+        let resultData = this.state.data;
+        let titleIsNull = true;
+        let bodyIsNull = true;
+        for (i = 0; i < resultData.length; i++) {
+            let rowData = resultData[i];
+            let type = rowData.type;
+            if (type === "image") {
+                bodyIsNull = false;
+                break;
+            }
+            if (type === "content" && rowData.text !== "") {
+                bodyIsNull = false;
+                break;
+            }
+            if (type === "title" && rowData.text !== "") {
+                titleIsNull = false;
+            }
+        }
+
+        if (titleIsNull) {
+            showToast(I18n.t('article_title_null'));
+            return;
+        }
+        if (bodyIsNull) {
+            showToast(I18n.t('article_content_null'));
+            return;
+        }
+
+
         setTimeout(() => this.loading && this.loading.open(), 500);
         this.closeAction();
         this.createNewData();
@@ -151,15 +176,19 @@ export default class ArticleRelease extends PureComponent {
 
     ///请求发长贴接口
     fetchData = (title, content, cover_link) => {
-        if (title === "") {
-            showToast(I18n.t('article_title_null'));
-            setTimeout(() => this.loading && this.loading.close(), 500);
-            return;
-        }
-        if (content === "") {
-            showToast(I18n.t('article_content_null'));
-            setTimeout(() => this.loading && this.loading.close(), 500);
-            return;
+
+        let lastObj = this.state.data[this.state.data.length - 1];
+        const {name, address, latitude, longtitude} = lastObj.address;
+
+        let lat = '';
+        let lng = '';
+        let address_title = '';
+        let addressDetail = '';
+        if (name !== I18n.t('show_address') && name !== I18n.t("hide_address")) {
+            lat = latitude;
+            lng = longtitude;
+            address_title = name;
+            addressDetail = address;
         }
 
         let body = {
@@ -168,9 +197,10 @@ export default class ArticleRelease extends PureComponent {
             title: title,
             published: true,
             cover_link: cover_link,
-            lat: '',
-            lng: '',
-            location: '',
+            lat: lat,
+            lng: lng,
+            address_title: address_title,
+            address: addressDetail,
         };
         postTopic(body, data => {
             showToast(I18n.t('article_release_success'));
@@ -342,7 +372,7 @@ export default class ArticleRelease extends PureComponent {
             compressImageMaxHeight: 1024,
             compressImageQuality: 0.5
         }).then(image => {
-            if (image.mime === "image/jpeg"){
+            if (image.mime === "image/jpeg") {
                 let rowData = {
                     type: "image",
                     swipeOpen: false,
@@ -387,6 +417,21 @@ export default class ArticleRelease extends PureComponent {
             text: "",
         };
         this.insertRow(rowData);
+    };
+
+    ///显示位置
+    vistLocations = () => {
+        router.toLocation({
+            address: (addressInfo) => {
+                let data = [...this.state.data];
+                let newObj = {
+                    type: "addModule",
+                    address: addressInfo,
+                };
+                data.splice(data.length - 1, 1, newObj);
+                this.setState({data: data});
+            }
+        });
     };
 
     ///打开、关闭侧滑
@@ -446,6 +491,11 @@ export default class ArticleRelease extends PureComponent {
             );
         }
         else if (type === "addModule") {
+            const {name, address} = item.item.address;
+            let result = name;
+            if (address !== "") {
+                result = result + " ● " + address;
+            }
             ///添加模块
             return (
                 <AddModule insertImage={this.insetrtImageAction}
@@ -453,6 +503,8 @@ export default class ArticleRelease extends PureComponent {
                            insertText={this.insertTextAction}
                            edit={this.editAction}
                            editState={swipeOpen}
+                           visitLocation={this.vistLocations}
+                           address={result}
                 />
             );
         }
@@ -502,7 +554,6 @@ export default class ArticleRelease extends PureComponent {
     };
 
     render() {
-        this.items.splice(0, this.items.length);
         let data = this.state.data;
         return (
             <View style={styles.container}>
@@ -548,9 +599,9 @@ export default class ArticleRelease extends PureComponent {
                                                    {text: I18n.t("save_n"), onPress: () => router.pop()},
                                                    {
                                                        text: I18n.t("save_s"), onPress: () => {
-                                                       this.saveDraft();
-                                                       router.pop();
-                                                   }
+                                                           this.saveDraft();
+                                                           router.pop();
+                                                       }
                                                    },
                                                ],
                                                {cancelable: false}
