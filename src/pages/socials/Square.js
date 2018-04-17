@@ -12,6 +12,7 @@ import I18n from "react-native-i18n";
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import MomentList from './MomentList'
 import PopAction from '../comm/PopAction';
+import {isEmptyObject} from "../../utils/ComonHelper";
 
 
 export default class Square extends PureComponent {
@@ -74,6 +75,8 @@ class SquareBar extends PureComponent {
     render() {
         const {tabs, activeTab, goToPage} = this.props;
 
+        if (activeTab === 2 && isEmptyObject(global.login_user))
+            global.router.toLoginFirstPage();
         let tabs_views = tabs.map((item, index) => <TouchableOpacity
             key={'bar' + index}
             onPress={() => {

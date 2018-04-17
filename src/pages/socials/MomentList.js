@@ -15,7 +15,7 @@ import {getDateDiff, alertOrder, strNotNull, isEmptyObject} from '../../utils/Co
 import {
     topics_recommends, topics,
     topics_like, user_topics, topics_delete,
-    topics_search
+    topics_search, my_foucs
 } from '../../services/SocialDao';
 
 export const styles = StyleSheet.create({
@@ -160,6 +160,13 @@ export default class MomentList extends PureComponent {
             }, err => {
                 abortFetch()
             }, {keyword: type})
+        }
+
+        if (type === 'follows') {
+            my_foucs({page, page_size: 20}, data => {
+                startFetch(data.items, 15)
+            }, err => {
+            })
         }
 
     };
