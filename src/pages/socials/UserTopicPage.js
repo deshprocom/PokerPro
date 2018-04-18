@@ -66,6 +66,17 @@ const styles = StyleSheet.create({
         borderColor: '#979797',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    go_top: {
+        position: 'absolute',
+        right: 17,
+        bottom: 50,
+        height: 40,
+        width: 40,
+        borderRadius: 40,
+        backgroundColor: Colors._161,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 })
 
@@ -185,6 +196,20 @@ export default class UserTopicPage extends PureComponent {
         this.scroll && this.scroll.scrollTo({x: 0, y: 0, animated: true})
     }
 
+
+    goTopView = () => {
+        return <TouchableOpacity
+            onPress={this.scrollTop}
+            style={styles.go_top}>
+            <Text style={{
+                fontSize: 15,
+                fontWeight: 'bold',
+                color: Colors._FFE
+            }}>TOP</Text>
+
+        </TouchableOpacity>
+    }
+
     render() {
 
         if (Platform.OS === 'ios')
@@ -201,9 +226,8 @@ export default class UserTopicPage extends PureComponent {
                         params={this.props.params}/>
                 </View>
 
-
+                {this.goTopView()}
                 <Loading ref={ref => this.loading = ref} cancelable={true}/>
-
 
             </ScrollView>
         else
@@ -221,6 +245,7 @@ export default class UserTopicPage extends PureComponent {
                         params={this.props.params}/>
                 </View>
 
+                {this.goTopView()}
                 <Loading ref={ref => this.loading = ref} cancelable={true}/>
 
             </ScrollView>
