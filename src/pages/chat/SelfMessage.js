@@ -4,17 +4,19 @@ import {
     Text,
     View,
     Image,
+    TouchableOpacity, Platform
 } from 'react-native';
 
 import {Images,Metrics} from "../../Themes";
 
 export default class SelfMessage extends Component {
     static props = {
-        message:null
+        message:null,
+        messageClick:null
     };
 
     createMessage = () => {
-        const {type,text,image} = this.props.message;
+        const {type,text,image,path} = this.props.message;
         switch(type){
             case "text" :
                 return (
@@ -31,7 +33,7 @@ export default class SelfMessage extends Component {
             case "video":
                 return (
                     <View style={[styles.superView,styles.imageView]}>
-                        <Image source={{uri:image}} style={{flex:1}}/>
+                        <Image source={{uri:path}} style={{flex:1}}/>
                     </View>
                 );
             case "voice":
@@ -46,14 +48,22 @@ export default class SelfMessage extends Component {
 
     };
 
+
     render(){
-        const {user,type} = this.props.message;
-        const {avatar,name} = user;
+        console.log("这是我发出去的消息",this.props.message);
+        const {userInfo} = this.props.message;
+        let avatarThumbPath = userInfo.avatarThumbPath;
         return(
             <View style={styles.container}>
-                {this.createMessage()}
-                <Image source={Images.home_avatar} style={styles.userIcon}/>
-                {/*<Image source={{uri:avatar}} style={styles.userIcon}/>*/}
+                <TouchableOpacity onPress={() => {
+                    if (this.props.messageClick === null) return;
+                    this.props.messageClick();
+                }}>
+                    {this.createMessage()}
+                </TouchableOpacity>
+                {avatarThumbPath === "" ?
+                    <Image source={Images.home_avatar} style={styles.userIcon}/> :
+                    <Image source={{uri:avatarThumbPath}} style={styles.userIcon}/>}
             </View>
         );
     }
@@ -75,7 +85,7 @@ const styles = StyleSheet.create({
         marginBottom:17,
     },
     superView:{
-        backgroundColor:"#1D89FA",
+        backgroundColor:"red",
         marginBottom:17,
         marginTop:17,
         marginRight:10,

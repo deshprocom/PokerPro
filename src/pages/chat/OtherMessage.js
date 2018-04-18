@@ -4,13 +4,15 @@ import {
     StyleSheet,
     Text,
     View,
-    Image
+    Image,
+    TouchableOpacity
 } from 'react-native';
 import {Images, Metrics} from "../../Themes";
 
 export default class OtherMessage extends Component {
     static props = {
-        message:null
+        message:null,
+        messageClick:null
     };
 
     createMessage = () => {
@@ -47,13 +49,18 @@ export default class OtherMessage extends Component {
     };
 
     render(){
-        const {user,type} = this.props.message;
-        const {avatar,name} = user;
+        console.log("这是其他人发过来的消息",this.props.message);
+        const {user} = this.props.message;
+        const {avatar} = user;
         return(
             <View style={styles.container}>
-                <Image source={Images.home_avatar} style={styles.userIcon}/>
-                {/*<Image source={{uri:avatar}} style={styles.userIcon}/>*/}
-                {this.createMessage()}
+                <Image source={{uri:avatar}} style={styles.userIcon}/>
+                <TouchableOpacity onPress={() => {
+                    if (this.props.messageClick === null) return;
+                    this.props.messageClick();
+                }}>
+                    {this.createMessage()}
+                </TouchableOpacity>
             </View>
         );
     }

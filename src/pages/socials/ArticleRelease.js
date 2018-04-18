@@ -353,7 +353,7 @@ export default class ArticleRelease extends PureComponent {
             compressImageMaxHeight: 1024,
             compressImageQuality: 0.5
         }).then(image => {
-            if (image.mime === "image/jpeg") {
+            if (image.mime.indexOf("image") !== -1) {
                 let rowData = {
                     type: "image",
                     swipeOpen: false,

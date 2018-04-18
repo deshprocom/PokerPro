@@ -50,7 +50,7 @@ export default class MoodRelease extends Component {
             compressImageQuality: 0.5
         }).then(image => {
             this.popAction.toggle();
-            if (image.mime === "image/jpeg"){
+            if (image.mime.indexOf("image") !== -1){
                 let imagePath = newImages[currentIndex];
 
                 //需要上传最后一张

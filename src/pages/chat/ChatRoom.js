@@ -22,6 +22,8 @@ import {showToast} from "../../utils/ComonHelper";
 import SelfMessage from "./SelfMessage";
 import OtherMessage from "./OtherMessage";
 import {screenHeight, screenWidth} from "../socials/Header";
+import VideoToast from "./VideoToast";
+import ImagePicker from 'react-native-image-crop-picker';
 
 const iOS = Platform.OS === "ios" ? "1" : "0";
 
@@ -37,12 +39,14 @@ export default class ChatRoom extends Component {
             myUserName: "",
             messages: [],
             showToolBar:true,//隐藏显示工具栏
+            videoPath:"",
+            moreText:"加载更多"
         };
     }
 
     componentWillMount() {
         //获取用户的信息
-        this.getUserInfo();
+        this.getChatUserInfo();
     }
 
     componentDidMount() {
@@ -93,7 +97,7 @@ export default class ChatRoom extends Component {
     };
 
     //获取用户的信息
-    getUserInfo = () => {
+    getChatUserInfo = () => {
         //获取当前用户自己的信息
         JMessage.getMyInfo((myInfo) => {
             this.myInfo = myInfo;
@@ -114,13 +118,15 @@ export default class ChatRoom extends Component {
             type: "single",
             username: userInfo.username,
             from: this.state.currentIndex,
-            limit: 10,
+            limit: 20,
         };
         JMessage.getHistoryMessages(param,
             (messageArray) => {
                 // 以参数形式返回消息对象数组
                 console.log("历史消息", messageArray);
-                this.setState({currentIndex: this.state.currentIndex + 10});
+                if (messageArray.length < 20){
+                    this.setState({moreText:"没有更多了"});
+                }
 
                 let newMsgArray = [];
                 messageArray.forEach((message) => {
@@ -129,7 +135,10 @@ export default class ChatRoom extends Component {
                         newMsgArray.push(newMessage);
                     }
                 });
-                this.addMessage(newMsgArray);
+                this.setState(previousState => ({
+                    currentIndex: this.state.currentIndex + 20,
+                    messages: GiftedChat.prepend(previousState.messages, newMsgArray),
+                }))
 
             }, (error) => {
                 ///被挤下线
@@ -142,7 +151,6 @@ export default class ChatRoom extends Component {
 
     //收到消息
     receiveMessage = (message) => {
-        console.log("收到新的消息了", message);
         let newMessage = this.createMessageBody(message);
         if (newMessage !== undefined) {
             this.addMessage([newMessage]);
@@ -197,12 +205,52 @@ export default class ChatRoom extends Component {
         return newMessage;
     };
 
+    //消息点击
+    clickMessageAction = (message) => {
+        let {type,image,path,_id} = message;
+        console.log(message);
+        if (type === "image"){
+            let images = [{url: image}];
+            router.toImageGalleryPage(images, 0);
+        }
+        if (type === "video") {
+            let url = path;
+
+            ///视频未下载
+            if (url === ""){
+                let userInfo = this.otherInfo;
+                let parma = {
+                    type: "single",
+                    username: userInfo.username,
+                    messageId: _id,
+                };
+                JMessage.downloadFile(parma,
+                    (result) => {
+                        console.log("下载文件成功");
+                        this.setState({videoPath:result.filePath});
+                        message.path = result.filePath;
+                    }, (error) => {
+                        console.log("下载文件失败");
+                    });
+            }
+            else {
+                this.setState({videoPath:url});
+            }
+
+        }
+    };
+
 
     ///添加消息
     addMessage = (messages) => {
         this.setState(previousState => ({
             messages: GiftedChat.append(previousState.messages, messages),
         }))
+    };
+
+    ///发送视频
+    onSendVideo = (mediaPath) => {
+        this.createMessage({messageType: "file", path: mediaPath});
     };
 
     ///发送图片
@@ -223,6 +271,26 @@ export default class ChatRoom extends Component {
     }
 
 
+    ///选择图片
+    selectedImage = () => {
+        ImagePicker.openPicker({
+        }).then(image => {
+            let type = image.mime;
+            let path = image.path;
+            let videoPath = path.replace("file://", "");
+            if (type.indexOf("image") !== -1){
+                this.onSendImage(videoPath);
+            }
+            else if (type.indexOf("video") !== -1){
+                this.onSendVideo(videoPath);
+            }
+        }).catch(e => {
+            // Alert.alert(e.message ? e.message : e);
+        });
+    };
+
+
+    ///创建消息
     createMessage = (msg) => {
         let userInfo = this.otherInfo;
         let msgInfo = {
@@ -269,6 +337,7 @@ export default class ChatRoom extends Component {
                 if (newMessage !== undefined) {
                     this.addMessage([newMessage]);
                 }
+                console.log("发送成功",jmessage);
 
 
                 ///回调，更新上一页数据
@@ -292,21 +361,22 @@ export default class ChatRoom extends Component {
 
     ///自定义消息组件
     createSystemMsg = (props) => {
-        console.log("创建系统消息", props);
+        console.log("自定义消息",props);
         let message = props.currentMessage;
         let currentName = message.user._id;
-
         let username = this.myInfo.username;
         if (username === currentName) {
+            message.userInfo = this.otherInfo;
             ///其他人发的消息
             return (
-                <OtherMessage message={message}/>
+                <OtherMessage message={message}  messageClick={() => {this.clickMessageAction(message)}}/>
             );
         }
         else {
+            message.userInfo = this.myInfo;
             ///自己发的消息
             return (
-                <SelfMessage message={message}/>
+                <SelfMessage message={message} messageClick={() => {this.clickMessageAction(message)}}/>
             );
         }
 
@@ -333,14 +403,20 @@ export default class ChatRoom extends Component {
     createToolBar = () => {
         return (
             <View style={styles.superView}>
-                <TouchableOpacity style={{flex:1}}>
+                <TouchableOpacity style={{flex:1}} onPress={this.selectedImage}>
                     <View style={styles.subView}>
                         <Image source={Images.social.chat_picture} style={[{width:Metrics.reallySize(34)},{height:Metrics.reallySize(34)}]}/>
                         <Text style={styles.text}>图片</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={{flex:1}} onPress={() => {router.toTakePhoto({imageInfo:(images) => {
-                        this.onSendImage(images);
+                <TouchableOpacity style={{flex:1}} onPress={() => {router.toTakePhoto({fileInfo:(file) => {
+                        let type = file.type;
+                        if (type === "image"){
+                            this.onSendImage(file.path);
+                        }
+                        else{
+                            this.onSendVideo(file.path);
+                        }
                     }})}}>
                     <View style={styles.subView}>
                         <Image source={Images.social.chat_takephoto} style={[{width:Metrics.reallySize(39)},{height:Metrics.reallySize(34)}]}/>
@@ -357,6 +433,23 @@ export default class ChatRoom extends Component {
         );
     };
 
+    renderEarlyMessage = () => {
+        return(
+                <View style={styles.subView}>
+
+                    {this.state.moreText === "加载更多"?
+                        <TouchableOpacity onPress={() => {
+                            this.getHistoryMessage();
+                        }}>
+                            <View style={styles.moreView}>
+                                <Text style={styles.moreText}>加载更多</Text>
+                            </View>
+                        </TouchableOpacity>
+                        :null}
+                </View>
+
+        );
+    };
 
     render() {
         let userInfo = this.otherInfo;
@@ -367,7 +460,7 @@ export default class ChatRoom extends Component {
                 <NavigationBar
                     barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
                     toolbarStyle={{backgroundColor: "white"}}
-                    title={userInfo.nickName}
+                    title={userInfo.nickname}
                     titleStyle={{color: Colors._333}}
                     leftBtnIcon={Images.set_back}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
@@ -383,16 +476,12 @@ export default class ChatRoom extends Component {
 
                 {this.state.myUserName === "" ? null :
                     <GiftedChat
-                        label={'发送 '}
+                        label={'发送'}
                         textStyle={{height: 27}}
-                        // renderSend={() => {}}
                         messages={this.state.messages}              //消息
                         showUserAvatar={true}                       //显示自己的头像
-                        // loadEarlier={true}                          //加载历史消息
-                        // isLoadingEarlier={true}                     //在加载早期消息时显示
-                        // onLoadEarlier={this.getHistoryMessage()}    //加载更早的消息
-                        onKeyboardWillShow={() => {alert("!11")}}
-                        onKeyboardWillHide={() => {alert("!22")}}
+                        loadEarlier={true}
+                        renderLoadEarlier = {this.renderEarlyMessage}           //加载历史消息
                         renderSystemMessage={this.createSystemMsg}  //自定义系统消息
                         renderActions={this.createToolButton}       //自定义左侧按钮
                         placeholder={"新消息"}
@@ -403,6 +492,8 @@ export default class ChatRoom extends Component {
                     />
                 }
                 {this.state.showToolBar?this.createToolBar():null}
+
+                {this.state.videoPath !== ""?<VideoToast videoUrl={this.state.videoPath} hiddenVideoAction={() => {this.setState({videoPath:""})}}/>:null}
 
             </View>
         );
@@ -448,5 +539,13 @@ const styles = StyleSheet.create({
         marginTop:Metrics.reallySize(9),
         fontSize:15,
         color:"#888888",
+    },
+    moreView:{
+        backgroundColor:"#1D89FA",
+        borderRadius:4,
+    },
+    moreText:{
+        padding:10,
+        color:"white",
     }
 });

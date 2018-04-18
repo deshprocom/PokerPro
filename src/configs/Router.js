@@ -91,7 +91,7 @@ export default class Router {
             }
         })
     }
-    
+
     toArticleRelease(articleKey, articleInfo,reloadInfo) {
         this.stackPush({
             name: "ArticleRelease",
