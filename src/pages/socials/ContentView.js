@@ -30,6 +30,7 @@ export default class ContentView extends Component{
                 <TextInput placeholder={I18n.t('social_content')}
                            style={styles.textInput}
                            multiline={true}
+                           underlineColorAndroid="transparent"
                            defaultValue={this.props.defaultValue}
                            onEndEditing={(event) => {this.updateText(event.nativeEvent.text)}}
                            onFocus={() => this.beginEditing()}

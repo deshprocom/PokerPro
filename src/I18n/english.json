@@ -632,6 +632,7 @@
     "message": "私信",
     "circle": "扑客圈",
     "location_friend": "附近牌友"
-  }
+  },
+  "hide_address": "不显示位置"
 }
 
