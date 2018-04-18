@@ -11,11 +11,11 @@ import {
 import I18n from "react-native-i18n";
 import {Colors, Images} from "../../Themes";
 import {NavigationBar} from '../../components';
-import {reallySize, screenWidth, toolBarHeight} from "./Header";
+import {reallySize,screenWidth,toolBarHeight} from "./Header";
 import ImagePicker from 'react-native-image-crop-picker';
 import PopAction from "../comm/PopAction";
-import {getFileName, showToast} from "../../utils/ComonHelper";
-import {uploadImage, postTopic} from '../../services/SocialDao';
+import {getFileName,showToast} from "../../utils/ComonHelper";
+import {uploadImage,postTopic} from '../../services/SocialDao';
 import Loading from "../../components/Loading";
 
 let lastUpload = false;//是否需要上传最后一张
@@ -31,6 +31,12 @@ export default class MoodRelease extends Component {
             ],
             currentIndex: 0,
             mood: "",
+            address: {
+                name: I18n.t('show_address'),
+                address: "",
+                latitude: "",
+                longtitude: "",
+            }
         }
     }
 
@@ -44,11 +50,11 @@ export default class MoodRelease extends Component {
             compressImageQuality: 0.5
         }).then(image => {
             this.popAction.toggle();
-            if (image.mime === "image/jpeg") {
+            if (image.mime.indexOf("image") !== -1){
                 let imagePath = newImages[currentIndex];
 
                 //需要上传最后一张
-                if (currentIndex === 8) {
+                if (currentIndex === 8){
                     lastUpload = true;
                 }
 
@@ -84,7 +90,7 @@ export default class MoodRelease extends Component {
             let imagePath = newImages[currentIndex];
 
             //需要上传最后一张
-            if (currentIndex === 8) {
+            if (currentIndex === 8){
                 lastUpload = true;
             }
 
@@ -103,7 +109,7 @@ export default class MoodRelease extends Component {
     ///请求发说说接口
     fetchData = () => {
         let mood = this.state.mood;
-        let images = this.state.images;
+        let images = [...this.state.images];
         let imageIds = [];
 
         if (mood === "" && images.length === 1) {
@@ -126,15 +132,15 @@ export default class MoodRelease extends Component {
                 this.uploadImageAction(imagePath, (data) => {
                     imageIds.push(data.id);
                     ///需要上传最后一张，等待所有图片上传完成
-                    if (lastUpload) {
-                        if (images.length === imageIds.length) {
-                            this.sendMood(mood, imageIds);
+                    if (lastUpload){
+                        if (images.length === imageIds.length){
+                            this.sendMood(mood,imageIds);
                         }
                     }
                     ///不需要上传最后一张，等待除占位图外所有图片上传完成
-                    else {
-                        if (images.length - 1 === imageIds.length) {
-                            this.sendMood(mood, imageIds);
+                    else{
+                        if (images.length - 1 === imageIds.length){
+                            this.sendMood(mood,imageIds);
                         }
                     }
                 })
@@ -144,23 +150,35 @@ export default class MoodRelease extends Component {
     };
     ///发说说
     sendMood = (mood, images) => {
+        const {name, address, latitude, longtitude} = this.state.address;
+        let lat = '';
+        let lng = '';
+        let address_title = '';
+        let addressDetail = '';
+        if (name !== I18n.t('show_address') && name !== I18n.t("hide_address")) {
+            lat = latitude;
+            lng = longtitude;
+            address_title = name;
+            addressDetail = address;
+        }
+
+
         let body = {
             body_type: 'short',
             body: mood,
             images,
             published: true,
-            lat: '',
-            lng: '',
-            location: '',
+            lat: lat,
+            lng: lng,
+            address_title: address_title,
+            address: addressDetail,
         };
 
         postTopic(body, data => {
-            console.log(I18n.t('article_release_success'));
             showToast(I18n.t('article_release_success'));
-            setTimeout(() => this.loading && this.loading.close(), 500);
+            setTimeout(() => this.loading && this.loading.close(),500);
             router.popToAriticle();
         }, err => {
-            console.log(err);
             this.loading && this.loading.close();
         })
     };
@@ -201,11 +219,11 @@ export default class MoodRelease extends Component {
 
     render() {
         let images = this.state.images;
-        let imageLine = images.length / 3;
-        if (images.length % 3 !== 0) {
-            imageLine = imageLine + 1;
+        const {name, address} = this.state.address;
+        let result = name;
+        if (address !== "") {
+            result = result + " ● " + address;
         }
-        let height = imageLine * (((screenWidth - reallySize(50)) / 3) + reallySize(8));
 
         return (
             <View style={styles.container}>
@@ -225,7 +243,6 @@ export default class MoodRelease extends Component {
                     <TextInput placeholder={I18n.t('social_content')}
                                style={styles.textInput}
                                multiline={true}
-                               underlineColorAndroid="transparent"
                                onChangeText={(text) => {
                                    this.setState({
                                        mood: text
@@ -242,14 +259,14 @@ export default class MoodRelease extends Component {
                               bounces={false}
                     />
 
-                    <TouchableOpacity onPress={() => {
-                        global.router.toLocation();
-                    }}>
+                    <TouchableOpacity onPress={() => {global.router.toLocation({address:(addressInfo) => {
+                            this.setState({address:addressInfo});
+                        }})}}>
                         <View style={styles.subView}>
                             <Image source={Images.social.address}
                                    style={[{width: reallySize(14)}, {height: reallySize(18)}]}/>
                             <Text
-                                style={[{color: "#AAAAAA"}, {fontSize: 14}, {marginLeft: 5}]}>{I18n.t('show_address')}</Text>
+                                style={[{color: "#AAAAAA"}, {fontSize: 14}, {marginLeft: 5},{marginRight: 17}]}>{result}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -272,7 +289,7 @@ export default class MoodRelease extends Component {
                     ref={ref => this.popAction = ref}
                     btnArray={this.popActions()}/>
 
-                <Loading ref={ref => this.loading = ref} cancelable={true}/>
+                <Loading ref={ref => this.loading = ref}  cancelable={true}/>
 
             </View>
         )
@@ -328,7 +345,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         width: reallySize(375),
         paddingLeft: reallySize(18),
-        height: reallySize(30),
     },
     toolBar: {
         width: screenWidth,

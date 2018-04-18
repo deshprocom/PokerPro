@@ -593,7 +593,7 @@
   "article_list": "草稿箱",
   "article_mode": "发说说",
   "article_title_null": "请输入长帖标题",
-  "article_content_null": "请编辑长贴内容",
+  "article_content_null": "请编辑长帖内容",
   "article_release_success": "发布成功",
   "article_null": "内容不能为空",
   "article_save_success": "保存成功",
@@ -625,12 +625,13 @@
     "follow": "关注",
     "read": "阅读",
     "comments": "全部评论",
-    "detail":"详情",
-    "select":"精选",
-    "official":"官方",
-    "replay":"条回复>",
-    "message":"私信",
-    "circle":"扑客圈",
-    "location_friend":"附近牌友"
-  }
+    "detail": "详情",
+    "select": "精选",
+    "official": "官方",
+    "replay": "条回复>",
+    "message": "私信",
+    "circle": "扑客圈",
+    "location_friend": "附近牌友"
+  },
+  "hide_address": "不显示位置"
 }

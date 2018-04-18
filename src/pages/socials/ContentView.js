@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     Platform,
     StyleSheet,
@@ -8,11 +8,11 @@ import {
 import {reallySize} from "./Header";
 import I18n from "react-native-i18n";
 
-export default class ContentView extends Component {
+export default class ContentView extends Component{
     static props = {
-        callbackText: null,
-        defaultValue: null,
-        beginEdit: null,
+        callbackText:null,
+        defaultValue:null,
+        beginEdit:null,
     };
 
     updateText = (text) => {
@@ -24,18 +24,15 @@ export default class ContentView extends Component {
         this.props.beginEdit();
     };
 
-    render() {
-        return (
+    render(){
+        return(
             <View style={styles.container}>
                 <TextInput placeholder={I18n.t('social_content')}
                            style={styles.textInput}
                            multiline={true}
                            defaultValue={this.props.defaultValue}
-                           onChangeText={(text) => {
-                               this.updateText(text)
-                           }}
+                           onEndEditing={(event) => {this.updateText(event.nativeEvent.text)}}
                            onFocus={() => this.beginEditing()}
-                           underlineColorAndroid="transparent"
                 />
             </View>
         );
@@ -44,14 +41,14 @@ export default class ContentView extends Component {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#ECECEE",
-        height: reallySize(148),
+        height:reallySize(148),
         justifyContent: "center",
-        alignItems: "center",
+        alignItems:"center",
     },
-    textInput: {
-        height: reallySize(132),
-        width: reallySize(342),
-        backgroundColor: "white",
-        padding: 10,
+    textInput:{
+        height:reallySize(132),
+        width:reallySize(342),
+        backgroundColor:"white",
+        padding:10,
     }
 });

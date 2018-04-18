@@ -159,6 +159,7 @@ export default {
     profile:profile,//获取其他用户信息
     my_focus:my_focus,//获取长帖／说说列表（关注）
     nearbys:nearbys,//更新个人位置
+    locations:'third_party/locations',//获取附近位置
 
 }
 

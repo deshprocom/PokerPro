@@ -317,7 +317,18 @@ const images = {
         crowd: require('../../source/social/crowd.png'),
         back: require('../../source/social/back.png'),
         male: require('../../source/social/male.png'),
-        woman: require('../../source/social/womale.png')
+        woman: require('../../source/social/womale.png'),
+        self_msg: require('../../source/social/icon_selfmsg.png'),
+        other_msg: require('../../source/social/icon_othermsg.png'),
+        chat_more: require('../../source/social/icon_chat_more.png'),
+        chat_emoji: require('../../source/social/icon_chat_emoji.png'),
+        chat_picture: require('../../source/social/icon_chat_picture.png'),
+        chat_takephoto: require('../../source/social/icon_chat_takephoto.png'),
+        close_camera: require('../../source/social/icon_closeCamera.png'),
+        cut_camera: require('../../source/social/icon_cutCamera.png'),
+        take_photo: require('../../source/social/icon_take_photo.png'),
+        play_video: require('../../source/social/icon_video_play.png'),
+
     }
 
 };

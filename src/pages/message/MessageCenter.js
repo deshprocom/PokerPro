@@ -110,7 +110,7 @@ export default class MessageCenter extends Component {
             <TouchableOpacity
                 onPress={() => {
                     router.toMessageList({
-                        username: username, nickName: nickname, reloadPage: () => {
+                        username: username, nickname: nickname, reloadPage: () => {
                             this.getConversations();
                         }
                     });

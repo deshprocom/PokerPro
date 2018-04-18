@@ -14,6 +14,12 @@ const customFloatFromRight = '';
 
 
 export default class Router {
+    toTakePhoto(params){
+        this.stackPush({
+            name:"TakePhoto",
+            params
+        })
+    }
 
     toSocialContact(params) {
         this.stackPush({
@@ -28,9 +34,10 @@ export default class Router {
         })
     }
 
-    toLocation() {
+    toLocation(params) {
         this.stackPush({
             name: "Location",
+            params
         })
     }
 
@@ -110,7 +117,8 @@ export default class Router {
         })
     }
 
-    toArticleRelease(articleKey, articleInfo, reloadInfo) {
+
+    toArticleRelease(articleKey, articleInfo,reloadInfo) {
         this.stackPush({
             name: "ArticleRelease",
             params: {
@@ -921,7 +929,7 @@ export default class Router {
 
     toMessageList(userInfo) {
         this.stackPush({
-            name: 'ChatMessage',
+            name: 'ChatRoom',
             params: {
                 userInfo
             }
