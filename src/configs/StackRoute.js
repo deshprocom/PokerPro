@@ -105,9 +105,11 @@ import SocialContact from "../pages/socials/SocialContact";
 import ExpandText from '../pages/comm/Record';
 import Square from '../pages/socials/Square';
 import MallPage from '../pages/malls/MallPage';
+import NearFriend from '../pages/socials/NearFriend';
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="NearFriend" component={NearFriend} hideNavBar/>
         <Scene key="MallPage" component={MallPage} hideNavBar/>
         <Scene key="Square" component={Square} hideNavBar/>
         <Scene key="ExpandText" component={ExpandText} hideNavBar/>

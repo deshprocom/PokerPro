@@ -8,6 +8,19 @@ import {getDispatchAction} from '../utils/ComonHelper';
 import {GET_PROFILE} from "../actions/ActionTypes";
 
 
+export function postNearBys(body, resolve, reject) {
+    helper.post(Api.nearbys(), body, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+export function getNearBys(resolve, reject) {
+    helper.get(Api.nearbys(), ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+
 export function my_foucs(param, resolve, reject) {
     helper.get(Api.my_focus(), ret => {
         resolve(ret.data)

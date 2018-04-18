@@ -71,6 +71,12 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
+    toNearFriend() {
+        this.stackPush({
+            name: 'NearFriend'
+        })
+    }
+
     toCrowdfunding() {
         this.stackPush({
             name: 'Crowdfunding'

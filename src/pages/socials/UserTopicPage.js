@@ -193,7 +193,7 @@ export default class UserTopicPage extends PureComponent {
     };
 
     scrollTop = () => {
-        this.scroll && this.scroll.scrollTo({x: 0, y: 0, animated: true})
+        this.scroll && this.scroll.scrollTo({x: 0, y: 0, animated: false})
     }
 
 

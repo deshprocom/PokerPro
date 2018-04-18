@@ -48,7 +48,14 @@ export default class Discover extends PureComponent {
                 title: I18n.t('social.location_friend'),
                 icon: Images.social.address,
                 ic_style: styles.location,
-                marginTop: 14
+                marginTop: 14,
+                onPress: () => {
+                    if (isEmptyObject(login_user)) {
+                        global.router.toLoginFirstPage()
+                    } else {
+                        global.router.toNearFriend()
+                    }
+                }
             },
             {
                 title: I18n.t('mall'),

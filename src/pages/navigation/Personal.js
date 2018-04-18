@@ -255,11 +255,14 @@ class Personal extends Component {
                         <TouchableOpacity
                             style={{padding: 10}}
                             onPress={() => {
-                                router.toSocialContact({
-                                    type: 0,
-                                    following_count: following_count,
-                                    follower_count: follower_count
-                                })
+                                if (isEmptyObject(login_user))
+                                    router.toLoginFirstPage()
+                                else
+                                    router.toSocialContact({
+                                        type: 0,
+                                        following_count: following_count,
+                                        follower_count: follower_count
+                                    })
                             }}>
                             <Text style={{
                                 color: Colors._CCC,
@@ -279,11 +282,14 @@ class Personal extends Component {
                         <TouchableOpacity
                             style={{padding: 10}}
                             onPress={() => {
-                                router.toSocialContact({
-                                    type: 1,
-                                    following_count: following_count,
-                                    follower_count: follower_count
-                                })
+                                if (isEmptyObject(login_user))
+                                    router.toLoginFirstPage()
+                                else
+                                    router.toSocialContact({
+                                        type: 1,
+                                        following_count: following_count,
+                                        follower_count: follower_count
+                                    })
                             }}>
                             <Text style={{
                                 color: Colors._CCC,

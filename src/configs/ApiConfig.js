@@ -158,6 +158,7 @@ export default {
     jmessage_visit_other:jmessage_visit_other,//极光IM访问其它用户
     profile:profile,//获取其他用户信息
     my_focus:my_focus,//获取长帖／说说列表（关注）
+    nearbys:nearbys,//更新个人位置
 
 }
 
@@ -171,6 +172,10 @@ function getUserId() {
 
 const page_size = 10;
 
+
+function nearbys() {
+    return `users/${getUserId()}/nearbys`
+}
 
 function my_focus() {
     return `users/${getUserId()}/user_topics/my_focus`

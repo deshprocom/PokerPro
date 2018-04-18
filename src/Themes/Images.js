@@ -315,7 +315,9 @@ const images = {
         mall: require('../../source/social/mall.png'),
         right: require('../../source/social/>.png'),
         crowd: require('../../source/social/crowd.png'),
-        back:require('../../source/social/back.png')
+        back: require('../../source/social/back.png'),
+        male: require('../../source/social/male.png'),
+        woman: require('../../source/social/womale.png')
     }
 
 };
