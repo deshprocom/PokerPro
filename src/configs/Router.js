@@ -91,7 +91,7 @@ export default class Router {
 
     popToAriticle() {
         Actions.popTo('tab_home');
-        Actions.tab_discover({type: ActionConst.REPLACE});
+        this.toSquare()
     }
 
 
