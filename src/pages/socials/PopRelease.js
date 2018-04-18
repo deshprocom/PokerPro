@@ -1,8 +1,13 @@
 import React, {PureComponent} from 'react';
-import {StyleSheet, View, Image, TouchableOpacity, Modal, Text} from 'react-native';
+import {
+    StyleSheet, View, Image,
+    TouchableOpacity, Modal,
+    Text, Platform
+} from 'react-native';
 import {Images, Colors} from '../../Themes';
 import {createAnimatableComponent} from 'react-native-animatable';
 import I18n from 'react-native-i18n';
+import {postNearBys} from '../../services/SocialDao'
 
 const AniTouchableOpacity = createAnimatableComponent(TouchableOpacity);
 
@@ -37,6 +42,13 @@ export default class PopRelease extends PureComponent {
     componentDidMount() {
         navigator.geolocation.getCurrentPosition(data => {
             console.log('位置坐标：', data)
+            if (Platform.OS === 'ios') {
+                const {coords} = data;
+                postNearBys(coords, data => {
+
+                }, err => {
+                })
+            }
 
         }, err => {
             console.log(err)
@@ -61,7 +73,7 @@ export default class PopRelease extends PureComponent {
                         onPress={() => {
                             this.toggle();
                             ///未登录先登录
-                            if (login_user.user_id === undefined){
+                            if (login_user.user_id === undefined) {
                                 router.toLoginFirstPage();
                                 return;
                             }
@@ -78,7 +90,7 @@ export default class PopRelease extends PureComponent {
                         onPress={() => {
                             this.toggle();
                             ///未登录先登录
-                            if (login_user.user_id === undefined){
+                            if (login_user.user_id === undefined) {
                                 router.toLoginFirstPage();
                                 return;
                             }
