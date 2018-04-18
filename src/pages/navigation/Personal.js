@@ -252,13 +252,15 @@ class Personal extends Component {
                     {/*关注与粉丝*/}
                     <View style={{height: 49, flexDirection: 'row', alignItems: 'center'}}>
 
-                        <TouchableOpacity onPress={() => {
-                            router.toSocialContact({
-                                type: 0,
-                                following_count: following_count,
-                                follower_count: follower_count
-                            })
-                        }}>
+                        <TouchableOpacity
+                            style={{padding: 10}}
+                            onPress={() => {
+                                router.toSocialContact({
+                                    type: 0,
+                                    following_count: following_count,
+                                    follower_count: follower_count
+                                })
+                            }}>
                             <Text style={{
                                 color: Colors._CCC,
                                 fontSize: 14
@@ -274,13 +276,15 @@ class Personal extends Component {
                                 marginRight: 28
                             }}/>
 
-                        <TouchableOpacity onPress={() => {
-                            router.toSocialContact({
-                                type: 1,
-                                following_count: following_count,
-                                follower_count: follower_count
-                            })
-                        }}>
+                        <TouchableOpacity
+                            style={{padding: 10}}
+                            onPress={() => {
+                                router.toSocialContact({
+                                    type: 1,
+                                    following_count: following_count,
+                                    follower_count: follower_count
+                                })
+                            }}>
                             <Text style={{
                                 color: Colors._CCC,
                                 fontSize: 14

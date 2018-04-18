@@ -10,6 +10,7 @@ import {
 import {Colors, Images, Metrics} from "../../Themes";
 import {NavigationBar} from '../../components';
 import I18n from "react-native-i18n";
+import {isEmptyObject} from '../../utils/ComonHelper';
 
 const styles = StyleSheet.create({
     circle: {
@@ -32,8 +33,10 @@ const styles = StyleSheet.create({
 
 export default class Discover extends PureComponent {
 
-    state = {
-        lists: [
+    constructor(props) {
+        super(props)
+
+        let menu = [
             {
                 title: I18n.t('social.circle'),
                 icon: Images.social.mine_moment,
@@ -53,19 +56,27 @@ export default class Discover extends PureComponent {
                 ic_style: styles.mall,
                 marginTop: 14,
                 onPress: () => global.router.toMallPage()
-            },
-            {
+            }
+
+        ]
+
+        if (!isEmptyObject(global.menuReleases) && global.menuReleases.crowdfunding) {
+            menu.push({
                 title: I18n.t('crowdfunding'),
                 icon: Images.social.crowd,
                 ic_style: styles.crowd,
                 marginTop: 1,
                 onPress: () => global.router.toCrowdfunding()
 
-            }
-        ]
+            })
+        }
+        this.state = {
+            lists: menu
+        }
 
 
     }
+
 
     render() {
         return <View>
@@ -75,8 +86,8 @@ export default class Discover extends PureComponent {
                 titleStyle={{color: Colors._FFE}}
             />
             <ScrollView>
-                {this.state.lists.map(item => {
-                    return this.renderItem(item)
+                {this.state.lists.map((item, index) => {
+                    return this.renderItem(item, index)
                 })}
             </ScrollView>
 
@@ -84,8 +95,9 @@ export default class Discover extends PureComponent {
         </View>
     }
 
-    renderItem = (item) => {
+    renderItem = (item, index) => {
         return <TouchableOpacity
+            key={'discover' + index}
             onPress={() => {
                 item.onPress && item.onPress()
             }}

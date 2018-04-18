@@ -26,7 +26,7 @@ export default class Crowdfunding extends PureComponent {
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => global.router.pop()}
                 toolbarStyle={{backgroundColor: Colors._161}}
-                title={I18n.t('discover')}
+                title={I18n.t('crowdfunding')}
                 titleStyle={{color: Colors._FFE}}
             />
             <UltimateFlatList
