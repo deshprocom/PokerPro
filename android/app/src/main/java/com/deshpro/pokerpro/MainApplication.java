@@ -29,7 +29,6 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import cn.jiguang.imui.messagelist.ReactIMUIPackage;
 
 import cn.jpush.reactnativejpush.JPushPackage;
 
@@ -66,8 +65,7 @@ public class MainApplication extends Application implements ReactApplication {
                     new RCTSplashScreenPackage(),
                     new RCTSwipeRefreshLayoutPackage(),
                     new PickerPackage(),
-                    new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
-                    new ReactIMUIPackage()
+                    new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG)
             );
         }
 

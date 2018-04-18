@@ -7,6 +7,7 @@ import {NavigationActions} from 'react-navigation';
 import {getDispatchAction} from '../utils/ComonHelper';
 import MapPosition from "../pages/socials/MapPosition";
 import UserTopicPage from "../pages/socials/UserTopicPage";
+import Crowdfunding from "../pages/crowdfundings/crowds/Crowdfunding";
 
 
 const customFloatFromRight = '';
@@ -66,9 +67,9 @@ export default class Router {
 
     }
 
-    toCamera(){
+    toCamera() {
         this.stackPush({
-            name:'ExpandText'
+            name: 'ExpandText'
         })
     }
 
@@ -77,9 +78,33 @@ export default class Router {
         Actions.popTo('tab_home')
     }
 
+    toNearFriend() {
+        this.stackPush({
+            name: 'NearFriend'
+        })
+    }
+
+    toCrowdfunding() {
+        this.stackPush({
+            name: 'Crowdfunding'
+        })
+    }
+
+    toMallPage() {
+        this.stackPush({
+            name: 'MallPage'
+        })
+    }
+
+    toSquare() {
+        this.stackPush({
+            name: 'Square'
+        })
+    }
+
     popToAriticle() {
         Actions.popTo('tab_home');
-        Actions.tab_mall({type:ActionConst.REPLACE});
+        this.toSquare()
     }
 
 
@@ -91,6 +116,7 @@ export default class Router {
             }
         })
     }
+
 
     toArticleRelease(articleKey, articleInfo,reloadInfo) {
         this.stackPush({

@@ -15,6 +15,27 @@ export function locations(body,resolve,reject) {
     },body);
 }
 
+export function postNearBys(body, resolve, reject) {
+    helper.post(Api.nearbys(), body, ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+export function getNearBys(resolve, reject) {
+    helper.get(Api.nearbys(), ret => {
+        resolve(ret.data)
+    }, reject)
+}
+
+
+export function my_foucs(param, resolve, reject) {
+    helper.get(Api.my_focus(), ret => {
+        resolve(ret.data)
+    }, err => {
+        reject(err)
+    }, param);
+}
+
 export function profile(user_id, resolve, reject) {
     helper.get(Api.profile(user_id), ret => {
         resolve(ret.data)

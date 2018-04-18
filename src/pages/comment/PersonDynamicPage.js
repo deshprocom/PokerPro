@@ -127,6 +127,9 @@ export default class PersonDynamicPage extends Component {
                               onPress={() => {
                                   if (topic_type === "usertopic") {
                                       global.router.toLongArticle(topic)
+                                  }else {
+                                      console.log('足迹', topic)
+                                      global.router.toDeletePage();
                                   }
 
                               }}>
@@ -309,43 +312,36 @@ export default class PersonDynamicPage extends Component {
         });
 
 
-        return (
-            <BaseComponent style={ApplicationStyles.bgContainer}>
+        return (  <ScrollableTabView
+                renderTabBar={() => <DynamicTopBar
+                    scrollTop={scrollTop}
+                    nickname={this.userInfo.nick_name}
+                    setUnreadCount={this.setUnreadCount}
+                    unreadCount={this.state.unreadCount}
+                    hideReceived={this.isMine()}
+                    count={this.state.dynamics.length}/>}>
 
+                {moments}
 
-                <ScrollableTabView
-                    renderTabBar={() => <DynamicTopBar
-                        scrollTop={scrollTop}
-                        nickname={this.userInfo.nick_name}
-                        setUnreadCount={this.setUnreadCount}
-                        unreadCount={this.state.unreadCount}
-                        hideReceived={this.isMine()}
-                        count={this.state.dynamics.length}/>}>
+                <UltimateListView
+                    scrollEnabled={scrollEnabled}
+                    style={{backgroundColor: 'white'}}
+                    tabLabel={'足迹'}
+                    header={() => this.personTop()}
+                    ref={ref => this.ultimate = ref}
+                    onFetch={this.onFetch}
+                    keyExtractor={(item, index) => `replies${index}`}
+                    item={this.content}
+                    refreshableTitlePull={I18n.t('pull_refresh')}
+                    refreshableTitleRelease={I18n.t('release_refresh')}
+                    dateTitle={I18n.t('last_refresh')}
+                    allLoadedText={I18n.t('no_more')}
+                    waitingSpinnerText={I18n.t('loading')}
+                    separator={this._separator1}
+                    emptyView={() => <DynamicEmpty/>}
+                />
 
-                    {moments}
-
-                    <UltimateListView
-                        scrollEnabled={scrollEnabled}
-                        style={{backgroundColor: 'white'}}
-                        tabLabel={'足迹'}
-                        header={() => this.personTop()}
-                        ref={ref => this.ultimate = ref}
-                        onFetch={this.onFetch}
-                        keyExtractor={(item, index) => `replies${index}`}
-                        item={this.content}
-                        refreshableTitlePull={I18n.t('pull_refresh')}
-                        refreshableTitleRelease={I18n.t('release_refresh')}
-                        dateTitle={I18n.t('last_refresh')}
-                        allLoadedText={I18n.t('no_more')}
-                        waitingSpinnerText={I18n.t('loading')}
-                        separator={this._separator1}
-                        emptyView={() => <DynamicEmpty/>}
-                    />
-
-                </ScrollableTabView>
-
-
-            </BaseComponent>
+            </ScrollableTabView>
         );
     }
 

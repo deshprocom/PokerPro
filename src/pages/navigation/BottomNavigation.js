@@ -64,36 +64,35 @@ class BottomNavigation extends Component {
                     <TabIcon tab={'news'} focused={index === 1}/>
                 </TouchableOpacity>
 
-                {global.menuReleases === undefined || global.menuReleases.crowdfunding ? <TouchableOpacity
+                <TouchableOpacity
                     onPress={() => {
                         this.props._videoPause();
 
-                        // jumpToIndex(2)
                         this.popRelease && this.popRelease.toggle()
 
                     }}
                     style={styleBN.navigations}>
                     <Image source={Images.social.close_blue}
                            style={{height: 46, width: 46}}/>
-                </TouchableOpacity> : null}
+                </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => {
                         this.props._videoPause();
 
-                        jumpToIndex(3)
+                        jumpToIndex(2)
 
                     }}
                     style={styleBN.navigations}>
-                    <TabIcon tab={'mall'} focused={index === 3}/>
+                    <TabIcon tab={'mall'} focused={index === 2}/>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
                         this.props._videoPause();
-                        jumpToIndex(4)
+                        jumpToIndex(3)
                     }}
                     style={styleBN.navigations}>
-                    <TabIcon tab={'me'} focused={index === 4}/>
+                    <TabIcon tab={'me'} focused={index === 3}/>
                 </TouchableOpacity>
 
                 {!isEmptyObject(share_param) ? <ShareToast hiddenShareAction={() => {

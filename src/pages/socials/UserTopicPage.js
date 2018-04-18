@@ -66,6 +66,17 @@ const styles = StyleSheet.create({
         borderColor: '#979797',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    go_top: {
+        position: 'absolute',
+        right: 17,
+        bottom: 50,
+        height: 40,
+        width: 40,
+        borderRadius: 40,
+        backgroundColor: Colors._161,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 })
 
@@ -145,9 +156,9 @@ export default class UserTopicPage extends PureComponent {
             <Text style={styles.name}>{nick_name}</Text>
 
             <View style={[styles.row, {marginTop: 7}]}>
-                <Text style={styles.follow}>{`关注 ${following_count}`}</Text>
+                <Text style={styles.follow}>{`${I18n.t('social.follow')} ${following_count}`}</Text>
                 <View style={styles.line}/>
-                <Text style={styles.follow}>{`粉丝 ${follower_count}`}</Text>
+                <Text style={styles.follow}>{`${I18n.t('stalwart')} ${follower_count}`}</Text>
             </View>
 
             <Text style={styles.intro}>{_.isEmpty(signature) ? '简介：这家伙很懒' : signature}</Text>
@@ -173,7 +184,7 @@ export default class UserTopicPage extends PureComponent {
                     <Image style={{height: 14, width: 15, marginRight: 3}}
                            source={Images.social.reply}
                     />
-                    <Text style={styles.follow}>私信</Text>
+                    <Text style={styles.follow}>{I18n.t('social.message')}</Text>
                 </TouchableOpacity>
             </View>
 
@@ -182,7 +193,21 @@ export default class UserTopicPage extends PureComponent {
     };
 
     scrollTop = () => {
-        this.scroll && this.scroll.scrollTo({x: 0, y: 0, animated: true})
+        this.scroll && this.scroll.scrollTo({x: 0, y: 0, animated: false})
+    }
+
+
+    goTopView = () => {
+        return <TouchableOpacity
+            onPress={this.scrollTop}
+            style={styles.go_top}>
+            <Text style={{
+                fontSize: 15,
+                fontWeight: 'bold',
+                color: Colors._FFE
+            }}>TOP</Text>
+
+        </TouchableOpacity>
     }
 
     render() {
@@ -201,9 +226,8 @@ export default class UserTopicPage extends PureComponent {
                         params={this.props.params}/>
                 </View>
 
-
+                {this.goTopView()}
                 <Loading ref={ref => this.loading = ref} cancelable={true}/>
-
 
             </ScrollView>
         else
@@ -221,6 +245,7 @@ export default class UserTopicPage extends PureComponent {
                         params={this.props.params}/>
                 </View>
 
+                {this.goTopView()}
                 <Loading ref={ref => this.loading = ref} cancelable={true}/>
 
             </ScrollView>

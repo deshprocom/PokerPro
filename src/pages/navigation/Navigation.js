@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import VideoNewsTab from './VideoNewsTab';
 import CustomTabBar from './BottomNavigation';
-import MallPage from '../malls/MallPage';
+import Discover from '../socials/Discover';
 import Square from '../socials/Square';
 
 
@@ -41,20 +41,14 @@ export const Navigation = () => {
 
                 />
             </Stack>
-            <Stack key="tab_3">
-                <Scene key="tab_rank"
-                       component={MallPage}
-                       hideNavBar
 
+            <Stack key="tab_3">
+                <Scene key="tab_discover"
+                       component={Discover}
+                       hideNavBar
                 />
             </Stack>
             <Stack key="tab_4">
-                <Scene key="tab_mall"
-                       component={Square}
-                       hideNavBar
-                />
-            </Stack>
-            <Stack key="tab_5">
                 <Scene key="tab_person"
                        component={Personal}
                        hideNavBar

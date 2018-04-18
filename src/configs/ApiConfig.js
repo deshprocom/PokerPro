@@ -156,7 +156,9 @@ export default {
     topics_delete: topics_delete,//删除说说或长帖
     topics_search: topics_search,//获取用户的说说或长帖¶
     jmessage_visit_other:jmessage_visit_other,//极光IM访问其它用户
-    profile:profile,
+    profile:profile,//获取其他用户信息
+    my_focus:my_focus,//获取长帖／说说列表（关注）
+    nearbys:nearbys,//更新个人位置
     locations:'third_party/locations',//获取附近位置
 
 }
@@ -170,6 +172,15 @@ function getUserId() {
 }
 
 const page_size = 10;
+
+
+function nearbys() {
+    return `users/${getUserId()}/nearbys`
+}
+
+function my_focus() {
+    return `users/${getUserId()}/user_topics/my_focus`
+}
 
 function profile(user_id) {
     return `users/${user_id}/profile`

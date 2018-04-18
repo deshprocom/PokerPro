@@ -1,7 +1,8 @@
 import React, {PureComponent} from 'react';
 import {
     StyleSheet, Text, View, Image,
-    TouchableOpacity,
+    TouchableOpacity, Platform,
+    StatusBar
 } from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
@@ -12,8 +13,21 @@ export default class MallTopBar extends PureComponent {
 
     render() {
         return (<View style={styles.navBar}>
+            <StatusBar barStyle={Platform.OS === 'ios' ? "dark-content" : "light-content"}/>
 
             <View style={styles.navContent}>
+                <TouchableOpacity
+                    onPress={() => {
+                        global.router.pop()
+                    }}
+                    style={{
+                        height: 40, width: 50,
+                        alignItems: 'center', justifyContent: 'center',
+                    }}>
+                    <Image style={{height: 19, width: 10}}
+                           source={Images.social.back}/>
+                </TouchableOpacity>
+
                 <TouchableOpacity
                     onPress={() => {
                         global.router.toSearchMallPage()
@@ -65,7 +79,6 @@ const styles = StyleSheet.create({
         width: 270,
         backgroundColor: Colors._ECE,
         borderRadius: 3,
-        marginLeft: 17,
         flexDirection: 'row',
         alignItems: 'center'
     },
@@ -92,7 +105,7 @@ const styles = StyleSheet.create({
     badge: {
         position: 'absolute',
         top: 5,
-        right:'26%'
+        right: '26%'
     }
 
 });

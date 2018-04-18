@@ -619,5 +619,19 @@
   "follow_stalwart": "关注与粉丝",
   "stalwart": "粉丝",
   "error_alert": "您的账号在其他设备登录,暂时无法正常使用私信功能,请尝试重启应用",
-  "hide_address":"不显示位置"
+  "social": {
+    "square": "广场",
+    "essence": "精华",
+    "follow": "关注",
+    "read": "阅读",
+    "comments": "全部评论",
+    "detail": "详情",
+    "select": "精选",
+    "official": "官方",
+    "replay": "条回复>",
+    "message": "私信",
+    "circle": "扑客圈",
+    "location_friend": "附近牌友"
+  },
+  "hide_address": "不显示位置"
 }

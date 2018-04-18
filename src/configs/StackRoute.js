@@ -99,18 +99,21 @@ import SubscriptionConfirmPage from '../pages/crowdfundings/orders/SubscriptionC
 import RiskWarningPage from '../pages/crowdfundings/orders/RiskWarningPage';
 import RecordList from '../pages/crowdfundings/orders/RecordList';
 import SubscriptionInfoPage from '../pages/crowdfundings/orders/SubscriptionInfoPage';
-import ChatMessage from "../pages/chat/ChatMessage";
 import ChatRoom from "../pages/chat/ChatRoom";
 import Location from "../pages/socials/Location";
 import Blacklist from "../pages/socials/Blacklist";
 import SocialContact from "../pages/socials/SocialContact";
-import ExpandText from '../pages/comm/ExpandText';
-
+import ExpandText from '../pages/comm/Record';
+import Square from '../pages/socials/Square';
+import MallPage from '../pages/malls/MallPage';
+import NearFriend from '../pages/socials/NearFriend';
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="NearFriend" component={NearFriend} hideNavBar/>
+        <Scene key="MallPage" component={MallPage} hideNavBar/>
+        <Scene key="Square" component={Square} hideNavBar/>
         <Scene key="ExpandText" component={ExpandText} hideNavBar/>
-        <Scene key="ChatMessage" component={ChatMessage} hideNavBar/>
         <Scene key="SocialContact" component={SocialContact} hideNavBar/>
         <Scene key="Blacklist" component={Blacklist} hideNavBar/>
         <Scene key="Location" component={Location} hideNavBar/>
@@ -208,7 +211,6 @@ export const Stacks = Actions.create(
         <Scene key="MallSearchResult" component={MallSearchResult} hideNavBar/>
         <Scene key="OrderSubmitPage" component={OrderSubmitPage} hideNavBar/>
         <Scene key="ChatRoom" component={ChatRoom} hideNavBar/>
-        <Scene key="ChatMessage" component={ChatMessage} hideNavBar/>
         <Scene key="TakePhoto" component={TakePhoto} hideNavBar/>
 
         <Scene type={ActionConst.RESET}

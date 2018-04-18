@@ -6,13 +6,13 @@ import {screenHeight, screenWidth} from "../pages/socials/Header";
 const {width, height} = Dimensions.get('window')
 
 
-const navBarHeight = Platform.OS === "ios" ? width===375 && height === 812 ? 88 : 64 : 44;
-const toolMargin = Platform.OS === "ios" ? width===375 && height === 812 ? 44 : 20 : 0;
+const navBarHeight = Platform.OS === "ios" ? width === 375 && height === 812 ? 88 : 64 : 44;
+const toolMargin = Platform.OS === "ios" ? width === 375 && height === 812 ? 44 : 20 : 0;
 const iPhone_X = Platform.OS === "ios" && screenWidth === 375 && screenHeight === 812;
 
 //真实尺寸
 export function reallySize(size) {
-    return size / 375 * width;
+    return width / 375 * size;
 }
 
 // Used via Metrics.baseMargin

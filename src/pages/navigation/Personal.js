@@ -252,17 +252,22 @@ class Personal extends Component {
                     {/*关注与粉丝*/}
                     <View style={{height: 49, flexDirection: 'row', alignItems: 'center'}}>
 
-                        <TouchableOpacity onPress={() => {
-                            router.toSocialContact({
-                                type: 0,
-                                following_count: following_count,
-                                follower_count: follower_count
-                            })
-                        }}>
+                        <TouchableOpacity
+                            style={{padding: 10}}
+                            onPress={() => {
+                                if (isEmptyObject(login_user))
+                                    router.toLoginFirstPage()
+                                else
+                                    router.toSocialContact({
+                                        type: 0,
+                                        following_count: following_count,
+                                        follower_count: follower_count
+                                    })
+                            }}>
                             <Text style={{
                                 color: Colors._CCC,
                                 fontSize: 14
-                            }}>{`关注   ${following_count ? following_count : 0}`}</Text>
+                            }}>{`${I18n.t('social.follow')}   ${following_count ? following_count : 0}`}</Text>
 
                         </TouchableOpacity>
                         <View
@@ -274,17 +279,22 @@ class Personal extends Component {
                                 marginRight: 28
                             }}/>
 
-                        <TouchableOpacity onPress={() => {
-                            router.toSocialContact({
-                                type: 1,
-                                following_count: following_count,
-                                follower_count: follower_count
-                            })
-                        }}>
+                        <TouchableOpacity
+                            style={{padding: 10}}
+                            onPress={() => {
+                                if (isEmptyObject(login_user))
+                                    router.toLoginFirstPage()
+                                else
+                                    router.toSocialContact({
+                                        type: 1,
+                                        following_count: following_count,
+                                        follower_count: follower_count
+                                    })
+                            }}>
                             <Text style={{
                                 color: Colors._CCC,
                                 fontSize: 14
-                            }}>{`粉丝   ${follower_count ? follower_count : 0}`}</Text>
+                            }}>{`${I18n.t('stalwart')}   ${follower_count ? follower_count : 0}`}</Text>
 
                         </TouchableOpacity>
                     </View>
