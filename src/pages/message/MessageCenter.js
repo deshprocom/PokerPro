@@ -118,8 +118,10 @@ export default class MessageCenter extends Component {
                 keyExtractor={(item, index) => index + ""}
                 style={{backgroundColor: 'white'}}>
                 <View style={styles.flatItem}>
-                    <Image style={styles.msgIcon}
-                           source={{uri: avatarThumbPath}}/>
+                    <Image
+                        defaultSource={Images.home_avatar}
+                        style={styles.msgIcon}
+                        source={{uri: avatarThumbPath}}/>
                     <View>
                         <Text style={styles.msgTitle} numberOfLines={1}>{nickname}</Text>
                         <Text style={styles.msgDesc} numberOfLines={1}>{text}</Text>
@@ -129,7 +131,7 @@ export default class MessageCenter extends Component {
 
                 {unreadCount !== 0 ?
                     <View style={styles.unread}>
-                        <Text style={{color:"white"}}>{unreadCount}</Text>
+                        <Text style={{color: "white"}}>{unreadCount}</Text>
                     </View> : null}
             </TouchableOpacity>
         );
@@ -270,15 +272,15 @@ const styles = StyleSheet.create({
         top: 25,
         left: 67
     },
-    unread:{
-        backgroundColor:"red",
-        width:20,
-        height:20,
-        alignItems:"center",
-        justifyContent:"center",
-        borderRadius:10,
+    unread: {
+        backgroundColor: "red",
+        width: 20,
+        height: 20,
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 10,
         position: 'absolute',
-        marginTop:25,
-        marginLeft:58,
+        marginTop: 25,
+        marginLeft: 58,
     }
 });

@@ -211,7 +211,6 @@ export const Stacks = Actions.create(
         <Scene key="MallSearchResult" component={MallSearchResult} hideNavBar/>
         <Scene key="OrderSubmitPage" component={OrderSubmitPage} hideNavBar/>
         <Scene key="ChatRoom" component={ChatRoom} hideNavBar/>
-        <Scene key="ChatMessage" component={ChatMessage} hideNavBar/>
         <Scene key="TakePhoto" component={TakePhoto} hideNavBar/>
 
         <Scene type={ActionConst.RESET}
