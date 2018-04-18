@@ -7,6 +7,13 @@ import _ from 'lodash';
 import {getDispatchAction} from '../utils/ComonHelper';
 import {GET_PROFILE} from "../actions/ActionTypes";
 
+export function locations(body,resolve,reject) {
+    helper.get(Api.locations, ret => {
+        resolve(ret.data)
+    }, err => {
+        reject(err)
+    },body);
+}
 
 export function profile(user_id, resolve, reject) {
     helper.get(Api.profile(user_id), ret => {

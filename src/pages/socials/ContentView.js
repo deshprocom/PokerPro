@@ -31,7 +31,7 @@ export default class ContentView extends Component{
                            style={styles.textInput}
                            multiline={true}
                            defaultValue={this.props.defaultValue}
-                           onChangeText={(text) => {this.updateText(text)}}
+                           onEndEditing={(event) => {this.updateText(event.nativeEvent.text)}}
                            onFocus={() => this.beginEditing()}
                 />
             </View>

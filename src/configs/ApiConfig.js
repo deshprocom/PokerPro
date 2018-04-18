@@ -156,7 +156,8 @@ export default {
     topics_delete: topics_delete,//删除说说或长帖
     topics_search: topics_search,//获取用户的说说或长帖¶
     jmessage_visit_other:jmessage_visit_other,//极光IM访问其它用户
-    profile:profile
+    profile:profile,
+    locations:'third_party/locations',//获取附近位置
 
 }
 

@@ -593,7 +593,7 @@
   "article_list": "草稿箱",
   "article_mode": "发说说",
   "article_title_null": "请输入长帖标题",
-  "article_content_null": "请编辑长贴内容",
+  "article_content_null": "请编辑长帖内容",
   "article_release_success": "发布成功",
   "article_null": "内容不能为空",
   "article_save_success": "保存成功",
@@ -618,5 +618,6 @@
   "remove_blacklist": "移除黑名单",
   "follow_stalwart": "关注与粉丝",
   "stalwart": "粉丝",
-  "error_alert": "您的账号在其他设备登录,暂时无法正常使用私信功能,请尝试重启应用"
+  "error_alert": "您的账号在其他设备登录,暂时无法正常使用私信功能,请尝试重启应用",
+  "hide_address":"不显示位置"
 }
