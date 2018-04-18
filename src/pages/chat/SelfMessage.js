@@ -7,8 +7,7 @@ import {
     TouchableOpacity, Platform
 } from 'react-native';
 
-import {Images, Metrics} from "../../Themes";
-import Colors from "../../Themes/styles/Colors";
+import {Images, Metrics, Colors} from "../../Themes";
 
 export default class SelfMessage extends Component {
     static props = {

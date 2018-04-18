@@ -21,7 +21,7 @@ export default class OtherMessage extends Component {
             case "text" :
                 return (
                     <View style={[styles.superView, styles.textView]}>
-                        <Text style={[{color: "white"}, {fontSize: 15}]}>{text}</Text>
+                        <Text style={[{color: Colors.txt_444}, {fontSize: 15}]}>{text}</Text>
                     </View>
                 );
             case "image" :
@@ -90,8 +90,7 @@ const styles = StyleSheet.create({
     },
     textView: {
         maxWidth: Metrics.screenWidth - (Metrics.reallySize(38) + 27) * 2,
-        padding: 10,
-        color: Colors.txt_444
+        padding: 10
     },
     imageView: {
         width: Metrics.reallySize(120),

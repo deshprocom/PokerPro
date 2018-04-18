@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -533,7 +534,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				48E31E3E2080BBC600D0B670 /* RCTAuroraIMUI.framework in Embed Frameworks */,
 				483DD02620577C5F00E5C97B /* RSKImageCropper.framework in Embed Frameworks */,
 				483DD02A20577C7400E5C97B /* QBImagePicker.framework in Embed Frameworks */,
 			);
@@ -691,8 +691,6 @@
 				8A0852A90E0345E8B3D7D183 /* AudioToolbox.framework in Frameworks */,
 				4263E347E2254B948940EA62 /* MobileCoreServices.framework in Frameworks */,
 				3DF0A3A2AF594B838CFC3723 /* libsqlite3.tbd in Frameworks */,
-				8BFA1C2A0145467383371E83 /* RCTAuroraIMUI.framework in Frameworks */,
-				478A633A2FF64593B3E4C577 /* RCTAuroraIMUITests.xctest in Frameworks */,
 				C443844777744502A3BAF3D8 /* libRNFS.a in Frameworks */,
 				47CADE50D75840C98BD2C2E0 /* libRCTImageResizer.a in Frameworks */,
 				7DC17D26CAD7440EA47B9A9F /* libRNCamera.a in Frameworks */,
@@ -973,9 +971,6 @@
 				7235D3383063497E81C4902B /* libRNI18n.a */,
 				4E61173EA2E94E7EB74CB6FA /* libRNI18n-tvOS.a */,
 				32393F6A28C44E9E83397363 /* libRCTJMessageModule.a */,
-				5386399D28C54817A32B5FA2 /* libAuroraIMUI.a */,
-				A89E947DD80745598C8E07FB /* RCTAuroraIMUI.framework */,
-				978B2B7937434CF5A6A154FD /* RCTAuroraIMUITests.xctest */,
 				6CA099D54D5143FC8647D366 /* libRNFS.a */,
 				FE8734CDD73948F5B8C98EB7 /* libRCTImageResizer.a */,
 				A580257746C34C3388D18504 /* libRNCamera.a */,
@@ -1946,7 +1941,6 @@
 		48E31E402080BBC600D0B670 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = RCTAuroraIMUI;
-			targetProxy = 48E31E3F2080BBC600D0B670 /* PBXContainerItemProxy */;
 		};
 		8BC21DDE206B65C20071E29A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2000,9 +1994,7 @@
 				INFOPLIST_FILE = PokerProTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -2041,9 +2033,7 @@
 				INFOPLIST_FILE = PokerProTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -2192,9 +2182,7 @@
 				);
 				INFOPLIST_FILE = "PokerPro-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -2242,9 +2230,7 @@
 				);
 				INFOPLIST_FILE = "PokerPro-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -2270,9 +2256,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "PokerPro-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.PokerPro-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -2294,9 +2278,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "PokerPro-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.PokerPro-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
