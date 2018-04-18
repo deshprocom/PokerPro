@@ -49,12 +49,13 @@ export default class OtherMessage extends Component {
     };
 
     render(){
-        console.log("这是其他人发过来的消息",this.props.message);
-        const {user} = this.props.message;
-        const {avatar} = user;
+        const {userInfo} = this.props.message;
+        let avatarThumbPath = userInfo.avatarThumbPath;
         return(
             <View style={styles.container}>
-                <Image source={{uri:avatar}} style={styles.userIcon}/>
+                {avatarThumbPath === "" ?
+                    <Image source={Images.home_avatar} style={styles.userIcon}/> :
+                    <Image source={{uri:avatarThumbPath}} style={styles.userIcon}/>}
                 <TouchableOpacity onPress={() => {
                     if (this.props.messageClick === null) return;
                     this.props.messageClick();

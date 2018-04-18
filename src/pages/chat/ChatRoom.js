@@ -38,9 +38,10 @@ export default class ChatRoom extends Component {
             currentIndex: 0,
             myUserName: "",
             messages: [],
-            showToolBar:true,//隐藏显示工具栏
-            videoPath:"",
-            moreText:"加载更多"
+            showToolBar: false,//隐藏显示工具栏
+            videoPath: "",
+            moreText: "加载更多",
+            otherInfo: {},
         };
     }
 
@@ -76,7 +77,7 @@ export default class ChatRoom extends Component {
     ///进入聊天室
     enterChat = () => {
         //停止接收推送
-        let userInfo = this.otherInfo;
+        let userInfo = this.state.otherInfo;
         JMessage.enterConversation({type: 'single', username: userInfo.username},
             (conversation) => {
 
@@ -88,8 +89,8 @@ export default class ChatRoom extends Component {
         JMessage.resetUnreadMessageCount({type: 'single', username: userInfo.username},
             (conversation) => {
                 ///回调，更新上一页数据
-                if (userInfo.reloadPage !== undefined) {
-                    userInfo.reloadPage();
+                if (this.props.params.userInfo.reloadPage !== undefined) {
+                    this.props.params.userInfo.reloadPage();
                 }
             }, (error) => {
 
@@ -101,19 +102,19 @@ export default class ChatRoom extends Component {
         //获取当前用户自己的信息
         JMessage.getMyInfo((myInfo) => {
             this.myInfo = myInfo;
-
-            console.log("自己的信息", this.myInfo);
             this.setState({myUserName: myInfo.username});
         });
-
-        //获取其他用户的信息
-        this.otherInfo = this.props.params.userInfo;
-        console.log("其他人的信息", this.otherInfo);
+        this.setState({otherInfo: this.props.params.userInfo});
+        JMessage.getUserInfo({username: this.props.params.userInfo.username},
+            (userInfo) => {
+                this.setState({otherInfo: userInfo});
+            }, (error) => {
+            });
     };
 
     ///历史消息
     getHistoryMessage = () => {
-        let userInfo = this.otherInfo;
+        let userInfo = this.state.otherInfo;
         let param = {
             type: "single",
             username: userInfo.username,
@@ -123,9 +124,8 @@ export default class ChatRoom extends Component {
         JMessage.getHistoryMessages(param,
             (messageArray) => {
                 // 以参数形式返回消息对象数组
-                console.log("历史消息", messageArray);
-                if (messageArray.length < 20){
-                    this.setState({moreText:"没有更多了"});
+                if (messageArray.length < 20) {
+                    this.setState({moreText: "没有更多了"});
                 }
 
                 let newMsgArray = [];
@@ -207,9 +207,8 @@ export default class ChatRoom extends Component {
 
     //消息点击
     clickMessageAction = (message) => {
-        let {type,image,path,_id} = message;
-        console.log(message);
-        if (type === "image"){
+        let {type, image, path, _id} = message;
+        if (type === "image") {
             let images = [{url: image}];
             router.toImageGalleryPage(images, 0);
         }
@@ -217,8 +216,8 @@ export default class ChatRoom extends Component {
             let url = path;
 
             ///视频未下载
-            if (url === ""){
-                let userInfo = this.otherInfo;
+            if (url === "") {
+                let userInfo = this.state.otherInfo;
                 let parma = {
                     type: "single",
                     username: userInfo.username,
@@ -227,14 +226,14 @@ export default class ChatRoom extends Component {
                 JMessage.downloadFile(parma,
                     (result) => {
                         console.log("下载文件成功");
-                        this.setState({videoPath:result.filePath});
+                        this.setState({videoPath: result.filePath});
                         message.path = result.filePath;
                     }, (error) => {
                         console.log("下载文件失败");
                     });
             }
             else {
-                this.setState({videoPath:url});
+                this.setState({videoPath: url});
             }
 
         }
@@ -258,30 +257,36 @@ export default class ChatRoom extends Component {
         this.createMessage({messageType: "image", path: mediaPath});
     };
 
-
-    ///发送消息
-    onSend(messages = []) {
-        console.log("发送的消息", messages);
+    ///发送文字
+    onSendMessage = (messages) => {
         let message = messages[0];
         let newMsg = {
             messageType: "text",
             text: message.text,
         };
         this.createMessage(newMsg);
-    }
+        // if (text === "") {
+        //     showToast("输入为空");
+        //     return;
+        // }
+        // let newMsg = {
+        //     messageType: "text",
+        //     text: text,
+        // };
+        // this.createMessage(newMsg);
 
+    };
 
     ///选择图片
     selectedImage = () => {
-        ImagePicker.openPicker({
-        }).then(image => {
+        ImagePicker.openPicker({}).then(image => {
             let type = image.mime;
             let path = image.path;
             let videoPath = path.replace("file://", "");
-            if (type.indexOf("image") !== -1){
+            if (type.indexOf("image") !== -1) {
                 this.onSendImage(videoPath);
             }
-            else if (type.indexOf("video") !== -1){
+            else if (type.indexOf("video") !== -1) {
                 this.onSendVideo(videoPath);
             }
         }).catch(e => {
@@ -292,7 +297,7 @@ export default class ChatRoom extends Component {
 
     ///创建消息
     createMessage = (msg) => {
-        let userInfo = this.otherInfo;
+        let userInfo = this.state.otherInfo;
         let msgInfo = {
             type: "single",
             username: userInfo.username,
@@ -337,12 +342,12 @@ export default class ChatRoom extends Component {
                 if (newMessage !== undefined) {
                     this.addMessage([newMessage]);
                 }
-                console.log("发送成功",jmessage);
+                console.log("发送成功", jmessage);
 
 
                 ///回调，更新上一页数据
-                if (userInfo.reloadPage !== undefined) {
-                    userInfo.reloadPage();
+                if (this.props.params.userInfo.reloadPage !== undefined) {
+                    this.props.params.userInfo.reloadPage();
                 }
 
             }, (error) => {
@@ -361,22 +366,25 @@ export default class ChatRoom extends Component {
 
     ///自定义消息组件
     createSystemMsg = (props) => {
-        console.log("自定义消息",props);
         let message = props.currentMessage;
         let currentName = message.user._id;
         let username = this.myInfo.username;
         if (username === currentName) {
-            message.userInfo = this.otherInfo;
+            message.userInfo = this.state.otherInfo;
             ///其他人发的消息
             return (
-                <OtherMessage message={message}  messageClick={() => {this.clickMessageAction(message)}}/>
+                <OtherMessage message={message} messageClick={() => {
+                    this.clickMessageAction(message)
+                }}/>
             );
         }
         else {
             message.userInfo = this.myInfo;
             ///自己发的消息
             return (
-                <SelfMessage message={message} messageClick={() => {this.clickMessageAction(message)}}/>
+                <SelfMessage message={message} messageClick={() => {
+                    this.clickMessageAction(message)
+                }}/>
             );
         }
 
@@ -388,7 +396,7 @@ export default class ChatRoom extends Component {
             <View style={{flexDirection: "row"}}>
                 <TouchableOpacity onPress={() => {
                     Keyboard.dismiss();
-                    this.setState({showToolBar:!this.state.showToolBar})
+                    this.setState({showToolBar: !this.state.showToolBar})
                 }}>
                     <Image source={Images.social.chat_more} style={styles.btnIcon}/>
                 </TouchableOpacity>
@@ -399,33 +407,71 @@ export default class ChatRoom extends Component {
         );
     };
 
+    renderAccessoryAction = () => {
+        return(
+            <View style={{flex:1}}>
+                <View style={[{height:1},{backgroundColor:"#f5f5f5"}]}/>
+                <View style={[{flex:1},{flexDirection:"row"},{alignItems:"center"}]}>
+                    <TouchableOpacity onPress={this.selectedImage}>
+                        <Image source={Images.social.chat_picture}
+                               style={[{width: Metrics.reallySize(25)}, {marginLeft:17},{height: Metrics.reallySize(25)}]}/>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity  onPress={() => {
+                        router.toTakePhoto({
+                            fileInfo: (file) => {
+                                let type = file.type;
+                                if (type === "image") {
+                                    this.onSendImage(file.path);
+                                }
+                                else {
+                                    this.onSendVideo(file.path);
+                                }
+                            }
+                        })
+                    }}>
+                        <Image source={Images.social.chat_takephoto}
+                               style={[{width: Metrics.reallySize(28)},  {marginLeft:30},{height: Metrics.reallySize(25)}]}/>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        );
+    };
+
     //自定义底部工具栏组件
     createToolBar = () => {
         return (
             <View style={styles.superView}>
-                <TouchableOpacity style={{flex:1}} onPress={this.selectedImage}>
+                <TouchableOpacity style={{flex: 1}} onPress={this.selectedImage}>
                     <View style={styles.subView}>
-                        <Image source={Images.social.chat_picture} style={[{width:Metrics.reallySize(34)},{height:Metrics.reallySize(34)}]}/>
+                        <Image source={Images.social.chat_picture}
+                               style={[{width: Metrics.reallySize(34)}, {height: Metrics.reallySize(34)}]}/>
                         <Text style={styles.text}>图片</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={{flex:1}} onPress={() => {router.toTakePhoto({fileInfo:(file) => {
-                        let type = file.type;
-                        if (type === "image"){
-                            this.onSendImage(file.path);
+                <TouchableOpacity style={{flex: 1}} onPress={() => {
+                    router.toTakePhoto({
+                        fileInfo: (file) => {
+                            let type = file.type;
+                            if (type === "image") {
+                                this.onSendImage(file.path);
+                            }
+                            else {
+                                this.onSendVideo(file.path);
+                            }
                         }
-                        else{
-                            this.onSendVideo(file.path);
-                        }
-                    }})}}>
+                    })
+                }}>
                     <View style={styles.subView}>
-                        <Image source={Images.social.chat_takephoto} style={[{width:Metrics.reallySize(39)},{height:Metrics.reallySize(34)}]}/>
+                        <Image source={Images.social.chat_takephoto}
+                               style={[{width: Metrics.reallySize(39)}, {height: Metrics.reallySize(34)}]}/>
                         <Text style={styles.text}>拍照</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={{flex:1}}>
+                <TouchableOpacity style={{flex: 1}}>
                     <View style={styles.subView}>
-                        <Image source={Images.social.chat_picture} style={[{width:Metrics.reallySize(34)},{height:Metrics.reallySize(34)}]}/>
+                        <Image source={Images.social.chat_picture}
+                               style={[{width: Metrics.reallySize(34)}, {height: Metrics.reallySize(34)}]}/>
                         <Text style={styles.text}>语音</Text>
                     </View>
                 </TouchableOpacity>
@@ -434,26 +480,40 @@ export default class ChatRoom extends Component {
     };
 
     renderEarlyMessage = () => {
-        return(
-                <View style={styles.subView}>
+        return (
+            <View style={styles.subView}>
 
-                    {this.state.moreText === "加载更多"?
-                        <TouchableOpacity onPress={() => {
-                            this.getHistoryMessage();
-                        }}>
-                            <View style={styles.moreView}>
-                                <Text style={styles.moreText}>加载更多</Text>
-                            </View>
-                        </TouchableOpacity>
-                        :null}
-                </View>
+                {this.state.moreText === "加载更多" ?
+                    <TouchableOpacity onPress={() => {
+                        this.getHistoryMessage();
+                    }}>
+                        <View style={styles.moreView}>
+                            <Text style={styles.moreText}>加载更多</Text>
+                        </View>
+                    </TouchableOpacity>
+                    : null}
+                :null}
+            </View>
 
+        );
+    };
+    createTextInput = () => {
+        return (
+            <TextInput placeholder={"新消息"}
+                       style={styles.textInput}
+                       onFocus={() => {
+                           this.setState({showToolBar: false})
+                       }}
+                       returnKeyType={"send"}
+                       onSubmitEditing={(event) => this.onSendMessage(event.nativeEvent.text)}
+                       ref={ref => this.textField = ref}
+                       blurOnSubmit={false}
+            />
         );
     };
 
     render() {
-        let userInfo = this.otherInfo;
-        //{username: "ngdy6037671", nickName: "测试as度假酒店"}
+        let userInfo = this.state.otherInfo;
         return (
             <View style={styles.container}>
                 {/*导航栏*/}
@@ -476,24 +536,28 @@ export default class ChatRoom extends Component {
 
                 {this.state.myUserName === "" ? null :
                     <GiftedChat
-                        label={'发送'}
-                        textStyle={{height: 27}}
+                        // textStyle={{height: 27}}
                         messages={this.state.messages}              //消息
                         showUserAvatar={true}                       //显示自己的头像
                         loadEarlier={true}
-                        renderLoadEarlier = {this.renderEarlyMessage}           //加载历史消息
+                        renderLoadEarlier={this.renderEarlyMessage}           //加载历史消息
                         renderSystemMessage={this.createSystemMsg}  //自定义系统消息
-                        renderActions={this.createToolButton}       //自定义左侧按钮
-                        placeholder={"新消息"}
-                        onSend={messages => this.onSend(messages)}  //发送消息
                         user={{
                             _id: this.state.myUserName,
                         }}
+                        label={"发送"}
+                        onSend = {(event) => this.onSendMessage(event)}
+                        placeholder={"新消息"}
+                        renderAccessory={this.renderAccessoryAction}
+                        // renderComposer={this.createTextInput}
+                        // renderActions={this.createToolButton}       //自定义左侧按钮
                     />
                 }
-                {this.state.showToolBar?this.createToolBar():null}
+                {/*{this.state.showToolBar ? this.createToolBar() : null}*/}
 
-                {this.state.videoPath !== ""?<VideoToast videoUrl={this.state.videoPath} hiddenVideoAction={() => {this.setState({videoPath:""})}}/>:null}
+                {this.state.videoPath !== "" ? <VideoToast videoUrl={this.state.videoPath} hiddenVideoAction={() => {
+                    this.setState({videoPath: ""})
+                }}/> : null}
 
             </View>
         );
@@ -521,31 +585,23 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    textInput:{
+    textInput: {
         flex: 1,
+        height: 49,
         marginLeft: 10,
-        fontSize: 16,
-        lineHeight: 16,
-        marginTop: Platform.select({
-            ios: 6,
-            android: 0,
-        }),
-        marginBottom: Platform.select({
-            ios: 5,
-            android: 3,
-        }),
+        marginRight: 17,
     },
-    text:{
-        marginTop:Metrics.reallySize(9),
-        fontSize:15,
-        color:"#888888",
+    text: {
+        marginTop: Metrics.reallySize(9),
+        fontSize: 15,
+        color: "#888888",
     },
-    moreView:{
-        backgroundColor:"#1D89FA",
-        borderRadius:4,
+    moreView: {
+        backgroundColor: "#1D89FA",
+        borderRadius: 4,
     },
-    moreText:{
-        padding:10,
-        color:"white",
+    moreText: {
+        padding: 10,
+        color: "white",
     }
 });

@@ -50,7 +50,6 @@ export default class SelfMessage extends Component {
 
 
     render(){
-        console.log("这是我发出去的消息",this.props.message);
         const {userInfo} = this.props.message;
         let avatarThumbPath = userInfo.avatarThumbPath;
         return(
@@ -85,7 +84,7 @@ const styles = StyleSheet.create({
         marginBottom:17,
     },
     superView:{
-        backgroundColor:"red",
+        backgroundColor:"#1D89FA",
         marginBottom:17,
         marginTop:17,
         marginRight:10,

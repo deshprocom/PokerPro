@@ -321,6 +321,7 @@ const images = {
         close_camera:require('../../source/social/icon_closeCamera.png'),
         cut_camera:require('../../source/social/icon_cutCamera.png'),
         take_photo:require('../../source/social/icon_take_photo.png'),
+        play_video:require('../../source/social/icon_video_play.png'),
     }
 
 };

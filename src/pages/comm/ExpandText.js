@@ -113,9 +113,12 @@ class ExpandText extends Component {
                         />
 
                         <TouchableOpacity onPress={() => {
+                            if (this.state.playing){
+                                return;
+                            }
                             this.setState({playing:true});
                         }}>
-                            <Text style={[styles.reTake,{height:100}]}>播放</Text>
+                            <Image source={Images.social.play_video} style={[{width:Metrics.reallySize(70)},{height:Metrics.reallySize(70)},{marginBottom:20},{marginTop:20}]}/>
                         </TouchableOpacity>
                     </View>
                     : null}
@@ -139,7 +142,6 @@ class ExpandText extends Component {
     };
 
     beginRecord = () => {
-        console.log("开始+1");
         this.timer = setInterval(() => {
             this.setState({duration:this.state.duration + 1});
         }, 1000);
@@ -158,7 +160,7 @@ class ExpandText extends Component {
         this.isRecord = true;
         this.beginRecord();
         if (this.camera) {
-            const options = {quality: 0.5,maxDuration: 15};
+            const options = {maxDuration: 20};
             const data = await this.camera.recordAsync(options);
             let videoPath = data.uri.replace("file://", "");
             this.setState({videoPath: videoPath,duration:0});
@@ -171,7 +173,7 @@ class ExpandText extends Component {
     ///拍照
     takePicture = async () => {
         if (this.camera) {
-            const options = {quality: 0.5, base64: false};
+            const options = {base64: false};
             const data = await this.camera.takePictureAsync(options);
             let imagePath = data.uri.replace("file://", "");
             this.setState({imagePath: imagePath});
