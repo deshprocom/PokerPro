@@ -350,7 +350,7 @@ export default class ArticleRelease extends PureComponent {
             compressImageMaxHeight: 1024,
             compressImageQuality: 0.5
         }).then(image => {
-            if (image.mime === "image/jpeg"){
+            if (image.mime === "image/jpeg") {
                 let rowData = {
                     type: "image",
                     swipeOpen: false,
@@ -514,7 +514,7 @@ export default class ArticleRelease extends PureComponent {
         let data = this.state.data;
         return (
             <View style={styles.container}>
-                <View style={{height: screenHeight - toolBarHeight}}>
+                <View style={{flex: 1}}>
                     {/*导航栏*/}
                     <NavigationBar barStyle={'dark-content'}
                                    titleStyle={{fontSize: 17, color: Colors._333}}
@@ -556,9 +556,9 @@ export default class ArticleRelease extends PureComponent {
                                                    {text: I18n.t("save_n"), onPress: () => router.pop()},
                                                    {
                                                        text: I18n.t("save_s"), onPress: () => {
-                                                       this.saveDraft();
-                                                       router.pop();
-                                                   }
+                                                           this.saveDraft();
+                                                           router.pop();
+                                                       }
                                                    },
                                                ],
                                                {cancelable: false}

@@ -41,20 +41,14 @@ export const Navigation = () => {
 
                 />
             </Stack>
-            <Stack key="tab_3">
-                <Scene key="tab_rank"
-                       component={MallPage}
-                       hideNavBar
 
-                />
-            </Stack>
-            <Stack key="tab_4">
-                <Scene key="tab_mall"
+            <Stack key="tab_3">
+                <Scene key="tab_discover"
                        component={Square}
                        hideNavBar
                 />
             </Stack>
-            <Stack key="tab_5">
+            <Stack key="tab_4">
                 <Scene key="tab_person"
                        component={Personal}
                        hideNavBar
