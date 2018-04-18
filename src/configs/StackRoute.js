@@ -103,10 +103,13 @@ import Location from "../pages/socials/Location";
 import Blacklist from "../pages/socials/Blacklist";
 import SocialContact from "../pages/socials/SocialContact";
 import ExpandText from '../pages/comm/Record';
-
+import Square from '../pages/socials/Square';
+import MallPage from '../pages/malls/MallPage';
 
 export const Stacks = Actions.create(
     <Scene key="root">
+        <Scene key="MallPage" component={MallPage} hideNavBar/>
+        <Scene key="Square" component={Square} hideNavBar/>
         <Scene key="ExpandText" component={ExpandText} hideNavBar/>
         <Scene key="SocialContact" component={SocialContact} hideNavBar/>
         <Scene key="Blacklist" component={Blacklist} hideNavBar/>

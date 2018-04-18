@@ -629,6 +629,8 @@
     "select":"精选",
     "official":"官方",
     "replay":"条回复>",
-    "message":"私信"
+    "message":"私信",
+    "circle":"扑客圈",
+    "location_friend":"附近牌友"
   }
 }

@@ -311,7 +311,11 @@ const images = {
         article_delete: require('../../source/social/delete.png'),
         more_4: require('../../source/social/more_4.png'),
         user_topic: require('../../source/social/user_topic.png'),
-        mine_moment: require('../../source/social/mine_moment.png')
+        mine_moment: require('../../source/social/mine_moment.png'),
+        mall: require('../../source/social/mall.png'),
+        right: require('../../source/social/>.png'),
+        crowd: require('../../source/social/crowd.png'),
+        back:require('../../source/social/back.png')
     }
 
 };

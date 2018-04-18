@@ -5,6 +5,8 @@ import {
     Image,
     Text,
     TouchableOpacity,
+    StatusBar,
+    Platform
 } from 'react-native';
 import {reallySize} from "./Header";
 import {Images, ApplicationStyles, Metrics, Colors} from "../../Themes";
@@ -103,6 +105,19 @@ class SquareBar extends PureComponent {
             flexDirection: 'row', justifyContent: 'center',
             backgroundColor: 'white'
         }}>
+            <StatusBar barStyle={Platform.OS === 'ios' ? "dark-content" : "light-content"}/>
+            <TouchableOpacity
+                onPress={() => {
+                    global.router.pop()
+                }}
+                style={{
+                    position: 'absolute', height: 40, width: 50,
+                    alignItems: 'center', justifyContent: 'center',
+                    left: 0, bottom: 0
+                }}>
+                <Image style={{height: 19, width: 10}}
+                       source={Images.social.back}/>
+            </TouchableOpacity>
             {tabs_views}
         </View>
     }
