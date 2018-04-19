@@ -9,12 +9,13 @@ import {
 } from 'react-native';
 import I18n from "react-native-i18n";
 import {Colors, Images, Metrics} from "../../Themes";
-import {NavigationBar, UltimateListView} from '../../components';
+import {NavigationBar, UltimateListView, ImageLoad} from '../../components';
 import {NoDataView} from '../../../src/components/load';
 import {isEmptyObject, utcDate, strNotNull} from '../../utils/ComonHelper';
 import {follow, followings, followers} from '../../services/SocialDao';
 import {reallySize} from "./Header";
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
+
 
 export default class SocialContact extends Component {
     constructor(props) {
@@ -149,10 +150,14 @@ export class FollowList extends Component {
             icon = avatar;
         }
         return (
-            <View style={styles.item}>
+            <TouchableOpacity
+                onPress={() => {
+                    global.router.toUserTopicPage({user_id: id})
+                }}
+                style={styles.item}>
                 <View style={styles.subRowItem}>
-                    <Image
-                        defaultSource={Images.home_avatar}
+                    <ImageLoad
+                        emptyBg={Images.home_avatar}
                         source={{uri: icon}}
                         style={styles.iconImage}/>
                     <View>
@@ -174,7 +179,7 @@ export class FollowList extends Component {
                         </View>
                     }
                 </TouchableOpacity>
-            </View>
+            </TouchableOpacity>
         );
     };
 
