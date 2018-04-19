@@ -111,7 +111,9 @@ export default class ChatRoom extends Component {
         JMessage.removeLoginStateChangedListener(this.loginState);
 
         //停止播放语音
-        this.sound.stop();
+        if(this.sound){
+            this.sound.stop();
+        }
     }
 
     //<!--------------------------------   极光相关   --------------------------------!>//
