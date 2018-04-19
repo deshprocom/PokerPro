@@ -8,6 +8,8 @@ import {
     TouchableOpacity
 } from 'react-native';
 import {Images, Metrics, Colors} from "../../Themes";
+import {localFilePath} from '../../utils/ComonHelper';
+import ImageLoad from "../../components/ImageLoad";
 
 export default class OtherMessage extends Component {
     static props = {
@@ -16,7 +18,9 @@ export default class OtherMessage extends Component {
     };
 
     createMessage = () => {
-        const {type, text, image,duration} = this.props.message;
+        let {type, text, image, duration} = this.props.message;
+        image = localFilePath(image);
+
         switch (type) {
             case "text" :
                 return (
@@ -38,7 +42,7 @@ export default class OtherMessage extends Component {
                 );
             case "voice":
                 return (
-                    <View style={[styles.superView, styles.voiceView,{width:parseInt(duration) * 6 + 50}]}>
+                    <View style={[styles.superView, styles.voiceView, {width: parseInt(duration) * 6 + 50}]}>
                         <Image source={Images.social.voice_left} style={styles.voiceImage}/>
                         <Text style={[{color: "white"}, {fontSize: 15}]}>{`${parseInt(duration)}"`}</Text>
                     </View>
@@ -51,12 +55,13 @@ export default class OtherMessage extends Component {
 
     render() {
         const {userInfo} = this.props.message;
-        let avatarThumbPath = userInfo.avatarThumbPath;
+        let avatarThumbPath = localFilePath(userInfo.avatarThumbPath);
         return (
             <View style={styles.container}>
-                {avatarThumbPath === undefined || avatarThumbPath === "" ?
-                    <Image source={Images.home_avatar} style={styles.userIcon}/> :
-                    <Image source={{uri: avatarThumbPath}} style={styles.userIcon}/>}
+                <ImageLoad
+                    emptyBg={Images.home_avatar}
+                    source={{uri: avatarThumbPath}}
+                    style={styles.userIcon}/>
 
                 <Image source={Images.social.chat_left} style={styles.leftCorner}/>
                 <TouchableOpacity onPress={() => {
@@ -95,28 +100,28 @@ const styles = StyleSheet.create({
         maxWidth: Metrics.screenWidth - (Metrics.reallySize(38) + 27) * 2,
         padding: 10,
     },
-    voiceView:{
-        flexDirection:"row",
-        alignItems:"center",
+    voiceView: {
+        flexDirection: "row",
+        alignItems: "center",
     },
-    voiceImage:{
+    voiceImage: {
         marginBottom: 12,
         marginTop: 12,
-        width:Metrics.reallySize(24),
-        height:Metrics.reallySize(15),
-        marginRight:2,
-        marginLeft:3,
-        resizeMode:'contain',
+        width: Metrics.reallySize(24),
+        height: Metrics.reallySize(15),
+        marginRight: 2,
+        marginLeft: 3,
+        resizeMode: 'contain',
     },
     imageView: {
         width: Metrics.reallySize(120),
         height: Metrics.reallySize(150),
         padding: 1,
     },
-    leftCorner:{
-        width:Metrics.reallySize(10),
-        height:Metrics.reallySize(10),
-        marginLeft:10,
-        marginBottom:17,
+    leftCorner: {
+        width: Metrics.reallySize(10),
+        height: Metrics.reallySize(10),
+        marginLeft: 10,
+        marginBottom: 17,
     }
 });

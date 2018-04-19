@@ -18,6 +18,7 @@ import _ from 'lodash';
 import Loading from "../../components/Loading";
 import {isFollowed} from '../../utils/ComonHelper';
 import JMessage from "jmessage-react-plugin";
+import {JPUSH_APPKEY} from '../../configs/Constants'
 
 const HeadHeight = Platform.OS === 'ios' ? Metrics.iPhone_X ? 300 : 280 : 260
 
@@ -113,12 +114,12 @@ export default class UserTopicPage extends PureComponent {
         ///获取私信用户的用户名
         visit_other({userId: user_id}, (success) => {
             this.loading && this.loading.close();
-            JMessage.getUserInfo({username: success.username},
+            JMessage.getUserInfo({username: success.username, appKey: JPUSH_APPKEY},
                 (userInfo) => {
                     router.toMessageList({
                         username: userInfo.username,
                         nickname: userInfo.nickname,
-                        avatarThumbPath:userInfo.avatarThumbPath,
+                        avatarThumbPath: userInfo.avatarThumbPath,
                     });
                 }, (error) => {
                 });

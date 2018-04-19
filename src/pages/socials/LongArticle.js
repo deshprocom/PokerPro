@@ -144,8 +144,12 @@ export default class LongArticle extends PureComponent {
     componentDidMount() {
         this.comment_id = '';
         const {article, isComment} = this.props.params;
-        console.log("====", article);
-        topics_details(article.id);
+
+        topics_details(article.id, data => {
+            this.setState({
+                article: data
+            })
+        });
         if (isComment) {
             setTimeout(() => {
                 this.commentBar && this.commentBar.showInput()
@@ -523,7 +527,8 @@ export default class LongArticle extends PureComponent {
                     marginLeft: 54,
                     marginTop: 8
                 }}>
-                <Text style={[styles.c_nick, {marginLeft: 6}]}>{`${I18n.t('look_detail')}${total_count}${I18n.t('social.replay')}`}</Text>
+                <Text
+                    style={[styles.c_nick, {marginLeft: 6}]}>{`${I18n.t('look_detail')}${total_count}${I18n.t('social.replay')}`}</Text>
 
 
             </TouchableOpacity> : null}
