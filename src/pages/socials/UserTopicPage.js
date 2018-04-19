@@ -17,6 +17,7 @@ import {visit_other, follow, profile} from '../../services/SocialDao';
 import _ from 'lodash';
 import Loading from "../../components/Loading";
 import {isFollowed} from '../../utils/ComonHelper';
+import JMessage from "jmessage-react-plugin";
 
 const HeadHeight = Platform.OS === 'ios' ? Metrics.iPhone_X ? 300 : 280 : 260
 
@@ -112,7 +113,15 @@ export default class UserTopicPage extends PureComponent {
         ///获取私信用户的用户名
         visit_other({userId: user_id}, (success) => {
             this.loading && this.loading.close();
-            router.toMessageList({username: success.username, nickname: nick_name});
+            JMessage.getUserInfo({username: success.username},
+                (userInfo) => {
+                    router.toMessageList({
+                        username: userInfo.username,
+                        nickname: userInfo.nickname,
+                        avatarThumbPath:userInfo.avatarThumbPath,
+                    });
+                }, (error) => {
+                });
         }, (error) => {
             console.log(error);
         });
