@@ -109,11 +109,18 @@ export default class MessageCenter extends Component {
         return (
             <TouchableOpacity
                 onPress={() => {
-                    router.toMessageList({
-                        username: username, nickname: nickname, reloadPage: () => {
-                            this.getConversations();
-                        }
-                    });
+                    JMessage.getUserInfo({username: username},
+                        (userInfo) => {
+                            router.toMessageList({
+                                username: userInfo.username,
+                                nickname: userInfo.nickname,
+                                avatarThumbPath:userInfo.avatarThumbPath,
+                                reloadPage: () => {
+                                    this.getConversations();
+                                }
+                            });
+                        }, (error) => {
+                        });
                 }}
                 keyExtractor={(item, index) => index + ""}
                 style={{backgroundColor: 'white'}}>

@@ -39,7 +39,7 @@ class ExpandText extends Component {
                                     <Image source={Images.social.close_camera} style={styles.closeBtn}/>
                                 </TouchableOpacity>
 
-                                {text !== "00" ? <Text style={[{color:"white"},{marginBottom: 12},{fontSize:20}]}>{`00:${text}`}</Text> : null}
+                                {text !== "00" ? <Text style={[{color:"white"},{marginBottom: 12},{fontSize:20}]}>{`00:${text}`}</Text> : <Text style={[{color:"white"},{marginBottom: 12},{fontSize:20}]}>长按录像</Text>}
 
                                 <TouchableOpacity onPress={this.cutCamera}>
                                     <Image source={Images.social.cut_camera} style={styles.cutCamera}/>

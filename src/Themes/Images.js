@@ -328,6 +328,8 @@ const images = {
         cut_camera: require('../../source/social/icon_cutCamera.png'),
         take_photo: require('../../source/social/icon_take_photo.png'),
         play_video: require('../../source/social/icon_video_play.png'),
+        chat_left: require('../../source/social/icon_chat_left.png'),
+        chat_right: require('../../source/social/icon_chat_right.png'),
 
     }
 

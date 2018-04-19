@@ -41,7 +41,7 @@ export default class ChatRoom extends Component {
             showToolBar: false,//隐藏显示工具栏
             videoPath: "",
             moreText: "加载更多",
-            otherInfo: {},
+            inputVoice:false,//是否输入语音
         };
     }
 
@@ -77,7 +77,7 @@ export default class ChatRoom extends Component {
     ///进入聊天室
     enterChat = () => {
         //停止接收推送
-        let userInfo = this.state.otherInfo;
+        let userInfo = this.otherInfo;
         JMessage.enterConversation({type: 'single', username: userInfo.username},
             (conversation) => {
 
@@ -104,17 +104,13 @@ export default class ChatRoom extends Component {
             this.myInfo = myInfo;
             this.setState({myUserName: myInfo.username});
         });
-        this.setState({otherInfo: this.props.params.userInfo});
-        JMessage.getUserInfo({username: this.props.params.userInfo.username},
-            (userInfo) => {
-                this.setState({otherInfo: userInfo});
-            }, (error) => {
-            });
+        ///其他人的信息
+        this.otherInfo = this.props.params.userInfo;
     };
 
     ///历史消息
     getHistoryMessage = () => {
-        let userInfo = this.state.otherInfo;
+        let userInfo = this.otherInfo;
         let param = {
             type: "single",
             username: userInfo.username,
@@ -217,7 +213,7 @@ export default class ChatRoom extends Component {
 
             ///视频未下载
             if (url === "") {
-                let userInfo = this.state.otherInfo;
+                let userInfo = this.otherInfo;
                 let parma = {
                     type: "single",
                     username: userInfo.username,
@@ -297,7 +293,7 @@ export default class ChatRoom extends Component {
 
     ///创建消息
     createMessage = (msg) => {
-        let userInfo = this.state.otherInfo;
+        let userInfo = this.otherInfo;
         let msgInfo = {
             type: "single",
             username: userInfo.username,
@@ -370,7 +366,7 @@ export default class ChatRoom extends Component {
         let currentName = message.user._id;
         let username = this.myInfo.username;
         if (username === currentName) {
-            message.userInfo = this.state.otherInfo;
+            message.userInfo = this.otherInfo;
             ///其他人发的消息
             return (
                 <OtherMessage message={message} messageClick={() => {
@@ -395,22 +391,22 @@ export default class ChatRoom extends Component {
         return (
             <View style={{flexDirection: "row"}}>
                 <TouchableOpacity onPress={() => {
-                    Keyboard.dismiss();
-                    this.setState({showToolBar: !this.state.showToolBar})
+                    this.setState({inputVoice: !this.state.inputVoice})
                 }}>
                     <Image source={Images.social.chat_more} style={styles.btnIcon}/>
                 </TouchableOpacity>
-                <TouchableOpacity>
-                    <Image source={Images.social.chat_emoji} style={styles.btnIcon}/>
-                </TouchableOpacity>
+                {/*<TouchableOpacity>*/}
+                    {/*<Image source={Images.social.chat_emoji} style={styles.btnIcon}/>*/}
+                {/*</TouchableOpacity>*/}
             </View>
         );
     };
 
+    ///第二排按钮
     renderAccessoryAction = () => {
         return(
             <View style={{flex:1}}>
-                <View style={[{height:1},{backgroundColor:"#f5f5f5"}]}/>
+                <View style={[{height:0.5},{backgroundColor:"#E5E5E5"}]}/>
                 <View style={[{flex:1},{flexDirection:"row"},{alignItems:"center"}]}>
                     <TouchableOpacity onPress={this.selectedImage}>
                         <Image source={Images.social.chat_picture}
@@ -479,6 +475,7 @@ export default class ChatRoom extends Component {
         );
     };
 
+    ///加载更多
     renderEarlyMessage = () => {
         return (
             <View style={styles.subView}>
@@ -497,23 +494,24 @@ export default class ChatRoom extends Component {
 
         );
     };
+
+    ///输入语音
     createTextInput = () => {
         return (
-            <TextInput placeholder={"新消息"}
-                       style={styles.textInput}
-                       onFocus={() => {
-                           this.setState({showToolBar: false})
-                       }}
-                       returnKeyType={"send"}
-                       onSubmitEditing={(event) => this.onSendMessage(event.nativeEvent.text)}
-                       ref={ref => this.textField = ref}
-                       blurOnSubmit={false}
-            />
+            <TouchableOpacity style={styles.voiceView} onLongPress={() => {
+                console.log("按住了");
+            }} onPressOut={() => {
+                console.log("移出去了");
+            }} onPressIn={() => {
+                console.log("2222");
+            }}>
+                <Text>按住说话</Text>
+            </TouchableOpacity>
         );
     };
 
     render() {
-        let userInfo = this.state.otherInfo;
+        let userInfo = this.otherInfo;
         return (
             <View style={styles.container}>
                 {/*导航栏*/}
@@ -534,9 +532,8 @@ export default class ChatRoom extends Component {
                     }}
                 />
 
-                {this.state.myUserName === "" ? null :
+                {!this.state.inputVoice ?
                     <GiftedChat
-                        // textStyle={{height: 27}}
                         messages={this.state.messages}              //消息
                         showUserAvatar={true}                       //显示自己的头像
                         loadEarlier={true}
@@ -549,11 +546,26 @@ export default class ChatRoom extends Component {
                         onSend = {(event) => this.onSendMessage(event)}
                         placeholder={"新消息"}
                         renderAccessory={this.renderAccessoryAction}
-                        // renderComposer={this.createTextInput}
-                        // renderActions={this.createToolButton}       //自定义左侧按钮
+                        renderActions={this.createToolButton}       //自定义左侧按钮
+                    />
+                    :
+                    <GiftedChat
+                        messages={this.state.messages}              //消息
+                        showUserAvatar={true}                       //显示自己的头像
+                        loadEarlier={true}
+                        renderLoadEarlier={this.renderEarlyMessage}           //加载历史消息
+                        renderSystemMessage={this.createSystemMsg}  //自定义系统消息
+                        user={{
+                            _id: this.state.myUserName,
+                        }}
+                        label={"发送"}
+                        onSend = {(event) => this.onSendMessage(event)}
+                        placeholder={"新消息"}
+                        renderAccessory={this.renderAccessoryAction}
+                        renderActions={this.createToolButton}       //自定义左侧按钮
+                        renderComposer={this.createTextInput}
                     />
                 }
-                {/*{this.state.showToolBar ? this.createToolBar() : null}*/}
 
                 {this.state.videoPath !== "" ? <VideoToast videoUrl={this.state.videoPath} hiddenVideoAction={() => {
                     this.setState({videoPath: ""})
@@ -575,6 +587,7 @@ const styles = StyleSheet.create({
         marginTop: (50 - Metrics.reallySize(26)) / 2,
         marginBottom: (50 - Metrics.reallySize(26)) / 2,
         marginLeft: 17,
+        marginRight:17,
     },
     superView: {
         height: 200,
@@ -585,11 +598,17 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    textInput: {
+    voiceView: {
         flex: 1,
-        height: 49,
-        marginLeft: 10,
+        height: 39,
+        marginTop:5,
+        marginBottom:5,
         marginRight: 17,
+        borderColor:"#E5E5E5",
+        borderWidth:0.5,
+        borderRadius:4,
+        justifyContent: "center",
+        alignItems: "center",
     },
     text: {
         marginTop: Metrics.reallySize(9),

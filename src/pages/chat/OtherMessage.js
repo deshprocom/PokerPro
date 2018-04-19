@@ -21,7 +21,7 @@ export default class OtherMessage extends Component {
             case "text" :
                 return (
                     <View style={[styles.superView, styles.textView]}>
-                        <Text style={[{color: "white"}, {fontSize: 15}]}>{text}</Text>
+                        <Text style={[{color: Colors.txt_444}, {fontSize: 15}]}>{text}</Text>
                     </View>
                 );
             case "image" :
@@ -53,9 +53,11 @@ export default class OtherMessage extends Component {
         let avatarThumbPath = userInfo.avatarThumbPath;
         return (
             <View style={styles.container}>
-                {avatarThumbPath === "" ?
+                {avatarThumbPath === undefined ?
                     <Image source={Images.home_avatar} style={styles.userIcon}/> :
                     <Image source={{uri: avatarThumbPath}} style={styles.userIcon}/>}
+
+                <Image source={Images.social.chat_left} style={styles.leftCorner}/>
                 <TouchableOpacity onPress={() => {
                     if (this.props.messageClick === null) return;
                     this.props.messageClick();
@@ -85,17 +87,22 @@ const styles = StyleSheet.create({
         backgroundColor: Colors._ECE,
         marginBottom: 17,
         marginTop: 17,
-        marginLeft: 10,
+        marginLeft: -5,
         borderRadius: 6,
     },
     textView: {
         maxWidth: Metrics.screenWidth - (Metrics.reallySize(38) + 27) * 2,
         padding: 10,
-        color: Colors.txt_444
     },
     imageView: {
         width: Metrics.reallySize(120),
         height: Metrics.reallySize(150),
         padding: 1,
+    },
+    leftCorner:{
+        width:Metrics.reallySize(10),
+        height:Metrics.reallySize(10),
+        marginLeft:10,
+        marginBottom:17,
     }
 });

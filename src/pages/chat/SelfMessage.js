@@ -7,8 +7,7 @@ import {
     TouchableOpacity, Platform
 } from 'react-native';
 
-import {Images, Metrics} from "../../Themes";
-import Colors from "../../Themes/styles/Colors";
+import {Images, Metrics,Colors} from "../../Themes";
 
 export default class SelfMessage extends Component {
     static props = {
@@ -27,13 +26,13 @@ export default class SelfMessage extends Component {
                 );
             case "image" :
                 return (
-                    <View style={[styles.superView, styles.imageView, {backgroundColor: Colors._ECE}]}>
+                    <View style={[styles.superView, styles.imageView]}>
                         <Image source={{uri: image}} style={{flex: 1, borderRadius: 5}}/>
                     </View>
                 );
             case "video":
                 return (
-                    <View style={[styles.superView, styles.imageView, {backgroundColor: Colors._ECE}]}>
+                    <View style={[styles.superView, styles.imageView]}>
                         <Image source={{uri: path}} style={{flex: 1, borderRadius: 5}}/>
                     </View>
                 );
@@ -55,15 +54,22 @@ export default class SelfMessage extends Component {
         let avatarThumbPath = userInfo.avatarThumbPath;
         return (
             <View style={styles.container}>
+
                 <TouchableOpacity onPress={() => {
                     if (this.props.messageClick === null) return;
                     this.props.messageClick();
-                }}>
+                }} style={[{flexDirection:"row"},{alignItems:"flex-end"}]}>
                     {this.createMessage()}
+
+                    <Image source={Images.social.chat_right} style={styles.rightCorner}/>
                 </TouchableOpacity>
+
+
                 {avatarThumbPath === "" ?
                     <Image source={Images.home_avatar} style={styles.userIcon}/> :
                     <Image source={{uri: avatarThumbPath}} style={styles.userIcon}/>}
+
+
             </View>
         );
     }
@@ -88,8 +94,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#1D89FA",
         marginBottom: 17,
         marginTop: 17,
-        marginRight: 10,
         borderRadius: 6,
+        marginRight:-5,
     },
     textView: {
         maxWidth: Metrics.screenWidth - (Metrics.reallySize(38) + 27) * 2,
@@ -99,5 +105,11 @@ const styles = StyleSheet.create({
         width: Metrics.reallySize(120),
         height: Metrics.reallySize(150),
         padding: 1,
+    },
+    rightCorner:{
+        width:Metrics.reallySize(10),
+        height:Metrics.reallySize(10),
+        marginBottom:17,
+        marginRight:10,
     }
 });
