@@ -702,22 +702,23 @@ export default class ChatRoom extends Component {
                     }}
                 />
 
-                <GiftedChat
-                    {...voiceView}
-                    messages={this.state.messages}              //消息
-                    showUserAvatar={true}                       //显示自己的头像
-                    loadEarlier={true}
-                    renderLoadEarlier={this.renderEarlyMessage}           //加载历史消息
-                    renderSystemMessage={this.createSystemMsg}  //自定义系统消息
-                    user={{
-                        _id: this.state.myUserName,
-                    }}
-                    label={"发送"}
-                    onSend={(event) => this.onSendMessage(event)}
-                    placeholder={"新消息"}
-                    renderAccessory={this.renderAccessoryAction}
-                    renderActions={this.createToolButton}       //自定义左侧按钮
-                />
+                {this.state.myUserName !== "" ?
+                    <GiftedChat
+                        {...voiceView}
+                        messages={this.state.messages}              //消息
+                        showUserAvatar={true}                       //显示自己的头像
+                        loadEarlier={true}
+                        renderLoadEarlier={this.renderEarlyMessage}           //加载历史消息
+                        renderSystemMessage={this.createSystemMsg}  //自定义系统消息
+                        user={{
+                            _id: this.state.myUserName,
+                        }}
+                        label={"发送"}
+                        onSend={(event) => this.onSendMessage(event)}
+                        placeholder={"新消息"}
+                        renderAccessory={this.renderAccessoryAction}
+                        renderActions={this.createToolButton}       //自定义左侧按钮
+                    />:null}
 
                 {this.state.recording ? <View style={styles.voiceAlert}><Text
                     style={styles.voiceText}>{this.leadingZeros(this.state.currentTime)}</Text></View> : null}
@@ -759,7 +760,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "white",
-        alignItems: "center",
     },
     btnIcon: {
         width: Metrics.reallySize(26),
@@ -808,6 +808,10 @@ const styles = StyleSheet.create({
         marginTop: Metrics.screenHeight - 150,
         backgroundColor: "rgba(0,0,0,0.5)",
         borderRadius: 4,
+        width:80,
+        justifyContent:"center",
+        alignItems:"center",
+        marginLeft:(Metrics.screenWidth - 80) / 2,
     },
     voiceText: {
         padding: 10,
