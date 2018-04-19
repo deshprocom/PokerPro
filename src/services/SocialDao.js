@@ -7,12 +7,25 @@ import _ from 'lodash';
 import {getDispatchAction} from '../utils/ComonHelper';
 import {GET_PROFILE} from "../actions/ActionTypes";
 
-export function locations(body,resolve,reject) {
+export function report_topic(topic_id,body, resolve, reject) {
+    helper.post(Api.report_topic(topic_id), body, ret => {
+        resolve(ret.data)
+    },reject);
+}
+
+
+export function report_user(body, resolve, reject) {
+    helper.post(Api.report_user(), body, ret => {
+        resolve(ret.data)
+    },reject);
+}
+
+export function locations(body, resolve, reject) {
     helper.get(Api.locations, ret => {
         resolve(ret.data)
     }, err => {
         reject(err)
-    },body);
+    }, body);
 }
 
 export function postNearBys(body, resolve, reject) {

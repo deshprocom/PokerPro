@@ -26,7 +26,7 @@ export default class Location extends Component{
                     name:I18n.t('hide_address'),
                     address:"",
                     latitude:"",
-                    longtitude:"",
+                    longitude:"",
                 }
             ],
             selectedIndex:0,
@@ -45,7 +45,7 @@ export default class Location extends Component{
             }
             let body = {
                 "latitude": latitude,
-                "longtitude": longitude,
+                "longitude": longitude,
                 "geo_type": geoType,
             };
             locations(body,ret => {

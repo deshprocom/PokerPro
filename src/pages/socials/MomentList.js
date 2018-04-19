@@ -236,7 +236,7 @@ export default class MomentList extends PureComponent {
                         }
                         else {
                             if (this.props.showMore === null) return;
-                            this.props.showMore();
+                            this.props.showMore(id);
                         }
                     }}
                 >

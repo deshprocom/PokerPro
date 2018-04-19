@@ -58,7 +58,7 @@ class Root extends Component {
 
         getUserData();
         getBaseURL(() => {
-            this._getUpdate()
+            this._getUpdate();
         });
         //App更新
 
@@ -70,13 +70,11 @@ class Root extends Component {
                 setAccessToken(access_token);
                 this.props._getProfile(user_id);
                 this.props._fetchUnreadMsg();
-
             }).catch(err => {
 
         });
 
     }
-
     _getUpdate = () => {
         getUpdate(data => {
             updateApp(data);

@@ -160,9 +160,11 @@ export default {
     my_focus:my_focus,//获取长帖／说说列表（关注）
     nearbys:nearbys,//更新个人位置
     locations:'third_party/locations',//获取附近位置
+    report_templates:'report_templates',//获取举报模板
+    report_user:report_user,//举报用户
+    report_topic:report_topic,//举报长帖说说
 
 }
-
 
 function getUserId() {
     if (!isEmptyObject(global.login_user) && strNotNull(global.login_user.user_id)) {
@@ -173,6 +175,14 @@ function getUserId() {
 
 const page_size = 10;
 
+function report_topic(topicId) {
+    return `topic/user_topics/${topicId}/report`
+
+}
+function report_user() {
+    return `users/${getUserId()}/im/report`
+
+}
 
 function nearbys() {
     return `users/${getUserId()}/nearbys`
