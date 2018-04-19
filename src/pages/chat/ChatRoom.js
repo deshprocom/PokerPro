@@ -10,7 +10,7 @@ import {
     TextInput,
     TouchableOpacity,
     Image,
-    Keyboard
+    PermissionsAndroid
 } from 'react-native';
 
 import {GiftedChat, Avatar} from 'react-native-gifted-chat';
@@ -24,6 +24,9 @@ import OtherMessage from "./OtherMessage";
 import {screenHeight, screenWidth} from "../socials/Header";
 import VideoToast from "./VideoToast";
 import ImagePicker from 'react-native-image-crop-picker';
+import {AudioRecorder, AudioUtils} from 'react-native-audio';
+
+let audioPath = AudioUtils.DocumentDirectoryPath + '/test.aac';
 
 const iOS = Platform.OS === "ios" ? "1" : "0";
 
@@ -41,7 +44,13 @@ export default class ChatRoom extends Component {
             showToolBar: false,//隐藏显示工具栏
             videoPath: "",
             moreText: "加载更多",
-            inputVoice:false,//是否输入语音
+            inputVoice: false,//是否输入语音
+            currentTime: 0.0, //开始录音到现在的持续时间
+            recording: false, //是否正在录音
+            stoppedRecording: false, //是否停止了录音
+            finished: false, //是否完成录音
+            audioPath: AudioUtils.DocumentDirectoryPath + '/test.aac', //路径下的文件名
+            hasPermission: undefined, //是否获取权限
         };
     }
 
@@ -51,6 +60,31 @@ export default class ChatRoom extends Component {
     }
 
     componentDidMount() {
+        ///检测是否有权限
+        this.checkPermission().then((hasPermission) => {
+            this.setState({hasPermission});
+
+            if (!hasPermission) return;
+
+            //准备录音
+            this.prepareRecordingPath();
+
+
+            ///录音时长
+            AudioRecorder.onProgress = (data) => {
+                this.setState({currentTime: Math.floor(data.currentTime)});
+            };
+
+            //录制完成
+            AudioRecorder.onFinished = (data) => {
+                // Android callback comes in the form of a promise instead.
+                if (Platform.OS === 'ios') {
+                    this.finishRecording(data.status === "OK", data.audioFileURL);
+                }
+            };
+        });
+
+
         ///历史消息
         this.getHistoryMessage();
         //进入聊天室
@@ -106,7 +140,6 @@ export default class ChatRoom extends Component {
         });
         ///其他人的信息
         this.otherInfo = this.props.params.userInfo;
-        console.log(this.otherInfo);
     };
 
     ///历史消息
@@ -165,7 +198,7 @@ export default class ChatRoom extends Component {
 
     ///创建消息体
     createMessageBody = (message) => {
-        const {id, type, text, target, thumbPath, path} = message;
+        const {id, type, text, target, thumbPath, path, duration} = message;
         const {username, avatarThumbPath, nickname} = target;
         let user = {
             _id: username,
@@ -191,10 +224,10 @@ export default class ChatRoom extends Component {
         if (type === "voice") {
             newMessage.type = "voice";
             newMessage.path = path;
+            newMessage.duration = duration;
         }
 
         if (type === "file") {
-            newMessage.system = true;
             newMessage.type = "video";
             newMessage.path = path;
         }
@@ -208,6 +241,9 @@ export default class ChatRoom extends Component {
         if (type === "image") {
             let images = [{url: image}];
             router.toImageGalleryPage(images, 0);
+        }
+        if (type === "voice"){
+
         }
         if (type === "video") {
             let url = path;
@@ -244,6 +280,12 @@ export default class ChatRoom extends Component {
         }))
     };
 
+    ///发送语音
+    onSendVoice = (mediaPath) => {
+        this.createMessage({messageType: "voice", path: mediaPath, duration: this.state.currentTime});
+    };
+
+
     ///发送视频
     onSendVideo = (mediaPath) => {
         this.createMessage({messageType: "file", path: mediaPath});
@@ -262,16 +304,6 @@ export default class ChatRoom extends Component {
             text: message.text,
         };
         this.createMessage(newMsg);
-        // if (text === "") {
-        //     showToast("输入为空");
-        //     return;
-        // }
-        // let newMsg = {
-        //     messageType: "text",
-        //     text: text,
-        // };
-        // this.createMessage(newMsg);
-
     };
 
     ///选择图片
@@ -309,6 +341,7 @@ export default class ChatRoom extends Component {
         ///语音类型 消息体拼接path字段
         if (msg.messageType === "voice") {
             msgInfo.path = msg.path;
+            msgInfo.duration = msg.duration;
         }
 
         ///图片类型 消息体拼接path字段
@@ -397,7 +430,7 @@ export default class ChatRoom extends Component {
                     <Image source={Images.social.chat_more} style={styles.btnIcon}/>
                 </TouchableOpacity>
                 {/*<TouchableOpacity>*/}
-                    {/*<Image source={Images.social.chat_emoji} style={styles.btnIcon}/>*/}
+                {/*<Image source={Images.social.chat_emoji} style={styles.btnIcon}/>*/}
                 {/*</TouchableOpacity>*/}
             </View>
         );
@@ -405,16 +438,16 @@ export default class ChatRoom extends Component {
 
     ///第二排按钮
     renderAccessoryAction = () => {
-        return(
-            <View style={{flex:1}}>
-                <View style={[{height:0.5},{backgroundColor:"#E5E5E5"}]}/>
-                <View style={[{flex:1},{flexDirection:"row"},{alignItems:"center"}]}>
+        return (
+            <View style={{flex: 1}}>
+                <View style={[{height: 0.5}, {backgroundColor: "#E5E5E5"}]}/>
+                <View style={[{flex: 1}, {flexDirection: "row"}, {alignItems: "center"}]}>
                     <TouchableOpacity onPress={this.selectedImage}>
                         <Image source={Images.social.chat_picture}
-                               style={[{width: Metrics.reallySize(25)}, {marginLeft:17},{height: Metrics.reallySize(25)}]}/>
+                               style={[{width: Metrics.reallySize(25)}, {marginLeft: 17}, {height: Metrics.reallySize(25)}]}/>
                     </TouchableOpacity>
 
-                    <TouchableOpacity  onPress={() => {
+                    <TouchableOpacity onPress={() => {
                         router.toTakePhoto({
                             fileInfo: (file) => {
                                 let type = file.type;
@@ -428,7 +461,7 @@ export default class ChatRoom extends Component {
                         })
                     }}>
                         <Image source={Images.social.chat_takephoto}
-                               style={[{width: Metrics.reallySize(28)},  {marginLeft:30},{height: Metrics.reallySize(25)}]}/>
+                               style={[{width: Metrics.reallySize(28)}, {marginLeft: 30}, {height: Metrics.reallySize(25)}]}/>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -496,16 +529,101 @@ export default class ChatRoom extends Component {
         );
     };
 
+    ///准备录制
+    prepareRecordingPath = () => {
+        AudioRecorder.prepareRecordingAtPath(audioPath, {
+            SampleRate: 22050,
+            Channels: 1,
+            AudioQuality: "Low",
+            AudioEncoding: "aac",
+            AudioEncodingBitRate: 32000
+        });
+    };
+
+    //开始
+    record = async () => {
+        if (this.state.recording) {
+            console.warn('Already recording!');
+            return;
+        }
+
+        if (!this.state.hasPermission) {
+            console.warn('Can\'t record, no permission granted!');
+            return;
+        }
+
+        if (this.state.stoppedRecording) {
+            this.prepareRecordingPath();
+        }
+
+        this.setState({recording: true, paused: false});
+
+        try {
+            const filePath = await AudioRecorder.startRecording();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    //停止
+    stop = async () => {
+        if (!this.state.recording) {
+            console.warn('Can\'t stop, not recording!');
+            return;
+        }
+
+        this.setState({stoppedRecording: true, recording: false, paused: false});
+
+        try {
+            const filePath = await AudioRecorder.stopRecording();
+
+            if (Platform.OS === 'android') {
+                this.finishRecording(true, filePath);
+            }
+            return filePath;
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    ///完成录制
+    finishRecording = (didSucceed, filePath) => {
+        this.setState({finished: didSucceed});
+        if (this.state.currentTime === 0) {
+            showToast("录音时间过短");
+            return;
+        }
+        this.onSendVoice(filePath.replace("file://", ""));
+    };
+
+    //检测是否授权
+    checkPermission = () => {
+        if (Platform.OS !== 'android') {
+            return Promise.resolve(true);
+        }
+
+        const rationale = {
+            'title': '获取录音权限',
+            'message': 'PokerPro正请求获取麦克风权限用于录音,是否允许'
+        };
+
+        return PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO, rationale)
+            .then((result) => {
+                return (result === true || PermissionsAndroid.RESULTS.GRANTED)
+            });
+    };
+
     ///输入语音
     createTextInput = () => {
         return (
-            <TouchableOpacity style={styles.voiceView} onLongPress={() => {
-                console.log("按住了");
-            }} onPressOut={() => {
-                console.log("移出去了");
-            }} onPressIn={() => {
-                console.log("2222");
-            }}>
+            <TouchableOpacity style={styles.voiceView}
+                              onLongPress={() => {
+                                  this.record();
+                              }}
+                              onPressOut={() => {
+                                  this.stop();
+                              }}
+            >
                 <Text>按住说话</Text>
             </TouchableOpacity>
         );
@@ -513,6 +631,9 @@ export default class ChatRoom extends Component {
 
     render() {
         let userInfo = this.otherInfo;
+        let voiceView = {};
+        if (this.state.inputVoice)
+            voiceView = {renderComposer: this.createTextInput};
         return (
             <View style={styles.container}>
                 {/*导航栏*/}
@@ -533,40 +654,23 @@ export default class ChatRoom extends Component {
                     }}
                 />
 
-                {!this.state.inputVoice ?
-                    <GiftedChat
-                        messages={this.state.messages}              //消息
-                        showUserAvatar={true}                       //显示自己的头像
-                        loadEarlier={true}
-                        renderLoadEarlier={this.renderEarlyMessage}           //加载历史消息
-                        renderSystemMessage={this.createSystemMsg}  //自定义系统消息
-                        user={{
-                            _id: this.state.myUserName,
-                        }}
-                        label={"发送"}
-                        onSend = {(event) => this.onSendMessage(event)}
-                        placeholder={"新消息"}
-                        renderAccessory={this.renderAccessoryAction}
-                        renderActions={this.createToolButton}       //自定义左侧按钮
-                    />
-                    :
-                    <GiftedChat
-                        messages={this.state.messages}              //消息
-                        showUserAvatar={true}                       //显示自己的头像
-                        loadEarlier={true}
-                        renderLoadEarlier={this.renderEarlyMessage}           //加载历史消息
-                        renderSystemMessage={this.createSystemMsg}  //自定义系统消息
-                        user={{
-                            _id: this.state.myUserName,
-                        }}
-                        label={"发送"}
-                        onSend = {(event) => this.onSendMessage(event)}
-                        placeholder={"新消息"}
-                        renderAccessory={this.renderAccessoryAction}
-                        renderActions={this.createToolButton}       //自定义左侧按钮
-                        renderComposer={this.createTextInput}
-                    />
-                }
+                <GiftedChat
+                    {...voiceView}
+                    messages={this.state.messages}              //消息
+                    showUserAvatar={true}                       //显示自己的头像
+                    loadEarlier={true}
+                    renderLoadEarlier={this.renderEarlyMessage}           //加载历史消息
+                    renderSystemMessage={this.createSystemMsg}  //自定义系统消息
+                    user={{
+                        _id: this.state.myUserName,
+                    }}
+                    label={"发送"}
+                    onSend={(event) => this.onSendMessage(event)}
+                    placeholder={"新消息"}
+                    renderAccessory={this.renderAccessoryAction}
+                    renderActions={this.createToolButton}       //自定义左侧按钮
+                />
+
 
                 {this.state.videoPath !== "" ? <VideoToast videoUrl={this.state.videoPath} hiddenVideoAction={() => {
                     this.setState({videoPath: ""})
@@ -588,7 +692,7 @@ const styles = StyleSheet.create({
         marginTop: (50 - Metrics.reallySize(26)) / 2,
         marginBottom: (50 - Metrics.reallySize(26)) / 2,
         marginLeft: 17,
-        marginRight:17,
+        marginRight: 17,
     },
     superView: {
         height: 200,
@@ -602,12 +706,12 @@ const styles = StyleSheet.create({
     voiceView: {
         flex: 1,
         height: 39,
-        marginTop:5,
-        marginBottom:5,
+        marginTop: 5,
+        marginBottom: 5,
         marginRight: 17,
-        borderColor:"#E5E5E5",
-        borderWidth:0.5,
-        borderRadius:4,
+        borderColor: "#E5E5E5",
+        borderWidth: 0.5,
+        borderRadius: 4,
         justifyContent: "center",
         alignItems: "center",
     },

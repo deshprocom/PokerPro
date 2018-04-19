@@ -330,6 +330,8 @@ const images = {
         play_video: require('../../source/social/icon_video_play.png'),
         chat_left: require('../../source/social/icon_chat_left.png'),
         chat_right: require('../../source/social/icon_chat_right.png'),
+        voice_left: require('../../source/social/icon_voice_left.png'),
+        voice_right: require('../../source/social/icon_voice_right.png'),
 
     }
 

@@ -70,7 +70,6 @@ export default class MessageCenter extends Component {
     getConversations = () => {
         ///获取会话列表
         JMessage.getConversations((conArr) => { // conArr: 会话数组。
-            console.log(conArr);
             this.setState({conversations: conArr});
         }, (error) => {
             console.log("获取会话列表失败", error);
