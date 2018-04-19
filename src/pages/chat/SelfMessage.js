@@ -17,7 +17,6 @@ export default class SelfMessage extends Component {
 
     createMessage = () => {
         const {type, text, image, path, duration} = this.props.message;
-        console.log("我发送的消息", this.props.message);
         switch (type) {
             case "text" :
                 return (

@@ -43,6 +43,7 @@
     "react-native-scrollable-tab-view": "^0.8.0",
     "react-native-smart-pull-to-refresh-listview": "^1.6.11-beta.2",
     "react-native-smart-splash-screen": "^2.3.3",
+    "react-native-sound": "^0.10.9",
     "react-native-storage": "^0.2.2",
     "react-native-swipeout": "git+https://github.com/CandyOgre/react-native-swipeout.git",
     "react-native-swiper": "^1.5.13",

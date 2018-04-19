@@ -332,6 +332,8 @@ const images = {
         chat_right: require('../../source/social/icon_chat_right.png'),
         voice_left: require('../../source/social/icon_voice_left.png'),
         voice_right: require('../../source/social/icon_voice_right.png'),
+        keyboard: require('../../source/social/icon_chat_keyboard.png'),
+        voiceinput: require('../../source/social/icon_chat_voiceinput.png'),
 
     }
 
