@@ -16,7 +16,7 @@ export default class OtherMessage extends Component {
     };
 
     createMessage = () => {
-        const {type, text, image} = this.props.message;
+        const {type, text, image,duration} = this.props.message;
         switch (type) {
             case "text" :
                 return (
@@ -38,8 +38,9 @@ export default class OtherMessage extends Component {
                 );
             case "voice":
                 return (
-                    <View style={[styles.superView, styles.textView]}>
-                        <Text style={[{color: "white"}, {fontSize: 15}]}>这是一条语音消息</Text>
+                    <View style={[styles.superView, styles.voiceView,{width:parseInt(duration) * 6 + 50}]}>
+                        <Image source={Images.social.voice_left} style={styles.voiceImage}/>
+                        <Text style={[{color: "white"}, {fontSize: 15}]}>{`${parseInt(duration)}"`}</Text>
                     </View>
                 );
             default:
@@ -53,9 +54,11 @@ export default class OtherMessage extends Component {
         let avatarThumbPath = userInfo.avatarThumbPath;
         return (
             <View style={styles.container}>
-                {avatarThumbPath === "" ?
+                {avatarThumbPath === undefined || avatarThumbPath === "" ?
                     <Image source={Images.home_avatar} style={styles.userIcon}/> :
                     <Image source={{uri: avatarThumbPath}} style={styles.userIcon}/>}
+
+                <Image source={Images.social.chat_left} style={styles.leftCorner}/>
                 <TouchableOpacity onPress={() => {
                     if (this.props.messageClick === null) return;
                     this.props.messageClick();
@@ -85,16 +88,35 @@ const styles = StyleSheet.create({
         backgroundColor: Colors._ECE,
         marginBottom: 17,
         marginTop: 17,
-        marginLeft: 10,
+        marginLeft: -5,
         borderRadius: 6,
     },
     textView: {
         maxWidth: Metrics.screenWidth - (Metrics.reallySize(38) + 27) * 2,
-        padding: 10
+        padding: 10,
+    },
+    voiceView:{
+        flexDirection:"row",
+        alignItems:"center",
+    },
+    voiceImage:{
+        marginBottom: 12,
+        marginTop: 12,
+        width:Metrics.reallySize(24),
+        height:Metrics.reallySize(15),
+        marginRight:2,
+        marginLeft:3,
+        resizeMode:'contain',
     },
     imageView: {
         width: Metrics.reallySize(120),
         height: Metrics.reallySize(150),
         padding: 1,
+    },
+    leftCorner:{
+        width:Metrics.reallySize(10),
+        height:Metrics.reallySize(10),
+        marginLeft:10,
+        marginBottom:17,
     }
 });

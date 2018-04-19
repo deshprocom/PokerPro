@@ -70,7 +70,6 @@ export default class MessageCenter extends Component {
     getConversations = () => {
         ///获取会话列表
         JMessage.getConversations((conArr) => { // conArr: 会话数组。
-            console.log(conArr);
             this.setState({conversations: conArr});
         }, (error) => {
             console.log("获取会话列表失败", error);
@@ -109,11 +108,18 @@ export default class MessageCenter extends Component {
         return (
             <TouchableOpacity
                 onPress={() => {
-                    router.toMessageList({
-                        username: username, nickname: nickname, reloadPage: () => {
-                            this.getConversations();
-                        }
-                    });
+                    JMessage.getUserInfo({username: username},
+                        (userInfo) => {
+                            router.toMessageList({
+                                username: userInfo.username,
+                                nickname: userInfo.nickname,
+                                avatarThumbPath:userInfo.avatarThumbPath,
+                                reloadPage: () => {
+                                    this.getConversations();
+                                }
+                            });
+                        }, (error) => {
+                        });
                 }}
                 keyExtractor={(item, index) => index + ""}
                 style={{backgroundColor: 'white'}}>

@@ -7,10 +7,10 @@ import {
     StyleSheet,
     Text,
     View,
-    TextInput,
+    Modal,
     TouchableOpacity,
     Image,
-    Keyboard
+    PermissionsAndroid
 } from 'react-native';
 
 import {GiftedChat, Avatar} from 'react-native-gifted-chat';
@@ -24,6 +24,12 @@ import OtherMessage from "./OtherMessage";
 import {screenHeight, screenWidth} from "../socials/Header";
 import VideoToast from "./VideoToast";
 import ImagePicker from 'react-native-image-crop-picker';
+import {AudioRecorder, AudioUtils} from 'react-native-audio';
+
+var Sound = require('react-native-sound');
+Sound.setCategory('Playback');
+
+let audioPath = AudioUtils.DocumentDirectoryPath + '/test.aac';
 
 const iOS = Platform.OS === "ios" ? "1" : "0";
 
@@ -41,7 +47,13 @@ export default class ChatRoom extends Component {
             showToolBar: false,//隐藏显示工具栏
             videoPath: "",
             moreText: "加载更多",
-            otherInfo: {},
+            inputVoice: false,//是否输入语音
+            currentTime: 0.0, //开始录音到现在的持续时间
+            recording: false, //是否正在录音
+            stoppedRecording: false, //是否停止了录音
+            finished: false, //是否完成录音
+            audioPath: AudioUtils.DocumentDirectoryPath + '/test.aac', //路径下的文件名
+            hasPermission: undefined, //是否获取权限
         };
     }
 
@@ -51,6 +63,31 @@ export default class ChatRoom extends Component {
     }
 
     componentDidMount() {
+        ///检测是否有权限
+        this.checkPermission().then((hasPermission) => {
+            this.setState({hasPermission});
+
+            if (!hasPermission) return;
+
+            //准备录音
+            this.prepareRecordingPath();
+
+
+            ///录音时长
+            AudioRecorder.onProgress = (data) => {
+                this.setState({currentTime: Math.floor(data.currentTime)});
+            };
+
+            //录制完成
+            AudioRecorder.onFinished = (data) => {
+                // Android callback comes in the form of a promise instead.
+                if (Platform.OS === 'ios') {
+                    this.finishRecording(data.status === "OK", data.audioFileURL);
+                }
+            };
+        });
+
+
         ///历史消息
         this.getHistoryMessage();
         //进入聊天室
@@ -72,12 +109,18 @@ export default class ChatRoom extends Component {
 
         ///移除登录状态监听
         JMessage.removeLoginStateChangedListener(this.loginState);
+
+        //停止播放语音
+        if(this.sound){
+            this.sound.stop();
+        }
     }
 
+    //<!--------------------------------   极光相关   --------------------------------!>//
     ///进入聊天室
     enterChat = () => {
         //停止接收推送
-        let userInfo = this.state.otherInfo;
+        let userInfo = this.otherInfo;
         JMessage.enterConversation({type: 'single', username: userInfo.username},
             (conversation) => {
 
@@ -104,17 +147,13 @@ export default class ChatRoom extends Component {
             this.myInfo = myInfo;
             this.setState({myUserName: myInfo.username});
         });
-        this.setState({otherInfo: this.props.params.userInfo});
-        JMessage.getUserInfo({username: this.props.params.userInfo.username},
-            (userInfo) => {
-                this.setState({otherInfo: userInfo});
-            }, (error) => {
-            });
+        ///其他人的信息
+        this.otherInfo = this.props.params.userInfo;
     };
 
     ///历史消息
     getHistoryMessage = () => {
-        let userInfo = this.state.otherInfo;
+        let userInfo = this.otherInfo;
         let param = {
             type: "single",
             username: userInfo.username,
@@ -166,96 +205,7 @@ export default class ChatRoom extends Component {
     };
 
 
-    ///创建消息体
-    createMessageBody = (message) => {
-        const {id, type, text, target, thumbPath, path} = message;
-        const {username, avatarThumbPath, nickname} = target;
-        let user = {
-            _id: username,
-            name: nickname,
-            avatar: avatarThumbPath,
-        };
-        let newMessage = {
-            _id: id,
-            user: user,
-            system: true,
-        };
-
-        if (type === "text") {
-            newMessage.type = "text";
-            newMessage.text = text;
-        }
-
-        if (type === "image") {
-            newMessage.type = "image";
-            newMessage.image = thumbPath;
-        }
-
-        if (type === "voice") {
-            newMessage.type = "voice";
-            newMessage.path = path;
-        }
-
-        if (type === "file") {
-            newMessage.system = true;
-            newMessage.type = "video";
-            newMessage.path = path;
-        }
-
-        return newMessage;
-    };
-
-    //消息点击
-    clickMessageAction = (message) => {
-        let {type, image, path, _id} = message;
-        if (type === "image") {
-            let images = [{url: image}];
-            router.toImageGalleryPage(images, 0);
-        }
-        if (type === "video") {
-            let url = path;
-
-            ///视频未下载
-            if (url === "") {
-                let userInfo = this.state.otherInfo;
-                let parma = {
-                    type: "single",
-                    username: userInfo.username,
-                    messageId: _id,
-                };
-                JMessage.downloadFile(parma,
-                    (result) => {
-                        console.log("下载文件成功");
-                        this.setState({videoPath: result.filePath});
-                        message.path = result.filePath;
-                    }, (error) => {
-                        console.log("下载文件失败");
-                    });
-            }
-            else {
-                this.setState({videoPath: url});
-            }
-
-        }
-    };
-
-
-    ///添加消息
-    addMessage = (messages) => {
-        this.setState(previousState => ({
-            messages: GiftedChat.append(previousState.messages, messages),
-        }))
-    };
-
-    ///发送视频
-    onSendVideo = (mediaPath) => {
-        this.createMessage({messageType: "file", path: mediaPath});
-    };
-
-    ///发送图片
-    onSendImage = (mediaPath) => {
-        this.createMessage({messageType: "image", path: mediaPath});
-    };
+    //<!--------------------------------   消息相关   --------------------------------!>//
 
     ///发送文字
     onSendMessage = (messages) => {
@@ -265,16 +215,22 @@ export default class ChatRoom extends Component {
             text: message.text,
         };
         this.createMessage(newMsg);
-        // if (text === "") {
-        //     showToast("输入为空");
-        //     return;
-        // }
-        // let newMsg = {
-        //     messageType: "text",
-        //     text: text,
-        // };
-        // this.createMessage(newMsg);
+    };
 
+    ///发送语音
+    onSendVoice = (mediaPath) => {
+        this.createMessage({messageType: "voice", path: mediaPath, duration: this.state.currentTime});
+    };
+
+
+    ///发送视频
+    onSendVideo = (mediaPath) => {
+        this.createMessage({messageType: "file", path: mediaPath});
+    };
+
+    ///发送图片
+    onSendImage = (mediaPath) => {
+        this.createMessage({messageType: "image", path: mediaPath});
     };
 
     ///选择图片
@@ -294,10 +250,9 @@ export default class ChatRoom extends Component {
         });
     };
 
-
-    ///创建消息
+    ///创建并发送消息
     createMessage = (msg) => {
-        let userInfo = this.state.otherInfo;
+        let userInfo = this.otherInfo;
         let msgInfo = {
             type: "single",
             username: userInfo.username,
@@ -312,6 +267,7 @@ export default class ChatRoom extends Component {
         ///语音类型 消息体拼接path字段
         if (msg.messageType === "voice") {
             msgInfo.path = msg.path;
+            msgInfo.duration = msg.duration;
         }
 
         ///图片类型 消息体拼接path字段
@@ -364,13 +320,231 @@ export default class ChatRoom extends Component {
 
     };
 
+    ///整理消息格式，添加到消息列表中
+    createMessageBody = (message) => {
+        const {id, type, text, target, thumbPath, path, duration} = message;
+        const {username, avatarThumbPath, nickname} = target;
+        let user = {
+            _id: username,
+            name: nickname,
+            avatar: avatarThumbPath,
+        };
+        let newMessage = {
+            _id: id,
+            user: user,
+            system: true,
+        };
+
+        if (type === "text") {
+            newMessage.type = "text";
+            newMessage.text = text;
+        }
+
+        if (type === "image") {
+            newMessage.type = "image";
+            newMessage.image = thumbPath;
+        }
+
+        if (type === "voice") {
+            newMessage.type = "voice";
+            newMessage.path = path;
+            newMessage.duration = duration;
+        }
+
+        if (type === "file") {
+            newMessage.type = "video";
+            newMessage.path = path;
+        }
+
+        return newMessage;
+    };
+
+
+    ///将消息添加到消息列表
+    addMessage = (messages) => {
+        this.setState(previousState => ({
+            messages: GiftedChat.append(previousState.messages, messages),
+        }))
+    };
+
+    //消息点击事件
+    clickMessageAction = (message) => {
+        let {type, image, path, _id} = message;
+        if (type === "image") {
+            let images = [{url: image}];
+            router.toImageGalleryPage(images, 0);
+        }
+        if (type === "voice") {
+            if (this.sound) {
+                this.sound.stop(() => {
+                    this.playVoice(path);
+                });
+            }
+            else {
+                this.playVoice(path);
+            }
+        }
+        if (type === "video") {
+            let url = path;
+
+            ///视频未下载
+            if (url === "") {
+                let userInfo = this.otherInfo;
+                let parma = {
+                    type: "single",
+                    username: userInfo.username,
+                    messageId: _id,
+                };
+                JMessage.downloadFile(parma,
+                    (result) => {
+                        console.log("下载文件成功");
+                        this.setState({videoPath: result.filePath});
+                        message.path = result.filePath;
+                    }, (error) => {
+                        console.log("下载文件失败");
+                    });
+            }
+            else {
+                this.setState({videoPath: url});
+            }
+
+        }
+    };
+
+    //<!--------------------------------   播放录音相关   --------------------------------!>//
+    playVoice = (mediaPath) => {
+        this.sound = new Sound(mediaPath, '', (error) => {
+            if (error) {
+                console.log('failed to load the sound', error);
+                return;
+            }
+            setTimeout(() => {
+                this.sound.play((success) => {
+                    if (success) {
+                        console.log('successfully finished playing');
+                    } else {
+                        console.log('playback failed due to audio decoding errors');
+                    }
+                });
+            }, 100);
+        });
+    };
+
+
+    //<!--------------------------------   录音相关   --------------------------------!>//
+    ///准备录制
+    prepareRecordingPath = () => {
+        AudioRecorder.prepareRecordingAtPath(audioPath, {
+            SampleRate: 22050,
+            Channels: 1,
+            AudioQuality: "Low",
+            AudioEncoding: "aac",
+            AudioEncodingBitRate: 32000
+        });
+    };
+
+    //开始录音
+    record = async () => {
+        if (this.state.recording) {
+            console.warn('Already recording!');
+            return;
+        }
+
+        if (!this.state.hasPermission) {
+            console.warn('Can\'t record, no permission granted!');
+            return;
+        }
+
+        if (this.state.stoppedRecording) {
+            this.prepareRecordingPath();
+        }
+
+        this.setState({recording: true, paused: false});
+
+        try {
+            const filePath = await AudioRecorder.startRecording();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    //停止录音
+    stop = async () => {
+        if (!this.state.recording) {
+            console.warn('Can\'t stop, not recording!');
+            return;
+        }
+
+        this.setState({stoppedRecording: true, recording: false, paused: false});
+
+        try {
+            const filePath = await AudioRecorder.stopRecording();
+
+            if (Platform.OS === 'android') {
+                this.finishRecording(true, filePath);
+            }
+            return filePath;
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    ///完成录制
+    finishRecording = (didSucceed, filePath) => {
+        this.setState({finished: didSucceed});
+        if (this.state.currentTime === 0) {
+            showToast("录音时间过短");
+            return;
+        }
+        this.onSendVoice(filePath.replace("file://", ""));
+    };
+
+    //检测是否授权
+    checkPermission = () => {
+        if (Platform.OS !== 'android') {
+            return Promise.resolve(true);
+        }
+
+        const rationale = {
+            'title': '获取录音权限',
+            'message': 'PokerPro正请求获取麦克风权限用于录音,是否允许'
+        };
+
+        return PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO, rationale)
+            .then((result) => {
+                return (result === true || PermissionsAndroid.RESULTS.GRANTED)
+            });
+    };
+
+
+    //<!--------------------------------   UI相关   --------------------------------!>//
+    ///加载更多
+    renderEarlyMessage = () => {
+        return (
+            <View style={styles.subView}>
+
+                {this.state.moreText === "加载更多" ?
+                    <TouchableOpacity onPress={() => {
+                        this.getHistoryMessage();
+                    }}>
+                        <View style={styles.moreView}>
+                            <Text style={styles.moreText}>加载更多</Text>
+                        </View>
+                    </TouchableOpacity>
+                    : null}
+                :null}
+            </View>
+
+        );
+    };
+
     ///自定义消息组件
     createSystemMsg = (props) => {
         let message = props.currentMessage;
         let currentName = message.user._id;
         let username = this.myInfo.username;
         if (username === currentName) {
-            message.userInfo = this.state.otherInfo;
+            message.userInfo = this.otherInfo;
             ///其他人发的消息
             return (
                 <OtherMessage message={message} messageClick={() => {
@@ -392,32 +566,55 @@ export default class ChatRoom extends Component {
 
     //自定义输入框左侧按钮组件
     createToolButton = () => {
+        let source = Images.social.voiceinput;
+        if (this.state.inputVoice){
+            source = Images.social.keyboard;
+        }
+
         return (
             <View style={{flexDirection: "row"}}>
                 <TouchableOpacity onPress={() => {
-                    Keyboard.dismiss();
-                    this.setState({showToolBar: !this.state.showToolBar})
+                    this.setState({inputVoice: !this.state.inputVoice})
                 }}>
-                    <Image source={Images.social.chat_more} style={styles.btnIcon}/>
+                    <Image source={source} style={styles.btnIcon}/>
                 </TouchableOpacity>
-                <TouchableOpacity>
-                    <Image source={Images.social.chat_emoji} style={styles.btnIcon}/>
-                </TouchableOpacity>
+                {/*<TouchableOpacity>*/}
+                {/*<Image source={Images.social.chat_emoji} style={styles.btnIcon}/>*/}
+                {/*</TouchableOpacity>*/}
             </View>
         );
     };
 
+
+    ///输入语音
+    createTextInput = () => {
+        return (
+            <TouchableOpacity style={styles.voiceView}
+                              onLongPress={() => {
+                                  this.record();
+                              }}
+                              onPressOut={() => {
+                                  this.stop();
+                              }}
+            >
+                <Text>按住说话</Text>
+            </TouchableOpacity>
+        );
+    };
+
+
+    ///第二排按钮
     renderAccessoryAction = () => {
-        return(
-            <View style={{flex:1}}>
-                <View style={[{height:1},{backgroundColor:"#f5f5f5"}]}/>
-                <View style={[{flex:1},{flexDirection:"row"},{alignItems:"center"}]}>
+        return (
+            <View style={{flex: 1}}>
+                <View style={[{height: 0.5}, {backgroundColor: "#E5E5E5"}]}/>
+                <View style={[{flex: 1}, {flexDirection: "row"}, {alignItems: "center"}]}>
                     <TouchableOpacity onPress={this.selectedImage}>
                         <Image source={Images.social.chat_picture}
-                               style={[{width: Metrics.reallySize(25)}, {marginLeft:17},{height: Metrics.reallySize(25)}]}/>
+                               style={[{width: Metrics.reallySize(25)}, {marginLeft: 17}, {height: Metrics.reallySize(25)}]}/>
                     </TouchableOpacity>
 
-                    <TouchableOpacity  onPress={() => {
+                    <TouchableOpacity onPress={() => {
                         router.toTakePhoto({
                             fileInfo: (file) => {
                                 let type = file.type;
@@ -431,89 +628,60 @@ export default class ChatRoom extends Component {
                         })
                     }}>
                         <Image source={Images.social.chat_takephoto}
-                               style={[{width: Metrics.reallySize(28)},  {marginLeft:30},{height: Metrics.reallySize(25)}]}/>
+                               style={[{width: Metrics.reallySize(28)}, {marginLeft: 30}, {height: Metrics.reallySize(25)}]}/>
                     </TouchableOpacity>
                 </View>
             </View>
         );
     };
 
-    //自定义底部工具栏组件
-    createToolBar = () => {
-        return (
-            <View style={styles.superView}>
-                <TouchableOpacity style={{flex: 1}} onPress={this.selectedImage}>
-                    <View style={styles.subView}>
-                        <Image source={Images.social.chat_picture}
-                               style={[{width: Metrics.reallySize(34)}, {height: Metrics.reallySize(34)}]}/>
-                        <Text style={styles.text}>图片</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={{flex: 1}} onPress={() => {
-                    router.toTakePhoto({
-                        fileInfo: (file) => {
-                            let type = file.type;
-                            if (type === "image") {
-                                this.onSendImage(file.path);
-                            }
-                            else {
-                                this.onSendVideo(file.path);
-                            }
-                        }
-                    })
-                }}>
-                    <View style={styles.subView}>
-                        <Image source={Images.social.chat_takephoto}
-                               style={[{width: Metrics.reallySize(39)}, {height: Metrics.reallySize(34)}]}/>
-                        <Text style={styles.text}>拍照</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={{flex: 1}}>
-                    <View style={styles.subView}>
-                        <Image source={Images.social.chat_picture}
-                               style={[{width: Metrics.reallySize(34)}, {height: Metrics.reallySize(34)}]}/>
-                        <Text style={styles.text}>语音</Text>
-                    </View>
-                </TouchableOpacity>
-            </View>
-        );
-    };
+    // //自定义底部工具栏组件
+    // createToolBar = () => {
+    //     return (
+    //         <View style={styles.superView}>
+    //             <TouchableOpacity style={{flex: 1}} onPress={this.selectedImage}>
+    //                 <View style={styles.subView}>
+    //                     <Image source={Images.social.chat_picture}
+    //                            style={[{width: Metrics.reallySize(34)}, {height: Metrics.reallySize(34)}]}/>
+    //                     <Text style={styles.text}>图片</Text>
+    //                 </View>
+    //             </TouchableOpacity>
+    //             <TouchableOpacity style={{flex: 1}} onPress={() => {
+    //                 router.toTakePhoto({
+    //                     fileInfo: (file) => {
+    //                         let type = file.type;
+    //                         if (type === "image") {
+    //                             this.onSendImage(file.path);
+    //                         }
+    //                         else {
+    //                             this.onSendVideo(file.path);
+    //                         }
+    //                     }
+    //                 })
+    //             }}>
+    //                 <View style={styles.subView}>
+    //                     <Image source={Images.social.chat_takephoto}
+    //                            style={[{width: Metrics.reallySize(39)}, {height: Metrics.reallySize(34)}]}/>
+    //                     <Text style={styles.text}>拍照</Text>
+    //                 </View>
+    //             </TouchableOpacity>
+    //             <TouchableOpacity style={{flex: 1}}>
+    //                 <View style={styles.subView}>
+    //                     <Image source={Images.social.chat_picture}
+    //                            style={[{width: Metrics.reallySize(34)}, {height: Metrics.reallySize(34)}]}/>
+    //                     <Text style={styles.text}>语音</Text>
+    //                 </View>
+    //             </TouchableOpacity>
+    //         </View>
+    //     );
+    // };
 
-    renderEarlyMessage = () => {
-        return (
-            <View style={styles.subView}>
-
-                {this.state.moreText === "加载更多" ?
-                    <TouchableOpacity onPress={() => {
-                        this.getHistoryMessage();
-                    }}>
-                        <View style={styles.moreView}>
-                            <Text style={styles.moreText}>加载更多</Text>
-                        </View>
-                    </TouchableOpacity>
-                    : null}
-                :null}
-            </View>
-
-        );
-    };
-    createTextInput = () => {
-        return (
-            <TextInput placeholder={"新消息"}
-                       style={styles.textInput}
-                       onFocus={() => {
-                           this.setState({showToolBar: false})
-                       }}
-                       returnKeyType={"send"}
-                       onSubmitEditing={(event) => this.onSendMessage(event.nativeEvent.text)}
-                       ref={ref => this.textField = ref}
-                       blurOnSubmit={false}
-            />
-        );
-    };
 
     render() {
-        let userInfo = this.state.otherInfo;
+        let userInfo = this.otherInfo;
+        let voiceView = {};
+        if (this.state.inputVoice)
+            voiceView = {renderComposer: this.createTextInput};
         return (
             <View style={styles.container}>
                 {/*导航栏*/}
@@ -534,26 +702,26 @@ export default class ChatRoom extends Component {
                     }}
                 />
 
-                {this.state.myUserName === "" ? null :
-                    <GiftedChat
-                        // textStyle={{height: 27}}
-                        messages={this.state.messages}              //消息
-                        showUserAvatar={true}                       //显示自己的头像
-                        loadEarlier={true}
-                        renderLoadEarlier={this.renderEarlyMessage}           //加载历史消息
-                        renderSystemMessage={this.createSystemMsg}  //自定义系统消息
-                        user={{
-                            _id: this.state.myUserName,
-                        }}
-                        label={"发送"}
-                        onSend = {(event) => this.onSendMessage(event)}
-                        placeholder={"新消息"}
-                        renderAccessory={this.renderAccessoryAction}
-                        // renderComposer={this.createTextInput}
-                        // renderActions={this.createToolButton}       //自定义左侧按钮
-                    />
-                }
-                {/*{this.state.showToolBar ? this.createToolBar() : null}*/}
+                <GiftedChat
+                    {...voiceView}
+                    messages={this.state.messages}              //消息
+                    showUserAvatar={true}                       //显示自己的头像
+                    loadEarlier={true}
+                    renderLoadEarlier={this.renderEarlyMessage}           //加载历史消息
+                    renderSystemMessage={this.createSystemMsg}  //自定义系统消息
+                    user={{
+                        _id: this.state.myUserName,
+                    }}
+                    label={"发送"}
+                    onSend={(event) => this.onSendMessage(event)}
+                    placeholder={"新消息"}
+                    renderAccessory={this.renderAccessoryAction}
+                    renderActions={this.createToolButton}       //自定义左侧按钮
+                />
+
+                {this.state.recording ? <View style={styles.voiceAlert}><Text
+                    style={styles.voiceText}>{this.leadingZeros(this.state.currentTime)}</Text></View> : null}
+
 
                 {this.state.videoPath !== "" ? <VideoToast videoUrl={this.state.videoPath} hiddenVideoAction={() => {
                     this.setState({videoPath: ""})
@@ -562,12 +730,36 @@ export default class ChatRoom extends Component {
             </View>
         );
     }
+
+
+    leadingZeros = (num) => {
+        let min = 0;//分钟数
+        let sec = 0;//秒数
+        //大于60s
+        if (num >= 60){
+            min = parseInt(num / 60);
+            sec = num % 60;
+        }
+        else {
+            sec = num;
+        }
+        min = String(min);
+        while (min.length < 2) {
+            min = '0' + min;
+        }
+        sec = String(sec);
+        while (sec.length < 2) {
+            sec = '0' + sec;
+        }
+        return `${min}:${sec}`;
+    }
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "white",
+        alignItems: "center",
     },
     btnIcon: {
         width: Metrics.reallySize(26),
@@ -575,6 +767,7 @@ const styles = StyleSheet.create({
         marginTop: (50 - Metrics.reallySize(26)) / 2,
         marginBottom: (50 - Metrics.reallySize(26)) / 2,
         marginLeft: 17,
+        marginRight: 17,
     },
     superView: {
         height: 200,
@@ -585,11 +778,17 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    textInput: {
+    voiceView: {
         flex: 1,
-        height: 49,
-        marginLeft: 10,
+        height: 39,
+        marginTop: 5,
+        marginBottom: 5,
         marginRight: 17,
+        borderColor: "#E5E5E5",
+        borderWidth: 0.5,
+        borderRadius: 4,
+        justifyContent: "center",
+        alignItems: "center",
     },
     text: {
         marginTop: Metrics.reallySize(9),
@@ -603,5 +802,16 @@ const styles = StyleSheet.create({
     moreText: {
         padding: 10,
         color: "white",
+    },
+    voiceAlert: {
+        position: 'absolute',
+        marginTop: Metrics.screenHeight - 150,
+        backgroundColor: "rgba(0,0,0,0.5)",
+        borderRadius: 4,
+    },
+    voiceText: {
+        padding: 10,
+        color: "white",
+        fontSize: 15,
     }
 });
