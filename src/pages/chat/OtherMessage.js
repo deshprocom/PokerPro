@@ -53,7 +53,7 @@ export default class OtherMessage extends Component {
         let avatarThumbPath = userInfo.avatarThumbPath;
         return (
             <View style={styles.container}>
-                {avatarThumbPath === undefined ?
+                {avatarThumbPath === undefined || avatarThumbPath === "" ?
                     <Image source={Images.home_avatar} style={styles.userIcon}/> :
                     <Image source={{uri: avatarThumbPath}} style={styles.userIcon}/>}
 

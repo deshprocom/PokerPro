@@ -106,6 +106,7 @@ export default class ChatRoom extends Component {
         });
         ///其他人的信息
         this.otherInfo = this.props.params.userInfo;
+        console.log(this.otherInfo);
     };
 
     ///历史消息

@@ -65,7 +65,7 @@ export default class SelfMessage extends Component {
                 </TouchableOpacity>
 
 
-                {avatarThumbPath === "" ?
+                {avatarThumbPath === "" || avatarThumbPath === undefined ?
                     <Image source={Images.home_avatar} style={styles.userIcon}/> :
                     <Image source={{uri: avatarThumbPath}} style={styles.userIcon}/>}
 
