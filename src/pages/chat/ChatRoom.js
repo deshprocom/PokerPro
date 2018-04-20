@@ -27,8 +27,7 @@ import {AudioRecorder, AudioUtils} from 'react-native-audio';
 import PopAction from '../comm/PopAction';
 import {report_user, uploadImage} from '../../services/SocialDao';
 import Loading from "../../components/Loading";
-
-var VideoCoverManager = NativeModules.VideoCoverManager;
+import Thumb from 'react-native-thumb';
 
 
 let Sound = require('react-native-sound');
@@ -246,7 +245,7 @@ export default class ChatRoom extends Component {
     ///发送视频
     onSendVideo = (mediaPath) => {
         this.loading && this.loading.open()
-        VideoCoverManager.getVideoCover(mediaPath,(events) => {
+        Thumb.getVideoCover(mediaPath,(events) => {
             this.uploadImageAction(events,(data) => {
                 this.createMessage({messageType: "file", path: mediaPath,coverPath:data.image_path});
             });

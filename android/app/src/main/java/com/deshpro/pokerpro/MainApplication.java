@@ -6,6 +6,7 @@ import cn.jiguang.share.android.api.JShareInterface;
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
 import com.facebook.react.ReactApplication;
+import com.reactlibrary.RNReactNativeThumbPackage;
 import com.zmxv.RNSound.RNSoundPackage;
 import com.rnim.rn.audio.ReactNativeAudioPackage;
 import org.reactnative.camera.RNCameraPackage;
@@ -51,6 +52,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+            new RNReactNativeThumbPackage(),
             new RNSoundPackage(),
             new ReactNativeAudioPackage(),
             new RNCameraPackage(),
