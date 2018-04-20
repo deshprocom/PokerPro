@@ -119,6 +119,18 @@ export default class ChatRoom extends Component {
         if (this.sound) {
             this.sound.stop();
         }
+
+        let userInfo = this.otherInfo;
+        //重置未读消息
+        JMessage.resetUnreadMessageCount({type: 'single', username: userInfo.username},
+            (conversation) => {
+                ///回调，更新上一页数据
+                if (this.props.params.userInfo.reloadPage !== undefined) {
+                    this.props.params.userInfo.reloadPage();
+                }
+            }, (error) => {
+
+            });
     }
 
     //<!--------------------------------   极光相关   --------------------------------!>//
@@ -132,6 +144,7 @@ export default class ChatRoom extends Component {
             }, (error) => {
 
             });
+
 
         //重置未读消息
         JMessage.resetUnreadMessageCount({type: 'single', username: userInfo.username},

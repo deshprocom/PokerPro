@@ -30,13 +30,13 @@ export default class OtherMessage extends Component {
                 );
             case "image" :
                 return (
-                    <View style={[styles.superView, styles.imageView, {backgroundColor: Colors._ECE}]}>
+                    <View style={[styles.superView, styles.imageView, {backgroundColor: Colors._ECE},{marginLeft:10}]}>
                         <Image source={{uri: image}} style={{flex: 1, borderRadius: 5}}/>
                     </View>
                 );
             case "video":
                 return (
-                    <View style={[styles.superView, styles.imageView, {backgroundColor: Colors._ECE}]}>
+                    <View style={[styles.superView, styles.imageView, {backgroundColor: Colors._ECE},{marginLeft:10}]}>
                         <Image source={{uri: coverPath}} style={{flex: 1, borderRadius: 5}}/>
                         <Image source={Images.social.play_video} style={styles.playImage}/>
                     </View>
@@ -55,7 +55,7 @@ export default class OtherMessage extends Component {
     };
 
     render() {
-        const {userInfo} = this.props.message;
+        const {type,userInfo} = this.props.message;
         let avatarThumbPath = localFilePath(userInfo.avatarThumbPath);
         return (
             <View style={styles.container}>
@@ -63,8 +63,8 @@ export default class OtherMessage extends Component {
                     emptyBg={Images.home_avatar}
                     source={{uri: avatarThumbPath}}
                     style={styles.userIcon}/>
+                {type === "image" || type === "video" ? null : <Image source={Images.social.chat_left} style={styles.leftCorner}/>}
 
-                <Image source={Images.social.chat_left} style={styles.leftCorner}/>
                 <TouchableOpacity onPress={() => {
                     if (this.props.messageClick === null) return;
                     this.props.messageClick();
