@@ -17,11 +17,10 @@ const DEVICE_HEIGHT = Dimensions.get('window').height;
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
 
-
 export default class ShareToast extends Component {
     static props = {
         hiddenVideoAction: null,//关闭弹窗回调
-        videoUrl:null,//视频地址
+        videoUrl: null,//视频地址
     };
 
     ///关闭视频弹窗
@@ -31,13 +30,15 @@ export default class ShareToast extends Component {
     };
 
     render() {
+
+        console.log('视频播放', this.props.videoUrl)
         return (
             <Modal
                 onRequestClose={this.hiddenVideo}
                 transparent={true}
                 visible={true}>
 
-                <Video source={{uri:this.props.videoUrl}}
+                <Video source={{uri: this.props.videoUrl}}
                        style={styles.backgroundVideo}
                        ref={(ref) => {
                            this.player = ref
@@ -54,7 +55,7 @@ export default class ShareToast extends Component {
                        progressUpdateInterval={250.0}          // [iOS] Interval to fire onProgress (default to ~250ms)
                 />
 
-                <TouchableOpacity onPress={this.hiddenVideo} style={{position:'absolute'}}>
+                <TouchableOpacity onPress={this.hiddenVideo} style={{position: 'absolute'}}>
                     <Image source={Images.social.close_camera} style={styles.closeBtn}/>
                 </TouchableOpacity>
             </Modal>
@@ -69,10 +70,10 @@ const styles = StyleSheet.create({
         bottom: 0,
         right: 0,
     },
-    closeBtn:{
-        position:'absolute',
-        marginTop:60,
-        marginLeft:30,
+    closeBtn: {
+        position: 'absolute',
+        marginTop: 60,
+        marginLeft: 30,
         width: Metrics.reallySize(20),
         height: Metrics.reallySize(20),
     }

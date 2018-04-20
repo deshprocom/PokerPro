@@ -245,9 +245,11 @@ export default class ChatRoom extends Component {
     onSendVideo = (mediaPath) => {
 
         this.loading && this.loading.open()
-        Thumb.getVideoCover(mediaPath,(events) => {
-            this.uploadImageAction(events,(data) => {
-                this.createMessage({messageType: "file", path: mediaPath,coverPath:data.image_path});
+        Thumb.getVideoCover(mediaPath, (events) => {
+            if (Platform.OS === 'android')
+                events = 'file://' + events;
+            this.uploadImageAction(events, (data) => {
+                this.createMessage({messageType: "file", path: mediaPath, coverPath: data.image_path});
             });
         });
     };
@@ -255,7 +257,7 @@ export default class ChatRoom extends Component {
     ///上传图片
     uploadImageAction = (imagePath, successCallBack) => {
         let formData = new FormData();
-        let file = {uri:imagePath, type: "multipart/form-data", name: getFileName(imagePath)};
+        let file = {uri: imagePath, type: "multipart/form-data", name: getFileName(imagePath)};
         formData.append("image", file);
         uploadImage(formData, data => {
             successCallBack(data);
@@ -313,8 +315,7 @@ export default class ChatRoom extends Component {
         ///文件类型 消息体拼接path字段
         if (msg.messageType === "file") {
             msgInfo.path = msg.path;
-            msgInfo.extras = {coverPath:msg.coverPath};
-            msgInfo.coverPath = msg.coverPath;
+            msgInfo.extras = {coverPath: msg.coverPath};
         }
 
 
@@ -324,14 +325,16 @@ export default class ChatRoom extends Component {
         ///创建消息
         JMessage.createSendMessage(msgInfo, (message) => {
 
-            console.log("发送一条",msg.messageType,"类型的消息:",message);
+            console.log("发送一条", msg.messageType, "类型的消息:", message);
             //发送消息
             JMessage.sendMessage({
                 id: message.id,
                 type: msgInfo.type,
                 username: msgInfo.username,
-                extras:{coverPath:msg.coverPath}
+                extras: {coverPath: msg.coverPath}
             }, (jmessage) => {
+                if (Platform.OS === 'android')
+                    jmessage.path = msg.path;
                 let newMessage = this.createMessageBody(jmessage);
                 if (newMessage !== undefined) {
                     this.addMessage([newMessage]);
@@ -361,7 +364,7 @@ export default class ChatRoom extends Component {
 
     ///整理消息格式，添加到消息列表中
     createMessageBody = (message) => {
-        const {id, type, text, target, thumbPath, path, duration,extras} = message;
+        const {id, type, text, target, thumbPath, path, duration, extras} = message;
         const {username, avatarThumbPath, nickname} = target;
         let user = {
             _id: username,
@@ -409,6 +412,7 @@ export default class ChatRoom extends Component {
 
     //消息点击事件
     clickMessageAction = (message) => {
+        console.log(message)
         let {type, image, path, _id} = message;
         if (type === "image") {
             let images = [{url: localFilePath(image)}];
@@ -568,7 +572,7 @@ export default class ChatRoom extends Component {
         else {
             let reportList = global.reportList;
             let resultArray = [];
-            reportList.forEach((data,index) => {
+            reportList.forEach((data, index) => {
                 let item = {name: data.name, txtStyle: {color: '#4A90E2'}, onPress: () => this.report(index)};
                 resultArray.push(item);
             });
@@ -600,9 +604,9 @@ export default class ChatRoom extends Component {
             "body": data.name,
             "description": ""
         };
-        report_user(body,(ret) =>{
+        report_user(body, (ret) => {
             showToast(I18n.t("report_success"));
-        },(err) => {
+        }, (err) => {
             console.log(err);
         });
         this.popAction && this.popAction.toggle();
@@ -831,9 +835,10 @@ export default class ChatRoom extends Component {
                     style={styles.voiceText}>{this.leadingZeros(this.state.currentTime)}</Text></View> : null}
 
 
-                {this.state.videoPath !== "" ? <VideoToast videoUrl={this.state.videoPath} hiddenVideoAction={() => {
-                    this.setState({videoPath: ""})
-                }}/> : null}
+                {this.state.videoPath !== "" ? <VideoToast videoUrl={localFilePath(this.state.videoPath)}
+                                                           hiddenVideoAction={() => {
+                                                               this.setState({videoPath: ""})
+                                                           }}/> : null}
 
                 <PopAction
                     ref={ref => this.popAction = ref}
