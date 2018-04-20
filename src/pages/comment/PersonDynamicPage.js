@@ -5,12 +5,24 @@ import I18n from 'react-native-i18n';
 import propTypes from 'prop-types';
 import {NavigationBar, BaseComponent, ImageLoad, UltimateListView} from '../../components';
 import {getPersonDynamics, getUnreadComments} from '../../services/CommentDao';
-import {agoDynamicDate, isEmptyObject, strNotNull, util, utcDate, convertDate} from '../../utils/ComonHelper';
+import {
+    agoDynamicDate,
+    isEmptyObject,
+    strNotNull,
+    util,
+    utcDate,
+    convertDate,
+    showToast
+} from '../../utils/ComonHelper';
 import DynamicEmpty from './DynamicEmpty';
 import DynamicTopBar from './DynamicTopBar';
 import LinearGradient from 'react-native-linear-gradient';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import MomentList from '../socials/MomentList'
+import PopAction from '../comm/PopAction';
+import {report_topic} from "../../services/SocialDao";
+
+let topicId = -1;
 
 export default class PersonDynamicPage extends Component {
     state = {
@@ -28,6 +40,38 @@ export default class PersonDynamicPage extends Component {
         }
 
     }
+
+    //举报原因
+    report = (index) => {
+        let reportList = global.reportList;
+        let data = reportList[index];
+        let body = {
+            "body": data.name,
+        };
+        report_topic(topicId, body, (ret) => {
+            showToast("举报成功");
+        }, (err) => {
+            console.log(err);
+        });
+        this.popAction && this.popAction.toggle();
+    };
+
+    //弹窗
+    popActions = () => {
+        let reportList = global.reportList;
+        let resultArray = [];
+        reportList.forEach((data, index) => {
+            let item = {name: data.name, txtStyle: {color: '#4A90E2'}, onPress: () => this.report(index)};
+            resultArray.push(item);
+        });
+        resultArray.push({
+            name: I18n.t('cancel'),
+            txtStyle: {color: Colors._AAA},
+            onPress: () => this.popAction.toggle()
+        });
+        return resultArray;
+    };
+
 
     setUnreadCount = (unreadCount) => {
         this.unread();
@@ -127,7 +171,7 @@ export default class PersonDynamicPage extends Component {
                               onPress={() => {
                                   if (topic_type === "usertopic") {
                                       global.router.toLongArticle(topic)
-                                  }else {
+                                  } else {
                                       console.log('足迹', topic)
                                       global.router.toDeletePage();
                                   }
@@ -308,40 +352,56 @@ export default class PersonDynamicPage extends Component {
                 key={'moments' + index}
                 userId={user_id}
                 tabLabel={this.tabLabel(item)}
-                type={item}/>
+                type={item}
+                showMore={(id) => {
+                    topicId = id;
+                    this.popAction && this.popAction.toggle();
+                }}/>
         });
 
 
-        return (  <ScrollableTabView
-                renderTabBar={() => <DynamicTopBar
-                    scrollTop={scrollTop}
-                    nickname={this.userInfo.nick_name}
-                    setUnreadCount={this.setUnreadCount}
-                    unreadCount={this.state.unreadCount}
-                    hideReceived={this.isMine()}
-                    count={this.state.dynamics.length}/>}>
+        return (
+                <View style={[{flex:1}]}>
+                    <ScrollableTabView
+                        renderTabBar={() => <DynamicTopBar
+                            scrollTop={scrollTop}
+                            nickname={this.userInfo.nick_name}
+                            setUnreadCount={this.setUnreadCount}
+                            unreadCount={this.state.unreadCount}
+                            hideReceived={this.isMine()}
+                            count={this.state.dynamics.length}/>}>
 
-                {moments}
+                        {moments}
 
-                <UltimateListView
-                    scrollEnabled={scrollEnabled}
-                    style={{backgroundColor: 'white'}}
-                    tabLabel={'足迹'}
-                    header={() => this.personTop()}
-                    ref={ref => this.ultimate = ref}
-                    onFetch={this.onFetch}
-                    keyExtractor={(item, index) => `replies${index}`}
-                    item={this.content}
-                    refreshableTitlePull={I18n.t('pull_refresh')}
-                    refreshableTitleRelease={I18n.t('release_refresh')}
-                    dateTitle={I18n.t('last_refresh')}
-                    allLoadedText={I18n.t('no_more')}
-                    waitingSpinnerText={I18n.t('loading')}
-                    separator={this._separator1}
-                    emptyView={() => <DynamicEmpty/>}
-                />
+                        <UltimateListView
+                            scrollEnabled={scrollEnabled}
+                            style={{backgroundColor: 'white'}}
+                            tabLabel={'足迹'}
+                            header={() => this.personTop()}
+                            ref={ref => this.ultimate = ref}
+                            onFetch={this.onFetch}
+                            keyExtractor={(item, index) => `replies${index}`}
+                            item={this.content}
+                            refreshableTitlePull={I18n.t('pull_refresh')}
+                            refreshableTitleRelease={I18n.t('release_refresh')}
+                            dateTitle={I18n.t('last_refresh')}
+                            allLoadedText={I18n.t('no_more')}
+                            waitingSpinnerText={I18n.t('loading')}
+                            separator={this._separator1}
+                            emptyView={() => <DynamicEmpty/>}
+                        />
 
-            </ScrollableTabView>
+
+
+
+
+                    </ScrollableTabView>
+
+                       <PopAction
+                           ref={ref => this.popAction = ref}
+                           btnArray={this.popActions()}
+                       />
+                </View>
         );
     }
 

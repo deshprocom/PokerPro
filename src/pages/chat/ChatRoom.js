@@ -7,7 +7,6 @@ import {
     StyleSheet,
     Text,
     View,
-    Modal,
     TouchableOpacity,
     Image,
     PermissionsAndroid
@@ -25,8 +24,10 @@ import {screenHeight, screenWidth} from "../socials/Header";
 import VideoToast from "./VideoToast";
 import ImagePicker from 'react-native-image-crop-picker';
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
+import PopAction from '../comm/PopAction';
+import {report_user} from '../../services/SocialDao';
 
-var Sound = require('react-native-sound');
+let Sound = require('react-native-sound');
 Sound.setCategory('Playback');
 
 let audioPath = AudioUtils.DocumentDirectoryPath + '/test.aac';
@@ -54,6 +55,7 @@ export default class ChatRoom extends Component {
             finished: false, //是否完成录音
             audioPath: AudioUtils.DocumentDirectoryPath + '/test.aac', //路径下的文件名
             hasPermission: undefined, //是否获取权限
+            windowType: 1,//弹窗类型 1-举报、拉黑 2-举报原因
         };
     }
 
@@ -111,7 +113,7 @@ export default class ChatRoom extends Component {
         JMessage.removeLoginStateChangedListener(this.loginState);
 
         //停止播放语音
-        if(this.sound){
+        if (this.sound) {
             this.sound.stop();
         }
     }
@@ -516,6 +518,74 @@ export default class ChatRoom extends Component {
             });
     };
 
+    //<!--------------------------------   举报弹窗相关   --------------------------------!>//
+    //弹窗
+    popActions = () => {
+        if (this.state.windowType === 1) {
+            return [{name: I18n.t('report'), txtStyle: {color: '#4A90E2'}, onPress: () => this.report()},
+                {name: I18n.t('add_blacklist'), txtStyle: {color: '#F24A4A'}, onPress: () => this.addBlacklist()},
+                {name: I18n.t('cancel'), txtStyle: {color: Colors._AAA}, onPress: () => this.popAction.toggle()}]
+
+        }
+        else {
+            let reportList = global.reportList;
+            let resultArray = [];
+            reportList.forEach((data,index) => {
+                let item = {name: data.name, txtStyle: {color: '#4A90E2'}, onPress: () => this.report(index)};
+                resultArray.push(item);
+            });
+            resultArray.push({
+                name: I18n.t('cancel'),
+                txtStyle: {color: Colors._AAA},
+                onPress: () => this.popAction.toggle()
+            });
+
+            return resultArray;
+        }
+    };
+
+    //举报
+    report = (index) => {
+        if (index === undefined) {
+            this.setState({windowType: 2});
+            this.popAction && this.popAction.toggle();
+            setTimeout(() => {
+                this.popAction && this.popAction.toggle();
+            }, 500);
+            return;
+        }
+        let userInfo = this.otherInfo;
+        let reportList = global.reportList;
+        let data = reportList[index];
+        let body = {
+            "reported_user_id": userInfo.username,
+            "body": data.name,
+            "description": ""
+        };
+        report_user(body,(ret) =>{
+            showToast("举报成功");
+        },(err) => {
+            console.log(err);
+        });
+        this.popAction && this.popAction.toggle();
+
+    };
+    //拉黑
+    addBlacklist = () => {
+        let userInfo = this.props.params.userInfo;
+        let param = {'usernameArray': [userInfo.username]};
+        JMessage.addUsersToBlacklist(param, (success) => {
+            showToast("添加黑名单成功");
+            this.popAction && this.popAction.toggle();
+        }, (error) => {
+            console.log("拉黑失败", error);
+            if (error.code === 861101) {
+                showToast("无法将自己加入黑名单");
+                this.popAction && this.popAction.toggle();
+            }
+        });
+    };
+
 
     //<!--------------------------------   UI相关   --------------------------------!>//
     ///加载更多
@@ -532,7 +602,6 @@ export default class ChatRoom extends Component {
                         </View>
                     </TouchableOpacity>
                     : null}
-                :null}
             </View>
 
         );
@@ -567,7 +636,7 @@ export default class ChatRoom extends Component {
     //自定义输入框左侧按钮组件
     createToolButton = () => {
         let source = Images.social.voiceinput;
-        if (this.state.inputVoice){
+        if (this.state.inputVoice) {
             source = Images.social.keyboard;
         }
 
@@ -698,26 +767,28 @@ export default class ChatRoom extends Component {
                     rightBtnIcon={Images.social.more_3}
                     rightImageStyle={{height: 4, width: 19, marginLeft: 20, marginRight: 20}}
                     rightBtnPress={() => {
-                        // this.popAction && this.popAction.toggle()
+                        this.setState({windowType: 1});
+                        this.popAction && this.popAction.toggle()
                     }}
                 />
 
-                <GiftedChat
-                    {...voiceView}
-                    messages={this.state.messages}              //消息
-                    showUserAvatar={true}                       //显示自己的头像
-                    loadEarlier={true}
-                    renderLoadEarlier={this.renderEarlyMessage}           //加载历史消息
-                    renderSystemMessage={this.createSystemMsg}  //自定义系统消息
-                    user={{
-                        _id: this.state.myUserName,
-                    }}
-                    label={"发送"}
-                    onSend={(event) => this.onSendMessage(event)}
-                    placeholder={"新消息"}
-                    renderAccessory={this.renderAccessoryAction}
-                    renderActions={this.createToolButton}       //自定义左侧按钮
-                />
+                {this.state.myUserName !== "" ?
+                    <GiftedChat
+                        {...voiceView}
+                        messages={this.state.messages}              //消息
+                        showUserAvatar={true}                       //显示自己的头像
+                        loadEarlier={true}
+                        renderLoadEarlier={this.renderEarlyMessage}           //加载历史消息
+                        renderSystemMessage={this.createSystemMsg}  //自定义系统消息
+                        user={{
+                            _id: this.state.myUserName,
+                        }}
+                        label={"发送"}
+                        onSend={(event) => this.onSendMessage(event)}
+                        placeholder={"新消息"}
+                        renderAccessory={this.renderAccessoryAction}
+                        renderActions={this.createToolButton}       //自定义左侧按钮
+                    /> : null}
 
                 {this.state.recording ? <View style={styles.voiceAlert}><Text
                     style={styles.voiceText}>{this.leadingZeros(this.state.currentTime)}</Text></View> : null}
@@ -727,16 +798,21 @@ export default class ChatRoom extends Component {
                     this.setState({videoPath: ""})
                 }}/> : null}
 
+                <PopAction
+                    ref={ref => this.popAction = ref}
+                    btnArray={this.popActions()}/>
+
             </View>
         );
     }
 
 
+    ///计时格式
     leadingZeros = (num) => {
         let min = 0;//分钟数
         let sec = 0;//秒数
         //大于60s
-        if (num >= 60){
+        if (num >= 60) {
             min = parseInt(num / 60);
             sec = num % 60;
         }
@@ -759,7 +835,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "white",
-        alignItems: "center",
     },
     btnIcon: {
         width: Metrics.reallySize(26),
@@ -808,6 +883,10 @@ const styles = StyleSheet.create({
         marginTop: Metrics.screenHeight - 150,
         backgroundColor: "rgba(0,0,0,0.5)",
         borderRadius: 4,
+        width: 80,
+        justifyContent: "center",
+        alignItems: "center",
+        marginLeft: (Metrics.screenWidth - 80) / 2,
     },
     voiceText: {
         padding: 10,
@@ -815,3 +894,8 @@ const styles = StyleSheet.create({
         fontSize: 15,
     }
 });
+
+
+
+
+

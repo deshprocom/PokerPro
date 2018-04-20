@@ -35,7 +35,7 @@ export default class MoodRelease extends Component {
                 name: I18n.t('show_address'),
                 address: "",
                 latitude: "",
-                longtitude: "",
+                longitude: "",
             }
         }
     }
@@ -150,14 +150,14 @@ export default class MoodRelease extends Component {
     };
     ///发说说
     sendMood = (mood, images) => {
-        const {name, address, latitude, longtitude} = this.state.address;
+        const {name, address, latitude, longitude} = this.state.address;
         let lat = '';
         let lng = '';
         let address_title = '';
         let addressDetail = '';
         if (name !== I18n.t('show_address') && name !== I18n.t("hide_address")) {
             lat = latitude;
-            lng = longtitude;
+            lng = longitude;
             address_title = name;
             addressDetail = address;
         }

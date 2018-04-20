@@ -14,8 +14,10 @@ import I18n from "react-native-i18n";
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import MomentList from './MomentList'
 import PopAction from '../comm/PopAction';
-import {isEmptyObject} from "../../utils/ComonHelper";
+import {isEmptyObject, showToast} from "../../utils/ComonHelper";
+import {report_topic} from "../../services/SocialDao";
 
+let topicId = -1;
 
 export default class Square extends PureComponent {
 
@@ -24,20 +26,34 @@ export default class Square extends PureComponent {
     };
 
     //举报原因
-    report = () => {
-        this.popAction.toggle()
+    report = (index) => {
+        let reportList = global.reportList;
+        let data = reportList[index];
+        let body = {
+            "body": data.name,
+        };
+        report_topic(topicId,body,(ret) =>{
+            showToast("举报成功");
+        },(err) => {
+            console.log(err);
+        });
+        this.popAction && this.popAction.toggle();
     };
 
     //弹窗
     popActions = () => {
-        return [
-            {name: I18n.t('report_reason1'), txtStyle: {color: '#4A90E2'}, onPress: () => this.report()},
-            {name: I18n.t('report_reason2'), txtStyle: {color: '#4A90E2'}, onPress: () => this.report()},
-            {name: I18n.t('report_reason3'), txtStyle: {color: '#4A90E2'}, onPress: () => this.report()},
-            {name: I18n.t('report_reason4'), txtStyle: {color: '#4A90E2'}, onPress: () => this.report()},
-            {name: I18n.t('report_reason5'), txtStyle: {color: '#4A90E2'}, onPress: () => this.report()},
-            {name: I18n.t('cancel'), txtStyle: {color: Colors._AAA}, onPress: () => this.popAction.toggle()}
-        ];
+        let reportList = global.reportList;
+        let resultArray = [];
+        reportList.forEach((data,index) => {
+            let item = {name: data.name, txtStyle: {color: '#4A90E2'}, onPress: () => this.report(index)};
+            resultArray.push(item);
+        });
+        resultArray.push({
+            name: I18n.t('cancel'),
+            txtStyle: {color: Colors._AAA},
+            onPress: () => this.popAction.toggle()
+        });
+        return resultArray;
     };
 
     render() {
@@ -49,7 +65,8 @@ export default class Square extends PureComponent {
                         key={item}
                         tabLabel={this.tabLabel(item)}
                         type={item}
-                        showMore={() => {
+                        showMore={(id) => {
+                            topicId = id;
                             this.popAction && this.popAction.toggle();
                         }}/>
                 })}
