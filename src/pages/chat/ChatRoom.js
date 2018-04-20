@@ -208,6 +208,7 @@ export default class ChatRoom extends Component {
 
     //收到消息
     receiveMessage = (message) => {
+        console.log("收到的消息:",message);
         let newMessage = this.createMessageBody(message);
         if (newMessage !== undefined) {
             this.addMessage([newMessage]);

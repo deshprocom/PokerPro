@@ -51,11 +51,19 @@ export default class NearFriend extends PureComponent {
     }
 
     componentWillMount() {
+
+        getNearBys(ret => {
+            console.log('获取附近', ret)
+            this.setState({
+                nearby_users: ret.nearby_users
+            })
+        }, err => {
+        })
+
         navigator.geolocation.getCurrentPosition(data => {
             const {coords} = data;
             postNearBys(coords, ret => {
             }, err => {
-
             })
 
         }, err => {
@@ -93,7 +101,13 @@ export default class NearFriend extends PureComponent {
                     <Text>{I18n.t("no_near_friend")}</Text>
                 </View>}
                 onRefresh={() => {
-                    console.log('onRefresh')
+                    getNearBys(ret => {
+                        console.log('获取附近', ret)
+                        this.setState({
+                            nearby_users: ret.nearby_users
+                        })
+                    }, err => {
+                    })
                 }
                 }
             /> : <ErrLocation/>}
@@ -152,8 +166,11 @@ export default class NearFriend extends PureComponent {
     covertTom = (distance) => {
         if (distance < 1) {
             return Number.parseInt(distance * 1000) + "m"
-        }
+        } else if (distance < 10) {
+            return Number.parseInt(distance) + "km"
+        } else
+            return ">10km"
 
-        return Number.parseInt(distance) + "km"
+
     }
 }

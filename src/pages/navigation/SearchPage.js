@@ -53,8 +53,7 @@ export class SearchPage extends Component {
     toMessagePage = () => {
         umengEvent('home_notification');
         if (isEmptyObject(login_user)) {
-            // router.toLoginFirstPage()
-            router.toCamera()
+            router.toLoginFirstPage()
         } else {
 
             JpushHelp.iosSetBadge(0);
