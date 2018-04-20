@@ -18,7 +18,7 @@ export default class OtherMessage extends Component {
     };
 
     createMessage = () => {
-        let {type, text, image, duration} = this.props.message;
+        let {type, text, image, duration, coverPath} = this.props.message;
         image = localFilePath(image);
 
         switch (type) {
@@ -37,7 +37,8 @@ export default class OtherMessage extends Component {
             case "video":
                 return (
                     <View style={[styles.superView, styles.imageView, {backgroundColor: Colors._ECE}]}>
-                        <Image source={{uri: image}} style={{flex: 1, borderRadius: 5}}/>
+                        <Image source={{uri: coverPath}} style={{flex: 1, borderRadius: 5}}/>
+                        <Image source={Images.social.play_video} style={styles.playImage}/>
                     </View>
                 );
             case "voice":
@@ -123,5 +124,12 @@ const styles = StyleSheet.create({
         height: Metrics.reallySize(10),
         marginLeft: 10,
         marginBottom: 17,
+    },
+    playImage: {
+        position: "absolute",
+        marginLeft: Metrics.reallySize(35),
+        marginTop: Metrics.reallySize(50),
+        width: Metrics.reallySize(50),
+        height: Metrics.reallySize(50),
     }
 });

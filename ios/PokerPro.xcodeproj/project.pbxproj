@@ -26,6 +26,7 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		1B4B6579E1144B17A09452C0 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D57A183A5C4642B8BA02052B /* Security.framework */; };
 		2534E530E0944E30A9A39990 /* libRNI18n-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E61173EA2E94E7EB74CB6FA /* libRNI18n-tvOS.a */; };
+		276099242089898C00F0D281 /* VideoCoverManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 276099232089898C00F0D281 /* VideoCoverManager.m */; };
 		27F2B7CFF9D14133A31F94DC /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CDAFB868B76D4FFFB21DA52E /* libresolv.tbd */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -583,6 +584,8 @@
 		1FC5B193421F4B229738D062 /* CFNetwork.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		2063F180AB3544E499BF51F4 /* libRCTSplashScreen.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTSplashScreen.a; sourceTree = "<group>"; };
 		272A8816B5B747E195BA8E3B /* RNI18n.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNI18n.xcodeproj; path = "../node_modules/react-native-i18n/ios/RNI18n.xcodeproj"; sourceTree = "<group>"; };
+		276099222089898C00F0D281 /* VideoCoverManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VideoCoverManager.h; path = PokerPro/VideoCoverManager.h; sourceTree = "<group>"; };
+		276099232089898C00F0D281 /* VideoCoverManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VideoCoverManager.m; path = PokerPro/VideoCoverManager.m; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* PokerPro-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PokerPro-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* PokerPro-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PokerPro-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -832,6 +835,8 @@
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				276099222089898C00F0D281 /* VideoCoverManager.h */,
+				276099232089898C00F0D281 /* VideoCoverManager.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
@@ -1967,6 +1972,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				276099242089898C00F0D281 /* VideoCoverManager.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
