@@ -19,7 +19,7 @@ export default class ImageView extends Component{
         let reallyHeight = imageHeight * reallySize(342) / imageWidth;
         return(
             <View style={[styles.container,{height:reallyHeight + 8}]}>
-                <Image source={{uri:imagePath}} style={[{backgroundColor:"yellow"},{width:reallySize(342)},{height:reallyHeight}]}/>
+                <Image source={{uri:imagePath}} style={[{width:reallySize(342)},{height:reallyHeight}]}/>
             </View>
         );
     }

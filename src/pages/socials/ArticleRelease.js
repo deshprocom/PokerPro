@@ -363,7 +363,7 @@ export default class ArticleRelease extends PureComponent {
                 this.insertRow(rowData);
             }
             else {
-                showToast("文件类型错误");
+                showToast(I18n.t("file_type_error"));
             }
         });
     };
@@ -448,7 +448,7 @@ export default class ArticleRelease extends PureComponent {
         return (
             <TouchableOpacity style={styles.editIcon} onPress={() => this.deleteRow(index)}>
                 <View style={styles.editIcon}>
-                    <Text style={{color:"white"}}>{I18n.t('delete')}</Text>
+                    <Text style={{color: "white"}}>{I18n.t('delete')}</Text>
                 </View>
             </TouchableOpacity>
         );
@@ -497,7 +497,7 @@ export default class ArticleRelease extends PureComponent {
                     right={[
                         {
                             component: this.createArrangeComponent(item.index),
-                            backgroundColor:"#ECECEE"
+                            backgroundColor: "#ECECEE"
                         }
                     ]}
                     backgroundColor={"#ECECEE"}
@@ -625,11 +625,11 @@ const styles = StyleSheet.create({
     },
     editIcon: {
         flex: 1,
-        marginTop:5,
-        marginBottom:5,
+        marginTop: 5,
+        marginBottom: 5,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor:"red"
+        backgroundColor: "red"
     },
     imageIcon: {
         width: reallySize(26),

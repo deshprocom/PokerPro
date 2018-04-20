@@ -639,5 +639,9 @@
   "add_backlist_failure":"无法将自己加入黑名单",
   "touch_speech":"按住说话",
   "send":"发送",
-  "new_message":"新消息"
+  "new_message":"新消息",
+  "file_type_error":"文件类型错误",
+  "remove_blacklist_success":"移除黑名单成功",
+  "near_friend":"附近牌友",
+  "no_near_friend":"附近没有人",
 }

@@ -256,7 +256,7 @@ export default class UserTopicPage extends PureComponent {
             "description": ""
         };
         report_user(body,(ret) =>{
-            showToast("举报成功");
+            showToast(I18n.t("report_success"));
         },(err) => {
             console.log(err);
         });

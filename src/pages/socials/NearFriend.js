@@ -45,24 +45,15 @@ export default class NearFriend extends PureComponent {
 
     state = {
         geolocation: true,
-        nearby_users: [{
-            avatar: "https://cdn-upyun.deshpro.com/faces/e2c/807/e2c8071236d3c5b913d6f98872d0112c.jpg",
-            distance: 8.757719710805624,
-            gender: 2,
-            nick_name: "Ricky",
-            signature: "这个人很懒，什么都没写。",
-            user_id: "014b58eac7cf2955a78b64393872fbda"
-        }],
+        nearby_users: [],
         refreshing: false
 
     }
 
     componentWillMount() {
         navigator.geolocation.getCurrentPosition(data => {
-            console.log('位置坐标：', data)
             const {coords} = data;
             postNearBys(coords, ret => {
-                console.log('更新位置', ret)
             }, err => {
 
             })
@@ -82,7 +73,7 @@ export default class NearFriend extends PureComponent {
                 barStyle={'dark-content'}
                 titleStyle={{color: Colors._333}}
                 toolbarStyle={{backgroundColor: 'white'}}
-                title={'附近牌友'}
+                title={I18n.t("near_friend")}
                 leftBtnIcon={Images.social.back}
                 leftImageStyle={{height: 19, width: 10, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}/>
@@ -99,7 +90,7 @@ export default class NearFriend extends PureComponent {
                     justifyContent: 'center',
                     marginTop: 100
                 }}>
-                    <Text>附近没有人</Text>
+                    <Text>{I18n.t("no_near_friend")}</Text>
                 </View>}
                 onRefresh={() => {
                     console.log('onRefresh')
