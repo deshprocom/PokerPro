@@ -7,6 +7,7 @@ import _ from 'lodash';
 import {getDispatchAction} from '../utils/ComonHelper';
 import {GET_PROFILE} from "../actions/ActionTypes";
 
+
 export function report_topic(topic_id,body, resolve, reject) {
     helper.post(Api.report_topic(topic_id), body, ret => {
         resolve(ret.data)
@@ -142,11 +143,11 @@ export function topics_comments(topic_id, resolve, reject) {
 }
 
 
-export function topics_details(topic_id) {
+export function topics_details(topic_id, resolve, reject) {
     helper.get(Api.topics_detail(topic_id), ret => {
-
+        resolve(ret.data)
     }, err => {
-
+        reject(err)
     })
 }
 

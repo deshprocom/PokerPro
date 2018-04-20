@@ -633,5 +633,6 @@
     "circle": "扑客圈",
     "location_friend": "附近牌友"
   },
-  "hide_address": "不显示位置"
+  "hide_address": "不显示位置",
+  "freight_free":"包邮"
 }

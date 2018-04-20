@@ -13,6 +13,7 @@ import {NavigationBar} from '../../components';
 import {isEmptyObject, showToast, utcDate} from '../../utils/ComonHelper';
 import {getActivities, getMsgUnRead} from '../../services/AccountDao';
 import JMessage from "jmessage-react-plugin";
+import {JPUSH_APPKEY} from '../../configs/Constants'
 import Loading from "../../components/Loading";
 
 const icons = [
@@ -109,14 +110,17 @@ export default class MessageCenter extends Component {
         return (
             <TouchableOpacity
                 onPress={() => {
+
+
+
                     this.loading && this.loading.open();
-                    JMessage.getUserInfo({username: username},
+                    JMessage.getUserInfo({username: username, appKey: JPUSH_APPKEY},
                         (userInfo) => {
                             this.loading && this.loading.close();
                             router.toMessageList({
                                 username: userInfo.username,
                                 nickname: userInfo.nickname,
-                                avatarThumbPath:userInfo.avatarThumbPath,
+                                avatarThumbPath: userInfo.avatarThumbPath,
                                 reloadPage: () => {
                                     this.getConversations();
                                 }

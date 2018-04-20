@@ -60,22 +60,12 @@ export default class NearFriend extends PureComponent {
     componentWillMount() {
         navigator.geolocation.getCurrentPosition(data => {
             console.log('位置坐标：', data)
-            if (Platform.OS === 'ios') {
-                const {coords} = data;
-                postNearBys(coords, data => {
-                    console.log('更新位置', data)
+            const {coords} = data;
+            postNearBys(coords, ret => {
+                console.log('更新位置', ret)
+            }, err => {
 
-                    getNearBys(ret => {
-                        console.log('获取附近', ret)
-                        this.setState({
-                            nearby_users: ret.nearby_users
-                        })
-                    }, err => {
-                    })
-                }, err => {
-
-                })
-            }
+            })
 
         }, err => {
             this.setState({

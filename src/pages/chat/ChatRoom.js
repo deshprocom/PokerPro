@@ -17,7 +17,7 @@ import {Colors, Images, Metrics} from "../../Themes";
 import NavigationBar from "../../components/NavigationBar";
 import JMessage from "jmessage-react-plugin";
 import I18n from "react-native-i18n";
-import {showToast} from "../../utils/ComonHelper";
+import {localFilePath, showToast} from "../../utils/ComonHelper";
 import SelfMessage from "./SelfMessage";
 import OtherMessage from "./OtherMessage";
 import {screenHeight, screenWidth} from "../socials/Header";
@@ -373,7 +373,7 @@ export default class ChatRoom extends Component {
     clickMessageAction = (message) => {
         let {type, image, path, _id} = message;
         if (type === "image") {
-            let images = [{url: image}];
+            let images = [{url: localFilePath(image)}];
             router.toImageGalleryPage(images, 0);
         }
         if (type === "voice") {

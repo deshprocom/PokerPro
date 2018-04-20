@@ -9,16 +9,25 @@ import {strNotNull} from '../utils/ComonHelper'
 class ImageLoad extends React.Component {
 
 
+    state = {
+        isErr: false
+    }
+
     render() {
         const {uri} = this.props.source;
         const {emptyBg} = this.props;
 
-        if (strNotNull(uri))
+        if (strNotNull(uri) && !this.state.isErr)
             return (
                 <Image
                     {...this.props}
                     defaultSource={emptyBg ? emptyBg : Images.empty_image}
                     loadingIndicatorSource={Images.empty_image}
+                    onError={(event) => {
+                        this.setState({
+                            isErr: true
+                        })
+                    }}
                 />)
         else
             return <Image

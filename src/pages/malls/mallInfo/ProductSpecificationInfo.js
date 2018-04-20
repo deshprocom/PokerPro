@@ -3,7 +3,7 @@ import {View, Text, Image, StyleSheet, TouchableOpacity, ScrollView} from 'react
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../../Themes';
 import * as Animatable from 'react-native-animatable';
 import I18n from 'react-native-i18n';
-import {showToast, strNotNull, pushProductToCart,isEmptyObject} from '../../../utils/ComonHelper';
+import {showToast, strNotNull, pushProductToCart, isEmptyObject} from '../../../utils/ComonHelper';
 import _ from 'lodash';
 
 
@@ -80,7 +80,7 @@ export default class ProductSpecificationInfo extends PureComponent {
                 <TouchableOpacity
                     style={[styleP.buyTouch, number === 1 ? styleCutDisable : styleCut]}
                     onPress={() => {
-                        if (number > 1 ) {
+                        if (number > 1) {
                             this.setState({number: --number})
                         }
 
@@ -211,18 +211,18 @@ export default class ProductSpecificationInfo extends PureComponent {
 
                     <ScrollView>
                         {this.optionTypesView(optionTypes)}
-                        <View style={{height:80}}/>
+                        <View style={{height: 80}}/>
                     </ScrollView>
 
                 </View>
 
                 <View style={styleP.confirmView}>
                     <TouchableOpacity
-                        onPress={()=>{
+                        onPress={() => {
                             if (isEmptyObject(global.login_user))
                                 global.router.toLoginFirstPage();
-                             else
-                                 this.addCarts()
+                            else
+                                this.addCarts()
                         }}
                         style={styleP.confirm}>
                         <Text style={styleP.confirmTxt}>{I18n.t('confirm')}</Text>
@@ -244,6 +244,7 @@ export default class ProductSpecificationInfo extends PureComponent {
 
         showToast(I18n.t('add_cart_ok'));
         let selectCommodity = {number: number, variant: this.tempProduct, title: this.tempProduct.title};
+        console.log('购物车', selectCommodity)
         pushProductToCart(selectCommodity);
         this.props.showSpecInfo(this.tempProduct)
     }
@@ -259,7 +260,7 @@ const styleP = StyleSheet.create({
         zIndex: 999
     },
     specificationInfo: {
-        paddingBottom:160,
+        paddingBottom: 160,
         marginTop: 160,
         backgroundColor: '#EEEEEE'
     },
