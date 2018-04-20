@@ -644,4 +644,7 @@
   "remove_blacklist_success":"移除黑名单成功",
   "near_friend":"附近牌友",
   "no_near_friend":"附近没有人",
+  "message_voice":"[语音]",
+  "message_image":"[图片]",
+  "message_video":"[视频]"
 }

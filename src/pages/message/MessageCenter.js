@@ -92,13 +92,13 @@ export default class MessageCenter extends Component {
             type = lastMessage.type;
             text = lastMessage.text;
             if (type === "voice") {
-                text = "[语音]";
+                text = I18n.t("message_voice");
             }
             if (type === "image") {
-                text = "[图片]";
+                text = I18n.t("message_image");
             }
             if (type === "file") {
-                text = "[视频]"
+                text = I18n.t("message_video");
             }
         }
 
