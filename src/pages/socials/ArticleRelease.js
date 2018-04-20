@@ -126,7 +126,6 @@ export default class ArticleRelease extends PureComponent {
             router.toLoginFirstPage();
             return;
         }
-        console.log("============",imagePath);
         let formData = new FormData();
         let file = {uri: imagePath, type: "multipart/form-data", name: getFileName(imagePath)};
         formData.append("image", file);
@@ -445,11 +444,13 @@ export default class ArticleRelease extends PureComponent {
     };
 
     ///创建侧滑右侧排序按钮
-    createArrangeComponent = () => {
+    createArrangeComponent = (index) => {
         return (
-            <View style={styles.editIcon}>
-                <Image style={styles.imageIcon} source={Images.social.row_arrange}/>
-            </View>
+            <TouchableOpacity style={styles.editIcon} onPress={() => this.deleteRow(index)}>
+                <View style={styles.editIcon}>
+                    <Text style={{color:"white"}}>{I18n.t('delete')}</Text>
+                </View>
+            </TouchableOpacity>
         );
     };
 
@@ -494,22 +495,12 @@ export default class ArticleRelease extends PureComponent {
             return (
                 <Swipeout
                     right={[
-                        // {
-                        //     component: this.createArrangeComponent()
-                        // },
                         {
-                            text: I18n.t('delete'),
-                            backgroundColor: "red",
-                            onPress: () => this.deleteRow(item.index)
+                            component: this.createArrangeComponent(item.index),
+                            backgroundColor:"#ECECEE"
                         }
                     ]}
                     backgroundColor={"#ECECEE"}
-                    onClose={() => {
-                    }} ///关闭
-                    onOpen={() => {
-                    }} ///打开
-                    scroll={event => {
-                    }} ///滑动
                     autoClose={false} ///点击按钮关闭
                     openRight={swipeOpen}
                     close={!swipeOpen}
@@ -634,9 +625,11 @@ const styles = StyleSheet.create({
     },
     editIcon: {
         flex: 1,
-        backgroundColor: "#ECECEE",
+        marginTop:5,
+        marginBottom:5,
         alignItems: "center",
         justifyContent: "center",
+        backgroundColor:"red"
     },
     imageIcon: {
         width: reallySize(26),
