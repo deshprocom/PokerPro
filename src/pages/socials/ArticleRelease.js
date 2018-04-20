@@ -126,7 +126,7 @@ export default class ArticleRelease extends PureComponent {
             router.toLoginFirstPage();
             return;
         }
-
+        console.log("============",imagePath);
         let formData = new FormData();
         let file = {uri: imagePath, type: "multipart/form-data", name: getFileName(imagePath)};
         formData.append("image", file);
