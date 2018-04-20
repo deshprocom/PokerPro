@@ -15,7 +15,7 @@ import {Colors, Images, Metrics} from '../../Themes';
 import HTML from 'react-native-render-html';
 import {
     topics_like, topics_details, topics_comments,
-    follow
+    follow, report_topic
 } from "../../services/SocialDao";
 import {
     getDateDiff, isEmptyObject, showToast, strNotNull,
@@ -255,20 +255,36 @@ export default class LongArticle extends PureComponent {
     }
 
     //举报原因
-    report = () => {
-        this.popAction.toggle()
+    report = (index) => {
+        const {id} = this.state.article;
+        let reportList = global.reportList;
+        let data = reportList[index];
+        let body = {
+            "body": data.name,
+        };
+        report_topic(id, body, (ret) => {
+            showToast("举报成功");
+        }, (err) => {
+            console.log(err);
+        });
+        this.popAction && this.popAction.toggle();
     };
 
     //弹窗
     popActions = () => {
-        return [
-            {name: I18n.t('report_reason1'), txtStyle: {color: '#4A90E2'}, onPress: () => this.report()},
-            {name: I18n.t('report_reason2'), txtStyle: {color: '#4A90E2'}, onPress: () => this.report()},
-            {name: I18n.t('report_reason3'), txtStyle: {color: '#4A90E2'}, onPress: () => this.report()},
-            {name: I18n.t('report_reason4'), txtStyle: {color: '#4A90E2'}, onPress: () => this.report()},
-            {name: I18n.t('report_reason5'), txtStyle: {color: '#4A90E2'}, onPress: () => this.report()},
-            {name: I18n.t('cancel'), txtStyle: {color: Colors._AAA}, onPress: () => this.popAction.toggle()}
-        ];
+        let reportList = global.reportList;
+        let resultArray = [];
+        reportList.forEach((data,index) => {
+            let item = {name: data.name, txtStyle: {color: '#4A90E2'}, onPress: () => this.report(index)};
+            resultArray.push(item);
+        });
+        resultArray.push({
+            name: I18n.t('cancel'),
+            txtStyle: {color: Colors._AAA},
+            onPress: () => this.popAction.toggle()
+        });
+
+        return resultArray;
     };
 
     //长帖 个人信息
