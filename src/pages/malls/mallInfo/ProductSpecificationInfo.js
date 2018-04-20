@@ -243,6 +243,9 @@ export default class ProductSpecificationInfo extends PureComponent {
         }
 
         showToast(I18n.t('add_cart_ok'));
+        if (!strNotNull(this.tempProduct.image))
+            this.tempProduct.image = this.state.tempImg;
+
         let selectCommodity = {number: number, variant: this.tempProduct, title: this.tempProduct.title};
         console.log('购物车', selectCommodity)
         pushProductToCart(selectCommodity);
