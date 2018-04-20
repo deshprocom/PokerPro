@@ -26,6 +26,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 import PopAction from '../comm/PopAction';
 import {report_user, uploadImage} from '../../services/SocialDao';
+import Loading from "../../components/Loading";
 
 var VideoCoverManager = NativeModules.VideoCoverManager;
 
@@ -244,9 +245,8 @@ export default class ChatRoom extends Component {
 
     ///发送视频
     onSendVideo = (mediaPath) => {
+        this.loading && this.loading.open()
         VideoCoverManager.getVideoCover(mediaPath,(events) => {
-            console.log("视频地址",mediaPath);
-            console.log("图片地址",events);
             this.uploadImageAction(events,(data) => {
                 this.createMessage({messageType: "file", path: mediaPath,coverPath:data.image_path});
             });
@@ -261,7 +261,7 @@ export default class ChatRoom extends Component {
         uploadImage(formData, data => {
             successCallBack(data);
         }, err => {
-            // this.uploadImageAction(imagePath, successCallBack);
+            this.uploadImageAction(imagePath, successCallBack);
         });
     };
 
@@ -338,6 +338,7 @@ export default class ChatRoom extends Component {
                     this.addMessage([newMessage]);
                 }
                 console.log("发送成功", jmessage);
+                this.loading && this.loading.close()
 
 
                 ///回调，更新上一页数据
@@ -840,6 +841,8 @@ export default class ChatRoom extends Component {
                     ref={ref => this.popAction = ref}
                     btnArray={this.popActions()}/>
 
+
+                <Loading ref={ref => this.loading = ref} cancelable={true}/>
             </View>
         );
     }
