@@ -5,6 +5,7 @@ global.addressList = [];//地址管理
 global.timeRecodes = [];//商城倒计时
 global.menuReleases = {};//首页菜单众筹隐藏
 global.followships = {};//关注及粉丝列
+global.reportList = [];//举报列表
 
 
 

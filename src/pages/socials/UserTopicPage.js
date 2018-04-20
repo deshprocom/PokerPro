@@ -13,12 +13,13 @@ import {Images, ApplicationStyles, Metrics, Colors} from "../../Themes";
 import I18n from "react-native-i18n";
 import {NavigationBar} from '../../components';
 import PersonDynamicPage from '../comment/PersonDynamicPage'
-import {visit_other, follow, profile} from '../../services/SocialDao';
+import {visit_other, follow, profile, report_user} from '../../services/SocialDao';
 import _ from 'lodash';
 import Loading from "../../components/Loading";
-import {isFollowed} from '../../utils/ComonHelper';
+import {isFollowed, showToast} from '../../utils/ComonHelper';
 import JMessage from "jmessage-react-plugin";
 import {JPUSH_APPKEY} from '../../configs/Constants'
+import PopAction from '../comm/PopAction';
 
 const HeadHeight = Platform.OS === 'ios' ? Metrics.iPhone_X ? 300 : 280 : 260
 
@@ -108,23 +109,27 @@ export default class UserTopicPage extends PureComponent {
         }
 
         this.loading && this.loading.open();
-        console.log("点击了按钮");
 
         const {nick_name, user_id} = this.props.params.userInfo;
         ///获取私信用户的用户名
         visit_other({userId: user_id}, (success) => {
+
             this.loading && this.loading.close();
             JMessage.getUserInfo({username: success.username, appKey: JPUSH_APPKEY},
                 (userInfo) => {
+                    this.loading && this.loading.close();
                     router.toMessageList({
                         username: userInfo.username,
                         nickname: userInfo.nickname,
                         avatarThumbPath: userInfo.avatarThumbPath,
                     });
                 }, (error) => {
+                    showToast("请求超时");
+                    this.loading && this.loading.close();
                 });
         }, (error) => {
-            console.log(error);
+            showToast("请求超时");
+            this.loading && this.loading.close();
         });
     };
 
@@ -154,7 +159,10 @@ export default class UserTopicPage extends PureComponent {
                 rightImageStyle={{height: 4, width: 20, marginLeft: 20, marginRight: 20}}
                 leftBtnIcon={Images.sign_return}
                 leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
-                leftBtnPress={() => router.pop()}/>
+                leftBtnPress={() => router.pop()}
+                rightBtnPress={() => {
+                    this.popAction && this.popAction.toggle();
+                }}/>
             <View
                 style={styles.person1}>
                 <Image
@@ -220,6 +228,41 @@ export default class UserTopicPage extends PureComponent {
         </TouchableOpacity>
     }
 
+    //弹窗
+    popActions = () => {
+        let reportList = global.reportList;
+        let resultArray = [];
+        reportList.forEach((data,index) => {
+            let item = {name: data.name, txtStyle: {color: '#4A90E2'}, onPress: () => this.report(index)};
+            resultArray.push(item);
+        });
+        resultArray.push({
+            name: I18n.t('cancel'),
+            txtStyle: {color: Colors._AAA},
+            onPress: () => this.popAction.toggle()
+        });
+
+        return resultArray;
+    };
+
+    //举报
+    report = (index) => {
+        const {user_id} = this.props.params.userInfo;
+        let reportList = global.reportList;
+        let data = reportList[index];
+        let body = {
+            "reported_user_id": user_id,
+            "body": data.name,
+            "description": ""
+        };
+        report_user(body,(ret) =>{
+            showToast("举报成功");
+        },(err) => {
+            console.log(err);
+        });
+        this.popAction && this.popAction.toggle();
+    };
+
     render() {
 
         if (Platform.OS === 'ios')
@@ -238,7 +281,9 @@ export default class UserTopicPage extends PureComponent {
 
                 {this.goTopView()}
                 <Loading ref={ref => this.loading = ref} cancelable={true}/>
-
+                <PopAction
+                    ref={ref => this.popAction = ref}
+                    btnArray={this.popActions()}/>
             </ScrollView>
         else
             return <ScrollView
@@ -257,7 +302,9 @@ export default class UserTopicPage extends PureComponent {
 
                 {this.goTopView()}
                 <Loading ref={ref => this.loading = ref} cancelable={true}/>
-
+                <PopAction
+                    ref={ref => this.popAction = ref}
+                    btnArray={this.popActions()}/>
             </ScrollView>
 
 

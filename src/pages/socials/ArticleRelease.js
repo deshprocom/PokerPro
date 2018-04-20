@@ -43,7 +43,7 @@ export default class ArticleRelease extends PureComponent {
                         name: I18n.t('show_address'),
                         address: "",
                         latitude: "",
-                        longtitude: "",
+                        longitude: "",
                     }
                 },
             ],
@@ -178,7 +178,7 @@ export default class ArticleRelease extends PureComponent {
     ///请求发长贴接口
     fetchData = (title, content, cover_link) => {
         let lastObj = this.state.data[this.state.data.length - 1];
-        const {name, address, latitude, longtitude} = lastObj.address;
+        const {name, address, latitude, longitude} = lastObj.address;
 
         let lat = '';
         let lng = '';
@@ -186,7 +186,7 @@ export default class ArticleRelease extends PureComponent {
         let addressDetail = '';
         if (name !== I18n.t('show_address') && name !== I18n.t("hide_address")) {
             lat = latitude;
-            lng = longtitude;
+            lng = longitude;
             address_title = name;
             addressDetail = address;
         }

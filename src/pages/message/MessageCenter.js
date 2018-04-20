@@ -10,10 +10,11 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {NavigationBar} from '../../components';
-import {isEmptyObject, utcDate} from '../../utils/ComonHelper';
+import {isEmptyObject, showToast, utcDate} from '../../utils/ComonHelper';
 import {getActivities, getMsgUnRead} from '../../services/AccountDao';
 import JMessage from "jmessage-react-plugin";
 import {JPUSH_APPKEY} from '../../configs/Constants'
+import Loading from "../../components/Loading";
 
 const icons = [
     require('../../../source/message/ic_order.png'),
@@ -109,8 +110,13 @@ export default class MessageCenter extends Component {
         return (
             <TouchableOpacity
                 onPress={() => {
+
+
+
+                    this.loading && this.loading.open();
                     JMessage.getUserInfo({username: username, appKey: JPUSH_APPKEY},
                         (userInfo) => {
+                            this.loading && this.loading.close();
                             router.toMessageList({
                                 username: userInfo.username,
                                 nickname: userInfo.nickname,
@@ -120,6 +126,8 @@ export default class MessageCenter extends Component {
                                 }
                             });
                         }, (error) => {
+                            showToast("请求超时");
+                            this.loading && this.loading.close();
                         });
                 }}
                 keyExtractor={(item, index) => index + ""}
@@ -173,7 +181,7 @@ export default class MessageCenter extends Component {
                           );
                       }}
             />
-
+            <Loading ref={ref => this.loading = ref} cancelable={true}/>
         </View>)
     }
 
