@@ -70,7 +70,7 @@ export default class MoodRelease extends Component {
                 this.setState({images: newImages});
             }
             else {
-                showToast("文件类型错误");
+                showToast(I18n.t("file_type_error"));
             }
         });
     };
@@ -330,16 +330,16 @@ export default class MoodRelease extends Component {
     popActions = () => {
         return [
             {
-                name: '拍照', txtStyle: {color: '#4A90E2'}, onPress: () => {
+                name: I18n.t("socials_takephoto"), txtStyle: {color: '#4A90E2'}, onPress: () => {
                     this.insertTakePhotoAction();
                 }
             },
             {
-                name: '从相册选择', txtStyle: {color: '#4A90E2'}, onPress: () => {
+                name: I18n.t("socials_picture"), txtStyle: {color: '#4A90E2'}, onPress: () => {
                     this.insetrtImageAction();
                 }
             },
-            {name: '取消', txtStyle: {color: '#F24A4A'}, onPress: () => this.popAction.toggle()}
+            {name: I18n.t("cancel"), txtStyle: {color: '#F24A4A'}, onPress: () => this.popAction.toggle()}
         ];
     };
 }

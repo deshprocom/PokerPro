@@ -162,7 +162,7 @@ export class FollowList extends Component {
                         style={styles.iconImage}/>
                     <View>
                         <Text style={styles.nickname}>{nick_name}</Text>
-                        <Text style={styles.followText}>{`关注 ${following_count} | 粉丝 ${follower_count}`}</Text>
+                        <Text style={styles.followText}>{`${I18n.t("follow")} ${following_count} | ${I18n.t("stalwart")} ${follower_count}`}</Text>
                     </View>
                 </View>
                 <TouchableOpacity onPress={() => this.followAction(id, is_following, () => {
@@ -171,11 +171,11 @@ export class FollowList extends Component {
                 })}>
                     {!is_following ?
                         <View style={styles.button_n}>
-                            <Text style={styles.btnText}>+关注</Text>
+                            <Text style={styles.btnText}>{`+${I18n.t("follow")}`}</Text>
                         </View>
                         :
                         <View style={styles.button_s}>
-                            <Text style={styles.btnText}>取消关注</Text>
+                            <Text style={styles.btnText}>{I18n.t("rank_del_focus")}</Text>
                         </View>
                     }
                 </TouchableOpacity>

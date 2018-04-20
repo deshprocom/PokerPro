@@ -5,7 +5,6 @@
 import {ActionConst, Actions} from 'react-native-router-flux';
 import {NavigationActions} from 'react-navigation';
 import {getDispatchAction} from '../utils/ComonHelper';
-import MapPosition from "../pages/socials/MapPosition";
 import UserTopicPage from "../pages/socials/UserTopicPage";
 import Crowdfunding from "../pages/crowdfundings/crowds/Crowdfunding";
 
@@ -142,12 +141,6 @@ export default class Router {
                 article,
                 isComment
             }
-        })
-    }
-
-    toMapPosition() {
-        this.stackPush({
-            name: 'MapPosition'
         })
     }
 

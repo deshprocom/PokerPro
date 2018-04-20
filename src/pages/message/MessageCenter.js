@@ -92,13 +92,13 @@ export default class MessageCenter extends Component {
             type = lastMessage.type;
             text = lastMessage.text;
             if (type === "voice") {
-                text = "[语音]";
+                text = I18n.t("message_voice");
             }
             if (type === "image") {
-                text = "[图片]";
+                text = I18n.t("message_image");
             }
             if (type === "file") {
-                text = "[视频]"
+                text = I18n.t("message_video");
             }
         }
 
@@ -110,9 +110,6 @@ export default class MessageCenter extends Component {
         return (
             <TouchableOpacity
                 onPress={() => {
-
-
-
                     this.loading && this.loading.open();
                     JMessage.getUserInfo({username: username, appKey: JPUSH_APPKEY},
                         (userInfo) => {
@@ -126,7 +123,7 @@ export default class MessageCenter extends Component {
                                 }
                             });
                         }, (error) => {
-                            showToast("请求超时");
+                            showToast(I18n.t("error_alert"));
                             this.loading && this.loading.close();
                         });
                 }}

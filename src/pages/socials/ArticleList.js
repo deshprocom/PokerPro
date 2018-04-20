@@ -30,7 +30,6 @@ export default class ArticleList extends Component{
 
     ///获取草稿箱列表数据
     getData = () => {
-        console.log("获取草稿列表");
         ///获取草稿列表
         storage.load({key: "articleList"}).then(ret => {
             this.setState({articleList:ret});
