@@ -43,7 +43,7 @@ export default class Blacklist extends Component{
     removeFromBlackList = (username) => {
         JMessage.removeUsersFromBlacklist({usernameArray:[username]},(success) => {
             this.getBlackList();
-            showToast("移除黑名单成功");
+            showToast(I18n.t("remove_blacklist_success"));
         },(error) => {
             console.log("移除黑名单失败");
         });

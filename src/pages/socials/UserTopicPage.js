@@ -124,11 +124,11 @@ export default class UserTopicPage extends PureComponent {
                         avatarThumbPath: userInfo.avatarThumbPath,
                     });
                 }, (error) => {
-                    showToast("请求超时");
+                    showToast(I18n.t("error_alert"));
                     this.loading && this.loading.close();
                 });
         }, (error) => {
-            showToast("请求超时");
+            showToast(I18n.t("error_alert"));
             this.loading && this.loading.close();
         });
     };
@@ -256,7 +256,7 @@ export default class UserTopicPage extends PureComponent {
             "description": ""
         };
         report_user(body,(ret) =>{
-            showToast("举报成功");
+            showToast(I18n.t("report_success"));
         },(err) => {
             console.log(err);
         });

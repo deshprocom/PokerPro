@@ -8,7 +8,6 @@ import TakePhoto from '../pages/comm/ExpandText';
 import UserTopicPage from '../pages/socials/UserTopicPage';
 import MoodRelease from '../pages/socials/MoodRelease';
 import LongArticle from '../pages/socials/LongArticle';
-import MapPosition from '../pages/socials/MapPosition';
 import ArticleRelease from '../pages/socials/ArticleRelease';
 import ArticleList from "../pages/socials/ArticleList";
 import SearchMallPage from '../pages/malls/SearchMallPage';
@@ -120,7 +119,6 @@ export const Stacks = Actions.create(
         <Scene key="UserTopicPage" component={UserTopicPage} hideNavBar/>
         <Scene key="MoodRelease" component={MoodRelease} hideNavBar/>
         <Scene key="LongArticle" component={LongArticle} hideNavBar/>
-        <Scene key="MapPosition" component={MapPosition} hideNavBar/>
         <Scene key="ArticleRelease" component={ArticleRelease} hideNavBar/>
         <Scene key="ArticleList" component={ArticleList} hideNavBar/>
         <Scene key="RecordList" component={RecordList} hideNavBar/>

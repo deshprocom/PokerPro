@@ -263,7 +263,7 @@ export default class LongArticle extends PureComponent {
             "body": data.name,
         };
         report_topic(id, body, (ret) => {
-            showToast("举报成功");
+            showToast(I18n.t('report_success'));
         }, (err) => {
             console.log(err);
         });
