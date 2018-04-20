@@ -110,9 +110,6 @@ export default class MessageCenter extends Component {
         return (
             <TouchableOpacity
                 onPress={() => {
-
-
-
                     this.loading && this.loading.open();
                     JMessage.getUserInfo({username: username, appKey: JPUSH_APPKEY},
                         (userInfo) => {
@@ -126,7 +123,7 @@ export default class MessageCenter extends Component {
                                 }
                             });
                         }, (error) => {
-                            showToast("请求超时");
+                            showToast(I18n.t("error_alert"));
                             this.loading && this.loading.close();
                         });
                 }}

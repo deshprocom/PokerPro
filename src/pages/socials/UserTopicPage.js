@@ -124,11 +124,11 @@ export default class UserTopicPage extends PureComponent {
                         avatarThumbPath: userInfo.avatarThumbPath,
                     });
                 }, (error) => {
-                    showToast("请求超时");
+                    showToast(I18n.t("error_alert"));
                     this.loading && this.loading.close();
                 });
         }, (error) => {
-            showToast("请求超时");
+            showToast(I18n.t("error_alert"));
             this.loading && this.loading.close();
         });
     };
