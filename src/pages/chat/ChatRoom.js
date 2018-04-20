@@ -9,7 +9,7 @@ import {
     View,
     TouchableOpacity,
     Image,
-    PermissionsAndroid
+    PermissionsAndroid, NativeModules
 } from 'react-native';
 
 import {GiftedChat, Avatar} from 'react-native-gifted-chat';
@@ -17,7 +17,7 @@ import {Colors, Images, Metrics} from "../../Themes";
 import NavigationBar from "../../components/NavigationBar";
 import JMessage from "jmessage-react-plugin";
 import I18n from "react-native-i18n";
-import {localFilePath, showToast} from "../../utils/ComonHelper";
+import {getFileName, localFilePath, showToast} from "../../utils/ComonHelper";
 import SelfMessage from "./SelfMessage";
 import OtherMessage from "./OtherMessage";
 import {screenHeight, screenWidth} from "../socials/Header";
@@ -25,7 +25,11 @@ import VideoToast from "./VideoToast";
 import ImagePicker from 'react-native-image-crop-picker';
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 import PopAction from '../comm/PopAction';
-import {report_user} from '../../services/SocialDao';
+import {report_user, uploadImage} from '../../services/SocialDao';
+import Loading from "../../components/Loading";
+
+var VideoCoverManager = NativeModules.VideoCoverManager;
+
 
 let Sound = require('react-native-sound');
 Sound.setCategory('Playback');
@@ -116,6 +120,18 @@ export default class ChatRoom extends Component {
         if (this.sound) {
             this.sound.stop();
         }
+
+        let userInfo = this.otherInfo;
+        //重置未读消息
+        JMessage.resetUnreadMessageCount({type: 'single', username: userInfo.username},
+            (conversation) => {
+                ///回调，更新上一页数据
+                if (this.props.params.userInfo.reloadPage !== undefined) {
+                    this.props.params.userInfo.reloadPage();
+                }
+            }, (error) => {
+
+            });
     }
 
     //<!--------------------------------   极光相关   --------------------------------!>//
@@ -129,6 +145,7 @@ export default class ChatRoom extends Component {
             }, (error) => {
 
             });
+
 
         //重置未读消息
         JMessage.resetUnreadMessageCount({type: 'single', username: userInfo.username},
@@ -192,6 +209,7 @@ export default class ChatRoom extends Component {
 
     //收到消息
     receiveMessage = (message) => {
+        console.log("收到消息",message);
         let newMessage = this.createMessageBody(message);
         if (newMessage !== undefined) {
             this.addMessage([newMessage]);
@@ -221,13 +239,30 @@ export default class ChatRoom extends Component {
 
     ///发送语音
     onSendVoice = (mediaPath) => {
-        this.createMessage({messageType: "voice", path: mediaPath, duration: this.state.currentTime});
+        this.createMessage({messageType: "voice", path: mediaPath});
     };
 
 
     ///发送视频
     onSendVideo = (mediaPath) => {
-        this.createMessage({messageType: "file", path: mediaPath});
+        this.loading && this.loading.open()
+        VideoCoverManager.getVideoCover(mediaPath,(events) => {
+            this.uploadImageAction(events,(data) => {
+                this.createMessage({messageType: "file", path: mediaPath,coverPath:data.image_path});
+            });
+        });
+    };
+
+    ///上传图片
+    uploadImageAction = (imagePath, successCallBack) => {
+        let formData = new FormData();
+        let file = {uri:imagePath, type: "multipart/form-data", name: getFileName(imagePath)};
+        formData.append("image", file);
+        uploadImage(formData, data => {
+            successCallBack(data);
+        }, err => {
+            this.uploadImageAction(imagePath, successCallBack);
+        });
     };
 
     ///发送图片
@@ -269,7 +304,6 @@ export default class ChatRoom extends Component {
         ///语音类型 消息体拼接path字段
         if (msg.messageType === "voice") {
             msgInfo.path = msg.path;
-            msgInfo.duration = msg.duration;
         }
 
         ///图片类型 消息体拼接path字段
@@ -280,6 +314,8 @@ export default class ChatRoom extends Component {
         ///文件类型 消息体拼接path字段
         if (msg.messageType === "file") {
             msgInfo.path = msg.path;
+            msgInfo.extras = {coverPath:msg.coverPath};
+            msgInfo.coverPath = msg.coverPath;
         }
 
 
@@ -289,18 +325,20 @@ export default class ChatRoom extends Component {
         ///创建消息
         JMessage.createSendMessage(msgInfo, (message) => {
 
-            console.log("发送一条" + msg.messageType + "类型的消息");
+            console.log("发送一条",msg.messageType,"类型的消息:",message);
             //发送消息
             JMessage.sendMessage({
                 id: message.id,
                 type: msgInfo.type,
                 username: msgInfo.username,
+                extras:{coverPath:msg.coverPath}
             }, (jmessage) => {
                 let newMessage = this.createMessageBody(jmessage);
                 if (newMessage !== undefined) {
                     this.addMessage([newMessage]);
                 }
                 console.log("发送成功", jmessage);
+                this.loading && this.loading.close()
 
 
                 ///回调，更新上一页数据
@@ -324,7 +362,7 @@ export default class ChatRoom extends Component {
 
     ///整理消息格式，添加到消息列表中
     createMessageBody = (message) => {
-        const {id, type, text, target, thumbPath, path, duration} = message;
+        const {id, type, text, target, thumbPath, path, duration,extras} = message;
         const {username, avatarThumbPath, nickname} = target;
         let user = {
             _id: username,
@@ -356,6 +394,7 @@ export default class ChatRoom extends Component {
         if (type === "file") {
             newMessage.type = "video";
             newMessage.path = path;
+            newMessage.coverPath = extras.coverPath;
         }
 
         return newMessage;
@@ -802,6 +841,8 @@ export default class ChatRoom extends Component {
                     ref={ref => this.popAction = ref}
                     btnArray={this.popActions()}/>
 
+
+                <Loading ref={ref => this.loading = ref} cancelable={true}/>
             </View>
         );
     }

@@ -18,7 +18,7 @@ export default class SelfMessage extends Component {
     };
 
     createMessage = () => {
-        let {type, text, image, path, duration} = this.props.message;
+        let {type, text, image, duration,coverPath} = this.props.message;
         image = localFilePath(image);
         switch (type) {
             case "text" :
@@ -29,14 +29,15 @@ export default class SelfMessage extends Component {
                 );
             case "image" :
                 return (
-                    <View style={[styles.superView, styles.imageView]}>
+                    <View style={[styles.superView, styles.imageView,{backgroundColor:"#ECECEE"},{marginRight:10}]}>
                         <Image source={{uri: image}} style={{flex: 1, borderRadius: 5}}/>
                     </View>
                 );
             case "video":
                 return (
-                    <View style={[styles.superView, styles.imageView]}>
-                        <Image source={{uri: path}} style={{flex: 1, borderRadius: 5}}/>
+                    <View style={[styles.superView, styles.imageView,{backgroundColor:"#ECECEE"},{marginRight:10}]}>
+                        <Image source={{uri: coverPath}} style={{flex: 1, borderRadius: 5}}/>
+                        <Image source={Images.social.play_video} style={styles.playImage}/>
                     </View>
                 );
             case "voice":
@@ -54,7 +55,7 @@ export default class SelfMessage extends Component {
 
 
     render() {
-        const {userInfo} = this.props.message;
+        const {type,userInfo} = this.props.message;
         let avatarThumbPath = localFilePath(userInfo.avatarThumbPath);
         return (
             <View style={styles.container}>
@@ -64,8 +65,7 @@ export default class SelfMessage extends Component {
                     this.props.messageClick();
                 }} style={[{flexDirection: "row"}, {alignItems: "flex-end"}]}>
                     {this.createMessage()}
-
-                    <Image source={Images.social.chat_right} style={styles.rightCorner}/>
+                    {type === "image" || type === "video" ? null : <Image source={Images.social.chat_right} style={styles.rightCorner}/>}
                 </TouchableOpacity>
 
 
@@ -130,5 +130,12 @@ const styles = StyleSheet.create({
         height: Metrics.reallySize(10),
         marginBottom: 17,
         marginRight: 10,
+    },
+    playImage: {
+        position: "absolute",
+        marginLeft: Metrics.reallySize(35),
+        marginTop: Metrics.reallySize(50),
+        width: Metrics.reallySize(50),
+        height: Metrics.reallySize(50),
     }
 });
