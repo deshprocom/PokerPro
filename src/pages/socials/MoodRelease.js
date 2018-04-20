@@ -106,6 +106,30 @@ export default class MoodRelease extends Component {
         });
     };
 
+
+    ///删除图片
+    deleteImage = (index) => {
+
+        let newImages = this.state.images;
+        ///9张图
+        if (newImages.length === 9){
+            let lastImage = newImages[8];
+            //最后一张不是占位图，删除后添加占位图
+            if (lastImage.imagePath !== Images.social.icon_send_mood){
+                newImages.splice(index, 1);
+                newImages.push({imagePath: Images.social.icon_send_mood});
+                lastUpload = false;
+            }
+            else{
+                newImages.splice(index, 1);
+            }
+        }
+        else{
+            newImages.splice(index, 1);
+        }
+        this.setState({images: newImages});
+    };
+
     ///请求发说说接口
     fetchData = () => {
         let mood = this.state.mood;
@@ -213,6 +237,14 @@ export default class MoodRelease extends Component {
                         <Image style={styles.itemImage} source={item.item.imagePath}/> :
                         <Image style={styles.itemImage} source={{uri: item.item.imagePath}}/>}
                 </TouchableOpacity>
+
+                {item.item.imagePath !== Images.social.icon_send_mood ?
+                    <TouchableOpacity style={styles.delete} onPress = {() => {this.deleteImage(item.index)}}>
+                        <View style={styles.deleteView}>
+                            <Text style={styles.deleteText}>删除</Text>
+                        </View>
+                    </TouchableOpacity>
+                    :null}
             </View>
         )
     };
@@ -374,5 +406,19 @@ const styles = StyleSheet.create({
         marginTop: reallySize(8),
         justifyContent: "center",
         alignItems: "center",
+    },
+    delete:{
+        position:"absolute",
+        marginLeft:(screenWidth - reallySize(50)) / 3 - 32,
+        marginTop:4,
+    },
+    deleteView:{
+        backgroundColor:"rgba(0,0,0,0.5)",
+        borderRadius:9,
+    },
+    deleteText:{
+        color:"white",
+        fontSize:10,
+        padding:4,
     }
 });
