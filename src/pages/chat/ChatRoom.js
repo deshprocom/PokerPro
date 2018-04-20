@@ -51,7 +51,7 @@ export default class ChatRoom extends Component {
             messages: [],
             showToolBar: false,//隐藏显示工具栏
             videoPath: "",
-            moreText: "加载更多",
+            moreText: I18n.t("load_more"),
             inputVoice: false,//是否输入语音
             currentTime: 0.0, //开始录音到现在的持续时间
             recording: false, //是否正在录音
@@ -183,7 +183,7 @@ export default class ChatRoom extends Component {
             (messageArray) => {
                 // 以参数形式返回消息对象数组
                 if (messageArray.length < 20) {
-                    this.setState({moreText: "没有更多了"});
+                    this.setState({moreText: I18n.t("no_more")});
                 }
 
                 let newMsgArray = [];
@@ -209,7 +209,6 @@ export default class ChatRoom extends Component {
 
     //收到消息
     receiveMessage = (message) => {
-        console.log("收到消息",message);
         let newMessage = this.createMessageBody(message);
         if (newMessage !== undefined) {
             this.addMessage([newMessage]);
@@ -245,7 +244,7 @@ export default class ChatRoom extends Component {
 
     ///发送视频
     onSendVideo = (mediaPath) => {
-        this.loading && this.loading.open()
+        this.loading && this.loading.open();
         VideoCoverManager.getVideoCover(mediaPath,(events) => {
             this.uploadImageAction(events,(data) => {
                 this.createMessage({messageType: "file", path: mediaPath,coverPath:data.image_path});
@@ -534,7 +533,7 @@ export default class ChatRoom extends Component {
     finishRecording = (didSucceed, filePath) => {
         this.setState({finished: didSucceed});
         if (this.state.currentTime === 0) {
-            showToast("录音时间过短");
+            showToast(I18n.t("time_short"));
             return;
         }
         this.onSendVoice(filePath.replace("file://", ""));
@@ -547,8 +546,8 @@ export default class ChatRoom extends Component {
         }
 
         const rationale = {
-            'title': '获取录音权限',
-            'message': 'PokerPro正请求获取麦克风权限用于录音,是否允许'
+            'title': I18n.t("voice_root"),
+            'message': I18n.t("voice_root_des")
         };
 
         return PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO, rationale)
@@ -602,7 +601,7 @@ export default class ChatRoom extends Component {
             "description": ""
         };
         report_user(body,(ret) =>{
-            showToast("举报成功");
+            showToast(I18n.t("report_success"));
         },(err) => {
             console.log(err);
         });
@@ -614,12 +613,11 @@ export default class ChatRoom extends Component {
         let userInfo = this.props.params.userInfo;
         let param = {'usernameArray': [userInfo.username]};
         JMessage.addUsersToBlacklist(param, (success) => {
-            showToast("添加黑名单成功");
+            showToast(I18n.t("add_backlist_success"));
             this.popAction && this.popAction.toggle();
         }, (error) => {
-            console.log("拉黑失败", error);
             if (error.code === 861101) {
-                showToast("无法将自己加入黑名单");
+                showToast(I18n.t("add_backlist_failure"));
                 this.popAction && this.popAction.toggle();
             }
         });
@@ -632,12 +630,12 @@ export default class ChatRoom extends Component {
         return (
             <View style={styles.subView}>
 
-                {this.state.moreText === "加载更多" ?
+                {this.state.moreText === I18n.t("load_more") ?
                     <TouchableOpacity onPress={() => {
                         this.getHistoryMessage();
                     }}>
                         <View style={styles.moreView}>
-                            <Text style={styles.moreText}>加载更多</Text>
+                            <Text style={styles.moreText}>{I18n.t("load_more")}</Text>
                         </View>
                     </TouchableOpacity>
                     : null}
@@ -705,7 +703,7 @@ export default class ChatRoom extends Component {
                                   this.stop();
                               }}
             >
-                <Text>按住说话</Text>
+                <Text>{I18n.t("touch_speech")}</Text>
             </TouchableOpacity>
         );
     };
@@ -822,9 +820,9 @@ export default class ChatRoom extends Component {
                         user={{
                             _id: this.state.myUserName,
                         }}
-                        label={"发送"}
+                        label={I18n.t("send")}
                         onSend={(event) => this.onSendMessage(event)}
-                        placeholder={"新消息"}
+                        placeholder={I18n.t("new_message")}
                         renderAccessory={this.renderAccessoryAction}
                         renderActions={this.createToolButton}       //自定义左侧按钮
                     /> : null}
