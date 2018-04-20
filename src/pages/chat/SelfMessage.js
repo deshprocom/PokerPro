@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 
 import {Images, Metrics, Colors} from "../../Themes";
+import ImageLoad from "../../components/ImageLoad";
+import {localFilePath} from "../../utils/ComonHelper";
 
 export default class SelfMessage extends Component {
     static props = {
@@ -16,7 +18,8 @@ export default class SelfMessage extends Component {
     };
 
     createMessage = () => {
-        const {type, text, image, path, duration} = this.props.message;
+        let {type, text, image, path, duration} = this.props.message;
+        image = localFilePath(image);
         switch (type) {
             case "text" :
                 return (
@@ -38,7 +41,7 @@ export default class SelfMessage extends Component {
                 );
             case "voice":
                 return (
-                    <View style={[styles.superView, styles.voiceView,{width:parseInt(duration) * 6 + 50}]}>
+                    <View style={[styles.superView, styles.voiceView, {width: parseInt(duration) * 6 + 50}]}>
                         <Text style={[{color: "white"}, {fontSize: 15}]}>{`${parseInt(duration)}"`}</Text>
                         <Image source={Images.social.voice_right} style={styles.voiceImage}/>
                     </View>
@@ -52,7 +55,7 @@ export default class SelfMessage extends Component {
 
     render() {
         const {userInfo} = this.props.message;
-        let avatarThumbPath = userInfo.avatarThumbPath;
+        let avatarThumbPath = localFilePath(userInfo.avatarThumbPath);
         return (
             <View style={styles.container}>
 
@@ -66,9 +69,10 @@ export default class SelfMessage extends Component {
                 </TouchableOpacity>
 
 
-                {avatarThumbPath === "" || avatarThumbPath === undefined ?
-                    <Image source={Images.home_avatar} style={styles.userIcon}/> :
-                    <Image source={{uri: avatarThumbPath}} style={styles.userIcon}/>}
+                <ImageLoad
+                    emptyBg={Images.home_avatar}
+                    source={{uri: avatarThumbPath}}
+                    style={styles.userIcon}/>
 
 
             </View>
@@ -103,9 +107,9 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     voiceView: {
-        flexDirection:"row",
+        flexDirection: "row",
         justifyContent: "flex-end",
-        alignItems:"center",
+        alignItems: "center",
     },
     voiceImage: {
         marginBottom: 12,

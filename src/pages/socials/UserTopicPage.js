@@ -18,6 +18,7 @@ import _ from 'lodash';
 import Loading from "../../components/Loading";
 import {isFollowed, showToast} from '../../utils/ComonHelper';
 import JMessage from "jmessage-react-plugin";
+import {JPUSH_APPKEY} from '../../configs/Constants'
 import PopAction from '../comm/PopAction';
 
 const HeadHeight = Platform.OS === 'ios' ? Metrics.iPhone_X ? 300 : 280 : 260
@@ -112,13 +113,15 @@ export default class UserTopicPage extends PureComponent {
         const {nick_name, user_id} = this.props.params.userInfo;
         ///获取私信用户的用户名
         visit_other({userId: user_id}, (success) => {
-            JMessage.getUserInfo({username: success.username},
+
+            this.loading && this.loading.close();
+            JMessage.getUserInfo({username: success.username, appKey: JPUSH_APPKEY},
                 (userInfo) => {
                     this.loading && this.loading.close();
                     router.toMessageList({
                         username: userInfo.username,
                         nickname: userInfo.nickname,
-                        avatarThumbPath:userInfo.avatarThumbPath,
+                        avatarThumbPath: userInfo.avatarThumbPath,
                     });
                 }, (error) => {
                     showToast("请求超时");

@@ -51,6 +51,13 @@ export const picker = {
 };
 
 
+export function localFilePath(path) {
+    if (Platform.OS === 'android')
+        return 'file://' + path;
+    return path;
+}
+
+
 export function uShareMallInfo(title, desc, icon, id) {
     let param = {
         shareTitle: title,
