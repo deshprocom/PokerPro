@@ -629,6 +629,16 @@
     "location_friend": "附近牌友"
   },
   "hide_address": "不显示位置",
-  "freight_free": "包邮"
+  "freight_free": "包邮",
+  "load_more":"加载更多",
+  "time_short":"说话时间过短",
+  "voice_root":"获取录音权限",
+  "voice_root_des":"PokerPro正请求获取麦克风权限用于录音,是否允许",
+  "report_success":"举报成功",
+  "add_backlist_success":"添加黑名单成功",
+  "add_backlist_failure":"无法将自己加入黑名单",
+  "touch_speech":"按住说话",
+  "send":"发送",
+  "new_message":"新消息"
 }
 
