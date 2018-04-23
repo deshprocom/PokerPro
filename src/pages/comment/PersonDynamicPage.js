@@ -333,11 +333,11 @@ export default class PersonDynamicPage extends Component {
 
     tabLabel = (type) => {
         if (type === 'user_topics')
-            return '动态'
+            return I18n.t('dynamic')
         else if (type === 'short')
-            return '说说'
+            return I18n.t('moment')
         else if (type === 'long')
-            return '长帖'
+            return I18n.t('topic')
     }
 
     render() {
@@ -361,47 +361,44 @@ export default class PersonDynamicPage extends Component {
 
 
         return (
-                <View style={[{flex:1}]}>
-                    <ScrollableTabView
-                        renderTabBar={() => <DynamicTopBar
-                            scrollTop={scrollTop}
-                            nickname={this.userInfo.nick_name}
-                            setUnreadCount={this.setUnreadCount}
-                            unreadCount={this.state.unreadCount}
-                            hideReceived={this.isMine()}
-                            count={this.state.dynamics.length}/>}>
+            <View style={[{flex: 1}]}>
+                <ScrollableTabView
+                    renderTabBar={() => <DynamicTopBar
+                        scrollTop={scrollTop}
+                        nickname={this.userInfo.nick_name}
+                        setUnreadCount={this.setUnreadCount}
+                        unreadCount={this.state.unreadCount}
+                        hideReceived={this.isMine()}
+                        count={this.state.dynamics.length}/>}>
 
-                        {moments}
+                    {moments}
 
-                        <UltimateListView
-                            scrollEnabled={scrollEnabled}
-                            style={{backgroundColor: 'white'}}
-                            tabLabel={'足迹'}
-                            header={() => this.personTop()}
-                            ref={ref => this.ultimate = ref}
-                            onFetch={this.onFetch}
-                            keyExtractor={(item, index) => `replies${index}`}
-                            item={this.content}
-                            refreshableTitlePull={I18n.t('pull_refresh')}
-                            refreshableTitleRelease={I18n.t('release_refresh')}
-                            dateTitle={I18n.t('last_refresh')}
-                            allLoadedText={I18n.t('no_more')}
-                            waitingSpinnerText={I18n.t('loading')}
-                            separator={this._separator1}
-                            emptyView={() => <DynamicEmpty/>}
-                        />
-
-
+                    <UltimateListView
+                        scrollEnabled={scrollEnabled}
+                        style={{backgroundColor: 'white'}}
+                        tabLabel={I18n.t('footprint')}
+                        header={() => this.personTop()}
+                        ref={ref => this.ultimate = ref}
+                        onFetch={this.onFetch}
+                        keyExtractor={(item, index) => `replies${index}`}
+                        item={this.content}
+                        refreshableTitlePull={I18n.t('pull_refresh')}
+                        refreshableTitleRelease={I18n.t('release_refresh')}
+                        dateTitle={I18n.t('last_refresh')}
+                        allLoadedText={I18n.t('no_more')}
+                        waitingSpinnerText={I18n.t('loading')}
+                        separator={this._separator1}
+                        emptyView={() => <DynamicEmpty/>}
+                    />
 
 
+                </ScrollableTabView>
 
-                    </ScrollableTabView>
-
-                       <PopAction
-                           ref={ref => this.popAction = ref}
-                           btnArray={this.popActions()}
-                       />
-                </View>
+                <PopAction
+                    ref={ref => this.popAction = ref}
+                    btnArray={this.popActions()}
+                />
+            </View>
         );
     }
 

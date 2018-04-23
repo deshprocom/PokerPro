@@ -32,7 +32,7 @@ export default class InputComment extends Component {
             >
                 <KeyboardAvoidingView
                     behavior={'height'}
-                    keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 40}
+                    keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 25}
                     style={{flex: 1}}>
                     <TouchableOpacity
                         onPress={() => {

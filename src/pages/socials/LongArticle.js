@@ -30,8 +30,6 @@ const styles = StyleSheet.create({
         fontSize: 17,
         color: Colors.txt_444,
         fontWeight: 'bold',
-        paddingTop: 12,
-        paddingBottom: 12
     },
     avatar: {
         height: 44,
@@ -129,7 +127,8 @@ const styles = StyleSheet.create({
         color: Colors.txt_444,
         fontSize: 16,
         marginLeft: 17,
-        marginRight: 17
+        marginRight: 17,
+        marginTop: 10
     }
 })
 
@@ -274,7 +273,7 @@ export default class LongArticle extends PureComponent {
     popActions = () => {
         let reportList = global.reportList;
         let resultArray = [];
-        reportList.forEach((data,index) => {
+        reportList.forEach((data, index) => {
             let item = {name: data.name, txtStyle: {color: '#4A90E2'}, onPress: () => this.report(index)};
             resultArray.push(item);
         });
@@ -291,11 +290,16 @@ export default class LongArticle extends PureComponent {
     flatHeader = () => {
 
 
-        const {user, created_at, likes, comments, id, body_type, body, title, page_views} = this.state.article;
+        const {user, created_at, likes, comments, id, body_type, body, title, page_views, location} = this.state.article;
+        const {address_title} = location;
         return <View>
             <View style={{backgroundColor: 'white'}}>
                 <View style={styles.info}>
-                    <Text style={styles.title}>{title}</Text>
+                    {strNotNull(title) ? <View style={{height: 46, flexDirection: 'row', alignItems: 'center'}}>
+                        <Text style={styles.title}>{title}</Text>
+                    </View> : <View style={{height: 15}}/>}
+
+
                     <View style={styles.btn_like}>
                         <TouchableOpacity
                             onPress={() => {
@@ -314,7 +318,9 @@ export default class LongArticle extends PureComponent {
                                     this.toUserPage(user)
                                 }}
                                 style={styles.nick_name}>{user.nick_name}</Text>
-                            <Text style={[styles.time, {marginTop: 5}]}>{getDateDiff(created_at)}·深圳</Text>
+                            <Text
+                                style={[styles.time, {marginTop: 5}]}
+                            >{getDateDiff(created_at)}{strNotNull(address_title) ? `·${address_title}` : ""}</Text>
                         </View>
 
                         <View style={{flex: 1}}/>
@@ -355,7 +361,13 @@ export default class LongArticle extends PureComponent {
                 </View> : this.short(this.state.article)}
 
 
-                <View style={[styles.btn_like, {marginTop: 15, paddingLeft: 17, paddingRight: 17}]}>
+                <View style={[styles.btn_like, {
+                    height: 44, width: Metrics.screenWidth - 34,
+                    marginLeft: 17,
+                    marginRight: 17
+                }]}>
+                    <Text style={styles.comment}>{`${I18n.t('social.comments')} (${this.state.comments_count})`}</Text>
+
                     <View style={{flex: 1}}/>
 
                     <Text style={styles.time}>{I18n.t('social.read')}</Text>
@@ -367,17 +379,6 @@ export default class LongArticle extends PureComponent {
                             source={Images.social.like_gray}/>
                         <Text style={[styles.time, {marginLeft: 4}]}>{likes}</Text>
                     </View>
-
-                </View>
-
-                <View style={[styles.btn_like, {
-                    height: 44, width: Metrics.screenWidth - 34,
-                    borderTopWidth: 1, borderTopColor: Colors._ECE,
-                    marginTop: 10,
-                    marginLeft: 17,
-                    marginRight: 17
-                }]}>
-                    <Text style={styles.comment}>{`${I18n.t('social.comments')} (${this.state.comments_count})`}</Text>
                 </View>
 
             </View>
@@ -387,8 +388,9 @@ export default class LongArticle extends PureComponent {
 
     short = (item) => {
         const {images, body} = item;
-        return <View style={{marginTop: 14}}>
-            <Text style={styles.body}>{body}</Text>
+        return <View>
+            {strNotNull(body) ? <Text style={styles.body}>{body}</Text> : null}
+
             {images && images.length > 0 ? this.shortImage(images) : null}
 
 
@@ -409,7 +411,7 @@ export default class LongArticle extends PureComponent {
                     this.previewImage(images, 0)
                 }}>
                 <ImageLoad
-                    style={[styles.long_cover, {marginTop: 14}]}
+                    style={styles.long_cover}
                     source={{uri: images[0].image_url}}/>
             </TouchableOpacity>
 
@@ -478,12 +480,19 @@ export default class LongArticle extends PureComponent {
             paddingTop: 12
         }}>
             <View style={styles.btn_like}>
-                <ImageLoad style={styles.c_avatar}
-                           source={{uri: avatar}}/>
+                <TouchableOpacity
+                    onPress={() => this.toUserPage(item)}>
+                    <ImageLoad style={styles.c_avatar}
+                               source={{uri: avatar}}/>
+                </TouchableOpacity>
+
 
                 <View style={{marginLeft: 10}}>
                     <View style={{flexDirection: 'row'}}>
-                        <Text style={styles.c_nick}>{nick_name}</Text>
+
+                        <Text
+                            onPress={() => this.toUserPage(item)}
+                            style={styles.c_nick}>{nick_name}</Text>
 
                         {official ? <Text style={[styles.c_tag, {
                             backgroundColor: '#161718',

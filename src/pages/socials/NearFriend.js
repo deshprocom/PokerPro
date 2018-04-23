@@ -14,6 +14,7 @@ import {NavigationBar, ImageLoad} from '../../components';
 import ErrLocation from '../comm/ErrLocation';
 import {getNearBys, postNearBys} from '../../services/SocialDao'
 import {strNotNull} from '../../utils/ComonHelper'
+import {checkPermission} from "../comm/Permission";
 
 const styles = StyleSheet.create({
     avatar: {
@@ -33,11 +34,13 @@ const styles = StyleSheet.create({
     },
     male: {
         height: 9,
-        width: 9
+        width: 9,
+        marginLeft: 5
     },
     woman: {
         height: 10,
-        width: 8
+        width: 8,
+        marginLeft: 5
     }
 })
 
@@ -51,18 +54,31 @@ export default class NearFriend extends PureComponent {
     }
 
     componentWillMount() {
-        navigator.geolocation.getCurrentPosition(data => {
-            const {coords} = data;
-            postNearBys(coords, ret => {
-            }, err => {
 
-            })
-
-        }, err => {
+        getNearBys(ret => {
+            console.log('获取附近', ret)
             this.setState({
-                geolocation: false
+                nearby_users: ret.nearby_users
             })
+        }, err => {
         })
+
+        checkPermission('location', ret => {
+            if (ret) {
+                navigator.geolocation.getCurrentPosition(data => {
+                    const {coords} = data;
+                    postNearBys(coords, ret => {
+                    }, err => {
+                    })
+
+                }, err => {
+                    this.setState({
+                        geolocation: false
+                    })
+                })
+            }
+        })
+
 
     }
 
@@ -78,8 +94,9 @@ export default class NearFriend extends PureComponent {
                 leftImageStyle={{height: 19, width: 10, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}/>
 
-            <View style={{height: 8}}/>
+
             {this.state.geolocation ? <FlatList
+                ListHeaderComponent={() => <View style={{height: 8}}/>}
                 refreshing={this.state.refreshing}
                 data={this.state.nearby_users}
                 renderItem={this.renderItem}
@@ -93,7 +110,13 @@ export default class NearFriend extends PureComponent {
                     <Text>{I18n.t("no_near_friend")}</Text>
                 </View>}
                 onRefresh={() => {
-                    console.log('onRefresh')
+                    getNearBys(ret => {
+                        console.log('获取附近', ret)
+                        this.setState({
+                            nearby_users: ret.nearby_users
+                        })
+                    }, err => {
+                    })
                 }
                 }
             /> : <ErrLocation/>}
@@ -152,8 +175,11 @@ export default class NearFriend extends PureComponent {
     covertTom = (distance) => {
         if (distance < 1) {
             return Number.parseInt(distance * 1000) + "m"
-        }
+        } else if (distance < 10) {
+            return Number.parseInt(distance) + "km"
+        } else
+            return ">10km"
 
-        return Number.parseInt(distance) + "km"
+
     }
 }

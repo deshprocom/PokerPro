@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import {reallySize} from "./Header";
-import {UltimateListView, ImageLoad} from '../../components'
+import {UltimateListView, ImageLoad, LeftAlignedImage} from '../../components'
 import I18n from "react-native-i18n";
 import {NoDataView, LoadErrorView} from '../../components/load';
 import {Colors, Images} from '../../Themes';
@@ -49,12 +49,10 @@ export const styles = StyleSheet.create({
         color: Colors.txt_444,
         fontSize: reallySize(16),
         paddingRight: reallySize(17),
-        paddingLeft: reallySize(17),
-        paddingBottom: reallySize(15),
-        paddingTop: reallySize(5)
+        paddingLeft: reallySize(17)
     },
     bottom: {
-        height: reallySize(55),
+        height: reallySize(38),
         width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
@@ -75,9 +73,9 @@ export const styles = StyleSheet.create({
         width: reallySize(15)
     },
     long_cover: {
-        height: reallySize(200),
-        width: '100%',
-        backgroundColor: Colors._ECE
+        marginLeft: reallySize(17),
+        marginTop: reallySize(8),
+        marginRight: reallySize(17)
     },
     btn_like: {
         flexDirection: 'row',
@@ -190,7 +188,8 @@ export default class MomentList extends PureComponent {
     };
 
     itemView = (item) => {
-        const {user, created_at, likes, comments, id, body_type} = item;
+        const {user, created_at, likes, comments, id, body_type, location} = item;
+        const {address_title} = location;
         return <TouchableOpacity
             onPress={() => {
                 router.toLongArticle(item)
@@ -255,7 +254,8 @@ export default class MomentList extends PureComponent {
 
             {/*帖子时间、地点*/}
             <View style={styles.bottom}>
-                <Text style={styles.time}>{getDateDiff(created_at)}·深圳</Text>
+                <Text
+                    style={styles.time}>{getDateDiff(created_at)}{strNotNull(address_title) ? `·${address_title}` : ""}</Text>
 
                 <View style={{flex: 1}}/>
                 <TouchableOpacity
@@ -304,11 +304,12 @@ export default class MomentList extends PureComponent {
             <Text style={styles.body}>{item.title}</Text>
 
             {strNotNull(item.cover_link) ? <TouchableOpacity
+                style={styles.long_cover}
                 onPress={() => {
                     global.router.toImageGalleryPage([{url: item.cover_link}], 0)
                 }}>
-                <ImageLoad
-                    style={styles.long_cover}
+                <LeftAlignedImage
+                    height={200}
                     source={{uri: item.cover_link}}/>
             </TouchableOpacity> : null}
 
@@ -319,9 +320,10 @@ export default class MomentList extends PureComponent {
     short = (item) => {
         const {images, body} = item;
         return <View>
-            <Text
+            {strNotNull(body) ? <Text
                 numberOfLines={6}
-                style={styles.body}>{body}</Text>
+                style={styles.body}>{body}</Text> : null}
+
 
             {images && images.length > 0 ? this.shortImage(images) : null}
 
@@ -339,12 +341,13 @@ export default class MomentList extends PureComponent {
     shortImage = (images) => {
         if (images.length === 1) {
             return <TouchableOpacity
+                style={styles.long_cover}
                 onPress={() => {
                     this.previewImage(images, 0)
                 }}
             >
-                <ImageLoad
-                    style={styles.long_cover}
+                <LeftAlignedImage
+                    height={200}
                     source={{uri: images[0].image_url}}/>
             </TouchableOpacity>
 

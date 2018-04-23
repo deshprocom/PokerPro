@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Image, TouchableOpacity, Animated} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity, Animated, Platform} from 'react-native';
 
 import {RNCamera} from 'react-native-camera';
 import {Images, Metrics} from "../../Themes";
@@ -12,8 +12,8 @@ class ExpandText extends Component {
             type: RNCamera.Constants.Type.back,//前置摄像头
             imagePath: "",
             videoPath: "",
-            playing:false,
-            duration:0,
+            playing: false,
+            duration: 0,
         };
         this.isRecord = false;//是否是录像
     }
@@ -39,7 +39,9 @@ class ExpandText extends Component {
                                     <Image source={Images.social.close_camera} style={styles.closeBtn}/>
                                 </TouchableOpacity>
 
-                                {text !== "00" ? <Text style={[{color:"white"},{marginBottom: 12},{fontSize:20}]}>{`00:${text}`}</Text> : <Text style={[{color:"white"},{marginBottom: 12},{fontSize:20}]}>长按录像</Text>}
+                                {text !== "00" ? <Text
+                                        style={[{color: "white"}, {marginBottom: 12}, {fontSize: 20}]}>{`00:${text}`}</Text> :
+                                    <Text style={[{color: "white"}, {marginBottom: 12}, {fontSize: 20}]}>长按录像</Text>}
 
                                 <TouchableOpacity onPress={this.cutCamera}>
                                     <Image source={Images.social.cut_camera} style={styles.cutCamera}/>
@@ -70,13 +72,15 @@ class ExpandText extends Component {
 
                             <TouchableOpacity onPress={() => {
                                 if (this.props.params.fileInfo === null) return;
-                                this.props.params.fileInfo({type:"image",path:this.state.imagePath});
+                                this.props.params.fileInfo({type: "image", path: this.state.imagePath});
                                 router.pop();
                             }}>
                                 <Text style={[styles.reTake, {marginRight: 20}]}>发送</Text>
                             </TouchableOpacity>
                         </View>
-                        <Image source={{uri: this.state.imagePath}} style={styles.image}/>
+                        <Image
+                            source={{uri: Platform.OS === 'ios' ? this.state.imagePath : 'file://' + this.state.imagePath}}
+                            style={styles.image}/>
                     </View>
                     : null}
                 {this.state.videoPath !== "" ?
@@ -90,7 +94,7 @@ class ExpandText extends Component {
 
                             <TouchableOpacity onPress={() => {
                                 if (this.props.params.fileInfo === null) return;
-                                this.props.params.fileInfo({type:"video",path:this.state.videoPath});
+                                this.props.params.fileInfo({type: "video", path: this.state.videoPath});
                                 router.pop();
                             }}>
                                 <Text style={[styles.reTake, {marginRight: 20}]}>发送</Text>
@@ -113,20 +117,22 @@ class ExpandText extends Component {
                         />
 
                         <TouchableOpacity onPress={() => {
-                            if (this.state.playing){
+                            if (this.state.playing) {
                                 return;
                             }
-                            this.setState({playing:true});
+                            this.setState({playing: true});
                         }}>
-                            <Image source={Images.social.play_video} style={[{width:Metrics.reallySize(70)},{height:Metrics.reallySize(70)},{marginBottom:20},{marginTop:20}]}/>
+                            <Image source={Images.social.play_video}
+                                   style={[{width: Metrics.reallySize(70)}, {height: Metrics.reallySize(70)}, {marginBottom: 20}, {marginTop: 20}]}/>
                         </TouchableOpacity>
                     </View>
                     : null}
             </View>
         );
     }
+
     endPlayer = () => {
-        this.setState({playing:false})
+        this.setState({playing: false})
     };
 
     ///切换摄像头
@@ -143,7 +149,7 @@ class ExpandText extends Component {
 
     beginRecord = () => {
         this.timer = setInterval(() => {
-            this.setState({duration:this.state.duration + 1});
+            this.setState({duration: this.state.duration + 1});
         }, 1000);
     };
 
@@ -163,7 +169,7 @@ class ExpandText extends Component {
             const options = {maxDuration: 20};
             const data = await this.camera.recordAsync(options);
             let videoPath = data.uri.replace("file://", "");
-            this.setState({videoPath: videoPath,duration:0});
+            this.setState({videoPath: videoPath, duration: 0});
 
             ///清除定时器
             this.timer && clearInterval(this.timer);

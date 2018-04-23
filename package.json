@@ -55,7 +55,8 @@
     "react-timer-mixin": "^0.13.3",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
-    "rn-markdown": "^1.1.1"
+    "rn-markdown": "^1.1.1",
+    "react-native-thumb":"git+https://github.com/dongodngtang/react-native-thumb.git"
   },
   "devDependencies": {
     "babel-jest": "23.0.0-alpha.0",
