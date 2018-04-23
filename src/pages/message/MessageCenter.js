@@ -10,11 +10,12 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {NavigationBar} from '../../components';
-import {isEmptyObject, showToast, utcDate} from '../../utils/ComonHelper';
+import {isEmptyObject, showToast, utcDate, localFilePath} from '../../utils/ComonHelper';
 import {getActivities, getMsgUnRead} from '../../services/AccountDao';
 import JMessage from "jmessage-react-plugin";
 import {JPUSH_APPKEY} from '../../configs/Constants'
 import Loading from "../../components/Loading";
+import ImageLoad from "../../components/ImageLoad";
 
 const icons = [
     require('../../../source/message/ic_order.png'),
@@ -79,6 +80,7 @@ export default class MessageCenter extends Component {
     };
 
     _renderItem = (item) => {
+
         let lastMessage = item.item.latestMessage;//最后一条消息
         let {nickname, avatarThumbPath, username} = item.item.target;
 
@@ -107,6 +109,8 @@ export default class MessageCenter extends Component {
             createTime = this.formatDate(createTime);
         }
 
+        avatarThumbPath = localFilePath(avatarThumbPath)
+
         return (
             <TouchableOpacity
                 onPress={() => {
@@ -130,8 +134,8 @@ export default class MessageCenter extends Component {
                 keyExtractor={(item, index) => index + ""}
                 style={{backgroundColor: 'white'}}>
                 <View style={styles.flatItem}>
-                    <Image
-                        defaultSource={Images.home_avatar}
+                    <ImageLoad
+                        emptyBg={Images.home_avatar}
                         style={styles.msgIcon}
                         source={{uri: avatarThumbPath}}/>
                     <View>

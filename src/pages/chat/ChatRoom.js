@@ -17,7 +17,7 @@ import {Colors, Images, Metrics} from "../../Themes";
 import NavigationBar from "../../components/NavigationBar";
 import JMessage from "jmessage-react-plugin";
 import I18n from "react-native-i18n";
-import {getFileName, localFilePath, showToast} from "../../utils/ComonHelper";
+import {getFileName, localFilePath, showToast, strNotNull} from "../../utils/ComonHelper";
 import SelfMessage from "./SelfMessage";
 import OtherMessage from "./OtherMessage";
 import {screenHeight, screenWidth} from "../socials/Header";
@@ -208,7 +208,7 @@ export default class ChatRoom extends Component {
 
     //收到消息
     receiveMessage = (message) => {
-        console.log("收到的消息:",message);
+        console.log("收到的消息:", message);
         let newMessage = this.createMessageBody(message);
         if (newMessage !== undefined) {
             this.addMessage([newMessage]);
@@ -413,7 +413,7 @@ export default class ChatRoom extends Component {
 
     //消息点击事件
     clickMessageAction = (message) => {
-        console.log(message)
+        console.log('消息点击事件', message)
         let {type, image, path, _id} = message;
         if (type === "image") {
             let images = [{url: localFilePath(image)}];
@@ -433,7 +433,7 @@ export default class ChatRoom extends Component {
             let url = path;
 
             ///视频未下载
-            if (url === "") {
+            if (!strNotNull(url)) {
                 let userInfo = this.otherInfo;
                 let parma = {
                     type: "single",
@@ -442,11 +442,11 @@ export default class ChatRoom extends Component {
                 };
                 JMessage.downloadFile(parma,
                     (result) => {
-                        console.log("下载文件成功");
+                        console.log("下载文件成功", result);
                         this.setState({videoPath: result.filePath});
                         message.path = result.filePath;
                     }, (error) => {
-                        console.log("下载文件失败");
+                        console.log("下载文件失败", error);
                     });
             }
             else {
