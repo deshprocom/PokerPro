@@ -646,5 +646,8 @@
   "no_near_friend":"附近没有人",
   "message_voice":"[语音]",
   "message_image":"[图片]",
-  "message_video":"[视频]"
+  "message_video":"[视频]",
+  "library_root":"未获取您设备的相册权限，请前往设置开启",
+  "camera_root":"未获取您设备的相机权限，请前往设置开启",
+  "microphone_root":"未获取您设备的麦克风权限，请前往设置开启"
 }

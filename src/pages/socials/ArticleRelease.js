@@ -18,6 +18,7 @@ import {uploadImage, postTopic} from '../../services/SocialDao'
 import {getFileName, showToast} from "../../utils/ComonHelper";
 import moment from 'moment';
 import Loading from "../../components/Loading";
+import {checkPermission} from "../comm/Permission";
 
 
 let articleKey = "";//长贴标识
@@ -347,44 +348,52 @@ export default class ArticleRelease extends PureComponent {
     ///插入图片
     insetrtImageAction = () => {
         this.closeAction();
-        ImagePicker.openPicker({
-            compressImageMaxWidth: 1024,
-            compressImageMaxHeight: 1024,
-            compressImageQuality: 0.5
-        }).then(image => {
-            if (image.mime.indexOf("image") !== -1) {
-                let rowData = {
-                    type: "image",
-                    swipeOpen: false,
-                };
-                rowData.imagePath = image.path;
-                rowData.imageWidth = image.width;
-                rowData.imageHeight = image.height;
-                this.insertRow(rowData);
+        checkPermission("photo",result => {
+            if (result) {
+                ImagePicker.openPicker({
+                    compressImageMaxWidth: 1024,
+                    compressImageMaxHeight: 1024,
+                    compressImageQuality: 0.5
+                }).then(image => {
+                    if (image.mime.indexOf("image") !== -1) {
+                        let rowData = {
+                            type: "image",
+                            swipeOpen: false,
+                        };
+                        rowData.imagePath = image.path;
+                        rowData.imageWidth = image.width;
+                        rowData.imageHeight = image.height;
+                        this.insertRow(rowData);
+                    }
+                    else {
+                        showToast(I18n.t("file_type_error"));
+                    }
+                });
             }
-            else {
-                showToast(I18n.t("file_type_error"));
-            }
-        });
+        })
     };
 
 
     ///拍照
     insertTakePhotoAction = () => {
         this.closeAction();
-        ImagePicker.openCamera({
-            compressImageMaxWidth: 1024,
-            compressImageMaxHeight: 1024,
-            compressImageQuality: 0.5
-        }).then(image => {
-            let rowData = {
-                type: "image",
-                swipeOpen: false,
-            };
-            rowData.imagePath = image.path;
-            rowData.imageWidth = image.width;
-            rowData.imageHeight = image.height;
-            this.insertRow(rowData);
+        checkPermission("camera",(result) => {
+            if (result){
+                ImagePicker.openCamera({
+                    compressImageMaxWidth: 1024,
+                    compressImageMaxHeight: 1024,
+                    compressImageQuality: 0.5
+                }).then(image => {
+                    let rowData = {
+                        type: "image",
+                        swipeOpen: false,
+                    };
+                    rowData.imagePath = image.path;
+                    rowData.imageWidth = image.width;
+                    rowData.imageHeight = image.height;
+                    this.insertRow(rowData);
+                });
+            }
         });
     };
 
