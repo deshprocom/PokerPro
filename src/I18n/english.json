@@ -650,6 +650,10 @@
   "dynamic": "Dynamic",
   "footprint": "Footprint",
   "moment": "Moment",
-  "topic": "Topic"
+  "topic": "Topic",
+  "library_root": "Failed to get photo permission for your device. Go to Settings On",
+  "camera_root": "Failed to get camera permission for your device. Go to Settings On",
+  "microphone_root": "Failed to get microphone permission for your device. Go to Settings On",
+  "location_root": "Failed to get location permission for your device. Go to Settings On"
 }
 

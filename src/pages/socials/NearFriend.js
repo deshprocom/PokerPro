@@ -14,6 +14,7 @@ import {NavigationBar, ImageLoad} from '../../components';
 import ErrLocation from '../comm/ErrLocation';
 import {getNearBys, postNearBys} from '../../services/SocialDao'
 import {strNotNull} from '../../utils/ComonHelper'
+import {checkPermission} from "../comm/Permission";
 
 const styles = StyleSheet.create({
     avatar: {
@@ -62,17 +63,22 @@ export default class NearFriend extends PureComponent {
         }, err => {
         })
 
-        navigator.geolocation.getCurrentPosition(data => {
-            const {coords} = data;
-            postNearBys(coords, ret => {
-            }, err => {
-            })
+        checkPermission('location', ret => {
+            if (ret) {
+                navigator.geolocation.getCurrentPosition(data => {
+                    const {coords} = data;
+                    postNearBys(coords, ret => {
+                    }, err => {
+                    })
 
-        }, err => {
-            this.setState({
-                geolocation: false
-            })
+                }, err => {
+                    this.setState({
+                        geolocation: false
+                    })
+                })
+            }
         })
+
 
     }
 

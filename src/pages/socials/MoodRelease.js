@@ -289,6 +289,7 @@ export default class MoodRelease extends Component {
                     <TextInput placeholder={I18n.t('social_content')}
                                style={styles.textInput}
                                multiline={true}
+                               underlineColorAndroid={'transparent'}
                                onChangeText={(text) => {
                                    this.setState({
                                        mood: text
