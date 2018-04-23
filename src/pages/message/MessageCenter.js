@@ -16,6 +16,7 @@ import JMessage from "jmessage-react-plugin";
 import {JPUSH_APPKEY} from '../../configs/Constants'
 import Loading from "../../components/Loading";
 import ImageLoad from "../../components/ImageLoad";
+import {reallySize} from "../../Themes/Metrics";
 
 const icons = [
     require('../../../source/message/ic_order.png'),
@@ -186,7 +187,9 @@ export default class MessageCenter extends Component {
                           <View>
                               {this.readerItem(0, I18n.t('order_notice'), notice.title, notice.created_at, msgUnRead)}
                               {this.readerItem(1, I18n.t('ads_activity'), activity.title, activity.activity_time, 0)}
-                              <View style={[{height: 10, backgroundColor: "#ECECEE"}]}/>
+                              <View style={[{height: 1}, {backgroundColor: "white"}]}>
+                                  <View style={[{height: 1}, {backgroundColor: "#ECECEE"}, {marginLeft: 15}]}/>
+                              </View>
                           </View>
                       }
                       ItemSeparatorComponent={() => {
@@ -263,12 +266,11 @@ const styles = StyleSheet.create({
     flatItem: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingTop: 24,
-        paddingBottom: 22
+        height:reallySize(78),
     },
     msgIcon: {
-        height: 54,
-        width: 54,
+        height: reallySize(54),
+        width: reallySize(54),
         borderRadius: 27,
         marginLeft: 18,
         marginRight: 22

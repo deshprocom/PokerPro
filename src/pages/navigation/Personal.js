@@ -115,7 +115,7 @@ class Personal extends Component {
 
                 })}
 
-            <View style={{height: 15, width: '100%'}}/>
+            <View style={{height: 10, width: '100%'}}/>
 
             {this._item(stylesP.item_view, Images.business, {width: 21, height: 22, marginLeft: 20},
                 I18n.t('business_cooperation'), () => {
@@ -129,19 +129,6 @@ class Personal extends Component {
                     router.toSettingPage()
 
                 })}
-
-
-            <TouchableOpacity
-                activeOpacity={1}
-                style={[stylesP.personalView, {marginTop: 20}]} onPress={() => {
-                Linking.openURL('tel:0755-23919844');
-
-            }}>
-                <View style={stylesP.personalView2}>
-                    <Image style={{width: 21, height: 22, marginLeft: 20}} source={Images.customer_service_tel}/>
-                    <Text style={stylesP.personalText}>{I18n.t('customer_service_tel')}：0755-23919844</Text>
-                </View>
-            </TouchableOpacity>
 
             <View style={{height: 50}}/>
         </ScrollView>

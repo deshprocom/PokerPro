@@ -11,12 +11,13 @@ import {
 import I18n from "react-native-i18n";
 import {Colors, Images} from "../../Themes";
 import {NavigationBar} from '../../components';
-import {reallySize, screenWidth, toolBarHeight} from "./Header";
+import {reallySize,screenWidth,toolBarHeight} from "./Header";
 import ImagePicker from 'react-native-image-crop-picker';
 import PopAction from "../comm/PopAction";
-import {getFileName, showToast} from "../../utils/ComonHelper";
-import {uploadImage, postTopic} from '../../services/SocialDao';
+import {getFileName,showToast} from "../../utils/ComonHelper";
+import {uploadImage,postTopic} from '../../services/SocialDao';
 import Loading from "../../components/Loading";
+import {checkPermission} from "../comm/Permission";
 
 let lastUpload = false;//是否需要上传最后一张
 
@@ -42,67 +43,75 @@ export default class MoodRelease extends Component {
 
     ///从相册选择
     insetrtImageAction = () => {
-        let currentIndex = this.state.currentIndex;
-        let newImages = this.state.images;
-        ImagePicker.openPicker({
-            compressImageMaxWidth: 1024,
-            compressImageMaxHeight: 1024,
-            compressImageQuality: 0.5
-        }).then(image => {
-            this.popAction.toggle();
-            if (image.mime.indexOf("image") !== -1) {
-                let imagePath = newImages[currentIndex];
+        checkPermission("photo",result => {
+            if (result) {
+                let currentIndex = this.state.currentIndex;
+                let newImages = this.state.images;
+                ImagePicker.openPicker({
+                    compressImageMaxWidth: 1024,
+                    compressImageMaxHeight: 1024,
+                    compressImageQuality: 0.5
+                }).then(image => {
+                    this.popAction.toggle();
+                    if (image.mime.indexOf("image") !== -1){
+                        let imagePath = newImages[currentIndex];
 
-                //需要上传最后一张
-                if (currentIndex === 8) {
-                    lastUpload = true;
-                }
+                        //需要上传最后一张
+                        if (currentIndex === 8){
+                            lastUpload = true;
+                        }
 
-                ///插入图片
-                if (imagePath.imagePath === Images.social.icon_send_mood && currentIndex !== 8) {
-                    newImages.splice(currentIndex, 0, {imagePath: image.path});
+                        ///插入图片
+                        if (imagePath.imagePath === Images.social.icon_send_mood && currentIndex !== 8) {
+                            newImages.splice(currentIndex, 0, {imagePath: image.path});
 
-                }
-                ///覆盖图片
-                else {
-                    newImages.splice(currentIndex, 1, {imagePath: image.path});
-                }
-                this.setState({images: newImages});
+                        }
+                        ///覆盖图片
+                        else {
+                            newImages.splice(currentIndex, 1, {imagePath: image.path});
+                        }
+                        this.setState({images: newImages});
+                    }
+                    else {
+                        showToast(I18n.t("file_type_error"));
+                    }
+                });
             }
-            else {
-                showToast(I18n.t("file_type_error"));
-            }
-        });
+        })
     };
 
 
     ///拍照
     insertTakePhotoAction = () => {
-        let currentIndex = this.state.currentIndex;
-        let newImages = this.state.images;
-        ImagePicker.openCamera({
-            compressImageMaxWidth: 1024,
-            compressImageMaxHeight: 1024,
-            compressImageQuality: 0.5
-        }).then(image => {
+        checkPermission("camera",result => {
+            if (result) {
+                let currentIndex = this.state.currentIndex;
+                let newImages = this.state.images;
+                ImagePicker.openCamera({
+                    compressImageMaxWidth: 1024,
+                    compressImageMaxHeight: 1024,
+                    compressImageQuality: 0.5
+                }).then(image => {
 
-            this.popAction.toggle();
-            let imagePath = newImages[currentIndex];
+                    this.popAction.toggle();
+                    let imagePath = newImages[currentIndex];
 
-            //需要上传最后一张
-            if (currentIndex === 8) {
-                lastUpload = true;
-            }
+                    //需要上传最后一张
+                    if (currentIndex === 8){
+                        lastUpload = true;
+                    }
 
-            ///插入图片
-            if (imagePath.imagePath === Images.social.icon_send_mood && currentIndex !== 8) {
-                newImages.splice(currentIndex, 0, {imagePath: image.path});
+                    ///插入图片
+                    if (imagePath.imagePath === Images.social.icon_send_mood && currentIndex !== 8) {
+                        newImages.splice(currentIndex, 0, {imagePath: image.path});
+                    }
+                    ///覆盖图片
+                    else {
+                        newImages.splice(currentIndex, 1, {imagePath: image.path});
+                    }
+                    this.setState({images: newImages});
+                });
             }
-            ///覆盖图片
-            else {
-                newImages.splice(currentIndex, 1, {imagePath: image.path});
-            }
-            this.setState({images: newImages});
         });
     };
 
@@ -112,19 +121,19 @@ export default class MoodRelease extends Component {
 
         let newImages = this.state.images;
         ///9张图
-        if (newImages.length === 9) {
+        if (newImages.length === 9){
             let lastImage = newImages[8];
             //最后一张不是占位图，删除后添加占位图
-            if (lastImage.imagePath !== Images.social.icon_send_mood) {
+            if (lastImage.imagePath !== Images.social.icon_send_mood){
                 newImages.splice(index, 1);
                 newImages.push({imagePath: Images.social.icon_send_mood});
                 lastUpload = false;
             }
-            else {
+            else{
                 newImages.splice(index, 1);
             }
         }
-        else {
+        else{
             newImages.splice(index, 1);
         }
         this.setState({images: newImages});
@@ -138,6 +147,11 @@ export default class MoodRelease extends Component {
 
         if (mood === "" && images.length === 1) {
             showToast(I18n.t('article_null'));
+            return;
+        }
+
+        if (mood === ""){
+            showToast(I18n.t('social_content'));
             return;
         }
         //无需上传图片
@@ -156,15 +170,15 @@ export default class MoodRelease extends Component {
                 this.uploadImageAction(imagePath, (data) => {
                     imageIds.push(data.id);
                     ///需要上传最后一张，等待所有图片上传完成
-                    if (lastUpload) {
-                        if (images.length === imageIds.length) {
-                            this.sendMood(mood, imageIds);
+                    if (lastUpload){
+                        if (images.length === imageIds.length){
+                            this.sendMood(mood,imageIds);
                         }
                     }
                     ///不需要上传最后一张，等待除占位图外所有图片上传完成
-                    else {
-                        if (images.length - 1 === imageIds.length) {
-                            this.sendMood(mood, imageIds);
+                    else{
+                        if (images.length - 1 === imageIds.length){
+                            this.sendMood(mood,imageIds);
                         }
                     }
                 })
@@ -200,7 +214,7 @@ export default class MoodRelease extends Component {
 
         postTopic(body, data => {
             showToast(I18n.t('article_release_success'));
-            setTimeout(() => this.loading && this.loading.close(), 500);
+            setTimeout(() => this.loading && this.loading.close(),500);
             router.popToAriticle();
         }, err => {
             this.loading && this.loading.close();
@@ -239,14 +253,12 @@ export default class MoodRelease extends Component {
                 </TouchableOpacity>
 
                 {item.item.imagePath !== Images.social.icon_send_mood ?
-                    <TouchableOpacity style={styles.delete} onPress={() => {
-                        this.deleteImage(item.index)
-                    }}>
+                    <TouchableOpacity style={styles.delete} onPress = {() => {this.deleteImage(item.index)}}>
                         <View style={styles.deleteView}>
                             <Text style={styles.deleteText}>删除</Text>
                         </View>
                     </TouchableOpacity>
-                    : null}
+                    :null}
             </View>
         )
     };
@@ -277,7 +289,6 @@ export default class MoodRelease extends Component {
                     <TextInput placeholder={I18n.t('social_content')}
                                style={styles.textInput}
                                multiline={true}
-                               underlineColorAndroid={'transparent'}
                                onChangeText={(text) => {
                                    this.setState({
                                        mood: text
@@ -294,18 +305,14 @@ export default class MoodRelease extends Component {
                               bounces={false}
                     />
 
-                    <TouchableOpacity onPress={() => {
-                        global.router.toLocation({
-                            address: (addressInfo) => {
-                                this.setState({address: addressInfo});
-                            }
-                        })
-                    }}>
+                    <TouchableOpacity onPress={() => {global.router.toLocation({address:(addressInfo) => {
+                            this.setState({address:addressInfo});
+                        }})}}>
                         <View style={styles.subView}>
                             <Image source={Images.social.address}
                                    style={[{width: reallySize(14)}, {height: reallySize(18)}]}/>
                             <Text
-                                style={[{color: "#AAAAAA"}, {fontSize: 14}, {marginLeft: 5}, {marginRight: 17}]}>{result}</Text>
+                                style={[{color: "#AAAAAA"}, {fontSize: 14}, {marginLeft: 5},{marginRight: 17}]}>{result}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -328,7 +335,7 @@ export default class MoodRelease extends Component {
                     ref={ref => this.popAction = ref}
                     btnArray={this.popActions()}/>
 
-                <Loading ref={ref => this.loading = ref} cancelable={true}/>
+                <Loading ref={ref => this.loading = ref}  cancelable={true}/>
 
             </View>
         )
@@ -414,18 +421,18 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    delete: {
-        position: "absolute",
-        marginLeft: (screenWidth - reallySize(50)) / 3 - 32,
-        marginTop: 4,
+    delete:{
+        position:"absolute",
+        marginLeft:(screenWidth - reallySize(50)) / 3 - 32,
+        marginTop:4,
     },
-    deleteView: {
-        backgroundColor: "rgba(0,0,0,0.5)",
-        borderRadius: 9,
+    deleteView:{
+        backgroundColor:"rgba(0,0,0,0.5)",
+        borderRadius:9,
     },
-    deleteText: {
-        color: "white",
-        fontSize: 10,
-        padding: 4,
+    deleteText:{
+        color:"white",
+        fontSize:10,
+        padding:4,
     }
 });

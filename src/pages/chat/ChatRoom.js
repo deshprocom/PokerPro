@@ -8,6 +8,7 @@ import {
     Text,
     View,
     TouchableOpacity,
+    TouchableWithoutFeedback,
     Image,
     PermissionsAndroid, NativeModules
 } from 'react-native';
@@ -27,7 +28,10 @@ import {AudioRecorder, AudioUtils} from 'react-native-audio';
 import PopAction from '../comm/PopAction';
 import {report_user, uploadImage} from '../../services/SocialDao';
 import Loading from "../../components/Loading";
+
 import Thumb from 'react-native-thumb';
+import {checkPermission} from "../comm/Permission";
+
 
 
 let Sound = require('react-native-sound');
@@ -70,6 +74,7 @@ export default class ChatRoom extends Component {
     componentDidMount() {
         ///检测是否有权限
         this.checkPermission().then((hasPermission) => {
+            console.log(hasPermission);
             this.setState({hasPermission});
 
             if (!hasPermission) return;
@@ -274,18 +279,22 @@ export default class ChatRoom extends Component {
 
     ///选择图片
     selectedImage = () => {
-        ImagePicker.openPicker({}).then(image => {
-            let type = image.mime;
-            let path = image.path;
-            let videoPath = path.replace("file://", "");
-            if (type.indexOf("image") !== -1) {
-                this.onSendImage(videoPath);
+        checkPermission("photo",(result) => {
+            if (result){
+                ImagePicker.openPicker({}).then(image => {
+                    let type = image.mime;
+                    let path = image.path;
+                    let videoPath = path.replace("file://", "");
+                    if (type.indexOf("image") !== -1) {
+                        this.onSendImage(videoPath);
+                    }
+                    else if (type.indexOf("video") !== -1) {
+                        this.onSendVideo(videoPath);
+                    }
+                }).catch(e => {
+                    // Alert.alert(e.message ? e.message : e);
+                });
             }
-            else if (type.indexOf("video") !== -1) {
-                this.onSendVideo(videoPath);
-            }
-        }).catch(e => {
-            // Alert.alert(e.message ? e.message : e);
         });
     };
 
@@ -490,6 +499,7 @@ export default class ChatRoom extends Component {
 
     //开始录音
     record = async () => {
+
         if (this.state.recording) {
             console.warn('Already recording!');
             return;
@@ -685,7 +695,11 @@ export default class ChatRoom extends Component {
         return (
             <View style={{flexDirection: "row"}}>
                 <TouchableOpacity onPress={() => {
-                    this.setState({inputVoice: !this.state.inputVoice})
+                    checkPermission("microphone",(result) => {
+                        if (result){
+                            this.setState({inputVoice: !this.state.inputVoice})
+                        }
+                    });
                 }}>
                     <Image source={source} style={styles.btnIcon}/>
                 </TouchableOpacity>
@@ -699,8 +713,9 @@ export default class ChatRoom extends Component {
 
     ///输入语音
     createTextInput = () => {
+        let color = this.state.recording ? "#ECECEE" : "white";
         return (
-            <TouchableOpacity style={styles.voiceView}
+            <TouchableWithoutFeedback
                               onLongPress={() => {
                                   this.record();
                               }}
@@ -708,8 +723,10 @@ export default class ChatRoom extends Component {
                                   this.stop();
                               }}
             >
-                <Text>{I18n.t("touch_speech")}</Text>
-            </TouchableOpacity>
+                <View style={[styles.voiceView,{backgroundColor:color}]}>
+                    <Text>{I18n.t("touch_speech")}</Text>
+                </View>
+            </TouchableWithoutFeedback>
         );
     };
 
@@ -726,17 +743,21 @@ export default class ChatRoom extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => {
-                        router.toTakePhoto({
-                            fileInfo: (file) => {
-                                let type = file.type;
-                                if (type === "image") {
-                                    this.onSendImage(file.path);
-                                }
-                                else {
-                                    this.onSendVideo(file.path);
-                                }
+                        checkPermission("camera",(result) =>{
+                            if (result){
+                                router.toTakePhoto({
+                                    fileInfo: (file) => {
+                                        let type = file.type;
+                                        if (type === "image") {
+                                            this.onSendImage(file.path);
+                                        }
+                                        else {
+                                            this.onSendVideo(file.path);
+                                        }
+                                    }
+                                })
                             }
-                        })
+                        });
                     }}>
                         <Image source={Images.social.chat_takephoto}
                                style={[{width: Metrics.reallySize(28)}, {marginLeft: 30}, {height: Metrics.reallySize(25)}]}/>

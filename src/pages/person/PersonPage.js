@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import {
-    ActivityIndicator, View, Text
+    ActivityIndicator, View, Text, Alert
 } from 'react-native';
 import {connect} from 'react-redux';
 import {Colors, Images} from '../../Themes';
@@ -70,11 +70,27 @@ class PersonPage extends Component {
                 <NavigationBar
                     toolbarStyle={{backgroundColor: '#161718'}}
                     title={I18n.t('edit_info')}
-                    rightBtnText={I18n.t('complete')}
+                    rightBtnText={I18n.t('save_s')}
                     leftBtnIcon={Images.sign_return}
                     leftImageStyle={{height: 19, width: 11, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}
-                    rightBtnPress={this._putProfile}/>
+                    rightBtnPress={() => {
+
+                        Alert.alert(
+                            I18n.t("save_title"),
+                            '',
+                            [
+                                {text: I18n.t("save_n"), onPress: () => router.pop()},
+                                {
+                                    text: I18n.t("save_s"), onPress: () => {
+                                        this._putProfile();
+                                        router.pop();
+                                    }
+                                },
+                            ],
+                            {cancelable: false}
+                        )
+                    }}/>
 
                 <KeyboardAwareScrollView>
                     {loading ? this._renderLoading() : null}

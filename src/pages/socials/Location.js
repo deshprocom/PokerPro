@@ -16,6 +16,7 @@ import I18n from "react-native-i18n";
 import {reallySize} from "./Header";
 import {locations} from '../../services/SocialDao'
 import {isInChina} from './ChinaLocation';
+import {checkPermission} from "../comm/Permission";
 
 export default class Location extends Component{
     constructor(props){
@@ -34,33 +35,37 @@ export default class Location extends Component{
     }
 
     componentDidMount(){
-        navigator.geolocation.getCurrentPosition(data => {
-            let latitude = data.coords.latitude;
-            let longitude = data.coords.longitude;
-            let inChina = isInChina(latitude,longitude);
+        checkPermission("location", result => {
+            if (result){
+                navigator.geolocation.getCurrentPosition(data => {
+                    let latitude = data.coords.latitude;
+                    let longitude = data.coords.longitude;
+                    let inChina = isInChina(latitude,longitude);
 
-            let geoType = "amap";
-            if (!inChina) {
-                geoType = "google";
+                    let geoType = "amap";
+                    if (!inChina) {
+                        geoType = "google";
+                    }
+                    let body = {
+                        "latitude": latitude,
+                        "longitude": longitude,
+                        "geo_type": geoType,
+                    };
+                    locations(body,ret => {
+                        let address = [...this.state.address];
+                        let nearbys = ret.nearbys;
+                        nearbys.forEach(item => {
+                            address.push(item);
+                        });
+                        this.setState({address:address});
+                    },err => {
+                        console.log("获取附近位置失败");
+                    })
+
+                }, err => {
+                    console.log(err)
+                })
             }
-            let body = {
-                "latitude": latitude,
-                "longitude": longitude,
-                "geo_type": geoType,
-            };
-            locations(body,ret => {
-                let address = [...this.state.address];
-                let nearbys = ret.nearbys;
-                nearbys.forEach(item => {
-                    address.push(item);
-                });
-                this.setState({address:address});
-            },err => {
-                console.log("获取附近位置失败");
-            })
-
-        }, err => {
-            console.log(err)
         })
     }
 
