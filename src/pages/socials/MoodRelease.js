@@ -149,6 +149,11 @@ export default class MoodRelease extends Component {
             showToast(I18n.t('article_null'));
             return;
         }
+
+        if (mood === ""){
+            showToast(I18n.t('social_content'));
+            return;
+        }
         //无需上传图片
         if (images.length === 1) {
             this.sendMood(mood, imageIds);

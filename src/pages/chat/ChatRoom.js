@@ -8,6 +8,7 @@ import {
     Text,
     View,
     TouchableOpacity,
+    TouchableWithoutFeedback,
     Image,
     PermissionsAndroid, NativeModules
 } from 'react-native';
@@ -705,8 +706,9 @@ export default class ChatRoom extends Component {
 
     ///输入语音
     createTextInput = () => {
+        let color = this.state.recording ? "#ECECEE" : "white";
         return (
-            <TouchableOpacity style={styles.voiceView}
+            <TouchableWithoutFeedback
                               onLongPress={() => {
                                   this.record();
                               }}
@@ -714,8 +716,10 @@ export default class ChatRoom extends Component {
                                   this.stop();
                               }}
             >
-                <Text>{I18n.t("touch_speech")}</Text>
-            </TouchableOpacity>
+                <View style={[styles.voiceView,{backgroundColor:color}]}>
+                    <Text>{I18n.t("touch_speech")}</Text>
+                </View>
+            </TouchableWithoutFeedback>
         );
     };
 

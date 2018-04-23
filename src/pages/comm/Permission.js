@@ -19,6 +19,9 @@ export function checkPermission(permissionType,callBack) {
             if (permissionType === "microphone"){
                 message = I18n.t("microphone_root");
             }
+            if (permissionType === "location"){
+                message = I18n.t("location_root");
+            }
             showToast(message);
         }
 
