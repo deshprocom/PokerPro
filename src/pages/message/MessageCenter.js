@@ -39,6 +39,7 @@ export default class MessageCenter extends Component {
         conversations: [],//会話列表
     };
 
+
     componentDidMount() {
 
         getActivities(data => {
@@ -66,8 +67,20 @@ export default class MessageCenter extends Component {
         }, err => {
 
         });
-
         this.getConversations();
+        ///添加消息监听
+        JMessage.addReceiveMessageListener(this.receiveMessage);
+
+
+    }
+
+    receiveMessage = (message) => {
+        this.getConversations();
+    };
+
+    componentWillUnmount() {
+        ///移除消息监听
+        JMessage.removeReceiveMessageListener(this.receiveMessage);
     }
 
     getConversations = () => {

@@ -35,7 +35,7 @@ export default class ShareToast extends Component {
         return (
             <Modal
                 onRequestClose={this.hiddenVideo}
-                transparent={true}
+                transparent={Platform.OS === 'ios'}
                 visible={true}>
 
                 <Video source={{uri: this.props.videoUrl}}
@@ -55,7 +55,7 @@ export default class ShareToast extends Component {
                        progressUpdateInterval={250.0}          // [iOS] Interval to fire onProgress (default to ~250ms)
                 />
 
-                <TouchableOpacity onPress={this.hiddenVideo} style={{position: 'absolute'}}>
+                <TouchableOpacity onPress={this.hiddenVideo} style={{position: 'absolute', zIndex: 99}}>
                     <Image source={Images.social.close_camera} style={styles.closeBtn}/>
                 </TouchableOpacity>
             </Modal>
@@ -71,10 +71,9 @@ const styles = StyleSheet.create({
         right: 0,
     },
     closeBtn: {
-        position: 'absolute',
         marginTop: 60,
         marginLeft: 30,
         width: Metrics.reallySize(20),
-        height: Metrics.reallySize(20),
+        height: Metrics.reallySize(20)
     }
 });
