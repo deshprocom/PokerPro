@@ -58,13 +58,15 @@ export default class PopRelease extends PureComponent {
     render() {
         const {visible} = this.state;
         return (<Modal
-            animationType="slide"
             transparent={true}
             visible={visible}
             onRequestClose={() => {
 
             }}>
-            <View style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.8)'}}>
+            <TouchableOpacity
+                activeOpacity={1}
+                onPress={this.toggle}
+                style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.6)'}}>
 
                 <View style={styles.release}>
 
@@ -79,7 +81,7 @@ export default class PopRelease extends PureComponent {
                             global.router.toArticleRelease()
                         }}
                         style={styles.btn}
-                        animation={'zoomIn'}>
+                    >
                         <Image source={Images.social.article}
                                style={styles.icon}/>
                         <Text style={styles.title}>{I18n.t('release_article')}</Text>
@@ -95,8 +97,7 @@ export default class PopRelease extends PureComponent {
                             }
                             global.router.toSendMood()
                         }}
-                        style={styles.btn}
-                        animation={'zoomIn'}>
+                        style={styles.btn}>
                         <Image source={Images.social.moment}
                                style={styles.icon}/>
                         <Text style={styles.title}>{I18n.t('release_moment')}</Text>
@@ -112,7 +113,7 @@ export default class PopRelease extends PureComponent {
                     <Image source={Images.social.close}/>
                 </TouchableOpacity>
 
-            </View>
+            </TouchableOpacity>
 
 
         </Modal>)

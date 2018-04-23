@@ -105,9 +105,9 @@ class SquareBar extends PureComponent {
                 height: Metrics.navBarHeight - Metrics.statusBarHeight,
                 marginTop: Metrics.statusBarHeight,
                 alignItems: 'center', justifyContent: 'center',
-
+                width: 90
             }}>
-            <Text style={[{fontSize: 15, marginRight: 10},
+            <Text style={[{fontSize: 15},
                 activeTab === index ? {color: '#F24A4A', fontWeight: 'bold'} : {color: '#333333'}]}>{item}</Text>
             {activeTab === index ? <View style={{
                 height: 2, width: 48, backgroundColor: '#F24A4A',
