@@ -88,8 +88,9 @@ export default class NearFriend extends PureComponent {
                 leftImageStyle={{height: 19, width: 10, marginLeft: 20, marginRight: 20}}
                 leftBtnPress={() => router.pop()}/>
 
-            <View style={{height: 8}}/>
+
             {this.state.geolocation ? <FlatList
+                ListHeaderComponent={() => <View style={{height: 8}}/>}
                 refreshing={this.state.refreshing}
                 data={this.state.nearby_users}
                 renderItem={this.renderItem}

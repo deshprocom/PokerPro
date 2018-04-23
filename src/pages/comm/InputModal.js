@@ -39,7 +39,7 @@ export default class InputModal extends Component {
 
             <KeyboardAvoidingView
                 behavior={'height'}
-                keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 40}
+                keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 25}
                 style={{flex: 1}}>
                 <TouchableOpacity
                     onPress={this.toggle}
@@ -86,7 +86,7 @@ export default class InputModal extends Component {
 
 const styles = StyleSheet.create({
     bottom: {
-        minHeight: 48,
+        height: 48,
         width: '100%',
         backgroundColor: '#FFFFFF',
         borderColor: '#EEEEEE',
