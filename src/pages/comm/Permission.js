@@ -5,7 +5,6 @@ import I18n from "react-native-i18n";
 export function checkPermission(permissionType,callBack) {
     Permissions.check(permissionType).then(response => {
         // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
-        console.log(response);
         if (response === "authorized"){
             callBack(true);
         }
