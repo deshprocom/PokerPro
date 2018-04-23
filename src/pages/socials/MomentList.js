@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import {reallySize} from "./Header";
-import {UltimateListView, ImageLoad} from '../../components'
+import {UltimateListView, ImageLoad, LeftAlignedImage} from '../../components'
 import I18n from "react-native-i18n";
 import {NoDataView, LoadErrorView} from '../../components/load';
 import {Colors, Images} from '../../Themes';
@@ -73,9 +73,9 @@ export const styles = StyleSheet.create({
         width: reallySize(15)
     },
     long_cover: {
-        height: reallySize(200),
+        marginLeft: reallySize(17),
         marginTop: reallySize(8),
-        resizeMode: 'contain'
+        marginRight: reallySize(17)
     },
     btn_like: {
         flexDirection: 'row',
@@ -304,11 +304,12 @@ export default class MomentList extends PureComponent {
             <Text style={styles.body}>{item.title}</Text>
 
             {strNotNull(item.cover_link) ? <TouchableOpacity
+                style={styles.long_cover}
                 onPress={() => {
                     global.router.toImageGalleryPage([{url: item.cover_link}], 0)
                 }}>
-                <ImageLoad
-                    style={styles.long_cover}
+                <LeftAlignedImage
+                    height={200}
                     source={{uri: item.cover_link}}/>
             </TouchableOpacity> : null}
 
@@ -340,12 +341,13 @@ export default class MomentList extends PureComponent {
     shortImage = (images) => {
         if (images.length === 1) {
             return <TouchableOpacity
+                style={styles.long_cover}
                 onPress={() => {
                     this.previewImage(images, 0)
                 }}
             >
-                <ImageLoad
-                    style={styles.long_cover}
+                <LeftAlignedImage
+                    height={200}
                     source={{uri: images[0].image_url}}/>
             </TouchableOpacity>
 

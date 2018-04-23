@@ -33,6 +33,7 @@ import LogisticsWeb from './logistics/LogisticsWeb';
 import CrowdCountDown from './CrowdCountDown';
 import ProgressBar from './ProgressBar';
 import ActionPay from './ActionPay';
+import {LeftAlignedImage} from "./LeftAlignedImage";
 
 export {
     BtnLong, BtnSoild, NavigationBar,
@@ -62,5 +63,6 @@ export {
     LogisticsWeb,
     CrowdCountDown,
     ProgressBar,
-    ActionPay
+    ActionPay,
+    LeftAlignedImage
 }
