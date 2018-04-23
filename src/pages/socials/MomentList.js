@@ -49,12 +49,10 @@ export const styles = StyleSheet.create({
         color: Colors.txt_444,
         fontSize: reallySize(16),
         paddingRight: reallySize(17),
-        paddingLeft: reallySize(17),
-        paddingBottom: reallySize(15),
-        paddingTop: reallySize(5)
+        paddingLeft: reallySize(17)
     },
     bottom: {
-        height: reallySize(55),
+        height: reallySize(38),
         width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
@@ -76,8 +74,8 @@ export const styles = StyleSheet.create({
     },
     long_cover: {
         height: reallySize(200),
-        width: '100%',
-        backgroundColor: Colors._ECE
+        marginTop: reallySize(8),
+        resizeMode: 'contain'
     },
     btn_like: {
         flexDirection: 'row',
@@ -321,9 +319,10 @@ export default class MomentList extends PureComponent {
     short = (item) => {
         const {images, body} = item;
         return <View>
-            <Text
+            {strNotNull(body) ? <Text
                 numberOfLines={6}
-                style={styles.body}>{body}</Text>
+                style={styles.body}>{body}</Text> : null}
+
 
             {images && images.length > 0 ? this.shortImage(images) : null}
 

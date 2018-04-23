@@ -48,7 +48,10 @@ export default class InputModal extends Component {
                 </TouchableOpacity>
 
                 <View style={styles.bottom}>
-                    <View style={{width: '80%', marginLeft: 17, borderWidth: 0, padding: 5}}>
+                    <View style={{
+                        width: '80%', marginLeft: 17,
+                        borderWidth: 0, padding: 5
+                    }}>
                         <TextInput
                             underlineColorAndroid="transparent"
                             style={styles.inputComment}

@@ -21,7 +21,8 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         alignItems: 'center',
         flexDirection: 'row',
-        marginLeft: 17
+        marginLeft: 17,
+        marginRight: 10
     },
     c_comment: {
         height: 19,
@@ -45,6 +46,11 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: Colors._CCC,
         marginLeft: 8
+    },
+    btn_center: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 })
 
@@ -68,41 +74,48 @@ export default class CommentBar extends PureComponent {
             <TouchableOpacity
                 onPress={this.showInput}
                 style={styles.comment}>
-                <Image
-                    style={styles.c_pen}
-                    source={Images.pen}/>
                 <Text style={styles.c_input}>{I18n.t('write_comment')}</Text>
             </TouchableOpacity>
 
-            <View style={{flexDirection: 'row', alignItems: 'center', flex: 1, justifyContent: 'space-around'}}>
-                <View style={{
-                    height: 30, width: 30
-                }}>
-
-
-                    <Image style={styles.c_comment}
-                           source={Images.commentWhite}/>
-
-                    {this.props.count > 0 ? <View style={{
-                        backgroundColor: '#F24A4A',
-                        height: 20,
-                        width: 20,
-                        borderRadius: 10,
-                        position: 'absolute',
-                        top: 0,
-                        right: 0,
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}>
-                        <Text style={{
-                            color: 'white',
-                            fontSize: 10
-                        }}>{this.props.count}</Text>
-                    </View> : null}
-
-                </View>
+            <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                flex: 1
+            }}>
 
                 <TouchableOpacity
+                    style={styles.btn_center}>
+                    <View style={{
+                        height: 30, width: 30
+                    }}>
+
+
+                        <Image style={styles.c_comment}
+                               source={Images.commentWhite}/>
+
+                        {this.props.count > 0 ? <View style={{
+                            backgroundColor: '#F24A4A',
+                            height: 20,
+                            width: 20,
+                            borderRadius: 10,
+                            position: 'absolute',
+                            top: 0,
+                            right: 0,
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}>
+                            <Text style={{
+                                color: 'white',
+                                fontSize: 10
+                            }}>{this.props.count}</Text>
+                        </View> : null}
+
+                    </View>
+                </TouchableOpacity>
+
+
+                <TouchableOpacity
+                    style={styles.btn_center}
                     onPress={() => {
                         this.props.like && this.props.like()
                     }}>
@@ -112,6 +125,7 @@ export default class CommentBar extends PureComponent {
                 </TouchableOpacity>
 
                 <TouchableOpacity
+                    style={styles.btn_center}
                     onPress={() => {
                         this.props.share && this.props.share()
                     }}>
