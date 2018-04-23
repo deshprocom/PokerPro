@@ -10,7 +10,7 @@ import {
 import {Colors, Fonts, Images, ApplicationStyles} from '../../Themes';
 import I18n from 'react-native-i18n';
 import {NavigationBar} from '../../components';
-import {isEmptyObject, showToast, utcDate, localFilePath} from '../../utils/ComonHelper';
+import {isEmptyObject, showToast, utcDate, localFilePath, strNotNull} from '../../utils/ComonHelper';
 import {getActivities, getMsgUnRead} from '../../services/AccountDao';
 import JMessage from "jmessage-react-plugin";
 import {JPUSH_APPKEY} from '../../configs/Constants'
@@ -118,11 +118,13 @@ export default class MessageCenter extends Component {
         }
 
 
-        if (createTime !== undefined && createTime !== "") {
+        if (strNotNull(createTime)) {
             createTime = this.formatDate(createTime);
         }
 
-        avatarThumbPath = localFilePath(avatarThumbPath)
+        avatarThumbPath = localFilePath(avatarThumbPath);
+
+        console.log(item)
 
         return (
             <TouchableOpacity
@@ -235,7 +237,7 @@ export default class MessageCenter extends Component {
         date.setTime(parseInt(timestamp));
         formater = (formater != null) ? formater : 'yyyy-MM-dd hh:mm';
         Date.prototype.Format = function (fmt) {
-            var o = {
+            let o = {
                 "M+": this.getMonth() + 1, //月
                 "d+": this.getDate(), //日
                 "h+": this.getHours(), //小时
@@ -246,7 +248,7 @@ export default class MessageCenter extends Component {
             };
 
             if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-            for (var k in o) {
+            for (let k in o) {
                 if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ?
                     (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
             }
