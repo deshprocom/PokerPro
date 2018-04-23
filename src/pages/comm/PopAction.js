@@ -44,24 +44,18 @@ export default class PopAction extends PureComponent {
                 <Text style={[{fontSize: 17, fontWeight: 'bold'}, item.txtStyle]}>{item.name}</Text>
 
             </TouchableOpacity>
-
-
         })
-
-
     }
 
     render() {
-
-
         return (<Modal
             animationType="slide"
             transparent={true}
             visible={this.state.visible}
             onRequestClose={() => {
             }}>
-            <View style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.8)'}}>
-                <View style={{flex: 1}}/>
+            <View style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.6)'}}>
+                <TouchableOpacity onPress = {this.toggle}  style={{flex: 1}}/>
                 {this.btnArrayView()}
 
             </View>

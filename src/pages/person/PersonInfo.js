@@ -15,6 +15,7 @@ import I18n from 'react-native-i18n';
 import {isEmptyObject, getCurrentDate, strNotNull} from '../../utils/ComonHelper';
 import {Verified} from '../../configs/Status';
 import {ActionSheet, DatePicker} from '../../components';
+import JMessage from "jmessage-react-plugin";
 
 
 export default class PersonInfo extends Component {
@@ -100,7 +101,6 @@ export default class PersonInfo extends Component {
     };
 
     _update = (image) => {
-
         const {postAvatar} = this.props;
         let formData = new FormData();
         let file = {
@@ -110,6 +110,12 @@ export default class PersonInfo extends Component {
         };
         formData.append("avatar", file);
         postAvatar(formData);
+        JMessage.updateMyAvatar({ imgPath: image.path },
+            () => {
+                // success do something.
+
+            }, (error) => {
+            })
     }
 
     _fileName = (filename) => {

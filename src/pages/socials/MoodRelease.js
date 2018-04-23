@@ -17,6 +17,7 @@ import PopAction from "../comm/PopAction";
 import {getFileName,showToast} from "../../utils/ComonHelper";
 import {uploadImage,postTopic} from '../../services/SocialDao';
 import Loading from "../../components/Loading";
+import {checkPermission} from "../comm/Permission";
 
 let lastUpload = false;//是否需要上传最后一张
 
@@ -42,67 +43,75 @@ export default class MoodRelease extends Component {
 
     ///从相册选择
     insetrtImageAction = () => {
-        let currentIndex = this.state.currentIndex;
-        let newImages = this.state.images;
-        ImagePicker.openPicker({
-            compressImageMaxWidth: 1024,
-            compressImageMaxHeight: 1024,
-            compressImageQuality: 0.5
-        }).then(image => {
-            this.popAction.toggle();
-            if (image.mime.indexOf("image") !== -1){
-                let imagePath = newImages[currentIndex];
+        checkPermission("photo",result => {
+            if (result) {
+                let currentIndex = this.state.currentIndex;
+                let newImages = this.state.images;
+                ImagePicker.openPicker({
+                    compressImageMaxWidth: 1024,
+                    compressImageMaxHeight: 1024,
+                    compressImageQuality: 0.5
+                }).then(image => {
+                    this.popAction.toggle();
+                    if (image.mime.indexOf("image") !== -1){
+                        let imagePath = newImages[currentIndex];
 
-                //需要上传最后一张
-                if (currentIndex === 8){
-                    lastUpload = true;
-                }
+                        //需要上传最后一张
+                        if (currentIndex === 8){
+                            lastUpload = true;
+                        }
 
-                ///插入图片
-                if (imagePath.imagePath === Images.social.icon_send_mood && currentIndex !== 8) {
-                    newImages.splice(currentIndex, 0, {imagePath: image.path});
+                        ///插入图片
+                        if (imagePath.imagePath === Images.social.icon_send_mood && currentIndex !== 8) {
+                            newImages.splice(currentIndex, 0, {imagePath: image.path});
 
-                }
-                ///覆盖图片
-                else {
-                    newImages.splice(currentIndex, 1, {imagePath: image.path});
-                }
-                this.setState({images: newImages});
+                        }
+                        ///覆盖图片
+                        else {
+                            newImages.splice(currentIndex, 1, {imagePath: image.path});
+                        }
+                        this.setState({images: newImages});
+                    }
+                    else {
+                        showToast(I18n.t("file_type_error"));
+                    }
+                });
             }
-            else {
-                showToast(I18n.t("file_type_error"));
-            }
-        });
+        })
     };
 
 
     ///拍照
     insertTakePhotoAction = () => {
-        let currentIndex = this.state.currentIndex;
-        let newImages = this.state.images;
-        ImagePicker.openCamera({
-            compressImageMaxWidth: 1024,
-            compressImageMaxHeight: 1024,
-            compressImageQuality: 0.5
-        }).then(image => {
+        checkPermission("camera",result => {
+            if (result) {
+                let currentIndex = this.state.currentIndex;
+                let newImages = this.state.images;
+                ImagePicker.openCamera({
+                    compressImageMaxWidth: 1024,
+                    compressImageMaxHeight: 1024,
+                    compressImageQuality: 0.5
+                }).then(image => {
 
-            this.popAction.toggle();
-            let imagePath = newImages[currentIndex];
+                    this.popAction.toggle();
+                    let imagePath = newImages[currentIndex];
 
-            //需要上传最后一张
-            if (currentIndex === 8){
-                lastUpload = true;
-            }
+                    //需要上传最后一张
+                    if (currentIndex === 8){
+                        lastUpload = true;
+                    }
 
-            ///插入图片
-            if (imagePath.imagePath === Images.social.icon_send_mood && currentIndex !== 8) {
-                newImages.splice(currentIndex, 0, {imagePath: image.path});
+                    ///插入图片
+                    if (imagePath.imagePath === Images.social.icon_send_mood && currentIndex !== 8) {
+                        newImages.splice(currentIndex, 0, {imagePath: image.path});
+                    }
+                    ///覆盖图片
+                    else {
+                        newImages.splice(currentIndex, 1, {imagePath: image.path});
+                    }
+                    this.setState({images: newImages});
+                });
             }
-            ///覆盖图片
-            else {
-                newImages.splice(currentIndex, 1, {imagePath: image.path});
-            }
-            this.setState({images: newImages});
         });
     };
 
@@ -138,6 +147,11 @@ export default class MoodRelease extends Component {
 
         if (mood === "" && images.length === 1) {
             showToast(I18n.t('article_null'));
+            return;
+        }
+
+        if (mood === ""){
+            showToast(I18n.t('social_content'));
             return;
         }
         //无需上传图片

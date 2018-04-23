@@ -577,7 +577,7 @@
   "my_coins": "我的扑客币",
   "pull_up_refresh": "上拉加载",
   "poker_coins": "扑客币",
-  "release_article": "发长贴",
+  "release_article": "发长帖",
   "release_moment": "说说",
   "draft_box": "草稿箱",
   "socials_content": "文字",
@@ -599,7 +599,7 @@
   "article_save_success": "保存成功",
   "article_save_failure": "保存失败,请重试",
   "delete": "删除",
-  "save_title": "是否保存草稿",
+  "save_title": "是否保存",
   "save_n": "不保存",
   "save_s": "保存",
   "discover": "发现",
@@ -646,5 +646,9 @@
   "no_near_friend":"附近没有人",
   "message_voice":"[语音]",
   "message_image":"[图片]",
-  "message_video":"[视频]"
+  "message_video":"[视频]",
+  "library_root":"未获取您设备的相册权限，请前往设置开启",
+  "camera_root":"未获取您设备的相机权限，请前往设置开启",
+  "microphone_root":"未获取您设备的麦克风权限，请前往设置开启",
+  "location_root":"未获取您设备的位置权限，请前往设置开启"
 }
