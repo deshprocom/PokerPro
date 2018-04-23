@@ -33,11 +33,13 @@ const styles = StyleSheet.create({
     },
     male: {
         height: 9,
-        width: 9
+        width: 9,
+        marginLeft: 5
     },
     woman: {
         height: 10,
-        width: 8
+        width: 8,
+        marginLeft: 5
     }
 })
 

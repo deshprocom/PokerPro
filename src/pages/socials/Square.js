@@ -32,9 +32,9 @@ export default class Square extends PureComponent {
         let body = {
             "body": data.name,
         };
-        report_topic(topicId,body,(ret) =>{
+        report_topic(topicId, body, (ret) => {
             showToast("举报成功");
-        },(err) => {
+        }, (err) => {
             console.log(err);
         });
         this.popAction && this.popAction.toggle();
@@ -44,7 +44,7 @@ export default class Square extends PureComponent {
     popActions = () => {
         let reportList = global.reportList;
         let resultArray = [];
-        reportList.forEach((data,index) => {
+        reportList.forEach((data, index) => {
             let item = {name: data.name, txtStyle: {color: '#4A90E2'}, onPress: () => this.report(index)};
             resultArray.push(item);
         });
@@ -105,9 +105,9 @@ class SquareBar extends PureComponent {
                 height: Metrics.navBarHeight - Metrics.statusBarHeight,
                 marginTop: Metrics.statusBarHeight,
                 alignItems: 'center', justifyContent: 'center',
-                width: 80,
+
             }}>
-            <Text style={[{fontSize: 15},
+            <Text style={[{fontSize: 15, marginRight: 10},
                 activeTab === index ? {color: '#F24A4A', fontWeight: 'bold'} : {color: '#333333'}]}>{item}</Text>
             {activeTab === index ? <View style={{
                 height: 2, width: 48, backgroundColor: '#F24A4A',

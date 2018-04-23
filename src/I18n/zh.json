@@ -646,5 +646,9 @@
   "no_near_friend":"附近没有人",
   "message_voice":"[语音]",
   "message_image":"[图片]",
-  "message_video":"[视频]"
+  "message_video":"[视频]",
+  "dynamic":"动态",
+  "footprint":"足迹",
+  "moment":"说说",
+  "topic":"长帖"
 }

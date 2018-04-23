@@ -274,7 +274,7 @@ export default class LongArticle extends PureComponent {
     popActions = () => {
         let reportList = global.reportList;
         let resultArray = [];
-        reportList.forEach((data,index) => {
+        reportList.forEach((data, index) => {
             let item = {name: data.name, txtStyle: {color: '#4A90E2'}, onPress: () => this.report(index)};
             resultArray.push(item);
         });
@@ -291,7 +291,8 @@ export default class LongArticle extends PureComponent {
     flatHeader = () => {
 
 
-        const {user, created_at, likes, comments, id, body_type, body, title, page_views} = this.state.article;
+        const {user, created_at, likes, comments, id, body_type, body, title, page_views, location} = this.state.article;
+        const {address_title} = location;
         return <View>
             <View style={{backgroundColor: 'white'}}>
                 <View style={styles.info}>
@@ -314,7 +315,9 @@ export default class LongArticle extends PureComponent {
                                     this.toUserPage(user)
                                 }}
                                 style={styles.nick_name}>{user.nick_name}</Text>
-                            <Text style={[styles.time, {marginTop: 5}]}>{getDateDiff(created_at)}·深圳</Text>
+                            <Text
+                                style={[styles.time, {marginTop: 5}]}
+                            >{getDateDiff(created_at)}{strNotNull(address_title) ? `·${address_title}` : ""}</Text>
                         </View>
 
                         <View style={{flex: 1}}/>

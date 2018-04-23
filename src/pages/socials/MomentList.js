@@ -190,7 +190,8 @@ export default class MomentList extends PureComponent {
     };
 
     itemView = (item) => {
-        const {user, created_at, likes, comments, id, body_type} = item;
+        const {user, created_at, likes, comments, id, body_type, location} = item;
+        const {address_title} = location;
         return <TouchableOpacity
             onPress={() => {
                 router.toLongArticle(item)
@@ -255,7 +256,8 @@ export default class MomentList extends PureComponent {
 
             {/*帖子时间、地点*/}
             <View style={styles.bottom}>
-                <Text style={styles.time}>{getDateDiff(created_at)}·深圳</Text>
+                <Text
+                    style={styles.time}>{getDateDiff(created_at)}{strNotNull(address_title) ? `·${address_title}` : ""}</Text>
 
                 <View style={{flex: 1}}/>
                 <TouchableOpacity
