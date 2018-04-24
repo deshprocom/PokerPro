@@ -244,24 +244,24 @@ export var LoginUser = {};
 function getJmessageInfo() {
 
     ///获取极光登录信息
-    helper.post(Api.jmessage_info(),{},(ret) => {
-        let {username,password} = ret.data;
+    helper.post(Api.jmessage_info(), {}, (ret) => {
+        let {username, password} = ret.data;
         ///登录极光
         JMessage.login({
-                username:username,
-                password:password,
+                username: username,
+                password: password,
             },
             //登录成功回调
             () => {
-
+                console.log("极光IM登录成功");
             },
             //登录失败回调
             (error) => {
-                console.log("极光IM登录失败",error);
+                console.log("极光IM登录失败", error);
             }
         );
-    },(err) => {
-        console.log("获取极光IM用户名和密码失败:",err);
+    }, (err) => {
+        console.log("获取极光IM用户名和密码失败:", err);
     });
 }
 
@@ -297,7 +297,9 @@ export function setLoginUser(ret) {
             report_templates();
 
             //获取关注及粉丝列表
-            followships(data => {}, err => {})
+            followships(data => {
+            }, err => {
+            })
 
         }, 100);
 

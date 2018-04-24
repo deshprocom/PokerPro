@@ -125,8 +125,6 @@ export default class MessageCenter extends Component {
 
         avatarThumbPath = localFilePath(avatarThumbPath);
 
-        console.log(item)
-
         return (
             <TouchableOpacity
                 onPress={() => {

@@ -232,7 +232,7 @@ export default class UserTopicPage extends PureComponent {
     popActions = () => {
         let reportList = global.reportList;
         let resultArray = [];
-        reportList.forEach((data,index) => {
+        reportList.forEach((data, index) => {
             let item = {name: data.name, txtStyle: {color: '#4A90E2'}, onPress: () => this.report(index)};
             resultArray.push(item);
         });
@@ -255,9 +255,9 @@ export default class UserTopicPage extends PureComponent {
             "body": data.name,
             "description": ""
         };
-        report_user(body,(ret) =>{
+        report_user(body, (ret) => {
             showToast(I18n.t("report_success"));
-        },(err) => {
+        }, (err) => {
             console.log(err);
         });
         this.popAction && this.popAction.toggle();
