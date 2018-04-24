@@ -47,13 +47,15 @@ const styles = StyleSheet.create({
     focus: {
         fontSize: 14,
         color: Colors.txt_444,
-        paddingRight: 20,
-        paddingLeft: 20,
-        paddingTop: 5,
-        paddingBottom: 5,
+    },
+    btn_focus: {
+        height: 26,
+        width: 80,
         borderRadius: 2,
         borderWidth: 1,
-        borderColor: Colors.txt_444
+        borderColor: Colors.txt_444,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     info: {
         width: '100%',
@@ -331,7 +333,7 @@ export default class LongArticle extends PureComponent {
 
                         <View style={{flex: 1}}/>
 
-                        {this.isMine(user.user_id) ? null : <Text
+                        {this.isMine(user.user_id) ? null : <TouchableOpacity
                             onPress={() => {
                                 follow(this.state.followed, {target_id: user.user_id}, data => {
                                         this.setState({
@@ -342,8 +344,12 @@ export default class LongArticle extends PureComponent {
                                     }
                                 )
                             }}
-                            style={styles.focus}>{this.state.followed ?
-                            I18n.t('rank_focused') : I18n.t('rank_focus')}</Text>}
+                            style={styles.btn_focus}>
+                            < Text
+                                style={styles.focus}>{this.state.followed ?
+                                I18n.t('rank_focused') : I18n.t('rank_focus')}</Text>
+                        </TouchableOpacity>
+                        }
 
 
                     </View>
