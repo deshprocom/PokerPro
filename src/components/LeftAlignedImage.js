@@ -34,7 +34,7 @@ export class LeftAlignedImage extends Component {
         const width = props.width || Dimensions.get('window').width;
 
         Image.getSize(source.uri, (iw, ih) => {
-            const {imageWidth, imageHeight} = this.calcDim(iw, ih, height, width - 17)
+            const {imageWidth, imageHeight} = this.calcDim(iw, ih, height, width - 34)
 
             this.setState({
                 imageWidth,

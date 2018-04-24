@@ -198,6 +198,8 @@ export default class LongArticle extends PureComponent {
 
             <View style={{position: 'absolute', bottom: 0}}>
                 <CommentBar
+                    placeholder={strNotNull(this.comment_id) ?
+                        I18n.t('reply') : I18n.t('write_comment')}
                     isLike={is_like}
                     ref={ref => this.commentBar = ref}
                     count={this.state.comments_count}
@@ -551,7 +553,12 @@ export default class LongArticle extends PureComponent {
 
             </View>
 
-            <Text style={styles.c_body}>{body}</Text>
+            <Text
+                onPress={() => {
+                    this.comment_id = id;
+                    this.commentBar && this.commentBar.showInput()
+                }}
+                style={styles.c_body}>{body}</Text>
 
             {total_count > 0 ? <TouchableOpacity
                 onPress={() => {

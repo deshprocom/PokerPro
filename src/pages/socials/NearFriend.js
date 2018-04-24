@@ -134,6 +134,7 @@ export default class NearFriend extends PureComponent {
         let sex = gender === 0 ? Images.social.male : gender === 1 ? Images.social.woman : "";
 
         return <TouchableOpacity
+            activeOpacity={1}
             onPress={() => {
                 global.router.toUserTopicPage(item)
             }}

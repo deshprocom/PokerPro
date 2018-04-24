@@ -15,7 +15,7 @@ const customFloatFromRight = '';
 export default class Router {
     toCamera(params) {
         this.stackPush({
-            name: "Camera",
+            name: "CameraVideo",
             params
         })
     }

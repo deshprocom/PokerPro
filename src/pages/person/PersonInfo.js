@@ -259,7 +259,6 @@ export default class PersonInfo extends Component {
 
                 <DatePicker
                     ref={ref => this.datePicker = ref}
-                    style={{width: 200}}
                     date={profile.birthday}
                     mode="date"
                     placeholder="select date"
