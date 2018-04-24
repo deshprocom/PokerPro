@@ -4,7 +4,7 @@ import {
     View,
     FlatList,
     Image,
-    Platform,
+    ActivityIndicator,
     TouchableOpacity,
     Text,
 } from 'react-native';
@@ -49,19 +49,11 @@ export default class NearFriend extends PureComponent {
     state = {
         geolocation: true,
         nearby_users: [],
-        refreshing: false
+        refreshing: true
 
     }
 
     componentDidMount() {
-
-        getNearBys(ret => {
-            console.log('获取附近', ret)
-            this.setState({
-                nearby_users: ret.nearby_users
-            })
-        }, err => {
-        })
 
         checkPermission('location', ret => {
             if (ret) {
@@ -78,6 +70,17 @@ export default class NearFriend extends PureComponent {
                 })
             }
         })
+
+        setTimeout(() => {
+            getNearBys(ret => {
+                console.log('获取附近', ret)
+                this.setState({
+                    nearby_users: ret.nearby_users,
+                    refreshing: false
+                })
+            }, err => {
+            })
+        }, 1000);
 
 
     }
@@ -108,12 +111,14 @@ export default class NearFriend extends PureComponent {
                     marginTop: 100
                 }}>
                     <Text>{I18n.t("no_near_friend")}</Text>
+
                 </View>}
                 onRefresh={() => {
                     getNearBys(ret => {
                         console.log('获取附近', ret)
                         this.setState({
-                            nearby_users: ret.nearby_users
+                            nearby_users: ret.nearby_users,
+                            refreshing: false
                         })
                     }, err => {
                     })
