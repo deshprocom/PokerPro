@@ -5,7 +5,7 @@ import {RNCamera} from 'react-native-camera';
 import {Images, Metrics} from "../../Themes";
 import Video from "react-native-video";
 
-class ExpandText extends Component {
+class Camera extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -189,7 +189,7 @@ class ExpandText extends Component {
 }
 
 
-export default ExpandText;
+export default Camera;
 
 const styles = StyleSheet.create({
     container: {

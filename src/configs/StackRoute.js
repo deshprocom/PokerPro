@@ -4,7 +4,7 @@ import {
     View, StatusBar
 } from 'react-native';
 //Pages
-import TakePhoto from '../pages/comm/ExpandText';
+import TakePhoto from '../pages/comm/Camera';
 import UserTopicPage from '../pages/socials/UserTopicPage';
 import MoodRelease from '../pages/socials/MoodRelease';
 import LongArticle from '../pages/socials/LongArticle';

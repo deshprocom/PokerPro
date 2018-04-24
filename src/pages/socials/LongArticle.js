@@ -115,7 +115,8 @@ const styles = StyleSheet.create({
     },
     long_cover: {
         height: reallySize(200),
-        width: '100%'
+        width: '100%',
+        marginTop: reallySize(10)
     },
     short_image: {
         height: 108,

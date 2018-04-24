@@ -68,7 +68,7 @@ export default class Router {
 
     toCamera() {
         this.stackPush({
-            name: 'ExpandText'
+            name: 'Camera'
         })
     }
 
