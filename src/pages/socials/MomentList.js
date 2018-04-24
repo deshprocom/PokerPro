@@ -120,12 +120,12 @@ export default class MomentList extends PureComponent {
 
     render() {
         return <UltimateListView
-            header={()=>  <View style={styles.separator1}/>}
+            header={() => <View style={styles.separator1}/>}
             scrollEnabled={this.props.scrollEnabled}
             keyExtractor={(item, index) => index + "_moment"}
             ref={(ref) => this.listView = ref}
             onFetch={this.onFetch}
-            separator={()=>  <View style={styles.separator}/>}
+            separator={() => <View style={styles.separator}/>}
             item={this.itemView}
             refreshableTitlePull={I18n.t('pull_refresh')}
             refreshableTitleRelease={I18n.t('release_refresh')}
@@ -269,6 +269,7 @@ export default class MomentList extends PureComponent {
                     onPress={() => {
                         topics_like(id, data => {
                             item.likes = data.total_likes;
+                            item.is_like = !is_like;
                             this.listView && this.listView.updateDataSource(this.listView.getRows())
 
                         }, err => {
