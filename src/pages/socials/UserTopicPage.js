@@ -20,6 +20,7 @@ import {isFollowed, showToast} from '../../utils/ComonHelper';
 import JMessage from "jmessage-react-plugin";
 import {JPUSH_APPKEY} from '../../configs/Constants'
 import PopAction from '../comm/PopAction';
+import ImageLoad from "../../components/ImageLoad";
 
 const HeadHeight = Platform.OS === 'ios' ? Metrics.iPhone_X ? 300 : 280 : 260
 
@@ -165,8 +166,8 @@ export default class UserTopicPage extends PureComponent {
                 }}/>
             <View
                 style={styles.person1}>
-                <Image
-                    defaultSource={Images.home_avatar}
+                <ImageLoad
+                    emptyBg={Images.home_avatar}
                     style={{width: 72, height: 72, borderRadius: 36}}
                     source={{uri: avatar}}/>
             </View>
