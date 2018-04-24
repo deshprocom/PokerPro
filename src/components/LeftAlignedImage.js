@@ -13,7 +13,7 @@ export class LeftAlignedImage extends Component {
         super(props)
 
         this.state = {
-            height: 0,
+            height: 200,
             width: 0,
             imageWidth: 0,
             imageHeight: 0,
@@ -47,18 +47,16 @@ export class LeftAlignedImage extends Component {
     }
 
     render() {
-        const {source, height, width, imageWidth, imageHeight} = this.state;
+        const {source, imageWidth, imageHeight} = this.state;
 
-        const localStyle = height ? {
-            height: height,
-            width: width,
-        } : {};
 
         return (
-            <View style={[styles.container, localStyle]}>
-                {source ?
+            <View>
+                {source && imageHeight > 0 ?
                     <Image
-                        style={{width: imageWidth, height: imageHeight}}
+                        style={{
+                            width: imageWidth, height: imageHeight
+                        }}
                         resizeMode="center"
                         source={source}
                     />
@@ -70,6 +68,7 @@ export class LeftAlignedImage extends Component {
     }
 
     calcDim = (imageWidth, imageHeight, maxHeight, maxWidth) => {
+
         const imageRatio = imageWidth / imageHeight;
 
         let newImageHeight = Math.min(maxHeight, imageHeight)
@@ -81,8 +80,8 @@ export class LeftAlignedImage extends Component {
         }
 
         return {
-            imageWidth: newImageWidth - 17,
-            imageHeight: newImageHeight,
+            imageWidth: newImageWidth - 10,
+            imageHeight: newImageHeight - 10,
         }
     }
 }

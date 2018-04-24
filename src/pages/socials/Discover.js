@@ -93,9 +93,13 @@ export default class Discover extends PureComponent {
                 titleStyle={{color: Colors._FFE}}
             />
             <ScrollView>
-                {this.state.lists.map((item, index) => {
-                    return this.renderItem(item, index)
-                })}
+                <View style={{height: Metrics.screenHeight, flex: 1}}>
+
+                    {this.state.lists.map((item, index) => {
+                        return this.renderItem(item, index)
+                    })}
+                </View>
+
             </ScrollView>
 
 
