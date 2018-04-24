@@ -53,7 +53,7 @@ export default class NearFriend extends PureComponent {
 
     }
 
-    componentWillMount() {
+    componentDidMount() {
 
         getNearBys(ret => {
             console.log('获取附近', ret)
