@@ -147,8 +147,8 @@ export default class UserTopicPage extends PureComponent {
 
 
     _renderHead = () => {
-        const {avatar, nick_name, signature, user_id} = this.props.params.userInfo;
-        const {following_count, follower_count} = this.state.user;
+
+        const {following_count, follower_count, avatar, nick_name, signature, user_id} = this.state.user;
         return <View style={styles.topBar}>
             <Image
                 style={{position: 'absolute', height: HeadHeight, width: '100%'}}

@@ -4,7 +4,7 @@ import {
     View, StatusBar
 } from 'react-native';
 //Pages
-import TakePhoto from '../pages/comm/Camera';
+import Camera from '../pages/comm/Camera';
 import UserTopicPage from '../pages/socials/UserTopicPage';
 import MoodRelease from '../pages/socials/MoodRelease';
 import LongArticle from '../pages/socials/LongArticle';
@@ -209,7 +209,7 @@ export const Stacks = Actions.create(
         <Scene key="MallSearchResult" component={MallSearchResult} hideNavBar/>
         <Scene key="OrderSubmitPage" component={OrderSubmitPage} hideNavBar/>
         <Scene key="ChatRoom" component={ChatRoom} hideNavBar/>
-        <Scene key="TakePhoto" component={TakePhoto} hideNavBar/>
+        <Scene key="Camera" component={Camera} hideNavBar/>
 
         <Scene type={ActionConst.RESET}
                initial={true}

@@ -246,7 +246,7 @@ export default class MomentList extends PureComponent {
                         }
                     }}
                 >
-                    {this.isDelete() ? <Image style={{height: 18, width: 14}}
+                    {this.isDelete() ? <Image style={{height: 18, width: 14, padding: 8}}
                                               source={Images.social.article_delete}/>
                         : <Image
                             style={styles.more_3}
