@@ -188,7 +188,7 @@ export default class MomentList extends PureComponent {
     };
 
     itemView = (item) => {
-        const {user, created_at, likes, comments, id, body_type, location} = item;
+        const {user, created_at, likes, comments, id, body_type, location, is_like} = item;
         const {address_title} = location;
         return <TouchableOpacity
             onPress={() => {
@@ -271,7 +271,7 @@ export default class MomentList extends PureComponent {
                     style={styles.btn_like}>
                     <Image
                         style={styles.like}
-                        source={Images.social.like_gray}/>
+                        source={is_like ? Images.social.like_red : Images.social.like_gray}/>
                     <Text style={[styles.time, {marginLeft: 4, marginRight: 25}]}>{likes}</Text>
                 </TouchableOpacity>
 

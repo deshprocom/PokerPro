@@ -69,6 +69,7 @@ export default class CommentBar extends PureComponent {
     }
 
     render() {
+        const {isLike, showCount, count} = this.props;
         return <View style={styles.bar}>
 
             <TouchableOpacity
@@ -93,7 +94,7 @@ export default class CommentBar extends PureComponent {
                         <Image style={styles.c_comment}
                                source={Images.commentWhite}/>
 
-                        {this.props.count > 0 ? <View style={{
+                        {count > 0 ? <View style={{
                             backgroundColor: '#F24A4A',
                             height: 20,
                             width: 20,
@@ -107,7 +108,7 @@ export default class CommentBar extends PureComponent {
                             <Text style={{
                                 color: 'white',
                                 fontSize: 10
-                            }}>{this.props.count}</Text>
+                            }}>{count}</Text>
                         </View> : null}
 
                     </View>
@@ -120,7 +121,7 @@ export default class CommentBar extends PureComponent {
                         this.props.like && this.props.like()
                     }}>
                     <Image style={styles.c_like}
-                           source={Images.like}/>
+                           source={isLike && isLike ? Images.likeRed : Images.like}/>
 
                 </TouchableOpacity>
 

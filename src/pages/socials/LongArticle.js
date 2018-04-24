@@ -161,7 +161,7 @@ export default class LongArticle extends PureComponent {
     }
 
     render() {
-        const {id, title, user, cover_link} = this.state.article;
+        const {id, title, user, cover_link, is_like} = this.state.article;
 
         return <View style={{flex: 1, backgroundColor: 'white'}}>
             <NavigationBar
@@ -195,6 +195,7 @@ export default class LongArticle extends PureComponent {
 
             <View style={{position: 'absolute', bottom: 0}}>
                 <CommentBar
+                    isLike={is_like}
                     ref={ref => this.commentBar = ref}
                     count={this.state.comments_count}
                     send={comment => {
@@ -233,6 +234,7 @@ export default class LongArticle extends PureComponent {
                         topics_like(id, data => {
                             let article = {...this.state.article};
                             article.likes = data.total_likes;
+                            article.is_like = !is_like;
                             this.setState({
                                 article
                             })
@@ -290,7 +292,10 @@ export default class LongArticle extends PureComponent {
     flatHeader = () => {
 
 
-        const {user, created_at, likes, comments, id, body_type, body, title, page_views, location} = this.state.article;
+        const {
+            user, created_at, likes, comments, id, body_type,
+            body, title, page_views, location, is_like
+        } = this.state.article;
         const {address_title} = location;
         return <View>
             <View style={{backgroundColor: 'white'}}>
@@ -376,7 +381,7 @@ export default class LongArticle extends PureComponent {
                         style={styles.btn_like}>
                         <Image
                             style={styles.like}
-                            source={Images.social.like_gray}/>
+                            source={is_like ? Images.social.like_red : Images.social.like_gray}/>
                         <Text style={[styles.time, {marginLeft: 4}]}>{likes}</Text>
                     </View>
                 </View>
@@ -473,7 +478,8 @@ export default class LongArticle extends PureComponent {
     itemView = (item) => {
         const {
             avatar, nick_name, created_at, official,
-            recommended, body, id, total_count, user_id
+            recommended, body, id, total_count, user_id,
+            is_like
         } = item;
         return <View style={{
             width: '100%', paddingLeft: 17, paddingRight: 17,
