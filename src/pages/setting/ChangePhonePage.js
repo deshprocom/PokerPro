@@ -2,7 +2,7 @@
  * Created by lorne on 2017/5/11.
  */
 
-import React, {Component}from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, TextInput, Alert,
     StyleSheet, Image, Text, ScrollView, Platform
@@ -10,7 +10,7 @@ import {
 
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {NavigationBar, SecurityText, Button} from '../../components';
+import {NavigationBar, SecurityText, BtnLong} from '../../components';
 import ModalPrompt from './ModalPrompt';
 import {strNotNull} from '../../utils/ComonHelper';
 
@@ -54,13 +54,14 @@ export default class ChangePhonePage extends Component {
 
 
             <View style={{flex: 1}}/>
-            <Button
+            <BtnLong
+                name={I18n.t('changeTel')}
                 testID="btn_change_phone"
                 onPress={this.modalShow}
                 textStyle={styles.txtChange}
-                style={styles.btnChange}>
-                {I18n.t('changeTel')}
-            </Button>
+                style={styles.btnChange}/>
+
+
         </View>)
     }
 
@@ -90,11 +91,9 @@ const styles = StyleSheet.create({
     },
     btnChange: {
         height: 45,
-        marginRight: 20,
-        marginLeft: 20,
         backgroundColor: Colors._161,
-        justifyContent: 'center',
         borderRadius: 4,
+        width: '70%',
         marginBottom: 240
     },
     txtChange: {

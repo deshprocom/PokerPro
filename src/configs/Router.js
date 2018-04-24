@@ -714,7 +714,6 @@ export default class Router {
 
     toSecurityPage(props) {
         this.push(props, {
-
             name: 'SecurityPage',
 
         })
