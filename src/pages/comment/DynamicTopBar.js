@@ -58,8 +58,9 @@ export default class DynamicTopBar extends PureComponent {
                     <View style={{flex: 1}}/>
                     {this.props.hideReceived ? <TouchableOpacity
                         onPress={() => {
-                            global.router.toReceivedReply();
                             setUnreadCount && setUnreadCount(0);
+                            global.router.toReceivedReply();
+
                         }}
                         style={styles.btnCat}>
                         <Image style={styles.imgCat}

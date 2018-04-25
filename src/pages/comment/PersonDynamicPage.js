@@ -74,10 +74,10 @@ export default class PersonDynamicPage extends Component {
 
 
     setUnreadCount = (unreadCount) => {
-        this.unread();
         this.setState({
             unreadCount
         })
+
     };
 
     componentDidMount() {

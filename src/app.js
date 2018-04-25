@@ -27,7 +27,7 @@ console.disableYellowBox = true;
 
 const store = configureStore();
 
-if (!__DEV__) {
+if (__DEV__) {
     global.console = {
         info: () => {
         },
