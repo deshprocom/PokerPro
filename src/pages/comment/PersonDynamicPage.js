@@ -163,8 +163,8 @@ export default class PersonDynamicPage extends Component {
     };
 
     renderItemTopic(item) {
-        const {topic, typological_type, topic_type,user} = item;
-        let {topic_description, topic_id, cover_link, title, body, body_type} = topic;
+        const {topic, typological_type, topic_type} = item;
+        let {user, topic_id, cover_link, title, body, body_type} = topic;
         if (body_type === 'short') {
             title = body;
             cover_link = user.avatar;

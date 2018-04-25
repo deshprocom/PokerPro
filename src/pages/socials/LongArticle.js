@@ -164,7 +164,7 @@ export default class LongArticle extends PureComponent {
     }
 
     render() {
-        const {id, title, user, cover_link, is_like} = this.state.article;
+        const {id, title, user, cover_link, is_like, body, body_type} = this.state.article;
 
         return <View style={{flex: 1, backgroundColor: 'white'}}>
             <NavigationBar
@@ -232,7 +232,9 @@ export default class LongArticle extends PureComponent {
 
                     }}
                     share={() => {
-                        sharePage(title, user.nick_name, cover_link, shareHost() + 'topics/' + id)
+
+                        sharePage(user.nick_name,
+                            body_type === 'short' ? body : title, user.avatar, shareHost() + 'topics/' + id)
                     }}
                     like={() => {
 
