@@ -189,6 +189,8 @@ export default class ChatRoom extends Component {
                     this.setState({moreText: I18n.t("no_more")});
                 }
 
+                console.log('数据库', messageArray)
+
                 let newMsgArray = [];
                 messageArray.forEach((message) => {
                     let newMessage = this.createMessageBody(message);
@@ -250,8 +252,6 @@ export default class ChatRoom extends Component {
 
     ///发送视频
     onSendVideo = (mediaPath) => {
-
-        this.loading && this.loading.open()
         Thumb.getVideoCover(mediaPath, (events) => {
             if (Platform.OS === 'android')
                 events = 'file://' + events;
@@ -332,9 +332,15 @@ export default class ChatRoom extends Component {
 
         console.log("创建一条" + msg.messageType + "类型的消息");
         console.log('消息对象', msgInfo);
-
+        msgInfo.id = 'msgId_1524644642276219';
         ///创建消息
         JMessage.createSendMessage(msgInfo, (message) => {
+
+            message.serverMessageId = 0;
+            let newMessage = this.createMessageBody(message);
+            if (newMessage !== undefined) {
+                this.addMessage([newMessage]);
+            }
 
             console.log("发送一条", msg.messageType, "类型的消息:", message);
             //发送消息
@@ -344,15 +350,11 @@ export default class ChatRoom extends Component {
                 username: msgInfo.username,
                 extras: {coverPath: msg.coverPath}
             }, (jmessage) => {
-                if (Platform.OS === 'android')
-                    jmessage.path = msg.path;
-                let newMessage = this.createMessageBody(jmessage);
-                if (newMessage !== undefined) {
-                    this.addMessage([newMessage]);
-                }
-                console.log("发送成功", jmessage);
-                this.loading && this.loading.close()
 
+
+                this.refresh(message, -1);
+
+                console.log("发送成功", jmessage);
 
                 ///回调，更新上一页数据
                 if (this.props.params.userInfo.reloadPage !== undefined) {
@@ -361,21 +363,19 @@ export default class ChatRoom extends Component {
 
             }, (error) => {
                 // 失败回调
-                console.log("发送" + msg.messageType + "类型消息失败");
-                console.log(error);
+
+                this.refresh(message, undefined);
+                console.log("发送" + msg.messageType + "类型消息失败", error);
+
             });
 
-        }, (error) => {
-
-            console.log("创建" + msg.messageType + "类型消息失败");
-            console.log(error);
         });
 
     };
 
     ///整理消息格式，添加到消息列表中
     createMessageBody = (message) => {
-        const {id, type, text, target, thumbPath, path, duration, extras} = message;
+        const {id, type, text, target, thumbPath, path, duration, extras, serverMessageId} = message;
         const {username, avatarThumbPath, nickname} = target;
         let user = {
             _id: username,
@@ -386,6 +386,7 @@ export default class ChatRoom extends Component {
             _id: id,
             user: user,
             system: true,
+            serverMessageId: serverMessageId
         };
 
         if (type === "text") {
@@ -420,6 +421,21 @@ export default class ChatRoom extends Component {
             messages: GiftedChat.append(previousState.messages, messages),
         }))
     };
+
+    refresh = (message, serverMessageId) => {
+        this.state.messages.filter(m => {
+            if (m._id === message.id) {
+                m.serverMessageId = serverMessageId;
+
+            }
+            return m._id === message.id;
+        })
+        this.setState((previousState) => {
+            return {
+                messages: GiftedChat.append([], this.state.messages)
+            };
+        });
+    }
 
     //消息点击事件
     clickMessageAction = (message) => {
@@ -868,7 +884,6 @@ export default class ChatRoom extends Component {
                     btnArray={this.popActions()}/>
 
 
-                <Loading ref={ref => this.loading = ref} cancelable={true}/>
             </View>
         );
     }
