@@ -179,6 +179,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-camera')
     compile project(':react-native-thumb')
     compile project(':react-native-sound')
     compile project(':react-native-audio')
