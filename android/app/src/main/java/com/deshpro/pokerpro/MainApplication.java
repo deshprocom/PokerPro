@@ -6,7 +6,6 @@ import cn.jiguang.share.android.api.JShareInterface;
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
 import com.facebook.react.ReactApplication;
-import org.reactnative.camera.RNCameraPackage;
 import com.reactlibrary.RNReactNativeThumbPackage;
 import com.zmxv.RNSound.RNSoundPackage;
 import com.rnim.rn.audio.ReactNativeAudioPackage;
@@ -41,7 +40,7 @@ import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
 
-    private boolean SHUTDOWN_TOAST = false;
+    private boolean SHUTDOWN_TOAST = true;
     private boolean SHUTDOWN_LOG = true;
     private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
         @Override
@@ -53,7 +52,6 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
-            new RNCameraPackage(),
             new RNReactNativeThumbPackage(),
             new RNSoundPackage(),
             new ReactNativeAudioPackage(),
