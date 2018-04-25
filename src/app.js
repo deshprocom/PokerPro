@@ -66,7 +66,7 @@ export default class App extends Component {
                 appKey: JPUSH_APPKEY,
                 channel: 'deshpro-app',
                 advertisingId: '',
-                isProduction: false,
+                isProduction: true,
                 wechatAppId: WX_ID,
                 wechatAppSecret: WX_Secret,
                 qqAppId: QQ_SHARE_ID,
@@ -88,7 +88,7 @@ export default class App extends Component {
         ///jMessage
         JMessage.init({
             appkey: JPUSH_APPKEY,
-            isProduction: false,//是否为生产模式
+            isProduction: true,//是否为生产模式
             isOpenMessageRoaming: false,//是否开启消息漫游
         });
         //开启Debug模式
