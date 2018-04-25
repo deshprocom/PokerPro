@@ -20,6 +20,7 @@ import {isFollowed, showToast} from '../../utils/ComonHelper';
 import JMessage from "jmessage-react-plugin";
 import {JPUSH_APPKEY} from '../../configs/Constants'
 import PopAction from '../comm/PopAction';
+import ImageLoad from "../../components/ImageLoad";
 
 const HeadHeight = Platform.OS === 'ios' ? Metrics.iPhone_X ? 300 : 280 : 260
 
@@ -146,8 +147,8 @@ export default class UserTopicPage extends PureComponent {
 
 
     _renderHead = () => {
-        const {avatar, nick_name, signature, user_id} = this.props.params.userInfo;
-        const {following_count, follower_count} = this.state.user;
+
+        const {following_count, follower_count, avatar, nick_name, signature, user_id} = this.state.user;
         return <View style={styles.topBar}>
             <Image
                 style={{position: 'absolute', height: HeadHeight, width: '100%'}}
@@ -165,8 +166,8 @@ export default class UserTopicPage extends PureComponent {
                 }}/>
             <View
                 style={styles.person1}>
-                <Image
-                    defaultSource={Images.home_avatar}
+                <ImageLoad
+                    emptyBg={Images.home_avatar}
                     style={{width: 72, height: 72, borderRadius: 36}}
                     source={{uri: avatar}}/>
             </View>
@@ -232,7 +233,7 @@ export default class UserTopicPage extends PureComponent {
     popActions = () => {
         let reportList = global.reportList;
         let resultArray = [];
-        reportList.forEach((data,index) => {
+        reportList.forEach((data, index) => {
             let item = {name: data.name, txtStyle: {color: '#4A90E2'}, onPress: () => this.report(index)};
             resultArray.push(item);
         });
@@ -255,9 +256,9 @@ export default class UserTopicPage extends PureComponent {
             "body": data.name,
             "description": ""
         };
-        report_user(body,(ret) =>{
+        report_user(body, (ret) => {
             showToast(I18n.t("report_success"));
-        },(err) => {
+        }, (err) => {
             console.log(err);
         });
         this.popAction && this.popAction.toggle();

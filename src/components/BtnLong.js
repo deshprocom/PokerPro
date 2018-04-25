@@ -15,11 +15,11 @@ export default class BtnLong extends Component {
         name: PropTypes.string,
         onPress: PropTypes.func,
         testID: PropTypes.string,
-        style: PropTypes.object
+        style: PropTypes.any
     };
 
     render() {
-        return ( <TouchableOpacity
+        return (<TouchableOpacity
             activeOpacity={1}
             testID={this.props.testID}
             style={[styles.btn_view, this.props.style]}
@@ -37,8 +37,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         height: 45,
         justifyContent: 'center',
-        alignItems: 'center',
-        flex: 1
+        alignItems: 'center'
     },
     txt: {
         color: Colors._AAA,

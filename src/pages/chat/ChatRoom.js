@@ -33,7 +33,6 @@ import Thumb from 'react-native-thumb';
 import {checkPermission} from "../comm/Permission";
 
 
-
 let Sound = require('react-native-sound');
 Sound.setCategory('Playback');
 
@@ -214,8 +213,10 @@ export default class ChatRoom extends Component {
     //收到消息
     receiveMessage = (message) => {
         console.log("收到的消息:", message);
+        const {username} = message.from;
         let newMessage = this.createMessageBody(message);
-        if (newMessage !== undefined) {
+
+        if (newMessage !== undefined && username === this.otherInfo.username) {
             this.addMessage([newMessage]);
         }
     };
@@ -279,8 +280,8 @@ export default class ChatRoom extends Component {
 
     ///选择图片
     selectedImage = () => {
-        checkPermission("photo",(result) => {
-            if (result){
+        checkPermission("photo", (result) => {
+            if (result) {
                 ImagePicker.openPicker({}).then(image => {
                     let type = image.mime;
                     let path = image.path;
@@ -695,8 +696,8 @@ export default class ChatRoom extends Component {
         return (
             <View style={{flexDirection: "row"}}>
                 <TouchableOpacity onPress={() => {
-                    checkPermission("microphone",(result) => {
-                        if (result){
+                    checkPermission("microphone", (result) => {
+                        if (result) {
                             this.setState({inputVoice: !this.state.inputVoice})
                         }
                     });
@@ -716,14 +717,14 @@ export default class ChatRoom extends Component {
         let color = this.state.recording ? "#ECECEE" : "white";
         return (
             <TouchableWithoutFeedback
-                              onLongPress={() => {
-                                  this.record();
-                              }}
-                              onPressOut={() => {
-                                  this.stop();
-                              }}
+                onLongPress={() => {
+                    this.record();
+                }}
+                onPressOut={() => {
+                    this.stop();
+                }}
             >
-                <View style={[styles.voiceView,{backgroundColor:color}]}>
+                <View style={[styles.voiceView, {backgroundColor: color}]}>
                     <Text>{I18n.t("touch_speech")}</Text>
                 </View>
             </TouchableWithoutFeedback>
@@ -743,9 +744,9 @@ export default class ChatRoom extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => {
-                        checkPermission("camera",(result) =>{
-                            if (result){
-                                router.toTakePhoto({
+                        checkPermission("camera", (result) => {
+                            if (result) {
+                                router.toCamera({
                                     fileInfo: (file) => {
                                         let type = file.type;
                                         if (type === "image") {

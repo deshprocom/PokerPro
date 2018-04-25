@@ -21,9 +21,6 @@ import JMessage from "jmessage-react-plugin";
 export default class PersonInfo extends Component {
 
 
-    state = {
-        visible: false
-    };
 
     _getGender(gender) {
         switch (gender) {
@@ -38,11 +35,10 @@ export default class PersonInfo extends Component {
 
     componentWillUnmount() {
         Picker.hide();
-        this._hideModal();
     }
 
     _showSexPicker = () => {
-        this._showModal();
+
         Picker.init({
             pickerConfirmBtnText: I18n.t('confirm'),
             pickerCancelBtnText: I18n.t('cancel'),
@@ -57,7 +53,7 @@ export default class PersonInfo extends Component {
             pickerFontSize: 21,
             pickerFontColor: [34, 34, 34, 1],
             onPickerConfirm: (pickedValue, pickedIndex) => {
-                this._hideModal();
+
                 const {profile} = this.props;
                 if (pickedValue == I18n.t('male'))
                     profile.gender = 0;
@@ -70,7 +66,7 @@ export default class PersonInfo extends Component {
                 });
             },
             onPickerCancel: (pickedValue, pickedIndex) => {
-                this._hideModal();
+
 
             },
             onPickerSelect: (pickedValue, pickedIndex) => {
@@ -78,18 +74,6 @@ export default class PersonInfo extends Component {
             }
         });
         Picker.show();
-    };
-
-    _showModal = () => {
-        this.setState({
-            visible: true
-        });
-    };
-
-    _hideModal = () => {
-        this.setState({
-            visible: false
-        });
     };
 
     _showDatePicker = () => {
@@ -236,18 +220,7 @@ export default class PersonInfo extends Component {
                 </View>
 
 
-                <Modal
-                    onRequestClose={() => {
 
-                    }}
-                    transparent={true}
-                    visible={this.state.visible}>
-                    <View style={{
-                        flex: 1,
-                        backgroundColor: 'rgba(0,0,0,0.38)'
-                    }}/>
-
-                </Modal>
                 <ActionSheet
                     ref={o => this.ActionSheet = o}
                     title={I18n.t('chose_image')}
@@ -259,7 +232,6 @@ export default class PersonInfo extends Component {
 
                 <DatePicker
                     ref={ref => this.datePicker = ref}
-                    style={{width: 200}}
                     date={profile.birthday}
                     mode="date"
                     placeholder="select date"

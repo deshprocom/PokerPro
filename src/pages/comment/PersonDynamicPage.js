@@ -74,10 +74,10 @@ export default class PersonDynamicPage extends Component {
 
 
     setUnreadCount = (unreadCount) => {
-        this.unread();
         this.setState({
             unreadCount
         })
+
     };
 
     componentDidMount() {
@@ -164,7 +164,11 @@ export default class PersonDynamicPage extends Component {
 
     renderItemTopic(item) {
         const {topic, typological_type, topic_type} = item;
-        const {topic_description, topic_id, cover_link, title} = topic;
+        let {user, topic_id, cover_link, title, body, body_type} = topic;
+        if (body_type === 'short') {
+            title = body;
+            cover_link = user.avatar;
+        }
 
         return (
             <TouchableOpacity style={styles.itemPage}

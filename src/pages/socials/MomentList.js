@@ -11,7 +11,10 @@ import {UltimateListView, ImageLoad, LeftAlignedImage} from '../../components'
 import I18n from "react-native-i18n";
 import {NoDataView, LoadErrorView} from '../../components/load';
 import {Colors, Images} from '../../Themes';
-import {getDateDiff, alertOrder, strNotNull, isEmptyObject} from '../../utils/ComonHelper';
+import {
+    getDateDiff, alertOrder, strNotNull, isEmptyObject,
+    getFileMine
+} from '../../utils/ComonHelper';
 import {
     topics_recommends, topics,
     topics_like, user_topics, topics_delete,
@@ -64,7 +67,12 @@ export const styles = StyleSheet.create({
         color: Colors._AAA
     },
     separator: {
-        height: reallySize(10),
+        height: reallySize(5),
+        backgroundColor: Colors._ECE,
+        width: '100%'
+    },
+    separator1: {
+        height: reallySize(1),
         backgroundColor: Colors._ECE,
         width: '100%'
     },
@@ -115,10 +123,12 @@ export default class MomentList extends PureComponent {
 
     render() {
         return <UltimateListView
+            header={() => <View style={styles.separator1}/>}
             scrollEnabled={this.props.scrollEnabled}
             keyExtractor={(item, index) => index + "_moment"}
             ref={(ref) => this.listView = ref}
             onFetch={this.onFetch}
+            separator={() => <View style={styles.separator}/>}
             item={this.itemView}
             refreshableTitlePull={I18n.t('pull_refresh')}
             refreshableTitleRelease={I18n.t('release_refresh')}
@@ -188,7 +198,10 @@ export default class MomentList extends PureComponent {
     };
 
     itemView = (item) => {
-        const {user, created_at, likes, comments, id, body_type, location} = item;
+        const {
+            user, created_at, likes, comments, id, body_type, location, is_like,
+            recommended
+        } = item;
         const {address_title} = location;
         return <TouchableOpacity
             onPress={() => {
@@ -196,7 +209,7 @@ export default class MomentList extends PureComponent {
             }}
             activeOpacity={1}
             style={styles.item}>
-            <View style={styles.separator}/>
+
             <View/>
             {/*用户数据*/}
             <View style={styles.user}>
@@ -218,6 +231,8 @@ export default class MomentList extends PureComponent {
                     style={styles.nick_name}>{user.nick_name}</Text>
                 <View style={{flex: 1}}/>
 
+                {recommended ?
+                    <Text style={[styles.txt_long, {color: '#F24A4A', borderColor: '#F24A4A'}]}>精华</Text> : null}
                 {body_type === 'long' ? <Text style={styles.txt_long}>长帖</Text> : null}
 
                 <TouchableOpacity
@@ -239,7 +254,7 @@ export default class MomentList extends PureComponent {
                         }
                     }}
                 >
-                    {this.isDelete() ? <Image style={{height: 24, width: 20}}
+                    {this.isDelete() ? <Image style={{height: 19, width: 14, padding: 8}}
                                               source={Images.social.article_delete}/>
                         : <Image
                             style={styles.more_3}
@@ -262,6 +277,7 @@ export default class MomentList extends PureComponent {
                     onPress={() => {
                         topics_like(id, data => {
                             item.likes = data.total_likes;
+                            item.is_like = !is_like;
                             this.listView && this.listView.updateDataSource(this.listView.getRows())
 
                         }, err => {
@@ -271,7 +287,7 @@ export default class MomentList extends PureComponent {
                     style={styles.btn_like}>
                     <Image
                         style={styles.like}
-                        source={Images.social.like_gray}/>
+                        source={is_like ? Images.social.like_red : Images.social.like_gray}/>
                     <Text style={[styles.time, {marginLeft: 4, marginRight: 25}]}>{likes}</Text>
                 </TouchableOpacity>
 

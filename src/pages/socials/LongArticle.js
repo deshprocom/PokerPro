@@ -47,13 +47,15 @@ const styles = StyleSheet.create({
     focus: {
         fontSize: 14,
         color: Colors.txt_444,
-        paddingRight: 20,
-        paddingLeft: 20,
-        paddingTop: 5,
-        paddingBottom: 5,
+    },
+    btn_focus: {
+        height: 26,
+        width: 80,
         borderRadius: 2,
         borderWidth: 1,
-        borderColor: Colors.txt_444
+        borderColor: Colors.txt_444,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     info: {
         width: '100%',
@@ -115,7 +117,8 @@ const styles = StyleSheet.create({
     },
     long_cover: {
         height: reallySize(200),
-        width: '100%'
+        width: '100%',
+        marginTop: reallySize(10)
     },
     short_image: {
         height: 108,
@@ -161,7 +164,7 @@ export default class LongArticle extends PureComponent {
     }
 
     render() {
-        const {id, title, user, cover_link} = this.state.article;
+        const {id, title, user, cover_link, is_like, body, body_type} = this.state.article;
 
         return <View style={{flex: 1, backgroundColor: 'white'}}>
             <NavigationBar
@@ -195,6 +198,9 @@ export default class LongArticle extends PureComponent {
 
             <View style={{position: 'absolute', bottom: 0}}>
                 <CommentBar
+                    placeholder={strNotNull(this.comment_id) ?
+                        I18n.t('reply') : I18n.t('write_comment')}
+                    isLike={is_like}
                     ref={ref => this.commentBar = ref}
                     count={this.state.comments_count}
                     send={comment => {
@@ -226,13 +232,16 @@ export default class LongArticle extends PureComponent {
 
                     }}
                     share={() => {
-                        sharePage(title, user.nick_name, cover_link, shareHost() + 'topics/' + id)
+
+                        sharePage(user.nick_name,
+                            body_type === 'short' ? body : title, user.avatar, shareHost() + 'topics/' + id)
                     }}
                     like={() => {
 
                         topics_like(id, data => {
                             let article = {...this.state.article};
                             article.likes = data.total_likes;
+                            article.is_like = !is_like;
                             this.setState({
                                 article
                             })
@@ -290,7 +299,10 @@ export default class LongArticle extends PureComponent {
     flatHeader = () => {
 
 
-        const {user, created_at, likes, comments, id, body_type, body, title, page_views, location} = this.state.article;
+        const {
+            user, created_at, likes, comments, id, body_type,
+            body, title, page_views, location, is_like
+        } = this.state.article;
         const {address_title} = location;
         return <View>
             <View style={{backgroundColor: 'white'}}>
@@ -325,7 +337,7 @@ export default class LongArticle extends PureComponent {
 
                         <View style={{flex: 1}}/>
 
-                        {this.isMine(user.user_id) ? null : <Text
+                        {this.isMine(user.user_id) ? null : <TouchableOpacity
                             onPress={() => {
                                 follow(this.state.followed, {target_id: user.user_id}, data => {
                                         this.setState({
@@ -336,8 +348,12 @@ export default class LongArticle extends PureComponent {
                                     }
                                 )
                             }}
-                            style={styles.focus}>{this.state.followed ?
-                            I18n.t('rank_focused') : I18n.t('rank_focus')}</Text>}
+                            style={styles.btn_focus}>
+                            < Text
+                                style={styles.focus}>{this.state.followed ?
+                                I18n.t('rank_focused') : I18n.t('rank_focus')}</Text>
+                        </TouchableOpacity>
+                        }
 
 
                     </View>
@@ -376,7 +392,7 @@ export default class LongArticle extends PureComponent {
                         style={styles.btn_like}>
                         <Image
                             style={styles.like}
-                            source={Images.social.like_gray}/>
+                            source={is_like ? Images.social.like_red : Images.social.like_gray}/>
                         <Text style={[styles.time, {marginLeft: 4}]}>{likes}</Text>
                     </View>
                 </View>
@@ -473,7 +489,8 @@ export default class LongArticle extends PureComponent {
     itemView = (item) => {
         const {
             avatar, nick_name, created_at, official,
-            recommended, body, id, total_count, user_id
+            recommended, body, id, total_count, user_id,
+            is_like
         } = item;
         return <View style={{
             width: '100%', paddingLeft: 17, paddingRight: 17,
@@ -538,7 +555,12 @@ export default class LongArticle extends PureComponent {
 
             </View>
 
-            <Text style={styles.c_body}>{body}</Text>
+            <Text
+                onPress={() => {
+                    this.comment_id = id;
+                    this.commentBar && this.commentBar.showInput()
+                }}
+                style={styles.c_body}>{body}</Text>
 
             {total_count > 0 ? <TouchableOpacity
                 onPress={() => {

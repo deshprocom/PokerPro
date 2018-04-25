@@ -27,7 +27,7 @@ console.disableYellowBox = true;
 
 const store = configureStore();
 
-if (!__DEV__) {
+if (__DEV__) {
     global.console = {
         info: () => {
         },
@@ -63,10 +63,10 @@ export default class App extends Component {
 
         let config =
             {
-                appKey:JPUSH_APPKEY,
-                channel:'deshpro-app',
-                advertisingId:'',
-                isProduction:false,
+                appKey: JPUSH_APPKEY,
+                channel: 'deshpro-app',
+                advertisingId: '',
+                isProduction: true,
                 wechatAppId: WX_ID,
                 wechatAppSecret: WX_Secret,
                 qqAppId: QQ_SHARE_ID,
@@ -78,7 +78,7 @@ export default class App extends Component {
                 facebookDisplayName: '',
                 isSupportWebSina: true
             };
-        if(Platform.OS === 'ios'){
+        if (Platform.OS === 'ios') {
             ///极光统计
             JAnalyticsModule.setup({appKey: JPUSH_APPKEY});
             JShareModule.setup(config);
@@ -87,12 +87,12 @@ export default class App extends Component {
 
         ///jMessage
         JMessage.init({
-            appkey:JPUSH_APPKEY,
-            isProduction:false,//是否为生产模式
-            isOpenMessageRoaming:false,//是否开启消息漫游
+            appkey: JPUSH_APPKEY,
+            isProduction: true,//是否为生产模式
+            isOpenMessageRoaming: false,//是否开启消息漫游
         });
         //开启Debug模式
-        JMessage.setDebugMode({ enable: false });
+        JMessage.setDebugMode({enable: false});
 
 
         WeChat.registerApp(WX_ID).then(ret => {

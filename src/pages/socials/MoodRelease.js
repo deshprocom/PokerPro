@@ -14,8 +14,9 @@ import {NavigationBar} from '../../components';
 import {reallySize, screenWidth, toolBarHeight} from "./Header";
 import ImagePicker from 'react-native-image-crop-picker';
 import PopAction from "../comm/PopAction";
-import {getFileName, showToast} from "../../utils/ComonHelper";
-import {uploadImage, postTopic} from '../../services/SocialDao';
+
+import {getFileName,showToast} from "../../utils/ComonHelper";
+import {uploadImage,postTopic} from '../../services/SocialDao';
 import Loading from "../../components/Loading";
 import {checkPermission} from "../comm/Permission";
 

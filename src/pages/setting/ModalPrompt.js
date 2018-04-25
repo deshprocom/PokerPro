@@ -1,21 +1,20 @@
 /**
  * Created by lorne on 2017/5/11.
  */
-import React, {Component}from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, TextInput, Alert,
-    StyleSheet, Image, Text, KeyboardAvoidingView
+    StyleSheet, Image, Text, Modal
 } from 'react-native';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {CountDownText}from '../../components/countdown/CountDownText';
+import {CountDownText} from '../../components/countdown/CountDownText';
 import {checkPhone, showToast, clearLoginUser} from '../../utils/ComonHelper';
-import {Password,SecurityText} from '../../components';
+import {Password, SecurityText} from '../../components';
 import {POST_CHANGE_BIND, POST_VERIFY_CODE, POST_V_CODE, POST_CHANGE_PERMISSION} from '../../actions/ActionTypes';
 import {fetchChangBind, fetchPostVCode, fetchPostVerifyCode, fetchChangePermission} from '../../actions/AccountAction';
 import {fetchGetRecentRaces, _getProfileOk} from '../../actions/RacesAction';
 import {connect} from 'react-redux';
-import Modal from 'react-native-root-modal';
 
 class ModalPrompt extends Component {
 
@@ -101,7 +100,7 @@ class ModalPrompt extends Component {
 
         switch (popup) {
             case 1:
-                return (   <View
+                return (<View
                     testID="page_bind_know"
                     style={styles.popUp}>
                     <TouchableOpacity
@@ -216,7 +215,7 @@ class ModalPrompt extends Component {
 
                 </View>);
             case 4:
-                return ( <View
+                return (<View
                     testID="page_bind_input_phone"
                     style={styles.popUp}>
                     <View style={styles.itemClose}>

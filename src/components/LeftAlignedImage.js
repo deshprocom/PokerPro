@@ -13,7 +13,7 @@ export class LeftAlignedImage extends Component {
         super(props)
 
         this.state = {
-            height: 0,
+            height: 200,
             width: 0,
             imageWidth: 0,
             imageHeight: 0,
@@ -34,7 +34,7 @@ export class LeftAlignedImage extends Component {
         const width = props.width || Dimensions.get('window').width;
 
         Image.getSize(source.uri, (iw, ih) => {
-            const {imageWidth, imageHeight} = this.calcDim(iw, ih, height, width)
+            const {imageWidth, imageHeight} = this.calcDim(iw, ih, height, width - 34)
 
             this.setState({
                 imageWidth,
@@ -47,18 +47,16 @@ export class LeftAlignedImage extends Component {
     }
 
     render() {
-        const {source, height, width, imageWidth, imageHeight} = this.state;
+        const {source, imageWidth, imageHeight} = this.state;
 
-        const localStyle = height ? {
-            height: height,
-            width: width,
-        } : {};
 
         return (
-            <View style={[styles.container, localStyle]}>
-                {source ?
+            <View>
+                {source && imageHeight > 0 ?
                     <Image
-                        style={{width: imageWidth, height: imageHeight}}
+                        style={{
+                            width: imageWidth, height: imageHeight
+                        }}
                         resizeMode="center"
                         source={source}
                     />
@@ -70,6 +68,7 @@ export class LeftAlignedImage extends Component {
     }
 
     calcDim = (imageWidth, imageHeight, maxHeight, maxWidth) => {
+
         const imageRatio = imageWidth / imageHeight;
 
         let newImageHeight = Math.min(maxHeight, imageHeight)
@@ -81,7 +80,7 @@ export class LeftAlignedImage extends Component {
         }
 
         return {
-            imageWidth: newImageWidth - 17,
+            imageWidth: newImageWidth,
             imageHeight: newImageHeight,
         }
     }

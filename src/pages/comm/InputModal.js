@@ -32,7 +32,6 @@ export default class InputModal extends Component {
             onRequestClose={() => {
 
             }}
-            animationType={"slide"}
             transparent
             visible={this.state.visible}
         >
@@ -42,6 +41,7 @@ export default class InputModal extends Component {
                 keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 25}
                 style={{flex: 1}}>
                 <TouchableOpacity
+                    activeOpacity={1}
                     onPress={this.toggle}
                     style={styles.inputModal}>
 

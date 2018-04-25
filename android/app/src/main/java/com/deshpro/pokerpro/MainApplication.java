@@ -40,7 +40,7 @@ import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
 
-    private boolean SHUTDOWN_TOAST = false;
+    private boolean SHUTDOWN_TOAST = true;
     private boolean SHUTDOWN_LOG = true;
     private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
         @Override

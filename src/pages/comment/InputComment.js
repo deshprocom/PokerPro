@@ -25,7 +25,6 @@ export default class InputComment extends Component {
                 onRequestClose={() => {
 
                 }}
-                animationType={"slide"}
                 transparent
                 visible={this.props.visible}
                 style={{flex: 1}}
@@ -35,6 +34,7 @@ export default class InputComment extends Component {
                     keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 25}
                     style={{flex: 1}}>
                     <TouchableOpacity
+                        activeOpacity={1}
                         onPress={() => {
                             this.props._showInput()
                         }}

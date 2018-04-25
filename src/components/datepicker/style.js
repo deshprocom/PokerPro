@@ -45,7 +45,6 @@ let style = StyleSheet.create({
     position: 'absolute',
     top: 0,
     height: 42,
-    padding: 20,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center'
@@ -58,10 +57,10 @@ let style = StyleSheet.create({
     color: '#666'
   },
   btnCancel: {
-    left: 0
+    left: 17
   },
   btnConfirm: {
-    right: 0
+    right: 17
   },
   datePicker: {
     marginTop: 42,

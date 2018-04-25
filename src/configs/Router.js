@@ -13,9 +13,9 @@ const customFloatFromRight = '';
 
 
 export default class Router {
-    toTakePhoto(params){
+    toCamera(params) {
         this.stackPush({
-            name:"TakePhoto",
+            name: "CameraVideo",
             params
         })
     }
@@ -66,11 +66,6 @@ export default class Router {
 
     }
 
-    toCamera() {
-        this.stackPush({
-            name: 'ExpandText'
-        })
-    }
 
     popToTop() {
         getDispatchAction()['BACK_TOP']();
@@ -117,7 +112,7 @@ export default class Router {
     }
 
 
-    toArticleRelease(articleKey, articleInfo,reloadInfo) {
+    toArticleRelease(articleKey, articleInfo, reloadInfo) {
         this.stackPush({
             name: "ArticleRelease",
             params: {
@@ -714,7 +709,6 @@ export default class Router {
 
     toSecurityPage(props) {
         this.push(props, {
-
             name: 'SecurityPage',
 
         })
