@@ -353,6 +353,7 @@ export default class ArticleRelease extends PureComponent {
                 ImagePicker.openPicker({
                     compressImageMaxWidth: 1024,
                     compressImageMaxHeight: 1024,
+                    mediaType: "photo",
                     compressImageQuality: 0.5
                 }).then(image => {
                     if (image.mime.indexOf("image") !== -1) {
