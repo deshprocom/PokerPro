@@ -179,9 +179,9 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-audio')
     compile project(':react-native-thumb')
     compile project(':react-native-sound')
-    compile project(':react-native-audio')
     compile (project(':react-native-camera')) {
         exclude group: "com.google.android.gms"
         compile 'com.android.support:exifinterface:27.+'
