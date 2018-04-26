@@ -27,7 +27,6 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 import PopAction from '../comm/PopAction';
 import {report_user, uploadImage} from '../../services/SocialDao';
-import Loading from "../../components/Loading";
 
 import Thumb from 'react-native-thumb';
 import {checkPermission} from "../comm/Permission";
@@ -505,6 +504,7 @@ export default class ChatRoom extends Component {
     //<!--------------------------------   录音相关   --------------------------------!>//
     ///准备录制
     prepareRecordingPath = () => {
+        console.log('准备录制', audioPath)
         AudioRecorder.prepareRecordingAtPath(audioPath, {
             SampleRate: 22050,
             Channels: 1,
@@ -563,11 +563,12 @@ export default class ChatRoom extends Component {
 
     ///完成录制
     finishRecording = (didSucceed, filePath) => {
-        this.setState({finished: didSucceed});
+
         if (this.state.currentTime === 0) {
             showToast(I18n.t("time_short"));
             return;
         }
+        this.setState({finished: didSucceed, currentTime: 0});
         this.onSendVoice(filePath.replace("file://", ""));
     };
 
