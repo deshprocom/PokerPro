@@ -110,7 +110,9 @@ export default class PopRelease extends PureComponent {
                     activeOpacity={1}
                     style={{position: 'absolute', bottom: 0, left: '50%', marginLeft: -26}}
                     onPress={this.toggle}>
-                    <Image source={Images.social.close}/>
+                    <Image
+                        style={{height: 52, width: 52}}
+                        source={Images.social.close}/>
                 </TouchableOpacity>
 
             </TouchableOpacity>
