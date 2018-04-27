@@ -1,7 +1,7 @@
 /**
  * Created by lorne on 2017/2/21.
  */
-import React, {Component}from 'react';
+import React, {Component} from 'react';
 import {
     TouchableOpacity, View, TextInput, Alert,
     StyleSheet, Image, Text, ScrollView, Platform
@@ -9,7 +9,7 @@ import {
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
-import {InputView,BtnLong} from '../../components';
+import {InputView, BtnLong} from '../../components';
 import {fetchPostCertification, fetchPostCardImage} from '../../actions/AccountAction';
 import {POST_CERTIFICATION, GET_CERTIFICATION} from '../../actions/ActionTypes';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -166,7 +166,7 @@ class IDCardView extends Component {
     _cardImageView = (image) => {
 
         if (!strNotNull(image)) {
-            return ( <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            return (<View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                 <Image
                     source={Images.post_id_image}
                     style={{height: 85, width: 134}}/>
@@ -304,7 +304,8 @@ class IDCardView extends Component {
     _hasRealBtn = () => {
         const {editable} = this.state;
         if (editable) {
-            return ( <Button
+            return (<BtnLong
+                name={I18n.t('submit')}
                 testID="btn_submit"
                 activeOpacity={1}
                 onPress={this._btnSubmit}
@@ -313,12 +314,10 @@ class IDCardView extends Component {
                     alignSelf: 'center', backgroundColor: '#161718',
                     marginTop: 25, justifyContent: 'center', marginBottom: 10
                 }}
-                textStyle={{fontSize: Fonts.size.h17, color: Colors.txt_E0C}}>
-                {I18n.t('submit')}
-
-            </Button>)
+                textStyle={{fontSize: Fonts.size.h17, color: Colors.txt_E0C}}/>)
         } else {
-            return ( <Button
+            return (<BtnLong
+                name={I18n.t('contact_customer_service')}
                 testID="btn_contact_customer_service"
                 activeOpacity={1}
                 onPress={this._btnService}
@@ -327,10 +326,7 @@ class IDCardView extends Component {
                     alignSelf: 'center', backgroundColor: Colors.white,
                     marginTop: 25, justifyContent: 'center', marginBottom: 10
                 }}
-                textStyle={{fontSize: Fonts.size.h17, color: Colors.txt_666}}>
-                {I18n.t('contact_customer_service')}
-
-            </Button>)
+                textStyle={{fontSize: Fonts.size.h17, color: Colors.txt_666}}/>)
         }
     }
 
@@ -342,8 +338,8 @@ class IDCardView extends Component {
             },
                 {
                     text: I18n.t('call'), onPress: () => {
-                    call(I18n.t('hot_phone'), false)
-                }
+                        call(I18n.t('hot_phone'), false)
+                    }
                 }])
 
     }
