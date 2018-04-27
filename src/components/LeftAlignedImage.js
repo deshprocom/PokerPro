@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {
     StyleSheet,
     Image,
-    View,
+    TouchableOpacity,
     Dimensions,
 } from 'react-native';
 
@@ -51,7 +51,14 @@ export class LeftAlignedImage extends Component {
 
 
         return (
-            <View>
+            <TouchableOpacity
+                style={{
+                    width: imageWidth, height: imageHeight,
+                    backgroundColor: 'red'
+                }}
+                onPress={() => {
+                    global.router.toImageGalleryPage([{url: source.uri}], 0)
+                }}>
                 {source && imageHeight > 0 ?
                     <Image
                         style={{
@@ -63,7 +70,7 @@ export class LeftAlignedImage extends Component {
                     :
                     null
                 }
-            </View>
+            </TouchableOpacity>
         )
     }
 

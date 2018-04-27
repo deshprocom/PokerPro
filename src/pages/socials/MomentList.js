@@ -319,15 +319,13 @@ export default class MomentList extends PureComponent {
         return <View>
             <Text style={styles.body}>{item.title}</Text>
 
-            {strNotNull(item.cover_link) ? <TouchableOpacity
+            {strNotNull(item.cover_link) ? <View
                 style={styles.long_cover}
-                onPress={() => {
-                    global.router.toImageGalleryPage([{url: item.cover_link}], 0)
-                }}>
+            >
                 <LeftAlignedImage
                     height={200}
                     source={{uri: item.cover_link}}/>
-            </TouchableOpacity> : null}
+            </View> : null}
 
 
         </View>
@@ -356,7 +354,7 @@ export default class MomentList extends PureComponent {
 
     shortImage = (images) => {
         if (images.length === 1) {
-            return <TouchableOpacity
+            return <View
                 style={styles.long_cover}
                 onPress={() => {
                     this.previewImage(images, 0)
@@ -365,7 +363,7 @@ export default class MomentList extends PureComponent {
                 <LeftAlignedImage
                     height={200}
                     source={{uri: images[0].image_url}}/>
-            </TouchableOpacity>
+            </View>
 
         }
 
