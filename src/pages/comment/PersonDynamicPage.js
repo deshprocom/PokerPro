@@ -90,9 +90,9 @@ export default class PersonDynamicPage extends Component {
         if (this.isMine()) {
             let body = {user_id: this.userInfo.user_id};
             getUnreadComments(body, data => {
-                console.log("unreadCount:", data.unread)
+                console.log("unreadCount:", data.unread_count)
                 this.setState({
-                    unreadCount: data.unread
+                    unreadCount: data.unread_count
                 })
             }, err => {
 
