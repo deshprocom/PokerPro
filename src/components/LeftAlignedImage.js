@@ -53,7 +53,8 @@ export class LeftAlignedImage extends Component {
         return (
             <TouchableOpacity
                 style={{
-                    width: imageWidth, height: imageHeight
+                    width: imageWidth, height: imageHeight,
+                    backgroundColor: '#ECECEC'
                 }}
                 onPress={() => {
                     global.router.toImageGalleryPage([{url: source.uri}], 0)
