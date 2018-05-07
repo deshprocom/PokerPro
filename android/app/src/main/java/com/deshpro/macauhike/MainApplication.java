@@ -1,4 +1,4 @@
-package com.deshpro.pokerpro;
+package com.deshpro.macauhike;
 
 import android.app.Application;
 

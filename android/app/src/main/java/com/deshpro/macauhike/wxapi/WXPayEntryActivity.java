@@ -1,4 +1,4 @@
-package com.deshpro.pokerpro.wxapi;
+package com.deshpro.macauhike.wxapi;
 
 import android.app.Activity;
 import android.os.Bundle;
