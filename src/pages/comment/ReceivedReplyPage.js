@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import {View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, TextInput, Modal, Platform} from 'react-native';
 import {Colors, Fonts, Images, ApplicationStyles, Metrics} from '../../Themes';
 import I18n from 'react-native-i18n';
-import propTypes from 'prop-types';
-import {Badge} from '../../components';
 import {NavigationBar, BaseComponent} from '../../components';
 import UltimateFlatList from '../../components/ultimate';
 import {getReceivedReply} from '../../services/CommentDao';
@@ -18,13 +16,14 @@ export default class ReceivedReplyPage extends Component {
     };
 
     _separator = () => {
-        return <View style={{height: 1, marginLeft: 14, marginRight: 17, backgroundColor: '#DDDDDD',marginBottom:16}}/>;
+        return <View
+            style={{height: 1, marginLeft: 14, marginRight: 17, backgroundColor: '#DDDDDD'}}/>;
     };
     onFetch = (page, postRefresh, endFetch) => {
         let body = {user_id: global.login_user.user_id, page: page, page_size: 10};
         getReceivedReply(body, data => {
             console.log("receivedReply:", data);
-            postRefresh(data.items, 9);
+            postRefresh(data.notifications, 9);
 
         }, err => {
             endFetch();
@@ -39,87 +38,76 @@ export default class ReceivedReplyPage extends Component {
         )
     };
 
-    deleteItem = (item) => {
-        const {typological_type, my_comment, created_at} = item;
-        return (
-            <View style={styles.itemPage}>
-                <Image style={styles.personImg} source={Images.poker_key}/>
-                <View style={styles.pageRight}>
-                    <View style={{flexDirection:'row',alignItems:'flex-start',marginTop:10}}>
-                        <Text style={styles.name}>{I18n.t('Poker')}</Text>
-                        <View style={{flex:1}}/>
-                        <Text style={styles.time}>{utcDate(created_at, 'YYYY-MM-DD HH:mm')}</Text>
-                    </View>
-                    <Text style={styles.topicTxt}>{I18n.t('bad_message')}</Text>
-                    <View style={styles.replyView}>
-                        <Text style={styles.replyTxt1}>
-                            {I18n.t('already_delete')}
-                        </Text>
-                        <Text style={styles.replyTxt2}>
-                            {I18n.t('your_comment')}：
-                        </Text>
-                        <Text style={styles.replyTxt1}>
-                            {my_comment}
-                        </Text>
-                    </View>
-                </View>
-            </View>
-        )
-    };
     _avatar = (avatar) => {
-        if (isEmptyObject(avatar))
-            return Images.home_avatar;
-        else if (strNotNull(avatar))
+        if (strNotNull(avatar))
             return {uri: avatar}
-        else
-            return Images.home_avatar;
+        return Images.home_avatar
+
     };
 
-    reply = (item) => {
-        const {mine, other} = item;
-        const {avatar, comment, nick_name, official, user_id, id} = other;
-        return (
-            <View style={styles.itemPage}>
-                <Image style={styles.personImg} source={official?Images.set_poker:this._avatar(avatar)}/>
-                <View style={styles.pageRight}>
-                    <View style={{flexDirection:'row',alignItems:'flex-start',marginTop:10}}>
-                        <Text style={styles.name}>{official ? I18n.t('Poker') : nick_name}</Text>
-                        {official ? this.official() : null}
-                        <View style={{flex:1}}/>
-                        <Text style={styles.time}>{utcDate(mine.created_at, 'YYYY-MM-DD HH:mm')}</Text>
-                    </View>
-                    <View style={styles.topic}>
-                        <Text style={styles.topicTxt}>{mine.comment}</Text>
-                    </View>
-                    <View style={styles.replyView}>
-                        <Text style={styles.replyTxt1}>
-                            {I18n.t('replied')}
-                        </Text>
-                        <Text style={styles.replyTxt2}>
-                            {I18n.t('your_comment')}：
-                        </Text>
-                        <Text singleLine={true} style={styles.replyTxt1}>
-                            {comment}
-                        </Text>
-                    </View>
-                </View>
-            </View>
-        )
-    };
+    notifyType = (notify_type) => {
+        switch (notify_type) {
+            case 'reply':
+                return I18n.t('reply') + ":"
+            case "comment":
+                return I18n.t('comment') + ":"
+            case 'topic_like':
+                return I18n.t('liked')
+        }
+    }
+
 
     renderItem = (item, index) => {
-        const {type} = item;
-        if (type === "delete") {
 
-            return this.deleteItem(item);
+        const {created_at, from_user, content, notify_type} = item;
+        const {avatar, nick_name, official} = from_user;
+        return (
+            <TouchableOpacity
+                onPress={() => {
+                    const {topic_type,topic_id} = content;
+                    if (topic_type === "Info") {
+                        let url = `news/${topic_id}`;
+                        global.router.toWebPage(url, {
+                            bottomNav: 'commentNav',
+                            info: {id:topic_id},
+                            topic_type: "info"
+                        })
+                    } else if (topic_type === "Video") {
+                        let urlVideo = `videos/${topic_id}`;
+                        global.router.toWebPage(urlVideo, {
+                            bottomNav: 'commentNav',
+                            info: {id: topic_id},
+                            topic_type: 'video'
+                        })
+                    } else if (topic_type === 'UserTopic') {
+                        global.router.toLongArticle({id: content.topic_id, user: from_user})
+                    }
+                }
+                }
+                style={styles.itemPage}>
+                <Image style={styles.personImg} source={this._avatar(avatar)}/>
+                <View style={styles.pageRight}>
+                    <View style={{flexDirection: 'row', alignItems: 'flex-start', marginBottom: 6}}>
+                        <Text style={styles.name}>{nick_name}</Text>
+                        {official ? this.official() : null}
+                        <View style={{flex: 1}}/>
+                        <Text style={styles.time}>{utcDate(created_at, 'YYYY-MM-DD HH:mm')}</Text>
+                    </View>
 
-        } else if (type === "reply") {
-            return this.reply(item);
+                    <View style={styles.replyView}>
+                        <Text style={styles.replyTxt1}>
+                            {this.notifyType(notify_type)}
+                        </Text>
 
-        } else {
-            return this.reply(item);
-        }
+                        {notify_type !== 'topic_like' ? <Text
+                            style={styles.replyTxt1}>
+                            {content.comment}
+                        </Text> : null}
 
+                    </View>
+                </View>
+            </TouchableOpacity>
+        )
     };
 
     render() {
@@ -134,9 +122,9 @@ export default class ReceivedReplyPage extends Component {
                     leftImageStyle={{height: 23, width: 23, marginLeft: 20, marginRight: 20}}
                     leftBtnPress={() => router.pop()}/>
 
-                <View style={{backgroundColor:'#FFFFFF',flex:1}}>
+                <View style={{backgroundColor: '#FFFFFF', flex: 1}}>
                     <UltimateFlatList
-                        header={()=><View style={{height:7,width:'100%',backgroundColor:'#ECECEE'}}/>}
+                        header={() => <View style={{height: 7, width: '100%', backgroundColor: '#ECECEE'}}/>}
                         arrowImageStyle={{width: 20, height: 20, resizeMode: 'contain'}}
                         ref={ref => this.ultimate = ref}
                         onFetch={this.onFetch}
@@ -164,11 +152,12 @@ export default class ReceivedReplyPage extends Component {
 const styles = StyleSheet.create({
 
     itemPage: {
-        paddingTop: 13,
+        marginTop: 10,
         flexDirection: 'row',
-        alignItems: 'flex-start',
-        paddingBottom: 30,
-        marginRight: 17
+        alignItems: 'center',
+        marginRight: 17,
+        paddingBottom: 10
+
 
     },
     personImg: {
@@ -178,10 +167,10 @@ const styles = StyleSheet.create({
         marginLeft: 17
     },
     pageRight: {
-        flex: 1,
         flexDirection: 'column',
         alignItems: 'flex-start',
         marginLeft: 11,
+        flex: 1
     },
     name: {
         fontSize: 14,
@@ -191,17 +180,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#AAAAAA'
     },
-    topic: {
-        width: '100%',
-        minHeight: 32,
-        backgroundColor: '#ECECEE',
-        alignItems: 'flex-start',
-        justifyContent: 'center',
-        marginTop: 17,
-        paddingTop: 5,
-        paddingBottom: 5
 
-    },
     topicTxt: {
         fontSize: 14,
         color: '#AAAAAA',
@@ -209,21 +188,18 @@ const styles = StyleSheet.create({
         marginRight: 8
     },
     replyView: {
-        marginTop: 12,
         flexDirection: 'row',
         alignItems: 'flex-start',
         flexWrap: 'wrap',
     },
     replyTxt1: {
         fontSize: 15,
-        color: '#444444',
-        lineHeight: 20
+        color: '#444444'
 
     },
     replyTxt2: {
         color: '#4990E2',
-        fontSize: 15,
-        lineHeight: 20
+        fontSize: 15
     },
     officialView: {
         width: 32,

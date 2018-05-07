@@ -139,7 +139,7 @@ export default class ArticleRelease extends PureComponent {
 
     ///发布长贴
     postTopic = () => {
-
+        this.contentView.blur()
         ///判断是否输入内容
         let resultData = this.state.data;
         let titleIsNull = true;
@@ -170,7 +170,7 @@ export default class ArticleRelease extends PureComponent {
         }
 
         ///开始动画，拼接内容
-        setTimeout(() => this.loading && this.loading.open(), 500);
+        setTimeout(() => this.loading && this.loading.open(), 100);
         this.closeAction();
         this.createNewData();
     };
@@ -204,7 +204,7 @@ export default class ArticleRelease extends PureComponent {
         };
         postTopic(body, data => {
             showToast(I18n.t('article_release_success'));
-            setTimeout(() => this.loading && this.loading.close(), 500);
+            setTimeout(() => this.loading && this.loading.close(), 100);
 
             ///草稿箱已经存在当前长帖 将其删除
             if (articleKey !== undefined) {
@@ -243,13 +243,15 @@ export default class ArticleRelease extends PureComponent {
 
 
         }, err => {
-
+            setTimeout(() => this.loading && this.loading.close(), 100);
+            console.log(err)
+            showToast(err)
         })
     };
 
     ///保存草稿
     saveDraft = () => {
-
+        this.contentView.blur()
         this.closeAction();
         let resultData = this.state.data;
         let title = "";
@@ -348,7 +350,7 @@ export default class ArticleRelease extends PureComponent {
     ///插入图片
     insetrtImageAction = () => {
         this.closeAction();
-        checkPermission("photo",result => {
+        checkPermission("photo", result => {
             if (result) {
                 ImagePicker.openPicker({
                     compressImageMaxWidth: 1024,
@@ -378,8 +380,8 @@ export default class ArticleRelease extends PureComponent {
     ///拍照
     insertTakePhotoAction = () => {
         this.closeAction();
-        checkPermission("camera",(result) => {
-            if (result){
+        checkPermission("camera", (result) => {
+            if (result) {
                 ImagePicker.openCamera({
                     compressImageMaxWidth: 1024,
                     compressImageMaxHeight: 1024,
@@ -522,6 +524,7 @@ export default class ArticleRelease extends PureComponent {
                         this.listView.scrollToIndex({index: item.index, viewPosition: 0.3});
                     }}
                                                        defaultValue={item.item.text}
+                                                       ref={ref => this.contentView = ref}
                                                        callbackText={(text) => {
                                                            let newData = [...this.state.data];
                                                            let titleData = newData[item.index];
@@ -539,7 +542,11 @@ export default class ArticleRelease extends PureComponent {
         let data = this.state.data;
         return (
             <View style={styles.container}>
-                <View style={{height: screenHeight - toolBarHeight}}>
+                <View
+                    style={{
+                        height: Platform.OS === 'ios' ?
+                            screenHeight - toolBarHeight : screenHeight - toolBarHeight - 20
+                    }}>
                     {/*导航栏*/}
                     <NavigationBar barStyle={'dark-content'}
                                    titleStyle={{fontSize: 17, color: Colors._333}}

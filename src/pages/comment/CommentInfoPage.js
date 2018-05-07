@@ -23,6 +23,12 @@ export default class CommentInfoPage extends Component {
         this.ultimate && this.ultimate.onRefresh();
     };
 
+    componentDidMount() {
+        const {item} = this.props.params;
+        this.commentBottom && this.commentBottom.setNewsInfo(item)
+    }
+
+
     render() {
         const {item} = this.props.params;
 
@@ -39,7 +45,7 @@ export default class CommentInfoPage extends Component {
 
                 <View style={{backgroundColor: '#FFFFFF', paddingBottom: 10, marginTop: 1}}>
                     <CommentItem
-                        refreshList = {this.refreshList}
+                        refreshList={this.refreshList}
                         repliesReFunc={() => {
                             this.repliesReFunc(item, CommentBottom.replies)
                         }}
@@ -81,8 +87,8 @@ export default class CommentInfoPage extends Component {
     };
 
     renderItem = (item, index) => {
-        return ( <CommentItem
-            refreshList = {this.refreshList}
+        return (<CommentItem
+            refreshList={this.refreshList}
             repliesReFunc={this.repliesReFunc}
             commentType={CommentItem.RepliesReplies}
             item={item}/>)

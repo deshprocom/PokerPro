@@ -89,7 +89,7 @@ export default class InputComment extends Component {
     txtPlaceholder = () => {
         const {topic_type, repliesName} = this.props;
         return topic_type === CommentBottom.replies ||
-        topic_type === CommentBottom.RepliesReplies ? `${I18n.t('reply')}${repliesName}:` : I18n.t('write_comment')
+        topic_type === CommentBottom.RepliesReplies ? `${I18n.t('reply')}` : I18n.t('write_comment')
     };
 
     releaseComment = () => {

@@ -27,6 +27,8 @@ export default class CommentBottom extends Component {
     };
 
     _showInput = () => {
+
+        console.log('显示输入框')
         if (isEmptyObject(global.login_user)) {
             global.router.toLoginFirstPage()
         } else {

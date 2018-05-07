@@ -24,6 +24,7 @@ import {
 import CommentBar from '../comm/CommentBar';
 import {postComment, postRelaies, delDeleteComment} from '../../services/CommentDao'
 import PopAction from '../comm/PopAction';
+import LoadingView from "../../components/load/LoadingView";
 
 const styles = StyleSheet.create({
     title: {
@@ -139,7 +140,7 @@ export default class LongArticle extends PureComponent {
 
     state = {
         comments_count: 0,
-        article: this.props.params.article,
+        article: {},
         followed: false
     }
 
@@ -165,6 +166,10 @@ export default class LongArticle extends PureComponent {
 
     render() {
         const {id, title, user, cover_link, is_like, body, body_type} = this.state.article;
+
+        if (isEmptyObject(this.state.article)) {
+            return <LoadingView/>
+        }
 
         return <View style={{flex: 1, backgroundColor: 'white'}}>
             <NavigationBar

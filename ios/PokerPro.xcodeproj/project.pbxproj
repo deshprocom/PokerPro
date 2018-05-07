@@ -2240,7 +2240,7 @@
 					"-framework",
 					"\"JMessage\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.deshpro.PokerPro;
+				PRODUCT_BUNDLE_IDENTIFIER = com.deshpro.macauhike;
 				PRODUCT_NAME = PokerPro;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2295,7 +2295,7 @@
 					"-framework",
 					"\"JMessage\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.deshpro.PokerPro;
+				PRODUCT_BUNDLE_IDENTIFIER = com.deshpro.macauhike;
 				PRODUCT_NAME = PokerPro;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
