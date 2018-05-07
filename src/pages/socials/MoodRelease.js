@@ -322,7 +322,7 @@ export default class MoodRelease extends Component {
                     }}>
                         <View style={styles.subView}>
                             <Image source={Images.social.address}
-                                   style={[{width: reallySize(14)}, {height: reallySize(18)}]}/>
+                                   style={[{width: 19}, {height: 22}]}/>
                             <Text
                                 style={[{color: "#AAAAAA"}, {fontSize: 14}, {marginLeft: 5}, {marginRight: 17}]}>{result}</Text>
                         </View>

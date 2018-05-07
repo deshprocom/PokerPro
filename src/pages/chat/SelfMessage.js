@@ -72,8 +72,8 @@ export default class SelfMessage extends Component {
                     this.props.messageClick();
                 }} style={[{flexDirection: "row"}, {alignItems: "flex-end"}]}>
                     {this.createMessage()}
-                    {type === "image" || type === "video" ? null :
-                        <Image source={Images.social.chat_right} style={styles.rightCorner}/>}
+                    {Platform.OS === 'ios' ? type === "image" || type === "video" ? null :
+                        <Image source={Images.social.chat_right} style={styles.rightCorner}/> : null}
 
                 </TouchableOpacity>
 
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
         marginBottom: 17,
         marginTop: 17,
         borderRadius: 6,
-        marginRight: -5,
+        marginRight: Platform.OS === 'ios' ? -6 : 10,
     },
     textView: {
         maxWidth: Metrics.screenWidth - (Metrics.reallySize(38) + 27) * 2,

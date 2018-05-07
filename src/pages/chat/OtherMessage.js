@@ -65,8 +65,8 @@ export default class OtherMessage extends Component {
                     emptyBg={Images.home_avatar}
                     source={{uri: avatarThumbPath}}
                     style={styles.userIcon}/>
-                {type === "image" || type === "video" ? null :
-                    <Image source={Images.social.chat_left} style={styles.leftCorner}/>}
+                {Platform.OS === 'ios' ? type === "image" || type === "video" ? null :
+                    <Image source={Images.social.chat_left} style={styles.leftCorner}/> : null}
 
                 <TouchableOpacity onPress={() => {
                     if (this.props.messageClick === null) return;
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors._ECE,
         marginBottom: 17,
         marginTop: 17,
-        marginLeft: -5,
+        marginLeft: Platform.OS === 'ios' ? -6 : 10,
         borderRadius: 6,
     },
     textView: {
